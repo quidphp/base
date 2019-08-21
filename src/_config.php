@@ -6,7 +6,7 @@ namespace Quid\Base;
 trait _config
 {
 	// static
-	protected static $initConfig = []; // tableau qui garde en mémoire les classes qui ont été init
+	protected static $initConfig = array(); // tableau qui garde en mémoire les classes qui ont été init
 	protected static $callableConfig = null; // garde une copie de la callable à utiliser, par défaut array_replace_recursive
 	
 	
