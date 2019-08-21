@@ -2,7 +2,7 @@
     "name": "quid5/base",
     "type": "library",
     "description": "A modern PHP framework and CMS",
-    "keywords": ["quid5","quid","framework"],
+    "keywords": ["quid5","quid","framework","cms"],
     "homepage": "https://quid5.com",
     "license": "MIT",
     "authors": [
