@@ -1054,14 +1054,14 @@ class Validate extends Root
 				}
 				
 				else
-				$return = Validate::is($condition,$v);
+				$return = static::is($condition,$v);
 				
 				if($return === false)
 				break;
 			}
 		}
 		
-		elseif(Validate::is($condition,$value))
+		elseif(static::is($condition,$value))
 		$return = true;
 		
 		return $return;
