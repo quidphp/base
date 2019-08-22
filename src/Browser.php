@@ -6,8 +6,8 @@ namespace Quid\Base;
 class Browser extends Root
 {
 	// config
-	public static $config = [
- 		'bots'=>[ // noms pouvant se retrouver dans le user-agent signifiant un bot
+	public static $config = array(
+ 		'bots'=>array( // noms pouvant se retrouver dans le user-agent signifiant un bot
 			'msnbot',
 			'googlebot',
 			'bingbot',
@@ -24,19 +24,19 @@ class Browser extends Root
 			'feedburner',
 			'monitoring',
 			'garlikcrawler',
-			'blexbot']
-	];
+			'blexbot')
+	);
 	
 	
 	// cacheStatic
-	protected static $cacheStatic = []; // conserve les données de la cache statique
+	protected static $cacheStatic = array(); // conserve les données de la cache statique
 	
 	
 	// is
 	// retourne vrai si le browser est reconnu par browscap
 	public static function is($value):bool 
 	{
-		return (\is_string($value) && static::name($value) !== 'Default Browser')? true:false;
+		return (is_string($value) && static::name($value) !== 'Default Browser')? true:false;
 	}
 	
 	
@@ -44,7 +44,7 @@ class Browser extends Root
 	// retourne vrai si le browser est desktop
 	public static function isDesktop($value):bool 
 	{
-		return (\is_string($value) && static::device($value) === 'Desktop')? true:false;
+		return (is_string($value) && static::device($value) === 'Desktop')? true:false;
 	}
 	
 	
@@ -54,7 +54,7 @@ class Browser extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
 			$cap = static::cap($value);
 			if(!empty($cap['ismobiledevice']))
@@ -71,7 +71,7 @@ class Browser extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
 			$cap = static::cap($value);
 			if(!empty($cap['browser']) && $cap['browser'] === 'IE' && !empty($cap['version']) && (int) $cap['version'] < 9)
@@ -86,7 +86,7 @@ class Browser extends Root
 	// retourne vrai si le browser est sur MacOs
 	public static function isMac($value):bool 
 	{
-		return (\is_string($value) && ($platform = static::platform($value)) && \stripos($platform,'mac') !== false)? true:false;
+		return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'mac') !== false)? true:false;
 	}
 	
 	
@@ -94,7 +94,7 @@ class Browser extends Root
 	// retourne vrai si le browser est sur Linux
 	public static function isLinux($value):bool 
 	{
-		return (\is_string($value) && ($platform = static::platform($value)) && \stripos($platform,'linux') !== false)? true:false;
+		return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'linux') !== false)? true:false;
 	}
 	
 	
@@ -102,7 +102,7 @@ class Browser extends Root
 	// retourne vrai si le browser est sur Windows
 	public static function isWindows($value):bool 
 	{
-		return (\is_string($value) && ($platform = static::platform($value)) && \stripos($platform,'win') !== false)? true:false;
+		return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'win') !== false)? true:false;
 	}
 	
 	
@@ -112,11 +112,11 @@ class Browser extends Root
 	{
 		$return = false;
 
-		if(\is_string($value) && !empty(static::$config['bots']))
+		if(is_string($value) && !empty(static::$config['bots']))
 		{
 			foreach(static::$config['bots'] as $v) 
 			{ 
-				if(\stripos($value,$v) !== false)
+				if(stripos($value,$v) !== false)
 				{
 					$return = true;
 					break;
@@ -134,8 +134,8 @@ class Browser extends Root
 	// utilise la fonction php get_browser
 	public static function cap(string $value):?array
 	{
-		return static::cacheStatic([__METHOD__,$value],function() use ($value) {
-			return (\strlen($value))? \get_browser($value,true):null;
+		return static::cacheStatic(array(__METHOD__,$value),function() use ($value) {
+			return (strlen($value))? get_browser($value,true):null;
 		});
 	}
 	

@@ -10,8 +10,8 @@ class Sql extends Root
 	
 	
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
+	public static $config = array(
+		'option'=>array( // tableau d'options
 			'primary'=>'id', // nom de la clé primaire
 			'prepare'=>true, // prépare la valeur ou non, priorité sur quote
 			'quote'=>true, // quote la valeur
@@ -24,119 +24,119 @@ class Sql extends Root
 			'collate'=>'utf8mb4_general_ci', // collate
 			'engine'=>'MyISAM', // engine pour create
 			'defaultCallable'=>null, // callable pour aller chercher les default selon la table
-			'default'=>[
+			'default'=>array(
 				'what'=>'*', // what par défaut
-				'where'=>['active'=>1], // where par défaut
-				'order'=>['id'=>'ASC'], // ordre par défaut
-				'limit'=>PHP_INT_MAX]], // limite par défaut
-		'prepared'=>[
+				'where'=>array('active'=>1), // where par défaut
+				'order'=>array('id'=>'ASC'), // ordre par défaut
+				'limit'=>PHP_INT_MAX)), // limite par défaut
+		'prepared'=>array(
 			'replace'=>':', // séparateur pour la chaîne replace
-			'random'=>[6,'alpha']], // argument pour random
-		'key'=>[ // types de clés
+			'random'=>array(6,'alpha')), // argument pour random
+		'key'=>array( // types de clés
 			'key'=>'KEY',
 			'unique'=>'UNIQUE KEY',
-			'primary'=>'PRIMARY KEY'],
-		'col'=>[ // types de colonnes et attributs par défaut
-			'int'=>['length'=>11,'null'=>true],
-			'tinyint'=>['length'=>1,'null'=>true],
-			'smallint'=>['length'=>5,'null'=>true],
-			'mediumint'=>['length'=>10,'null'=>true],
-			'bigint'=>['length'=>20,'null'=>true],
-			'char'=>['length'=>255,'null'=>true],
-			'varchar'=>['length'=>255,'null'=>true],
-			'text'=>['null'=>true],
-			'tinytext'=>['null'=>true],
-			'mediumtext'=>['null'=>true],
-			'longtext'=>['null'=>true]],
-		'what'=>[ // config pour what
+			'primary'=>'PRIMARY KEY'),
+		'col'=>array( // types de colonnes et attributs par défaut
+			'int'=>array('length'=>11,'null'=>true),
+			'tinyint'=>array('length'=>1,'null'=>true),
+			'smallint'=>array('length'=>5,'null'=>true),
+			'mediumint'=>array('length'=>10,'null'=>true),
+			'bigint'=>array('length'=>20,'null'=>true),
+			'char'=>array('length'=>255,'null'=>true),
+			'varchar'=>array('length'=>255,'null'=>true),
+			'text'=>array('null'=>true),
+			'tinytext'=>array('null'=>true),
+			'mediumtext'=>array('null'=>true),
+			'longtext'=>array('null'=>true)),
+		'what'=>array( // config pour what
 			'separator'=>'()', // séparateur pour fonction
-			'default'=>['parenthesis'=>true], // function par défaut
-			'function'=>[ // liste de functions avec syntaxe spéciale
-				'distinct'=>['key'=>'DISTINCT','parenthesis'=>false]]],
-		'where'=>[ // config pour where
-			'symbol'=>['>'=>'>','>='=>'>=','<'=>'<','<='=>'<=','!'=>'!=','!='=>'!=','='=>'='], // symbol
-			'separator'=>[ // sépateur par défaut et tous les séparateurs
+			'default'=>array('parenthesis'=>true), // function par défaut
+			'function'=>array( // liste de functions avec syntaxe spéciale
+				'distinct'=>array('key'=>'DISTINCT','parenthesis'=>false))),
+		'where'=>array( // config pour where
+			'symbol'=>array('>'=>'>','>='=>'>=','<'=>'<','<='=>'<=','!'=>'!=','!='=>'!=','='=>'='), // symbol
+			'separator'=>array( // sépateur par défaut et tous les séparateurs
 				'default'=>'AND',
-				'all'=>['AND','&&','OR','||','XOR']],
-			'likeQuoteChar'=>['%','_','\\'], // caractère à quote pour un like
-			'method'=>[ // méthodes callback pour where à 3 arguments
-				'in'=>[self::class,'whereIn'],
-				'notIn'=>[self::class,'whereIn'],
-				'between'=>[self::class,'whereBetween'],
-				'notBetween'=>[self::class,'whereBetween'],
-				'findInSet'=>[self::class,'whereFind'],
-				'findInSetOrNull'=>[self::class,'whereFindOrNull'],
-				'notFindInSet'=>[self::class,'whereFind'],
-				'like'=>[self::class,'whereLike'],
-				'%like'=>[self::class,'whereLike'],
-				'like%'=>[self::class,'whereLike'],
-				'notLike'=>[self::class,'whereLike'],
-				'%notLike'=>[self::class,'whereLike'],
-				'notLike%'=>[self::class,'whereLike'],
-				'year'=>[self::class,'whereDate'],
-				'month'=>[self::class,'whereDate'],
-				'day'=>[self::class,'whereDate'],
-				'hour'=>[self::class,'whereDate'],
-				'minute'=>[self::class,'whereDate']]],
-		'order'=>[ // config pour order
+				'all'=>array('AND','&&','OR','||','XOR')),
+			'likeQuoteChar'=>array('%','_','\\'), // caractère à quote pour un like
+			'method'=>array( // méthodes callback pour where à 3 arguments
+				'in'=>array(self::class,'whereIn'),
+				'notIn'=>array(self::class,'whereIn'),
+				'between'=>array(self::class,'whereBetween'),
+				'notBetween'=>array(self::class,'whereBetween'),
+				'findInSet'=>array(self::class,'whereFind'),
+				'findInSetOrNull'=>array(self::class,'whereFindOrNull'),
+				'notFindInSet'=>array(self::class,'whereFind'),
+				'like'=>array(self::class,'whereLike'),
+				'%like'=>array(self::class,'whereLike'),
+				'like%'=>array(self::class,'whereLike'),
+				'notLike'=>array(self::class,'whereLike'),
+				'%notLike'=>array(self::class,'whereLike'),
+				'notLike%'=>array(self::class,'whereLike'),
+				'year'=>array(self::class,'whereDate'),
+				'month'=>array(self::class,'whereDate'),
+				'day'=>array(self::class,'whereDate'),
+				'hour'=>array(self::class,'whereDate'),
+				'minute'=>array(self::class,'whereDate'))),
+		'order'=>array( // config pour order
 			'default'=>'ASC', // direction par défaut
-			'direction'=>['ASC','DESC'],
-			'method'=>[ // méthodes callback pour order à 3 arguments
-				'find'=>[self::class,'orderFind'],
-				'notFind'=>[self::class,'orderFind'],
-				'findInSet'=>[self::class,'orderFind'],
-				'notFindInSet'=>[self::class,'orderFind']]],
-		'set'=>[ // config pour insertSet et updateSet
-			'method'=>[
-				'replace'=>[self::class,'setReplace']]],
-		'query'=>[
-			'select'=>[ // config pour select
-				'what'=>['required'=>true,'key'=>0],
-				'table'=>['required'=>true,'word'=>'FROM','key'=>1],
-				'join'=>['word'=>'JOIN'],
-				'innerJoin'=>['word'=>'INNER JOIN'],
-				'outerJoin'=>['word'=>'LEFT OUTER JOIN'],
-				'where'=>['word'=>'WHERE','key'=>2],
-				'group'=>['word'=>'GROUP BY'],
-				'order'=>['word'=>'ORDER BY','key'=>3],
-				'limit'=>['word'=>'LIMIT','key'=>4]],
-			'show'=>[ // config pour show
-				'what'=>['required'=>true,'key'=>0],
-				'table'=>['word'=>'FROM','key'=>1],
-				'where'=>['key'=>2],
-				'order'=>['word'=>'ORDER BY','key'=>3],
-				'limit'=>['word'=>'LIMIT','key'=>4]],
-			'insert'=>[ // config pour insert
-				'table'=>['required'=>true,'word'=>'INTO','key'=>0],
-				'insertSet'=>['required'=>true,'key'=>1]],
-			'update'=>[ // config pour update
-				'table'=>['required'=>true,'key'=>0],
-				'updateSet'=>['required'=>true,'word'=>'SET','key'=>1],
-				'where'=>['required'=>true,'word'=>'WHERE','key'=>2],
-				'order'=>['word'=>'ORDER BY','key'=>3],
-				'limit'=>['word'=>'LIMIT','key'=>4]],	
-			'delete'=>[ // config pour delete
-				'table'=>['required'=>true,'word'=>'FROM','key'=>0],
-				'where'=>['required'=>true,'word'=>'WHERE','key'=>1],
-				'order'=>['word'=>'ORDER BY','key'=>2],
-				'limit'=>['word'=>'LIMIT','key'=>3]],
-			'create'=>[ // config pour create
-				'table'=>['required'=>true,'word'=>'TABLE','key'=>0],
-				'createCol'=>['key'=>1,'required'=>true,'comma'=>true,'parenthesisOpen'=>true],
-				'createKey'=>['key'=>2]],
-			'alter'=>[ // config pour alter
-				'table'=>['required'=>true,'word'=>'TABLE','key'=>0],
-				'addCol'=>['key'=>1,'comma'=>true],
-				'addKey'=>['key'=>2,'comma'=>true],
-				'alterCol'=>['key'=>3,'comma'=>true],
-				'dropCol'=>['key'=>4,'comma'=>true],
-				'dropKey'=>['key'=>5],
-				'sql'=>['key'=>6]],
-			'truncate'=>[ // config pour truncate
-				'table'=>['required'=>true,'word'=>'TABLE','key'=>0]],
-			'drop'=>[ // config pour drop
-				'table'=>['required'=>true,'word'=>'TABLE','key'=>0]]]
-	];
+			'direction'=>array('ASC','DESC'),
+			'method'=>array( // méthodes callback pour order à 3 arguments
+				'find'=>array(self::class,'orderFind'),
+				'notFind'=>array(self::class,'orderFind'),
+				'findInSet'=>array(self::class,'orderFind'),
+				'notFindInSet'=>array(self::class,'orderFind'))),
+		'set'=>array( // config pour insertSet et updateSet
+			'method'=>array(
+				'replace'=>array(self::class,'setReplace'))),
+		'query'=>array(
+			'select'=>array( // config pour select
+				'what'=>array('required'=>true,'key'=>0),
+				'table'=>array('required'=>true,'word'=>'FROM','key'=>1),
+				'join'=>array('word'=>'JOIN'),
+				'innerJoin'=>array('word'=>'INNER JOIN'),
+				'outerJoin'=>array('word'=>'LEFT OUTER JOIN'),
+				'where'=>array('word'=>'WHERE','key'=>2),
+				'group'=>array('word'=>'GROUP BY'),
+				'order'=>array('word'=>'ORDER BY','key'=>3),
+				'limit'=>array('word'=>'LIMIT','key'=>4)),
+			'show'=>array( // config pour show
+				'what'=>array('required'=>true,'key'=>0),
+				'table'=>array('word'=>'FROM','key'=>1),
+				'where'=>array('key'=>2),
+				'order'=>array('word'=>'ORDER BY','key'=>3),
+				'limit'=>array('word'=>'LIMIT','key'=>4)),
+			'insert'=>array( // config pour insert
+				'table'=>array('required'=>true,'word'=>'INTO','key'=>0),
+				'insertSet'=>array('required'=>true,'key'=>1)),
+			'update'=>array( // config pour update
+				'table'=>array('required'=>true,'key'=>0),
+				'updateSet'=>array('required'=>true,'word'=>'SET','key'=>1),
+				'where'=>array('required'=>true,'word'=>'WHERE','key'=>2),
+				'order'=>array('word'=>'ORDER BY','key'=>3),
+				'limit'=>array('word'=>'LIMIT','key'=>4)),	
+			'delete'=>array( // config pour delete
+				'table'=>array('required'=>true,'word'=>'FROM','key'=>0),
+				'where'=>array('required'=>true,'word'=>'WHERE','key'=>1),
+				'order'=>array('word'=>'ORDER BY','key'=>2),
+				'limit'=>array('word'=>'LIMIT','key'=>3)),
+			'create'=>array( // config pour create
+				'table'=>array('required'=>true,'word'=>'TABLE','key'=>0),
+				'createCol'=>array('key'=>1,'required'=>true,'comma'=>true,'parenthesisOpen'=>true),
+				'createKey'=>array('key'=>2)),
+			'alter'=>array( // config pour alter
+				'table'=>array('required'=>true,'word'=>'TABLE','key'=>0),
+				'addCol'=>array('key'=>1,'comma'=>true),
+				'addKey'=>array('key'=>2,'comma'=>true),
+				'alterCol'=>array('key'=>3,'comma'=>true),
+				'dropCol'=>array('key'=>4,'comma'=>true),
+				'dropKey'=>array('key'=>5),
+				'sql'=>array('key'=>6)),
+			'truncate'=>array( // config pour truncate
+				'table'=>array('required'=>true,'word'=>'TABLE','key'=>0)),
+			'drop'=>array( // config pour drop
+				'table'=>array('required'=>true,'word'=>'TABLE','key'=>0)))
+	);
 
 
 	// prepared
@@ -147,7 +147,7 @@ class Sql extends Root
 	// retourne vrai si la valeur est un type de query
 	public static function isQuery($value):bool 
 	{
-		return (\is_string($value) && \array_key_exists($value,static::$config['query']) && \is_array(static::$config['query'][$value]))? true:false;
+		return (is_string($value) && array_key_exists($value,static::$config['query']) && is_array(static::$config['query'][$value]))? true:false;
 	}
 	
 	
@@ -155,7 +155,7 @@ class Sql extends Root
 	// retourne vrai si la valeur est quote
 	public static function isQuote($value):bool 
 	{
-		return (\is_string($value) && Str::isStartEnd("'","'",$value))? true:false;
+		return (is_string($value) && Str::isStartEnd("'","'",$value))? true:false;
 	}
 	
 	
@@ -163,7 +163,7 @@ class Sql extends Root
 	// retourne vrai si la valeur a un tick ou un espace
 	public static function hasTickOrSpace($value):bool 
 	{
-		return (\is_string($value) && (\strpos($value,' ') !== false || \strpos($value,'`') !== false))? true:false;
+		return (is_string($value) && (strpos($value,' ') !== false || strpos($value,'`') !== false))? true:false;
 	}
 	
 	
@@ -173,7 +173,7 @@ class Sql extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value) && \strlen($value) > 2)
+		if(is_string($value) && strlen($value) > 2)
 		{
 			if(static::hasDot($value))
 			$return = static::isTick(Str::explodeIndex(-1,'.',$value,2,true,true));
@@ -199,7 +199,7 @@ class Sql extends Root
 		elseif($openClose === false && $value === ')')
 		$return = true;
 		
-		elseif($openClose === null && \in_array($value,['(',')'],true))
+		elseif($openClose === null && in_array($value,array('(',')'),true))
 		$return = true;
 		
 		return $return;
@@ -210,7 +210,7 @@ class Sql extends Root
 	// retourne vrai si le type de clé existe
 	public static function isKey($value):bool 
 	{
-		return (\is_string($value) && \array_key_exists($value,static::$config['key']))? true:false;
+		return (is_string($value) && array_key_exists($value,static::$config['key']))? true:false;
 	}
 
 
@@ -218,7 +218,7 @@ class Sql extends Root
 	// retourne vrai si le type de colonne existe
 	public static function isColType($value):bool 
 	{
-		return (\is_string($value) && \array_key_exists($value,static::$config['col']))? true:false;
+		return (is_string($value) && array_key_exists($value,static::$config['col']))? true:false;
 	}
 	
 	
@@ -226,7 +226,7 @@ class Sql extends Root
 	// retourne vrai si la valeur est un symbol where
 	public static function isWhereSymbol($value):bool
 	{
-		return (\is_string($value) && \array_key_exists($value,static::$config['where']['symbol']))? true:false;
+		return (is_string($value) && array_key_exists($value,static::$config['where']['symbol']))? true:false;
 	}
 	
 	
@@ -234,7 +234,7 @@ class Sql extends Root
 	// retourne vrai si la valeur est un séparateur where
 	public static function isWhereSeparator($value):bool
 	{
-		return (\is_string($value) && \in_array(\strtoupper($value),static::$config['where']['separator']['all'],true))? true:false;
+		return (is_string($value) && in_array(strtoupper($value),static::$config['where']['separator']['all'],true))? true:false;
 	}
 	
 	
@@ -242,7 +242,7 @@ class Sql extends Root
 	// retourne vrai si la valeur est une des méthodes whereTwo
 	public static function isWhereTwo($value):bool
 	{
-		return (\in_array($value,[null,'null','notNull',false,'empty',true,'notEmpty'],true) || \is_int($value))? true:false;
+		return (in_array($value,array(null,'null','notNull',false,'empty',true,'notEmpty'),true) || is_int($value))? true:false;
 	}
 	
 	
@@ -250,7 +250,7 @@ class Sql extends Root
 	// retourne vrai si la valeur est une direction
 	public static function isOrderDirection($value):bool 
 	{
-		return (\is_string($value) && \in_array(\strtoupper($value),static::$config['order']['direction'],true))? true:false;
+		return (is_string($value) && in_array(strtoupper($value),static::$config['order']['direction'],true))? true:false;
 	}
 	
 	
@@ -260,7 +260,7 @@ class Sql extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && !empty($value['sql']) && \array_key_exists('select',$value) && \is_array($value['select']) && !empty($value['select']['sql']))
+		if(is_array($value) && !empty($value['sql']) && array_key_exists('select',$value) && is_array($value['select']) && !empty($value['select']['sql']))
 		$return = true;
 		
 		return $return;
@@ -275,7 +275,7 @@ class Sql extends Root
 		
 		if(static::isReturnSelect($value))
 		{
-			if(\array_key_exists('table',$value['select']) && \is_string($value['select']['table']) && \array_key_exists('id',$value['select']) && \is_int($value['select']['id']))
+			if(array_key_exists('table',$value['select']) && is_string($value['select']['table']) && array_key_exists('id',$value['select']) && is_int($value['select']['id']))
 			$return = true;
 		}
 		
@@ -289,9 +289,9 @@ class Sql extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && !empty($value['sql']))
+		if(is_array($value) && !empty($value['sql']))
 		{
-			if(\array_key_exists('table',$value) && \is_string($value['table']) && \array_key_exists('id',$value) && \is_int($value['id']))
+			if(array_key_exists('table',$value) && is_string($value['table']) && array_key_exists('id',$value) && is_int($value['id']))
 			$return = true;
 		}
 		
@@ -303,7 +303,7 @@ class Sql extends Root
 	// retourne vrai si la valeur a un dot
 	public static function hasDot($value):bool 
 	{
-		return (\is_string($value) && \strlen($value) > 1 && \strpos($value,".") > 0);
+		return (is_string($value) && strlen($value) > 1 && strpos($value,".") > 0);
 	}
 	
 	
@@ -313,9 +313,9 @@ class Sql extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value) && \is_string($key) && \array_key_exists($value,static::$config['query']) && \is_array(static::$config['query'][$value]))
+		if(is_string($value) && is_string($key) && array_key_exists($value,static::$config['query']) && is_array(static::$config['query'][$value]))
 		{
-			if(\array_key_exists($key,static::$config['query'][$value]))
+			if(array_key_exists($key,static::$config['query'][$value]))
 			$return = true;
 		}
 		
@@ -327,7 +327,7 @@ class Sql extends Root
 	// retourne tous les types de requêtes
 	public static function getQueryTypes():array 
 	{
-		return \array_keys(static::$config['query']);
+		return array_keys(static::$config['query']);
 	}
 	
 	
@@ -337,13 +337,13 @@ class Sql extends Root
 	{
 		$return = null;
 		
-		if(\array_key_exists($value,static::$config['query']) && \is_array(static::$config['query'][$value]))
+		if(array_key_exists($value,static::$config['query']) && is_array(static::$config['query'][$value]))
 		{
-			$return = [];
+			$return = array();
 			
 			foreach (static::$config['query'][$value] as $key => $value) 
 			{
-				if(\is_string($key) && \is_array($value) && !empty($value['required']))
+				if(is_string($key) && is_array($value) && !empty($value['required']))
 				{
 					$return[] = $key;
 				}
@@ -360,7 +360,7 @@ class Sql extends Root
 	{
 		$return = null;
 		
-		if(\array_key_exists($value,static::$config['key']))
+		if(array_key_exists($value,static::$config['key']))
 		$return = static::$config['key'][$value];
 		
 		return $return;
@@ -373,7 +373,7 @@ class Sql extends Root
 	{
 		$return = null;
 		
-		if(\array_key_exists($value,static::$config['col']))
+		if(array_key_exists($value,static::$config['col']))
 		$return = static::$config['col'][$value];
 		
 		return $return;
@@ -384,7 +384,7 @@ class Sql extends Root
 	// retourne le nom de la fonction formattée
 	public static function functionFormat(string $value):string
 	{
-		return \strtoupper($value);
+		return strtoupper($value);
 	}
 	
 	
@@ -398,7 +398,7 @@ class Sql extends Root
 		{
 			$return = static::$config['what']['default'];
 			
-			if(\array_key_exists($value,static::$config['what']['function']))
+			if(array_key_exists($value,static::$config['what']['function']))
 			$return = Arr::plus($return,static::$config['what']['function'][$value]);
 			else
 			$return['key'] = static::functionFormat($value);
@@ -412,7 +412,7 @@ class Sql extends Root
 	// retourne le symbol where ou null
 	public static function getWhereSymbol(string $value):?string
 	{
-		return (\array_key_exists($value,static::$config['where']['symbol']))? static::$config['where']['symbol'][$value]:null;
+		return (array_key_exists($value,static::$config['where']['symbol']))? static::$config['where']['symbol'][$value]:null;
 	}
 	
 	
@@ -420,7 +420,7 @@ class Sql extends Root
 	// retourne la callable d'une méthode where
 	public static function getWhereMethod(string $value):?callable
 	{
-		return (\array_key_exists($value,static::$config['where']['method']) && static::classIsCallable(static::$config['where']['method'][$value]))? static::$config['where']['method'][$value]:null;
+		return (array_key_exists($value,static::$config['where']['method']) && static::classIsCallable(static::$config['where']['method'][$value]))? static::$config['where']['method'][$value]:null;
 	}
 	
 	
@@ -428,7 +428,7 @@ class Sql extends Root
 	// retourne le séparateur pour where, si pas de valeur retourner le séparateur par défaut
 	public static function getWhereSeparator(?string $value=null):string
 	{
-		return (\is_string($value) && static::isWhereSeparator($value))? \strtoupper($value):static::$config['where']['separator']['default'];
+		return (is_string($value) && static::isWhereSeparator($value))? strtoupper($value):static::$config['where']['separator']['default'];
 	}
 	
 	
@@ -438,10 +438,10 @@ class Sql extends Root
 	{
 		$return = static::$config['order']['default'];
 		
-		if(\is_string($value) && static::isOrderDirection($value))
+		if(is_string($value) && static::isOrderDirection($value))
 		$return = $value;
 		
-		$return = \strtoupper($return);
+		$return = strtoupper($return);
 		
 		return $return;
 	}
@@ -456,9 +456,9 @@ class Sql extends Root
 		
 		if(!empty($return) && !empty($directions))
 		{
-			$key = \array_search($return,$directions,true);
+			$key = array_search($return,$directions,true);
 			unset($directions[$key]);
-			$return = \current($directions);
+			$return = current($directions);
 		}
 		
 		return $return;
@@ -469,7 +469,7 @@ class Sql extends Root
 	// retourne la callable d'une méthode order
 	public static function getOrderMethod(string $value):?callable
 	{
-		return (\array_key_exists($value,static::$config['order']['method']) && static::classIsCallable(static::$config['order']['method'][$value]))? static::$config['order']['method'][$value]:null;
+		return (array_key_exists($value,static::$config['order']['method']) && static::classIsCallable(static::$config['order']['method'][$value]))? static::$config['order']['method'][$value]:null;
 	}
 	
 	
@@ -477,7 +477,7 @@ class Sql extends Root
 	// retourne la callable d'une méthode set
 	public static function getSetMethod(string $value):?callable
 	{
-		return (\array_key_exists($value,static::$config['set']['method']) && static::classIsCallable(static::$config['set']['method'][$value]))? static::$config['set']['method'][$value]:null;
+		return (array_key_exists($value,static::$config['set']['method']) && static::classIsCallable(static::$config['set']['method'][$value]))? static::$config['set']['method'][$value]:null;
 	}
 	
 	
@@ -488,12 +488,12 @@ class Sql extends Root
 	{
 		$return = null;
 		
-		if(\array_key_exists($type,static::$config['query']))
+		if(array_key_exists($type,static::$config['query']))
 		{
 			if($key === null)
-			$return = \strtoupper($type);
+			$return = strtoupper($type);
 			
-			elseif(\is_string($key))
+			elseif(is_string($key))
 			{
 				$array = static::$config['query'][$type];
 				
@@ -518,7 +518,7 @@ class Sql extends Root
 	// retourne le tableau de retour
 	public static function getReturn(?array $return=null):array 
 	{
-		return (\is_array($return) && \array_key_exists('sql',$return) && \is_string($return['sql']))? $return:['sql'=>''];
+		return (is_array($return) && array_key_exists('sql',$return) && is_string($return['sql']))? $return:array('sql'=>'');
 	}
 	
 	
@@ -526,18 +526,18 @@ class Sql extends Root
 	// merge des tableaux return ensemble
 	public static function returnMerge(array ...$values):array 
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		foreach ($values as $value) 
 		{
 			foreach ($value as $k => $v) 
 			{
-				if(\is_string($k))
+				if(is_string($k))
 				{
-					if($k === 'sql' && \is_string($v))
+					if($k === 'sql' && is_string($v))
 					$return['sql'] .= $v;
 					
-					elseif($k === 'prepare' && \is_array($v))
+					elseif($k === 'prepare' && is_array($v))
 					$return['prepare'] = (empty($return['prepare']))? $v:Arr::replace($return['prepare'],$v);
 					
 					else
@@ -559,20 +559,20 @@ class Sql extends Root
 	{
 		$return = static::shortcut($return);
 		
-		if(\strlen($return) && !static::isTick($return))
+		if(strlen($return) && !static::isTick($return))
 		{
 			if(static::hasDot($return) !== false)
 			{
 				$x = Str::explodeTrimClean(".",$return,2);
 				$key = Arr::keyLast($x);
 				
-				if(\strlen($x[$key]))
+				if(strlen($x[$key]))
 				$x[$key] = Str::wrapStartEnd('`','`',$x[$key]);
 				
-				$return = \implode(".",$x);
+				$return = implode(".",$x);
 			}
 			
-			elseif(!Str::isStartEnd('(',')',$return) && \strpos($return,'@') !== 0)
+			elseif(!Str::isStartEnd('(',')',$return) && strpos($return,'@') !== 0)
 			$return = Str::wrapStartEnd('`','`',$return);
 			
 			if(!empty($return) && !empty($option))
@@ -593,7 +593,7 @@ class Sql extends Root
 	// dérobe la valeur de tick
 	public static function untick(string $return):string 
 	{
-		if(\strlen($return) && static::isTick($return))
+		if(strlen($return) && static::isTick($return))
 		{
 			if(static::hasDot($return))
 			{
@@ -604,7 +604,7 @@ class Sql extends Root
 					$x[$i] = Str::stripStartEnd('`','`',$x[$i]);
 				}
 				
-				$return = \implode(".",$x);
+				$return = implode(".",$x);
 			}
 			
 			elseif(Str::isStartEnd('`','`',$return))
@@ -624,21 +624,21 @@ class Sql extends Root
 	{
 		$return = '';
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
-			if(\is_string($value))
+			if(is_string($value))
 			{
 				if(static::classIsCallable($callable))
 				$return = $callable($value);
 				
 				else
 				{
-					$value = \addslashes($value);
+					$value = addslashes($value);
 					$return = Str::quote($value,false);
 				}
 				
-				if(\is_string($return) && $replaceDoubleEscape === true)
-				$return = \str_replace("\\\\","\\",$return);
+				if(is_string($return) && $replaceDoubleEscape === true)
+				$return = str_replace("\\\\","\\",$return);
 			}
 			
 			else
@@ -660,7 +660,7 @@ class Sql extends Root
 		{
 			foreach ($value as $v) 
 			{
-				$return .= (\strlen($return))? ",":'';
+				$return .= (strlen($return))? ",":'';
 				$return .= static::quote($v,$callable);
 			}
 		}
@@ -673,7 +673,7 @@ class Sql extends Root
 	// unquote une valeur
 	public static function unquote(string $return):string 
 	{
-		return Str::unquote(\stripslashes($return),true,false);
+		return Str::unquote(stripslashes($return),true,false);
 	}
 	
 	
@@ -681,7 +681,7 @@ class Sql extends Root
 	// enrobe la valeur de parenthese si pas vide
 	public static function parenthesis(string $return):string 
 	{
-		return (\strlen($return))? "($return)":'';
+		return (strlen($return))? "($return)":'';
 	}
 	
 	
@@ -689,7 +689,7 @@ class Sql extends Root
 	// retourne une virgule si la valeur n'est pas vide
 	public static function comma(string $value,bool $space=true):string 
 	{
-		return (\strlen($value))? ($space === true)? ', ':',':'';
+		return (strlen($value))? ($space === true)? ', ':',':'';
 	}
 	
 
@@ -699,7 +699,7 @@ class Sql extends Root
 	{
 		$return = '';
 		
-		if($value === null || \strlen($value))
+		if($value === null || strlen($value))
 		{
 			$return = static::getWhereSeparator($separator);
 			
@@ -745,8 +745,8 @@ class Sql extends Root
 			static::$prepared++;
 		}
 		
-		if(\is_string($prepare))
-		$return = [$prepare,static::$config['prepared']['replace'].$prepare];
+		if(is_string($prepare))
+		$return = array($prepare,static::$config['prepared']['replace'].$prepare);
 		
 		return $return;
 	}
@@ -756,13 +756,13 @@ class Sql extends Root
 	// prépare la valeur avant d'append
 	public static function prepareValue($return) 
 	{
-		if(\is_bool($return) || $return === null)
+		if(is_bool($return) || $return === null)
 		$return = static::boolNull($return);
 		
 		elseif(Arr::isSet($return))
 		$return = static::makeSet($return);
 		
-		elseif(\is_array($return) || \is_object($return) || \is_resource($return))
+		elseif(is_array($return) || is_object($return) || is_resource($return))
 		$return = Str::cast($return);
 
 		return $return;
@@ -777,7 +777,7 @@ class Sql extends Root
 	{
 		$return = static::getReturn($return);
 		
-		if(\is_bool($value) || $value === null)
+		if(is_bool($value) || $value === null)
 		{
 			$option['prepare'] = false;
 			$option['quote'] = false;
@@ -789,10 +789,10 @@ class Sql extends Root
 		
 		$value = static::prepareValue($value);
 		
-		if(\is_int($value) || \is_float($value))
+		if(is_int($value) || is_float($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_string($value))
+		elseif(is_string($value))
 		{
 			$sql = $value;
 			
@@ -843,7 +843,7 @@ class Sql extends Root
 			$i = 0;
 			foreach ($value as $v) 
 			{
-				if(\is_scalar($v))
+				if(is_scalar($v))
 				{
 					$return['sql'] .= ($i > 0)? static::comma($return['sql']):'';
 					$return = static::value($v,$return,$option);
@@ -864,7 +864,7 @@ class Sql extends Root
 		
 		foreach ($value as $v) 
 		{
-			if(\is_scalar($v))
+			if(is_scalar($v))
 			{
 				$return .= static::comma($return,false);
 				$return .= Str::cast($v);
@@ -881,14 +881,14 @@ class Sql extends Root
 	// méthode protégé
 	protected static function makeDefault(string $type,$return,array $option)
 	{
-		if(\array_key_exists($type,$option))
+		if(array_key_exists($type,$option))
 		{
 			$default = $option[$type];
 			
 			if($return === true)
 			$return = $default;
 			
-			elseif(\is_array($return) && $default !== null)
+			elseif(is_array($return) && $default !== null)
 			{
 				$do = true;
 				while ($do === true) 
@@ -897,12 +897,12 @@ class Sql extends Root
 					
 					foreach ($return as $key => $value) 
 					{
-						if(\is_numeric($key) && $value === true)
+						if(is_numeric($key) && $value === true)
 						{
-							if(\is_scalar($default))
+							if(is_scalar($default))
 							$return[$key] = $default;
 							
-							elseif(\is_array($default))
+							elseif(is_array($default))
 							{
 								$return = Arr::splice($key,$key,$return,$default);
 								$do = true;
@@ -929,7 +929,7 @@ class Sql extends Root
 		
 		foreach ($return as $key => $value) 
 		{
-			if(\is_numeric($key) && $value === true)
+			if(is_numeric($key) && $value === true)
 			{
 				$add = false;
 				break;
@@ -952,7 +952,7 @@ class Sql extends Root
 		
 		foreach ($return as $key => $value) 
 		{
-			if(\is_numeric($key) && $value === true)
+			if(is_numeric($key) && $value === true)
 			unset($return[$key]);
 		}
 		
@@ -965,9 +965,9 @@ class Sql extends Root
 	// utilisé pour simplement ajouté du sql à la requête
 	public static function sql($value,?array $option=null):array 
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
 		return $return;
@@ -979,33 +979,33 @@ class Sql extends Root
 	// une string est passé directement en sql
 	public static function what($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(!empty($option['default']) && \is_array($option['default']))
+		if(!empty($option['default']) && is_array($option['default']))
 		$value = static::makeDefault('what',$value,$option['default']);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_array($value) && !empty($value))
+		elseif(is_array($value) && !empty($value))
 		{
 			foreach (static::whatPrepare($value) as $prepare) 
 			{
-				if(!empty($prepare) && \is_string($prepare[0]))
+				if(!empty($prepare) && is_string($prepare[0]))
 				{
-					$merge = [];
-					$count = \count($prepare);
+					$merge = array();
+					$count = count($prepare);
 					
 					if($count === 1)
 					$merge = static::whatOne($prepare[0],$option);
 					
-					elseif($count === 2 && \is_string($prepare[1]))
+					elseif($count === 2 && is_string($prepare[1]))
 					$merge = static::whatTwo($prepare[0],$prepare[1],$option);
 					
-					elseif($count === 3 && \is_string($prepare[1]) && \is_string($prepare[2]))
+					elseif($count === 3 && is_string($prepare[1]) && is_string($prepare[2]))
 					$merge = static::whatThree($prepare[0],$prepare[1],$prepare[2],$option);
 					
-					if(\array_key_exists('sql',$merge) && \is_string($merge['sql']) && \strlen($merge['sql']))
+					if(array_key_exists('sql',$merge) && is_string($merge['sql']) && strlen($merge['sql']))
 					{
 						$return['sql'] .= static::comma($return['sql']);
 						$return = static::returnMerge($return,$merge);
@@ -1023,28 +1023,28 @@ class Sql extends Root
 	// retourne un tableau multidimensionnel
 	public static function whatPrepare(array $array,?array $option=null):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $k => $v) 
 		{
 			if(!empty($v))
 			{
-				if(\is_numeric($k))
+				if(is_numeric($k))
 				{
-					if(\is_string($v))
-					$return[] = [$v];
+					if(is_string($v))
+					$return[] = array($v);
 					
-					elseif(\is_array($v) && \count($v) <= 3)
-					$return[] = \array_values($v);
+					elseif(is_array($v) && count($v) <= 3)
+					$return[] = array_values($v);
 				}
 				
-				elseif(\is_string($k))
+				elseif(is_string($k))
 				{
-					if(\is_string($v))
-					$return[] = [$v,$k];
+					if(is_string($v))
+					$return[] = array($v,$k);
 					
-					elseif(\is_array($v) && \count($v) <= 2)
-					$return[] = Arr::append(\array_values($v),$k);
+					elseif(is_array($v) && count($v) <= 2)
+					$return[] = Arr::append(array_values($v),$k);
 				}
 			}
 		}
@@ -1057,7 +1057,7 @@ class Sql extends Root
 	// construit une entrée what à une variable
 	public static function whatOne(string $key,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		if($key === '*')
 		$return['sql'] .= $key;
@@ -1074,7 +1074,7 @@ class Sql extends Root
 	// si as finit par des paranthèses vides (), c'est considéré comme une function
 	public static function whatTwo(string $key,string $as,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		if(!empty($key) && !empty($as))
 		{
@@ -1095,7 +1095,7 @@ class Sql extends Root
 	// construit une entrée what à trois variables
 	public static function whatThree(string $key,string $function,string $as,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$separator = static::$config['what']['separator'] ?? null;
 		
 		if(!empty($separator) && Str::isEnd($separator,$function))
@@ -1127,9 +1127,9 @@ class Sql extends Root
 	// si where n'est pas array, retourne *
 	public static function whatFromWhere($where,?string $prefix=null):array 
 	{
-		$return = [];
+		$return = array();
 		
-		if(\is_array($where))
+		if(is_array($where))
 		{
 			$cols = static::whereCols($where);
 			
@@ -1137,9 +1137,9 @@ class Sql extends Root
 			{
 				foreach ($cols as $col) 
 				{
-					if(\is_string($col))
+					if(is_string($col))
 					{
-						$col = (\is_string($prefix))? "$prefix.$col":$col;
+						$col = (is_string($prefix))? "$prefix.$col":$col;
 						$return[] = $col;
 					}
 				}
@@ -1160,14 +1160,14 @@ class Sql extends Root
 	// la table est retourné dans la clé table si elle ne contient pas d'espace
 	public static function table(string $value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		if(!empty($value))
 		{
 			$tickOrSpace = static::hasTickOrSpace($value);
 			$return['sql'] .= ($tickOrSpace === false)? static::tick($value):$value;
 			
-			if(\strpos($value,' ') === false)
+			if(strpos($value,' ') === false)
 			$return['table'] = static::untick($value);
 		}
 		
@@ -1179,18 +1179,18 @@ class Sql extends Root
 	// décortique une entrée join
 	public static function join($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$option['type'] = (empty($option['type']))? 'join':$option['type'];
 		
-		if(\in_array($option['type'],['join','innerJoin','outerJoin'],true))
+		if(in_array($option['type'],array('join','innerJoin','outerJoin'),true))
 		{
-			if(\is_string($value))
+			if(is_string($value))
 			$return['sql'] .= $value;
 			
-			elseif(\is_array($value) && !empty($value))
+			elseif(is_array($value) && !empty($value))
 			{
-				$table = Arr::keysFirstValue(['table',0],$value);
-				$on = Arr::keysFirstValue(['on',1],$value);
+				$table = Arr::keysFirstValue(array('table',0),$value);
+				$on = Arr::keysFirstValue(array('on',1),$value);
 				
 				if(!empty($table) && !empty($on))
 				{
@@ -1201,10 +1201,10 @@ class Sql extends Root
 					{
 						$on['sql'] = " ON(".$on['sql'].")";
 						
-						if(\array_key_exists('table',$table))
+						if(array_key_exists('table',$table))
 						unset($table['table']);
 						
-						if(\array_key_exists('id',$on))
+						if(array_key_exists('id',$on))
 						unset($on['id']);
 						
 						$return = static::returnMerge($return,$table,$on);
@@ -1221,7 +1221,7 @@ class Sql extends Root
 	// décortique une entrée inner join
 	public static function innerJoin($value,?array $option=null):array
 	{
-		return static::join($value,Arr::plus($option,['type'=>'innerJoin']));
+		return static::join($value,Arr::plus($option,array('type'=>'innerJoin')));
 	}
 	
 	
@@ -1229,7 +1229,7 @@ class Sql extends Root
 	// décortique une entrée outer join
 	public static function outerJoin($value,?array $option=null):array
 	{
-		return static::join($value,Arr::plus($option,['type'=>'outerJoin']));
+		return static::join($value,Arr::plus($option,array('type'=>'outerJoin')));
 	}
 	
 
@@ -1237,13 +1237,13 @@ class Sql extends Root
 	// décortique une entrée where
 	public static function where($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$value = static::whereDefault($value,$option);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_array($value) && !empty($value))
+		elseif(is_array($value) && !empty($value))
 		{
 			$where = static::wherePrepare($value,$option);
 			$last = null;
@@ -1254,14 +1254,14 @@ class Sql extends Root
 			
 			foreach ($where as $prepare) 
 			{
-				if(!empty($prepare) && \is_scalar($prepare[0]))
+				if(!empty($prepare) && is_scalar($prepare[0]))
 				{
-					$isSeparator = (\count($prepare) === 1 && static::isWhereSeparator($prepare[0]))? true:false;
+					$isSeparator = (count($prepare) === 1 && static::isWhereSeparator($prepare[0]))? true:false;
 					if($isSeparator === true && empty($last))
 					continue;
 					
-					$merge = [];
-					$count = \count($prepare);
+					$merge = array();
+					$count = count($prepare);
 					
 					if($count === 1)
 					$merge = static::whereOne($prepare[0],$option);
@@ -1269,10 +1269,10 @@ class Sql extends Root
 					elseif($count >= 2 && static::isWhereTwo($prepare[1]))
 					$merge = static::whereTwo($prepare[0],$prepare[1],$option);
 					
-					elseif($count === 3 && \is_string($prepare[1]))
+					elseif($count === 3 && is_string($prepare[1]))
 					$merge = static::whereThree($prepare[0],$prepare[1],$prepare[2],$option);
 					
-					if(\array_key_exists('sql',$merge) && \is_string($merge['sql']) && \strlen($merge['sql']))
+					if(array_key_exists('sql',$merge) && is_string($merge['sql']) && strlen($merge['sql']))
 					{
 						if(!empty($toMerge))
 						{
@@ -1300,29 +1300,29 @@ class Sql extends Root
 	// gère la variable where par défaut
 	public static function whereDefault($return,?array $option=null)
 	{
-		if(!empty($option['default']) && \is_array($option['default']))
+		if(!empty($option['default']) && is_array($option['default']))
 		$return = static::makeDefault('where',$return,$option['default']);
 		
-		if(!empty($option['primary']) && !empty($return) && !\is_string($return))
+		if(!empty($option['primary']) && !empty($return) && !is_string($return))
 		{
-			if(\is_array($return) && Arr::onlyNumeric($return))
-			$return = [$return];
+			if(is_array($return) && Arr::onlyNumeric($return))
+			$return = array($return);
 			
 			$return = (array) $return;
 
 			foreach ($return as $key => $value) 
 			{
-				if(\is_numeric($key))
+				if(is_numeric($key))
 				{
-					if(\is_numeric($value))
-					$return[$key] = [$option['primary'],'=',$value];
+					if(is_numeric($value))
+					$return[$key] = array($option['primary'],'=',$value);
 					
-					elseif(\is_array($value) && Arr::onlyNumeric($value))
+					elseif(is_array($value) && Arr::onlyNumeric($value))
 					{
-						if(\count($value) === 1)
-						$return[$key] = [$option['primary'],'=',\current($value)];
+						if(count($value) === 1)
+						$return[$key] = array($option['primary'],'=',current($value));
 						else
-						$return[$key] = [$option['primary'],'in',$value];
+						$return[$key] = array($option['primary'],'in',$value);
 					}
 				}
 			}
@@ -1338,7 +1338,7 @@ class Sql extends Root
 	// retourne un tableau multidimensionnel
 	public static function wherePrepare(array $array,?array $option=null):array 
 	{
-		$return = [];
+		$return = array();
 		$wasSeparator = null;
 		$needSeparator = false;
 		$parenthesisOpen = 0;
@@ -1348,10 +1348,10 @@ class Sql extends Root
 		{
 			foreach (static::wherePrepareOne($key,$value,$option) as $v) 
 			{
-				if(\is_array($v) && !empty($v))
+				if(is_array($v) && !empty($v))
 				{
 					// séparateur ou parenthèse
-					if(\count($v) === 1)
+					if(count($v) === 1)
 					{
 						if(static::isParenthesis($v[0]))
 						{
@@ -1360,7 +1360,7 @@ class Sql extends Root
 								$needSeparator = false;
 								
 								if($wasSeparator === null && !empty($return))
-								$return[] = [$separator];
+								$return[] = array($separator);
 								
 								$parenthesisOpen++;
 							}
@@ -1388,7 +1388,7 @@ class Sql extends Root
 						$wasSeparator = null;
 						
 						if($needSeparator === true)
-						$return[] = [$separator];
+						$return[] = array($separator);
 						
 						else
 						$needSeparator = true;	
@@ -1401,7 +1401,7 @@ class Sql extends Root
 		
 		while ($parenthesisOpen > 0) 
 		{
-			$return[] = [')'];
+			$return[] = array(')');
 			$parenthesisOpen--;
 		}
 		
@@ -1414,38 +1414,38 @@ class Sql extends Root
 	// retourne un tableau multidimensionnel
 	public static function wherePrepareOne($key,$value,?array $option=null):array 
 	{
-		$return = [];
+		$return = array();
 		
-		if(\is_string($key))
+		if(is_string($key))
 		{
 			if($value === null)
-			$return[] = [$key,null];
+			$return[] = array($key,null);
 			
 			elseif($value === true)
-			$return[] = [$key,true];
+			$return[] = array($key,true);
 			
 			elseif($value === false)
-			$return[] = [$key,false];
+			$return[] = array($key,false);
 			
 			elseif(Arr::isSet($value))
-			$return[] = [$key,'in',$value];
+			$return[] = array($key,'in',$value);
 			
 			else
-			$return[] = [$key,'=',$value];
+			$return[] = array($key,'=',$value);
 		}
 		
-		elseif(\is_numeric($key))
+		elseif(is_numeric($key))
 		{
-			if(\is_array($value) && !Arr::onlyNumeric($value) && \in_array(\count($value),[2,3],true))
-			$return[] = \array_values($value);
+			if(is_array($value) && !Arr::onlyNumeric($value) && in_array(count($value),array(2,3),true))
+			$return[] = array_values($value);
 			
-			elseif(\is_string($value))
+			elseif(is_string($value))
 			{
 				if(static::isWhereSeparator($value))
-				$return[] = [$value];
+				$return[] = array($value);
 				
 				elseif(static::isParenthesis($value))
-				$return[] = [$value];
+				$return[] = array($value);
 			}
 		}
 		
@@ -1457,15 +1457,15 @@ class Sql extends Root
 	// retourne toutes les colonnes uniques trouvés dans un tableau where
 	public static function whereCols(array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach (static::wherePrepare($array) as $key => $value) 
 		{
-			if(\is_array($value) && \count($value) > 1)
+			if(is_array($value) && count($value) > 1)
 			{
-				$current = \current($value);
+				$current = current($value);
 				
-				if(\is_string($current) && !\in_array($current,$return,true))
+				if(is_string($current) && !in_array($current,$return,true))
 				$return[] = $current;
 			}
 		}
@@ -1479,19 +1479,19 @@ class Sql extends Root
 	// les options par défaut sont utilisés
 	public static function whereAppend(...$values) 
 	{
-		$return = [];
-		$merge = [];
+		$return = array();
+		$merge = array();
 		$option = static::option();
 		
 		foreach ($values as $key => $value) 
 		{
 			$value = static::whereDefault($value,$option);
 			
-			if(\is_array($value))
+			if(is_array($value))
 			{
 				$prepare = static::wherePrepare($value,$option);
 				
-				if(!empty($prepare) && \is_array($prepare))
+				if(!empty($prepare) && is_array($prepare))
 				$merge[] = $prepare;
 			}
 		}
@@ -1515,22 +1515,22 @@ class Sql extends Root
 		{
 			foreach ($array as $key => $value) 
 			{
-				if(\is_array($value) && !empty($value[0]) && $value[0] === $option['primary'])
+				if(is_array($value) && !empty($value[0]) && $value[0] === $option['primary'])
 				{
-					if(!empty($value[1]) && \is_string($value[1]) && \in_array($value[1],['=','in'],true))
+					if(!empty($value[1]) && is_string($value[1]) && in_array($value[1],array('=','in'),true))
 					{
-						if(!empty($value[2]) && (\is_numeric($value[2]) || (\is_array($value[2]) && Arr::onlyNumeric($value[2]))))
+						if(!empty($value[2]) && (is_numeric($value[2]) || (is_array($value[2]) && Arr::onlyNumeric($value[2]))))
 						{
-							$return = [];
+							$return = array();
 							
-							if(\is_numeric($value[2]))
+							if(is_numeric($value[2]))
 							$value[2] = (int) $value[2];
 							
-							if(\is_array($value[2]))
+							if(is_array($value[2]))
 							$value[2] = Arr::cast($value[2]);
 							
 							$return['id'] = $value[2];
-							$return['whereOnlyId'] = (\count($array) === 1)? true:false;
+							$return['whereOnlyId'] = (count($array) === 1)? true:false;
 							
 							break;
 						}
@@ -1547,7 +1547,7 @@ class Sql extends Root
 	// construit une entrée where à une variable
 	public static function whereOne(string $key):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		if(static::isParenthesis($key))
 		$return['sql'] .= $key;
@@ -1564,24 +1564,24 @@ class Sql extends Root
 	// whereTwo accepte maintenant un int aussi
 	public static function whereTwo(string $key,$value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$tick = static::tick($key);
 		
-		if(\is_scalar($value) || $value === null)
+		if(is_scalar($value) || $value === null)
 		{
-			if(\in_array($value,[null,'null'],true))
+			if(in_array($value,array(null,'null'),true))
 			$return['sql'] .= $tick." IS NULL";
 			
 			elseif($value === 'notNull')
 			$return['sql'] .= $tick." IS NOT NULL";
 			
-			elseif(\in_array($value,[false,'empty'],true))
+			elseif(in_array($value,array(false,'empty'),true))
 			$return['sql'] .= static::parenthesis("$tick = '' OR $tick IS NULL");
 			
-			elseif(\in_array($value,[true,'notEmpty'],true))
+			elseif(in_array($value,array(true,'notEmpty'),true))
 			$return['sql'] .= static::parenthesis("$tick != '' AND $tick IS NOT NULL");
 			
-			elseif(\is_int($value))
+			elseif(is_int($value))
 			{
 				$return['sql'] .= "$tick = ";
 				$return = static::value($value,$return,$option);
@@ -1600,17 +1600,17 @@ class Sql extends Root
 	// support pour b binary, i insensitive et or or
 	protected static function whereThreeMethod(string $method,?array $option=null)
 	{
-		$return = [];
+		$return = array();
 		$option = (array) $option;
 		
-		if(\strpos($method,'[') !== false && Segment::isWrapped(null,$method))
+		if(strpos($method,'[') !== false && Segment::isWrapped(null,$method))
 		{
 			$method = Segment::strip(null,$method);
 			$option['quote'] = false;
 			$option['prepare'] = false;
 		}
 		
-		elseif(\strpos($method,'`') !== false && Segment::isWrapped('``',$method))
+		elseif(strpos($method,'`') !== false && Segment::isWrapped('``',$method))
 		{
 			$method = Segment::strip('``',$method);
 			$option['tick'] = true;
@@ -1618,12 +1618,12 @@ class Sql extends Root
 			$option['prepare'] = false;
 		}
 		
-		if(\strpos($method,'|') !== false)
+		if(strpos($method,'|') !== false)
 		{
-			$x = \explode('|',$method);
-			if(\count($x) === 2 && !empty($x[1]))
+			$x = explode('|',$method);
+			if(count($x) === 2 && !empty($x[1]))
 			{
-				foreach (\explode(',',$x[0]) as $v) 
+				foreach (explode(',',$x[0]) as $v) 
 				{
 					if($v === 'b')
 					$option['binary'] = true;
@@ -1642,7 +1642,7 @@ class Sql extends Root
 			}
 		}
 		
-		$return = ['method'=>$method,'option'=>$option];
+		$return = array('method'=>$method,'option'=>$option);
 		
 		return $return;
 	}
@@ -1652,7 +1652,7 @@ class Sql extends Root
 	// construit une entrée where à trois variables
 	public static function whereThree($key,string $method,$value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$parse = static::whereThreeMethod($method,$option);
 		$method = $parse['method'];
 		$option = $parse['option'];
@@ -1687,10 +1687,10 @@ class Sql extends Root
 	// construit une entrée where in à trois variables
 	public static function whereIn(string $key,$value,string $method='in',?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_scalar($value))
-		$value = [$value];
+		if(is_scalar($value))
+		$value = array($value);
 		
 		if(!empty($value) && Arr::isSet($value))
 		{
@@ -1702,7 +1702,7 @@ class Sql extends Root
 			elseif($method === 'notIn')
 			$word = 'NOT IN';
 			
-			if(\is_string($word))
+			if(is_string($word))
 			{
 				$return['sql'] .= static::tick($key,$option)." $word(";
 				$return = static::valueSet($value,$return,$option);
@@ -1719,12 +1719,12 @@ class Sql extends Root
 	// value doit être un tableau contenant deux valeurs -> min et max
 	public static function whereBetween($key,array $value,string $method='between',?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_array($value) && \count($value) === 2)
+		if(is_array($value) && count($value) === 2)
 		{
 			$word = null;
-			$value = \array_values($value);
+			$value = array_values($value);
 			
 			if($method === 'between')
 			$word = 'BETWEEN';
@@ -1732,7 +1732,7 @@ class Sql extends Root
 			elseif($method === 'notBetween')
 			$word = 'NOT BETWEEN';
 			
-			if(\is_string($word))
+			if(is_string($word))
 			{
 				$return = static::value($key,$return,$option);
 				$return['sql'] .= " $word ";
@@ -1751,24 +1751,24 @@ class Sql extends Root
 	// si l'argument est un tableau, un loop est construit
 	public static function whereFind(string $key,$value,string $method='find',?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$separator = static::getWhereSeparator($option['separator'] ?? null);
 		$value = (array) $value;
 		$word = null;
 		
-		if(\in_array($method,['find','findInSet'],true))
+		if(in_array($method,array('find','findInSet'),true))
 		$word = "FIND_IN_SET";
 		
-		elseif(\in_array($method,['notFind','notFindInSet'],true))
+		elseif(in_array($method,array('notFind','notFindInSet'),true))
 		$word = "!FIND_IN_SET";
 		
-		if(\is_string($word) && !empty($value))
+		if(is_string($word) && !empty($value))
 		{
 			$count = 0;
 			
 			foreach ($value as $v) 
 			{
-				if(\is_scalar($v))
+				if(is_scalar($v))
 				{
 					$return['sql'] .= static::whereSeparator($return['sql'],$separator);
 					$return['sql'] .= "$word(";
@@ -1792,7 +1792,7 @@ class Sql extends Root
 	// si l'argument est un tableau, un loop est construit
 	public static function whereFindOrNull(string $key,$value,string $method='find',?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$separator = static::getWhereSeparator($option['separator'] ?? null);
 		$method = 'find';
 		$or = 'or';
@@ -1802,7 +1802,7 @@ class Sql extends Root
 		{
 			$merge = static::whereFind($key,$v,$method,$option); 
 			$merge2 = static::whereTwo($key,null);
-			$new = ['sql'=>''];
+			$new = array('sql'=>'');
 			
 			if(!empty($merge['sql']) && !empty($merge2['sql']))
 			{
@@ -1830,30 +1830,30 @@ class Sql extends Root
 	// la méthode va quoteChar les caractères % et _, comme l'indique la document SQL
 	public static function whereLike(string $key,$value,string $method='like',?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$quoteChar = static::$config['where']['likeQuoteChar'];
-		$option = Arr::plus($option,['quoteChar'=>$quoteChar]);
+		$option = Arr::plus($option,array('quoteChar'=>$quoteChar));
 		$separator = static::getWhereSeparator($option['separator'] ?? null);
 		$value = (array) $value;
 		$word = null;
 		$concat = null;
 		
-		if(\in_array($method,['like','%like','like%'],true))
+		if(in_array($method,array('like','%like','like%'),true))
 		$word = 'LIKE';
 		
-		elseif(\in_array($method,['notLike','%notLike','notLike%'],true))
+		elseif(in_array($method,array('notLike','%notLike','notLike%'),true))
 		$word = 'NOT LIKE';
 
-		if(\in_array($method,['%like','%notLike'],true))
+		if(in_array($method,array('%like','%notLike'),true))
 		$concat = "concat(@, '%')";
 
-		elseif(\in_array($method,['like','notLike'],true))
+		elseif(in_array($method,array('like','notLike'),true))
 		$concat = "concat('%', @, '%')";
 
-		elseif(\in_array($method,['like%','notLike%'],true))
+		elseif(in_array($method,array('like%','notLike%'),true))
 		$concat = "concat('%', @)";
 		
-		if(\is_string($word) && \is_string($concat) && \is_array($value) && !empty($value))
+		if(is_string($word) && is_string($concat) && is_array($value) && !empty($value))
 		{
 			$tick = static::tick($key,$option);
 			$count = 0;
@@ -1861,15 +1861,15 @@ class Sql extends Root
 			
 			foreach ($value as $v) 
 			{
-				if(\is_scalar($v))
+				if(is_scalar($v))
 				{
 					$sql = $base;
 					
-					$current = static::value($v,[],$option);
+					$current = static::value($v,array(),$option);
 					
 					if(!empty($current['sql']))
 					{
-						$current['sql'] = $base.\str_replace("@",$current['sql'],$concat);
+						$current['sql'] = $base.str_replace("@",$current['sql'],$concat);
 						
 						$return['sql'] .= static::whereSeparator($return['sql'],$separator);
 						$return = static::returnMerge($return,$current);
@@ -1890,24 +1890,24 @@ class Sql extends Root
 	// construit une entrée where date à trois variables
 	public static function whereDate(string $key,$value,string $method='month',?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$separator = static::getWhereSeparator($option['separator'] ?? null);
 		$arg = null;
 		$floorCeil = null;
 		$count = 0;
 		
-		if(\is_numeric($value))
-		$value = [(int) $value];
+		if(is_numeric($value))
+		$value = array((int) $value);
 		
-		elseif(\is_array($value))
-		$value = \array_values($value);
+		elseif(is_array($value))
+		$value = array_values($value);
 		
 		if(!empty($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(!\is_array($v))
-				$v = [$v];
+				if(!is_array($v))
+				$v = array($v);
 				
 				if($method === 'year')
 				$floorCeil = Date::floorCeilYear(...$v);
@@ -1924,9 +1924,9 @@ class Sql extends Root
 				elseif($method === 'minute')
 				$floorCeil = Date::floorCeilMinute(...$v);
 				
-				if(!empty($floorCeil) && \is_int($floorCeil['floor']) && \is_int($floorCeil['ceil']))
+				if(!empty($floorCeil) && is_int($floorCeil['floor']) && is_int($floorCeil['ceil']))
 				{
-					$current = ['sql'=>''];
+					$current = array('sql'=>'');
 					$return['sql'] .= static::whereSeparator($return['sql'],$separator);
 					
 					$current['sql'] .= static::tick($key,$option)." >= ";
@@ -1952,16 +1952,16 @@ class Sql extends Root
 	// décortique une entrée group
 	public static function group($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_array($value) && !empty($value))
+		elseif(is_array($value) && !empty($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\is_string($v))
+				if(is_string($v))
 				{
 					$return['sql'] .= static::comma($return['sql']);
 					$return['sql'] .= static::tick($v);
@@ -1977,34 +1977,34 @@ class Sql extends Root
 	// décortique une entrée order
 	public static function order($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(!empty($option['default']) && \is_array($option['default']))
+		if(!empty($option['default']) && is_array($option['default']))
 		$value = static::makeDefault('order',$value,$option['default']);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_array($value) && !empty($value))
+		elseif(is_array($value) && !empty($value))
 		{
 			foreach (static::orderPrepare($value) as $prepare) 
 			{
-				if(!empty($prepare) && \is_scalar($prepare[0]))
+				if(!empty($prepare) && is_scalar($prepare[0]))
 				{
-					$merge = [];
-					$count = \count($prepare);
+					$merge = array();
+					$count = count($prepare);
 					$prepare[0] = Str::cast($prepare[0]);
 					
 					if($count === 1)
 					$merge = static::orderOne($prepare[0],$option);
 					
-					elseif($count === 2 && \is_scalar($prepare[1]))
+					elseif($count === 2 && is_scalar($prepare[1]))
 					$merge = static::orderTwo($prepare[0],$prepare[1],$option);
 					
-					elseif($count === 3 && \is_string($prepare[1]))
+					elseif($count === 3 && is_string($prepare[1]))
 					$merge = static::orderThree($prepare[0],$prepare[1],$prepare[2],$option);
 					
-					if(\array_key_exists('sql',$merge) && \is_string($merge['sql']) && \strlen($merge['sql']))
+					if(array_key_exists('sql',$merge) && is_string($merge['sql']) && strlen($merge['sql']))
 					{
 						$return['sql'] .= static::comma($return['sql']);
 						$return = static::returnMerge($return,$merge);
@@ -2022,20 +2022,20 @@ class Sql extends Root
 	// retourne un tableau multidimensionnel
 	public static function orderPrepare(array $array,?array $option=null):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $k => $v) 
 		{
 			if(!empty($v))
 			{
-				if(\is_numeric($k) && \is_string($v))
-				$return[] = [$v];
+				if(is_numeric($k) && is_string($v))
+				$return[] = array($v);
 				
-				elseif(\is_string($k) && \is_scalar($v))
-				$return[] = [$k,$v];
+				elseif(is_string($k) && is_scalar($v))
+				$return[] = array($k,$v);
 				
-				elseif(\is_array($v) && \count($v) <= 3)
-				$return[] = \array_values($v);
+				elseif(is_array($v) && count($v) <= 3)
+				$return[] = array_values($v);
 			}
 		}
 		
@@ -2047,7 +2047,7 @@ class Sql extends Root
 	// construit une entrée order à une variable
 	public static function orderOne(string $key,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		if($key === 'rand()')
 		$return['sql'] = $key;
@@ -2063,9 +2063,9 @@ class Sql extends Root
 	// construit une entrée order à deux variables
 	public static function orderTwo(string $key,$value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(!empty($key) && \is_scalar($value))
+		if(!empty($key) && is_scalar($value))
 		$return['sql'] = static::tick($key)." ".static::getOrderDirection($value);
 		
 		return $return;
@@ -2076,7 +2076,7 @@ class Sql extends Root
 	// construit une entrée order à trois variables
 	public static function orderThree(string $key,string $method,$value,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		
 		$callable = static::getOrderMethod($method);
 		if(!empty($callable))
@@ -2090,17 +2090,17 @@ class Sql extends Root
 	// construit une entrée order find à trois variables
 	public static function orderFind(string $key,$value,string $method='find',?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$value = $value;
 		$word = null;
 		
-		if(\in_array($method,['find','findInSet'],true))
+		if(in_array($method,array('find','findInSet'),true))
 		$word = "FIND_IN_SET";
 		
-		elseif(\in_array($method,['notFind','notFindInSet'],true))
+		elseif(in_array($method,array('notFind','notFindInSet'),true))
 		$word = "!FIND_IN_SET";
 		
-		if(\is_string($word) && \is_string($value))
+		if(is_string($word) && is_string($value))
 		{
 			$return['sql'] = "$word(";
 			$return['sql'] .= static::tick($value);
@@ -2116,26 +2116,26 @@ class Sql extends Root
 	// la méthode utilise la syntaxe avec le mot OFFSET plutôt que la syntaxe courte
 	public static function limit($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(!empty($option['default']) && \is_array($option['default']))
+		if(!empty($option['default']) && is_array($option['default']))
 		$value = static::makeDefault('limit',$value,$option['default']);
 		
-		if(\is_int($value))
-		$value = [$value];
+		if(is_int($value))
+		$value = array($value);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 
-		elseif(\is_array($value) && !empty($value))
+		elseif(is_array($value) && !empty($value))
 		{
 			$value = static::limitPrepare($value);
 			
-			if(!empty($value) && \array_key_exists(0,$value) && \is_numeric($value[0]))
+			if(!empty($value) && array_key_exists(0,$value) && is_numeric($value[0]))
 			{
 				$return['sql'] .= Str::cast($value[0]);
 				
-				if(\array_key_exists(1,$value) && \is_numeric($value[1]) && $value[1] > 0)
+				if(array_key_exists(1,$value) && is_numeric($value[1]) && $value[1] > 0)
 				{
 					$return['sql'] .= " OFFSET ";
 					$return['sql'] .= Str::cast($value[1]);
@@ -2152,17 +2152,17 @@ class Sql extends Root
 	// si le tableau a 1 niveau et que la clé est numérique sans être 0, key est considéré comme page et current comme limit
 	public static function limitPrepare(array $value):array 
 	{
-		$return = [];
-		$count = \count($value);
+		$return = array();
+		$count = count($value);
 		$array = null;
 		
 		if($count === 1)
-		$array = static::limitPrepareOne(\key($value),\current($value));
+		$array = static::limitPrepareOne(key($value),current($value));
 		
 		elseif($count === 2)
 		$array = static::limitPrepareTwo($value);
 		
-		if(\is_array($array))
+		if(is_array($array))
 		$return = Arr::cast($array);
 		
 		return $return;
@@ -2174,24 +2174,24 @@ class Sql extends Root
 	// si le tableau a 1 niveau et que la clé est numérique sans être 0, key est considéré comme page et current comme limit
 	public static function limitPrepareOne($key,$value):array 
 	{
-		$return = [];
+		$return = array();
 		
-		if(\is_int($key) && $key > 0 && \is_int($value))
+		if(is_int($key) && $key > 0 && is_int($value))
 		{
 			$return = Nav::limitPage($key,$value);
-			$return = \array_reverse($return,false);
+			$return = array_reverse($return,false);
 		}
 		
-		elseif(\is_array($value))
-		$return = \array_values($value);
+		elseif(is_array($value))
+		$return = array_values($value);
 		
-		elseif(\is_numeric($value))
-		$return = [$value];
+		elseif(is_numeric($value))
+		$return = array($value);
 		
-		elseif(\is_string($value))
+		elseif(is_string($value))
 		{
 			$return = Str::explodeTrimClean(',',$value,2);
-			$return = \array_reverse($return,false);
+			$return = array_reverse($return,false);
 		}
 		
 		return $return;
@@ -2202,22 +2202,22 @@ class Sql extends Root
 	// prépare un tableau limit si la valeur avait deux entrées
 	public static function limitPrepareTwo(array $value):array 
 	{
-		$return = [];
+		$return = array();
 		$limit = $value['limit'] ?? Arr::valueFirst($value);
 		
-		if(\is_int($limit))
+		if(is_int($limit))
 		{
 			$offset = $value['offset'] ?? Arr::valueLast($value);
 			$page = $value['page'] ?? null;
 			
-			if(\is_int($page))
+			if(is_int($page))
 			{
 				$return = Nav::limitPage($page,$limit);
-				$return = \array_reverse($return,false);
+				$return = array_reverse($return,false);
 			}
 			
 			else
-			$return = [$limit,$offset];
+			$return = array($limit,$offset);
 		}
 		
 		return $return;
@@ -2230,27 +2230,27 @@ class Sql extends Root
 	// ne permet pas de faire plusieurs insertions par requête, car il y a support pour callable dans set et aussi le rollback ne marchait pas correctement
 	public static function insertSet($value,?array $option=null):array 
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
 		elseif(empty($value))
 		$return['sql'] = "() VALUES ()";
 		
-		elseif(\is_array($value))
+		elseif(is_array($value))
 		{
 			$prepare = static::setPrepare($value);
 			$fields = static::insertSetFields($prepare);
 			$merge = static::setValues($prepare,false,$option);
 			
-			if(\strlen($fields['sql']))
+			if(strlen($fields['sql']))
 			{
 				$return['sql'] .= static::parenthesis($fields['sql']);
 				$return['sql'] .= " ";
 			}
 			
-			if(\strlen($merge['sql'])) 
+			if(strlen($merge['sql'])) 
 			{
 				$return['sql'] .= "VALUES ";
 				$merge['sql'] = static::parenthesis($merge['sql']);
@@ -2266,11 +2266,11 @@ class Sql extends Root
 	// génère le sql pour les fields lors d'une insertion
 	public static function insertSetFields(array $value):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		foreach ($value as $array) 
 		{
-			if(!empty($array) && \is_string($array[0]))
+			if(!empty($array) && is_string($array[0]))
 			{
 				$return['sql'] .= static::comma($return['sql']);
 				$return['sql'] .= static::tick($array[0]);
@@ -2286,15 +2286,15 @@ class Sql extends Root
 	// retourne un tableau multidimensionnel
 	public static function setPrepare(array $array):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $k => $v) 
 		{
-			if(\is_string($k))
-			$return[] = [$k,$v];
+			if(is_string($k))
+			$return[] = array($k,$v);
 			
-			elseif(\is_numeric($k) && \is_array($v) && \in_array(\count($v),[2,3,4]))
-			$return[] = \array_values($v);
+			elseif(is_numeric($k) && is_array($v) && in_array(count($v),array(2,3,4)))
+			$return[] = array_values($v);
 		}
 		
 		return $return;
@@ -2306,25 +2306,25 @@ class Sql extends Root
 	// si tick est true, alors met le nom du champ avant la valeur avec un =
 	public static function setValues(array $value,bool $tick=false,?array $option=null):array 
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		foreach ($value as $prepare) 
 		{
-			if(!empty($prepare) && \is_string($prepare[0]))
+			if(!empty($prepare) && is_string($prepare[0]))
 			{
-				$merge = [];
-				$count = \count($prepare);
+				$merge = array();
+				$count = count($prepare);
 				
 				if($count === 2)
 				$merge = static::setOne($prepare[1],$option);
 				
-				elseif($count === 3 && \is_string($prepare[1]))
+				elseif($count === 3 && is_string($prepare[1]))
 				$merge = static::setTwo($prepare[1],$prepare[2],$option);
 				
-				elseif($count === 4 && \is_string($prepare[1]))
+				elseif($count === 4 && is_string($prepare[1]))
 				$merge = static::setThree($prepare[0],$prepare[1],$prepare[2],$prepare[3],$option);
 				
-				if(\array_key_exists('sql',$merge) && \is_string($merge['sql']) && \strlen($merge['sql']))
+				if(array_key_exists('sql',$merge) && is_string($merge['sql']) && strlen($merge['sql']))
 				{
 					$return['sql'] .= static::comma($return['sql']);
 					
@@ -2345,12 +2345,12 @@ class Sql extends Root
 	// ne supporte pas les valeurs par défaut
 	public static function updateSet($value,?array $option=null):array 
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_array($value))
+		elseif(is_array($value))
 		{
 			$prepare = static::setPrepare($value);
 			$return = static::setValues($prepare,true,$option);
@@ -2372,7 +2372,7 @@ class Sql extends Root
 	// construit une entrée insertSet ou updateSet à deux variables
 	public static function setTwo(string $method,$value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		$return['sql'] .= static::functionFormat($method);
 		$return['sql'] .= "(";
@@ -2387,7 +2387,7 @@ class Sql extends Root
 	// construit une entrée insertSet ou updateSet à trois variables
 	public static function setThree(string $key,string $method,$value1,$value2,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		
 		$callable = static::getSetMethod($method);
 		if(!empty($callable))
@@ -2405,7 +2405,7 @@ class Sql extends Root
 	// permet de faire un remplacement sur une colonne
 	public static function setReplace(string $key,$from,$to,string $method,?array $option=null):array 
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
 		$return['sql'] .= 'REPLACE';
 		$return['sql'] .= "(";
@@ -2424,15 +2424,15 @@ class Sql extends Root
 	// obtient le sql de création d'une col
 	public static function col(array $value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
-		$option = static::option(Arr::plus($option,['prepare'=>false]));
-		$name = Arr::keysFirstValue(['name',0],$value);
-		$type = Arr::keysFirstValue(['type',1],$value);
+		$return = array('sql'=>'');
+		$option = static::option(Arr::plus($option,array('prepare'=>false)));
+		$name = Arr::keysFirstValue(array('name',0),$value);
+		$type = Arr::keysFirstValue(array('type',1),$value);
 		
-		if(\is_string($name) && !empty($name) && \is_string($type) && static::isColType($type))
+		if(is_string($name) && !empty($name) && is_string($type) && static::isColType($type))
 		{
 			$attr = Arr::plus(static::getColTypeAttr($type),$value);
-			$type = \strtoupper($type);
+			$type = strtoupper($type);
 			
 			if(!empty($option['type']) && ($option['type'] === 'addCol' || $option['type'] === 'alterCol'))
 			{
@@ -2442,7 +2442,7 @@ class Sql extends Root
 				elseif($option['type'] === 'alterCol')
 				{
 					$return['sql'] .= "CHANGE ".static::tick($name)." ";
-					$return['sql'] .= (!empty($attr['rename']) && \is_string($attr['rename']))? static::tick($attr['rename']):static::tick($name);
+					$return['sql'] .= (!empty($attr['rename']) && is_string($attr['rename']))? static::tick($attr['rename']):static::tick($name);
 				}
 			}
 			
@@ -2453,7 +2453,7 @@ class Sql extends Root
 			$return['sql'] .= " ".$type;
 			
 			// length
-			if(!empty($attr['length']) && \is_numeric($attr['length']))
+			if(!empty($attr['length']) && is_numeric($attr['length']))
 			{
 				$length = Str::cast($attr['length']);
 				$return['sql'] .= static::parenthesis($length);
@@ -2471,7 +2471,7 @@ class Sql extends Root
 			if(!empty($attr['charset']))
 			{
 				$attr['charset'] = ($attr['charset'] === true && !empty($option['charset']))? $option['charset']:$attr['charset'];
-				if(\is_string($attr['charset']))
+				if(is_string($attr['charset']))
 				$return['sql'] .= " CHARACTER SET ".$attr['charset'];
 			}
 			
@@ -2479,12 +2479,12 @@ class Sql extends Root
 			if(!empty($attr['collate']))
 			{
 				$attr['collate'] = ($attr['collate'] === true && !empty($option['collate']))? $option['collate']:$attr['collate'];
-				if(\is_string($attr['collate']))
+				if(is_string($attr['collate']))
 				$return['sql'] .= " COLLATE ".$attr['collate'];
 			}
 			
 			// null
-			if(\array_key_exists('null',$attr))
+			if(array_key_exists('null',$attr))
 			{
 				if($attr['null'] === false)
 				$return['sql'] .= " NOT NULL";
@@ -2494,7 +2494,7 @@ class Sql extends Root
 			}
 			
 			// default
-			if(\array_key_exists("default",$attr) && $attr['default'] !== null && $attr['default'] !== 'NULL')
+			if(array_key_exists("default",$attr) && $attr['default'] !== null && $attr['default'] !== 'NULL')
 			$return['sql'] .= " DEFAULT ".static::value($attr['default'],null,$option)['sql'];
 			
 			// default null
@@ -2506,7 +2506,7 @@ class Sql extends Root
 			$return['sql'] .= " AUTO_INCREMENT";
 			
 			// after
-			if(!empty($attr['after']) && \is_string($attr['after']))
+			if(!empty($attr['after']) && is_string($attr['after']))
 			$return['sql'] .= " AFTER ".static::tick($attr['after']);
 		}
 		
@@ -2518,21 +2518,21 @@ class Sql extends Root
 	// méthode utilisé par createCol, addCol et alterCol
 	public static function makeCol($value,array $option):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(!empty($option['type']) && \in_array($option['type'],['createCol','addCol','alterCol'],true))
+		if(!empty($option['type']) && in_array($option['type'],array('createCol','addCol','alterCol'),true))
 		{
-			if(\is_string($value))
+			if(is_string($value))
 			$return['sql'] .= $value;
 			
-			elseif(\is_array($value) && !empty($value))
+			elseif(is_array($value) && !empty($value))
 			{
 				if(!Column::is($value))
-				$value = [$value];
+				$value = array($value);
 				
 				foreach ($value as $v) 
 				{
-					if(\is_array($v))
+					if(is_array($v))
 					{
 						$col = static::col($v,$option);
 						if(!empty($col['sql']))
@@ -2553,7 +2553,7 @@ class Sql extends Root
 	// ajoute une col pour un create
 	public static function createCol($value,?array $option=null):array
 	{
-		return static::makeCol($value,Arr::plus($option,['type'=>'createCol']));
+		return static::makeCol($value,Arr::plus($option,array('type'=>'createCol')));
 	}
 	
 	
@@ -2561,7 +2561,7 @@ class Sql extends Root
 	// ajoute une col pour un alter
 	public static function addCol($value,?array $option=null):array
 	{
-		return static::makeCol($value,Arr::plus($option,['type'=>'addCol']));
+		return static::makeCol($value,Arr::plus($option,array('type'=>'addCol')));
 	}
 
 
@@ -2570,7 +2570,7 @@ class Sql extends Root
 	// il faut remettre l'ensemble des paramètres de la colonne (type, longueur)
 	public static function alterCol($value,?array $option=null):array
 	{
-		return static::makeCol($value,Arr::plus($option,['type'=>'alterCol']));
+		return static::makeCol($value,Arr::plus($option,array('type'=>'alterCol')));
 	}
 
 
@@ -2578,16 +2578,16 @@ class Sql extends Root
 	// drop une col pour un alter
 	public static function dropCol($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_array($value) && !empty($value))
+		elseif(is_array($value) && !empty($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\is_string($v) && !empty($v))
+				if(is_string($v) && !empty($v))
 				{
 					$return['sql'] .= static::comma($return['sql']);
 					$return['sql'] .= "DROP COLUMN ".static::tick($v);
@@ -2603,8 +2603,8 @@ class Sql extends Root
 	// obtient le sql de création d'une key
 	public static function key(array $value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
-		$key = Arr::keysFirstValue(['key',0],$value);
+		$return = array('sql'=>'');
+		$key = Arr::keysFirstValue(array('key',0),$value);
 		
 		if(!empty($key))
 		{
@@ -2616,36 +2616,36 @@ class Sql extends Root
 				
 				if($key === 'unique')
 				{
-					$name = Arr::keysFirstValue(['name',1],$value);
-					$col = Arr::keysFirstValue(['col',2],$value);
+					$name = Arr::keysFirstValue(array('name',1),$value);
+					$col = Arr::keysFirstValue(array('col',2),$value);
 					$col = ($col === null)? $name:$col; 
 				}
 				
 				else
-				$col = Arr::keysFirstValue(['col',1],$value);
+				$col = Arr::keysFirstValue(array('col',1),$value);
 
-				if(!empty($col) && (\is_string($name) || $key !== 'unique'))
+				if(!empty($col) && (is_string($name) || $key !== 'unique'))
 				{
 					$v = '';
 					$col = (array) $col;
 					
 					foreach ($col as $c) 
 					{
-						if(\is_string($c))
+						if(is_string($c))
 						{
 							$v .= static::comma($v);
 							$v .= static::tick($c); 
 						}
 					}
 					
-					if(\strlen($v))
+					if(strlen($v))
 					{
 						if(!empty($option['type']) && $option['type'] === 'addKey')
 						$return['sql'] .= "ADD ";
 						
 						$return['sql'] .= $keyWord;
 						
-						if(\is_string($name))
+						if(is_string($name))
 						$return['sql'] .= " ".static::tick($name);
 						
 						$return['sql'] .= " ".static::parenthesis($v);
@@ -2662,21 +2662,21 @@ class Sql extends Root
 	// méthode utilisé par createKey et alterKey
 	public static function makeKey($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(!empty($option['type']) && \in_array($option['type'],['createKey','addKey'],true))
+		if(!empty($option['type']) && in_array($option['type'],array('createKey','addKey'),true))
 		{
-			if(\is_string($value))
+			if(is_string($value))
 			$return['sql'] .= $value;
 			
-			elseif(\is_array($value) && !empty($value))
+			elseif(is_array($value) && !empty($value))
 			{
 				if(!Column::is($value))
-				$value = [$value];
+				$value = array($value);
 				
 				foreach ($value as $v) 
 				{
-					if(\is_array($v))
+					if(is_array($v))
 					{
 						$key = static::key($v,$option);
 						if(!empty($key['sql']))
@@ -2697,7 +2697,7 @@ class Sql extends Root
 	// ajoute une key pour un create
 	public static function createKey($value,?array $option=null):array
 	{
-		return static::makeKey($value,Arr::plus($option,['type'=>'createKey']));
+		return static::makeKey($value,Arr::plus($option,array('type'=>'createKey')));
 	}
 	
 	
@@ -2705,7 +2705,7 @@ class Sql extends Root
 	// ajoute une key pour un alter
 	public static function addKey($value,?array $option=null):array
 	{
-		return static::makeKey($value,Arr::plus($option,['type'=>'addKey']));
+		return static::makeKey($value,Arr::plus($option,array('type'=>'addKey')));
 	}
 
 
@@ -2713,16 +2713,16 @@ class Sql extends Root
 	// drop une key pour un alter
 	public static function dropKey($value,?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return['sql'] .= $value;
 		
-		elseif(\is_array($value) && !empty($value))
+		elseif(is_array($value) && !empty($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\is_string($v) && !empty($v))
+				if(is_string($v) && !empty($v))
 				{
 					$return['sql'] .= static::comma($return['sql']);
 					$return['sql'] .= "DROP KEY ".static::tick($v);
@@ -2739,7 +2739,7 @@ class Sql extends Root
 	// option engine et charset
 	public static function createEnd(?array $option=null):array
 	{
-		$return = ['sql'=>''];
+		$return = array('sql'=>'');
 		$return['sql'] .= ")";
 
 		// engine
@@ -2764,11 +2764,11 @@ class Sql extends Root
 	{
 		$return = null;
 		
-		if(!empty($option['table']) && \in_array($type,['select','update','delete'],true))
+		if(!empty($option['table']) && in_array($type,array('select','update','delete'),true))
 		{
-			$return = [];
+			$return = array();
 			
-			if(!empty($option['default']) && \is_array($option['default']))
+			if(!empty($option['default']) && is_array($option['default']))
 			$return = $option['default'];
 			
 			if(!empty($option['defaultCallable']))
@@ -2798,8 +2798,8 @@ class Sql extends Root
 			$required = static::getQueryRequired($type);
 			if(empty($required) || Arr::keysExists($required,$parses))
 			{
-				$return = ['sql'=>static::getQueryWord($type,null,$option),'type'=>$type];
-				$option['table'] = (!empty($parses['table']) && \is_string($parses['table']) && !static::hasTickOrSpace($parses['table']))? static::untick($parses['table']):null;
+				$return = array('sql'=>static::getQueryWord($type,null,$option),'type'=>$type);
+				$option['table'] = (!empty($parses['table']) && is_string($parses['table']) && !static::hasTickOrSpace($parses['table']))? static::untick($parses['table']):null;
 				$option['default'] = static::prepareDefault($type,$option);
 				
 				if(!empty($array['prepare']))
@@ -2811,9 +2811,9 @@ class Sql extends Root
 					$merge = static::$key($value,$option);
 					$param = static::$config['query'][$type][$key];
 					
-					if(\array_key_exists('sql',$merge))
+					if(array_key_exists('sql',$merge))
 					{
-						if(\strlen($merge['sql']))
+						if(strlen($merge['sql']))
 						{
 							if(!empty($comma))
 							$return['sql'] .= static::comma($return['sql']);
@@ -2845,7 +2845,7 @@ class Sql extends Root
 					if($type === 'create')
 					$return = static::returnMerge($return,static::createEnd($option));
 					
-					elseif(\in_array($type,['insert','update','delete'],true) && !empty($option['makeSelectFrom']))
+					elseif(in_array($type,array('insert','update','delete'),true) && !empty($option['makeSelectFrom']))
 					{
 						$select = static::makeSelectFrom($type,$array,$option);
 						if(!empty($select))
@@ -2867,7 +2867,7 @@ class Sql extends Root
 		
 		if(static::isQuery($type))
 		{
-			$return = [];
+			$return = array();
 			
 			foreach (static::$config['query'][$type] as $key => $value) 
 			{
@@ -2892,10 +2892,10 @@ class Sql extends Root
 		{
 			$data = static::$config['query'][$type];
 			
-			if(\array_key_exists($key,$data) && \is_array($data[$key]))
+			if(array_key_exists($key,$data) && is_array($data[$key]))
 			{
-				$keys = [$key];
-				if(\array_key_exists('key',$data[$key]))
+				$keys = array($key);
+				if(array_key_exists('key',$data[$key]))
 				$keys[] = $data[$key]['key'];
 				
 				$return = Arr::keysFirstValue($keys,$array);
@@ -2912,22 +2912,22 @@ class Sql extends Root
 	{
 		$return = null;
 
-		if(\in_array($type,['insert','update','delete'],true))
+		if(in_array($type,array('insert','update','delete'),true))
 		{
 			$array = Obj::cast($array);
-			$values = ['what'=>'*'];
+			$values = array('what'=>'*');
 			
 			if($type === 'insert')
 			{
 				$insertSet = static::makeParse($type,'insertSet',$array);
 				
-				if(!empty($insertSet) && \is_array($insertSet))
+				if(!empty($insertSet) && is_array($insertSet))
 				{
 					$values['table'] = static::makeParse($type,'table',$array);
 					$values['where'] = $insertSet;
 					
 					if(!empty($option['primary']))
-					$values['order'] = [$option['primary']=>'desc'];
+					$values['order'] = array($option['primary']=>'desc');
 					
 					$values['limit'] = 1;
 				}
@@ -3114,7 +3114,7 @@ class Sql extends Root
 	// génère une requête select count, what est la function count
 	public static function makeSelectCount(array $value,?array $option=null):?array
 	{
-		return static::makeSelect(Arr::unshift($value,[[($primary = static::option($option)['primary']),'count',$primary]]),$option);
+		return static::makeSelect(Arr::unshift($value,array(array(($primary = static::option($option)['primary']),'count',$primary))),$option);
 	}
 	
 	
@@ -3130,7 +3130,7 @@ class Sql extends Root
 	// génère une requête select function, what est est une colonne avec function
 	public static function makeSelectFunction($what,string $function,array $value,?array $option=null):?array
 	{
-		return static::makeSelect(Arr::unshift($value,[[Obj::cast($what,1),$function,Obj::cast($what,1)]]),$option);
+		return static::makeSelect(Arr::unshift($value,array(array(Obj::cast($what,1),$function,Obj::cast($what,1)))),$option);
 	}
 	
 	
@@ -3138,7 +3138,7 @@ class Sql extends Root
 	// génère une requête select distinct, what est est une colonne pour passage à la function distinct
 	public static function makeSelectDistinct($what,array $value,?array $option=null):?array
 	{
-		return static::makeSelect(Arr::unshift($value,[[Obj::cast($what,1),'distinct',Obj::cast($what,1)]]),$option);
+		return static::makeSelect(Arr::unshift($value,array(array(Obj::cast($what,1),'distinct',Obj::cast($what,1)))),$option);
 	}
 	
 	
@@ -3146,7 +3146,7 @@ class Sql extends Root
 	// génère une requête select column, what est est une seule colonne
 	public static function makeSelectColumn($what,array $value,?array $option=null):?array
 	{
-		return static::makeSelect(Arr::unshift($value,[$what]),$option);
+		return static::makeSelect(Arr::unshift($value,array($what)),$option);
 	}
 	
 	
@@ -3154,7 +3154,7 @@ class Sql extends Root
 	// génère une requête select keyValue, what est deux colonnes key et pair
 	public static function makeSelectKeyPair($key,$pair,array $value,?array $option=null):?array
 	{
-		return static::makeSelect(Arr::unshift($value,[Obj::cast($key,1),Obj::cast($pair,1)]),$option);
+		return static::makeSelect(Arr::unshift($value,array(Obj::cast($key,1),Obj::cast($pair,1))),$option);
 	}
 	
 	
@@ -3170,7 +3170,7 @@ class Sql extends Root
 	// génère une requête select idPair, what est option primary avec pair une autre colonne
 	public static function makeselectPrimaryPair($pair,array $value,?array $option=null):?array
 	{
-		return static::makeSelect(Arr::unshift($value,[static::option($option)['primary'],Obj::cast($pair,1)]),$option);
+		return static::makeSelect(Arr::unshift($value,array(static::option($option)['primary'],Obj::cast($pair,1))),$option);
 	}
 	
 	
@@ -3202,10 +3202,10 @@ class Sql extends Root
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
-		$option = static::option(Arr::plus($option,['prepare'=>false]));
+		$option = static::option(Arr::plus($option,array('prepare'=>false)));
 		$array['what'] = 'DATABASES';
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$array['where'] = "LIKE ".static::value(static::shortcut($value),null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
@@ -3221,10 +3221,10 @@ class Sql extends Root
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
-		$option = static::option(Arr::plus($option,['prepare'=>false]));
+		$option = static::option(Arr::plus($option,array('prepare'=>false)));
 		$array['what'] = 'VARIABLES';
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$array['where'] = "LIKE ".static::value($value,null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
@@ -3240,10 +3240,10 @@ class Sql extends Root
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
-		$option = static::option(Arr::plus($option,['prepare'=>false]));
+		$option = static::option(Arr::plus($option,array('prepare'=>false)));
 		$array['what'] = 'TABLES';
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$array['where'] = "LIKE ".static::value(static::shortcut($value),null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
@@ -3259,10 +3259,10 @@ class Sql extends Root
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
-		$option = static::option(Arr::plus($option,['prepare'=>false]));
+		$option = static::option(Arr::plus($option,array('prepare'=>false)));
 		$array['what'] = 'TABLE STATUS';
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$array['where'] = "LIKE ".static::value(static::shortcut($value),null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
@@ -3279,7 +3279,7 @@ class Sql extends Root
 		$return = null;
 		$table = Obj::cast($table,1);
 		$value = Obj::cast($value,2);
-		$option = static::option(Arr::plus($option,['prepare'=>false,'full'=>false]));
+		$option = static::option(Arr::plus($option,array('prepare'=>false,'full'=>false)));
 		
 		if(!empty($table))
 		{
@@ -3291,7 +3291,7 @@ class Sql extends Root
 			$array['what'] .= 'COLUMNS';
 			$array['table'] = $table;
 			
-			if(\is_string($value))
+			if(is_string($value))
 			{
 				$array['where'] = "WHERE FIELD = ";
 				$array['where'] .= static::value(static::shortcut($value),null,$option)['sql'];
@@ -3334,24 +3334,24 @@ class Sql extends Root
 	{
 		$return = null;
 		
-		if(\is_string($value))
-		$value = ['sql'=>$value];
+		if(is_string($value))
+		$value = array('sql'=>$value);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
-			if(\array_key_exists(0,$value) && empty($value['sql']))
+			if(array_key_exists(0,$value) && empty($value['sql']))
 			{
 				$value['sql'] = $value[0];
 				unset($value[0]);
 			}
 			
-			if(\array_key_exists(1,$value) && empty($value['prepare']))
+			if(array_key_exists(1,$value) && empty($value['prepare']))
 			{
 				$value['prepare'] = $value[1];
 				unset($value[1]);
 			}
 			
-			if(!empty($value['sql']) && \is_string($value['sql']))
+			if(!empty($value['sql']) && is_string($value['sql']))
 			{
 				$return = $value;
 				
@@ -3371,9 +3371,9 @@ class Sql extends Root
 		$return = null;
 		$value = Str::wordExplodeIndex(0,$value);
 
-		if(\is_string($value))
+		if(is_string($value))
 		{
-			$value = \strtolower($value);
+			$value = strtolower($value);
 
 			if(static::isQuery($value))
 			$return = $value;
@@ -3389,15 +3389,15 @@ class Sql extends Root
 	// replaceDoubleEscape est true par défaut, va remplacer tous les double \\ par \, comme emulate est surtout utilisé pour de l'affichage ou debug
 	public static function emulate(string $return,?array $prepare=null,?callable $callable=null,bool $replaceDoubleEscape=true):string
 	{
-		if(\is_array($prepare))
+		if(is_array($prepare))
 		{
 			foreach ($prepare as $k => $v)
 			{
-				if(\is_string($k) && \is_scalar($v))
+				if(is_string($k) && is_scalar($v))
 				{
 					$replace = static::quote($v,$callable,$replaceDoubleEscape);
 					
-					$return = \preg_replace_callback("/(?!'|\"):$k(?!'|\")/",function($match) use ($replace) {
+					$return = preg_replace_callback("/(?!'|\"):$k(?!'|\")/",function($match) use ($replace) {
 						return $replace;
 					},$return);
 				}

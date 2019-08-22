@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Constant extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// is
 	// retourne vrai si la constante est défini
 	public static function is($name):bool
 	{
-		return (\is_string($name) && \defined($name))? true:false;
+		return (is_string($name) && defined($name))? true:false;
 	}
 	
 	
@@ -23,8 +23,8 @@ class Constant extends Root
 	{
 		$return = null;
 		
-		if(\defined($name))
-		$return = \constant($name);
+		if(defined($name))
+		$return = constant($name);
 		
 		return $return;
 	}
@@ -37,7 +37,7 @@ class Constant extends Root
 		$return = false;
 		
 		if(!empty($name) && !static::is($name))
-		$return = \define($name,$value,$sensitive);
+		$return = define($name,$value,$sensitive);
 		
 		return $return;
 	}
@@ -47,12 +47,12 @@ class Constant extends Root
 	// retourne toutes les constantes définis
 	public static function all(?string $key=null,bool $categorize=true):array
 	{
-		$return = [];
-		$constants = \get_defined_constants($categorize);
+		$return = array();
+		$constants = get_defined_constants($categorize);
 		
 		if(!empty($key))
 		{
-			if(\array_key_exists($key,$constants))
+			if(array_key_exists($key,$constants))
 			$return = $constants[$key];
 		}
 		

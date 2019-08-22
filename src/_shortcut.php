@@ -6,14 +6,14 @@ namespace Quid\Base;
 trait _shortcut
 {	
 	// config
-	protected static $shortcut = []; // conserve les shortcuts de la classe
+	protected static $shortcut = array(); // conserve les shortcuts de la classe
 	
 	
 	// isShortcut
 	// retourne vrai si le shortcut existe
 	public static function isShortcut(string $key):bool 
 	{
-		return (\array_key_exists($key,static::$shortcut))? true:false;
+		return (array_key_exists($key,static::$shortcut))? true:false;
 	}
 	
 	
@@ -42,7 +42,7 @@ trait _shortcut
 	{
 		foreach ($keyValue as $key => $value) 
 		{
-			if(\is_string($key) && \is_string($value))
+			if(is_string($key) && is_string($value))
 			static::setShortcut($key,$value);
 		}
 		
@@ -66,10 +66,10 @@ trait _shortcut
 	{
 		if(!empty(static::$shortcut))
 		{
-			if(\is_string($return))
+			if(is_string($return))
 			$return = Segment::sets(null,static::$shortcut,$return);
 			
-			elseif(\is_array($return))
+			elseif(is_array($return))
 			$return = Segment::setsArray(null,static::$shortcut,$return);
 		}
 		

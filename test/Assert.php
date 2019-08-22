@@ -10,10 +10,10 @@ class Assert extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// call
-		\assert(Base\Assert::call(function() { return true; },'what'));
+		assert(Base\Assert::call(function() { return true; },'what'));
 
 		// get
-		\assert(Base\Assert::get(ASSERT_ACTIVE) === 1);
+		assert(Base\Assert::get(ASSERT_ACTIVE) === 1);
 
 		// set
 

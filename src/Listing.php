@@ -6,8 +6,8 @@ namespace Quid\Base;
 class Listing extends Assoc
 {
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
+	public static $config = array(
+		'option'=>array( // tableau d'options
 			'implode'=>0, // index du séparateur à utiliser lors du implode
 			'explode'=>0, // index du séparateur à utiliser lors du explode
 			'case'=>null, // les clés sont ramenés dans cette case lors du explode
@@ -17,11 +17,11 @@ class Listing extends Assoc
 			'clean'=>true, // une partie listing vide est retiré
 			'start'=>false, // ajoute le premier séparateur au début lors du implode
 			'end'=>false,  // ajoute le premier séparateur à la fin lors du implode
-			'sort'=>null], // les clés sont sort
-		'separator'=>[ // les séparateurs de listing, le deuxième index est la version avec espace
-			["\n","\n"],
-			[':',': ']]
-	];
+			'sort'=>null), // les clés sont sort
+		'separator'=>array( // les séparateurs de listing, le deuxième index est la version avec espace
+			array("\n","\n"),
+			array(':',': '))
+	);
 	
 	
 	// isSeparatorStart
@@ -55,9 +55,9 @@ class Listing extends Assoc
 	{
 		$return = null;
 		
-		if(\array_key_exists($index,static::$config['separator']) && \is_array(static::$config['separator'][$index]))
+		if(array_key_exists($index,static::$config['separator']) && is_array(static::$config['separator'][$index]))
 		{
-			if(\array_key_exists($index2,static::$config['separator'][$index]) && \is_string(static::$config['separator'][$index][$index2]))
+			if(array_key_exists($index2,static::$config['separator'][$index]) && is_string(static::$config['separator'][$index][$index2]))
 			$return = static::$config['separator'][$index][$index2];
 		}
 		
@@ -80,25 +80,25 @@ class Listing extends Assoc
 	// retourne un tableau unidimensionnel avec clé numérique
 	public static function list($array,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = static::option($option);
 		$separator = static::getSeparator(1,$option['implode']);
 		$array = static::arr($array,$option);
 		
-		if(\is_array($array) && !empty($array))
+		if(is_array($array) && !empty($array))
 		{
 			foreach ($array as $key => $value) 
 			{
-				if(\is_string($key) && (\is_scalar($value) || \is_array($value)))
+				if(is_string($key) && (is_scalar($value) || is_array($value)))
 				{
 					$value = (array) $value;
 					
 					foreach ($value as $v) 
 					{
-						if(\is_scalar($v))
+						if(is_scalar($v))
 						{
 							$v = Str::cast($v);
-							$return[] = \implode($separator,[$key,$v]);
+							$return[] = implode($separator,array($key,$v));
 						}
 					}
 				}
@@ -123,20 +123,20 @@ class Listing extends Assoc
 	// de même si listing est déjà un array, retourne le après parse
 	public static function arr($value,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = static::option($option);
 		$value = Obj::cast($value);
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = Str::cast($value);
 			$value = static::prepareStr($value,$option);
 		}
 		
-		if(\is_array($value))
+		if(is_array($value))
 		$value = static::prepareArr($value,$option);
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		{
 			$value = Arr::trimClean($value,$option['trim'],$option['trim'],$option['clean']);
 			
@@ -157,7 +157,7 @@ class Listing extends Assoc
 	// prépare une string dans la méthode arr
 	public static function prepareStr(string $value,array $option):array 
 	{
-		$return = [];
+		$return = array();
 		$separator = static::getSeparator(0,$option['explode']);
 		$return = Str::explode($separator,$value,$option['limit']);
 
@@ -169,7 +169,7 @@ class Listing extends Assoc
 	// prépare un array dans la méthode arr
 	public static function prepareArr(array $value,array $option):array 
 	{
-		$return = [];
+		$return = array();
 		
 		if(Arr::isIndexed($value))
 		{
@@ -188,11 +188,11 @@ class Listing extends Assoc
 	// traite aussi les demandes de caseImplode
 	public static function keyValue(array $array,array $option):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $key => $value) 
 		{
-			if(\is_scalar($value))
+			if(is_scalar($value))
 			$return[$key] = Str::cast($value);
 		}
 		
@@ -213,14 +213,14 @@ class Listing extends Assoc
 		$separator = static::getSeparator(0,$option['implode']);
 		
 		if(Arr::isIndexed($value))
-		$return = \implode($separator,$value);
+		$return = implode($separator,$value);
 		
 		else
 		{
 			$value = static::keyValue($value,$option);
 			
 			if(Arr::isIndexed($value))
-			$return = \implode($separator,$value);
+			$return = implode($separator,$value);
 			else
 			$return = Arr::implodeKey($separator,static::getSeparator(1,$option['implode']),$value);
 		}

@@ -6,10 +6,10 @@ namespace Quid\Base;
 class Obj extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'method'=>'_cast', // méthode pour cast
 		'cast'=>null // méthode à appeler si cast ne respecte pas le type
-	];
+	);
 	
 	
 	// typecast
@@ -29,7 +29,7 @@ class Obj extends Root
 	// retourne vrai si la valeur est objet
 	public static function is($value):bool
 	{
-		return (\is_object($value))? true:false;
+		return (is_object($value))? true:false;
 	}
 	
 	
@@ -37,7 +37,7 @@ class Obj extends Root
 	// retourne vrai si l'objet est une instance de la classe incomplete
 	public static function isIncomplete($value):bool 
 	{
-		return (\is_object($value) && $value instanceof \__PHP_Incomplete_Class)? true:false;
+		return (is_object($value) && $value instanceof \__PHP_Incomplete_Class)? true:false;
 	}
 	
 	
@@ -69,7 +69,7 @@ class Obj extends Root
 	// retourne vrai si l'objet a la méthode qu'elle soit publique ou privé
 	public static function hasMethod($method,object $value):bool
 	{
-		return (\is_string($method) && \method_exists($value,$method))? true:false;
+		return (is_string($method) && method_exists($value,$method))? true:false;
 	}
 	
 	
@@ -77,7 +77,7 @@ class Obj extends Root
 	// retourne vrai si la propriété existe dans l'objet qu'elle soit publique ou privé
 	public static function hasProperty($property,object $value):bool
 	{
-		return (\is_string($property) && \property_exists($value,$property))? true:false;
+		return (is_string($property) && property_exists($value,$property))? true:false;
 	}
 	
 	
@@ -119,7 +119,7 @@ class Obj extends Root
 	{
 		$return = false;
 		
-		if(\count($values) > 1)
+		if(count($values) > 1)
 		{
 			$instance = null;
 			
@@ -189,7 +189,7 @@ class Obj extends Root
 	// retourne l'id unique de l'objet
 	public static function hash(object $value):string
 	{
-		return \spl_object_hash($value);
+		return spl_object_hash($value);
 	}
 	
 	
@@ -271,7 +271,7 @@ class Obj extends Root
 			{
 				foreach ($methods as $value) 
 				{
-					if(!\in_array($value,$return['method'],true))
+					if(!in_array($value,$return['method'],true))
 					$return['*method'][] = $value;
 				}
 			}
@@ -280,7 +280,7 @@ class Obj extends Root
 			{
 				foreach ($properties as $key => $value) 
 				{
-					if(!\array_key_exists($key,$return['property']))
+					if(!array_key_exists($key,$return['property']))
 					$return['*property'][$key] = $value;
 				}
 			}
@@ -297,7 +297,7 @@ class Obj extends Root
 	{
 		$return = null;
 		
-		if(\property_exists($object,$property))
+		if(property_exists($object,$property))
 		$return = $object->$property;
 		
 		return $return;
@@ -309,13 +309,13 @@ class Obj extends Root
 	// les propriétés doivent être public, pas accès au variable protégé ou privé
 	public static function gets(array $properties,object $object):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($properties as $property) 
 		{
-			if(\is_string($property))
+			if(is_string($property))
 			{
-				if(\property_exists($object,$property))
+				if(property_exists($object,$property))
 				$return[$property] = $object->$property;
 				else
 				$return[$property] = null;
@@ -332,7 +332,7 @@ class Obj extends Root
 	// retourne l'objet
 	public static function set(string $property,$value,object $return):object
 	{
-		if(\is_string($property))
+		if(is_string($property))
 		$return->$property = $value;
 		
 		return $return;
@@ -359,7 +359,7 @@ class Obj extends Root
 	// retourne l'objet
 	public static function unset(string $property,object $return):object
 	{
-		if(\property_exists($return,$property))
+		if(property_exists($return,$property))
 		unset($return->$property);
 		
 		return $return;
@@ -397,13 +397,13 @@ class Obj extends Root
 	
 	// createArgs
 	// créer un objet à partir d'un nom de classe et et d'un tableau d'arguments
-	public static function createArgs($class,array $args=[]):?object
+	public static function createArgs($class,array $args=array()):?object
 	{
 		$return = null;
 		$class = Fqcn::str($class);
 		
 		if(!empty($class))
-		$return = new $class(...\array_values($args));
+		$return = new $class(...array_values($args));
 		
 		return $return;
 	}
@@ -416,7 +416,7 @@ class Obj extends Root
 	{
 		$return = null;
 		
-		if(\count($array) === 2)
+		if(count($array) === 2)
 		{
 			$class = Arr::get(0,$array);
 			$class = Fqcn::str($class);
@@ -424,7 +424,7 @@ class Obj extends Root
 			if(!empty($class))
 			{
 				$args = (array) Arr::get(1,$array);
-				$return = new $class(...\array_values($args));
+				$return = new $class(...array_values($args));
 			}
 		}
 		
@@ -459,18 +459,18 @@ class Obj extends Root
 	// une resource est transformé en sa version base64
 	public static function cast($return,int $mode=0) 
 	{
-		if(\is_object($return))
+		if(is_object($return))
 		{
 			$method = static::$config['method'];
 			
 			if($return instanceof \Closure)
 			$return = $return();
 			
-			elseif(\method_exists($return,$method))
+			elseif(method_exists($return,$method))
 			$return = $return->$method();
 		}
 		
-		elseif(\is_array($return))
+		elseif(is_array($return))
 		{
 			foreach ($return as $key => $value) 
 			{
@@ -478,27 +478,27 @@ class Obj extends Root
 			}
 		}
 		
-		elseif(\is_resource($return))
+		elseif(is_resource($return))
 		$return = Res::pathToUriOrBase64($return);
 		
 		if(!empty($mode))
 		{
-			if($mode === 1 && !\is_string($return))
+			if($mode === 1 && !is_string($return))
 			$error = 'castStr';
 			
-			elseif($mode === 2 && !\is_string($return) && $return !== null)
+			elseif($mode === 2 && !is_string($return) && $return !== null)
 			$error = 'castStrOrNull';
 			
-			elseif($mode === 3 && !\is_string($return) && !\is_int($return))
+			elseif($mode === 3 && !is_string($return) && !is_int($return))
 			$error = 'castStrOrInt';
 			
-			elseif($mode === 4 && !\is_int($return))
+			elseif($mode === 4 && !is_int($return))
 			$error = 'castInt';
 			
-			elseif($mode === 5 && !\is_int($return) && $return !== null)
+			elseif($mode === 5 && !is_int($return) && $return !== null)
 			$error = 'castIntOrNull';
 			
-			elseif($mode === 6 && !\is_array($return))
+			elseif($mode === 6 && !is_array($return))
 			$error = 'castArray';
 			
 			if(!empty($error))

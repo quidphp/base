@@ -6,22 +6,22 @@ namespace Quid\Base;
 class Response extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'idLength'=>10, // longueur du id de la réponse
-		'closeDown'=>[], // callbacks à lancer lors d'un closeDown
-		'closeBody'=>[], // callbacks à lancer lors d'un closeBody
-		'default'=>[
+		'closeDown'=>array(), // callbacks à lancer lors d'un closeDown
+		'closeBody'=>array(), // callbacks à lancer lors d'un closeBody
+		'default'=>array(
 			'code'=>200, // code de réponse par défaut
-			'headers'=>[ // header par défaut, le cacheLimiter dans session peut prendre le dessus sur certains de ces défauts
+			'headers'=>array( // header par défaut, le cacheLimiter dans session peut prendre le dessus sur certains de ces défauts
 				"Expires"=>0, // temps d'expiration d'une réponse (maintenant)
 				"Cache-Control"=>'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
 				"Pragma"=>'no-cache',
 				"Connection"=>"keep-alive",
 				"Last-Modified"=>0,
-				'X-UA-Compatible'=>'IE=Edge'], // désactive compatibility mode pour IE
+				'X-UA-Compatible'=>'IE=Edge'), // désactive compatibility mode pour IE
 			'headersCallbackSpeed'=>null, // nom du header pour le speed, avant c'était un tableau headersCallback mais ça causait un bug bizarre sur php 7.3
-			'contentType'=>true] // contentType par défaut, si true alors utilise le callback autoContentType
-	];
+			'contentType'=>true) // contentType par défaut, si true alors utilise le callback autoContentType
+	);
 	
 
 	// id
@@ -128,7 +128,7 @@ class Response extends Root
 	// retourne vrai si les en-têtes ont été envoyés
 	public static function areHeadersSent():bool
 	{
-		return \headers_sent();
+		return headers_sent();
 	}
 	
 	
@@ -140,7 +140,7 @@ class Response extends Root
 		
 		foreach ($values as $value) 
 		{
-			$return = (\is_numeric($value) && \http_response_code() === (int) $value)? true:false;
+			$return = (is_numeric($value) && http_response_code() === (int) $value)? true:false;
 			
 			if($return === true)
 			break;
@@ -156,9 +156,9 @@ class Response extends Root
 	public static function isCodeBetween($from,$to,?int $code=null):bool 
 	{
 		$return = false;
-		$code = (\is_int($code))? $code:static::code();
+		$code = (is_int($code))? $code:static::code();
 		
-		if(\is_int($from) && \is_int($to) && $code >= $from && $code <= $to)
+		if(is_int($from) && is_int($to) && $code >= $from && $code <= $to)
 		$return = true;
 		
 		return $return;
@@ -172,9 +172,9 @@ class Response extends Root
 	{
 		$return = false;
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
-			$from = (int) (\floor($value/100) * 100);
+			$from = (int) (floor($value/100) * 100);
 			$to = ($from+99);
 			$return = static::isCodeBetween($from,$to,$code);
 		}
@@ -212,7 +212,7 @@ class Response extends Root
 	// retourne le id unique de la réponse
 	public static function id():string
 	{
-		if(static::$id === null && \is_int(static::$config['idLength']))
+		if(static::$id === null && is_int(static::$config['idLength']))
 		static::$id = Str::random(static::$config['idLength']);
 		
 		return static::$id;
@@ -252,10 +252,10 @@ class Response extends Root
 		$return = null;
 		$file = null;
 		$line = null;
-		$headersSent = \headers_sent($file,$line);
+		$headersSent = headers_sent($file,$line);
 		
 		if($headersSent === true)
-		$return = ['file'=>$file,'line'=>$line];
+		$return = array('file'=>$file,'line'=>$line);
 		
 		return $return;
 	}
@@ -265,7 +265,7 @@ class Response extends Root
 	// retourne le code actuel de la réponse
 	public static function code():int 
 	{
-		return \http_response_code();
+		return http_response_code();
 	}
 	
 	
@@ -317,19 +317,19 @@ class Response extends Root
 			$code = null;
 			$text = null;
 			
-			if(\is_int($value) && Header::isCodeValid($value))
+			if(is_int($value) && Header::isCodeValid($value))
 			{
 				$code = $value;
 				$text = Header::statusTextFromCode($value);
 			}
 			
-			elseif(\is_string($value) && Header::isStatusTextValid($value))
+			elseif(is_string($value) && Header::isStatusTextValid($value))
 			{
 				$code = Header::codeFromStatusText($value);
 				$text = $value;
 			}
 			
-			if(\is_int($code) && \is_string($text))
+			if(is_int($code) && is_string($text))
 			{
 				$array['protocol'] = static::protocol();
 				$array['code'] = $code;
@@ -338,9 +338,9 @@ class Response extends Root
 				
 				if(Header::isStatus($status))
 				{
-					\header($status,true);
+					header($status,true);
 					
-					if(\http_response_code() === $code)
+					if(http_response_code() === $code)
 					$return = true;
 				}
 			}
@@ -385,7 +385,7 @@ class Response extends Root
 	{
 		$return = false;
 		
-		if(!\is_int($code))
+		if(!is_int($code))
 		$code = 404;
 		
 		if(static::isCodeIn(400,$code))
@@ -414,7 +414,7 @@ class Response extends Root
 	{
 		$return = false;
 		
-		if(!\is_int($code))
+		if(!is_int($code))
 		$code = 500;
 		
 		if(static::isCodeIn(500,$code))
@@ -434,10 +434,10 @@ class Response extends Root
 	{
 		$return = false;
 		
-		if(\is_object($value))
+		if(is_object($value))
 		$value = Obj::cast($value);
 		
-		if(\is_string($value) && static::moved($code))
+		if(is_string($value) && static::moved($code))
 		{
 			$return = true;
 			
@@ -467,7 +467,7 @@ class Response extends Root
 		{
 			$path = Uri::path($referer);
 
-			if(!\is_string($path) || !Path::isSafe($path))
+			if(!is_string($path) || !Path::isSafe($path))
 			$referer = null;
 		}
 		
@@ -509,27 +509,27 @@ class Response extends Root
 	protected static function downloadToScreen(string $method,$value,?array $option=null):bool
 	{
 		$return = false;
-		$option = Arr::plus(['kill'=>true,'length'=>true,'sleep'=>false,'mime'=>null,'basename'=>null],$option);
+		$option = Arr::plus(array('kill'=>true,'length'=>true,'sleep'=>false,'mime'=>null,'basename'=>null),$option);
 		
-		if(\in_array($method,['download','toScreen'],true))
+		if(in_array($method,array('download','toScreen'),true))
 		{
-			if(\is_object($value))
+			if(is_object($value))
 			$value = Obj::cast($value);
 			
-			if(\is_string($value))
+			if(is_string($value))
 			$value = Res::open($value);
 			
-			if(\is_resource($value))
+			if(is_resource($value))
 			{
-				if(\is_string($option['mime']))
+				if(is_string($option['mime']))
 				Res::setContextMime($option['mime'],$value);
 				
-				if(\is_string($option['basename']))
+				if(is_string($option['basename']))
 				Res::setContextBasename($option['basename'],$value);
 				
 				$meta = Res::responseMeta($value);
 				
-				if(!empty($meta) && \is_array($meta))
+				if(!empty($meta) && is_array($meta))
 				{
 					$headers = Header::$method($meta);
 					
@@ -559,7 +559,7 @@ class Response extends Root
 	// mettre parse à false pour envoyer le résultat de headers_list
 	public static function headers(bool $parse=true):array
 	{
-		$return = \headers_list();
+		$return = headers_list();
 
 		if($parse === true)
 		$return = Header::arr($return);
@@ -604,10 +604,10 @@ class Response extends Root
 	public static function setHeader(string $key,$value,bool $replace=true):?int
 	{
 		$return = null;
-		$sets = static::setsHeader([$key=>$value],$replace);
+		$sets = static::setsHeader(array($key=>$value),$replace);
 		
 		if(!empty($sets))
-		$return = \current($sets);
+		$return = current($sets);
 		
 		return $return;
 	}
@@ -623,17 +623,17 @@ class Response extends Root
 		
 		if(!static::areHeadersSent())
 		{
-			$return = [];
+			$return = array();
 			
 			foreach ($values as $key => $value) 
 			{
 				$return[$key] = 0;
-				$list = Header::list([$key=>$value]);
+				$list = Header::list(array($key=>$value));
 				
 				foreach ($list as $i => $header)
 				{
 					$r = ($i === 0)? $replace:false;
-					\header($header,$r);
+					header($header,$r);
 					$return[$key]++;
 				}
 			}
@@ -670,7 +670,7 @@ class Response extends Root
 			
 			if(static::headerExists($key))
 			{
-				\header_remove($key);
+				header_remove($key);
 				$return = true;
 			}
 		}
@@ -688,7 +688,7 @@ class Response extends Root
 		
 		if(!static::areHeadersSent())
 		{
-			$return = [];
+			$return = array();
 			
 			foreach ($keys as $key) 
 			{
@@ -696,7 +696,7 @@ class Response extends Root
 				
 				if(static::headerExists($key))
 				{
-					\header_remove($key);
+					header_remove($key);
 					$return[$key] = true;
 				}
 			}
@@ -711,7 +711,7 @@ class Response extends Root
 	// retourne null si headers sont envoyés
 	public static function emptyHeader():?array
 	{
-		return static::unsetsHeader(\array_keys(static::headers(true)));
+		return static::unsetsHeader(array_keys(static::headers(true)));
 	}
 	
 	
@@ -721,12 +721,12 @@ class Response extends Root
 	// note headersCallbackSpeed -> avant c'était un tableau headersCallback mais ça causait un bug bizarre sur php 7.3
 	public static function prepare(?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = Arr::plus(static::$config['default'],$option);
 		$bufferCallback = null;
 		
 		// code
-		if(\is_int($option['code']))
+		if(is_int($option['code']))
 		$return['code'] = static::setCode($option['code']);
 		
 		// headers
@@ -734,24 +734,24 @@ class Response extends Root
 		$return['headers'] = static::setsHeaderDefault($option['headers']);
 		
 		// headersCallbackSpeed
-		if(\is_string($option['headersCallbackSpeed']))
+		if(is_string($option['headersCallbackSpeed']))
 		{
 			$name = $option['headersCallbackSpeed'];
 			$return['headersCallbackSpeed'] = static::setHeaderCallback(function() use ($name) {
 				$speed = Debug::speed();
 				$header = $name.": ".$speed;
-				\header($header);
+				header($header);
 			});
 		}
 		
 		// contentType
 		if(!empty($option['contentType']))
 		{
-			if(\is_string($option['contentType']))
+			if(is_string($option['contentType']))
 			$return['setContentType'] = static::setContentType($option['contentType']);
 			
 			elseif($option['contentType'] === true)
-			$bufferCallback = [static::class,'autoContentType'];
+			$bufferCallback = array(static::class,'autoContentType');
 		}
 		
 		// buffer
@@ -772,7 +772,7 @@ class Response extends Root
 	// permet de changer les headers avant l'envoie
 	public static function setHeaderCallback(callable $callable):bool 
 	{
-		return \header_register_callback($callable);
+		return header_register_callback($callable);
 	}
 	
 	
@@ -785,7 +785,7 @@ class Response extends Root
 		
 		foreach ($return as $key => $value) 
 		{
-			if(\is_int($value))
+			if(is_int($value))
 			$return[$key] = Date::gmt($value += $time);
 		}
 		
@@ -801,7 +801,7 @@ class Response extends Root
 		$return = null;
 		$option = Arr::plus(static::$config['default']['headers'],$option);
 		
-		if(!empty($option) && \is_array($option))
+		if(!empty($option) && is_array($option))
 		{
 			static::emptyHeader();
 			$option = static::prepareHeaderDefault($option);
@@ -865,7 +865,7 @@ class Response extends Root
 		{
 			$microtime = Date::microtime();
 			$uvalue = (int) ($value * 1000000);
-			\usleep($uvalue);
+			usleep($uvalue);
 			$return = Date::microtime() - $microtime;
 		}
 		
@@ -882,7 +882,7 @@ class Response extends Root
 		$return = null;
 		$microtime = Date::microtime();
 		
-		if($value > $microtime && \time_sleep_until($value))
+		if($value > $microtime && time_sleep_until($value))
 		$return = Date::microtime() - $microtime;
 		
 		return $return;
@@ -897,10 +897,10 @@ class Response extends Root
 	{
 		$kill = null;
 		
-		if(\is_int($value) && $value >= 0 && $value < 255)
+		if(is_int($value) && $value >= 0 && $value < 255)
 		$kill = $value;
 		
-		elseif(!\is_bool($value))
+		elseif(!is_bool($value))
 		$kill = $value;
 		
 		exit($kill);
@@ -914,7 +914,7 @@ class Response extends Root
 	// des arguments peuvent être passés au callable
 	public static function onShutDown(callable $call,...$args):void
 	{
-		\register_shutdown_function($call,...$args);
+		register_shutdown_function($call,...$args);
 		
 		return;
 	}
@@ -924,7 +924,7 @@ class Response extends Root
 	// enregistre une callable à appeler au close down, des arguments peuvent être passés au callable
 	public static function onCloseDown(callable $call,...$args):void 
 	{
-		static::$config['closeDown'][] = [$call,$args];
+		static::$config['closeDown'][] = array($call,$args);
 		
 		return;
 	}
@@ -935,7 +935,7 @@ class Response extends Root
 	// remet on closeBody sur closeDown
 	public static function emptyCloseDown():void 
 	{
-		static::$config['closeDown'] = [];
+		static::$config['closeDown'] = array();
 		static::onCloseDownCloseBody();
 		
 		return;
@@ -956,7 +956,7 @@ class Response extends Root
 	// sur shutDown lance closeDown
 	public static function onShutDownCloseDown():void 
 	{
-		static::onShutDown([static::class,'closeDown']);
+		static::onShutDown(array(static::class,'closeDown'));
 		
 		return;
 	}
@@ -966,7 +966,7 @@ class Response extends Root
 	// enregistre une callable à appeler au close doc, des arguments peuvent être passés au callable
 	public static function onCloseBody(callable $call,...$args):void 
 	{
-		static::$config['closeBody'][] = [$call,$args];
+		static::$config['closeBody'][] = array($call,$args);
 		
 		return;
 	}
@@ -976,7 +976,7 @@ class Response extends Root
 	// vide le tableau des callbacks sur closeBody
 	public static function emptyCloseBody():void 
 	{
-		static::$config['closeBody'] = [];
+		static::$config['closeBody'] = array();
 		
 		return;
 	}
@@ -996,7 +996,7 @@ class Response extends Root
 	// sur closeDown lance closeBody
 	public static function onCloseDownCloseBody():void 
 	{
-		static::onCloseDown([static::class,'closeBody']);
+		static::onCloseDown(array(static::class,'closeBody'));
 		
 		return;
 	}
@@ -1020,11 +1020,11 @@ class Response extends Root
 	// méthode protégé
 	protected static function closeDownBody(string $type):void 
 	{
-		if(\in_array($type,['closeDown','closeBody',true]))
+		if(in_array($type,array('closeDown','closeBody',true)))
 		{
 			foreach (static::$config[$type] as $key => $callback) 
 			{
-				if(\is_array($callback) && !empty($callback))
+				if(is_array($callback) && !empty($callback))
 				{
 					$callable = Arr::valueFirst($callback);
 					$args = Arr::valueLast($callback);

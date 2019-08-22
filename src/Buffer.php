@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Buffer extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// has
 	// retourne vrai s'il y a un buffer d'ouvert
 	public static function has():bool
 	{
-		return (\ob_get_level() > 0)? true:false;
+		return (ob_get_level() > 0)? true:false;
 	}
 	
 	
@@ -21,7 +21,7 @@ class Buffer extends Root
 	// retourne le nombre de buffer ouvert
 	public static function count():int
 	{
-		return \ob_get_level();
+		return ob_get_level();
 	}
 	
 
@@ -29,7 +29,7 @@ class Buffer extends Root
 	// retourne les informations sur le ou les buffer
 	public static function status(bool $all=true):array 
 	{
-		return \ob_get_status($all);
+		return ob_get_status($all);
 	}
 	
 	
@@ -37,7 +37,7 @@ class Buffer extends Root
 	// retourne les informations sur les handlers du ou des buffer
 	public static function handler():array
 	{
-		return \ob_list_handlers();
+		return ob_list_handlers();
 	}
 	
 	
@@ -45,9 +45,9 @@ class Buffer extends Root
 	// retourne la taille du buffer courant
 	public static function size():?int
 	{
-		$return = \ob_get_length();
+		$return = ob_get_length();
 		
-		if(!\is_int($return))
+		if(!is_int($return))
 		$return = null;
 		
 		return $return;
@@ -58,7 +58,7 @@ class Buffer extends Root
 	// démarre un buffer, permet d'y joindre une fonction de rappel
 	public static function start(?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
 	{
-		return \ob_start($callback,$chunk,$flag);
+		return ob_start($callback,$chunk,$flag);
 	}
 	
 	
@@ -66,7 +66,7 @@ class Buffer extends Root
 	// démarre un buffer et echo des données
 	public static function startEcho($data,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
 	{
-		$return = \ob_start($callback,$chunk,$flag);
+		$return = ob_start($callback,$chunk,$flag);
 		$data = Str::cast($data);
 		echo $data;
 		
@@ -76,7 +76,7 @@ class Buffer extends Root
 
 	// startCallGet
 	// démarre un buffer, lance le callable, ferme le buffer et retourne les données
-	public static function startCallGet(callable $callable,array $arg=[],?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):?string
+	public static function startCallGet(callable $callable,array $arg=array(),?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):?string
 	{
 		$return = null;
 		static::start($callback,$chunk,$flag);
@@ -92,9 +92,9 @@ class Buffer extends Root
 	// retourne le contenu du niveau actuel de buffer, ne ferme pas le buffer
 	public static function get():?string
 	{
-		$return = \ob_get_contents();
+		$return = ob_get_contents();
 		
-		if(!\is_string($return))
+		if(!is_string($return))
 		$return = null;
 		
 		return $return;
@@ -109,17 +109,17 @@ class Buffer extends Root
 	public static function getAll(bool $keep=true):string 
 	{
 		$return = '';
-		$buffer = [];
+		$buffer = array();
 		
-		while (($level = \ob_get_level())) 
+		while (($level = ob_get_level())) 
 		{
 			if($level > 1)
-			$buffer[] = \ob_get_clean();
+			$buffer[] = ob_get_clean();
 			
 			elseif($level === 1)
 			{
-				$buffer[] = \ob_get_contents();
-				\ob_clean();
+				$buffer[] = ob_get_contents();
+				ob_clean();
 				break;
 			}
 			
@@ -129,8 +129,8 @@ class Buffer extends Root
 		
 		if(!empty($buffer))
 		{
-			$buffer = \array_reverse($buffer,true);
-			$return = \implode('',$buffer);
+			$buffer = array_reverse($buffer,true);
+			$return = implode('',$buffer);
 			
 			if($keep === true)
 			echo $return;
@@ -146,8 +146,8 @@ class Buffer extends Root
 	{
 		$return = null;
 		
-		if(\ob_get_level())
-		$return = \ob_get_clean();
+		if(ob_get_level())
+		$return = ob_get_clean();
 		
 		return $return;
 	}
@@ -158,15 +158,15 @@ class Buffer extends Root
 	// par défaut les buffer sont retournés dans l'ordre inverse
 	public static function getCleanAll():array
 	{
-		$return = [];
+		$return = array();
 		
-		while (\ob_get_level()) 
+		while (ob_get_level()) 
 		{
-			$return[] = \ob_get_clean();
+			$return[] = ob_get_clean();
 		}
 		
 		if(!empty($return))
-		$return = \array_reverse($return,true);
+		$return = array_reverse($return,true);
 		
 		return $return;
 	}
@@ -179,7 +179,7 @@ class Buffer extends Root
 		$return = false;
 		
 		$value = static::getCleanAll();
-		$value = \implode('',$value);
+		$value = implode('',$value);
 		$return = static::startEcho($value,$callback,$chunk,$flag);
 		
 		return $return;
@@ -190,7 +190,7 @@ class Buffer extends Root
 	// utilise la fonction flush
 	public static function flush():void
 	{
-		\flush();
+		flush();
 		
 		return;
 	}
@@ -200,8 +200,8 @@ class Buffer extends Root
 	// flush et vide un buffer s'il y en a un d'ouvert, le buffer reste ouvert
 	public static function keepFlush(bool $flush=true):void
 	{
-		if(\ob_get_level())
-		\ob_flush();
+		if(ob_get_level())
+		ob_flush();
 		
 		if($flush === true)	
 		static::flush();
@@ -216,8 +216,8 @@ class Buffer extends Root
 	{
 		$return = false;
 		
-		if(\ob_get_level())
-		$return = \ob_end_flush();
+		if(ob_get_level())
+		$return = ob_end_flush();
 
 		if($flush === true)
 		static::flush();
@@ -230,13 +230,13 @@ class Buffer extends Root
 	// flush les buffers et ferme les buffers
 	public static function endFlushAll(bool $flush=true):array
 	{
-		$return = [];
+		$return = array();
 		
-		if(\ob_get_level())
+		if(ob_get_level())
 		{
-			while (\ob_get_level()) 
+			while (ob_get_level()) 
 			{
-				$return[] = \ob_end_flush();
+				$return[] = ob_end_flush();
 			}
 		}
 		
@@ -265,10 +265,10 @@ class Buffer extends Root
 	{
 		$return = false;
 		
-		if(\ob_get_level())
+		if(ob_get_level())
 		{
 			$return = true;
-			\ob_clean();
+			ob_clean();
 		}
 
 		return $return;
@@ -280,18 +280,18 @@ class Buffer extends Root
 	// note que ob_clean sur le dernier buffer envoie quand même le contenu dans la fonction callback même s'il le buffer ne ferme pas
 	public static function cleanAll():array 
 	{
-		$return = [];
+		$return = array();
 		
-		while (($level = \ob_get_level())) 
+		while (($level = ob_get_level())) 
 		{
 			$return[$level] = true;
 			
 			if($level > 1)
-			\ob_end_clean();
+			ob_end_clean();
 			
 			elseif($level === 1)
 			{
-				\ob_clean();
+				ob_clean();
 				break;
 			}
 			
@@ -312,13 +312,13 @@ class Buffer extends Root
 	{
 		$return = false;
 		
-		if(\ob_get_level())
+		if(ob_get_level())
 		{
 			$return = true;
-			\ob_clean();
+			ob_clean();
 			
-			if(\is_array($value))
-			$value = \implode('',$value);
+			if(is_array($value))
+			$value = implode('',$value);
 			
 			echo $value;
 		}
@@ -341,13 +341,13 @@ class Buffer extends Root
 	{
 		$return = false;
 		
-		if(\ob_get_level())
+		if(ob_get_level())
 		{
 			$return = true;
 			static::cleanAll();
 			
-			if(\is_array($value))
-			$value = \implode('',$value);
+			if(is_array($value))
+			$value = implode('',$value);
 			
 			echo $value;
 		}
@@ -367,8 +367,8 @@ class Buffer extends Root
 	{
 		$return = false;
 		
-		if(\ob_get_level())
-		$return = \ob_end_clean();
+		if(ob_get_level())
+		$return = ob_end_clean();
 		
 		return $return;
 	}
@@ -378,11 +378,11 @@ class Buffer extends Root
 	// vide les buffer, ferme les buffer et rien d'afficher
 	public static function endCleanAll():array
 	{
-		$return = [];
+		$return = array();
 		
-		while (\ob_get_level()) 
+		while (ob_get_level()) 
 		{
-			$return[] = \ob_end_clean();
+			$return[] = ob_end_clean();
 		}
 		
 		return $return;
@@ -419,15 +419,15 @@ class Buffer extends Root
 	{
 		$return = false;
 		
-		if(!\ob_get_level())
+		if(!ob_get_level())
 		static::start($callback,$chunk,$flag);
 		
 		$buffer = static::getAll(false);
 		
-		if(\is_array($value))
-		$value = \implode('',$value);
+		if(is_array($value))
+		$value = implode('',$value);
 		
-		if(\is_string($buffer) && \is_string($value))
+		if(is_string($buffer) && is_string($value))
 		{
 			$return = true;
 			$buffer = $value.$buffer;
@@ -444,13 +444,13 @@ class Buffer extends Root
 	{
 		$return = true;
 		
-		if(\is_array($value))
-		$value = \implode('',$value);
+		if(is_array($value))
+		$value = implode('',$value);
 		
-		if(!\ob_get_level())
+		if(!ob_get_level())
 		static::start($callback,$chunk,$flag);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		echo $value;
 		
 		return $return;

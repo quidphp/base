@@ -6,32 +6,32 @@ namespace Quid\Base;
 class Path extends Set
 {
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
-			'start'=>true], // ajoute le séparateur au début lors du implode
-		'separator'=>['/'], // sépareur de chemin, n'utilise pas directorySeparator
-		'safe'=>[
+	public static $config = array(
+		'option'=>array( // tableau d'options
+			'start'=>true), // ajoute le séparateur au début lors du implode
+		'separator'=>array('/'), // sépareur de chemin, n'utilise pas directorySeparator
+		'safe'=>array(
 			'length'=>250, // longueur maximale permise pour un path
 			'extension'=>null, // extension permises, tout est permis si null
-			'pattern'=>['./','/.','..','//','?',' ']], // pattern de chemin non sécuritaire
-		'safeBasenameReplace'=>[' '=>'_','-'=>'_','.'=>'_',','=>'_'], // caractère à remplacer sur un safebasename
-		'extensionReplace'=>['jpeg'=>'jpg'], // gère le remplacement d'extension, utiliser par safeBasename
-		'build'=>[ // pour reconstuire à partir d'un array
+			'pattern'=>array('./','/.','..','//','?',' ')), // pattern de chemin non sécuritaire
+		'safeBasenameReplace'=>array(' '=>'_','-'=>'_','.'=>'_',','=>'_'), // caractère à remplacer sur un safebasename
+		'extensionReplace'=>array('jpeg'=>'jpg'), // gère le remplacement d'extension, utiliser par safeBasename
+		'build'=>array( // pour reconstuire à partir d'un array
 			'dirname'=>'/',
 			'basename'=>null,
 			'filename'=>null,
-			'extension'=>'.'],
-		'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
+			'extension'=>'.'),
+		'lang'=>array( // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
 			'length'=>2, // longueur de lang
-			'all'=>null] // possibilité de lang
-	];
+			'all'=>null) // possibilité de lang
+	);
 	
 	
 	// is
 	// retourne vrai si la valeur est un path
 	public static function is($value):bool 
 	{
-		return (\is_string($value) && Validate::regex('path',$value))? true:false;
+		return (is_string($value) && Validate::regex('path',$value))? true:false;
 	}
 
 
@@ -63,7 +63,7 @@ class Path extends Set
 			$return = true;
 			
 			// length
-			if(!empty($option['length']) && \is_int($option['length']))
+			if(!empty($option['length']) && is_int($option['length']))
 			{
 				if(!Str::isMaxLength($option['length'],$path))
 				$return = false;
@@ -74,7 +74,7 @@ class Path extends Set
 			{
 				$extension = static::extension($path);
 				
-				if(!empty($extension) && !\in_array($extension,(array) $option['extension'],true))
+				if(!empty($extension) && !in_array($extension,(array) $option['extension'],true))
 				$return = false;
 			}
 			
@@ -85,7 +85,7 @@ class Path extends Set
 				
 				foreach ($patterns as $v) 
 				{
-					if(\strpos($path,$v) !== false)
+					if(strpos($path,$v) !== false)
 					{
 						$return = false;
 						break;
@@ -109,10 +109,10 @@ class Path extends Set
 		{
 			$return = true;
 			
-			if(\is_int($option['length']) && \strlen($value) !== $option['length'])
+			if(is_int($option['length']) && strlen($value) !== $option['length'])
 			$return = false;
 			
-			elseif(\is_array($option['all']) && !\in_array($value,$option['all'],true))
+			elseif(is_array($option['all']) && !in_array($value,$option['all'],true))
 			$return = false;
 		}
 		
@@ -128,7 +128,7 @@ class Path extends Set
 		$parent = static::str($parent);
 		$parents = static::parents($path);
 		
-		if(\in_array($parent,$parents,true))
+		if(in_array($parent,$parents,true))
 		$return = true;
 		
 		return $return;
@@ -143,7 +143,7 @@ class Path extends Set
 	{
 		$return = false;
 
-		if(\is_string($target) || \is_array($target))
+		if(is_string($target) || is_array($target))
 		{
 			$extension = static::extension($path);
 			
@@ -159,7 +159,7 @@ class Path extends Set
 	// retourne vrai si le path à la langue spécifié
 	public static function isLang($value,string $path,?array $option=null):bool 
 	{
-		return (\is_string($value) && $value === static::lang($path,$option))? true:false;
+		return (is_string($value) && $value === static::lang($path,$option))? true:false;
 	}
 	
 	
@@ -167,7 +167,7 @@ class Path extends Set
 	// retourne vrai si le mime est du group spécifé
 	public static function isMimeGroup($group,$value):bool 
 	{
-		return (\is_string($value) && \is_string($group) && static::mimeGroup($value) === $group)? true:false;
+		return (is_string($value) && is_string($group) && static::mimeGroup($value) === $group)? true:false;
 	}
 	
 	
@@ -175,7 +175,7 @@ class Path extends Set
 	// retourne vrai si le mime est de la famille spécifiée
 	public static function isMimeFamily($family,$value):bool 
 	{
-		return (\is_string($value) && \is_string($family) && \in_array($family,static::mimeFamilies($value),true))? true:false;
+		return (is_string($value) && is_string($family) && in_array($family,static::mimeFamilies($value),true))? true:false;
 	}
 	
 	
@@ -183,7 +183,7 @@ class Path extends Set
 	// retourne vrai si le chemin semble pointer vers des interfaces
 	public static function isInterface($value):bool 
 	{
-		return (\is_string($value) && Str::isEnd('/contract',\dirname($value),false))? true:false;
+		return (is_string($value) && Str::isEnd('/contract',dirname($value),false))? true:false;
 	}
 	
 	
@@ -192,14 +192,14 @@ class Path extends Set
 	// dirname est passé dans separator si pas false, '', ou '.'
 	public static function info(string $path):?array
 	{
-		$return = \pathinfo($path);
+		$return = pathinfo($path);
 		
-		if(\array_key_exists('dirname',$return))
+		if(array_key_exists('dirname',$return))
 		{
-			if(\in_array($return['dirname'],[false,'','.'],true))
+			if(in_array($return['dirname'],array(false,'','.'),true))
 			unset($return['dirname']);
 			
-			elseif(\is_string($return['dirname']))
+			elseif(is_string($return['dirname']))
 			$return['dirname'] = static::separator($return['dirname']);
 		}
 
@@ -211,12 +211,12 @@ class Path extends Set
 	// retourne une entrée de pathinfo
 	public static function infoOne(int $key,string $path):?string
 	{
-		$return = \pathinfo($path,$key);
+		$return = pathinfo($path,$key);
 		
 		if($return === false || $return === '' || ($key === PATHINFO_DIRNAME && $return === '.'))
 		$return = null;
 		
-		elseif($key === PATHINFO_DIRNAME && \is_string($return))
+		elseif($key === PATHINFO_DIRNAME && is_string($return))
 		$return = static::separator($return);
 		
 		return $return;
@@ -240,7 +240,7 @@ class Path extends Set
 		$previous = false;
 		foreach (static::$config['build'] as $k => $v) 
 		{
-			if(\array_key_exists($k,$parse) && \is_string($parse[$k]) && !empty($parse[$k]))
+			if(array_key_exists($k,$parse) && is_string($parse[$k]) && !empty($parse[$k]))
 			{
 				if($previous === 'dirname' && !empty($return) && !empty(static::$config['build'][$previous]))
 				$return .= static::$config['build'][$previous];
@@ -317,7 +317,7 @@ class Path extends Set
 		{
 			$change = (array) $change;
 			
-			if(\array_key_exists('basename',$info) && Arr::inFirst(['filename','extension'],$change) !== null)
+			if(array_key_exists('basename',$info) && Arr::inFirst(array('filename','extension'),$change) !== null)
 			unset($info['basename']);
 			
 			$info = Arr::keysStrip($change,$info);
@@ -386,7 +386,7 @@ class Path extends Set
 	// retourne les chemins absolus de tous les parents
 	public static function parents(string $path):array
 	{
-		$return = [];
+		$return = array();
 		$path = static::stripStart($path);
 		$x = static::arr($path);
 		
@@ -394,7 +394,7 @@ class Path extends Set
 		{
 			while (!empty($x)) 
 			{
-				\array_pop($x);
+				array_pop($x);
 				$return[] = static::str($x);
 			}
 		}
@@ -425,11 +425,11 @@ class Path extends Set
 	// l'extension peut être ramené en lowercase
 	public static function makeBasename(string $return,?string $extension=null,bool $lowerCase=false):string 
 	{
-		if(\is_string($extension))
+		if(is_string($extension))
 		{
 			$return .= ".";
 			if($lowerCase === true)
-			$extension = \strtolower($extension);
+			$extension = strtolower($extension);
 			
 			$return .= $extension;
 		}
@@ -450,7 +450,7 @@ class Path extends Set
 		
 		$filename = static::filename($value);
 		
-		if(\is_string($filename))
+		if(is_string($filename))
 		{
 			$return = $filename;
 			$replace = static::$config['safeBasenameReplace'];
@@ -459,7 +459,7 @@ class Path extends Set
 			$return = Str::trim($return,'_');
 			$return = Str::removeConsecutive('_',$return);
 			
-			if(\is_string($extension) && !empty($return))
+			if(is_string($extension) && !empty($return))
 			{
 				$extension = static::extensionReplace($extension);
 				$return = static::makeBasename($return,$extension,true);
@@ -571,8 +571,8 @@ class Path extends Set
 	{
 		$return = static::infoOne(PATHINFO_EXTENSION,$path);
 		
-		if(\is_string($return) && $lowerCase === true)
-		$return = \strtolower($return);
+		if(is_string($return) && $lowerCase === true)
+		$return = strtolower($return);
 		
 		return $return;
 	}
@@ -583,9 +583,9 @@ class Path extends Set
 	public static function extensionLowerCase(string $return):?string
 	{
 		$extension = static::extension($return);
-		if(\is_string($extension))
+		if(is_string($extension))
 		{
-			$lowerCase = \strtolower($extension);
+			$lowerCase = strtolower($extension);
 			if($lowerCase !== $extension)
 			$return = static::changeExtension($lowerCase,$return);
 		}
@@ -598,9 +598,9 @@ class Path extends Set
 	// permet de remplacer une extension par une autre, utiliser par safeBasename
 	public static function extensionReplace(string $return):string 
 	{
-		$return = \strtolower($return);
+		$return = strtolower($return);
 		
-		if(\array_key_exists($return,static::$config['extensionReplace']))
+		if(array_key_exists($return,static::$config['extensionReplace']))
 		$return = static::$config['extensionReplace'][$return];
 		
 		return $return;
@@ -648,7 +648,7 @@ class Path extends Set
 	// enlève une extension à un path
 	public static function removeExtension(string $path):string 
 	{
-		return static::remove(['extension'],$path);
+		return static::remove(array('extension'),$path);
 	}
 	
 
@@ -714,7 +714,7 @@ class Path extends Set
 		$return = null;
 		$value = static::get(0,$path);
 		
-		if(\is_string($value) && static::isLangCode($value,$option))
+		if(is_string($value) && static::isLangCode($value,$option))
 		$return = $value;
 		
 		return $return;
@@ -790,7 +790,7 @@ class Path extends Set
 		
 		if(!empty($separator))
 		{
-			$return = \preg_replace('#'.$separator.'+#',$separator,$path);
+			$return = preg_replace('#'.$separator.'+#',$separator,$path);
 			$return = static::stripWrap($return,static::getOption('start'),static::getOption('end'));
 		}
 		
@@ -813,14 +813,14 @@ class Path extends Set
 			$return = $path = static::str($path);
 			
 			// protection s'il manque lang uri (sauf si vide)
-			if(\strlen($path))
+			if(strlen($path))
 			{
 				$lang = static::lang($path,$langOpt);
 				$langDefault = Lang::default();
 				
 				if(empty($lang) && !empty($langDefault))
 				{
-					$path = static::str([$langDefault,$path]);
+					$path = static::str(array($langDefault,$path));
 					$return = (static::isSafe($path,$safeOpt))? $path:static::wrapStart('');
 				}
 			}

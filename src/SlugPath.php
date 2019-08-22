@@ -6,20 +6,20 @@ namespace Quid\Base;
 class SlugPath extends Listing
 {
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
-			'slug'=>null], 
-		'separator'=>[ // les séparateurs de listing, le deuxième index est la version avec espace
-			["/","/"],
-			['-','-']]
-	];
+	public static $config = array(
+		'option'=>array( // tableau d'options
+			'slug'=>null), 
+		'separator'=>array( // les séparateurs de listing, le deuxième index est la version avec espace
+			array("/","/"),
+			array('-','-'))
+	);
 	
 	
 	// is
 	// retourne vrai si la valeur est un slugPath
 	public static function is($value):bool
 	{
-		return (\is_string($value) && Validate::regex('alphanumericSlugPath',$value))? true:false;
+		return (is_string($value) && Validate::regex('alphanumericSlugPath',$value))? true:false;
 	}
 	
 	
@@ -27,16 +27,16 @@ class SlugPath extends Listing
 	// parse un tableau pathSlug
 	public static function parse(array $array,array $option):array 
 	{
-		$return = [];
+		$return = array();
 		$slugOption = $option['slug'] ?? null;
 		
 		foreach ($array as $key => $value) 
 		{
-			if(\is_numeric($key))
+			if(is_numeric($key))
 			$slug = $value;
 			
-			elseif(\is_string($key))
-			$slug = [$key,$value];
+			elseif(is_string($key))
+			$slug = array($key,$value);
 
 			$return[] = $slug;
 		}
@@ -60,19 +60,19 @@ class SlugPath extends Listing
 	// traitement particulier de l'option totalLength qui est divisé par le nombre d'entrée dans le tableau
 	public static function makeSlugs(array $array,?array $option=null):array 
 	{
-		$return = [];
-		$option = Arr::plus(['totalLength'=>null],$option);
+		$return = array();
+		$option = Arr::plus(array('totalLength'=>null),$option);
 		
 		if(!empty($array))
 		{
-			$count = \count($array);
+			$count = count($array);
 			
-			if(\is_int($option['totalLength']) && $option['totalLength'] > 0)
+			if(is_int($option['totalLength']) && $option['totalLength'] > 0)
 			{
 				$option['totalLength'] -= $count;
 				
 				if($option['totalLength'] > 0)
-				$option['totalLength'] = (int) \floor($option['totalLength'] / $count);
+				$option['totalLength'] = (int) floor($option['totalLength'] / $count);
 				
 				else
 				$option['totalLength'] = null;
@@ -82,7 +82,7 @@ class SlugPath extends Listing
 			{
 				$slug = Slug::str($value,$option);
 				
-				if(\strlen($slug))
+				if(strlen($slug))
 				$return[$key] = $slug;
 			}
 		}

@@ -10,12 +10,12 @@ class Assoc extends Root
 	
 	
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
+	public static $config = array(
+		'option'=>array( // tableau d'options
 			'trim'=>false, // chaque partie de assoc est trim
-			'clean'=>false], // une partie assoc vide est retiré
+			'clean'=>false), // une partie assoc vide est retiré
 		'sensitive'=>true // la classe est sensible ou non à la case
-	];
+	);
 	
 	
 	// arr
@@ -23,14 +23,14 @@ class Assoc extends Root
 	// de même si assoc est déjà un array, retourne le après parse
 	public static function arr($value,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = static::option($option);
 		$value = Obj::cast($value);
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		$value = (array) $value;
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		$return = Arr::trimClean($value,$option['trim'],$option['trim'],$option['clean']);
 		
 		return $return;
@@ -141,7 +141,7 @@ class Assoc extends Root
 	// input string ou array
 	public static function prepend(...$values):array
 	{
-		return static::append(...\array_reverse($values));
+		return static::append(...array_reverse($values));
 	}
 	
 	
@@ -151,13 +151,13 @@ class Assoc extends Root
 	public static function append(...$values):array
 	{
 		$return = '';
-		$array = [];
+		$array = array();
 		
 		foreach ($values as $k => $value) 
 		{	
 			$value = static::arr($value);
 			
-			if(\is_array($value))
+			if(is_array($value))
 			$array = Arr::replace($array,$value);
 		}
 
@@ -171,7 +171,7 @@ class Assoc extends Root
 	// count le nombre d'éléments dans le assoc
 	public static function count($assoc,bool $recursive=false,?array $option=null):int
 	{
-		return \count(static::arr($assoc,$option),($recursive === true)? COUNT_RECURSIVE:COUNT_NORMAL);
+		return count(static::arr($assoc,$option),($recursive === true)? COUNT_RECURSIVE:COUNT_NORMAL);
 	}
 	
 	

@@ -40,7 +40,7 @@ trait _root
 		$return = Fqcn::name(static::class);
 		
 		if($lcfirst === true)
-		$return = \lcfirst($return);
+		$return = lcfirst($return);
 		
 		return $return;
 	}
@@ -69,7 +69,7 @@ trait _root
 	// retourne vrai aux méthodes protégés pour la classe courante
 	public static function classIsCallable($value):bool 
 	{
-		return ($value instanceof \Closure || (Call::isSafeStaticMethod($value) && \is_callable($value)))? true:false;
+		return ($value instanceof \Closure || (Call::isSafeStaticMethod($value) && is_callable($value)))? true:false;
 	}
 	
 	

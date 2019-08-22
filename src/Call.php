@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Call extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// typecast
@@ -36,7 +36,7 @@ class Call extends Root
 	// retourne vrai si la valeur est callable
 	public static function is($value):bool
 	{
-		return (\is_callable($value))? true:false;
+		return (is_callable($value))? true:false;
 	}
 	
 	
@@ -46,11 +46,11 @@ class Call extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && \count($value) === 2 && \array_key_exists(0,$value) && \array_key_exists(1,$value) && \is_string($value[1]))
+		if(is_array($value) && count($value) === 2 && array_key_exists(0,$value) && array_key_exists(1,$value) && is_string($value[1]))
 		{
-			if(\is_object($value[0]) || (\is_string($value[0]) && \strpos($value[0],'\\') > 0))
+			if(is_object($value[0]) || (is_string($value[0]) && strpos($value[0],'\\') > 0))
 			{
-				if($callable === false || \is_callable($value))
+				if($callable === false || is_callable($value))
 				$return = true;
 			}
 		}
@@ -71,7 +71,7 @@ class Call extends Root
 	// retourne vrai si la valeur est callable et function
 	public static function isFunction($value):bool 
 	{
-		return (\is_string($value) && \function_exists($value))? true:false;
+		return (is_string($value) && function_exists($value))? true:false;
 	}
 	
 	
@@ -107,15 +107,15 @@ class Call extends Root
 		
 		if(static::is($value))
 		{
-			if(\is_string($value) && \function_exists($value))
+			if(is_string($value) && function_exists($value))
 			$return = 'function';
 			
 			elseif($value instanceof \Closure)
 			$return = 'closure';
 			
-			elseif(\is_array($value) && \array_key_exists(0,$value) && \array_key_exists(1,$value))
+			elseif(is_array($value) && array_key_exists(0,$value) && array_key_exists(1,$value))
 			{
-				if(\is_object($value[0]))
+				if(is_object($value[0]))
 				$return = 'dynamicMethod';
 				
 				else
@@ -139,9 +139,9 @@ class Call extends Root
 	// ableArgs
 	// fonction static pour créer un callable
 	// callable en argument 0, et tableau arg en argument 1
-	public static function ableArgs(callable $callable,array $args=[])
+	public static function ableArgs(callable $callable,array $args=array())
 	{
-		return $callable(...\array_values($args));
+		return $callable(...array_values($args));
 	}
 	
 	
@@ -152,14 +152,14 @@ class Call extends Root
 	{
 		$return = null;
 		
-		if(\count($array) === 2)
+		if(count($array) === 2)
 		{
 			$callable = Arr::get(0,$array);
 			
 			if(static::is($callable))
 			{
 				$args = (array) Arr::get(1,$array);
-				$return = $callable(...\array_values($args));
+				$return = $callable(...array_values($args));
 			}
 		}
 		
@@ -194,11 +194,11 @@ class Call extends Root
 	// possible de fournir des arguments
 	public static function staticClasses(array $classes,string $method,...$arg):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($classes as $class) 
 		{
-			if(\is_string($class))
+			if(is_string($class))
 			$return[$class] = static::staticClass($class,$method,...$arg);
 		}
 		
@@ -213,7 +213,7 @@ class Call extends Root
 	{
 		$return = null;
 		
-		if(Arr::isKey($key) && \array_key_exists($key,$array) && static::is($array[$key]))
+		if(Arr::isKey($key) && array_key_exists($key,$array) && static::is($array[$key]))
 		$return = $array[$key](...$arg);
 		
 		return $return;
@@ -240,7 +240,7 @@ class Call extends Root
 	// le tableau est passé par référence
 	public static function arr($key,array &$array,...$arg):void
 	{
-		if(Arr::isKey($key) && \array_key_exists($key,$array) && static::is($array[$key]))
+		if(Arr::isKey($key) && array_key_exists($key,$array) && static::is($array[$key]))
 		$array[$key] = $array[$key](...$arg);
 		
 		return;
@@ -280,11 +280,11 @@ class Call extends Root
 	// retourne la valeur
 	public static function map($condition,callable $callable,$return,...$args)
 	{
-		if(\is_array($return))
+		if(is_array($return))
 		{
 			foreach ($return as $key => $value) 
 			{
-				if(\is_array($value))
+				if(is_array($value))
 				$return[$key] = static::map($condition,$callable,$value,...$args);
 				
 				elseif(Validate::is($condition,$value))
@@ -325,14 +325,14 @@ class Call extends Root
 	// les closures ne sont pas appelés
 	public static function digStaticMethod($return,...$args) 
 	{
-		if(\is_array($return))
+		if(is_array($return))
 		{
 			foreach ($return as $key => $value) 
 			{
 				if(static::isSafeStaticMethod($value,true))
 				$return[$key] = $value(...$args);
 				
-				elseif(\is_array($value))
+				elseif(is_array($value))
 				$return[$key] = static::digStaticMethod($value,...$args);
 			}
 		}

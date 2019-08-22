@@ -6,17 +6,17 @@ namespace Quid\Base;
 class Timezone extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'current'=>null, // conserve le timezone courant pour le set/reset
 		'default'=>'UTC' // timezone par défaut, lorsque value est true
-	];
+	);
 	
 	
 	// is
 	// retourne vrai si la timezone existe
 	public static function is($value):bool 
 	{
-		return (\is_string($value) && \in_array($value,static::all(),true))? true:false;
+		return (is_string($value) && in_array($value,static::all(),true))? true:false;
 	}
 	
 	
@@ -24,7 +24,7 @@ class Timezone extends Root
 	// retourne le timezone courant
 	public static function get():string
 	{
-		return \date_default_timezone_get();
+		return date_default_timezone_get();
 	}
 	
 	
@@ -39,10 +39,10 @@ class Timezone extends Root
 		if($value === true)
 		$value = static::$config['default'];
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
 			static::$config['current'] = static::get();
-			$return = \date_default_timezone_set($value);
+			$return = date_default_timezone_set($value);
 			
 			if($return === true && $ini === true)
 			Ini::setTimezone($value);
@@ -65,7 +65,7 @@ class Timezone extends Root
 		if($timezone === null)
 		$timezone = Ini::getTimezone();
 		
-		$return = \date_default_timezone_set($timezone);
+		$return = date_default_timezone_set($timezone);
 		static::$config['current'] = $timezone;
 		
 		return $return;
@@ -76,7 +76,7 @@ class Timezone extends Root
 	// retourne le nom d'un timezone à partir d'une abbréviation
 	public static function name(string $abbr,int $offset=-1,int $isDst=-1):?string
 	{
-		return \timezone_name_from_abbr($abbr,$offset,$isDst);
+		return timezone_name_from_abbr($abbr,$offset,$isDst);
 	}
 	
 	
@@ -84,7 +84,7 @@ class Timezone extends Root
 	// retourne l'emplacement d'un timezone à partir d'un nom de timezone
 	public static function location(string $value):array
 	{
-		return \timezone_location_get(\timezone_open($value));
+		return timezone_location_get(timezone_open($value));
 	}
 	
 		
@@ -92,18 +92,18 @@ class Timezone extends Root
 	// retourne les transitions d'un timezone à partir d'un nom de timezone
 	public static function transitions(string $value,?int $begin=null,?int $end=null):array
 	{
-		$return = [];
-		$timezone = \timezone_open($value);
+		$return = array();
+		$timezone = timezone_open($value);
 		
 		if(!empty($begin))
 		{
 			if(!empty($end))
-			$return = \timezone_transitions_get($timezone,$begin,$end);
+			$return = timezone_transitions_get($timezone,$begin,$end);
 			else
-			$return = \timezone_transitions_get($timezone,$begin);
+			$return = timezone_transitions_get($timezone,$begin);
 		}
 		else
-		$return = \timezone_transitions_get($timezone);
+		$return = timezone_transitions_get($timezone);
 		
 		return $return;
 	}
@@ -115,21 +115,21 @@ class Timezone extends Root
 	public static function sunrise($value,$timestamp=null,$format=null,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(['zenith'=>Ini::get('date.sunrise_zenith'),'gmtOffset'=>0],$option);
+		$option = Arr::plus(array('zenith'=>Ini::get('date.sunrise_zenith'),'gmtOffset'=>0),$option);
 		$timestamp = Date::time($timestamp);
 		$timezone = null;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
 			$timezone = $value;
 			$value = static::location($value);
 		}
 		
-		if(\is_array($value) && \is_int($timestamp) && \is_float($option['zenith']) && \is_int($option['gmtOffset']) && \array_key_exists('latitude',$value) && \array_key_exists('longitude',$value))
+		if(is_array($value) && is_int($timestamp) && is_float($option['zenith']) && is_int($option['gmtOffset']) && array_key_exists('latitude',$value) && array_key_exists('longitude',$value))
 		{
-			$sunrise = \date_sunrise($timestamp,SUNFUNCS_RET_TIMESTAMP,$value['latitude'],$value['longitude'],$option['zenith'],$option['gmtOffset']);
+			$sunrise = date_sunrise($timestamp,SUNFUNCS_RET_TIMESTAMP,$value['latitude'],$value['longitude'],$option['zenith'],$option['gmtOffset']);
 			
-			if(\is_int($sunrise))
+			if(is_int($sunrise))
 			{
 				$return = $sunrise;
 				
@@ -148,21 +148,21 @@ class Timezone extends Root
 	public static function sunset($value,$timestamp=null,$format=null,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(['zenith'=>Ini::get('date.sunset_zenith'),'gmtOffset'=>0],$option);
+		$option = Arr::plus(array('zenith'=>Ini::get('date.sunset_zenith'),'gmtOffset'=>0),$option);
 		$timestamp = Date::time($timestamp);
 		$timezone = null;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
 			$timezone = $value;
 			$value = static::location($value);
 		}
 		
-		if(\is_array($value) && \is_int($timestamp) && \is_float($option['zenith']) && \is_int($option['gmtOffset']) && \array_key_exists('latitude',$value) && \array_key_exists('longitude',$value))
+		if(is_array($value) && is_int($timestamp) && is_float($option['zenith']) && is_int($option['gmtOffset']) && array_key_exists('latitude',$value) && array_key_exists('longitude',$value))
 		{
-			$sunset = \date_sunset($timestamp,SUNFUNCS_RET_TIMESTAMP,$value['latitude'],$value['longitude'],$option['zenith'],$option['gmtOffset']);
+			$sunset = date_sunset($timestamp,SUNFUNCS_RET_TIMESTAMP,$value['latitude'],$value['longitude'],$option['zenith'],$option['gmtOffset']);
 			
-			if(\is_int($sunset))
+			if(is_int($sunset))
 			{
 				$return = $sunset;
 				
@@ -184,15 +184,15 @@ class Timezone extends Root
 		$timestamp = Date::time($timestamp);
 		$timezone = null;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
 			$timezone = $value;
 			$value = static::location($value);
 		}
 		
-		if(\is_array($value) && \is_int($timestamp) && \array_key_exists('latitude',$value) && \array_key_exists('longitude',$value))
+		if(is_array($value) && is_int($timestamp) && array_key_exists('latitude',$value) && array_key_exists('longitude',$value))
 		{
-			$return = \date_sun_info($timestamp,$value['latitude'],$value['longitude']);
+			$return = date_sun_info($timestamp,$value['latitude'],$value['longitude']);
 			
 			if(!empty($format) && !empty($return))
 			$return = Date::formats($format,$return);
@@ -206,7 +206,7 @@ class Timezone extends Root
 	// retourne la version de la db timezone
 	public static function version():string
 	{
-		return \timezone_version_get();
+		return timezone_version_get();
 	}
 	
 	
@@ -214,7 +214,7 @@ class Timezone extends Root
 	// retourne un tableau multidimensionnel avec tous les timezone dans leur abbréviations
 	public static function abbreviations():array
 	{
-		return \timezone_abbreviations_list();
+		return timezone_abbreviations_list();
 	}
 	
 	
@@ -222,7 +222,7 @@ class Timezone extends Root
 	// retourne un tableau avec tous les timezone
 	public static function all():array
 	{
-		return \timezone_identifiers_list();
+		return timezone_identifiers_list();
 	}
 }
 ?>

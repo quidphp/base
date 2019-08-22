@@ -6,16 +6,16 @@ namespace Quid\Base;
 class Request extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'idLength'=>10, // longueur du id de la requête
 		'safe'=>null, // paramètre par défaut pour la méhode isPathSafe
-		'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
+		'lang'=>array( // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
 			'length'=>2, // longueur de lang
-			'all'=>['en']], // possibilité de lang
-		'default'=>[
+			'all'=>array('en')), // possibilité de lang
+		'default'=>array(
 			'scheme'=>'http', // scheme par défaut si le tableau serveur est vide
-			'port'=>80] // port par défaut si le tableau serveur est vide
-	];
+			'port'=>80) // port par défaut si le tableau serveur est vide
+	);
 	
 	
 	// id
@@ -134,7 +134,7 @@ class Request extends Root
 	// retourne vrai si la requête courante a un query string
 	public static function hasQuery():bool
 	{
-		return (\strlen(static::query()))? true:false;
+		return (strlen(static::query()))? true:false;
 	}
 	
 	
@@ -170,7 +170,7 @@ class Request extends Root
 		$post = static::post();
 		$genuine = Html::getGenuineName();
 		
-		if(!empty($genuine) && !empty($post) && \array_key_exists($genuine,$post) && empty($post['genuine']))
+		if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post['genuine']))
 		$return = true;
 		
 		return $return;
@@ -181,7 +181,7 @@ class Request extends Root
 	// retourne vrai si la requête courante contient un user
 	public static function hasUser():bool 
 	{
-		return (\is_string(static::user()))? true:false;
+		return (is_string(static::user()))? true:false;
 	}
 	
 	
@@ -189,7 +189,7 @@ class Request extends Root
 	// retourne vrai si la requête courante contient un pass
 	public static function hasPass():bool 
 	{
-		return (\is_string(static::pass()))? true:false;
+		return (is_string(static::pass()))? true:false;
 	}
 	
 	
@@ -197,7 +197,7 @@ class Request extends Root
 	// retourne vrai si la requête courante contient un fragment
 	public static function hasFragment():bool 
 	{
-		return (\is_string(static::fragment()))? true:false;
+		return (is_string(static::fragment()))? true:false;
 	}
 	
 	
@@ -293,7 +293,7 @@ class Request extends Root
 	// retourne vrai si la langue est celle fourni
 	public static function isLang($value):bool 
 	{
-		return (\is_string($value) && $value === static::lang())? true:false;
+		return (is_string($value) && $value === static::lang())? true:false;
 	}
 	
 	
@@ -301,7 +301,7 @@ class Request extends Root
 	// retourne vrai si le scheme est celui fourni
 	public static function isScheme($value):bool 
 	{
-		return (\is_string($value) && $value === static::scheme())? true:false;
+		return (is_string($value) && $value === static::scheme())? true:false;
 	}
 	
 	
@@ -309,7 +309,7 @@ class Request extends Root
 	// retourne vrai si l'host est celui fourni
 	public static function isHost($value):bool 
 	{
-		return (\is_string($value) && $value === static::host())? true:false;
+		return (is_string($value) && $value === static::host())? true:false;
 	}
 	
 	
@@ -317,7 +317,7 @@ class Request extends Root
 	// retourne vrai si le scheme host est celui fourni
 	public static function isSchemeHost($value):bool 
 	{
-		return (\is_string($value) && $value === static::schemeHost())? true:false;
+		return (is_string($value) && $value === static::schemeHost())? true:false;
 	}
 	
 	
@@ -325,7 +325,7 @@ class Request extends Root
 	// retourne vrai si le ip est celui fourni
 	public static function isIp($value,bool $validIp=false):bool 
 	{
-		return (\is_string($value) && $value === static::ip($validIp))? true:false;
+		return (is_string($value) && $value === static::ip($validIp))? true:false;
 	}
 	
 	
@@ -438,7 +438,7 @@ class Request extends Root
 	// comme parse_str
 	public static function parse():array
 	{
-		$return = [];
+		$return = array();
 		
 		$return['scheme'] = static::scheme();
 		$return['user'] = static::user();
@@ -513,7 +513,7 @@ class Request extends Root
 	// retourne le scheme de la requete
 	public static function scheme():string
 	{
-		return (\is_string($scheme = Superglobal::getServer('REQUEST_SCHEME')))? $scheme:static::$config['default']['scheme'];
+		return (is_string($scheme = Superglobal::getServer('REQUEST_SCHEME')))? $scheme:static::$config['default']['scheme'];
 	}
 	
 	
@@ -521,7 +521,7 @@ class Request extends Root
 	// change la valeur du scheme de la requête courante
 	public static function setScheme(string $value):void
 	{
-		if(\in_array($value,['http','https'],true))
+		if(in_array($value,array('http','https'),true))
 		static::setSsl(($value === 'https')? true:false);
 		
 		return;
@@ -542,7 +542,7 @@ class Request extends Root
 	// peut être null pour retirer
 	public static function setUser(?string $value):void
 	{
-		if(\is_string($value))
+		if(is_string($value))
 		Superglobal::setServer('REQUEST_USER',$value);
 		else
 		Superglobal::unsetServer('REQUEST_USER');
@@ -565,7 +565,7 @@ class Request extends Root
 	// peut être null pour retirer
 	public static function setPass(?string $value):void
 	{
-		if(\is_string($value))
+		if(is_string($value))
 		Superglobal::setServer('REQUEST_PASS',$value);
 		else
 		Superglobal::unsetServer('REQUEST_PASS');
@@ -605,7 +605,7 @@ class Request extends Root
 	// retourne le port de la requête courante
 	public static function port():?int 
 	{
-		return (\is_numeric($port = Superglobal::getServer('SERVER_PORT')))? (int) $port:static::$config['default']['port'];
+		return (is_numeric($port = Superglobal::getServer('SERVER_PORT')))? (int) $port:static::$config['default']['port'];
 	}
 	
 
@@ -625,7 +625,7 @@ class Request extends Root
 	{
 		$return = '';
 		$requestUri = Superglobal::getServer('REQUEST_URI');
-		if(\is_string($requestUri))
+		if(is_string($requestUri))
 		$return = Uri::path($requestUri) ?? '';
 		
 		return $return;
@@ -743,7 +743,7 @@ class Request extends Root
 	// retourne l'uri courant, avec query, en fonction de server request_uri
 	public static function pathQuery():string
 	{
-		return (\is_string($requestUri = Superglobal::getServer('REQUEST_URI')))? $requestUri:'';
+		return (is_string($requestUri = Superglobal::getServer('REQUEST_URI')))? $requestUri:'';
 	}
 	
 	
@@ -759,7 +759,7 @@ class Request extends Root
 	// retourne la valeur get courante
 	public static function query():string
 	{
-		return (\is_string($queryString = Superglobal::getServer('QUERY_STRING')))? $queryString:'';
+		return (is_string($queryString = Superglobal::getServer('QUERY_STRING')))? $queryString:'';
 	}
 	
 	
@@ -768,18 +768,18 @@ class Request extends Root
 	public static function setQuery($value,bool $encode=false):void 
 	{
 		$string = '';
-		$array = [];
+		$array = array();
 		
-		if(\is_string($value) && \strlen($value))
+		if(is_string($value) && strlen($value))
 		$value = Uri::parseQuery($value);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			$array = $value;
 			$string = Uri::buildQuery($value,$encode);
 		}
 		
-		if(\is_string($string))
+		if(is_string($string))
 		{
 			Globals::set("_GET",$array);
 			Superglobal::setServer('QUERY_STRING',$string);
@@ -813,7 +813,7 @@ class Request extends Root
 	// peut être null pour retirer
 	public static function setFragment(?string $value):void
 	{
-		if(\is_string($value))
+		if(is_string($value))
 		Superglobal::setServer('REQUEST_FRAGMENT',$value);
 		else
 		Superglobal::unsetServer('REQUEST_FRAGMENT');
@@ -826,7 +826,7 @@ class Request extends Root
 	// retourne la method courante
 	public static function method():string
 	{
-		return (($requestMethod = Superglobal::getServer('REQUEST_METHOD')) && \strtolower($requestMethod) === 'post')? 'post':'get';
+		return (($requestMethod = Superglobal::getServer('REQUEST_METHOD')) && strtolower($requestMethod) === 'post')? 'post':'get';
 	}
 	
 	
@@ -834,9 +834,9 @@ class Request extends Root
 	// change la méthode de la requête courante
 	public static function setMethod(string $value):void
 	{
-		$value = \strtoupper($value);
+		$value = strtoupper($value);
 		
-		if(\in_array($value,['GET','POST'],true))
+		if(in_array($value,array('GET','POST'),true))
 		Superglobal::setServer('REQUEST_METHOD',$value);
 		
 		return;
@@ -888,7 +888,7 @@ class Request extends Root
 		$host = static::host();
 		
 		if(!empty($scheme) && !empty($host))
-		$return = Uri::build(['scheme'=>$scheme,'host'=>$host]);
+		$return = Uri::build(array('scheme'=>$scheme,'host'=>$host));
 		
 		return $return;
 	}
@@ -928,7 +928,7 @@ class Request extends Root
 		if(!empty($attr))
 		{
 			$csrf = Superglobal::getPost($attr['name']);
-			if(!empty($csrf) && \is_string($csrf) && \strlen($csrf) === $attr['length'])
+			if(!empty($csrf) && is_string($csrf) && strlen($csrf) === $attr['length'])
 			$return = $csrf;
 		}
 		
@@ -1015,7 +1015,7 @@ class Request extends Root
 		elseif(($remoteAddr = Superglobal::getServer('REMOTE_ADDR')) !== null)
 		$return = $remoteAddr;
 		
-		if($valid === true && \is_string($return) && !Ip::is($return))
+		if($valid === true && is_string($return) && !Ip::is($return))
 		$return = '0.0.0.0';
 		
 		return $return;
@@ -1065,7 +1065,7 @@ class Request extends Root
 		$return = null;
 		$referer = static::getHeader('Referer');
 		
-		if(\is_string($referer) && !empty($referer))
+		if(is_string($referer) && !empty($referer))
 		{
 			if($internal === false || Uri::isInternal($referer,$hosts))
 			$return = $referer;
@@ -1090,7 +1090,7 @@ class Request extends Root
 	// retourne les capacités du browser en fonction du useragent
 	public static function browserCap():?array
 	{
-		return (\is_string($userAgent = static::userAgent()))? Browser::cap($userAgent):null;
+		return (is_string($userAgent = static::userAgent()))? Browser::cap($userAgent):null;
 	}
 	
 	
@@ -1098,7 +1098,7 @@ class Request extends Root
 	// retourne le nom du browser du useragent
 	public static function browserName():?string
 	{
-		return (\is_string($userAgent = static::userAgent()))? Browser::name($userAgent):null;
+		return (is_string($userAgent = static::userAgent()))? Browser::name($userAgent):null;
 	}
 	
 	
@@ -1106,7 +1106,7 @@ class Request extends Root
 	// retourne la plateforme du browser du useragent
 	public static function browserPlatform():?string
 	{
-		return (\is_string($userAgent = static::userAgent()))? Browser::platform($userAgent):null;
+		return (is_string($userAgent = static::userAgent()))? Browser::platform($userAgent):null;
 	}
 	
 	
@@ -1114,7 +1114,7 @@ class Request extends Root
 	// retourne le device du browser du useragent
 	public static function browserDevice():?string
 	{
-		return (\is_string($userAgent = static::userAgent()))? Browser::device($userAgent):null;
+		return (is_string($userAgent = static::userAgent()))? Browser::device($userAgent):null;
 	}
 	
 	
@@ -1122,7 +1122,7 @@ class Request extends Root
 	// retourne la valeur du header lang de la requête courante
 	public static function langHeader():?string
 	{
-		return (\is_string($acceptLanguage = static::getHeader("Accept-Language")))? \substr($acceptLanguage,0,2):null;
+		return (is_string($acceptLanguage = static::getHeader("Accept-Language")))? substr($acceptLanguage,0,2):null;
 	}
 	
 	
@@ -1154,7 +1154,7 @@ class Request extends Root
 		$path = static::pathStripStart();
 		$return = Path::redirect($path,static::$config['safe'],static::$config['lang']);
 		
-		if(\is_string($return) && $absolute === true)
+		if(is_string($return) && $absolute === true)
 		$return = Uri::absolute($return);
 		
 		return $return;
@@ -1179,7 +1179,7 @@ class Request extends Root
 		if($absolute === true)
 		$parse = static::parse();
 		else
-		$parse = ['path'=>static::path(),'query'=>static::query(),'fragment'=>static::fragment()];
+		$parse = array('path'=>static::path(),'query'=>static::query(),'fragment'=>static::fragment());
 		
 		$return = Uri::build($parse,false);
 		

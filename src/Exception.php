@@ -6,9 +6,9 @@ namespace Quid\Base;
 class Exception extends Root
 {
 	// config
-	public static $config = [
-		'separator'=>[' -> ',', ',': '] // séparateur si le message est un tableau
-	];
+	public static $config = array(
+		'separator'=>array(' -> ',', ',': ') // séparateur si le message est un tableau
+	);
 	
 	
 	// setHandler
@@ -16,7 +16,7 @@ class Exception extends Root
 	// si la valeur passé est null, le handler est remis à son état initial
 	public static function setHandler(?callable $value=null):void
 	{
-		\set_exception_handler($value);
+		set_exception_handler($value);
 		
 		return;
 	}
@@ -26,7 +26,7 @@ class Exception extends Root
 	// remet le handler à ce qu'il était avant le dernière appel à set
 	public static function restoreHandler():bool 
 	{
-		return \restore_exception_handler();
+		return restore_exception_handler();
 	}
 	
 	
@@ -38,16 +38,16 @@ class Exception extends Root
 		$return = '';
 		$value = Obj::cast($value);
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		$value = (string) $value;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$value = (array) $value;
 		
-		if(\is_array($value))
+		if(is_array($value))
 		$value = Arrs::implode(static::$config['separator'],$value,true,true);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return = $value;
 		
 		return $return;
@@ -62,20 +62,20 @@ class Exception extends Root
 		$class = null;
 		$function = null;
 		
-		if(\is_array($trace) && \array_key_exists('class',$trace) && \array_key_exists('function',$trace))
+		if(is_array($trace) && array_key_exists('class',$trace) && array_key_exists('function',$trace))
 		{
 			$class = $trace['class'];
 			$function = $trace['function'];
 		}
 		
-		if(\is_string($staticClass))
+		if(is_string($staticClass))
 		$class = $staticClass;
 		
 		if(!empty($function))
-		\array_unshift($return,$function);
+		array_unshift($return,$function);
 		
 		if(!empty($class))
-		\array_unshift($return,$class);
+		array_unshift($return,$class);
 		
 		return $return;
 	}

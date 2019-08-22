@@ -6,11 +6,11 @@ namespace Quid\Base;
 class Email extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'active'=>true, // permet d'activer ou non l'envoie d'email
-		'message'=>[ // contenu par défaut pour un tableau message
+		'message'=>array( // contenu par défaut pour un tableau message
 			'priority'=>null,
-			'xmailer'=>[self::class,'xmailer'],
+			'xmailer'=>array(self::class,'xmailer'),
 			'mimeVersion'=>'1.0',
 			'charset'=>'UTF-8',
 			'contentType'=>'txt',
@@ -22,11 +22,11 @@ class Email extends Root
 			'subject'=>null,
 			'body'=>null,
 			'from'=>null,
-			'header'=>null],
-		'contact'=>['to','cc','bcc','replyTo'], // champs contact qui supportent multiples addresses, from n'accepte que un
-		'headers'=>[ 
-			'default'=>[], // headers par défaut à ajouter à chaque message
-			'message'=>[ // nom des headers pour le champ additional_headers
+			'header'=>null),
+		'contact'=>array('to','cc','bcc','replyTo'), // champs contact qui supportent multiples addresses, from n'accepte que un
+		'headers'=>array( 
+			'default'=>array(), // headers par défaut à ajouter à chaque message
+			'message'=>array( // nom des headers pour le champ additional_headers
 				'mimeVersion'=>'MIME-Version',
 				'priority'=>'X-Priority',
 				'xmailer'=>'X-Mailer',
@@ -35,20 +35,20 @@ class Email extends Root
 				'cc'=>'Cc',
 				'bcc'=>'Bcc',
 				'replyTo'=>'Reply-To',
-				'from'=>'From']],
-		'test'=>[ // contenu par défaut pour un message test
-			'destination'=>[
+				'from'=>'From')),
+		'test'=>array( // contenu par défaut pour un message test
+			'destination'=>array(
 				'to'=>null,
 				'from'=>null,
 				'cc'=>null,
-				'bcc'=>null],
-			'message'=>[
+				'bcc'=>null),
+			'message'=>array(
 				'subject'=>'Test',
-				'body'=>'Test']],
-		'contentType'=>[ // différents contentType supportés, supporte le remplacement par clé
+				'body'=>'Test')),
+		'contentType'=>array( // différents contentType supportés, supporte le remplacement par clé
 			1=>'text/plain',
-			2=>'text/html'],
-	];
+			2=>'text/html'),
+	);
 	
 	
 	// is
@@ -58,7 +58,7 @@ class Email extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value) && \strpos($value,'/') === false)
+		if(is_string($value) && strpos($value,'/') === false)
 		$return = Validate::isEmail($value);
 		
 		return $return;
@@ -81,9 +81,9 @@ class Email extends Root
 		
 		if(static::is($value))
 		{
-			$explode = \explode("@",$value);
-			if(\count($explode) === 2)
-			$return = ['name'=>$explode[0],'host'=>$explode[1]];
+			$explode = explode("@",$value);
+			if(count($explode) === 2)
+			$return = array('name'=>$explode[0],'host'=>$explode[1]);
 		}
 		
 		return $return;
@@ -138,9 +138,9 @@ class Email extends Root
 			if(static::isActive())
 			{	
 				if($mb === true)
-				$return = \mb_send_mail($to,$subject,$body,$headers);
+				$return = mb_send_mail($to,$subject,$body,$headers);
 				else
-				$return = \mail($to,$subject,$body,$headers);
+				$return = mail($to,$subject,$body,$headers);
 			}
 			
 			else
@@ -163,11 +163,11 @@ class Email extends Root
 	// permet d'envoyer plusieurs messages à partir d'un tableau multidimensionnel
 	public static function sendLoop(array $values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::send($value);
 		}
 		
@@ -186,7 +186,7 @@ class Email extends Root
 		$message = Call::ableArrs(static::$config['message']);
 		$value = Arr::replace($message,$value);
 		$value['from'] = static::address($value['from']);
-		$value['date'] = (\is_int($value['date']))? $value['date']:Date::timestamp();
+		$value['date'] = (is_int($value['date']))? $value['date']:Date::timestamp();
 		$value = Arr::replace($value,static::prepareContentTypeCharset($value['contentType'],$value['charset']));
 		
 		foreach (static::$config['contact'] as $v) 
@@ -195,9 +195,9 @@ class Email extends Root
 			$value[$v] = static::addresses($value[$v]);
 		}
 
-		if(\in_array($value['contentType'],static::$config['contentType'],true) && !empty($value['charset']) && \is_string($value['charset']))
+		if(in_array($value['contentType'],static::$config['contentType'],true) && !empty($value['charset']) && is_string($value['charset']))
 		{
-			if(!empty($value['to']) && !empty($value['from']) && \is_string($value['subject']) && \is_string($value['body']))
+			if(!empty($value['to']) && !empty($value['from']) && is_string($value['subject']) && is_string($value['body']))
 			{
 				$return = $value;
 				$return['header'] = static::prepareHeader($return,$headerMessage);
@@ -222,7 +222,7 @@ class Email extends Root
 	// est utilisé dans prepareMessage
 	public static function prepareContentTypeCharset($value=null,?string $charset=null):array
 	{
-		$return = [];
+		$return = array();
 		$charset = $charset ?? Encoding::getCharset();
 		$contentType = 'txt';
 		$contentTypes = static::$config['contentType'];
@@ -230,10 +230,10 @@ class Email extends Root
 		
 		if(!empty($value))
 		{
-			if(\is_int($value) && \array_key_exists($value,$contentTypes))
+			if(is_int($value) && array_key_exists($value,$contentTypes))
 			$contentType = $contentTypes[$value];
 			
-			elseif(\is_string($value))
+			elseif(is_string($value))
 			$contentType = $value;
 		}
 		
@@ -250,21 +250,21 @@ class Email extends Root
 	// le tableau value doit avoir été préparé au préalable à partir de la méthode prepareMessage
 	public static function prepareHeader(array $value,bool $headerMessage=true):array 
 	{
-		$return = [];
+		$return = array();
 		
 		if(!empty(static::$config['headers']['default']))
 		$return = static::$config['headers']['default'];
 		
-		if(!empty($value['header']) && \is_array($value['header']))
+		if(!empty($value['header']) && is_array($value['header']))
 		$return = Arr::replace($return,$value['header']);
 		
 		if($headerMessage === true)
 		{
 			foreach (static::$config['headers']['message'] as $k => $v) 
 			{
-				if(\array_key_exists($k,$value) && !empty($value[$k]))
+				if(array_key_exists($k,$value) && !empty($value[$k]))
 				{
-					if(\in_array($k,static::$config['contact'],true) && \is_array($value[$k]))
+					if(in_array($k,static::$config['contact'],true) && is_array($value[$k]))
 					$return[$v] = static::prepareAddress($value[$k],true);
 					
 					elseif($k === 'from')
@@ -273,7 +273,7 @@ class Email extends Root
 					elseif($k === 'date')
 					$return[$v] = Date::rfc822($value[$k]);
 					
-					elseif(\is_scalar($value[$k]))
+					elseif(is_scalar($value[$k]))
 					$return[$v] = $value[$k];
 				}
 			}
@@ -294,11 +294,11 @@ class Email extends Root
 		$return = '';
 		
 		if(Arr::isUni($values))
-		$values = [$values];
+		$values = array($values);
 		
 		foreach ($values as $value) 
 		{
-			if(\is_array($value) && \array_key_exists('email',$value) && \is_string($value['email']) && \array_key_exists('name',$value))
+			if(is_array($value) && array_key_exists('email',$value) && is_string($value['email']) && array_key_exists('name',$value))
 			{
 				$string = static::addressStr($value['email'],$value['name']);
 				
@@ -325,17 +325,17 @@ class Email extends Root
 	// retourne un tableau multidimensionnel
 	public static function addresses($values):array 
 	{
-		$return = [];
+		$return = array();
 		
-		if(!\is_array($values))
-		$values = [$values];
+		if(!is_array($values))
+		$values = array($values);
 		
-		if(\array_key_exists('email',$values))
+		if(array_key_exists('email',$values))
 		{
 			$email = $values['email'];
 			unset($values['email']);
 			
-			if(\array_key_exists('name',$values))
+			if(array_key_exists('name',$values))
 			{
 				$name = $values['name'];
 				unset($values['name']);
@@ -348,8 +348,8 @@ class Email extends Root
 		
 		foreach ($values as $key => $value) 
 		{
-			if(\is_string($key))
-			$value = [$key=>$value];
+			if(is_string($key))
+			$value = array($key=>$value);
 			
 			$prepare = static::address($value);
 			
@@ -370,35 +370,35 @@ class Email extends Root
 	{
 		$return = null;
 
-		if(\is_string($value))
-		$value = [$value=>null];
+		if(is_string($value))
+		$value = array($value=>null);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			$email = null;
 			$name = null;
 			
-			if(\array_key_exists('email',$value))
+			if(array_key_exists('email',$value))
 			{
 				$email = $value['email'];
 				
-				if(\array_key_exists('name',$value) && \is_string($value['name']))
+				if(array_key_exists('name',$value) && is_string($value['name']))
 				$name = $value['name'];
 			}
 			
 			else
 			{
-				$k = \key($value);
-				$v = \current($value);
+				$k = key($value);
+				$v = current($value);
 				
-				if(\is_numeric($k) && \is_string($v))
+				if(is_numeric($k) && is_string($v))
 				$email = $v;
 				
-				elseif(\is_string($k))
+				elseif(is_string($k))
 				{
 					$email = $k;
 					
-					if(\is_string($v))
+					if(is_string($v))
 					$name = $v;
 				}
 			}
@@ -406,7 +406,7 @@ class Email extends Root
 			if(static::is($email))
 			{
 				$name = ($name === null)? static::name($email):$name;
-				$return = ['email'=>$email,'name'=>$name];
+				$return = array('email'=>$email,'name'=>$name);
 			}
 		}
 		
@@ -418,10 +418,10 @@ class Email extends Root
 	// génère une string avec arguments email et nom
 	public static function addressStr(string $email,$name=null):string
 	{
-		$return = \trim($email);
+		$return = trim($email);
 		
-		if(\is_string($name))
-		$return = \trim($name)." <".$return.">";
+		if(is_string($name))
+		$return = trim($name)." <".$return.">";
 
 		return $return;
 	}

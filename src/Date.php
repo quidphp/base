@@ -6,12 +6,12 @@ namespace Quid\Base;
 class Date extends Root
 {
 	// config
-	public static $config = [
-		'format'=>[
-			'replace'=>[ // contenu de remplacement pour date, via une callable et éventuellement un map
-				'%'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'lower']],
-				'@'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'upperFirst']]],
-			'date'=>[ // format compatible avec date, gmdate et idate (certains)
+	public static $config = array(
+		'format'=>array(
+			'replace'=>array( // contenu de remplacement pour date, via une callable et éventuellement un map
+				'%'=>array('call'=>array(self::class,'getMonths'),'map'=>array(Str::class,'lower')),
+				'@'=>array('call'=>array(self::class,'getMonths'),'map'=>array(Str::class,'upperFirst'))),
+			'date'=>array( // format compatible avec date, gmdate et idate (certains)
 				'year'=>'Y',
 				'month'=>'m',
 				'day'=>'d',
@@ -30,23 +30,23 @@ class Date extends Root
 				'office365'=>'Ymd\THisP',
 				'daysInMonth'=>'t',
 				'weekDay'=>'w',
-				'weekNo'=>'W'],
-			'locale'=>[ // format locale compatible avec strftime et gmstrftime
+				'weekNo'=>'W'),
+			'locale'=>array( // format locale compatible avec strftime et gmstrftime
 				'ymd'=>'%G-%m-%d',
 				'ymdhis'=>'%G-%m-%d %H:%M:%S',
-				'ym'=>'%G-%m']],
-		'floor'=>[ // données pour date floor
+				'ym'=>'%G-%m')),
+		'floor'=>array( // données pour date floor
 			'month'=>1,
 			'day'=>1,
 			'hour'=>0,
 			'minute'=>0,
-			'second'=>0],
-		'ceil'=>[ // données pour date ceils
+			'second'=>0),
+		'ceil'=>array( // données pour date ceils
 			'month'=>12,
 			'hour'=>23,
 			'minute'=>59,
-			'second'=>59],
-		'amount'=>[
+			'second'=>59),
+		'amount'=>array(
 			'secondsInMinute'=>60, // seconde par minute
 			'secondsInHour'=>3600, // seconde par heure
 			'secondsInDay'=>86400, // seconde par jour
@@ -55,10 +55,10 @@ class Date extends Root
 			'daysInMonth'=>31, // jour par mois
 			'daysInYear'=>365, // jour par année
 			'monthsInYear'=>12, // mois par année
-			'maxYear'=>9999], // année maximale
+			'maxYear'=>9999), // année maximale
 		'timestamp'=>null, // timestamp de début de script
 		'microtime'=>null // microtime de début de script
-	];
+	);
 	
 	
 	// isNow
@@ -75,19 +75,19 @@ class Date extends Root
 	public static function isValid($value,?int $month=null,?int $day=null):bool
 	{
 		$return = false;
-		$year = (\is_int($value))? $value:null;
+		$year = (is_int($value))? $value:null;
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
-			foreach (['year','month','day'] as $v) 
+			foreach (array('year','month','day') as $v) 
 			{
-				if(\array_key_exists($v,$value) && \is_int($value[$v]))
+				if(array_key_exists($v,$value) && is_int($value[$v]))
 				$$v = $value[$v];
 			}
 		}
 		
-		if(\is_int($year) && !empty($year) && \is_int($month) && \is_int($day))
-		$return = \checkdate($month,$day,$year);
+		if(is_int($year) && !empty($year) && is_int($month) && is_int($day))
+		$return = checkdate($month,$day,$year);
 		
 		return $return;
 	}
@@ -97,7 +97,7 @@ class Date extends Root
 	// retourne vrai si le timestamp est une année valide
 	public static function isYearValid($value):bool 
 	{
-		return (\is_int($value) && $value >= 0 && $value <= static::$config['amount']['maxYear'])? true:false;
+		return (is_int($value) && $value >= 0 && $value <= static::$config['amount']['maxYear'])? true:false;
 	}
 	
 	
@@ -109,7 +109,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format,true);
 		
-		if(\is_int($value) && \date('L',$value) === "1")
+		if(is_int($value) && date('L',$value) === "1")
 		$return = true;
 		
 		return $return;
@@ -123,7 +123,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value) && static::floorDay($value) === static::floorDay(null))
+		if(is_int($value) && static::floorDay($value) === static::floorDay(null))
 		$return = true;
 		
 		return $return;
@@ -138,7 +138,7 @@ class Date extends Root
 		$value = static::time($value,$format);
 		$timestamp = static::addDay(1);
 		
-		if(\is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
+		if(is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
 		$return = true;
 		
 		return $return;
@@ -153,7 +153,7 @@ class Date extends Root
 		$value = static::time($value,$format);
 		$timestamp = static::addDay(-1);
 		
-		if(\is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
+		if(is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
 		$return = true;
 		
 		return $return;
@@ -167,7 +167,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value) && static::year($value) === static::year($timestamp))
+		if(is_int($value) && static::year($value) === static::year($timestamp))
 		$return = true;
 		
 		return $return;
@@ -181,7 +181,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value) && static::floorMonth($value) === static::floorMonth($timestamp))
+		if(is_int($value) && static::floorMonth($value) === static::floorMonth($timestamp))
 		$return = true;
 		
 		return $return;
@@ -195,7 +195,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
+		if(is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
 		$return = true;
 		
 		return $return;
@@ -217,7 +217,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value) && static::floorHour($value) === static::floorHour($timestamp))
+		if(is_int($value) && static::floorHour($value) === static::floorHour($timestamp))
 		$return = true;
 		
 		return $return;
@@ -231,7 +231,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value) && static::floorMinute($value) === static::floorMinute($timestamp))
+		if(is_int($value) && static::floorMinute($value) === static::floorMinute($timestamp))
 		$return = true;
 		
 		return $return;
@@ -245,7 +245,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value) && $value === static::time($timestamp))
+		if(is_int($value) && $value === static::time($timestamp))
 		$return = true;
 		
 		return $return;
@@ -258,17 +258,17 @@ class Date extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value) && !empty($value))
+		if(is_string($value) && !empty($value))
 		{
 			$parse = static::parse($format,$value);
 			$get = static::get(static::time($value,$format));
 			
-			if(\is_array($parse) && \is_array($get))
+			if(is_array($parse) && is_array($get))
 			{
 				$parse = Arr::cleanEmpty($parse);
 				$get = Arr::cleanEmpty($get);
 				
-				if(Arr::gets(\array_keys($parse),$get) === $parse)
+				if(Arr::gets(array_keys($parse),$get) === $parse)
 				$return = true;
 			}
 		}
@@ -310,7 +310,7 @@ class Date extends Root
 	{
 		$return = static::$config['timestamp'];
 		
-		if(!\is_int($return))
+		if(!is_int($return))
 		$return = static::$config['timestamp'] = static::timestamp();
 		
 		return $return;
@@ -333,7 +333,7 @@ class Date extends Root
 	{
 		$return = static::$config['microtime'];
 		
-		if(!\is_float($return))
+		if(!is_float($return))
 		$return = static::$config['microtime'] = static::microtime();
 		
 		return $return;
@@ -355,7 +355,7 @@ class Date extends Root
 	// possibilité de changer le nombre de jour dans une année ou un mois
 	public static function seconds(?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = Arr::plus(static::getAmount(),$option);
 		
 		$return['year'] = ($option['daysInYear'] * $option['secondsInDay']);
@@ -416,8 +416,8 @@ class Date extends Root
 		$return = null;
 		$value = static::time($value);
 		
-		if(\is_int($value))
-		$return = \localtime($value,$assoc);
+		if(is_int($value))
+		$return = localtime($value,$assoc);
 		
 		return $return;
 	}
@@ -427,7 +427,7 @@ class Date extends Root
 	// retourne le tableau associatif time of day
 	public static function timeOfDay():array
 	{
-		return \gettimeofday(false);
+		return gettimeofday(false);
 	}
 	
 	
@@ -436,7 +436,7 @@ class Date extends Root
 	// il faut utiliser getTimestamp pour avoir le temps du début de requête
 	public static function timestamp():int
 	{
-		return \time();
+		return time();
 	}
 	
 	
@@ -444,7 +444,7 @@ class Date extends Root
 	// retourne le microtime comme float
 	public static function microtime():float 
 	{
-		return \microtime(true);
+		return microtime(true);
 	}
 	
 	
@@ -455,10 +455,10 @@ class Date extends Root
 		$return = null;
 		$value = static::time($value);
 		
-		if(\is_int($value) && \strlen($format))
+		if(is_int($value) && strlen($format))
 		{
-			$time = \strtotime($format,$value);
-			if(\is_int($time))
+			$time = strtotime($format,$value);
+			if(is_int($time))
 			$return = $time;
 		}
 		
@@ -470,7 +470,7 @@ class Date extends Root
 	// retourne le format pour locale
 	public static function getLocaleFormat(string $return):string 
 	{
-		if(\array_key_exists($return,static::$config['format']['locale']))
+		if(array_key_exists($return,static::$config['format']['locale']))
 		$return = static::$config['format']['locale'][$return];
 		
 		return $return;
@@ -486,8 +486,8 @@ class Date extends Root
 		$return = null;
 		$value = static::time($value);
 		
-		if(\is_int($value) && \strlen($format))
-		$return = \strftime(static::getLocaleFormat($format),$value);
+		if(is_int($value) && strlen($format))
+		$return = strftime(static::getLocaleFormat($format),$value);
 		
 		return $return;
 	}
@@ -501,8 +501,8 @@ class Date extends Root
 		$return = null;
 		$value = static::time($value);
 		
-		if(\is_int($value) && \strlen($format))
-		$return = \gmstrftime(static::getLocaleFormat($format),$value);
+		if(is_int($value) && strlen($format))
+		$return = gmstrftime(static::getLocaleFormat($format),$value);
 		
 		return $return;
 	}
@@ -524,17 +524,17 @@ class Date extends Root
 		$return = null;
 		$formats = static::getFormats($lang);
 		
-		if(\is_array($formats) && !empty($formats))
+		if(is_array($formats) && !empty($formats))
 		{
 			if($key === true)
 			$key = 0;
 			
-			if(\is_int($key) || \is_string($key))
+			if(is_int($key) || is_string($key))
 			{
-				if(\array_key_exists($key,$formats))
+				if(array_key_exists($key,$formats))
 				$return = $formats[$key];
 				
-				elseif(\is_string($key) && \strlen($key))
+				elseif(is_string($key) && strlen($key))
 				$return = $key;
 			}
 		}
@@ -551,21 +551,21 @@ class Date extends Root
 		$return = null;
 		$format = static::getFormat($key,$lang);
 		
-		if(\is_string($format))
+		if(is_string($format))
 		{
-			$return = ['format'=>$format,'replace'=>null];
+			$return = array('format'=>$format,'replace'=>null);
 			
 			if(!empty(static::$config['format']['replace']))
 			{
 				foreach (static::$config['format']['replace'] as $char => $array) 
 				{
-					if(\is_string($char) && \is_array($array) && \array_key_exists('call',$array) && \strpos($format,$char) !== false)
+					if(is_string($char) && is_array($array) && array_key_exists('call',$array) && strpos($format,$char) !== false)
 					{
 						if(static::classIsCallable($array['call']))
 						$return['replace'][$char] = $array['call']($lang);
 						
-						if(\array_key_exists('map',$array) && static::classIsCallable($array['map']))
-						$return['replace'][$char] = \array_map($array['map'],$return['replace'][$char]);
+						if(array_key_exists('map',$array) && static::classIsCallable($array['map']))
+						$return['replace'][$char] = array_map($array['map'],$return['replace'][$char]);
 					}
 				}
 			}
@@ -581,7 +581,7 @@ class Date extends Root
 	{
 		$return = false;
 		
-		if((\is_string($key) || \is_int($key)) && !empty($value))
+		if((is_string($key) || is_int($key)) && !empty($value))
 		{
 			static::$config['format']['date'][$key] = $value;
 			$return = true;
@@ -597,7 +597,7 @@ class Date extends Root
 	{
 		$return = false;
 		
-		if((\is_string($key) || \is_int($key)) && \array_key_exists($key,static::$config['format']['date']))
+		if((is_string($key) || is_int($key)) && array_key_exists($key,static::$config['format']['date']))
 		{
 			unset(static::$config['format']['date'][$key]);
 			$return = true;
@@ -611,32 +611,32 @@ class Date extends Root
 	// retourne un tableau contenant le format, le timezone et le replace en vue d'un formattage ou d'un parse
 	public static function parseFormat($key):array 
 	{
-		$return = [];
+		$return = array();
 		$format = null;
 		$timezone = null;
 		$replace = null;
 		$lang = null;
 		
-		if(\is_scalar($key))
+		if(is_scalar($key))
 		$format = $key;
 		
-		elseif(\is_array($key))
+		elseif(is_array($key))
 		{
-			$format = Arr::keysFirstValue(['format',0],$key);
-			$timezone = Arr::keysFirstValue(['timezone',1],$key);
-			$replace = Arr::keysFirstValue(['replace',2],$key);
-			$lang = Arr::keysFirstValue(['lang',3],$key);
+			$format = Arr::keysFirstValue(array('format',0),$key);
+			$timezone = Arr::keysFirstValue(array('timezone',1),$key);
+			$replace = Arr::keysFirstValue(array('replace',2),$key);
+			$lang = Arr::keysFirstValue(array('lang',3),$key);
 		}
 		
-		if(\is_scalar($format) || \is_scalar($timezone))
+		if(is_scalar($format) || is_scalar($timezone))
 		{
 			$format = static::getFormatReplace($format,$lang);
 			
 			$return['format'] = $format['format'];
-			$return['timezone'] = (\is_scalar($timezone) && !empty($timezone))? $timezone:null;
-			$return['replace'] = (\is_array($format['replace']) && !empty($format['replace']))? $format['replace']:null;
+			$return['timezone'] = (is_scalar($timezone) && !empty($timezone))? $timezone:null;
+			$return['replace'] = (is_array($format['replace']) && !empty($format['replace']))? $format['replace']:null;
 			
-			if(\is_array($replace) && !empty($replace) && Arrs::is($replace))
+			if(is_array($replace) && !empty($replace) && Arrs::is($replace))
 			$return['replace'] = Arrs::replace($return['replace'],$replace);
 		}
 		
@@ -656,22 +656,22 @@ class Date extends Root
 		$value = static::time($value,$from);
 		$format = static::parseFormat($format);
 		
-		if(\is_int($value) && \is_array($format) && !empty($format['format']))
+		if(is_int($value) && is_array($format) && !empty($format['format']))
 		{
 			if($format['timezone'] === true)
-			$return = \gmdate($format['format'],$value);
+			$return = gmdate($format['format'],$value);
 			
-			elseif(\is_string($format['timezone']))
+			elseif(is_string($format['timezone']))
 			{
-				$date = \date_create('@'.$value);
-				\date_timezone_set($date,\timezone_open($format['timezone']));
-				$return = \date_format($date,$format['format']);
+				$date = date_create('@'.$value);
+				date_timezone_set($date,timezone_open($format['timezone']));
+				$return = date_format($date,$format['format']);
 			}
 			
 			else
-			$return = \date($format['format'],$value);
+			$return = date($format['format'],$value);
 
-			if(!empty($format['replace']) && \is_array($format['replace']))
+			if(!empty($format['replace']) && is_array($format['replace']))
 			$return = static::formatReplace($return,$format['replace']);
 		}
 		
@@ -685,10 +685,10 @@ class Date extends Root
 	public static function formatDayStart($start=null,?array $option=null):?string 
 	{
 		$return = null;
-		$option = Arr::plus(['format'=>'ymdhis','formatDay'=>'ymd'],$option);
+		$option = Arr::plus(array('format'=>'ymdhis','formatDay'=>'ymd'),$option);
 		$start = static::time($start);
 		
-		if(\is_int($start))
+		if(is_int($start))
 		{
 			if(static::isDayStart($start) === true)
 			$return = static::format($option['formatDay'],$start);
@@ -707,15 +707,15 @@ class Date extends Root
 	public static function formatStartEnd($start=null,$end=null,?array $option=null):?string 
 	{
 		$return = null;
-		$option = Arr::plus(['format'=>'ymdhis','formatTime'=>'his','formatDay'=>'ymd','dayStart'=>true,'separator'=>' - '],$option);
+		$option = Arr::plus(array('format'=>'ymdhis','formatTime'=>'his','formatDay'=>'ymd','dayStart'=>true,'separator'=>' - '),$option);
 		$start = static::time($start);
 		$end = static::time($end);
 		
-		if(\is_int($start))
+		if(is_int($start))
 		{
 			$startDayStart = ($option['dayStart'] === true && static::isDayStart($start))? true:false;
 			
-			if(\is_int($end) && $end > $start)
+			if(is_int($end) && $end > $start)
 			{
 				$endDayStart = ($option['dayStart'] === true && static::isDayStart($end))? true:false;
 				
@@ -756,7 +756,7 @@ class Date extends Root
 	// remplacement peut être effectué avant le retour
 	public static function gmtFormat($format=true,$value=null):?string
 	{
-		return static::format(Arr::plus((array) $format,['timezone'=>true]),$value);
+		return static::format(Arr::plus((array) $format,array('timezone'=>true)),$value);
 	}
 	
 	
@@ -778,11 +778,11 @@ class Date extends Root
 	// replace peut être un array ou une callable
 	public static function formatReplace(string $return,array $replace) 
 	{
-		if(\strlen($return) && !empty($replace))
+		if(strlen($return) && !empty($replace))
 		{
 			foreach ($replace as $key => $value) 
 			{
-				if(\is_string($key) && \strlen($key) && \is_array($value) && !empty($value))
+				if(is_string($key) && strlen($key) && is_array($value) && !empty($value))
 				{
 					$value = Arr::keysWrap($key,null,$value);
 					$return = Str::replace($value,$return);
@@ -809,7 +809,7 @@ class Date extends Root
 		$return = null;
 		$placeholders = static::getPlaceholders($lang);
 		
-		if(!empty($placeholders) && Arr::isKey($value) && \array_key_exists($value,$placeholders))
+		if(!empty($placeholders) && Arr::isKey($value) && array_key_exists($value,$placeholders))
 		$return = $placeholders[$value];
 		
 		return $return;
@@ -820,7 +820,7 @@ class Date extends Root
 	// formatte une date au format dmy
 	public static function dmy($value=null,$timezone=null,$format=null):?string
 	{
-		return static::format(['dmy',$timezone],static::time($value,$format));
+		return static::format(array('dmy',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -828,7 +828,7 @@ class Date extends Root
 	// formatte une date au format ymd
 	public static function ymd($value=null,$timezone=null,$format=null):?string
 	{
-		return static::format(['ymd',$timezone],static::time($value,$format));
+		return static::format(array('ymd',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -836,7 +836,7 @@ class Date extends Root
 	// formatte une date au format ymdhis
 	public static function ymdhis($value=null,$timezone=null,$format=null):?string
 	{
-		return static::format(['ymdhis',$timezone],static::time($value,$format));
+		return static::format(array('ymdhis',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -844,7 +844,7 @@ class Date extends Root
 	// formatte une date au format ym
 	public static function ym($value=null,$timezone=null,$format=null):?string
 	{
-		return static::format(['ym',$timezone],static::time($value,$format));
+		return static::format(array('ym',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -852,7 +852,7 @@ class Date extends Root
 	// formatte une date au format his
 	public static function his($value=null,$timezone=null,$format=null):?string
 	{
-		return static::format(['his',$timezone],static::time($value,$format));
+		return static::format(array('his',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -860,7 +860,7 @@ class Date extends Root
 	// formatte une date au format rfc822
 	public static function rfc822($value=null,$timezone=null,$format=null):?string
 	{
-		return static::format(['rfc822',$timezone],static::time($value,$format));
+		return static::format(array('rfc822',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -868,7 +868,7 @@ class Date extends Root
 	// formatte une date au format sql
 	public static function sql($value=null,$timezone=null,$format=null):?string 
 	{
-		return static::format(['sql',$timezone],static::time($value,$format));
+		return static::format(array('sql',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -876,7 +876,7 @@ class Date extends Root
 	// formatte une date au format compact
 	public static function compact($value=null,$timezone=null,$format=null):?string 
 	{
-		return static::format(['compact',$timezone],static::time($value,$format));
+		return static::format(array('compact',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -898,18 +898,18 @@ class Date extends Root
 		$value = static::time($value);
 		$format = static::parseFormat($format);
 		
-		if(\is_int($value) && \is_array($format) && !empty($format['format']) && \strlen($format['format']) === 1)
+		if(is_int($value) && is_array($format) && !empty($format['format']) && strlen($format['format']) === 1)
 		{
 			if(!empty($format['timezone']))
 			{
 				$return = static::format($format,$value);
 				
-				if(\is_string($return))
+				if(is_string($return))
 				$return = (int) $return;
 			}
 			
 			else
-			$return = \idate($format['format'],$value);
+			$return = idate($format['format'],$value);
 		}
 		
 		return $return;
@@ -920,7 +920,7 @@ class Date extends Root
 	// retourne le nombre de jour dans un mois
 	public static function countDaysInMonth($value=null,$timezone=null,$format=null):?int 
 	{
-		return static::iformat(['daysInMonth',$timezone],static::time($value,$format));
+		return static::iformat(array('daysInMonth',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -928,7 +928,7 @@ class Date extends Root
 	// retourne le numéro du jour dans la semaine
 	public static function weekDay($value=null,$timezone=null,$format=null):?int 
 	{
-		return static::iformat(['weekDay',$timezone],static::time($value,$format));
+		return static::iformat(array('weekDay',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -937,9 +937,9 @@ class Date extends Root
 	// possible de mettre dimanche plutôt que lundi comme premier jour de la semaine
 	public static function weekNo($value=null,bool $sundayFirst=false,$timezone=null,$format=null):?int 
 	{
-		$return = static::iformat(['weekNo',$timezone],static::time($value,$format));
+		$return = static::iformat(array('weekNo',$timezone),static::time($value,$format));
 		
-		if(\is_int($return) && $sundayFirst === true)
+		if(is_int($return) && $sundayFirst === true)
 		{
 			$weekDay = static::weekDay($value,$timezone,$format);
 			if($weekDay === 0)
@@ -960,7 +960,7 @@ class Date extends Root
 	// retourne l'année d'un timestamp en int
 	public static function year($value=null,$timezone=null,$format=null):?int
 	{
-		return static::iformat(['year',$timezone],static::time($value,$format));
+		return static::iformat(array('year',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -968,7 +968,7 @@ class Date extends Root
 	// retourne le mois d'un timestamp en int
 	public static function month($value=null,$timezone=null,$format=null):?int
 	{
-		return static::iformat(['month',$timezone],static::time($value,$format));
+		return static::iformat(array('month',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -976,7 +976,7 @@ class Date extends Root
 	// retourne le jour d'un timestamp en int
 	public static function day($value=null,$timezone=null,$format=null):?int
 	{
-		return static::iformat(['day',$timezone],static::time($value,$format));
+		return static::iformat(array('day',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -984,7 +984,7 @@ class Date extends Root
 	// retourne l'heure d'un timestamp en int
 	public static function hour($value=null,$timezone=null,$format=null):?int
 	{
-		return static::iformat(['hour',$timezone],static::time($value,$format));
+		return static::iformat(array('hour',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -992,7 +992,7 @@ class Date extends Root
 	// retourne la minute d'un timestamp en int
 	public static function minute($value=null,$timezone=null,$format=null):?int
 	{
-		return static::iformat(['minute',$timezone],static::time($value,$format));
+		return static::iformat(array('minute',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -1000,7 +1000,7 @@ class Date extends Root
 	// retourne la seconde d'un timestamp en int
 	public static function second($value=null,$timezone=null,$format=null):?int
 	{
-		return static::iformat(['second',$timezone],static::time($value,$format));
+		return static::iformat(array('second',$timezone),static::time($value,$format));
 	}
 	
 	
@@ -1014,12 +1014,12 @@ class Date extends Root
 		$format = static::parseFormat($format);
 		$value = Str::cast($value);
 		
-		if(\is_array($format) && !empty($format['format']))
+		if(is_array($format) && !empty($format['format']))
 		{
-			if(!empty($format['replace']) && \is_array($format['replace']))
+			if(!empty($format['replace']) && is_array($format['replace']))
 			$value = static::parseReplace($value,$format['replace']);
 			
-			$parse = \date_parse_from_format($format['format'],$value);
+			$parse = date_parse_from_format($format['format'],$value);
 
 			if(empty($parse['error_count']))
 			$return = static::parsePrepare($parse);
@@ -1055,9 +1055,9 @@ class Date extends Root
 		$return = null;
 		$value = Str::cast($value);
 		
-		if(\strlen($format))
+		if(strlen($format))
 		{
-			$parse = \strptime($value,static::getLocaleFormat($format));
+			$parse = strptime($value,static::getLocaleFormat($format));
 			
 			if(!empty($parse))
 			$return = static::parsePrepare($parse);
@@ -1075,7 +1075,7 @@ class Date extends Root
 	{
 		$return = null;
 		$value = Str::cast($value);
-		$parse = \date_parse($value);
+		$parse = date_parse($value);
 		
 		if(empty($parse['error_count']))
 		$return = static::parsePrepare($parse);
@@ -1088,13 +1088,13 @@ class Date extends Root
 	// fait un remplacement avant la méthode parse
 	public static function parseReplace(string $return,array $replace):string 
 	{
-		if(\strlen($return) && !empty($replace))
+		if(strlen($return) && !empty($replace))
 		{
 			foreach ($replace as $key => $value) 
 			{
-				if(\is_string($key) && \strlen($key) && \is_array($value) && !empty($value))
+				if(is_string($key) && strlen($key) && is_array($value) && !empty($value))
 				{
-					$value = \array_flip($value);
+					$value = array_flip($value);
 					$value = Arr::valuesWrap($key,$key,$value);
 					$return = Str::replace($value,$return);
 				}
@@ -1116,7 +1116,7 @@ class Date extends Root
 		{
 			$keep = true;
 			
-			if((\strpos($key,'warning') === 0 || \strpos($key,'error') === 0) && empty($value))
+			if((strpos($key,'warning') === 0 || strpos($key,'error') === 0) && empty($value))
 			$keep = false;
 			
 			elseif($key === 'fraction' && empty($value))
@@ -1125,13 +1125,13 @@ class Date extends Root
 			elseif($value === false || $value === '')
 			$keep = false;
 			
-			elseif($key === 'relative' && \is_array($value))
+			elseif($key === 'relative' && is_array($value))
 			{
 				$keep = false;
 				
 				foreach ($value as $k => $v) 
 				{
-					if(\is_int($v) && !empty($v) && \array_key_exists($k,$return))
+					if(is_int($v) && !empty($v) && array_key_exists($k,$return))
 					$return[$k] += $v;
 				}
 			}
@@ -1156,18 +1156,18 @@ class Date extends Root
 		if($value === null)
 		$return = static::getTimestamp();
 		
-		elseif(\is_array($value))
+		elseif(is_array($value))
 		$return = static::make($value,static::parseFormat($format)['timezone'] ?? null);
 		
-		elseif($format !== null && \is_scalar($value))
+		elseif($format !== null && is_scalar($value))
 		$return = static::parseMake($format,$value);
 
-		elseif(\is_numeric($value))
+		elseif(is_numeric($value))
 		{
 			$return = (int) $value;
 			
 			if($convertYear === true && static::isYearValid($return))
-			$return = static::make([$return],static::parseFormat($format)['timezone'] ?? null);
+			$return = static::make(array($return),static::parseFormat($format)['timezone'] ?? null);
 		}
 		
 		return $return;
@@ -1179,24 +1179,24 @@ class Date extends Root
 	// s'il y a une timezone spécifié, change et remet le timezone par défaut
 	public static function get($value=null,$timezone=null):array
 	{
-		$return = [];
+		$return = array();
 		$value = static::time($value);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
 			if(!empty($timezone))
 			Timezone::set($timezone);
 			
-			$get = \getdate($value);
+			$get = getdate($value);
 
 			if(!empty($timezone))
 			Timezone::reset();
 			
 			if(!empty($get))
 			{
-				foreach (['year'=>'year','mon'=>'month','mday'=>'day','hours'=>'hour','minutes'=>'minute','seconds'=>'second'] as $k => $v) 
+				foreach (array('year'=>'year','mon'=>'month','mday'=>'day','hours'=>'hour','minutes'=>'minute','seconds'=>'second') as $k => $v) 
 				{
-					if(\array_key_exists($k,$get) && \is_int($get[$k]))
+					if(array_key_exists($k,$get) && is_int($get[$k]))
 					$return[$v] = $get[$k];
 				}
 			}
@@ -1215,16 +1215,16 @@ class Date extends Root
 	public static function keep(int $amount=2,$value=null):?array
 	{
 		$return = null;
-		$value = (!\is_array($value))? static::get($value):$value;
+		$value = (!is_array($value))? static::get($value):$value;
 		
-		if(\is_array($value) && !empty($value) && $amount > 0)
+		if(is_array($value) && !empty($value) && $amount > 0)
 		{
-			$return = [];
+			$return = array();
 			$i = 0;
 			
 			foreach ($value as $k => $v) 
 			{
-				if(\is_int($v) && $v > 0)
+				if(is_int($v) && $v > 0)
 				{
 					$return[$k] = $v;
 					$i++;
@@ -1252,15 +1252,15 @@ class Date extends Root
 		if(!empty($str))
 		{
 			$i = 0;
-			$count = \count($keep);
+			$count = count($keep);
 			
 			foreach ($keep as $key => $value) 
 			{
 				$i++;
 				
-				if(\is_string($key) && \array_key_exists($key,$str) && \is_int($value) && $value > 0)
+				if(is_string($key) && array_key_exists($key,$str) && is_int($value) && $value > 0)
 				{
-					if($i === $count && !empty($return) && \array_key_exists('and',$str))
+					if($i === $count && !empty($return) && array_key_exists('and',$str))
 					$return .= " ".$str['and'];
 					
 					$return .= (!empty($return))? ' ':'';
@@ -1283,35 +1283,35 @@ class Date extends Root
 	{
 		$return = null;
 		$floor = static::$config['floor'];
-		$year = \idate('Y');
+		$year = idate('Y');
 		$month = $floor['month'];
 		$day = $floor['day'];
 		$hour = $floor['hour'];
 		$minute = $floor['minute'];
 		$second = $floor['second'];
 
-		foreach (['year','month','day','hour','minute','second'] as $i => $v) 
+		foreach (array('year','month','day','hour','minute','second') as $i => $v) 
 		{
-			if(\array_key_exists($v,$value) && \is_numeric($value[$v]))
+			if(array_key_exists($v,$value) && is_numeric($value[$v]))
 			$$v = (int) $value[$v];
 			
-			elseif(\array_key_exists($i,$value) && \is_numeric($value[$i]))
+			elseif(array_key_exists($i,$value) && is_numeric($value[$i]))
 			$$v = (int) $value[$i];
 		}
 		
-		if(\is_int($year) && $year >= 0)
+		if(is_int($year) && $year >= 0)
 		{
 			if($timezone === true)
-			$return = \gmmktime($hour,$minute,$second,$month,$day,$year);
+			$return = gmmktime($hour,$minute,$second,$month,$day,$year);
 			
 			else
 			{
-				if(\is_string($timezone))
+				if(is_string($timezone))
 				Timezone::set($timezone);
 				
-				$return = \mktime($hour,$minute,$second,$month,$day,$year);
+				$return = mktime($hour,$minute,$second,$month,$day,$year);
 				
-				if(\is_string($timezone))
+				if(is_string($timezone))
 				Timezone::reset();
 			}
 		}
@@ -1332,7 +1332,7 @@ class Date extends Root
 	// comme make mais le premier argument n'est pas un tableau
 	public static function mk(?int $year=null,?int $month=null,?int $day=null,?int $hour=null,?int $minute=null,?int $second=null,$timezone=null) 
 	{
-		return static::make([$year,$month,$day,$hour,$minute,$second],$timezone);
+		return static::make(array($year,$month,$day,$hour,$minute,$second),$timezone);
 	}
 	
 	
@@ -1344,13 +1344,13 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format);
 		
-		if(!empty($values) && \is_int($value))
+		if(!empty($values) && is_int($value))
 		{
 			$get = static::get($value);
 			
 			foreach ($values as $key => $value) 
 			{
-				if(\array_key_exists($key,$get) && \is_numeric($value))
+				if(array_key_exists($key,$get) && is_numeric($value))
 				$get[$key] += (int) $value;
 			}
 			
@@ -1369,7 +1369,7 @@ class Date extends Root
 		$return = null;
 		$value = static::time($value,$format);
 		
-		if(!empty($values) && \is_int($value))
+		if(!empty($values) && is_int($value))
 		{
 			$get = static::get($value);
 			
@@ -1392,7 +1392,7 @@ class Date extends Root
 		$return = null;
 		$value = static::time($value,$format);
 		
-		if(!empty($values) && \is_int($value))
+		if(!empty($values) && is_int($value))
 		{
 			$get = static::get($value);
 			
@@ -1400,9 +1400,9 @@ class Date extends Root
 			{
 				foreach ($values as $v) 
 				{
-					if(\is_string($v) && \array_key_exists($v,$get))
+					if(is_string($v) && array_key_exists($v,$get))
 					{
-						$val = (\in_array($v,['day','month'],true))? 1:0;
+						$val = (in_array($v,array('day','month'),true))? 1:0;
 						$get[$v] = $val;
 					}
 				}
@@ -1424,7 +1424,7 @@ class Date extends Root
 		$ceil = static::$config['floor'];
 		$value = static::time($value,$format,true);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
 			$get = static::get($value);
 			
@@ -1435,7 +1435,7 @@ class Date extends Root
 				
 				foreach ($return as $k => $v) 
 				{
-					if($do === true && \array_key_exists($k,$ceil))
+					if($do === true && array_key_exists($k,$ceil))
 					$return[$k] = $ceil[$k];
 					
 					if($k === $period)
@@ -1457,7 +1457,7 @@ class Date extends Root
 		$ceil = static::$config['ceil'];
 		$value = static::time($value,$format,true);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
 			$get = static::get($value);
 			
@@ -1471,9 +1471,9 @@ class Date extends Root
 					if($do === true)
 					{
 						if($k === 'day')
-						$return[$k] = static::countDaysInMonth(['year'=>$return['year'],'month'=>$return['month']]);
+						$return[$k] = static::countDaysInMonth(array('year'=>$return['year'],'month'=>$return['month']));
 						
-						elseif(\array_key_exists($k,$ceil))
+						elseif(array_key_exists($k,$ceil))
 						$return[$k] = $ceil[$k];
 					}
 					
@@ -1491,7 +1491,7 @@ class Date extends Root
 	// retourne un tableau avec les valeur tableau floor et ceil d'une date
 	public static function getFloorCeil(string $period,$value=null,$format=null):array 
 	{
-		$return = [];
+		$return = array();
 		$return['floor'] = static::getFloor($period,$value,$format);
 		$return['ceil'] = static::getCeil($period,$value,$format);
 		
@@ -1506,7 +1506,7 @@ class Date extends Root
 		$return = null;
 		$floor = static::getFloor($period,$value,$format);
 		
-		if(\is_array($floor))
+		if(is_array($floor))
 		$return = static::make($floor);
 		
 		return $return;
@@ -1520,7 +1520,7 @@ class Date extends Root
 		$return = null;
 		$ceil = static::getCeil($period,$value,$format);
 		
-		if(\is_array($ceil))
+		if(is_array($ceil))
 		$return = static::make($ceil);
 		
 		return $return;
@@ -1531,7 +1531,7 @@ class Date extends Root
 	// retourne un tableau avec les valeur floor et ceil d'une date
 	public static function floorCeil(string $period,$value=null,$format=null):array 
 	{
-		$return = [];
+		$return = array();
 		$return['floor'] = static::floor($period,$value,$format);
 		$return['ceil'] = static::ceil($period,$value,$format);
 		
@@ -1544,7 +1544,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function addYear(int $change,$value=null,$format=null):?int 
 	{
-		return static::add(['year'=>$change],$value,$format);
+		return static::add(array('year'=>$change),$value,$format);
 	}
 	
 	
@@ -1553,7 +1553,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function changeYear(int $change,$value=null,$format=null):?int 
 	{
-		return static::change(['year'=>$change],$value,$format);
+		return static::change(array('year'=>$change),$value,$format);
 	}
 	
 	
@@ -1562,7 +1562,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function removeYear($value=null,$format=null):?int 
 	{
-		return static::remove(['year'],$value,$format);
+		return static::remove(array('year'),$value,$format);
 	}
 	
 	
@@ -1598,7 +1598,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function addMonth(int $change,$value=null,$format=null):?int 
 	{
-		return static::add(['month'=>$change],$value,$format);
+		return static::add(array('month'=>$change),$value,$format);
 	}
 	
 	
@@ -1607,7 +1607,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function changeMonth(int $change,$value=null,$format=null):?int 
 	{
-		return static::change(['month'=>$change],$value,$format);
+		return static::change(array('month'=>$change),$value,$format);
 	}
 	
 	
@@ -1616,7 +1616,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function removeMonth($value=null,$format=null):?int 
 	{
-		return static::remove(['month'],$value,$format);
+		return static::remove(array('month'),$value,$format);
 	}
 	
 	
@@ -1652,7 +1652,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function addDay(int $change,$value=null,$format=null):?int 
 	{
-		return static::add(['day'=>$change],$value,$format);
+		return static::add(array('day'=>$change),$value,$format);
 	}
 	
 	
@@ -1661,7 +1661,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function changeDay(int $change,$value=null,$format=null):?int 
 	{
-		return static::change(['day'=>$change],$value,$format);
+		return static::change(array('day'=>$change),$value,$format);
 	}
 	
 	
@@ -1670,7 +1670,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function removeDay($value=null,$format=null):?int 
 	{
-		return static::remove(['day'],$value,$format);
+		return static::remove(array('day'),$value,$format);
 	}
 	
 	
@@ -1706,7 +1706,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function addHour(int $change,$value=null,$format=null):?int
 	{
-		return static::add(['hour'=>$change],$value,$format);
+		return static::add(array('hour'=>$change),$value,$format);
 	}
 	
 	
@@ -1715,7 +1715,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function changeHour(int $change,$value=null,$format=null):?int
 	{
-		return static::change(['hour'=>$change],$value,$format);
+		return static::change(array('hour'=>$change),$value,$format);
 	}
 	
 	
@@ -1724,7 +1724,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function removeHour($value=null,$format=null):?int
 	{
-		return static::remove(['hour'],$value,$format);
+		return static::remove(array('hour'),$value,$format);
 	}
 	
 	
@@ -1760,7 +1760,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function addMinute(int $change,$value=null,$format=null):?int
 	{
-		return static::add(['minute'=>$change],$value,$format);
+		return static::add(array('minute'=>$change),$value,$format);
 	}
 	
 	
@@ -1769,7 +1769,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function changeMinute(int $change,$value=null,$format=null):?int
 	{
-		return static::change(['minute'=>$change],$value,$format);
+		return static::change(array('minute'=>$change),$value,$format);
 	}
 	
 	
@@ -1778,7 +1778,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function removeMinute($value=null,$format=null):?int
 	{
-		return static::remove(['minute'],$value,$format);
+		return static::remove(array('minute'),$value,$format);
 	}
 	
 	
@@ -1814,7 +1814,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function addSecond(int $change,$value=null,$format=null):?int
 	{
-		return static::add(['second'=>$change],$value,$format);
+		return static::add(array('second'=>$change),$value,$format);
 	}
 	
 	
@@ -1823,7 +1823,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function changeSecond(int $change,$value=null,$format=null):?int
 	{
-		return static::change(['second'=>$change],$value,$format);
+		return static::change(array('second'=>$change),$value,$format);
 	}
 
 
@@ -1832,7 +1832,7 @@ class Date extends Root
 	// possibilité d'utiliser un format en entrée
 	public static function removeSecond($value=null,$format=null):?int
 	{
-		return static::remove(['second'],$value,$format);
+		return static::remove(array('second'),$value,$format);
 	}
 	
 	
@@ -1847,13 +1847,13 @@ class Date extends Root
 		$value = static::time($value,$format);
 		$value2 = static::time($value2,$format2);
 
-		if(\is_int($value) && \is_int($value2))
+		if(is_int($value) && is_int($value2))
 		{
-			$diff = \date_diff(\date_create("@$value"),\date_create("@$value2"));
+			$diff = date_diff(date_create("@$value"),date_create("@$value2"));
 			
 			if(!empty($diff))
 			{
-				$return = [];
+				$return = array();
 				$return['year'] = $diff->y;
 				$return['month'] = $diff->m;
 				$return['day'] = $diff->d;
@@ -1879,13 +1879,13 @@ class Date extends Root
 		$value2 = static::time($value2,$format2);
 		$amount = static::getAmount();
 		
-		if(\is_int($value) && \is_int($value2))
+		if(is_int($value) && is_int($value2))
 		{
-			$diff = \date_diff(\date_create("@$value"),\date_create("@$value2"));
+			$diff = date_diff(date_create("@$value"),date_create("@$value2"));
 			
 			if(!empty($diff))
 			{
-				$return = [];
+				$return = array();
 				$return['year'] = $diff->y;
 				$return['month'] = $diff->m + ($return['year'] * $amount['monthsInYear']);
 				$return['day'] = $diff->days;
@@ -2029,7 +2029,7 @@ class Date extends Root
 	// possible de remplir les trous dans le calendrier avec des mois des autres jours si fill est true
 	public static function calendar($value=null,bool $sundayFirst=false,bool $fill=false):array
 	{
-		$return = [];
+		$return = array();
 		$daysInMonths = static::daysInMonth($value);
 		
 		foreach ($daysInMonths as $day => $timestamp) 
@@ -2053,19 +2053,19 @@ class Date extends Root
 	{
 		foreach ($return as $weekNo => $weekDays) 
 		{
-			if(\is_int($weekNo) && \is_array($weekDays) && !empty($weekDays) && \count($weekDays) !== 7)
+			if(is_int($weekNo) && is_array($weekDays) && !empty($weekDays) && count($weekDays) !== 7)
 			{
-				$firstKey = \key($weekDays);
+				$firstKey = key($weekDays);
 				
 				// manque à la fin
 				if($firstKey === 0)
 				{
 					for ($i=0; $i < 7; $i++) 
 					{ 
-						if(\array_key_exists($i,$weekDays))
+						if(array_key_exists($i,$weekDays))
 						$target = $weekDays[$i];
 						
-						elseif(\is_int($target))
+						elseif(is_int($target))
 						{
 							$target = static::addDay(1,$target);
 							$weekDays[$i] = $target;
@@ -2076,7 +2076,7 @@ class Date extends Root
 				// manque au début
 				else
 				{
-					$target = \current($weekDays);
+					$target = current($weekDays);
 					$weekDays = Arr::keysMissing($weekDays,null,0);
 					
 					foreach ($weekDays as $k => $v) 
@@ -2104,13 +2104,13 @@ class Date extends Root
 		$min = static::floorDay($min,$format);
 		$max = static::floorDay($max,$format2);
 		
-		if(\is_int($min) && \is_int($max))
+		if(is_int($min) && is_int($max))
 		{
 			$return = 0;
-			$minDate = \date_create("@$min");
-			$maxDate = \date_create("@$max");
+			$minDate = date_create("@$min");
+			$maxDate = date_create("@$max");
 			
-			$diff = \date_diff($minDate,$maxDate);
+			$diff = date_diff($minDate,$maxDate);
 			if(!empty($diff->days))
 			$return = $diff->days;
 		}
@@ -2130,12 +2130,12 @@ class Date extends Root
 		$min = static::floorMonth($min,$format);
 		$max = static::floorMonth($max,$format2);
 		
-		if(\is_int($min) && \is_int($max))
+		if(is_int($min) && is_int($max))
 		{
 			$yearMaxMin = (static::year($max) - static::year($min));
 			$monthMaxMin = (static::month($max) - static::month($min));
 			$calc = ($yearMaxMin * $amount['monthsInYear']) + $monthMaxMin;
-			$return = \abs($calc);
+			$return = abs($calc);
 		}
 		
 		return $return;
@@ -2152,10 +2152,10 @@ class Date extends Root
 		$min = static::floorYear($min,$format);
 		$max = static::floorYear($max,$format2);
 		
-		if(\is_int($min) && \is_int($max))
+		if(is_int($min) && is_int($max))
 		{
 			$calc = static::year($max) - static::year($min);
-			$return = \abs($calc);
+			$return = abs($calc);
 		}
 		
 		return $return;
@@ -2171,13 +2171,13 @@ class Date extends Root
 	// floor est true par défaut
 	public static function days($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
 	{
-		$return = [];
+		$return = array();
 		$diff = static::daysDiff($min,$max);
-		$interval = (\is_int($interval))? $interval:1;
+		$interval = (is_int($interval))? $interval:1;
 		$min = ($floor === true)? static::floorDay($min):static::time($min,null,true);
 		$max = ($floor === true)? static::floorDay($max):static::time($max,null,true);
 		
-		if(\is_int($diff) && \is_int($min))
+		if(is_int($diff) && is_int($min))
 		{
 			$diff++;
 			$timestamp = $min;
@@ -2212,7 +2212,7 @@ class Date extends Root
 		$return = null;
 		$value = static::time($value,$format);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
 			$floor = static::floorDay($value);
 			
@@ -2234,11 +2234,11 @@ class Date extends Root
 	// format seulement utilisé pour le output
 	public static function daysInMonth($value=null,?int $interval=null,$format=null):array
 	{
-		$return = [];
-		$interval = (\is_int($interval))? $interval:1;
+		$return = array();
+		$interval = (is_int($interval))? $interval:1;
 		$value = static::time($value);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
 			$year = static::year($value);
 			$month = static::month($value);
@@ -2248,7 +2248,7 @@ class Date extends Root
 			foreach ($range as $v) 
 			{
 				$key = $v;
-				$timestamp = static::make([$year,$month,$v]);
+				$timestamp = static::make(array($year,$month,$v));
 				
 				if($format !== null)
 				$return[$timestamp] = static::format($format,$timestamp);
@@ -2279,13 +2279,13 @@ class Date extends Root
 	// floor est true par défaut
 	public static function months($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
 	{
-		$return = [];
+		$return = array();
 		$diff = static::monthsDiff($min,$max);
-		$interval = (\is_int($interval))? $interval:1;
+		$interval = (is_int($interval))? $interval:1;
 		$min = ($floor === true)? static::floorMonth($min):static::time($min,null,true);
 		$max = ($floor === true)? static::floorMonth($max):static::time($max,null,true);
 		
-		if(\is_int($diff) && \is_int($min))
+		if(is_int($diff) && is_int($min))
 		{
 			$diff++;
 			$timestamp = $min;
@@ -2319,12 +2319,12 @@ class Date extends Root
 	// format seulement utilisé pour le output
 	public static function monthsInYear($value=null,?int $interval=null,$format=null):array
 	{
-		$return = [];
-		$interval = (\is_int($interval))? $interval:1;
+		$return = array();
+		$interval = (is_int($interval))? $interval:1;
 		$value = static::time($value,null,true);
 		$amount = static::getAmount();
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
 			$year = static::year($value);
 			$range = Arr::range(1,$amount['monthsInYear'],$interval);
@@ -2332,7 +2332,7 @@ class Date extends Root
 			foreach ($range as $v) 
 			{
 				$key = $v;
-				$timestamp = static::make([$year,$v]);
+				$timestamp = static::make(array($year,$v));
 				
 				if($format !== null)
 				$return[$timestamp] = static::format($format,$timestamp);
@@ -2363,13 +2363,13 @@ class Date extends Root
 	// floor est true par défaut
 	public static function years($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
 	{
-		$return = [];
-		$interval = (\is_int($interval))? $interval:1;
+		$return = array();
+		$interval = (is_int($interval))? $interval:1;
 		$diff = static::yearsDiff($min,$max);
 		$min = ($floor === true)? static::floorYear($min):static::time($min,null,true);
 		$max = ($floor === true)? static::floorYear($max):static::time($max,null,true);
 		
-		if(\is_int($diff) && \is_int($min))
+		if(is_int($diff) && is_int($min))
 		{
 			$diff++;
 			$timestamp = $min;
@@ -2402,7 +2402,7 @@ class Date extends Root
 	// possibilité de changer interval
 	public static function yearsDefault(int $before=-100,int $after=30,?int $interval=null,$format=null):array
 	{
-		$return = [];
+		$return = array();
 		$year = static::year();
 		$before = $year + $before;
 		$after = $year + $after;
@@ -2418,7 +2418,7 @@ class Date extends Root
 	// transforme une int en format de date
 	public static function onSet($return,$format=true) 
 	{
-		if(\is_string($return))
+		if(is_string($return))
 		$return = static::time($return,$format);
 		
 		return $return;
@@ -2430,7 +2430,7 @@ class Date extends Root
 	// envoie en format de date par défaut si int
 	public static function onGet($return,$format=true) 
 	{
-		if(\is_int($return))
+		if(is_int($return))
 		$return = static::format($format,$return);
 		
 		return $return;

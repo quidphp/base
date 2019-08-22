@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Cookie extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'lifetime'=>3600, // durée de vie, 0 signifie fermeture du browser, a priorité sur expire car le timestamp courant est ajouté
 		'expire'=>null, // expiration, 0 signifie fermeture du browser, le timestamp n'est pas additionné, a priorité sur lifetime
 		'path'=>'/', // chemin dans le domaine 
 		'domain'=>'', // ce paramètre est étrange, le plus strict est de laisser domain comme chaîne vide
 		'secure'=>null, // cookie doit être servis via https
 		'httponly'=>true // cookie ne peut pas être modifié dans javaScript
-	];
+	);
 	
 	
 	// is
@@ -41,7 +41,7 @@ class Cookie extends Root
 		$option = static::option('set',$option);
 		
 		if(!empty($option) && !Response::areHeadersSent())
-		$return = \setcookie($name,$value,$option['expire'],$option['path'],$option['domain'],$option['secure'],$option['httponly']);
+		$return = setcookie($name,$value,$option['expire'],$option['path'],$option['domain'],$option['secure'],$option['httponly']);
 		
 		return $return;
 	}
@@ -56,7 +56,7 @@ class Cookie extends Root
 		$option = static::option('unset',$option);
 		
 		if(!empty($option) && !Response::areHeadersSent())
-		$return = \setcookie($name,"",$option['expire'],$option['path'],$option['domain'],$option['secure'],$option['httponly']);
+		$return = setcookie($name,"",$option['expire'],$option['path'],$option['domain'],$option['secure'],$option['httponly']);
 		
 		return $return;
 	}
@@ -66,18 +66,18 @@ class Cookie extends Root
 	// prépare le tableau option pour cookie
 	public static function option(string $mode,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = Arr::plus(static::$config,$option);
 		$time = Date::time();
 		
-		if(\in_array($mode,['set','unset'],true))
+		if(in_array($mode,array('set','unset'),true))
 		{
 			$return = $option;
 			
 			// expire et lifetime set
 			if($mode === 'set')
 			{
-				if(\is_int($return['expire']))
+				if(is_int($return['expire']))
 				{
 					if($return['expire'] > $time)
 					$return['lifetime'] = $return['expire'] - $time;
@@ -85,13 +85,13 @@ class Cookie extends Root
 					$return['lifetime'] = 0;
 				}
 				
-				elseif(\is_int($return['lifetime']))
+				elseif(is_int($return['lifetime']))
 				$return['expire'] = $time + $return['lifetime'];
 
-				if(!\is_int($return['expire']))
+				if(!is_int($return['expire']))
 				$return['expire'] = 0;
 				
-				if(!\is_int($return['lifetime']))
+				if(!is_int($return['lifetime']))
 				$return['lifetime'] = 0;
 			}
 			
@@ -103,22 +103,22 @@ class Cookie extends Root
 			}
 			
 			// path
-			if(!\is_string($return['path']))
+			if(!is_string($return['path']))
 			$return['path'] = '/';
 			
 			// domain
 			if($return['domain'] === true)
 			$return['domain'] = Request::host();
 			
-			if(!\is_string($return['domain']))
+			if(!is_string($return['domain']))
 			$return['domain'] = '';
 			
 			// secure
-			if(!\is_bool($return['secure']))
+			if(!is_bool($return['secure']))
 			$return['secure'] = Request::isSsl();
 			
 			// httponly
-			if(!\is_bool($return['httponly']))
+			if(!is_bool($return['httponly']))
 			$return['httponly'] = true;
 		}
 		

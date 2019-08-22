@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Error extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// setHandler
@@ -14,7 +14,7 @@ class Error extends Root
 	// si la valeur passé est null, le handler est remis à son état initial
 	public static function setHandler(?callable $value=null,int $type=E_ALL|E_STRICT):void
 	{
-		\set_error_handler($value,$type);
+		set_error_handler($value,$type);
 
 		return;
 	}
@@ -24,7 +24,7 @@ class Error extends Root
 	// remet le handler à ce qu'il était avant le dernière appel à set
 	public static function restoreHandler():bool 
 	{
-		return \restore_error_handler();
+		return restore_error_handler();
 	}
 	
 
@@ -32,7 +32,7 @@ class Error extends Root
 	// retourne les informations sur la dernière erreur
 	public static function last():?array
 	{
-		return \error_get_last();
+		return error_get_last();
 	}
 	
 	
@@ -40,7 +40,7 @@ class Error extends Root
 	// efface les informations sur la dernière erreur
 	public static function clearLast():void
 	{
-		\error_clear_last();
+		error_clear_last();
 		
 		return;
 	}
@@ -50,7 +50,7 @@ class Error extends Root
 	// log une erreur à l'endroit défini dans error_log
 	public static function log($message):bool
 	{
-		return \error_log(static::logPrepareMessage($message),0);
+		return error_log(static::logPrepareMessage($message),0);
 	}
 	
 	
@@ -61,7 +61,7 @@ class Error extends Root
 		$return = false;
 		
 		if(Validate::isEmail($email))
-		$return = \error_log(static::logPrepareMessage($message),1,$email,$headers);
+		$return = error_log(static::logPrepareMessage($message),1,$email,$headers);
 		
 		return $return;
 	}
@@ -78,7 +78,7 @@ class Error extends Root
 		$path = Res::uri($path);
 		
 		if(Finder::isWritableOrCreatable($path))
-		$return = \error_log(static::logPrepareMessage($message),3,$path);
+		$return = error_log(static::logPrepareMessage($message),3,$path);
 		
 		return $return;
 	}
@@ -90,16 +90,16 @@ class Error extends Root
 	{
 		$return = '';
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		$return = (string) $value;
 		
-		elseif(\is_array($value))
+		elseif(is_array($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\is_scalar($v))
+				if(is_scalar($v))
 				{
-					$return .= (\strlen($return))? ' ':'';
+					$return .= (strlen($return))? ' ':'';
 					$return .= (string) $v;
 				}
 			}
@@ -116,11 +116,11 @@ class Error extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		$value = Arr::implodeTrimClean(' -> ',$value);
 		
-		if(\is_string($value))
-		$return = \trigger_error($value,$type);
+		if(is_string($value))
+		$return = trigger_error($value,$type);
 		
 		return $return;
 	}
@@ -149,7 +149,7 @@ class Error extends Root
 	// retourne le niveau actuel de error reporting
 	public static function reporting():int
 	{
-		return \error_reporting();
+		return error_reporting();
 	}
 	
 	
@@ -168,7 +168,7 @@ class Error extends Root
 		$return = null;
 		$codes = static::getCodes($lang);
 		
-		if(\array_key_exists($code,$codes))
+		if(array_key_exists($code,$codes))
 		$return = $codes[$code];
 		
 		return $return;
@@ -179,9 +179,9 @@ class Error extends Root
 	// initialise la prise en charge des erreurs
 	public static function init():void
 	{
-		Uri::setNotFound([static::class,'trigger']);
-		File::setNotFound([static::class,'trigger']);
-		Obj::setCastError([static::class,'trigger']);
+		Uri::setNotFound(array(static::class,'trigger'));
+		File::setNotFound(array(static::class,'trigger'));
+		Obj::setCastError(array(static::class,'trigger'));
 		
 		return;
 	}

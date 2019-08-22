@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Func extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// is
 	// retourne vrai si une fonction existe
 	public static function is($name):bool
 	{
-		return (\is_string($name) && \function_exists($name))? true:false;
+		return (is_string($name) && function_exists($name))? true:false;
 	}
 	
 	
@@ -34,7 +34,7 @@ class Func extends Root
 	// retourne toutes les fonctions définis
 	public static function all():array
 	{
-		return \get_defined_functions();
+		return get_defined_functions();
 	}
 	
 	
@@ -42,10 +42,10 @@ class Func extends Root
 	// retourne les fonctions définis par l'utilisateur
 	public static function user():array
 	{
-		$return = [];
+		$return = array();
 		
 		$all = static::all();
-		if(\array_key_exists('user',$all) && \is_array($all['user']))
+		if(array_key_exists('user',$all) && is_array($all['user']))
 		$return = $all['user'];
 		
 		return $return;

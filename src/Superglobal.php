@@ -6,9 +6,9 @@ namespace Quid\Base;
 class Superglobal extends Root
 {
 	// config
-	public static $config = [
-		'postKeys'=>['MAX_FILE_SIZE'] // clés post pouvant être enlevés
-	];
+	public static $config = array(
+		'postKeys'=>array('MAX_FILE_SIZE') // clés post pouvant être enlevés
+	);
 	
 	
 	// hasSession
@@ -275,15 +275,15 @@ class Superglobal extends Root
 	// possible d'envoyer le retour dans la méthode format
 	public static function getServerStart(string $key,bool $sensitive=true,bool $format=false):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach (static::server() as $k => $v) 
 		{
-			if(($sensitive === true && \strpos($k,$key) === 0) || ($sensitive === false && \stripos($k,$key) === 0))
+			if(($sensitive === true && strpos($k,$key) === 0) || ($sensitive === false && stripos($k,$key) === 0))
 			$return[$k] = $v;
 		}
 		
-		if($format === true && \is_array($return))
+		if($format === true && is_array($return))
 		$return = static::reformatServer($return);
 		
 		return $return;
@@ -304,20 +304,20 @@ class Superglobal extends Root
 	// la clé est ramener en strtolower et ucfirst
 	public static function reformatServer(array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(!empty($array))
 		{
 			foreach ($array as $key => $value) 
 			{
-				$explode = \explode("_",$key);
-				if(\is_array($explode))
+				$explode = explode("_",$key);
+				if(is_array($explode))
 				{
-					if(\count($explode) > 1)
-					\array_shift($explode);
-					$explode = \array_map('strtolower',$explode);
-					$explode = \array_map('ucfirst',$explode);
-					$key = \implode('-',$explode);
+					if(count($explode) > 1)
+					array_shift($explode);
+					$explode = array_map('strtolower',$explode);
+					$explode = array_map('ucfirst',$explode);
+					$key = implode('-',$explode);
 					$return[$key] = $value;
 				}
 			}
@@ -501,7 +501,7 @@ class Superglobal extends Root
 		$values = static::getServerStart($key,$sensitive,false);
 		
 		if(!empty($values))
-		Arrs::unsetsRef(\array_keys($values),$_SERVER,$sensitive);
+		Arrs::unsetsRef(array_keys($values),$_SERVER,$sensitive);
 		
 		return;
 	}
@@ -521,7 +521,7 @@ class Superglobal extends Root
 	// format une chaîne dans le format du tableau serveur
 	public static function formatServerKey(string $return):string 
 	{
-		return \str_replace("-","_",\strtoupper($return));
+		return str_replace("-","_",strtoupper($return));
 	}
 	
 	
@@ -538,7 +538,7 @@ class Superglobal extends Root
 			
 			foreach ($return as $key => $value) 
 			{
-				if(\in_array($key,$postKeys,true) || !Validate::isCol($key))
+				if(in_array($key,$postKeys,true) || !Validate::isCol($key))
 				unset($return[$key]);
 			}
 		}
@@ -548,7 +548,7 @@ class Superglobal extends Root
 		
 		if($includeFiles === true)
 		{
-			$files = (\is_array($files))? $files:static::files();
+			$files = (is_array($files))? $files:static::files();
 			$files = static::filesReformat($files);
 			$return = Arrs::replace($files,$return);
 		}
@@ -562,11 +562,11 @@ class Superglobal extends Root
 	// retourne un tableau multidimensionnel si plusieurs fichiers
 	public static function filesReformat(array $value):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($value as $key => $value) 
 		{
-			if(\is_string($key) && \is_array($value))
+			if(is_string($key) && is_array($value))
 			{
 				if(Arrs::is($value))
 				$return[$key] = Column::keySwap($value);

@@ -6,15 +6,15 @@ namespace Quid\Base {
 class Debug extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'method'=>true, // méthode par défaut pour générer l'affichage des détails d'une variable, si true c'est automatique
 		'helper'=>null, // closure pour helper
 		'inc'=>0 // permet de test le nombre d'appel
-	];
+	);
 	
 	
 	// data
-	public static $data = []; // peut être utilisé comme variable statique pour le débogagge
+	public static $data = array(); // peut être utilisé comme variable statique pour le débogagge
 	
 	
 	// helper
@@ -40,7 +40,7 @@ class Debug extends Root
 		$return = '';
 		$method = static::varMethod();
 		
-		if(\is_string($method))
+		if(is_string($method))
 		{
 			$return = static::$method($value,$wrap);
 			
@@ -76,7 +76,7 @@ class Debug extends Root
 	// echo et retourne un array
 	public static function vars(...$values):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -92,7 +92,7 @@ class Debug extends Root
 	// echo, et retourne un array, flush est utilisé
 	public static function varsFlush(...$values):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -182,7 +182,7 @@ class Debug extends Root
 	// si wrap est true, la string est enrobbé de pre
 	public static function printr($value=null,bool $wrap=true):string
 	{   
-		$return = \print_r($value,true);
+		$return = print_r($value,true);
 
 		if($wrap===true)
 		$return = "<pre>$return</pre>";
@@ -201,17 +201,17 @@ class Debug extends Root
 		$return = '';
 		$isOverloaded = Ini::isVarDumpOverloaded();
 		
-		if($isOverloaded === false && \is_string($value) && $extra === true)
+		if($isOverloaded === false && is_string($value) && $extra === true)
 		{
-			$strlen = \strlen($value);
+			$strlen = strlen($value);
 			$specialChars = Html::specialChars($value);
 			
-			if(\strlen($specialChars) !== $strlen)
+			if(strlen($specialChars) !== $strlen)
 			$value = $specialChars."---$strlen";
 		}
 		
 		Buffer::start();
-		\var_dump($value);
+		var_dump($value);
 		$return = Buffer::getClean();
 		
 		if($isOverloaded === false && $wrap === true)
@@ -230,7 +230,7 @@ class Debug extends Root
 	{   
 		$return = '';
 		
-		$return = \var_export($value,true);
+		$return = var_export($value,true);
 		
 		if($wrap === true)
 		$return = static::highlight($return,$wrap,true);
@@ -239,13 +239,13 @@ class Debug extends Root
 		{
 			$count = null;
 			
-			if(\is_string($value))
-			$count = \strlen($value);
+			if(is_string($value))
+			$count = strlen($value);
 			
-			if(\is_array($value))
-			$count = \count($value);
+			if(is_array($value))
+			$count = count($value);
 			
-			if(\is_int($count))
+			if(is_int($count))
 			{
 				$count = "---$count";
 				$return .= ($wrap === true)? "<pre>$count</pre>":$count;
@@ -265,20 +265,20 @@ class Debug extends Root
 		$return = '';
 		
 		if($file === true)
-		$return = \highlight_file($string,true);
+		$return = highlight_file($string,true);
 		
 		else
 		{
-			$string = \stripslashes($string);
+			$string = stripslashes($string);
 			
 			if($wrap === true)
 			$string = "<?php\n".$string."\n?>";
 			
-			$return = \highlight_string($string,true);
+			$return = highlight_string($string,true);
 		}
 		
 		if($unwrap === true)
-		$return = \str_replace(['&lt;?php<br />','&lt;?php&nbsp;','<span style="color: #0000BB">?&gt;</span>','?&gt;'],'',$return);
+		$return = str_replace(array('&lt;?php<br />','&lt;?php&nbsp;','<span style="color: #0000BB">?&gt;</span>','?&gt;'),'',$return);
 		
 		return $return;
 	}
@@ -290,8 +290,8 @@ class Debug extends Root
 	{
 		$return = null;
 		
-		if(\is_file($value))
-		$return = \php_strip_whitespace($value);
+		if(is_file($value))
+		$return = php_strip_whitespace($value);
 		
 		return $return; 
 	}
@@ -304,7 +304,7 @@ class Debug extends Root
 	public static function trace(bool $showArgs=false,int $shift=0):array
 	{
 		$option = ($showArgs===true)? 0:DEBUG_BACKTRACE_IGNORE_ARGS;
-		$return = \debug_backtrace($option);
+		$return = debug_backtrace($option);
 		Arr::shift($return,$shift);
 		
 		return $return;
@@ -316,17 +316,17 @@ class Debug extends Root
 	// showArgs permet d'enlever les arguments
 	public static function traceStart(string $file,?int $line=null,bool $showArgs=false,?array $trace=null):array
 	{
-		$return = [];
+		$return = array();
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		$capture = false;
 		
 		foreach ($trace as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			{
-				if(\array_key_exists('file',$value) && $value['file'] === $file)
+				if(array_key_exists('file',$value) && $value['file'] === $file)
 				{
-					if($line === null || (\array_key_exists('line',$value) && $value['line'] === $line))
+					if($line === null || (array_key_exists('line',$value) && $value['line'] === $line))
 					$capture = true;
 				}
 				
@@ -350,7 +350,7 @@ class Debug extends Root
 		$return = null;
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		
-		if(\is_string($file))
+		if(is_string($file))
 		$trace = static::traceStart($file,$line,$showArgs,$trace);
 		
 		elseif($showArgs === false)
@@ -367,10 +367,10 @@ class Debug extends Root
 	// les arguments de traceStart peuvent aussi être fournis en 3e et 4e position
 	public static function traceSlice(int $offset,?int $length=null,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):array
 	{
-		$return = [];
+		$return = array();
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		
-		if(\is_string($file))
+		if(is_string($file))
 		$trace = static::traceStart($file,$line,$showArgs,$trace);
 		
 		elseif($showArgs === false)
@@ -390,12 +390,12 @@ class Debug extends Root
 		$return = null;
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		
-		if(\is_string($file))
+		if(is_string($file))
 		$trace = static::traceStart($file,$line,false,$trace);
 		
 		foreach ($trace as $key => $value) 
 		{
-			if(\is_array($value) && !empty($value['function']))
+			if(is_array($value) && !empty($value['function']))
 			{
 				$return = '';
 				
@@ -420,13 +420,13 @@ class Debug extends Root
 	{
 		$return = null;
 		$trace = ($trace === null)? static::trace(false,1):$trace;
-		$class = (empty($class))? [static::class]:Arr::append($class,static::class);
+		$class = (empty($class))? array(static::class):Arr::append($class,static::class);
 		
 		foreach ($trace as $key => $value) 
 		{
-			if(\is_array($value) && \array_key_exists('class',$value) && \array_key_exists('function',$value))
+			if(is_array($value) && array_key_exists('class',$value) && array_key_exists('function',$value))
 			{
-				if(!\in_array($value['class'],$class,true) || ($construct === true && $value['function'] === '__construct'))
+				if(!in_array($value['class'],$class,true) || ($construct === true && $value['function'] === '__construct'))
 				{
 					$return = $value;
 					break;
@@ -447,7 +447,7 @@ class Debug extends Root
 		
 		foreach ($trace as $key => $value) 
 		{
-			if(\is_array($value) && \array_key_exists('file',$value) && $value['file'] !== $file)
+			if(is_array($value) && array_key_exists('file',$value) && $value['file'] !== $file)
 			{
 				$return = $value;
 				break;
@@ -464,7 +464,7 @@ class Debug extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value) && \array_key_exists('args',$value))
+			if(is_array($value) && array_key_exists('args',$value))
 			{
 				unset($value['args']);
 				$return[$key] = $value;
@@ -481,9 +481,9 @@ class Debug extends Root
 	public static function speed(?float $value=null,int $round=3):float
 	{
 		$return = 0;
-		$value = (\is_numeric($value))? $value:Date::getMicrotime();
+		$value = (is_numeric($value))? $value:Date::getMicrotime();
 
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		$return = Number::round((Date::microtime()-$value),$round);
 
 		return $return;
@@ -529,7 +529,7 @@ use Quid\Base;
 Base\Debug::$config['helper'] = function() {
 	// d
 	// raccourci pour vars
-	if(!\function_exists('d'))
+	if(!function_exists('d'))
 	{
 		function d(...$values):array
 		{
@@ -540,7 +540,7 @@ Base\Debug::$config['helper'] = function() {
 	
 	// df
 	// raccourci pour varsFlush
-	if(!\function_exists('df'))
+	if(!function_exists('df'))
 	{
 		function df(...$values):array
 		{
@@ -551,7 +551,7 @@ Base\Debug::$config['helper'] = function() {
 	
 	// dg
 	// raccourci pour varsGet
-	if(!\function_exists('dg'))
+	if(!function_exists('dg'))
 	{
 		function dg(...$values):string
 		{
@@ -562,7 +562,7 @@ Base\Debug::$config['helper'] = function() {
 
 	// dd
 	// raccourci pour deads
-	if(!\function_exists('dd'))
+	if(!function_exists('dd'))
 	{
 		function dd(...$values):void
 		{
@@ -573,7 +573,7 @@ Base\Debug::$config['helper'] = function() {
 
 	// trace
 	// raccourci pour trace
-	if(!\function_exists('trace'))
+	if(!function_exists('trace'))
 	{
 		function trace(bool $showArgs=false,int $shift=1):array
 		{
@@ -586,7 +586,7 @@ Base\Debug::$config['helper'] = function() {
 
 	// speed
 	// raccourci pour speed
-	if(!\function_exists('speed'))
+	if(!function_exists('speed'))
 	{
 		function speed(?float $value=null,int $round=3):float
 		{
@@ -599,7 +599,7 @@ Base\Debug::$config['helper'] = function() {
 
 	// speedd
 	// raccourci pour speed + dead
-	if(!\function_exists('speedd'))
+	if(!function_exists('speedd'))
 	{
 		function speedd(?float $value=null,int $round=3):void
 		{

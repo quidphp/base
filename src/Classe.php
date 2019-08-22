@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Classe extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// is
@@ -15,17 +15,17 @@ class Classe extends Root
 	{
 		$return = false;
 		
-		if(\is_object($value))
+		if(is_object($value))
 		$return = true;
 		
-		elseif(\is_string($value) && \class_exists($value,false))
+		elseif(is_string($value) && class_exists($value,false))
 		$return = true;
 		
 		else
 		{
 			$value = Fqcn::str($value);
 			
-			if(!empty($value) && \class_exists($value,$autoload))
+			if(!empty($value) && class_exists($value,$autoload))
 			$return = true;
 		}
 		
@@ -39,11 +39,11 @@ class Classe extends Root
 	{
 		$return = false;
 		
-		if(!\is_object($value))
+		if(!is_object($value))
 		{
 			$value = Fqcn::str($value);
 			
-			if(!empty($value) && \interface_exists($value,$autoload))
+			if(!empty($value) && interface_exists($value,$autoload))
 			$return = true;
 		}
 		
@@ -57,11 +57,11 @@ class Classe extends Root
 	{
 		$return = false;
 		
-		if(!\is_object($value))
+		if(!is_object($value))
 		{
 			$value = Fqcn::str($value);
 			
-			if(!empty($value) && \trait_exists($value,$autoload))
+			if(!empty($value) && trait_exists($value,$autoload))
 			$return = true;
 		}
 		
@@ -75,7 +75,7 @@ class Classe extends Root
 	{
 		$return = false;
 		
-		if(\is_object($value))
+		if(is_object($value))
 		$return = true;
 		
 		else
@@ -83,7 +83,7 @@ class Classe extends Root
 			$value = Fqcn::str($value);
 			if(!empty($value))
 			{
-				if(\class_exists($value,$autoload) || \interface_exists($value,$autoload) || \trait_exists($value,$autoload))
+				if(class_exists($value,$autoload) || interface_exists($value,$autoload) || trait_exists($value,$autoload))
 				$return = true;
 			}
 		}
@@ -107,7 +107,7 @@ class Classe extends Root
 		$return = false;
 		$value = static::fqcn($value);
 		
-		if(\is_string($value) && \strpos($value,'@') !== false)
+		if(is_string($value) && strpos($value,'@') !== false)
 		$return = true;
 		
 		return $return;
@@ -118,7 +118,7 @@ class Classe extends Root
 	// retourne vrai si le nom du fichier semble être une classe
 	public static function isNameClass($value):bool
 	{
-		return (\is_string($value) && \strlen($value) && \strpos($value,'_') === false && \stripos($value,'Interface') === false)? true:false;
+		return (is_string($value) && strlen($value) && strpos($value,'_') === false && stripos($value,'Interface') === false)? true:false;
 	}
 	
 	
@@ -127,7 +127,7 @@ class Classe extends Root
 	// doit commencer par un _
 	public static function isNameTrait($value):bool
 	{
-		return (\is_string($value) && \strlen($value) && \strpos($value,'_') === 0)? true:false;
+		return (is_string($value) && strlen($value) && strpos($value,'_') === 0)? true:false;
 	}
 	
 	
@@ -136,7 +136,7 @@ class Classe extends Root
 	// doit contenir Interface avec un i majuscule
 	public static function isNameInterface($value):bool
 	{
-		return (\is_string($value) && \strlen($value) && \strpos($value,'_') === false && \stripos($value,'Interface') > 0)? true:false;
+		return (is_string($value) && strlen($value) && strpos($value,'_') === false && stripos($value,'Interface') > 0)? true:false;
 	}
 	
 	
@@ -148,7 +148,7 @@ class Classe extends Root
 		$parent = Fqcn::str($parent);
 		$value = static::get($value,$autoload);
 		
-		if(!empty($parent) && !empty($value) && \is_subclass_of($value,$parent,$autoload))
+		if(!empty($parent) && !empty($value) && is_subclass_of($value,$parent,$autoload))
 		$return = true;
 		
 		return $return;
@@ -167,7 +167,7 @@ class Classe extends Root
 			foreach ($parents as $v) 
 			{
 				$v = Fqcn::str($v);
-				if(!empty($v) && \is_subclass_of($value,$v,$autoload))
+				if(!empty($v) && is_subclass_of($value,$v,$autoload))
 				{
 					$return = true;
 					break;
@@ -186,7 +186,7 @@ class Classe extends Root
 		$return = false;
 		$value = static::get($value,$autoload);
 		
-		if(!empty($value) && \is_string($method) && \method_exists($value,$method))
+		if(!empty($value) && is_string($method) && method_exists($value,$method))
 		$return = true;
 		
 		return $return;
@@ -200,7 +200,7 @@ class Classe extends Root
 		$return = false;
 		$value = static::get($value,$autoload);
 		
-		if(!empty($value) && \is_string($property) && \property_exists($value,$property))
+		if(!empty($value) && is_string($property) && property_exists($value,$property))
 		$return = true;
 		
 		return $return;
@@ -287,7 +287,7 @@ class Classe extends Root
 	{
 		$return = false;
 		
-		if(\count($values) > 1)
+		if(count($values) > 1)
 		{
 			$instance = null;
 			
@@ -304,7 +304,7 @@ class Classe extends Root
 						$return = true;
 					}
 					
-					elseif(\is_a($value,$instance,true))
+					elseif(is_a($value,$instance,true))
 					$return = true;
 				}
 				
@@ -324,7 +324,7 @@ class Classe extends Root
 	{
 		$return = false;
 		
-		if(\count($values) > 1)
+		if(count($values) > 1)
 		{
 			$interface = null;
 			
@@ -338,14 +338,14 @@ class Classe extends Root
 					if($interface === null)
 					{
 						$i = static::interfaces($value,true);
-						if(\is_array($i))
+						if(is_array($i))
 						{
 							$interface = $i;
 							$return = true;
 						}
 					}
 					
-					elseif(\is_array($interface))
+					elseif(is_array($interface))
 					{
 						$i = static::interfaces($value,true);
 						if((empty($i) && empty($interface)) || Arr::ins($i,$interface,false,true))
@@ -370,7 +370,7 @@ class Classe extends Root
 	{
 		$return = false;
 		
-		if(\count($values) > 1)
+		if(count($values) > 1)
 		{
 			$namespace = null;
 			
@@ -409,7 +409,7 @@ class Classe extends Root
 		$value = static::get($value,$autoload);
 		
 		if(!empty($alias) && !empty($value) && !static::isAny($alias))
-		$return = \class_alias($value,$alias,$autoload);
+		$return = class_alias($value,$alias,$autoload);
 		
 		return $return;
 	}
@@ -419,7 +419,7 @@ class Classe extends Root
 	// crée plusieurs alias de classe, interface ou trait
 	public static function aliases(array $aliases,bool $autoload=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($aliases as $alias => $value) 
 		{
@@ -437,10 +437,10 @@ class Classe extends Root
 	{
 		$return = null;
 		
-		if(\is_object($value))
+		if(is_object($value))
 		$return = $value;
 		
-		elseif(\is_string($value) && \class_exists($value,false))
+		elseif(is_string($value) && class_exists($value,false))
 		$return = $value;
 		
 		elseif($autoload === true)
@@ -449,7 +449,7 @@ class Classe extends Root
 			
 			if(!empty($value))
 			{
-				if(\class_exists($value,$autoload) || \interface_exists($value,$autoload) || \trait_exists($value,$autoload))
+				if(class_exists($value,$autoload) || interface_exists($value,$autoload) || trait_exists($value,$autoload))
 				$return = $value;
 			}
 		}
@@ -529,13 +529,13 @@ class Classe extends Root
 		
 		if(!empty($value))
 		{
-			if(\is_object($value) || \class_exists($value,$autoload))
+			if(is_object($value) || class_exists($value,$autoload))
 			$return = 'class';
 			
-			elseif(\interface_exists($value,$autoload))
+			elseif(interface_exists($value,$autoload))
 			$return = 'interface';
 			
-			elseif(\trait_exists($value,$autoload))
+			elseif(trait_exists($value,$autoload))
 			$return = 'trait';
 		}
 		
@@ -556,7 +556,7 @@ class Classe extends Root
 			
 			if(!empty($class))
 			{
-				$parent = \get_parent_class($class);
+				$parent = get_parent_class($class);
 				if($parent !== false)
 				$return = $parent;
 			}
@@ -581,14 +581,14 @@ class Classe extends Root
 			
 			if(!empty($class))
 			{
-				$return = [];
+				$return = array();
 				
-				$parents = \class_parents($class,$autoload);
+				$parents = class_parents($class,$autoload);
 				if($parents !== false)
-				$return = \array_values($parents);
+				$return = array_values($parents);
 				
 				if($self === true)
-				\array_unshift($return,static::fqcn($class));
+				array_unshift($return,static::fqcn($class));
 				
 				if(!empty($pop))
 				Arr::pop($return,$pop);
@@ -639,7 +639,7 @@ class Classe extends Root
 		$value = static::get($value,$autoload);
 		
 		if(!empty($value))
-		$return = \get_class_methods($value);
+		$return = get_class_methods($value);
 		
 		return $return;
 	}
@@ -660,12 +660,12 @@ class Classe extends Root
 			if(!empty($value))
 			{
 				$name = Fqcn::str($value);
-				$vars = \get_class_vars($name);
+				$vars = get_class_vars($name);
 				if($vars !== false)
 				$return = $vars;
 				
-				if(\is_object($value))
-				$return = Arr::replace($return,\get_object_vars($value));
+				if(is_object($value))
+				$return = Arr::replace($return,get_object_vars($value));
 			}
 		}
 		
@@ -677,10 +677,10 @@ class Classe extends Root
 	// retourne la callable à utiliser pour le propertyMerge
 	public static function propertyMergeCallable($value):callable 
 	{
-		$return = [Arrs::class,'replace'];
+		$return = array(Arrs::class,'replace');
 		
 		if($value === false)
-		$return = [Arr::class,'replace'];
+		$return = array(Arr::class,'replace');
 		
 		elseif(static::classIsCallable($value))
 		$return = $value;
@@ -699,12 +699,12 @@ class Classe extends Root
 		$return = null;
 		$class = static::get($class,$autoload);
 		
-		if(!empty($class) && \property_exists($class,$property) && \is_array($class::$$property))
+		if(!empty($class) && property_exists($class,$property) && is_array($class::$$property))
 		{
-			if(\is_string($value) && File::is($value))
+			if(is_string($value) && File::is($value))
 			$value = File::load($value);
 			
-			if(\is_array($value))
+			if(is_array($value))
 			{
 				$callable = static::propertyMergeCallable($callable);
 				$return = $callable($class::$config,$value);
@@ -730,16 +730,16 @@ class Classe extends Root
 		
 		if(!empty($value))
 		{
-			$return = [];
+			$return = array();
 			
-			if(\property_exists($class,$property) && \is_array($class::$$property))
+			if(property_exists($class,$property) && is_array($class::$$property))
 			$return[] = $class::$$property;
 			
 			if(!empty($parents))
 			{
 				foreach ($parents as $parent) 
 				{
-					if(\property_exists($parent,$property) && \is_array($parent::$$property))
+					if(property_exists($parent,$property) && is_array($parent::$$property))
 					{
 						$key = Arr::keyLast($return);
 						
@@ -751,13 +751,13 @@ class Classe extends Root
 			
 			if(!empty($return))
 			{
-				if(\count($return) === 1)
-				$return = \current($return);
+				if(count($return) === 1)
+				$return = current($return);
 				
 				else
 				{
 					$callable = static::propertyMergeCallable($callable);
-					$return = $callable(...\array_reverse($return));
+					$return = $callable(...array_reverse($return));
 					
 					if($write === true)
 					$class::$config = $return;
@@ -802,9 +802,9 @@ class Classe extends Root
 			
 			if(!empty($value))
 			{
-				$interfaces = \class_implements($value,$autoload);
+				$interfaces = class_implements($value,$autoload);
 				if($interfaces !== false)
-				$return = \array_values($interfaces);
+				$return = array_values($interfaces);
 			}
 		}
 		
@@ -826,14 +826,14 @@ class Classe extends Root
 			
 			if(!empty($value))
 			{
-				$uses = \class_uses($value,$autoload);
+				$uses = class_uses($value,$autoload);
 				if($uses !== false)
 				{
-					$return = \array_values($uses);
+					$return = array_values($uses);
 					
 					if($deep === true)
 					{
-						$deep = [];
+						$deep = array();
 						
 						// trait
 						foreach ($return as $v) 
@@ -864,7 +864,7 @@ class Classe extends Root
 	// ne vérifie pas l'existence des éléments
 	public static function namespaces(array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $value) 
 		{
@@ -882,7 +882,7 @@ class Classe extends Root
 	// retourne un tableau avec les classes spl déclarés
 	public static function spl():array
 	{
-		return \spl_classes();
+		return spl_classes();
 	}
 	
 	
@@ -892,11 +892,11 @@ class Classe extends Root
 	// dig permet de retenir aussi les namespaces non exact (mais contenant la valeur namespace)
 	public static function declared(?string $namespace=null,bool $onlyClass=true,bool $dig=false):array 
 	{
-		$return = [];
-		$declared = \get_declared_classes();
+		$return = array();
+		$declared = get_declared_classes();
 		
 		if($onlyClass === false)
-		$declared = Arr::append($declared,\get_declared_interfaces(),\get_declared_traits());
+		$declared = Arr::append($declared,get_declared_interfaces(),get_declared_traits());
 		
 		if(empty($namespace))
 		$return = $declared;
@@ -905,7 +905,7 @@ class Classe extends Root
 		{
 			foreach ($declared as $class) 
 			{
-				if(\strpos($class,"\\") !== false)
+				if(strpos($class,"\\") !== false)
 				{
 					$classNamespace = Fqcn::namespace($class);
 					
@@ -913,10 +913,10 @@ class Classe extends Root
 					{
 						$keep = false;
 						
-						if($dig === false && \strtolower($classNamespace) === \strtolower($namespace))
+						if($dig === false && strtolower($classNamespace) === strtolower($namespace))
 						$keep = true;
 						
-						elseif($dig === true && \stripos($classNamespace,$namespace) === 0)
+						elseif($dig === true && stripos($classNamespace,$namespace) === 0)
 						$keep = true;
 						
 						if($keep === true)
@@ -937,11 +937,11 @@ class Classe extends Root
 	// si méthode true, classe interface et trait sont passé dans methods, enfin le nombre total de méthode est retourné
 	public static function overview($filter=null,bool $namespace=false,bool $method=false,bool $sort=false):array
 	{
-		$return = [];
+		$return = array();
 		
-		$return['class'] = \get_declared_classes();
-		$return['interface'] = \get_declared_interfaces();
-		$return['trait'] = \get_declared_traits();
+		$return['class'] = get_declared_classes();
+		$return['interface'] = get_declared_interfaces();
+		$return['trait'] = get_declared_traits();
 		
 		if($filter !== null)
 		{
@@ -958,7 +958,7 @@ class Classe extends Root
 		
 		if($method === true)
 		{
-			foreach (['class','interface','trait'] as $k) 
+			foreach (array('class','interface','trait') as $k) 
 			{
 				foreach ($return[$k] as $key => $value) 
 				{
@@ -981,25 +981,25 @@ class Classe extends Root
 	// possible d'appliquer un filtre
 	public static function total($filter=null,bool $method=true):array
 	{
-		$return = ['class'=>0,'interface'=>0,'trait'=>0,'namespace'=>0];
+		$return = array('class'=>0,'interface'=>0,'trait'=>0,'namespace'=>0);
 		$all = static::overview($filter,true);
 		
-		$return['class'] = \count($all['class']);
-		$return['interface'] = \count($all['interface']);
-		$return['trait'] = \count($all['trait']);
-		$return['namespace'] = \count($all['namespace']);
+		$return['class'] = count($all['class']);
+		$return['interface'] = count($all['interface']);
+		$return['trait'] = count($all['trait']);
+		$return['namespace'] = count($all['namespace']);
 		
 		if($method === true)
 		{
 			$return['method'] = 0;
 			
-			foreach (['class','interface','trait'] as $key) 
+			foreach (array('class','interface','trait') as $key) 
 			{
 				foreach ($all[$key] as $value) 
 				{
 					$methods = static::methods($value);
-					if(\is_array($methods))
-					$return['method'] += \count($methods);
+					if(is_array($methods))
+					$return['method'] += count($methods);
 				}
 			}
 		}
@@ -1018,9 +1018,9 @@ class Classe extends Root
 	// ne vérifie pas l'existence des éléments
 	public static function filter($filter,array $values,bool $autoload=true):array 
 	{
-		$return = [];
-		$filter = (\is_scalar($filter))? ['namespace'=>$filter]:$filter;
-		$filter = Arr::plus(['fqcn'=>null,'namespace'=>null,'interface'=>null,'trait'=>null],$filter);
+		$return = array();
+		$filter = (is_scalar($filter))? array('namespace'=>$filter):$filter;
+		$filter = Arr::plus(array('fqcn'=>null,'namespace'=>null,'interface'=>null,'trait'=>null),$filter);
 		
 		foreach ($values as $value) 
 		{
@@ -1028,7 +1028,7 @@ class Classe extends Root
 			$keep = true;
 			
 			// fqcn
-			if(\is_string($filter['fqcn']) && \stripos($value,$filter['fqcn']) !== 0)
+			if(is_string($filter['fqcn']) && stripos($value,$filter['fqcn']) !== 0)
 			$keep = false;
 			
 			// namespace
@@ -1036,10 +1036,10 @@ class Classe extends Root
 			{
 				$namespace = Fqcn::namespace($value);
 				
-				if(\is_object($filter['namespace']))
+				if(is_object($filter['namespace']))
 				$filter['namespace'] = Fqcn::namespace($filter['namespace']);
 				
-				elseif(\is_array($filter['namespace']) || \is_string($filter['namespace']))
+				elseif(is_array($filter['namespace']) || is_string($filter['namespace']))
 				$filter['namespace'] = Fqcn::str($filter['namespace']);
 				
 				if($filter['namespace'] === true && empty($namespace))
@@ -1048,7 +1048,7 @@ class Classe extends Root
 				elseif($filter['namespace'] === false && !empty($namespace))
 				$keep = false;
 				
-				elseif(\is_string($filter['namespace']) && !Str::icompare($filter['namespace'],$namespace))
+				elseif(is_string($filter['namespace']) && !Str::icompare($filter['namespace'],$namespace))
 				$keep = false;
 			}
 			
@@ -1063,7 +1063,7 @@ class Classe extends Root
 				elseif(!empty($array) && empty($filter['interface']))
 				$keep = false;
 				
-				elseif(!empty($array) && \is_string($filter['interface']) && !Arr::in($filter['interface'],$array,false))
+				elseif(!empty($array) && is_string($filter['interface']) && !Arr::in($filter['interface'],$array,false))
 				$keep = false;
 			}
 			
@@ -1078,7 +1078,7 @@ class Classe extends Root
 				elseif(!empty($array) && empty($filter['trait']))
 				$keep = false;
 				
-				elseif(!empty($array) && \is_string($filter['trait']) && !Arr::in($filter['trait'],$array,false))
+				elseif(!empty($array) && is_string($filter['trait']) && !Arr::in($filter['trait'],$array,false))
 				$keep = false;
 			}
 			
@@ -1100,7 +1100,7 @@ class Classe extends Root
 		
 		if(!empty($value))
 		{
-			$return = [];
+			$return = array();
 			$return['fqcn'] = static::fqcn($value);
 			$return['namespace'] = static::namespace($value);
 			$return['name'] = static::name($value);

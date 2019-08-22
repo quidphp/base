@@ -6,22 +6,22 @@ namespace Quid\Base;
 class Json extends Assoc
 {
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
+	public static $config = array(
+		'option'=>array( // tableau d'options
 			'encode'=>JSON_INVALID_UTF8_IGNORE|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES, // flag encode
 			'decode'=>JSON_INVALID_UTF8_IGNORE|JSON_BIGINT_AS_STRING, // flag decode
 			'depth'=>512, // depth pour encode et decode
 			'assoc'=>true, // option assoc pour decode
 			'case'=>null, // les clés sont ramenés dans cette case dans arr
-			'sort'=>null] // les clés sont sort
-	];
+			'sort'=>null) // les clés sont sort
+	);
 	
 	
 	// is
 	// retourne vrai si la chaîne est du json
 	public static function is($value):bool
 	{
-		return (\is_string($value) && static::decode($value) !== null)? true:false;
+		return (is_string($value) && static::decode($value) !== null)? true:false;
 	}
 	
 	
@@ -29,7 +29,7 @@ class Json extends Assoc
 	// retourne vrai si la chaîne est du json mais vide
 	public static function isEmpty($value):bool 
 	{
-		return (\is_string($value) && ($json = static::decode($value)) !== null && empty($json))? true:false;
+		return (is_string($value) && ($json = static::decode($value)) !== null && empty($json))? true:false;
 	}
 	
 	
@@ -37,7 +37,7 @@ class Json extends Assoc
 	// retourne vrai si la chaîne est du json non vide
 	public static function isNotEmpty($value):bool 
 	{
-		return (\is_string($value) && ($json = static::decode($value)) !== null && !empty($json))? true:false;
+		return (is_string($value) && ($json = static::decode($value)) !== null && !empty($json))? true:false;
 	}
 	
 	
@@ -52,7 +52,7 @@ class Json extends Assoc
 		
 		$flag = ($flag === null)? $option['encode']:$flag;
 		$depth = ($depth === null)? $option['depth']:$depth;
-		$return = \json_encode($value,$flag,$depth);
+		$return = json_encode($value,$flag,$depth);
 		
 		return $return;		
 	}
@@ -93,7 +93,7 @@ class Json extends Assoc
 		$return = '';
 		$json = static::encode($value,$flag,$depth);
 		
-		if(\is_string($json))
+		if(is_string($json))
 		$return = Html::specialchars($json);
 		
 		return $return;
@@ -107,7 +107,7 @@ class Json extends Assoc
 		$return = null;
 		$value = static::encode($value,$flag,$depth);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return = static::var($var,$value);
 		
 		return $return;
@@ -140,7 +140,7 @@ class Json extends Assoc
 		$depth = ($depth === null)? $option['depth']:$depth;
 		$flag = ($flag === null)? $option['decode']:$flag;
 		
-		$return = \json_decode($value,$assoc,$depth,$flag);
+		$return = json_decode($value,$assoc,$depth,$flag);
 		
 		return $return;
 	}
@@ -153,7 +153,7 @@ class Json extends Assoc
 		$return = null;
 		$decode = static::decode($value,$assoc,$flag,$depth);
 		
-		if(\is_array($decode))
+		if(is_array($decode))
 		$return = Arr::gets($keys,$decode);
 		
 		return $return;
@@ -167,7 +167,7 @@ class Json extends Assoc
 		$return = null;
 		$decode = static::decode($value,$assoc,$flag,$depth);
 		
-		if(\is_array($decode) && Arr::keysExists($keys,$decode))
+		if(is_array($decode) && Arr::keysExists($keys,$decode))
 		$return = $decode;
 		
 		return $return;
@@ -178,7 +178,7 @@ class Json extends Assoc
 	// retourne les informations sur la dernière erreur json
 	public static function error():array
 	{
-		return ['code'=>\json_last_error(),'msg'=>\json_last_error_msg()];
+		return array('code'=>json_last_error(),'msg'=>json_last_error_msg());
 	}
 	
 	
@@ -187,13 +187,13 @@ class Json extends Assoc
 	// retourne tableau vide si après decode ce n'est pas un tableau
 	public static function arr($value,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = static::option($option);
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		$value = static::decode($value,$option['assoc'],$option['decode'],$option['depth']);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			$return = Arr::trimClean($value,$option['trim'],$option['trim'],$option['clean']);
 			
@@ -213,7 +213,7 @@ class Json extends Assoc
 	// encode en json si array ou objet
 	public static function onSet($return) 
 	{
-		if(\is_array($return) || \is_object($return))
+		if(is_array($return) || is_object($return))
 		$return = static::encode($return);
 		
 		return $return;
@@ -225,7 +225,7 @@ class Json extends Assoc
 	// décode de json si scalar
 	public static function onGet($return) 
 	{
-		if(\is_scalar($return))
+		if(is_scalar($return))
 		$return = static::decode($return);
 		
 		return $return;

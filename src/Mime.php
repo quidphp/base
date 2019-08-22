@@ -6,33 +6,33 @@ namespace Quid\Base;
 class Mime extends Root
 {
 	// config
-	public static $config = [ 
-		'groupToExtension'=>[ // permet de lier des extensions à des groupes
+	public static $config = array( 
+		'groupToExtension'=>array( // permet de lier des extensions à des groupes
 			'audio'=>'mp3',
 			'calendar'=>'ics',
-			'css'=>['css','scss'],
+			'css'=>array('css','scss'),
 			'csv'=>'csv',
-			'doc'=>['doc','doct','docx','docxt'],
+			'doc'=>array('doc','doct','docx','docxt'),
 			'font'=>'ttf',
 			'html'=>'html',
-			'imageRaster'=>['jpg','gif','jpeg','png'],
+			'imageRaster'=>array('jpg','gif','jpeg','png'),
 			'imageVector'=>'svg',
 			'js'=>'js',
 			'json'=>'json',
 			'pdf'=>'pdf',
 			'php'=>'php',
 			'txt'=>'txt',
-			'video'=>['mp4','mov'],
+			'video'=>array('mp4','mov'),
 			'xml'=>'xml',
-			'zip'=>'zip'],
-		'mimeToExtension'=>[ // liste de mimetype commun avec leur extension
+			'zip'=>'zip'),
+		'mimeToExtension'=>array( // liste de mimetype commun avec leur extension
 			'audio/mpeg'=>'mp3',
 			'text/calendar'=>'ics',
 			'text/csv'=>'csv',
-			'application/octet-stream'=>['ttf'],
+			'application/octet-stream'=>array('ttf'),
 			'text/html'=>'html',
 			'image/gif'=>'gif',
-			'image/jpeg'=>['jpg','jpeg'],
+			'image/jpeg'=>array('jpg','jpeg'),
 			'image/png'=>'png',
 			'image/svg'=>'svg',
 			'text/json'=>'json',
@@ -43,27 +43,27 @@ class Mime extends Root
 			'text/x-scss'=>'scss',
 			'text/javascript'=>'js',
 			'text/x-php'=>'php',
-			'application/msword'=>['doc','doct'],
+			'application/msword'=>array('doc','doct'),
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document'=>'docx',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.template'=>'docxt',
 			'video/mp4'=>'mp4',
 			'video/quicktime'=>'mov',
 			'text/xml'=>'xml',
-			'application/zip'=>'zip'],
-		'strictExtension'=>[ // liste de mimetype strict, l'extension dicte le mime type, pas finfo
-			'notebook'=>'application/x-smarttech-notebook'],
-		'family'=>[ // permet de lier des groupes à des familles
-			'image'=>['imageRaster','imageVector'],
-			'binary'=>['audio','font','imageRaster','imageVector','pdf','video','zip'],
-			'text'=>['calendar','css','csv','doc','html','js','json','php','txt','xml']]
-	];
+			'application/zip'=>'zip'),
+		'strictExtension'=>array( // liste de mimetype strict, l'extension dicte le mime type, pas finfo
+			'notebook'=>'application/x-smarttech-notebook'),
+		'family'=>array( // permet de lier des groupes à des familles
+			'image'=>array('imageRaster','imageVector'),
+			'binary'=>array('audio','font','imageRaster','imageVector','pdf','video','zip'),
+			'text'=>array('calendar','css','csv','doc','html','js','json','php','txt','xml'))
+	);
 	
 	
 	// isEmpty
 	// retourne vrai si le mime type en est un d'un fichier vide
 	public static function isEmpty($value):bool 
 	{
-		return (\is_string($value) && \strpos($value,'inode/x-empty') === 0)? true:false;
+		return (is_string($value) && strpos($value,'inode/x-empty') === 0)? true:false;
 	}
 	
 	
@@ -74,12 +74,12 @@ class Mime extends Root
 	{
 		$return = false;
 		
-		if(\is_string($group))
+		if(is_string($group))
 		{
 			if($get === true && static::getGroup($value,$fromPath) === $group)
 			$return = true;
 			
-			elseif(\is_string($value) && static::group($value) === $group)
+			elseif(is_string($value) && static::group($value) === $group)
 			$return = true;
 		}
 		
@@ -98,7 +98,7 @@ class Mime extends Root
 		{
 			foreach (static::$config['family'] as $key => $array) 
 			{
-				if(\is_array($array) && \in_array($group,$array,true) && $key === $family)
+				if(is_array($array) && in_array($group,$array,true) && $key === $family)
 				{
 					$return = true;
 					break;
@@ -116,12 +116,12 @@ class Mime extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value) && \is_string($mimeGroup))
+		if(is_string($value) && is_string($mimeGroup))
 		{
-			$value = \strtolower($value);
+			$value = strtolower($value);
 			$extensions = static::extensionsFromGroup($mimeGroup);
 			
-			if(\in_array($value,$extensions,true))
+			if(in_array($value,$extensions,true))
 			$return = true;
 		}
 		
@@ -136,7 +136,7 @@ class Mime extends Root
 	{
 		$return = null;
 		
-		if(\is_resource($value))
+		if(is_resource($value))
 		$return = static::getFromResource($value,$charset,true,$strict);
 		
 		elseif(File::is($value))
@@ -147,7 +147,7 @@ class Mime extends Root
 			{
 				$extension = Path::extension($value);
 				
-				if(\is_string($extension))
+				if(is_string($extension))
 				$return = static::strictExtension($extension);
 			}
 			
@@ -157,9 +157,9 @@ class Mime extends Root
 				
 				if(!empty($finfo))
 				{
-					$mime = \finfo_file($finfo,$value);
+					$mime = finfo_file($finfo,$value);
 					
-					if(\is_string($mime) && !empty($mime))
+					if(is_string($mime) && !empty($mime))
 					{
 						if(static::toExtension($mime) === 'txt')
 						$return = static::fromPath($value);
@@ -167,7 +167,7 @@ class Mime extends Root
 						else
 						$return = $mime;
 						
-						if(\is_string($return) && $charset === false)
+						if(is_string($return) && $charset === false)
 						$return = static::removeCharset($return);
 					}
 					
@@ -190,11 +190,11 @@ class Mime extends Root
 		if($contextOption === true || Res::isPhpWritable($value))
 		{
 			$option = Res::option($value);
-			if(!empty($option['php']['mime']) && \is_string($option['php']['mime']))
+			if(!empty($option['php']['mime']) && is_string($option['php']['mime']))
 			{
 				$return = $option['php']['mime'];
 				
-				if(\is_string($return))
+				if(is_string($return))
 				{
 					$return = static::fromExtension($return) ?? $return;
 					
@@ -209,17 +209,17 @@ class Mime extends Root
 			if(Res::isFile($value))
 			{
 				$path = Res::path($value);
-				if(\is_string($path))
+				if(is_string($path))
 				$return = static::get($path,$charset,$strict);
 			}
 			
 			elseif(Res::isHttp($value))
 			{
 				$header = Res::wrapperData($value);
-				if(\is_array($header) && !empty($header))
+				if(is_array($header) && !empty($header))
 				{
 					$mime = Header::contentType($header,$charset);
-					if(\is_string($mime) && !empty($mime))
+					if(is_string($mime) && !empty($mime))
 					$return = $mime;
 				}
 			}
@@ -271,7 +271,7 @@ class Mime extends Root
 		$families = static::getFamilies($value,$fromPath);
 		
 		if(!empty($families))
-		$return = \current($families);
+		$return = current($families);
 		
 		return $return;
 	}
@@ -283,7 +283,7 @@ class Mime extends Root
 	{
 		$return = null;
 		$mime = static::get($value);
-		if(\is_string($mime))
+		if(is_string($mime))
 		$return = static::toExtension($mime);
 		
 		return $return;
@@ -299,11 +299,11 @@ class Mime extends Root
 		
 		if(!empty($extension))
 		{
-			$extension = \strtolower($extension);
+			$extension = strtolower($extension);
 			
 			foreach (static::$config['groupToExtension'] as $k => $v) 
 			{
-				if((\is_array($v) && (\in_array($extension,$v,true)) || $extension === $v))
+				if((is_array($v) && (in_array($extension,$v,true)) || $extension === $v))
 				{
 					$return = $k;
 					break;
@@ -319,11 +319,11 @@ class Mime extends Root
 	// retourne toutes les familles contenant le groupe donné en argument
 	public static function families(string $value):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach (static::$config['family'] as $key => $array) 
 		{
-			if(\is_array($array) && \in_array($value,$array,true))
+			if(is_array($array) && in_array($value,$array,true))
 			$return[] = $key;
 		}
 		
@@ -339,7 +339,7 @@ class Mime extends Root
 		$families = static::families($value);
 		
 		if(!empty($families))
-		$return = \current($families);
+		$return = current($families);
 		
 		return $return;
 	}
@@ -352,7 +352,7 @@ class Mime extends Root
 	{
 		$return = null;
 		
-		if(\array_key_exists($value,static::$config['strictExtension']))
+		if(array_key_exists($value,static::$config['strictExtension']))
 		$return = static::$config['strictExtension'][$value];
 		
 		return $return;
@@ -367,13 +367,13 @@ class Mime extends Root
 	{
 		$return = null;
 		
-		if(\is_resource($value))
+		if(is_resource($value))
 		$value = Res::extension($value);
 		
-		elseif(\is_string($value))
+		elseif(is_string($value))
 		$value = Path::extension($value) ?? $value;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return = static::fromExtension($value);
 		
 		return $return;
@@ -388,7 +388,7 @@ class Mime extends Root
 		
 		foreach (static::$config['mimeToExtension'] as $key => $value) 
 		{
-			if((\is_array($value) && Arr::in($extension,$value,false)) || Str::icompare($extension,$value))
+			if((is_array($value) && Arr::in($extension,$value,false)) || Str::icompare($extension,$value))
 			{
 				$return = $key;
 				break;
@@ -421,10 +421,10 @@ class Mime extends Root
 		
 		foreach (static::$config['mimeToExtension'] as $key => $value) 
 		{
-			if(\stripos($mime,$key) === 0)
+			if(stripos($mime,$key) === 0)
 			{
-				if(\is_array($value))
-				$value = \current($value);
+				if(is_array($value))
+				$value = current($value);
 				
 				$return = $value;
 				break;
@@ -439,9 +439,9 @@ class Mime extends Root
 	// retourne toutes les extensions admises pour un groupe
 	public static function extensionsFromGroup(string $value):array
 	{
-		$return = [];
+		$return = array();
 		
-		if(\array_key_exists($value,static::$config['groupToExtension']))
+		if(array_key_exists($value,static::$config['groupToExtension']))
 		$return = (array) static::$config['groupToExtension'][$value];
 		
 		return $return;
@@ -456,7 +456,7 @@ class Mime extends Root
 		$return = null;
 		$extensions = static::extensionsFromGroup($value);
 		
-		if(\is_array($extensions))
+		if(is_array($extensions))
 		$return = Arr::index($index,$extensions);
 		
 		return $return;
@@ -467,7 +467,7 @@ class Mime extends Root
 	// enlève le charset à partir d'une string mime
 	public static function removeCharset(string $return):string 
 	{
-		if(\strpos($return,';'))
+		if(strpos($return,';'))
 		$return = Str::explodeIndex(0,';',$return,null,true);
 		
 		return $return;

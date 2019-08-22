@@ -11,46 +11,46 @@ class Error extends Base\Test
 	{
 		// prepare
 		$storage = Base\Finder::shortcut("[assertCurrent]");
-		\assert(Base\Dir::reset($storage));
+		assert(Base\Dir::reset($storage));
 
 		// setHandler
 
 		// restoreHandler
 
 		// last
-		\assert(Base\Error::last() === null);
+		assert(Base\Error::last() === null);
 
 		// clearLast
-		\assert(Base\Error::clearLast() === null);
-		\assert(Base\Error::last() === null);
+		assert(Base\Error::clearLast() === null);
+		assert(Base\Error::last() === null);
 
 		// log
-		\assert(Base\Error::log("test"));
+		assert(Base\Error::log("test"));
 
 		// logEmail
-		\assert(Base\Error::logEmail('LOLZ',"aew@gmailz") === false);
+		assert(Base\Error::logEmail('LOLZ',"aew@gmailz") === false);
 
 		// logFile
-		\assert(Base\Error::logFile('what',$storage."/error.txt") === true);
-		$tmp = \tmpfile();
-		\assert(Base\Error::logFile('what',$tmp));
+		assert(Base\Error::logFile('what',$storage."/error.txt") === true);
+		$tmp = tmpfile();
+		assert(Base\Error::logFile('what',$tmp));
 
 		// logPrepareMessage
-		\assert(Base\Error::logPrepareMessage(['lol','ok']) === "lol ok");
-		\assert(Base\Error::logPrepareMessage('lol') === "lol");
+		assert(Base\Error::logPrepareMessage(array('lol','ok')) === "lol ok");
+		assert(Base\Error::logPrepareMessage('lol') === "lol");
 
 		// trigger
 
 		// triggers
 
 		// reporting
-		\assert(Base\Error::reporting() === -1);
+		assert(Base\Error::reporting() === -1);
 
 		// getCodes
-		\assert(\count(Base\Error::getCodes()) === 16);
+		assert(count(Base\Error::getCodes()) === 16);
 
 		// code
-		\assert(Base\Error::code(2) === 'E_WARNING');
+		assert(Base\Error::code(2) === 'E_WARNING');
 
 		// init
 

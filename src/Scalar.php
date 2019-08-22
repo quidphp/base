@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Scalar extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// typecast
@@ -42,19 +42,19 @@ class Scalar extends Root
 	{		
 		$return = null;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$return = $value;
 			
 			// numberCast
-			if(!\is_bool($value) && $numberCast > 0)
+			if(!is_bool($value) && $numberCast > 0)
 			{
 				$extra = ($numberCast === 2)? true:false;
 				$value = Number::cast($value,$extra);
 			}
 
 			// boolCast
-			if(!\is_numeric($value) && $boolCast > 0)
+			if(!is_numeric($value) && $boolCast > 0)
 			{
 				$extra = ($boolCast === 2)? true:false;
 				$value = Boolean::cast($value,$extra);
@@ -82,7 +82,7 @@ class Scalar extends Root
 	// retourne vrai si la valeur est scalar
 	public static function is($value):bool
 	{
-		return (\is_scalar($value))? true:false;
+		return (is_scalar($value))? true:false;
 	}
 	
 	
@@ -90,7 +90,7 @@ class Scalar extends Root
 	// retourne vrai si la valeur est scalar et vide
 	public static function isEmpty($value):bool
 	{
-		return (\is_scalar($value) && empty($value))? true:false;
+		return (is_scalar($value) && empty($value))? true:false;
 	}
 	
 	
@@ -98,7 +98,7 @@ class Scalar extends Root
 	// retourne vrai si la valeur est scalar et non vide
 	public static function isNotEmpty($value):bool
 	{
-		return (\is_scalar($value) && !empty($value))? true:false;
+		return (is_scalar($value) && !empty($value))? true:false;
 	}
 	
 	
@@ -106,7 +106,7 @@ class Scalar extends Root
 	// retourne vrai si scalar mais pas bool
 	public static function isNotBool($value):bool 
 	{
-		return (\is_scalar($value) && !\is_bool($value))? true:false;
+		return (is_scalar($value) && !is_bool($value))? true:false;
 	}
 	
 	
@@ -114,7 +114,7 @@ class Scalar extends Root
 	// retourne vrai si scalar mais pas numérique
 	public static function isNotNumeric($value):bool 
 	{
-		return (\is_scalar($value) && !\is_numeric($value))? true:false;
+		return (is_scalar($value) && !is_numeric($value))? true:false;
 	}
 	
 	
@@ -122,7 +122,7 @@ class Scalar extends Root
 	// retourne vrai si scalar mais pas int
 	public static function isNotInt($value):bool 
 	{
-		return (\is_scalar($value) && !\is_int($value))? true:false;
+		return (is_scalar($value) && !is_int($value))? true:false;
 	}
 	
 	
@@ -130,7 +130,7 @@ class Scalar extends Root
 	// retourne vrai si scalar mais pas float
 	public static function isNotFloat($value):bool 
 	{
-		return (\is_scalar($value) && !\is_float($value))? true:false;
+		return (is_scalar($value) && !is_float($value))? true:false;
 	}
 	
 	
@@ -138,7 +138,7 @@ class Scalar extends Root
 	// retourne vrai si scalar mais pas string
 	public static function isNotString($value):bool 
 	{
-		return (\is_scalar($value) && !\is_string($value))? true:false;
+		return (is_scalar($value) && !is_string($value))? true:false;
 	}
 	
 	
@@ -146,7 +146,7 @@ class Scalar extends Root
 	// retourne vrai si la length est celle spécifié
 	public static function isLength(int $length,$value,?bool $mb=null):bool
 	{
-		return (\is_scalar($value) && Str::len((string) $value,$mb) === $length)? true:false;
+		return (is_scalar($value) && Str::len((string) $value,$mb) === $length)? true:false;
 	}
 	
 	
@@ -154,7 +154,7 @@ class Scalar extends Root
 	// retourne vrai si la length est plus grande ou égale que celle spécifié
 	public static function isMinLength(int $length,$value,?bool $mb=null):bool
 	{
-		return (\is_scalar($value) && Str::len((string) $value,$mb) >= $length)? true:false;
+		return (is_scalar($value) && Str::len((string) $value,$mb) >= $length)? true:false;
 	}
 	
 	
@@ -162,7 +162,7 @@ class Scalar extends Root
 	// retourne vrai si la length est plus petite ou égale que celui spécifié
 	public static function isMaxLength(int $length,$value,?bool $mb=null):bool
 	{
-		return (\is_scalar($value) && Str::len((string) $value,$mb) <= $length)? true:false;
+		return (is_scalar($value) && Str::len((string) $value,$mb) <= $length)? true:false;
 	}
 }
 ?>

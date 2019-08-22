@@ -10,19 +10,19 @@ class Func extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// is
-		\assert(Base\Func::is('strlen'));
-		\assert(!Base\Func::is('strlenz'));
-		\assert(!Base\Func::is([Base\Func::class,'is']));
-		\assert(!Base\Func::is([new \DateTime,'setDate']));
+		assert(Base\Func::is('strlen'));
+		assert(!Base\Func::is('strlenz'));
+		assert(!Base\Func::is(array(Base\Func::class,'is')));
+		assert(!Base\Func::is(array(new \DateTime,'setDate')));
 
 		// call
-		\assert(Base\Func::call('strlen','lala') === 4);
+		assert(Base\Func::call('strlen','lala') === 4);
 
 		// all
-		\assert(\count(Base\Func::all()) === 2);
+		assert(count(Base\Func::all()) === 2);
 
 		// user
-		\assert(\count(Base\Func::user()) < 20);
+		assert(count(Base\Func::user()) < 20);
 		
 		return true;
 	}

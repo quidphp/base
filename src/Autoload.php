@@ -6,9 +6,9 @@ namespace Quid\Base;
 class Autoload
 {
 	// config
-	public static $config = [
-		'psr4'=>[] // garde une copie du racine de l'auto chargement des classes
-	];
+	public static $config = array(
+		'psr4'=>array() // garde une copie du racine de l'auto chargement des classes
+	);
 	
 	
 	// construct
@@ -22,11 +22,11 @@ class Autoload
 	{
 		$return = false;
 
-		if(!\class_exists($class,false))
+		if(!class_exists($class,false))
 		{
-			\spl_autoload_call($class);
+			spl_autoload_call($class);
 			
-			if(\class_exists($class,false))
+			if(class_exists($class,false))
 			$return = true;
 		}
 		
@@ -38,7 +38,7 @@ class Autoload
 	// retourne les extensions utilisés dans l'implémentation par défaut
 	public static function getExtensions():string
 	{
-		return \spl_autoload_extensions();
+		return spl_autoload_extensions();
 	}
 	
 	
@@ -51,12 +51,12 @@ class Autoload
 		if($value === true)
 		$value = ".".static::phpExtension();
 		
-		if(\is_array($value))
-		$value = \implode(',',$value);
+		if(is_array($value))
+		$value = implode(',',$value);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
-			$extension = \spl_autoload_extensions($value);
+			$extension = spl_autoload_extensions($value);
 			
 			if($extension === $value)
 			$return = true;
@@ -76,10 +76,10 @@ class Autoload
 		$return = false;
 		
 		if(!empty($call))
-		$return = \spl_autoload_register($call,$throw,$prepend);
+		$return = spl_autoload_register($call,$throw,$prepend);
 		
 		else
-		$return = \spl_autoload_register();
+		$return = spl_autoload_register();
 		
 		return $return;
 	}
@@ -89,7 +89,7 @@ class Autoload
 	// enlève une fonction du pool autoload
 	public static function unregister(callable $call):bool
 	{
-		return \spl_autoload_unregister($call);
+		return spl_autoload_unregister($call);
 	}
 	
 	
@@ -97,7 +97,7 @@ class Autoload
 	// enlève toutes les fonctions autoload enregistrés
 	public static function unregisterAll():array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach (static::all() as $key => $value) 
 		{
@@ -112,10 +112,10 @@ class Autoload
 	// retourne les fonctions autoload enregistrés
 	public static function all():array
 	{
-		$return = \spl_autoload_functions();
+		$return = spl_autoload_functions();
 		
-		if(!\is_array($return))
-		$return = [];
+		if(!is_array($return))
+		$return = array();
 		
 		return $return;
 	}
@@ -140,14 +140,14 @@ class Autoload
 		
 		if(!empty($psr4))
 		{
-			$return = \current($psr4);
-			$key = \key($psr4);
-			$len = (\strlen($key) + 1);
-			$after = \substr($class,$len);
+			$return = current($psr4);
+			$key = key($psr4);
+			$len = (strlen($key) + 1);
+			$after = substr($class,$len);
 			
-			if(\is_string($after) && \strlen($after))
+			if(is_string($after) && strlen($after))
 			{
-				$after = \str_replace("\\","/",$after);
+				$after = str_replace("\\","/",$after);
 				$return .= "/".$after;
 			}
 		}
@@ -163,11 +163,11 @@ class Autoload
 	{
 		$return = static::getPath($class,$different);
 		
-		if(\is_string($return))
+		if(is_string($return))
 		{
 			$return .= ".".static::phpExtension();
 			
-			if($exists === true && !\file_exists($return))
+			if($exists === true && !file_exists($return))
 			$return = null;
 		}
 		
@@ -182,7 +182,7 @@ class Autoload
 	{
 		$return = static::getPath($class,$different);
 		
-		if(\is_string($return) && $exists === true && !\is_dir($return))
+		if(is_string($return) && $exists === true && !is_dir($return))
 		$return = null;
 		
 		return $return;
@@ -201,9 +201,9 @@ class Autoload
 		{
 			if($different === false || $class !== $key)
 			{
-				if(\strpos($class,$key) === 0)
+				if(strpos($class,$key) === 0)
 				{
-					$return = [$key=>$value];
+					$return = array($key=>$value);
 					break;
 				}
 			}
@@ -229,7 +229,7 @@ class Autoload
 	{
 		foreach ($keyValue as $key => $value) 
 		{
-			if(\is_string($key) && \is_string($value))
+			if(is_string($key) && is_string($value))
 			static::$config['psr4'][$key] = $value;
 		}
 		
@@ -241,7 +241,7 @@ class Autoload
 	// enlève un point racine
 	public static function unsetPsr4(string $key):void 
 	{
-		if(\array_key_exists($key,static::$config['psr4']))
+		if(array_key_exists($key,static::$config['psr4']))
 		unset(static::$config['psr4'][$key]);
 		
 		return;
@@ -255,22 +255,22 @@ class Autoload
 	{
 		$return = static::$config['psr4'];
 		
-		if(\is_string($start) || \is_string($end))
+		if(is_string($start) || is_string($end))
 		{
-			if(\is_string($start))
+			if(is_string($start))
 			{
 				foreach ($return as $key => $value) 
 				{
-					if(\stripos($key,$start) !== 0)
+					if(stripos($key,$start) !== 0)
 					unset($return[$key]);
 				}
 			}
 			
-			if(\is_string($end))
+			if(is_string($end))
 			{
 				foreach ($return as $key => $value) 
 				{
-					$ipos = \stripos(\substr($key,-\strlen($end)),$end);
+					$ipos = stripos(substr($key,-strlen($end)),$end);
 					
 					if(($endContains === true && $ipos !== 0) || ($endContains === false && $ipos === 0))
 					unset($return[$key]);
@@ -290,7 +290,7 @@ class Autoload
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\strtolower($value) === $value && \strpos($value,"\\") && \substr($value,-5) === 'alias')
+			if(strtolower($value) === $value && strpos($value,"\\") && substr($value,-5) === 'alias')
 			unset($return[$key]);
 		}
 		
@@ -303,12 +303,12 @@ class Autoload
 	// possible de filtrer par début de namespace
 	public static function overview(?string $start=null,?string $end=null,bool $endContains=true,bool $sort=true):array 
 	{
-		$return = [];
+		$return = array();
 		$extension = static::phpExtension();
 		
 		foreach (static::allPsr4($start,$end,$endContains) as $key => $value) 
 		{
-			$array = [];
+			$array = array();
 			$array['count'] = Dir::count($value,$extension,true);
 			$array['size'] = Dir::size($value,true);
 			$array['line'] = Dir::line($value);
@@ -316,7 +316,7 @@ class Autoload
 		}
 		
 		if($sort === true)
-		\ksort($return);
+		ksort($return);
 		
 		return $return;
 	}

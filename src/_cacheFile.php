@@ -21,9 +21,9 @@ trait _cacheFile
 			$key = Obj::cast($key);
 			$key = Str::cast($key,'-');
 			
-			if(\is_string($key) && \strlen($key))
+			if(is_string($key) && strlen($key))
 			{
-				$key = \str_replace(".","_",$key);
+				$key = str_replace(".","_",$key);
 				$key = Path::safeBasename($key);
 				$storage = static::getCacheFileStorage();
 				$path = Path::addBasename($key,$storage);
@@ -36,7 +36,7 @@ trait _cacheFile
 					if(File::isReadable($path))
 					{
 						$get = File::get($path);
-						if(\is_string($get))
+						if(is_string($get))
 						$return = Crypt::unserialize($get);
 					}
 					
@@ -64,11 +64,11 @@ trait _cacheFile
 	{
 		$return = null;
 		
-		if(\is_string(static::$cacheFile))
+		if(is_string(static::$cacheFile))
 		{
 			$return = Finder::shortcut(static::$cacheFile);
-			$class = \str_replace('\\','',static::class);
-			$return = Str::replace(['%class%'=>$class],$return);
+			$class = str_replace('\\','',static::class);
+			$return = Str::replace(array('%class%'=>$class),$return);
 		}
 		
 		return $return;

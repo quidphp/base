@@ -6,9 +6,9 @@ namespace Quid\Base;
 class Arrs extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'delimiter'=>'/' // séparateur pour les méthode comme gets et sets
-	];
+	);
 	
 	
 	// typecast
@@ -17,11 +17,11 @@ class Arrs extends Root
 	{
 		foreach ($values as &$value) 
 		{
-			if(!\is_array($value))
-			$value = [[$value]];
+			if(!is_array($value))
+			$value = array(array($value));
 			
 			elseif(!static::is($value))
-			$value = [$value];
+			$value = array($value);
 		}
 		
 		return;
@@ -36,10 +36,10 @@ class Arrs extends Root
 		$return = (array) $return;
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::cast($value,$numberCast,$boolCast);
 
-			elseif(\is_scalar($value))
+			elseif(is_scalar($value))
 			$return[$key] = Scalar::cast($value,$numberCast,$boolCast);
 		}
 
@@ -55,10 +55,10 @@ class Arrs extends Root
 		$return = (array) $return;
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::castMore($value);
 
-			elseif(\is_scalar($value))
+			elseif(is_scalar($value))
 			$return[$key] = Scalar::castMore($value);
 		}
 
@@ -72,11 +72,11 @@ class Arrs extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\is_array($v))
+				if(is_array($v))
 				{
 					$return = true;
 					break;
@@ -119,7 +119,7 @@ class Arrs extends Root
 	public static function merge(...$values):array 
 	{
 		Arr::typecast(...$values);
-		return \array_merge_recursive(...$values);
+		return array_merge_recursive(...$values);
 	}
 	
 	
@@ -128,13 +128,13 @@ class Arrs extends Root
 	// fonctionne si une valeur n'est pas un tableau
 	public static function replace(...$values):array 
 	{
-		if(\count($values) === 2 && \is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
+		if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
 		return $values[0];
 		
 		else
 		{
 			Arr::typecast(...$values);
-			return \array_replace_recursive(...$values);
+			return array_replace_recursive(...$values);
 		}
 	}
 	
@@ -151,26 +151,26 @@ class Arrs extends Root
 		
 		else
 		{
-			$return = [];
+			$return = array();
 			$replaceKeys = (array) $replaceKeys;
 			
 			foreach ($values as $array) 
 			{
-				if(!\is_array($array))
+				if(!is_array($array))
 				$array = (array) $array;
 				
 				foreach ($array as $key => $value) 
 				{
 					$type = 'replace';
 					
-					if(\is_string($key) && \is_array($value) && \array_key_exists($key,$return) && \is_array($return[$key]))
+					if(is_string($key) && is_array($value) && array_key_exists($key,$return) && is_array($return[$key]))
 					{
 						$type = 'multi';
 						
-						if(\in_array($key,$replaceKeys,true))
+						if(in_array($key,$replaceKeys,true))
 						$type = 'uni';
 						
-						elseif(\in_array("=$key",$replaceKeys,true))
+						elseif(in_array("=$key",$replaceKeys,true))
 						$type = 'replace';
 					}
 					
@@ -196,11 +196,11 @@ class Arrs extends Root
 	// les valeurs qui ne sont pas des tableaux ne sont pas considérés
 	public static function replaceSpecial(array $target,array $keys,?array $replaceKeys,...$values) 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $key => $value) 
 		{
-			if(!empty($value) && \is_array($value))
+			if(!empty($value) && is_array($value))
 			$values[$key] = static::climbReplaceMode($target,$keys,$replaceKeys,$value);
 			
 			else
@@ -221,7 +221,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::clean($value,$reset);
 		}
 		
@@ -237,7 +237,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $k => $v) 
 		{
-			if(\is_array($v))
+			if(is_array($v))
 			$return[$k] = static::trim($v,$key,$value);
 		}
 		
@@ -254,7 +254,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::trimClean($value,$trimKey,$trim,$clean,$reset);
 		}
 		
@@ -275,23 +275,23 @@ class Arrs extends Root
 		if($sensitive === false)
 		{
 			$array = static::keysLower($array,true);
-			$key = Str::map([Str::class,'lower'],$key,true);
+			$key = Str::map(array(Str::class,'lower'),$key,true);
 		}
 		
-		if(Arr::isKey($key) && \strpos((string) $key,static::$config['delimiter']) === false && \array_key_exists($key,$array))
+		if(Arr::isKey($key) && strpos((string) $key,static::$config['delimiter']) === false && array_key_exists($key,$array))
 		$return = $array[$key];
 		
 		elseif($key !== null)
 		{
 			$x = static::keyExplode($key);
-			$count = \count($x);
+			$count = count($x);
 			$current = 1;
 
 			foreach ($x as $v) 
 			{		
-				if(Arr::isKey($v) && \is_array($array))
+				if(Arr::isKey($v) && is_array($array))
 				{
-					$array = (\array_key_exists($v,$array))? $array[$v]:null;
+					$array = (array_key_exists($v,$array))? $array[$v]:null;
 
 					if($current === $count)
 					$return = $array;
@@ -313,7 +313,7 @@ class Arrs extends Root
 	// support pour clé insensibe à la case
 	public static function gets(array $value,array $array,bool $sensitive=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($value as $v) 
 		{
@@ -330,31 +330,31 @@ class Arrs extends Root
 	// retourne un tableau
 	public static function indexPrepare($index,array $array):array
 	{
-		$return = [];
+		$return = array();
 		
-		if(\is_string($index))
-		$index = \explode(static::$config['delimiter'],$index);
+		if(is_string($index))
+		$index = explode(static::$config['delimiter'],$index);
 		
-		elseif(\is_numeric($index))
-		$index = [$index];
+		elseif(is_numeric($index))
+		$index = array($index);
 		
-		if(\is_array($index))
+		if(is_array($index))
 		{
-			$index = \array_values($index);
+			$index = array_values($index);
 			
 			foreach ($index as $key => $value) 
 			{
 				$break = true;
 				
-				if(\is_scalar($value))
+				if(is_scalar($value))
 				{
-					if(\is_array($array))
+					if(is_array($array))
 					{
 						$key = (int) $key;
 						$value = (int) $value;
 						$return[$key] = Arr::indexPrepare($value,$array);
 						
-						if(\is_int($return[$key]))
+						if(is_int($return[$key]))
 						{
 							$array = Arr::index($return[$key],$array);
 							$break = false;
@@ -364,7 +364,7 @@ class Arrs extends Root
 				
 				if($break === true)
 				{
-					$return = [];
+					$return = array();
 					break;
 				}
 			}
@@ -381,23 +381,23 @@ class Arrs extends Root
 	{
 		$return = null;
 		
-		if(\is_string($key) || \is_numeric($key))
+		if(is_string($key) || is_numeric($key))
 		{
-			if(!\is_string($key))
+			if(!is_string($key))
 			$key = (string) $key;
 			
 			$return = $key;
 		}
 		
-		elseif(\is_array($key))
+		elseif(is_array($key))
 		{
 			foreach ($key as $i => $k) 
 			{
-				if(\is_string($k))
-				$key[$i] = \trim($k,static::$config['delimiter']);
+				if(is_string($k))
+				$key[$i] = trim($k,static::$config['delimiter']);
 			}
 			
-			$return = \implode(static::$config['delimiter'],$key);
+			$return = implode(static::$config['delimiter'],$key);
 		}
 		
 		return $return;
@@ -409,7 +409,7 @@ class Arrs extends Root
 	public static function keyPrepares(...$keys):?string
 	{
 		$return = null;
-		$prepare = [];
+		$prepare = array();
 		
 		foreach ($keys as $key) 
 		{
@@ -417,7 +417,7 @@ class Arrs extends Root
 		}
 		
 		if(!empty($prepare))
-		$return = \implode(static::$config['delimiter'],$prepare);
+		$return = implode(static::$config['delimiter'],$prepare);
 		
 		return $return;
 	}
@@ -427,13 +427,13 @@ class Arrs extends Root
 	// retourne la clé en array
 	public static function keyExplode($key):array 
 	{
-		$return = [];
+		$return = array();
 		
-		if(\is_string($key) || \is_numeric($key))
-		$return = \explode(static::$config['delimiter'],(string) $key);
+		if(is_string($key) || is_numeric($key))
+		$return = explode(static::$config['delimiter'],(string) $key);
 		
-		elseif(\is_array($key))
-		$return = \array_values($key);
+		elseif(is_array($key))
+		$return = array_values($key);
 		
 		return $return;
 	}
@@ -459,7 +459,7 @@ class Arrs extends Root
 	// faire plusieurs appels à la fonction get et retourne un tableau multi-dimensionnel
 	public static function indexes(array $indexes,array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($indexes as $index) 
 		{
@@ -476,24 +476,24 @@ class Arrs extends Root
 	// support pour clé insensible à la case
 	public static function climb($key,array $return,bool $sensitive=true)
 	{
-		if(Arr::isKey($key) && \strpos((string) $key,static::$config['delimiter']) === false && \array_key_exists($key,$return) && $sensitive === true)
+		if(Arr::isKey($key) && strpos((string) $key,static::$config['delimiter']) === false && array_key_exists($key,$return) && $sensitive === true)
 		$return = $return[$key];
 		
 		elseif($key !== null)
 		{
 			if($sensitive === false)
-			$key = Call::map('string',[Str::class,'lower'],$key);
+			$key = Call::map('string',array(Str::class,'lower'),$key);
 
 			$x = static::keyExplode($key);
 			
 			foreach ($x as $v) 
 			{		
-				if(Arr::isKey($v) && \is_array($return))
+				if(Arr::isKey($v) && is_array($return))
 				{
 					if($sensitive === false)
 					$return = Arr::keysLower($return,true);
 					
-					if(\array_key_exists($v,$return))
+					if(array_key_exists($v,$return))
 					$return = $return[$v];
 				}
 			}
@@ -515,14 +515,14 @@ class Arrs extends Root
 		$gets = Arr::getsExists($target,$return);
 		$return = Arr::keysStrip($all,$return);
 		
-		if(\is_array($gets) && !empty($gets))
+		if(is_array($gets) && !empty($gets))
 		{
 			foreach ($gets as $key => $value) 
 			{
-				if(\is_array($value))
+				if(is_array($value))
 				{
-					if(!\is_array($return))
-					$return = [];
+					if(!is_array($return))
+					$return = array();
 					
 					$return = static::replaceWithMode($replaceKeys,$return,$value);
 				}
@@ -531,7 +531,7 @@ class Arrs extends Root
 				$return = $value;
 			}
 
-			if(\is_array($return))
+			if(is_array($return))
 			$return = static::climbReplaceMode($target,$all,$replaceKeys,$return);
 		}
 		
@@ -545,7 +545,7 @@ class Arrs extends Root
 	// si key est null, append []
 	public static function set($key,$value,array $return,bool $sensitive=true):array
 	{
-		if(Arr::isKey($key) && \strpos((string) $key,static::$config['delimiter']) === false && $sensitive === true)
+		if(Arr::isKey($key) && strpos((string) $key,static::$config['delimiter']) === false && $sensitive === true)
 		$return[$key] = $value;
 		
 		elseif($key === null)
@@ -554,14 +554,14 @@ class Arrs extends Root
 		else
 		{
 			$x = static::keyExplode($key);
-			$count = \count($x);
+			$count = count($x);
 			$current = 1;
 			$target =& $return;
 			
 			// pour chaque niveau
 			foreach ($x as $v) 
 			{
-				if(\is_array($target))
+				if(is_array($target))
 				{
 					if(Arr::isKey($v))
 					{
@@ -579,8 +579,8 @@ class Arrs extends Root
 						// sinon
 						else
 						{
-							$slice = (\array_key_exists($v,$target))? $target[$v]:null;
-							$target[$v] = (\is_array($slice))? $slice:[];
+							$slice = (array_key_exists($v,$target))? $target[$v]:null;
+							$target[$v] = (is_array($slice))? $slice:array();
 							$target =& $target[$v];
 							$current++;
 						}
@@ -595,7 +595,7 @@ class Arrs extends Root
 						// sinon
 						else
 						{
-							$target[] = [];
+							$target[] = array();
 							$lastKey = Arr::keyLast($target);
 							$target =& $target[$lastKey];
 							$current++;
@@ -654,20 +654,20 @@ class Arrs extends Root
 	// support pour clé insensible à la case
 	public static function unset($key,array $return,bool $sensitive=true):array
 	{
-		if(Arr::isKey($key) && \strpos((string) $key,static::$config['delimiter']) === false && \array_key_exists($key,$return) && $sensitive === true)
+		if(Arr::isKey($key) && strpos((string) $key,static::$config['delimiter']) === false && array_key_exists($key,$return) && $sensitive === true)
 		unset($return[$key]);
 		
 		elseif($key !== null)
 		{
 			$x = static::keyExplode($key);
-			$count = \count($x);
+			$count = count($x);
 			$current = 1;
 			$target =& $return;
 			
 			// pour chaque niveau
 			foreach ($x as $v) 
 			{
-				if(Arr::isKey($v) && \is_array($target))
+				if(Arr::isKey($v) && is_array($target))
 				{
 					if($sensitive === false)
 					{
@@ -677,14 +677,14 @@ class Arrs extends Root
 					}
 					
 					// last
-					if($current === $count && \array_key_exists($v,$target))
+					if($current === $count && array_key_exists($v,$target))
 					unset($target[$v]);
 					
 					// sinon
 					else
 					{
-						$slice = (\array_key_exists($v,$target))? $target[$v]:null;
-						if(\is_array($slice))
+						$slice = (array_key_exists($v,$target))? $target[$v]:null;
+						if(is_array($slice))
 						{
 							$target =& $target[$v];
 							$current++;
@@ -754,7 +754,7 @@ class Arrs extends Root
 		$return = static::get($get,$source);
 
 		// tableau, set tout
-		elseif(\is_array($get))
+		elseif(is_array($get))
 		{
 			$source = static::replace($source,$get);
 			$return = true;
@@ -775,7 +775,7 @@ class Arrs extends Root
 	// count les clés d'un tableau multidimensionnel
 	public static function count(array $array):int
 	{
-		return \count($array,COUNT_RECURSIVE);
+		return count($array,COUNT_RECURSIVE);
 	}
 	
 	
@@ -786,13 +786,13 @@ class Arrs extends Root
 		$return = 0;
 		
 		if($level === 0)
-		$return = \count($array,COUNT_NORMAL);
+		$return = count($array,COUNT_NORMAL);
 		
 		elseif($level > 0)
 		{
 			foreach ($array as $key => $value) 
 			{
-				if(\is_array($value))
+				if(is_array($value))
 				$return += static::countLevel(($level-1),$array[$key]);
 			}
 		}
@@ -809,7 +809,7 @@ class Arrs extends Root
 
 		foreach ($array as $value) 
 		{
-			if(\is_array($value)) 
+			if(is_array($value)) 
 			{
 				$depth = static::depth($value) + 1;
 
@@ -827,9 +827,9 @@ class Arrs extends Root
 	// retourne dans un format compatible avec la méthode get
 	// support pour recherche insensible à la case
 	// si valeur est null, la fonction ne cherche pas à moins que searchNull soit true
-	public static function keys(array $array,$value=null,bool $sensitive=true,bool $searchNull=false,array $parent=[]):array
+	public static function keys(array $array,$value=null,bool $sensitive=true,bool $searchNull=false,array $parent=array()):array
 	{
-		$return = [];
+		$return = array();
 		$keys = Arr::keys($array,$value,$sensitive,$searchNull);
 		
 		foreach ($array as $k => $v) 
@@ -837,9 +837,9 @@ class Arrs extends Root
 			if(!empty($parent))
 			$current = Arr::append($parent,$k);
 			else
-			$current = [$k];
+			$current = array($k);
 			
-			if(\is_array($v))
+			if(is_array($v))
 			{
 				$append = static::keys($v,$value,$sensitive,$searchNull,$current);
 				
@@ -847,7 +847,7 @@ class Arrs extends Root
 				$return = Arr::append($return,$append);
 			}
 			
-			elseif(\in_array($k,$keys,true))
+			elseif(in_array($k,$keys,true))
 			$return[] = $current;
 		}
 
@@ -861,7 +861,7 @@ class Arrs extends Root
 	// support pour recherche insensible à la case
 	public static function crush(array $array,$value=null,bool $sensitive=true,string $parent=''):array
 	{
-		$return = [];
+		$return = array();
 		$keys = Arr::keys($array,$value,$sensitive);
 		$delimiter = static::$config['delimiter'];
 		
@@ -872,7 +872,7 @@ class Arrs extends Root
 			if(!empty($parent))
 			$current = $parent.$delimiter.$current;
 			
-			if(\is_array($v))
+			if(is_array($v))
 			{
 				$append = static::crush($v,$value,$sensitive,$current);
 				
@@ -880,7 +880,7 @@ class Arrs extends Root
 				$return = Arr::append($return,$append);
 			}
 			
-			elseif(\in_array($k,$keys,true))
+			elseif(in_array($k,$keys,true))
 			$return[$current] = $v;
 		}
 
@@ -893,12 +893,12 @@ class Arrs extends Root
 	// support pour recherche insensible à la case
 	public static function crushReplace(array $array,$value=null,bool $sensitive=true):array
 	{
-		$return = [];
+		$return = array();
 		$keys = Arr::keys($array,$value,$sensitive);
 		
 		foreach ($array as $k => $v) 
 		{
-			if(\is_array($v))
+			if(is_array($v))
 			{
 				$replace = static::crushReplace($v,$value,$sensitive);
 				
@@ -906,7 +906,7 @@ class Arrs extends Root
 				$return = Arr::replace($return,$replace);
 			}
 			
-			elseif(\in_array($k,$keys,true))
+			elseif(in_array($k,$keys,true))
 			$return[$k] = $v;
 		}
 
@@ -919,13 +919,13 @@ class Arrs extends Root
 	// is permet de spécifier le type de valeurs à garder dans le tableau multidimensionnel réindexé
 	public static function values(array $array,$is=null):array
 	{
-		$return = [];
+		$return = array();
 		
 		if($is !== null)
 		{
 			foreach ($array as $value) 
 			{
-				if(\is_array($value))
+				if(is_array($value))
 				$return[] = static::values($value,$is);
 				
 				elseif(Validate::is($is,$value))
@@ -935,11 +935,11 @@ class Arrs extends Root
 		
 		else 
 		{
-			$return = \array_values($array);
+			$return = array_values($array);
 
 			foreach ($return as $key => $value) 
 			{
-				if(\is_array($value))
+				if(is_array($value))
 				$return[$key] = static::values($value);
 			}
 		}
@@ -958,13 +958,13 @@ class Arrs extends Root
 		
 		$search = Arr::search($value,$array,$sensitive);
 		if($search !== null)
-		$return = [$search];
+		$return = array($search);
 		
 		if($return === null)
 		{
 			foreach ($array as $k => $v) 
 			{
-				if(\is_array($v))
+				if(is_array($v))
 				{
 					$search = static::search($value,$v,$sensitive);
 					
@@ -1010,7 +1010,7 @@ class Arrs extends Root
 		{
 			foreach ($array as $k => $v) 
 			{
-				if(\is_array($v) && static::in($value,$v,$sensitive))
+				if(is_array($v) && static::in($value,$v,$sensitive))
 				{
 					$return = true;
 					break;
@@ -1066,7 +1066,7 @@ class Arrs extends Root
 			{
 				foreach ($array as $k => $v) 
 				{
-					if(\is_array($v) && Arr::in($value,$v,$sensitive))
+					if(is_array($v) && Arr::in($value,$v,$sensitive))
 					{
 						$return = $value;
 						break 2;
@@ -1088,7 +1088,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::map($callable,$value,...$args);
 			
 			else
@@ -1109,7 +1109,7 @@ class Arrs extends Root
 	// array est passé par référence
 	public static function walk(callable $callable,array &$array,$data=null):bool
 	{
-		return \array_walk_recursive($array,$callable,$data);
+		return array_walk_recursive($array,$callable,$data);
 	}
 	
 	
@@ -1119,7 +1119,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::shuffle($value);
 		}
 		
@@ -1135,7 +1135,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::reverse($value,$preserve);
 		}
 		
@@ -1151,15 +1151,15 @@ class Arrs extends Root
 	// exception permet d'exclure le contenu d'une clé du reformatage
 	public static function flip(array $array,$value=null,$exception=null):array
 	{               
-		$return = [];
+		$return = array();
 		
 		if(Arr::isKey($exception))
-		$exception = [$exception];
+		$exception = array($exception);
 		
 		foreach ($array as $k => $v) 
 		{
 			// exception
-			if(!empty($exception) && \is_array($exception) && \in_array($k,$exception,true))
+			if(!empty($exception) && is_array($exception) && in_array($k,$exception,true))
 			$return[$k] = $v;
 			
 			// cle normal de tableau
@@ -1167,7 +1167,7 @@ class Arrs extends Root
 			$return[$v] = ($value === null)? $k:$value;
 			
 			// tableau
-			elseif(\is_array($v))
+			elseif(is_array($v))
 			$return[$k] = static::flip($v,$value,$exception);
 			
 			// autre valeur
@@ -1188,16 +1188,16 @@ class Arrs extends Root
 		$return = '';
 		$deli = null;
 		
-		if(\is_string($delimiter))
+		if(is_string($delimiter))
 		$deli = $delimiter;
 		
-		elseif(\is_array($delimiter) && !empty($delimiter))
+		elseif(is_array($delimiter) && !empty($delimiter))
 		{
-			$deli = \array_shift($delimiter);
+			$deli = array_shift($delimiter);
 			$delimiter = (empty($delimiter))? $deli:$delimiter;
 		}
 		
-		if(\is_string($deli))
+		if(is_string($deli))
 		{
 			if($trim === true || $clean === true)
 			$array = static::trimClean($array,$trim,$trim,$clean);
@@ -1206,18 +1206,18 @@ class Arrs extends Root
 			{
 				$r = '';
 				
-				if(\is_scalar($v))
+				if(is_scalar($v))
 				{
 					$v = (string) $v;
 					$r .= $v;
 				}
 				
-				elseif(\is_array($v))
+				elseif(is_array($v))
 				$r .= static::implode($delimiter,$v);
 				
-				if(\strlen($r))
+				if(strlen($r))
 				{
-					if(\strlen($return))
+					if(strlen($return))
 					$return .= $deli;
 					
 					$return .= $r;
@@ -1233,19 +1233,19 @@ class Arrs extends Root
 	// explose un tableau multidimensionnel selon un delimiter
 	public static function explode(string $delimiter,array $value,int $limit=PHP_INT_MAX):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($value as $k => $v) 
 		{
-			if(\is_scalar($v))
+			if(is_scalar($v))
 			{
 				$v = (string) $v;
-				$x = \explode($delimiter,$v,$limit);
-				$return = \array_merge($return,$x);
+				$x = explode($delimiter,$v,$limit);
+				$return = array_merge($return,$x);
 			}
 			
-			elseif(\is_array($v))
-			$return = \array_merge($return,static::explode($delimiter,$v,$limit));
+			elseif(is_array($v))
+			$return = array_merge($return,static::explode($delimiter,$v,$limit));
 		}
 		
 		return $return;
@@ -1256,20 +1256,20 @@ class Arrs extends Root
 	// crée un tableau multidimensionnel en utilisant la fonction range
 	public static function fill(array $dimensions,$value=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($dimensions as $dimension) 
 		{
-			$arg = [0,1,1];
+			$arg = array(0,1,1);
 			
-			if(\is_array($dimension) && Arr::validate('int',$dimension))
-			$arg = \array_replace($arg,\array_values($dimension));
+			if(is_array($dimension) && Arr::validate('int',$dimension))
+			$arg = array_replace($arg,array_values($dimension));
 			
 			$range = Arr::range(...$arg);
 			
 			if(!empty($range))
 			{
-				$fillKeys = \array_fill_keys($range,$value);
+				$fillKeys = array_fill_keys($range,$value);
 				
 				if(empty($return))
 				$return = $fillKeys;
@@ -1287,13 +1287,13 @@ class Arrs extends Root
 	// crée un tableau multidimensionnel en utilisant des tableaux de keys
 	public static function fillKeys(array $dimensions,$value=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($dimensions as $dimension) 
 		{
-			if(\is_array($dimension) && !empty($dimension) && Arr::validate('arrKey',$dimension))
+			if(is_array($dimension) && !empty($dimension) && Arr::validate('arrKey',$dimension))
 			{
-				$fillKeys = \array_fill_keys($dimension,$value);
+				$fillKeys = array_fill_keys($dimension,$value);
 				
 				if(empty($return))
 				$return = $fillKeys;
@@ -1312,9 +1312,9 @@ class Arrs extends Root
 	// un parent non existant peut être ajouté dans la hiérarchie si existe est true
 	public static function hierarchy(array $array,bool $exists=true):array
 	{
-		$return = [];
+		$return = array();
 		$structure = static::hierarchyStructure($array,$exists);
-		$sets = [];
+		$sets = array();
 		
 		foreach ($structure as $key => $value) 
 		{
@@ -1335,25 +1335,25 @@ class Arrs extends Root
 	// un parent non existant peut être ajouté dans la hiérarchie si existe est true
 	public static function hierarchyStructure(array $array,bool $exists=true):array 
 	{
-		$return = [];
-		$remove = [];
+		$return = array();
+		$remove = array();
 		
 		foreach ($array as $key => $value) 
 		{
 			$keep = false;
 			
-			if(\is_scalar($key))
+			if(is_scalar($key))
 			{
 				if($value === null)
-				$return[] = [$key];
+				$return[] = array($key);
 				
-				elseif(\is_scalar($value))
+				elseif(is_scalar($value))
 				{
-					if(\array_key_exists($value,$array))
+					if(array_key_exists($value,$array))
 					$keep = true;
 					
 					elseif($exists === false)
-					$return[] = [$value,$key];
+					$return[] = array($value,$key);
 				}
 			}
 			
@@ -1416,28 +1416,28 @@ class Arrs extends Root
 		if($sensitive === false)
 		{
 			$array = static::keysLower($array,true);
-			$key = Str::map([Str::class,'lower'],$key,true);
+			$key = Str::map(array(Str::class,'lower'),$key,true);
 		}
 		
-		if(Arr::isKey($key) && \strpos((string) $key,static::$config['delimiter']) === false && \array_key_exists($key,$array))
+		if(Arr::isKey($key) && strpos((string) $key,static::$config['delimiter']) === false && array_key_exists($key,$array))
 		$return = true;
 		
 		elseif($key !== null)
 		{
 			$x = static::keyExplode($key);
-			$count = \count($x);
+			$count = count($x);
 			$current = 1;
 
 			foreach ($x as $v) 
 			{		
-				if(Arr::isKey($v) && \is_array($array))
+				if(Arr::isKey($v) && is_array($array))
 				{
-					if($current === $count && \array_key_exists($v,$array))
+					if($current === $count && array_key_exists($v,$array))
 					$return = true;
 					
 					else
 					{
-						$array = (\array_key_exists($v,$array))? $array[$v]:null;
+						$array = (array_key_exists($v,$array))? $array[$v]:null;
 						$current++;
 					}
 				}
@@ -1479,20 +1479,20 @@ class Arrs extends Root
 		
 		if(Arr::isKey($key) && !empty($source))
 		{
-			if(\array_key_exists($key,$source))
-			$return = [$key=>null];
+			if(array_key_exists($key,$source))
+			$return = array($key=>null);
 			
 			else
 			{
 				foreach ($source as $k => $v) 
 				{
-					if(\is_array($v))
+					if(is_array($v))
 					{
 						$path = static::keyPath($key,$v,false);
 						
 						if($path !== null)
 						{
-							if(\is_array($path))
+							if(is_array($path))
 							$return[$k] = $path;
 							
 							else
@@ -1505,11 +1505,11 @@ class Arrs extends Root
 			}
 		}
 		
-		if($first === true && \is_array($return))
+		if($first === true && is_array($return))
 		{
 			$keys = static::keys($return);
-			if(\is_array($keys) && \count($keys) === 1)
-			$return = \current($keys);
+			if(is_array($keys) && count($keys) === 1)
+			$return = current($keys);
 		}
 		
 		return $return;
@@ -1520,7 +1520,7 @@ class Arrs extends Root
 	// retourne les chemins de toutes les occurences de la clé
 	public static function keyPaths($key,array $source):array
 	{
-		$return = [];
+		$return = array();
 		
 		while ($path = static::keyPath($key,$source)) 
 		{
@@ -1539,7 +1539,7 @@ class Arrs extends Root
 		$return = null;
 		$path = static::keyPath($key,$source);
 		
-		if(\is_array($path) && !empty($path))
+		if(is_array($path) && !empty($path))
 		$return = static::get($path,$source);
 		
 		return $return;
@@ -1550,10 +1550,10 @@ class Arrs extends Root
 	// retourne toutes les valeurs de la clé trouvé dans le tableau
 	public static function keyValues($key,array $source):array
 	{
-		$return = [];
+		$return = array();
 		$paths = static::keyPaths($key,$source);
 		
-		if(\is_array($paths) && !empty($paths))
+		if(is_array($paths) && !empty($paths))
 		$return = static::gets($paths,$source);
 		
 		return $return;
@@ -1567,7 +1567,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::keysLower($value,$mb);
 		}
 		
@@ -1584,7 +1584,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::keysUpper($value,$mb);
 		}
 		
@@ -1601,7 +1601,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::keysInsensitive($value);
 		}
 		
@@ -1620,7 +1620,7 @@ class Arrs extends Root
 		
 		foreach ($return as $key => &$value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = Arr::keysSort($value,$sort,$type);
 		}
 
@@ -1642,13 +1642,13 @@ class Arrs extends Root
 	// support pour recherche insensible à la case
 	public static function valuesKey(array $values,array $array,bool $sensitive=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
 			foreach (static::keys($array,$value,$sensitive,true) as $key)
 			{
-				if(!\in_array($key,$return,true))
+				if(!in_array($key,$return,true))
 				$return[] = $key;
 			}
 		}
@@ -1689,13 +1689,13 @@ class Arrs extends Root
 	// permet de crush les valeurs d'un tableau multidimensionnel de manière exponentielle
 	// c'est à dire que toutes les valeurs de chaque niveau se combienent avec toutes les valeurs des niveaux supérieures
 	// utiliser par base assert pour la méthode prepareClasse
-	public static function valuesCrush(array $array,?array $parent=[]):array 
+	public static function valuesCrush(array $array,?array $parent=array()):array 
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array) && !empty($array))
 		{
-			$hasParent = (\count($parent) > 0)? true:false;
+			$hasParent = (count($parent) > 0)? true:false;
 			$first = Arr::valueFirst($array);
 			$array = Arr::spliceFirst($array);
 			
@@ -1703,7 +1703,7 @@ class Arrs extends Root
 			{
 				foreach ($first as $value) 
 				{
-					$value = ($hasParent===true)? Arr::append($parent,$value):[$value];
+					$value = ($hasParent===true)? Arr::append($parent,$value):array($value);
 					$return = Arr::append($return,static::valuesCrush($array,$value));
 				}
 			}
@@ -1712,7 +1712,7 @@ class Arrs extends Root
 			{
 				foreach ($first as $v) 
 				{
-					$v = ($hasParent === true)? Arr::append($parent,$v):[$v];
+					$v = ($hasParent === true)? Arr::append($parent,$v):array($v);
 					$return[] = $v;
 				}
 			}
@@ -1733,11 +1733,11 @@ class Arrs extends Root
 				$return[$k] = $change;
 				$i++;
 				
-				if(\is_int($amount) && $i >= $amount)
+				if(is_int($amount) && $i >= $amount)
 				break;
 			}
 			
-			elseif(\is_array($v))
+			elseif(is_array($v))
 			$return[$k] = static::valuesChange($value,$change,$v,$amount,$i);
 		}
 		
@@ -1753,7 +1753,7 @@ class Arrs extends Root
 		{
 			foreach ($return as $key => $value) 
 			{
-				if(\is_string($value))
+				if(is_string($value))
 				{
 					$v = Str::replace($replace,$value,$sensitive);
 
@@ -1761,7 +1761,7 @@ class Arrs extends Root
 					$return[$key] = $v;
 				}
 				
-				elseif(\is_array($value))
+				elseif(is_array($value))
 				$return[$key] = static::valuesReplace($replace,$value,$sensitive);
 			}
 		}
@@ -1777,7 +1777,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::valuesLower($value);
 		}
 		
@@ -1794,7 +1794,7 @@ class Arrs extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::valuesUpper($value);
 		}
 		

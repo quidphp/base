@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Globals extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// is
 	// retourne vrai si la variable est une globale
 	public static function is($key):bool 
 	{
-		return (Arr::isKey($key) && \array_key_exists($key,$GLOBALS))? true:false;
+		return (Arr::isKey($key) && array_key_exists($key,$GLOBALS))? true:false;
 	}
 	
 	
@@ -23,7 +23,7 @@ class Globals extends Root
 	{
 		$return = null;
 		
-		if(Arr::isKey($key) && \array_key_exists($key,$GLOBALS))
+		if(Arr::isKey($key) && array_key_exists($key,$GLOBALS))
 		$return = $GLOBALS[$key];
 		
 		return $return;

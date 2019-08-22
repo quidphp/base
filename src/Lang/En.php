@@ -7,63 +7,63 @@ use Quid\Base;
 class En extends Base\Config
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		// number 
-		'number'=>[
+		'number'=>array(
 			
 			// format
-			'format'=>[
+			'format'=>array(
 				'decimal'=>2,
 				'separator'=>'.',
 				'thousand'=>","
-			],
+			),
 			
 			// moneyFormat
-			'moneyFormat'=>[
+			'moneyFormat'=>array(
 				'decimal'=>2,
 				'separator'=>'.',
 				'thousand'=>",",
 				'output'=>'$%v%'
-			],
+			),
 			
 			// percentFormat
-			'percentFormat'=>[
+			'percentFormat'=>array(
 				'decimal'=>0,
 				'separator'=>'.',
 				'thousand'=>"",
 				'output'=>'%v%%'
-			],
+			),
 				
 			// phoneFormat
-			'phoneFormat'=>[
+			'phoneFormat'=>array(
 				'parenthesis'=>true,
 				'extension'=>'#'
-			],
+			),
 
 			// sizeFormat
-			'sizeFormat'=>[
-				'round'=>[
+			'sizeFormat'=>array(
+				'round'=>array(
 					0=>0,
 					1=>0,
 					2=>1,
 					3=>2,
 					4=>2,
-					5=>3],
-				'text'=>[
+					5=>3),
+				'text'=>array(
 					0=>'Byte',
 					1=>'KB',
 					2=>'MB',
 					3=>'GB',
 					4=>'TB',
-					5=>'PB']
-				]
-		],
+					5=>'PB')
+				)
+		),
 		
 		// date
-		'date'=>[
+		'date'=>array(
 			
 			// format
-			'format'=>[
+			'format'=>array(
 				0=>'F j, Y',
 				1=>'F j, Y H:i:s',
 				2=>'F Y',
@@ -75,17 +75,17 @@ class En extends Base\Config
 				'short'=>'F j, Y',
 				'long'=>'F j, Y H:i:s',
 				'calendar'=>'F Y'
-			],
+			),
 			
 			// placeholder
-			'placeholder'=>[
+			'placeholder'=>array(
 				'dateToDay'=>'MM-DD-YYYY',
 				'dateToMinute'=>'MM-DD-YYYY HH:MM',
 				'dateToSecond'=>'MM-DD-YYYY HH:MM:SS'
-			],
+			),
 			
 			// str
-			'str'=>[
+			'str'=>array(
 				'year'=>'year',
 				'month'=>'month',
 				'day'=>'day',
@@ -93,10 +93,10 @@ class En extends Base\Config
 				'minute'=>'minute',
 				'second'=>'second',
 				'and'=>'and'
-			],
+			),
 				
 			// month
-			'month'=>[
+			'month'=>array(
 				1=>'January',
 				2=>'February',
 				3=>'March',
@@ -109,10 +109,10 @@ class En extends Base\Config
 				10=>'October',
 				11=>'November',
 				12=>'December'
-			],
+			),
 				
 			// dayShort
-			'dayShort'=>[
+			'dayShort'=>array(
 				0=>'Su',
 				1=>'Mo',
 				2=>'Tu',
@@ -120,10 +120,10 @@ class En extends Base\Config
 				4=>'Th',
 				5=>'Fr',
 				6=>'Sa'
-			],
+			),
 			
 			// day
-			'day'=>[
+			'day'=>array(
 				0=>'Sunday',
 				1=>'Monday',
 				2=>'Tuesday',
@@ -131,14 +131,14 @@ class En extends Base\Config
 				4=>'Thursday',
 				5=>'Friday',
 				6=>'Saturday'
-			]
-		],
+			)
+		),
 		
 		// header
-		'header'=>[
+		'header'=>array(
 			
 			// responseStatus
-			'responseStatus'=>[
+			'responseStatus'=>array(
 				100=>'Continue', 
 				101=>'Switching Protocols',
 				200=>'OK',
@@ -200,12 +200,12 @@ class En extends Base\Config
 				508=>'Loop Detected',
 				510=>'Not Extended',
 				511=>'Network Authentication Required'
-			]
-		],
+			)
+		),
 		
 		// error
-		'error'=>[
-			'code'=>[
+		'error'=>array(
+			'code'=>array(
 				E_ERROR=>'E_ERROR',
 				E_WARNING=>'E_WARNING',
 				E_PARSE=>'E_PARSE',
@@ -222,11 +222,11 @@ class En extends Base\Config
 				E_DEPRECATED=>'E_DEPRECATED',
 				E_USER_DEPRECATED=>'E_USER_DEPRECATED',
 				E_ALL=>'E_ALL'
-			]
-		],
+			)
+		),
 		
 		// validate
-		'validate'=>[
+		'validate'=>array(
 			'array'=>'Must be an array',
 			'bool'=>'Must be a boolean',
 			'callable'=>'Must be callable',
@@ -339,25 +339,25 @@ class En extends Base\Config
 			'maxFilesizes'=>"The uploaded file(s) size must be smaller than [%]",
 			'extension'=>"The extension of the file must be: [%]",
 			'extensions'=>"The extension of the file(s) must be: [%]"
-		],
+		),
 		
 		// required
-		'required'=>[
+		'required'=>array(
 			'common'=>'Cannot be empty'
-		],
+		),
 		
 		// unique
-		'unique'=>[
+		'unique'=>array(
 			'common'=>'Must be unique[%]'
-		],
+		),
 		
 		// editable
-		'editable'=>[
+		'editable'=>array(
 			'common'=>'Cannot be modified'
-		],
+		),
 		
 		// compare
-		'compare'=>[
+		'compare'=>array(
 			'='=>'Must be equal to [%]',
 			'=='=>'Must be equal to [%]',
 			'==='=>'Must be equal to [%]',
@@ -368,7 +368,7 @@ class En extends Base\Config
 			'!'=>'Must be different than [%]',
 			'!='=>'Must be different than [%]',
 			'!=='=>'Must be different than [%]'
-		]
-	];
+		)
+	);
 }
 ?>

@@ -6,7 +6,7 @@ namespace Quid\Base;
 trait _config
 {
 	// static
-	protected static $initConfig = []; // tableau qui garde en mémoire les classes qui ont été init
+	protected static $initConfig = array(); // tableau qui garde en mémoire les classes qui ont été init
 	protected static $callableConfig = null; // garde une copie de la callable à utiliser, par défaut array_replace_recursive
 	
 	
@@ -22,17 +22,17 @@ trait _config
 		
 		if($force === true || empty(static::$initConfig[$class]))
 		{
-			if(\property_exists($class,'config') && \is_array(static::$config))
+			if(property_exists($class,'config') && is_array(static::$config))
 			{
 				$method = '__config';
 				$init = false;
 				$callable = static::getConfigCallable();
 				
-				$merge = [];
-				$vars = \get_class_vars($class);
+				$merge = array();
+				$vars = get_class_vars($class);
 				foreach ($vars as $key => $value) 
 				{
-					if($key !== 'config' && \is_array($value) && !empty($value) && \strpos($key,'config') === 0)
+					if($key !== 'config' && is_array($value) && !empty($value) && strpos($key,'config') === 0)
 					$merge[] = $value;
 				}
 				
@@ -43,10 +43,10 @@ trait _config
 					$init = true;
 				}
 				
-				$merge = [];
+				$merge = array();
 				
-				$parent = \get_parent_class($class);
-				if(!empty($parent) && \property_exists($parent,'config') && \is_array($parent::$config) && !empty($parent::$config))
+				$parent = get_parent_class($class);
+				if(!empty($parent) && property_exists($parent,'config') && is_array($parent::$config) && !empty($parent::$config))
 				$merge[] = $parent::$config;
 				
 				if(!empty($merge) || $init === false)
@@ -76,7 +76,7 @@ trait _config
 					$value = (array) $value;
 				}
 				
-				return \array_replace_recursive(...$values);
+				return array_replace_recursive(...$values);
 			};
 		}
 		
@@ -98,7 +98,7 @@ trait _config
 	// retourne le tableau des clés à ne pas merger recursivement
 	public static function configReplaceMode():array
 	{
-		return [];
+		return array();
 	}
 	
 	
@@ -111,7 +111,7 @@ trait _config
 		$return = null;
 		$class = static::class;
 		
-		if(\property_exists($class,'config') && \is_array(static::$config))
+		if(property_exists($class,'config') && is_array(static::$config))
 		{
 			$return = static::$config;
 			

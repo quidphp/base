@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Network extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// isOnline
@@ -16,7 +16,7 @@ class Network extends Root
 		$return = false;
 		$ping = static::ping($hostname,$port,$timeout,$errno,$errstr);
 		
-		if(\is_numeric($ping))
+		if(is_numeric($ping))
 		$return = true;
 		
 		return $return;
@@ -27,7 +27,7 @@ class Network extends Root
 	// retourne vrai si un enregistrement dns existe
 	public static function hasDns(string $hostname,string $type='MX'):bool
 	{
-		return \checkdnsrr($hostname,$type);
+		return checkdnsrr($hostname,$type);
 	}
 	
 	
@@ -40,7 +40,7 @@ class Network extends Root
 	{
 		$return = null;
 		$microtime = Date::microtime();
-		$socket = @\fsockopen($hostname,$port,$errno,$errstr,$timeout);
+		$socket = @fsockopen($hostname,$port,$errno,$errstr,$timeout);
 		
 		if(!empty($socket))
 		{
@@ -56,7 +56,7 @@ class Network extends Root
 	// retourne les enregistrements dns pour un hostname
 	public static function dns(string $hostname,int $type=DNS_ALL):array 
 	{
-		return \dns_get_record($hostname,$type);
+		return dns_get_record($hostname,$type);
 	}
 	
 	
@@ -64,13 +64,13 @@ class Network extends Root
 	// retourne les enregistrements mx pour un hostname 
 	public static function mx(string $hostname,bool $weight=true):array
 	{
-		$return = [];
-		$weights = [];
+		$return = array();
+		$weights = array();
 		
-		if(\getmxrr($hostname,$return,$weights))
+		if(getmxrr($hostname,$return,$weights))
 		{
 			if($weight === true)
-			$return = ['mx'=>$return,'weight'=>$weights];
+			$return = array('mx'=>$return,'weight'=>$weights);
 		}
 		
 		return $return;
@@ -85,8 +85,8 @@ class Network extends Root
 		
 		if(Validate::isIp($ip))
 		{
-			$hostname = \gethostbyaddr($ip);
-			if(\is_string($hostname) && $hostname !== $ip)
+			$hostname = gethostbyaddr($ip);
+			if(is_string($hostname) && $hostname !== $ip)
 			$return = $hostname;
 		}
 		
@@ -100,7 +100,7 @@ class Network extends Root
 	{
 		$return = null;
 		
-		$ip = \gethostbyname($hostname);
+		$ip = gethostbyname($hostname);
 		if(Validate::isIp($ip))
 		$return = $ip;
 		
@@ -114,8 +114,8 @@ class Network extends Root
 	{
 		$return = null;
 		
-		$no = \getprotobyname($name);
-		if(\is_int($no))
+		$no = getprotobyname($name);
+		if(is_int($no))
 		$return = $no;
 		
 		return $return;
@@ -128,8 +128,8 @@ class Network extends Root
 	{
 		$return = null;
 		
-		$name = \getprotobynumber($no);
-		if(\is_string($name))
+		$name = getprotobynumber($no);
+		if(is_string($name))
 		$return = $name;
 		
 		return $return;
@@ -142,8 +142,8 @@ class Network extends Root
 	{
 		$return = null;
 		
-		$name = \getservbyport($port,$protocol);
-		if(\is_string($name) && !empty($name))
+		$name = getservbyport($port,$protocol);
+		if(is_string($name) && !empty($name))
 		$return = $name;
 		
 		return $return;
@@ -156,8 +156,8 @@ class Network extends Root
 	{
 		$return = null;
 		
-		$port = \getservbyname($name,$protocol);
-		if(\is_int($port))
+		$port = getservbyname($name,$protocol);
+		if(is_int($port))
 		$return = $port;
 		
 		return $return;

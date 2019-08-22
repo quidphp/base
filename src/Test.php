@@ -6,7 +6,7 @@ namespace Quid\Base;
 abstract class Test extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// start

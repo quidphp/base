@@ -6,12 +6,12 @@ namespace Quid\Base;
 class ImageRaster extends File
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'mimeGroup'=>'imageRaster', // mime groupe de la classe
 		'load'=>null, // extension permise pour la méthode imageRaster::load
-		'prefix'=>[ // option image file::temp
-			'extension'=>'jpg']
-	];
+		'prefix'=>array( // option image file::temp
+			'extension'=>'jpg')
+	);
 	
 	
 	// captcha
@@ -20,11 +20,11 @@ class ImageRaster extends File
 	public static function captcha(string $value,?string $font=null,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(['background'=>[0,0,0],'line'=>[155,155,155],'pixel'=>[155,155,155],'text'=>[255,255,255]],$option);
+		$option = Arr::plus(array('background'=>array(0,0,0),'line'=>array(155,155,155),'pixel'=>array(155,155,155),'text'=>array(255,255,255)),$option);
 		$image = null;
-		$length = \strlen($value);
+		$length = strlen($value);
 		
-		if($length > 0 && \is_string($font) && \is_array($option['text']) && \count($option['text']) === 3)
+		if($length > 0 && is_string($font) && is_array($option['text']) && count($option['text']) === 3)
 		{
 			$font = File::shortcut($font);
 			
@@ -33,44 +33,44 @@ class ImageRaster extends File
 				$return = Res::temp('png');
 				$width = $length * 40;
 				$str = Str::split(1,$value);
-				$image = \imagecreatetruecolor($width,50);
+				$image = imagecreatetruecolor($width,50);
 				
 				// background
-				if(\is_array($option['background']) && \count($option['background']) === 3)
+				if(is_array($option['background']) && count($option['background']) === 3)
 				{
-					$backgroundColor = \imagecolorallocate($image,...$option['background']);
-					\imagefilledrectangle($image,0,0,$width,50,$backgroundColor);
+					$backgroundColor = imagecolorallocate($image,...$option['background']);
+					imagefilledrectangle($image,0,0,$width,50,$backgroundColor);
 				}
 				
 				// line
-				if(\is_array($option['line']) && \count($option['line']) === 3)
+				if(is_array($option['line']) && count($option['line']) === 3)
 				{
-					$lineColor = \imagecolorallocate($image,...$option['line']); 
+					$lineColor = imagecolorallocate($image,...$option['line']); 
 					for ($i=0; $i<10; $i++) 
 					{
-					    \imageline($image,0,\rand() % 50,$width,\rand() % 50,$lineColor);
+					    imageline($image,0,rand() % 50,$width,rand() % 50,$lineColor);
 					}
 				}
 				
 				// pixel
-				if(\is_array($option['pixel']) && \count($option['pixel']) === 3)
+				if(is_array($option['pixel']) && count($option['pixel']) === 3)
 				{
-					$pixelColor = \imagecolorallocate($image,...$option['pixel']);
+					$pixelColor = imagecolorallocate($image,...$option['pixel']);
 					for ($i=0; $i<1000; $i++) 
 					{
-					    \imagesetpixel($image,\rand() % $width,\rand() % 50,$pixelColor);
+					    imagesetpixel($image,rand() % $width,rand() % 50,$pixelColor);
 					}
 				}
 
 				// text
-				$textColor = \imagecolorallocate($image,...$option['text']);
+				$textColor = imagecolorallocate($image,...$option['text']);
 				foreach ($str as $k => $z) 
 				{
-					\imagettftext($image,25,0,20 + ($k * 35),35,$textColor,$font,$z);
+					imagettftext($image,25,0,20 + ($k * 35),35,$textColor,$font,$z);
 				}
 				
 				// render
-				\imagepng($image,$return);
+				imagepng($image,$return);
 			}
 		}
 		
@@ -123,7 +123,7 @@ class ImageRaster extends File
 			if($expand === true)
 			$image = static::bestFitExpand($maxWidth,$maxHeight,$newWidth,$newHeight);
 			else
-			$image = ['width'=>$newWidth,'height'=>$newHeight];
+			$image = array('width'=>$newWidth,'height'=>$newHeight);
 		}
 		
 		return $image;
@@ -151,7 +151,7 @@ class ImageRaster extends File
 				$newHeight *= $ratio;
 			}
 			
-			$image = ['width'=>(int) $newWidth,'height'=>(int) $newHeight];
+			$image = array('width'=>(int) $newWidth,'height'=>(int) $newHeight);
 		}
 		
 		return $image;

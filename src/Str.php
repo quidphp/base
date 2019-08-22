@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Str extends Root
 {	
 	// config
-	public static $config = [
+	public static $config = array(
 		'charset'=>'UTF-8', // charset, peut être changé via encoding
-		'plural'=>['letter'=>'s','wrap'=>'%'], // pour la fonction plural
-		'excerpt'=>['suffix'=>'...'], // suffix pour la méthode excerpt
+		'plural'=>array('letter'=>'s','wrap'=>'%'), // pour la fonction plural
+		'excerpt'=>array('suffix'=>'...'), // suffix pour la méthode excerpt
 		'trim'=>" \t\n\r\0\x0B", // liste des caractères trimmés par défaut par les fonctions trim
 		'search'=>' ', // séparateur pour prepareSearch
 		'pointer'=>'/', // séparateur pour pointer
-		'loremIpsum'=>[ // contenu source pour la méthode loremIpsum
+		'loremIpsum'=>array( // contenu source pour la méthode loremIpsum
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 			'Aenean ullamcorper nunc non gravida ornare. Interdum et malesuada fames ac ante ipsum primis in faucibus.',
 			'Vestibulum lacinia sapien posuere risus viverra accumsan. Curabitur tempor lorem accumsan nunc scelerisque vehicula.',
@@ -35,8 +35,8 @@ class Str extends Root
 			'Vestibulum sodales iaculis convallis.',
 			'Nam ut luctus sapien.',
 			'Nulla facilisi.',
-			'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.']
-	];
+			'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.')
+	);
 
 	
 	// typecast
@@ -71,7 +71,7 @@ class Str extends Root
 	// retourne vrai si la valeur est string
 	public static function is($value):bool
 	{
-		return (\is_string($value))? true:false;
+		return (is_string($value))? true:false;
 	}
 	
 	
@@ -79,7 +79,7 @@ class Str extends Root
 	// retourne vrai si la valeur est string et vide
 	public static function isEmpty($value):bool
 	{
-		return (\is_string($value) && !\strlen($value))? true:false;
+		return (is_string($value) && !strlen($value))? true:false;
 	}
 	
 	
@@ -87,7 +87,7 @@ class Str extends Root
 	// retourne vrai si la valeur est string et non vide
 	public static function isNotEmpty($value):bool
 	{
-		return (\is_string($value) && \strlen($value))? true:false;
+		return (is_string($value) && strlen($value))? true:false;
 	}
 	
 
@@ -95,7 +95,7 @@ class Str extends Root
 	// retourne vrai si la length est celle spécifié
 	public static function isLength(int $length,$value,?bool $mb=null):bool
 	{
-		return (\is_string($value) && static::len($value,$mb) === $length)? true:false;
+		return (is_string($value) && static::len($value,$mb) === $length)? true:false;
 	}
 	
 	
@@ -103,7 +103,7 @@ class Str extends Root
 	// retourne vrai si la length est plus grande ou égale que celle spécifié
 	public static function isMinLength(int $length,$value,?bool $mb=null):bool
 	{
-		return (\is_string($value) && static::len($value,$mb) >= $length)? true:false;
+		return (is_string($value) && static::len($value,$mb) >= $length)? true:false;
 	}
 	
 	
@@ -111,7 +111,7 @@ class Str extends Root
 	// retourne vrai si la length est plus petite ou égale que celui spécifié
 	public static function isMaxLength(int $length,$value,?bool $mb=null):bool
 	{
-		return (\is_string($value) && static::len($value,$mb) <= $length)? true:false;
+		return (is_string($value) && static::len($value,$mb) <= $length)? true:false;
 	}
 	
 	
@@ -121,7 +121,7 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			
@@ -141,7 +141,7 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			$mb = ($sensitive === false)? true:false;
@@ -163,7 +163,7 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			$return = static::isStart($startNeedle,$value,$sensitive);
@@ -184,24 +184,24 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
-			$len = \strlen($value);
-			$charLen = \strlen($char);
+			$len = strlen($value);
+			$charLen = strlen($char);
 			
 			if($charLen > 0 && $len > 0)
 			{
-				if(\strpos($pattern,$char) === 0)
+				if(strpos($pattern,$char) === 0)
 				{
-					$pattern = \substr($pattern,$charLen);
+					$pattern = substr($pattern,$charLen);
 					if(static::isEnd($pattern,$value,$sensitive))
 					$return = true;
 				}
 				
-				elseif(\strpos($pattern,$char) === (\strlen($pattern)-$charLen))
+				elseif(strpos($pattern,$char) === (strlen($pattern)-$charLen))
 				{
-					$pattern = \substr($pattern,0,-$charLen);
+					$pattern = substr($pattern,0,-$charLen);
 					if(static::isStart($pattern,$value,$sensitive))
 					$return = true;
 				}
@@ -219,7 +219,7 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value) && !\preg_match('/[^\\p{Common}\\p{Latin}]/u', $value))
+		if(is_string($value) && !preg_match('/[^\\p{Common}\\p{Latin}]/u', $value))
 		$return = true;
 		
 		return $return;
@@ -233,7 +233,7 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\is_string($value) && \strpos($value,"\0") !== false)
+		if(is_string($value) && strpos($value,"\0") !== false)
 		$return = true;
 		
 		return $return;
@@ -248,7 +248,7 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\count($values) > 1)
+		if(count($values) > 1)
 		{
 			$compare = null;
 			
@@ -256,11 +256,11 @@ class Str extends Root
 			{
 				$return = false;
 				
-				if(\is_string($value))
+				if(is_string($value))
 				$value = static::lower($value,true);
 				
-				elseif(\is_array($value))
-				$value = static::map([Str::class,'lower'],$value,true);
+				elseif(is_array($value))
+				$value = static::map(array(Str::class,'lower'),$value,true);
 				
 				if($compare === null)
 				{
@@ -318,7 +318,7 @@ class Str extends Root
 	// la grosse différence avec cette méthode pour les scalaires, est que false retourne '0' plutôt que ''
 	public static function cast($return,?string $separator=null,bool $fixUnicode=false):string
 	{
-		if(!\is_string($return))
+		if(!is_string($return))
 		{
 			if($return === null)
 			$return = '';
@@ -329,26 +329,26 @@ class Str extends Root
 			elseif($return === true)
 			$return = '1';
 			
-			elseif(\is_int($return) || \is_float($return))
+			elseif(is_int($return) || is_float($return))
 			$return = (string) $return;
 			
-			elseif(\is_array($return))
+			elseif(is_array($return))
 			{
-				if(\is_string($separator) && Arr::isUni($return))
-				$return = \implode($separator,$return);
+				if(is_string($separator) && Arr::isUni($return))
+				$return = implode($separator,$return);
 				
 				else
 				$return = Json::encode($return);
 			}
 			
-			elseif(\is_object($return))
+			elseif(is_object($return))
 			$return = Crypt::serialize($return);
 			
-			elseif(\is_resource($return))
+			elseif(is_resource($return))
 			$return = Res::pathToUriOrBase64($return);
 		}
 		
-		if($fixUnicode === true && \is_string($return))
+		if($fixUnicode === true && is_string($return))
 		$return = static::fixUnicode($return);
 		
 		return $return;
@@ -371,7 +371,7 @@ class Str extends Root
 		$return = null;
 		
 		$return = Number::cast($value,$extra);
-		if(!\is_numeric($return))
+		if(!is_numeric($return))
 		$return = (float) $return;
 		
 		return $return; 
@@ -410,12 +410,12 @@ class Str extends Root
 	public static function len(string $value,?bool $mb=null):int
 	{
 		$return = 0;
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
 		if($mb === true)
-		$return = \mb_strlen($value,static::$config['charset']);
+		$return = mb_strlen($value,static::$config['charset']);
 		else
-		$return = \strlen($value);
+		$return = strlen($value);
 		
 		return $return;
 	}
@@ -427,10 +427,10 @@ class Str extends Root
 	{
 		$return = 0;
 		
-		if(\is_int($length))
-		$return = \strspn($str,$chars,$start,$length);
+		if(is_int($length))
+		$return = strspn($str,$chars,$start,$length);
 		else
-		$return = \strspn($str,$chars,$start);
+		$return = strspn($str,$chars,$start);
 		
 		return $return;
 	}
@@ -442,10 +442,10 @@ class Str extends Root
 	{
 		$return = 0;
 		
-		if(\is_int($length))
-		$return = \strcspn($str,$chars,$start,$length);
+		if(is_int($length))
+		$return = strcspn($str,$chars,$start,$length);
 		else
-		$return = \strcspn($str,$chars,$start);
+		$return = strcspn($str,$chars,$start);
 		
 		return $return;
 	}
@@ -457,19 +457,19 @@ class Str extends Root
 	public static function pos(string $needle,string $str,$offset=0,?bool $mb=null):?int
 	{
 		$return = null;
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
 		
-		if(\is_string($offset))
+		if(is_string($offset))
 		$offset = static::len($offset,$mb);
 		
-		if(\is_int($offset) && \strlen($needle))
+		if(is_int($offset) && strlen($needle))
 		{
 			if($mb === true)
-			$pos = \mb_strpos($str,$needle,$offset,static::$config['charset']);
+			$pos = mb_strpos($str,$needle,$offset,static::$config['charset']);
 			else
-			$pos = \strpos($str,$needle,$offset);
+			$pos = strpos($str,$needle,$offset);
 			
-			if(\is_int($pos))
+			if(is_int($pos))
 			$return = $pos;
 		}
 		
@@ -483,19 +483,19 @@ class Str extends Root
 	public static function posRev(string $needle,string $str,$offset=0,?bool $mb=null):?int 
 	{
 		$return = null;
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
 		
-		if(\is_string($offset))
+		if(is_string($offset))
 		$offset = static::len($offset,$mb);
 		
-		if(\is_int($offset) && \strlen($needle))
+		if(is_int($offset) && strlen($needle))
 		{
 			if($mb === true)
-			$pos = \mb_strrpos($str,$needle,$offset,static::$config['charset']);
+			$pos = mb_strrpos($str,$needle,$offset,static::$config['charset']);
 			else
-			$pos = \strrpos($str,$needle,$offset);
+			$pos = strrpos($str,$needle,$offset);
 			
-			if(\is_int($pos))
+			if(is_int($pos))
 			$return = $pos;
 		}
 		
@@ -509,20 +509,20 @@ class Str extends Root
 	public static function ipos(string $needle,string $str,$offset=0,?bool $mb=null):?int
 	{
 		$return = null;
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
 		
-		if(\is_string($offset))
+		if(is_string($offset))
 		$offset = static::len($offset,$mb);
 		
-		if(\is_int($offset) && \strlen($needle))
+		if(is_int($offset) && strlen($needle))
 		{
 			if($mb === true)
-			$pos = \mb_stripos($str,$needle,$offset,static::$config['charset']);
+			$pos = mb_stripos($str,$needle,$offset,static::$config['charset']);
 			
 			else
-			$pos = \stripos($str,$needle,$offset);
+			$pos = stripos($str,$needle,$offset);
 			
-			if(\is_int($pos))
+			if(is_int($pos))
 			$return = $pos;
 		}
 		
@@ -537,19 +537,19 @@ class Str extends Root
 	public static function iposRev(string $needle,string $str,$offset=0,?bool $mb=null):?int
 	{
 		$return = null;
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
 		
-		if(\is_string($offset))
+		if(is_string($offset))
 		$offset = static::len($offset,$mb);
 		
-		if(\is_int($offset) && \strlen($needle))
+		if(is_int($offset) && strlen($needle))
 		{
 			if($mb === true)
-			$pos = \mb_strripos($str,$needle,$offset,static::$config['charset']);
+			$pos = mb_strripos($str,$needle,$offset,static::$config['charset']);
 			else
-			$pos = \strripos($str,$needle,$offset);
+			$pos = strripos($str,$needle,$offset);
 			
-			if(\is_int($pos))
+			if(is_int($pos))
 			$return = $pos;
 		}
 		
@@ -565,12 +565,12 @@ class Str extends Root
 		$return = null;
 		
 		if($sensitive === true)
-		$pos = \strpos($str,$needle);
+		$pos = strpos($str,$needle);
 		
 		else
-		$pos = \mb_stripos($str,$needle,0,static::$config['charset']);
+		$pos = mb_stripos($str,$needle,0,static::$config['charset']);
 		
-		if(\is_int($pos))
+		if(is_int($pos))
 		$return = $pos;
 		
 		return $return;
@@ -589,7 +589,7 @@ class Str extends Root
 		else
 		$position = static::ipos($needle,$str,$offset,true);
 		
-		if(\is_numeric($position))
+		if(is_numeric($position))
 		$return = true;
 
 		return $return;
@@ -614,7 +614,7 @@ class Str extends Root
 				else
 				$position = static::ipos($needle,$str,$offset,true);
 				
-				if(!\is_numeric($position))
+				if(!is_numeric($position))
 				{
 					$return = false;
 					break;
@@ -640,7 +640,7 @@ class Str extends Root
 			else
 			$position = static::ipos($needle,$str,$offset,true);
 			
-			if(\is_numeric($position))
+			if(is_numeric($position))
 			{
 				$return = $needle;
 				break;
@@ -659,15 +659,15 @@ class Str extends Root
 	{
 		$return = false;
 		
-		if(\is_string($needle))
+		if(is_string($needle))
 		{
 			if($prepare === true)
 			$needle = static::prepareSearch($needle,$separator);
 			else
-			$needle = [$needle];
+			$needle = array($needle);
 		}
 		
-		if(\is_array($needle) && !empty($needle))
+		if(is_array($needle) && !empty($needle))
 		{
 			$return = true;
 			
@@ -676,10 +676,10 @@ class Str extends Root
 			
 			foreach ($needle as $n) 
 			{
-				if(\is_string($n) && $accentSensitive === false)
+				if(is_string($n) && $accentSensitive === false)
 				$n = static::replaceAccent($n);
 				
-				if(!\is_string($n) || !static::in($n,$str,$sensitive))
+				if(!is_string($n) || !static::in($n,$str,$sensitive))
 				{
 					$return = false;
 					break;
@@ -696,10 +696,10 @@ class Str extends Root
 	// par défaut support pour espace pour diviser le terme
 	public static function prepareSearch($value,?string $separator=null):array 
 	{
-		$return = [];
-		$separator = (\is_string($separator))? $separator:static::$config['search'];
+		$return = array();
+		$separator = (is_string($separator))? $separator:static::$config['search'];
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			$return = static::explodeTrimClean($separator,$value);
@@ -716,17 +716,17 @@ class Str extends Root
 	public static function sub($offset,$length,string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
-		$offset = (\is_string($offset))? static::len($offset,$mb):$offset;
-		$length = (\is_string($length))? static::len($length,$mb):$length;
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
+		$offset = (is_string($offset))? static::len($offset,$mb):$offset;
+		$length = (is_string($length))? static::len($length,$mb):$length;
 		$length = ($length === null)? static::len($value,$mb):$length;
 		
-		if(\is_int($offset) && \is_int($length))
+		if(is_int($offset) && is_int($length))
 		{
 			if($mb===true)
-			$return = \mb_substr($value,$offset,$length,static::$config['charset']);
+			$return = mb_substr($value,$offset,$length,static::$config['charset']);
 			else
-			$return = \substr($value,$offset,$length);
+			$return = substr($value,$offset,$length);
 		}
 		
 		return $return;		
@@ -757,17 +757,17 @@ class Str extends Root
 	public static function cut($offset,$length,string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
-		$offset = (\is_string($offset))? static::len($offset,$mb):$offset;
-		$length = (\is_string($length))? static::len($length,$mb):$length;
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
+		$offset = (is_string($offset))? static::len($offset,$mb):$offset;
+		$length = (is_string($length))? static::len($length,$mb):$length;
 		$length = ($length === null)? static::len($value,$mb):$length;
 		
-		if(\is_int($offset) && \is_int($length))
+		if(is_int($offset) && is_int($length))
 		{
 			if($mb===true)
-			$return = \mb_strcut($value,$offset,$length,static::$config['charset']);
+			$return = mb_strcut($value,$offset,$length,static::$config['charset']);
 			else
-			$return = \substr($value,$offset,$length);
+			$return = substr($value,$offset,$length);
 		}
 		
 		return $return;		
@@ -780,17 +780,17 @@ class Str extends Root
 	public static function subCount(string $needle,string $value,$offset=null,$length=null,?bool $mb=null):int
 	{
 		$return = 0;
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$value,$offset,$length);
-		$offset = (\is_string($offset))? static::len($offset,$mb):$offset;
-		$length = (\is_string($length))? static::len($length,$mb):$length;
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$value,$offset,$length);
+		$offset = (is_string($offset))? static::len($offset,$mb):$offset;
+		$length = (is_string($length))? static::len($length,$mb):$length;
 		
 		if($offset !== null)
 		$value = static::sub($offset,$length,$value,$mb);
 		
 		if($mb === true)
-		$return = \mb_substr_count($value,$needle,static::$config['charset']);
+		$return = mb_substr_count($value,$needle,static::$config['charset']);
 		else
-		$return = \substr_count($value,$needle);
+		$return = substr_count($value,$needle);
 		
 		return $return;
 	}
@@ -804,17 +804,17 @@ class Str extends Root
 	public static function subReplace($offset,$length,$replace,string $str,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$offset,$length,$str,$replace);
-		$offset = (\is_string($offset))? static::len($offset,$mb):$offset;
-		$length = (\is_string($length))? static::len($length,$mb):$length;
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$offset,$length,$str,$replace);
+		$offset = (is_string($offset))? static::len($offset,$mb):$offset;
+		$length = (is_string($length))? static::len($length,$mb):$length;
 		
-		if(\is_array($replace))
+		if(is_array($replace))
 		$replace = static::charImplode($replace);
 		
-		if(\is_scalar($replace))
+		if(is_scalar($replace))
 		$replace = (string) $replace;
 		
-		if(\is_int($offset) && \is_int($length) && \is_string($replace))
+		if(is_int($offset) && is_int($length) && is_string($replace))
 		{
 			if($mb === true)
 			{
@@ -825,7 +825,7 @@ class Str extends Root
 			}
 			
 			else
-			$return = \substr_replace($str,$replace,$offset,$length);
+			$return = substr_replace($str,$replace,$offset,$length);
 		}
 		
 		return $return;
@@ -838,11 +838,11 @@ class Str extends Root
 	public static function subCompare(string $str,$offset,$length,string $main,bool $sensitive=true,?bool $mb=null):?int
 	{
 		$return = null;
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$offset,$length,$main);
-		$offset = (\is_string($offset))? static::len($offset,$mb):$offset;
-		$length = (\is_string($length))? static::len($length,$mb):$length;
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$offset,$length,$main);
+		$offset = (is_string($offset))? static::len($offset,$mb):$offset;
+		$length = (is_string($length))? static::len($length,$mb):$length;
 
-		if(\is_int($offset) && \is_int($length))
+		if(is_int($offset) && is_int($length))
 		{
 			if($sensitive===false)
 			{
@@ -850,7 +850,7 @@ class Str extends Root
 				$main = static::lower($main,$mb);
 			}
 			
-			$return = \substr_compare($main,$str,$offset,$length,($sensitive===true)? false:true);
+			$return = substr_compare($main,$str,$offset,$length,($sensitive===true)? false:true);
 		}
 		
 		return $return;
@@ -865,7 +865,7 @@ class Str extends Root
 		
 		if(!empty($chars))
 		{
-			$brk = \strpbrk($str,$chars);
+			$brk = strpbrk($str,$chars);
 			if($brk !== false)
 			$return = $brk;
 		}
@@ -1034,10 +1034,10 @@ class Str extends Root
 	{
 		$return = null;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
-			$return = \str_replace($char,$value,$pattern);
+			$return = str_replace($char,$value,$pattern);
 		}
 		
 		return $return;
@@ -1051,24 +1051,24 @@ class Str extends Root
 	{
 		$return = null;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
-			$len = \strlen($value);
-			$charLen = \strlen($char);
+			$len = strlen($value);
+			$charLen = strlen($char);
 			
 			if($charLen > 0 && $len > 0)
 			{
-				if(\strpos($pattern,$char) === 0)
+				if(strpos($pattern,$char) === 0)
 				{
-					$pattern = \substr($pattern,$charLen);
+					$pattern = substr($pattern,$charLen);
 					if(static::isEnd($pattern,$value,$sensitive))
 					$return = static::stripEnd($pattern,$value,$sensitive);
 				}
 				
-				elseif(\strpos($pattern,$char) === (\strlen($pattern)-$charLen))
+				elseif(strpos($pattern,$char) === (strlen($pattern)-$charLen))
 				{
-					$pattern = \substr($pattern,0,-$charLen);
+					$pattern = substr($pattern,0,-$charLen);
 					if(static::isStart($pattern,$value,$sensitive))
 					$return = static::stripStart($pattern,$value,$sensitive);
 				}
@@ -1085,24 +1085,24 @@ class Str extends Root
 	public static function stripBefore(string $char,string $value,bool $includeChar=true,bool $sensitive=true,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$char,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$char,$value);
 		
 		if(!empty($char))
 		{
 			if($sensitive === true)
 			{
 				if($mb === true)
-				$strip = \mb_strstr($value,$char,false,static::$config['charset']);
+				$strip = mb_strstr($value,$char,false,static::$config['charset']);
 				else
-				$strip = \strstr($value,$char,false);
+				$strip = strstr($value,$char,false);
 			}
 			
 			else
 			{
 				if($mb === true)
-				$strip = \mb_stristr($value,$char,false,static::$config['charset']);
+				$strip = mb_stristr($value,$char,false,static::$config['charset']);
 				else
-				$strip = \stristr($value,$char,false);
+				$strip = stristr($value,$char,false);
 			}
 			
 			if($strip !== false)
@@ -1128,10 +1128,10 @@ class Str extends Root
 		if(!empty($char))
 		{
 			if($sensitive === true)
-			$strip = \mb_strrchr($value,$char,false,static::$config['charset']);
+			$strip = mb_strrchr($value,$char,false,static::$config['charset']);
 			
 			else
-			$strip = \mb_strrichr($value,$char,false,static::$config['charset']);
+			$strip = mb_strrichr($value,$char,false,static::$config['charset']);
 			
 			if($strip !== false)
 			{
@@ -1152,24 +1152,24 @@ class Str extends Root
 	public static function stripAfter(string $char,string $value,bool $includeChar=false,bool $sensitive=true,?bool $mb=null):?string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$char,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$char,$value);
 		
 		if(!empty($char))
 		{
 			if($sensitive === true)
 			{
 				if($mb === true)
-				$strip = \mb_strstr($value,$char,true,static::$config['charset']);
+				$strip = mb_strstr($value,$char,true,static::$config['charset']);
 				else
-				$strip = \strstr($value,$char,true);
+				$strip = strstr($value,$char,true);
 			}
 			
 			else
 			{
 				if($mb === true)
-				$strip = \mb_stristr($value,$char,true,static::$config['charset']);
+				$strip = mb_stristr($value,$char,true,static::$config['charset']);
 				else
-				$strip = \stristr($value,$char,true);
+				$strip = stristr($value,$char,true);
 			}
 
 			if($strip !== false)
@@ -1195,10 +1195,10 @@ class Str extends Root
 		if(!empty($char))
 		{
 			if($sensitive === true)
-			$strip = \mb_strrchr($value,$char,true,static::$config['charset']);
+			$strip = mb_strrchr($value,$char,true,static::$config['charset']);
 			
 			else
-			$strip = \mb_strrichr($value,$char,true,static::$config['charset']);
+			$strip = mb_strrichr($value,$char,true,static::$config['charset']);
 			
 			if($strip !== false)
 			{
@@ -1251,12 +1251,12 @@ class Str extends Root
 	public static function lower(string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
 		if($mb === true)
-		$return = \mb_strtolower($value,static::$config['charset']);
+		$return = mb_strtolower($value,static::$config['charset']);
 		else
-		$return = \strtolower($value);
+		$return = strtolower($value);
 
 		return $return;
 	}
@@ -1267,7 +1267,7 @@ class Str extends Root
 	public static function lowerFirst(string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
 		if($mb === true)
 		{
@@ -1276,7 +1276,7 @@ class Str extends Root
 		}
 		
 		else
-		$return = \lcfirst($value);
+		$return = lcfirst($value);
 		
 		return $return;
 	}
@@ -1287,12 +1287,12 @@ class Str extends Root
 	public static function upper(string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
 		if($mb === true)
-		$return = \mb_strtoupper($value,static::$config['charset']);
+		$return = mb_strtoupper($value,static::$config['charset']);
 		else
-		$return = \strtoupper($value);
+		$return = strtoupper($value);
 		
 		return $return;
 	}
@@ -1303,7 +1303,7 @@ class Str extends Root
 	public static function upperFirst(string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
 		if($mb === true)
 		{
@@ -1312,7 +1312,7 @@ class Str extends Root
 		}
 		
 		else
-		$return = \ucfirst($value);
+		$return = ucfirst($value);
 		
 		return $return;
 	}
@@ -1323,7 +1323,7 @@ class Str extends Root
 	public static function capitalize(string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
 		if($mb===true)
 		{
@@ -1333,7 +1333,7 @@ class Str extends Root
 		}
 		
 		else
-		$return = \ucfirst(\strtolower($value));
+		$return = ucfirst(strtolower($value));
 
 		return $return;		
 	}
@@ -1344,12 +1344,12 @@ class Str extends Root
 	public static function title(string $value,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
 		if($mb === true)
-		$return = \mb_convert_case($value,MB_CASE_TITLE,static::$config['charset']);
+		$return = mb_convert_case($value,MB_CASE_TITLE,static::$config['charset']);
 		else
-		$return = \ucwords(\strtolower($value));
+		$return = ucwords(strtolower($value));
 
 		return $return;		
 	}
@@ -1366,12 +1366,12 @@ class Str extends Root
 			$split = static::chars($str,$mb);
 			if(!empty($split))
 			{
-				$reverse = \array_reverse($split);
+				$reverse = array_reverse($split);
 				$return = static::charImplode($reverse);
 			}
 		}
 		else
-		$return = \strrev($str);
+		$return = strrev($str);
 		
 		return $return;
 	}
@@ -1388,12 +1388,12 @@ class Str extends Root
 			$split = static::chars($str,$mb);
 			if(!empty($split))
 			{
-				\shuffle($split);
+				shuffle($split);
 				$return = static::charImplode($split);
 			}
 		}
 		else
-		$return = \str_shuffle($str);
+		$return = str_shuffle($str);
 		
 		return $return;
 	}
@@ -1404,7 +1404,7 @@ class Str extends Root
 	public static function pad(string $input,int $length,string $str,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
 		
 		if($mb === true)
 		{
@@ -1415,9 +1415,9 @@ class Str extends Root
 			{
 				$return = $str;
 				$start = '';
-				$startLength = (int) \floor(($length - $strLength) / 2);
+				$startLength = (int) floor(($length - $strLength) / 2);
 				$end = '';
-				$endLength = (int) \ceil(($length - $strLength) / 2);
+				$endLength = (int) ceil(($length - $strLength) / 2);
 				
 				while (static::len($start,$mb) < $startLength) 
 				{
@@ -1435,7 +1435,7 @@ class Str extends Root
 			}
 		}
 		else
-		$return = \str_pad($str,$length,$input,STR_PAD_BOTH);
+		$return = str_pad($str,$length,$input,STR_PAD_BOTH);
 		
 		return $return;
 	}
@@ -1446,7 +1446,7 @@ class Str extends Root
 	public static function padLeft(string $input,int $length,string $str,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
 		
 		if($mb === true)
 		{
@@ -1467,7 +1467,7 @@ class Str extends Root
 			$return = $str;
 		}
 		else
-		$return = \str_pad($str,$length,$input,STR_PAD_LEFT);
+		$return = str_pad($str,$length,$input,STR_PAD_LEFT);
 		
 		return $return;
 	}
@@ -1478,7 +1478,7 @@ class Str extends Root
 	public static function padRight(string $input,int $length,string $str,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
 		
 		if($mb === true)
 		{
@@ -1495,7 +1495,7 @@ class Str extends Root
 			}
 		}
 		else
-		$return = \str_pad($str,$length,$input,STR_PAD_RIGHT);
+		$return = str_pad($str,$length,$input,STR_PAD_RIGHT);
 		
 		return $return;
 	}
@@ -1506,8 +1506,8 @@ class Str extends Root
 	// length permet de définir la longueur du split
 	public static function split(int $length=1,string $str,?bool $mb=null):array
 	{
-		$return = [];
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+		$return = array();
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
 
 		if($length > 0)
 		{
@@ -1521,7 +1521,7 @@ class Str extends Root
 			}
 			
 			else
-			$return = \str_split($str,$length);
+			$return = str_split($str,$length);
 		}
 		
 		return $return;
@@ -1541,12 +1541,12 @@ class Str extends Root
 	// si mb est numérique, on envoie à la fonction count_chars qui retourne les octets pour des caractères
 	public static function charCount(string $str,$mb=null):array 
 	{
-		$return = [];
+		$return = array();
 		
-		if(\is_int($mb))
-		$return = \count_chars($str,$mb);
+		if(is_int($mb))
+		$return = count_chars($str,$mb);
 		
-		elseif(\is_scalar($mb) || $mb === null)
+		elseif(is_scalar($mb) || $mb === null)
 		{
 			$split = static::chars($str,$mb);
 			
@@ -1562,7 +1562,7 @@ class Str extends Root
 	// implode un tableau de caractère en une chaîne
 	public static function charImplode(array $array):string 
 	{
-		return \implode('',$array);
+		return implode('',$array);
 	}
 	
 	
@@ -1578,7 +1578,7 @@ class Str extends Root
 	// permet de régurilariser la situation des line breaks dans une chaîne
 	public static function lineBreaks(string $str,string $separator=PHP_EOL):string
 	{
-		return \str_replace(["\r\n","\n\r","\r","\n"],$separator,$str);
+		return str_replace(array("\r\n","\n\r","\r","\n"),$separator,$str);
 	}
 	
 	
@@ -1588,10 +1588,10 @@ class Str extends Root
 	// trim permet d'enlever les espaces au début et à la fin de chaque ligne
 	public static function lines(string $str,bool $trim=false):array
 	{
-		$return = \explode(PHP_EOL,static::lineBreaks($str,PHP_EOL));
+		$return = explode(PHP_EOL,static::lineBreaks($str,PHP_EOL));
 		
 		if($trim === true)
-		$return = \array_map('trim',$return);
+		$return = array_map('trim',$return);
 		
 		return $return;
 	}
@@ -1601,7 +1601,7 @@ class Str extends Root
 	// retourne le nombre de ligne dans la chaîne
 	public static function lineCount(string $str):int
 	{
-		return \count(static::lines($str));
+		return count(static::lines($str));
 	}
 	
 	
@@ -1609,22 +1609,22 @@ class Str extends Root
 	// implode un tableau dans une string, le séparateur est PHP_EOL
 	public static function lineImplode(array $value,string $separator=PHP_EOL):string
 	{
-		return \implode($separator,$value);
+		return implode($separator,$value);
 	}
 	
 	
 	// lineSplice
 	// permet d'ajouter ou remplacer une ou plusieurs lignes dans la chaîne
 	// replace peut être array, string ou null
-	public static function lineSplice(int $offset,?int $length,$replace=[],string $str):string
+	public static function lineSplice(int $offset,?int $length,$replace=array(),string $str):string
 	{
 		$return = '';
 		$lines = static::lines($str);
 		
-		if(\is_scalar($replace))
+		if(is_scalar($replace))
 		$replace = (array) $replace;
 		
-		if(!empty($lines) && (\is_array($replace) || $replace === null))
+		if(!empty($lines) && (is_array($replace) || $replace === null))
 		{
 			$splice = Arr::spliceIndex($offset,$length,$lines,$replace);
 			$return = static::lineImplode($splice);
@@ -1639,10 +1639,10 @@ class Str extends Root
 	// str_word_count n'est pas utilisé pour pour cette méthode car les résultats de la fonction sont inconsistents
 	public static function words(string $str,?bool $mb=null):array
 	{
-		$return = [];
+		$return = array();
 		$i = 0;
 		
-		foreach (\explode(" ",$str) as $v) 
+		foreach (explode(" ",$str) as $v) 
 		{
 			$oriLen = static::len($v,$mb);
 			$v = static::removeWhiteSpace($v);
@@ -1662,7 +1662,7 @@ class Str extends Root
 	// retourne le nombre de mot dans la string
 	public static function wordCount(string $str):int
 	{
-		return \count(static::words($str));
+		return count(static::words($str));
 	}
 	
 	
@@ -1670,7 +1670,7 @@ class Str extends Root
 	// explode un tableau de mot, plus rapide que words
 	public static function wordExplode(string $value,?int $limit=null,bool $trim=false,bool $clean=false):array 
 	{
-		$return = [];
+		$return = array();
 		$value = static::removeWhiteSpace($value);
 		$return = static::explode(" ",$value,$limit,$trim,$clean);
 		
@@ -1690,22 +1690,22 @@ class Str extends Root
 	// implode un tableau en une string de mots 
 	public static function wordImplode(array $array):string 
 	{
-		return \implode(' ',$array);
+		return implode(' ',$array);
 	}
 	
 	
 	// wordSplice
 	// permet d'ajouter ou remplacer un ou plusieurs mots dans la chaîne
 	// replace peut être array, string ou null
-	public static function wordSplice(int $offset,?int $length,$replace=[],string $str,?bool $mb=null):string
+	public static function wordSplice(int $offset,?int $length,$replace=array(),string $str,?bool $mb=null):string
 	{
 		$return = '';
 		$words = static::words($str,$mb);
 		
-		if(\is_scalar($replace))
+		if(is_scalar($replace))
 		$replace = (array) $replace;
 		
-		if(!empty($words) && (\is_array($replace) || $replace === null))
+		if(!empty($words) && (is_array($replace) || $replace === null))
 		{
 			$splice = Arr::spliceIndex($offset,$length,$words,$replace);
 			$return = static::wordImplode($splice);
@@ -1720,9 +1720,9 @@ class Str extends Root
 	public static function wordSliceLength(int $min,?int $max,string $str,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
 		$max = ($max === null)? PHP_INT_MAX:$max;
-		$array = [];
+		$array = array();
 		
 		foreach (static::words($str,$mb) as $word) 
 		{
@@ -1744,8 +1744,8 @@ class Str extends Root
 	public static function wordStripLength(int $min,?int $max,string $str,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$str);
-		$array = [];
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+		$array = array();
 		$max = ($max === null)? PHP_INT_MAX:$max;
 		
 		foreach (static::words($str,$mb) as $word) 
@@ -1769,14 +1769,14 @@ class Str extends Root
 	public static function wordTotalLength(int $length,string $str,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
 		
 		if(static::len($str,$mb) <= $length)
 		$return = $str;
 		
 		else
 		{
-			$array = [];
+			$array = array();
 			$inLength = 0;
 			
 			foreach ($words = static::words($str) as $word) 
@@ -1810,22 +1810,22 @@ class Str extends Root
 	public static function wordwrap(int $width=75,string $str,string $break=PHP_EOL,bool $cut=false,?bool $mb=null):string
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$break);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$break);
 		
 		if(!empty($break))
 		{
 			if($mb === true)
 			{
-				$array = [];
+				$array = array();
 				
-				foreach (\explode($break,$str) as $line) 
+				foreach (explode($break,$str) as $line) 
 				{
 					$actual = '';
-					$line = \rtrim($line);
+					$line = rtrim($line);
 					if(static::len($line,$mb) <= $width)
 					continue;
 					
-					$words = \explode(' ',$line);
+					$words = explode(' ',$line);
 					$line = '';
 					foreach ($words as $word) 
 					{
@@ -1834,7 +1834,7 @@ class Str extends Root
 						else 
 						{
 							if($actual !== '')
-							$line .= \rtrim($actual).$break;
+							$line .= rtrim($actual).$break;
 							
 							$actual = $word;
 							if($cut === true) 
@@ -1849,15 +1849,15 @@ class Str extends Root
 						}
 					}
 					
-					$line .= \trim($actual);
+					$line .= trim($actual);
 					$array[] = $line;
 				}
 				
-				$return = \implode($break,$array);
+				$return = implode($break,$array);
 			}
 			
 			else
-			$return = \wordwrap($str,$width,$break,$cut);
+			$return = wordwrap($str,$width,$break,$cut);
 		}
 		
 		return $return;
@@ -1875,22 +1875,22 @@ class Str extends Root
 			{
 				$k = (string) $k;
 				
-				if(\is_object($v))
+				if(is_object($v))
 				$v = Obj::cast($v);
 				
-				if(\is_scalar($v))
+				if(is_scalar($v))
 				$v = (string) $v;
 				
 				if($v === null)
 				$v = '';
 				
-				if(\is_string($v))
+				if(is_string($v))
 				{
 					if($sensitive === true)
-					$return = \str_replace($k,$v,$return);
+					$return = str_replace($k,$v,$return);
 					
 					else
-					$return = \str_ireplace($k,$v,$return);
+					$return = str_ireplace($k,$v,$return);
 				}
 			}
 		}
@@ -1914,17 +1914,17 @@ class Str extends Root
 	// si clean est true, enlève les entrées du tableau cleanable
 	public static function explode(string $delimiter,string $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
 	{
-		$return = \explode($delimiter,$value,($limit===null)? PHP_INT_MAX:$limit);
+		$return = explode($delimiter,$value,($limit===null)? PHP_INT_MAX:$limit);
 		
 		if(!empty($return))
 		{
 			if($trim === true)
-			$return = \array_map('trim',$return);
+			$return = array_map('trim',$return);
 			
 			if($clean === true)
 			{
 				$return = Arr::clean($return);
-				$return = \array_values($return);
+				$return = array_values($return);
 			}
 		}
 		
@@ -1993,10 +1993,10 @@ class Str extends Root
 	// explose les valeurs d'une string et retourne un tableau sous une forme clé -> valeur
 	public static function explodekeyValue(string $delimiter,string $value,bool $trim=false,bool $clean=false):array
 	{
-		$return = [];
+		$return = array();
 		
 		$x = static::explode($delimiter,$value,2,$trim,$clean);
-		if(\count($x) === 2 && Arr::isKey($x[0]))
+		if(count($x) === 2 && Arr::isKey($x[0]))
 		$return[$x[0]] = $x[1];
 		
 		return $return;
@@ -2007,16 +2007,16 @@ class Str extends Root
 	// explosion d'une chaîne en fonction de multiples delimiteurs
 	public static function explodes(array $delimiters,string $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
 	{
-		$return = [];
-		$delimiter = \array_shift($delimiters);
+		$return = array();
+		$delimiter = array_shift($delimiters);
 		
-		if(\is_string($delimiter) && !empty($delimiter))
+		if(is_string($delimiter) && !empty($delimiter))
 		{
 			$return = static::explode($delimiter,$value,$limit,$trim,$clean);
 			
 			if(!empty($delimiters))
 			{
-				$explodes = [];
+				$explodes = array();
 				foreach ($return as $v) 
 				{
 					$explodes[] = static::explodes($delimiters,$v,$limit,$trim,$clean);
@@ -2038,10 +2038,10 @@ class Str extends Root
 	{
 		$return = '';
 		$trim = ($default === true)? static::$config['trim']:'';
-		if(\is_string($extraTrim))
+		if(is_string($extraTrim))
 		$trim .= $extraTrim;
 		
-		$return = \trim($value,$trim);
+		$return = trim($value,$trim);
 		
 		return $return;
 	}
@@ -2055,10 +2055,10 @@ class Str extends Root
 	{
 		$return = '';
 		$trim = ($default === true)? static::$config['trim']:'';
-		if(\is_string($extraTrim))
+		if(is_string($extraTrim))
 		$trim .= $extraTrim;
 		
-		$return = \ltrim($value,$trim);
+		$return = ltrim($value,$trim);
 		
 		return $return;
 	}
@@ -2072,10 +2072,10 @@ class Str extends Root
 	{
 		$return = '';
 		$trim = ($default === true)? static::$config['trim']:'';
-		if(\is_string($extraTrim))
+		if(is_string($extraTrim))
 		$trim .= $extraTrim;
 		
-		$return = \rtrim($value,$trim);
+		$return = rtrim($value,$trim);
 		
 		return $return;
 	}
@@ -2086,7 +2086,7 @@ class Str extends Root
 	public static function repeatLeft(string $input,int $multiplier=2,string $return):string
 	{
 		if($multiplier > 0)
-		$return = \str_repeat($input,$multiplier).$return;
+		$return = str_repeat($input,$multiplier).$return;
 		
 		return $return;
 	}
@@ -2097,7 +2097,7 @@ class Str extends Root
 	public static function repeatRight(string $input,int $multiplier=2,string $return):string
 	{
 		if($multiplier > 0)
-		$return = $return.\str_repeat($input,$multiplier);
+		$return = $return.str_repeat($input,$multiplier);
 		
 		return $return;
 	}
@@ -2107,7 +2107,7 @@ class Str extends Root
 	// ajoute un backslash avant chaque quote ou doubleQuote
 	public static function addSlash(string $value):string
 	{
-		return \addslashes($value);
+		return addslashes($value);
 	}
 	
 	
@@ -2115,7 +2115,7 @@ class Str extends Root
 	// enlève les backslash à gauche de chaque quote ou doubleQuote
 	public static function stripSlash(string $value):string
 	{
-		return \stripslashes($value);
+		return stripslashes($value);
 	}
 	
 	
@@ -2145,7 +2145,7 @@ class Str extends Root
 	// transforme les doubles quotes en single quotes
 	public static function doubleToSingleQuote(string $return):string
 	{
-		return \str_replace('"',"'",$return);
+		return str_replace('"',"'",$return);
 	}
 	
 	
@@ -2153,7 +2153,7 @@ class Str extends Root
 	// transforme les single quotes en double quotes
 	public static function singleToDoubleQuote(string $return):string
 	{
-		return \str_replace("'",'"',$return);	
+		return str_replace("'",'"',$return);	
 	}
 	
 	
@@ -2161,10 +2161,10 @@ class Str extends Root
 	// permet d'ajouter un slash à tous les caractères données en argument présent dans la string
 	public static function quoteChar(string $return,$chars):string 
 	{
-		if(\is_array($chars))
-		$chars = \implode('',$chars);
+		if(is_array($chars))
+		$chars = implode('',$chars);
 		
-		$return = \addcslashes($return,$chars);
+		$return = addcslashes($return,$chars);
 		
 		return $return;
 	}
@@ -2174,7 +2174,7 @@ class Str extends Root
 	// transforme la virgule en decimal
 	public static function commaToDecimal(string $value):string
 	{
-		return \str_replace(',','.',$value);
+		return str_replace(',','.',$value);
 	}
 	
 	
@@ -2182,7 +2182,7 @@ class Str extends Root
 	// transforme la decimal en virgule
 	public static function decimalToComma(string $value):string
 	{
-		return \str_replace('.',',',$value);
+		return str_replace('.',',',$value);
 	}
 	
 	
@@ -2199,7 +2199,7 @@ class Str extends Root
 			$value2 = static::asciiLower($value2);
 		}
 		
-		\similar_text($value,$value2,$return);
+		similar_text($value,$value2,$return);
 		
 		return $return;
 	}
@@ -2218,7 +2218,7 @@ class Str extends Root
 			$value2 = static::asciiLower($value2);
 		}
 		
-		$return = \levenshtein($value,$value2);
+		$return = levenshtein($value,$value2);
 		
 		return $return;
 	}
@@ -2237,11 +2237,11 @@ class Str extends Root
 		{
 			$random = Crypt::getRandomString($random);
 			
-			if($length > 0 && \is_string($random) && !empty($random))
+			if($length > 0 && is_string($random) && !empty($random))
 			{
 				$counter = 0;
 				$split = static::chars($random,$mb);
-				$count = \count($split);
+				$count = count($split);
 				
 				if($count > 0)
 				{
@@ -2249,9 +2249,9 @@ class Str extends Root
 					
 					while ($counter < $length) 
 					{
-						$key = \mt_rand(0,$max);
+						$key = mt_rand(0,$max);
 						
-						if(\array_key_exists($key,$split))
+						if(array_key_exists($key,$split))
 						{
 							$return .= $split[$key];
 							$counter++; 
@@ -2285,7 +2285,7 @@ class Str extends Root
 	// explose une string camelCase
 	public static function fromCamelCase(string $str):array
 	{
-		return \preg_split('#([A-Z][^A-Z]*)#',$str,0,PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+		return preg_split('#([A-Z][^A-Z]*)#',$str,0,PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 	}
 	
 	
@@ -2295,17 +2295,17 @@ class Str extends Root
 	{
 		$return = '';
 		
-		if(\is_string($value) && !empty($delimiter))
-		$value = \explode($delimiter,$value);
+		if(is_string($value) && !empty($delimiter))
+		$value = explode($delimiter,$value);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			$i = 0;
-			$camelCase = [];
+			$camelCase = array();
 			
 			foreach ($value as $v) 
 			{
-				if(\is_string($v))
+				if(is_string($v))
 				{
 					if($i)
 					$camelCase[] = static::capitalize($v,$mb);
@@ -2331,7 +2331,7 @@ class Str extends Root
 		$return = '';
 		$source = static::$config['loremIpsum'];
 		
-		if(\is_array($source) && !empty($source) && $amount > 0 && $paragraph > 0)
+		if(is_array($source) && !empty($source) && $amount > 0 && $paragraph > 0)
 		{
 			for ($i=0; $i < $paragraph; $i++) 
 			{ 
@@ -2361,19 +2361,19 @@ class Str extends Root
 	public static function s($value,?string $letter=null):string
 	{
 		$return = '';
-		$letter = (\is_string($letter))? $letter:static::$config['plural']['letter'];
+		$letter = (is_string($letter))? $letter:static::$config['plural']['letter'];
 		
-		if(\is_string($letter))
+		if(is_string($letter))
 		{
 			$s = false;
 			
-			if(\is_numeric($value) && $value > 1)
+			if(is_numeric($value) && $value > 1)
 			$s = true;
 			
-			elseif(\is_string($value) && \strlen($value) > 1)
+			elseif(is_string($value) && strlen($value) > 1)
 			$s = true;
 			
-			elseif(\is_array($value) && \count($value) > 1)
+			elseif(is_array($value) && count($value) > 1)
 			$s = true;
 			
 			if($s === true)
@@ -2390,40 +2390,40 @@ class Str extends Root
 	// retourne peut etre une string ou une valeur qui sera passé dans obj:cast
 	public static function plural($value,$return,?array $replace=null,?string $letter=null,?string $wrap=null):string
 	{  
-		if(!\is_int($value))
-		$value = \count($value);
+		if(!is_int($value))
+		$value = count($value);
 		
-		if(!\is_string($return))
+		if(!is_string($return))
 		$return = (string) Obj::cast($return);
 		
-		if(\is_int($value) && \is_string($return))
+		if(is_int($value) && is_string($return))
 		{
 			$isPlural = ($value>1)? true:false;
-			$letter = (\is_string($letter))? $letter:static::$config['plural']['letter'];
+			$letter = (is_string($letter))? $letter:static::$config['plural']['letter'];
 			$wrap = (!empty($wrap))? $wrap:static::$config['plural']['wrap'];
 			$delimiter = Segment::getDelimiter($wrap);
 			$default = $delimiter[0].$letter.$delimiter[1];
 			$replace = (array) $replace;
 			
-			if(\strpos($return,$default) !== false)
+			if(strpos($return,$default) !== false)
 			$replace[$letter] = $letter;
 			
-			if(\is_array($replace) && !empty($replace))
+			if(is_array($replace) && !empty($replace))
 			{	
 				if($isPlural === false)
 				{
-					$replace = \array_combine(\array_keys($replace),\array_keys($replace));
-					if(\is_string($letter))
+					$replace = array_combine(array_keys($replace),array_keys($replace));
+					if(is_string($letter))
 					$replace[$letter] = '';
 				}
 				
-				if(\is_string($wrap))
+				if(is_string($wrap))
 				$replace = Arr::keysWrap($delimiter[0],$delimiter[1],$replace);
 				
 				$return = static::replace($replace,$return);
 			}
 			
-			elseif($isPlural && \is_string($letter) && !Str::isEnd($letter,$return))
+			elseif($isPlural && is_string($letter) && !Str::isEnd($letter,$return))
 			$return .= $letter;
 		}
 
@@ -2437,17 +2437,17 @@ class Str extends Root
 	public static function replaceChar(string $from,string $to,string $str,?bool $mb=null):string 
 	{
 		$return = '';
-		$mb = (\is_bool($mb))? $mb:Encoding::getMbs($mb,$from,$to,$str);
+		$mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$from,$to,$str);
 		
 		if($mb === true)
 		{
 			$from = static::chars($from,$mb);
 			$to = static::chars($to,$mb);
-			$replace = \array_combine(\array_values($from),\array_values($to));
-			$return = \strtr($str,$replace);
+			$replace = array_combine(array_values($from),array_values($to));
+			$return = strtr($str,$replace);
 		}
 		else
-		$return = \strtr($str,$from,$to);
+		$return = strtr($str,$from,$to);
 		
 		return $return;
 	}
@@ -2459,11 +2459,11 @@ class Str extends Root
 	{                  
 		if(Encoding::isMb($return))
 		{
-			$from = ['À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ'];
+			$from = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ');
 			
-			$to = ['A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o'];
+			$to = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o');
 
-			$return = \str_replace($from,$to,$return);
+			$return = str_replace($from,$to,$return);
 		}
 
 		return $return;
@@ -2476,9 +2476,9 @@ class Str extends Root
 	{
 		if(Encoding::isMb($return))
 		{
-			$from = ['À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ'];
+			$from = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ');
 			
-			$return = \str_replace($from,"",$return);
+			$return = str_replace($from,"",$return);
 		}
 
 		return $return;
@@ -2493,9 +2493,9 @@ class Str extends Root
 	{
 		$return .= "....";
 		
-		$return = \iconv("UTF-8", "UTF-8//IGNORE", $return);
-		$return = \substr($return,0,-4);
-		$return = \preg_replace('/[\x{0092}]/u','',$return);
+		$return = iconv("UTF-8", "UTF-8//IGNORE", $return);
+		$return = substr($return,0,-4);
+		$return = preg_replace('/[\x{0092}]/u','',$return);
 		
 		return $return;
 	}
@@ -2508,11 +2508,11 @@ class Str extends Root
 		if(Encoding::isMb($return))
 		{
 			$return = static::fixUnicode($return);
-			$return = \preg_replace('/[\x{1F600}-\x{1F64F}]/u','',$return);
-			$return = \preg_replace('/[\x{1F300}-\x{1F5FF}]/u','',$return);
-			$return = \preg_replace('/[\x{1F680}-\x{1F6FF}]/u','',$return);
-			$return = \preg_replace('/[\x{2600}-\x{26FF}]/u','',$return);
-			$return = \preg_replace('/[\x{2700}-\x{27BF}]/u','',$return);
+			$return = preg_replace('/[\x{1F600}-\x{1F64F}]/u','',$return);
+			$return = preg_replace('/[\x{1F300}-\x{1F5FF}]/u','',$return);
+			$return = preg_replace('/[\x{1F680}-\x{1F6FF}]/u','',$return);
+			$return = preg_replace('/[\x{2600}-\x{26FF}]/u','',$return);
+			$return = preg_replace('/[\x{2700}-\x{27BF}]/u','',$return);
 		}
 
 		return $return;
@@ -2523,7 +2523,7 @@ class Str extends Root
 	// enlève les symbols d'une string
 	public static function removeSymbols(string $return):string
 	{
-		return \preg_replace('/[^\p{L}\p{N}\s]/u','',$return);
+		return preg_replace('/[^\p{L}\p{N}\s]/u','',$return);
 	}
 	
 	
@@ -2531,7 +2531,7 @@ class Str extends Root
 	// enleve les line breaks d'une string
 	public static function removeLineBreaks(string $return):string
 	{
-		return \str_replace(["\n","\r","\r\n","\t"],'',$return);
+		return str_replace(array("\n","\r","\r\n","\t"),'',$return);
 	}
 	
 	
@@ -2539,7 +2539,7 @@ class Str extends Root
 	// enlève les tabs d'une string
 	public static function removeTabs(string $return):string
 	{
-		return \str_replace("\t",'',$return);
+		return str_replace("\t",'',$return);
 	}
 	
 	
@@ -2548,9 +2548,9 @@ class Str extends Root
 	// enlève aussi un caractère espace qui peut apparaître après avoir encode une string iso en utf8 via utf8_encode
 	public static function removeWhitespace(string $return):string
 	{
-		$return = \str_replace(["\n","\r","\r\n","\t",'&nbsp;',' '],' ',$return);
+		$return = str_replace(array("\n","\r","\r\n","\t",'&nbsp;',' '),' ',$return);
 		$return = static::removeConsecutive(' ',$return);
-		$return = \trim($return);
+		$return = trim($return);
 
 		return $return;
 	}
@@ -2560,9 +2560,9 @@ class Str extends Root
 	// enleve toutes les whitespace d'une string (saut de ligne, tab, &nbsp; et espace)
 	public static function removeAllWhitespace(string $return):string
 	{
-		$return = \str_replace(["\n","\r","\r\n","\t",'&nbsp;'],'',$return);
-		$return = \str_replace(' ','',$return);
-		$return = \trim($return);
+		$return = str_replace(array("\n","\r","\r\n","\t",'&nbsp;'),'',$return);
+		$return = str_replace(' ','',$return);
+		$return = trim($return);
 		
 		return $return;
 	}
@@ -2573,7 +2573,7 @@ class Str extends Root
 	// possible de mettre un autre caractère de remplacement
 	public static function removeConsecutive(string $remove,string $return,?string $replace=null) 
 	{
-		return \preg_replace("/$remove+/",(\is_string($replace))? $replace:$remove,$return);
+		return preg_replace("/$remove+/",(is_string($replace))? $replace:$remove,$return);
 	}
 	
 	
@@ -2581,12 +2581,12 @@ class Str extends Root
 	// enlève un ou plusieurs caractères d'une chaîne en utilisant str_replace
 	public static function remove($remove,string $return):string
 	{
-		$replace = [];
+		$replace = array();
 		$remove = (array) $remove;
 		
 		foreach ($remove as $v) 
 		{
-			if(\is_scalar($v))
+			if(is_scalar($v))
 			{
 				$v = (string) $v;
 				$replace[$v] = '';
@@ -2605,7 +2605,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepNumeric(string $value,string $keep=''):string
 	{
-		return \preg_replace("/[^0-9\-\.$keep]/", '', $value);
+		return preg_replace("/[^0-9\-\.$keep]/", '', $value);
 	}
 	
 	
@@ -2614,7 +2614,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepNumber(string $value,string $keep=''):string
 	{
-		return \preg_replace("/[^0-9$keep]/", '', $value);
+		return preg_replace("/[^0-9$keep]/", '', $value);
 	}
 	
 	
@@ -2623,7 +2623,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlpha(string $value,string $keep=''):string
 	{
-		return \preg_replace("/[^A-Za-z]/", '', $value);
+		return preg_replace("/[^A-Za-z]/", '', $value);
 	}
 
 
@@ -2632,7 +2632,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlphanumeric(string $value,string $keep=''):string
 	{
-		return \preg_replace("/[^A-Za-z0-9$keep]/", '', $value);	
+		return preg_replace("/[^A-Za-z0-9$keep]/", '', $value);	
 	}
 	
 	
@@ -2641,7 +2641,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlphanumericPlus(string $value,string $keep=''):string
 	{
-		return \preg_replace("/[^A-Za-z0-9_\-\.\@$keep]/", '', $value);	
+		return preg_replace("/[^A-Za-z0-9_\-\.\@$keep]/", '', $value);	
 	}
 	
 	
@@ -2650,7 +2650,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlphanumericPlusSpace(string $value,string $keep=''):string
 	{
-		return \preg_replace("/[^A-Za-z0-9_\-\.\@ $keep]/", '', $value);	
+		return preg_replace("/[^A-Za-z0-9_\-\.\@ $keep]/", '', $value);	
 	}
 
 
@@ -2661,7 +2661,7 @@ class Str extends Root
 		if($replaceAccent === true)
 		$return = static::replaceAccent($return);
 		
-		$return = \preg_replace("/[^\x01-\x7F]/","",$return);
+		$return = preg_replace("/[^\x01-\x7F]/","",$return);
 		
 		return $return;
 	}
@@ -2672,7 +2672,7 @@ class Str extends Root
 	public static function asciiLower(string $return,bool $replaceAccent=true):string 
 	{
 		$return = static::ascii($return);
-		$return = \strtolower($return);
+		$return = strtolower($return);
 		
 		return $return;
 	}
@@ -2684,7 +2684,7 @@ class Str extends Root
 	{
 		$return = static::replaceAccent($return);
 		$return = static::keepAlphanumeric($return,$keep);
-		$return = \trim($return);
+		$return = trim($return);
 		
 		return $return;
 	}
@@ -2696,8 +2696,8 @@ class Str extends Root
 	{
 		$return = static::replaceAccent($return);
 		$return = static::keepAlphanumeric($return,$keep);
-		$return = \strtolower($return);
-		$return = \trim($return);
+		$return = strtolower($return);
+		$return = trim($return);
 		
 		return $return;
 	}
@@ -2716,11 +2716,11 @@ class Str extends Root
 	// remplace _ par espace, cleanKeepSpace, lower, capitalizeTitle et trim
 	public static function def(string $return,string $keep=''):string
 	{
-		$return = static::replace(["_"=>" "],$return);
+		$return = static::replace(array("_"=>" "),$return);
 		$return = static::cleanKeepSpace($return,$keep);
-		$return = \strtolower($return);
-		$return = \ucfirst($return);
-		$return = \trim($return);
+		$return = strtolower($return);
+		$return = ucfirst($return);
+		$return = trim($return);
 		
 		return $return;
 	}
@@ -2733,11 +2733,11 @@ class Str extends Root
 	public static function pointer(string $value,?string $separator=null):?array 
 	{
 		$return = null;
-		$separator = (\is_string($separator))? $separator:static::$config['pointer'];
+		$separator = (is_string($separator))? $separator:static::$config['pointer'];
 		$value = static::explodeTrimClean($separator,$value);
 		$value = Arr::cast($value);
 		
-		if(\count($value) === 2 && \is_string($value[0]) && \is_int($value[1]))
+		if(count($value) === 2 && is_string($value[0]) && is_int($value[1]))
 		$return = $value;
 		
 		return $return;
@@ -2748,7 +2748,7 @@ class Str extends Root
 	// génère un pointeur à partir d'une string et chiffre
 	public static function toPointer(string $key,int $value,?string $separator=null):string 
 	{
-		$separator = (\is_string($separator))? $separator:static::$config['pointer'];
+		$separator = (is_string($separator))? $separator:static::$config['pointer'];
 		return $key.$separator.$value;
 	}
 	
@@ -2758,19 +2758,19 @@ class Str extends Root
 	// peut fournir une valeur scalaire ou un tableau
 	public static function map(callable $callable,$return,...$args)
 	{
-		if(\is_array($return))
+		if(is_array($return))
 		{
 			foreach ($return as $key => $value) 
 			{
-				if(\is_array($value))
+				if(is_array($value))
 				$return[$key] = static::map($callable,$value,...$args);
 				
-				elseif(\is_string($value))
+				elseif(is_string($value))
 				$return[$key] = $callable($value,...$args);
 			}
 		}
 		
-		elseif(\is_string($return))
+		elseif(is_string($return))
 		$return = $callable($return,...$args);
 
 		return $return;
@@ -2783,7 +2783,7 @@ class Str extends Root
 	// prendre note que le suffix est maintenant comptabilisé dans la longueur de la string
 	public static function excerpt(?int $length,string $return,?array $option=null):string
 	{       		  
-		$option = Arr::plus(['removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true],$option);
+		$option = Arr::plus(array('removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true),$option);
 		
 		// enleve les sauts de ligne et les tabulations
 		if(!empty($option['removeLineBreaks']))
@@ -2804,7 +2804,7 @@ class Str extends Root
 		
 		// trim les espaces
 		if(!empty($option['trim']))
-		$return = \trim($return);
+		$return = trim($return);
 		
 		return $return;                     
 	}
@@ -2817,17 +2817,17 @@ class Str extends Root
 	// important: mb est null par défaut
 	public static function lengthTrimSuffix(int $length,string $value,?array $option=null):array
 	{
-		$return = ['str'=>'','strSuffix'=>'','suffix'=>null];
-		$option = Arr::plus(['mb'=>null,'rtrim'=>null,'suffix'=>static::$config['excerpt']['suffix']],$option);
+		$return = array('str'=>'','strSuffix'=>'','suffix'=>null);
+		$option = Arr::plus(array('mb'=>null,'rtrim'=>null,'suffix'=>static::$config['excerpt']['suffix']),$option);
 		$mb = Encoding::getMb($option['mb'],$value);
 		$suffix = $option['suffix'];
 		$sliced = static::wordTotalLength($length,$value,$mb);
 		
 		$rtrim = ".,:;";
-		$rtrim .= (!empty($option['rtrim']) && \is_string($option['rtrim']))? $option['rtrim']:'';
+		$rtrim .= (!empty($option['rtrim']) && is_string($option['rtrim']))? $option['rtrim']:'';
 		$sliced = static::trimRight($sliced,$rtrim);
 		
-		if(\is_string($suffix) && \strlen($suffix) && $sliced !== $value)
+		if(is_string($suffix) && strlen($suffix) && $sliced !== $value)
 		{
 			$suffixLength = static::len($suffix,$mb);
 			$newLength = $length - $suffixLength;
@@ -2851,7 +2851,7 @@ class Str extends Root
 	// removeUnicode et trim
 	public static function output(string $return,?array $option=null):string
 	{
-		$option = Arr::plus(['removeLineBreaks'=>false,'removeUnicode'=>true,'trim'=>true],$option);
+		$option = Arr::plus(array('removeLineBreaks'=>false,'removeUnicode'=>true,'trim'=>true),$option);
 		
 		// enleve les sauts de ligne et les tabulations
 		if(!empty($option['removeLineBreaks']))
@@ -2865,7 +2865,7 @@ class Str extends Root
 		
 		// trim les espaces
 		if(!empty($option['trim']))
-		$return = \trim($return);
+		$return = trim($return);
 		
 		return $return;
 	}

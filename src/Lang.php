@@ -6,15 +6,15 @@ namespace Quid\Base;
 class Lang extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'default'=>'en', // langue par défaut à appliquer au chargement de la classe
 		'field'=>'_', // délimiteur pour les méthodes field
-	];
+	);
 	
 	
 	// static
 	protected static $current = null; // langue courante
-	protected static $all = []; // toute les langues, la première est la langue par défaut
+	protected static $all = array(); // toute les langues, la première est la langue par défaut
 	protected static $callable = null; // callable d'un objet lang
 	
 	
@@ -25,7 +25,7 @@ class Lang extends Root
 		$return = false;
 		$value = static::prepareCode($value);
 		
-		if(!empty($value) && \in_array($value,static::all(),true))
+		if(!empty($value) && in_array($value,static::all(),true))
 		$return = true;
 		
 		return $return;
@@ -76,7 +76,7 @@ class Lang extends Root
 	// retourne la langue par défaut, la première déclaré dans le tableau all
 	public static function default():?string
 	{
-		return (!empty(static::$all))? \current(static::$all):null;
+		return (!empty(static::$all))? current(static::$all):null;
 	}
 	
 	
@@ -97,10 +97,10 @@ class Lang extends Root
 		$others = static::others($value);
 		$arg = ($arg === true)? 0:$arg;
 		
-		if(\is_int($arg) && \array_key_exists($arg,$others))
+		if(is_int($arg) && array_key_exists($arg,$others))
 		$return = $others[$arg];
 		
-		elseif(\is_string($arg) && \in_array($arg,$others,true))
+		elseif(is_string($arg) && in_array($arg,$others,true))
 		$return = $arg;
 		
 		return $return;
@@ -111,10 +111,10 @@ class Lang extends Root
 	// retourne un tableau avec toutes les autres langues
 	public static function others(?string $value=null):array 
 	{
-		$return = [];
+		$return = array();
 		$value = static::code($value);
 		$return = Arr::valueStrip($value,static::all());
-		$return = \array_values($return);
+		$return = array_values($return);
 		
 		return $return;
 	}
@@ -132,7 +132,7 @@ class Lang extends Root
 	// count le nombre de langues déclarés
 	public static function count():int 
 	{
-		return \count(static::all());
+		return count(static::all());
 	}
 	
 	
@@ -142,7 +142,7 @@ class Lang extends Root
 	{
 		$return = static::prepareCode($value);
 		
-		if(!\is_string($return))
+		if(!is_string($return))
 		$return = static::current();
 		
 		return $return;
@@ -154,7 +154,7 @@ class Lang extends Root
 	// doit être une string avec deux caractères
 	public static function prepareCode(?string $value):?string 
 	{
-		return (\is_string($value) && \strlen($value) === 2)? $value:null;
+		return (is_string($value) && strlen($value) === 2)? $value:null;
 	}
 	
 	
@@ -166,14 +166,14 @@ class Lang extends Root
 		$return = false;
 		$current = static::prepareCode($value);
 		
-		if(\is_string($all))
-		$all = [$all];
+		if(is_string($all))
+		$all = array($all);
 		
-		if(\is_array($all) && !empty($all) && ($value === null || \in_array($value,$all,true)))
+		if(is_array($all) && !empty($all) && ($value === null || in_array($value,$all,true)))
 		{
 			$return = true;
-			static::$all = [];
-			static::add(...\array_values($all));
+			static::$all = array();
+			static::add(...array_values($all));
 			
 			if($value === null)
 			$value = static::default();
@@ -189,7 +189,7 @@ class Lang extends Root
 	// callback après un ajout, rettait ou changement de langue
 	protected static function onChange():void
 	{
-		if(\is_string(static::$current))
+		if(is_string(static::$current))
 		{
 			$current = static::current();
 			Request::setLangs(static::all());
@@ -206,14 +206,14 @@ class Lang extends Root
 	// ajoute une ou plusieurs langues
 	public static function add(string ...$values):array 
 	{
-		$return = [];
+		$return = array();
 		$change = false;
 		
 		foreach ($values as $value) 
 		{
 			$value = static::prepareCode($value);
 			
-			if(\is_string($value))
+			if(is_string($value))
 			{
 				$return[$value] = false;
 				
@@ -221,7 +221,7 @@ class Lang extends Root
 				{
 					$return[$value] = true;
 					static::$all[] = $value;
-					static::$all = \array_values(static::$all);
+					static::$all = array_values(static::$all);
 					$change = true;
 				}
 			}
@@ -239,21 +239,21 @@ class Lang extends Root
 	// la langue doit exister et ne pas être la courante
 	public static function remove(string ...$values):array 
 	{
-		$return = [];
+		$return = array();
 		$change = false;
 		
 		foreach ($values as $value) 
 		{
 			$value = static::prepareCode($value);
 			
-			if(\is_string($value))
+			if(is_string($value))
 			{
 				$return[$value] = false;
 				
 				if(static::is($value) && !static::isCurrent($value))
 				{
 					$return[$value] = true;
-					static::$all = \array_values(Arr::valueStrip($value,static::$all));
+					static::$all = array_values(Arr::valueStrip($value,static::$all));
 					$change = true;
 				}
 			}
@@ -484,14 +484,14 @@ class Lang extends Root
 	{
 		$return = null;
 		
-		if(\is_array($value))
+		if(is_array($value))
 		$return = $value;
 		
-		elseif(\is_string($value))
+		elseif(is_string($value))
 		$return = File::load($value);
 		
 		if(Arr::isUni($return))
-		$return = Arrs::sets($return,[]);
+		$return = Arrs::sets($return,array());
 		
 		return $return;
 	}
@@ -503,9 +503,9 @@ class Lang extends Root
 	{
 		$return = null;
 		$lang = static::code($lang);
-		$delimiter = (\is_string($delimiter))? $delimiter:static::$config['field'];
+		$delimiter = (is_string($delimiter))? $delimiter:static::$config['field'];
 
-		if(\strlen($value) && !empty($lang) && \is_string($delimiter) && \strlen($delimiter))
+		if(strlen($value) && !empty($lang) && is_string($delimiter) && strlen($delimiter))
 		$return = $value.$delimiter.$lang;
 		
 		return $return;
@@ -519,7 +519,7 @@ class Lang extends Root
 		$return = null;
 		$field = static::field($value,$lang,$delimiter);
 		
-		if(\is_string($field) && \array_key_exists($field,$array))
+		if(is_string($field) && array_key_exists($field,$array))
 		$return = $array[$field];
 		
 		return $return;
@@ -534,7 +534,7 @@ class Lang extends Root
 		$return = null;
 		$field = static::field($value,$lang,$delimiter);
 		
-		if(\is_string($field))
+		if(is_string($field))
 		$return = Arrs::keyValues($field,$array);
 		
 		return $return;
@@ -547,21 +547,21 @@ class Lang extends Root
 	// accepte un tableau unidimensionnel seulement
 	public static function reformat(array $array,?string $lang=null,?string $delimiter=null) 
 	{
-		$return = [];
+		$return = array();
 		$lang = static::code($lang);
 		$others = static::others();
-		$delimiter = (\is_string($delimiter))? $delimiter:static::$config['field'];
-		$not = [];
+		$delimiter = (is_string($delimiter))? $delimiter:static::$config['field'];
+		$not = array();
 		
-		if(!empty($lang) && !empty($others) && \strlen($delimiter) && !empty($array))
+		if(!empty($lang) && !empty($others) && strlen($delimiter) && !empty($array))
 		{
 			foreach ($array as $key => $value) 
 			{
 				$keep = true;
 				
-				if(\is_string($key))
+				if(is_string($key))
 				{
-					if(\in_array($key,$not,true))
+					if(in_array($key,$not,true))
 					$keep = false;
 					
 					elseif(Str::isEnd($delimiter.$lang,$key))
@@ -595,11 +595,11 @@ class Lang extends Root
 	// accepte seulement un tableau column
 	public static function reformatColumn(array $array,?string $lang=null,?string $delimiter=null) 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$return[$key] = static::reformat($value,$lang,$delimiter);
 		}
 		

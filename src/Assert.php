@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Assert extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// call
 	// fait une assertion sur une callable
 	public static function call(callable $call,$extra=null):bool
 	{
-		return \assert($call(),$extra);
+		return assert($call(),$extra);
 	}
 	
 	
@@ -21,7 +21,7 @@ class Assert extends Root
 	// retourne la valeur d'une option
 	public static function get(int $key) 
 	{
-		return \assert_options($key);
+		return assert_options($key);
 	}
 	
 	
@@ -31,7 +31,7 @@ class Assert extends Root
 	{
 		$return = false;
 		
-		if(\assert_options($key,$value) !== false)
+		if(assert_options($key,$value) !== false)
 		$return = true;
 		
 		return $return;

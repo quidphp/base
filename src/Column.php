@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Column extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// is
@@ -15,13 +15,13 @@ class Column extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		{
 			$return = true;
 			
 			foreach ($value as $v) 
 			{
-				if(!\is_array($v))
+				if(!is_array($v))
 				{
 					$return = false;
 					break;
@@ -39,13 +39,13 @@ class Column extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		{
 			$return = true;
 			
 			foreach ($value as $v) 
 			{
-				if(!\is_array($v) || !empty($v))
+				if(!is_array($v) || !empty($v))
 				{
 					$return = false;
 					break;
@@ -63,13 +63,13 @@ class Column extends Root
 	{
 		$return = false;
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		{
 			$return = true;
 			
 			foreach ($value as $v) 
 			{
-				if(!\is_array($v) || empty($v))
+				if(!is_array($v) || empty($v))
 				{
 					$return = false;
 					break;
@@ -185,7 +185,7 @@ class Column extends Root
 		$return = false;
 		
 		if(static::is($array))
-		$return = (\count($array) > 1)? Arr::same(...\array_values($array)):true;
+		$return = (count($array) > 1)? Arr::same(...array_values($array)):true;
 		
 		return $return;
 	}
@@ -199,7 +199,7 @@ class Column extends Root
 		$return = false;
 		
 		if(static::is($array))
-		$return = (\count($array) > 1)? Arr::sameCount(...\array_values($array)):true;
+		$return = (count($array) > 1)? Arr::sameCount(...array_values($array)):true;
 		
 		return $return;
 	}
@@ -213,7 +213,7 @@ class Column extends Root
 		$return = false;
 		
 		if(static::is($array))
-		$return = (\count($array) > 1)? Arr::sameKey(...\array_values($array)):true;
+		$return = (count($array) > 1)? Arr::sameKey(...array_values($array)):true;
 		
 		return $return;
 	}
@@ -225,7 +225,7 @@ class Column extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			{
 				if($recursive === true)
 				$return[$key] = Arrs::merge($value,$array);
@@ -244,7 +244,7 @@ class Column extends Root
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			{
 				if($recursive === true)
 				$return[$key] = Arrs::replace($value,$array);
@@ -261,7 +261,7 @@ class Column extends Root
 	// enlève toutes les colonnes qui n'ont pas le même count et les mêmes clés que la première colonne
 	public static function clean(array $array):array 
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array))
 		{
@@ -287,12 +287,12 @@ class Column extends Root
 	// retoure un tableau avec les différents counts
 	public static function count(array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $key => $value) 
 		{
-			if(\is_array($value))
-			$return[$key] = \count($value);
+			if(is_array($value))
+			$return[$key] = count($value);
 		}
 		
 		return $return;
@@ -308,10 +308,10 @@ class Column extends Root
 		
 		if(static::sameCount($array))
 		{
-			$current = \current($array);
+			$current = current($array);
 			
-			if(\is_array($current))
-			$return = \count($current);
+			if(is_array($current))
+			$return = count($current);
 		}
 		
 		return $return;
@@ -337,7 +337,7 @@ class Column extends Root
 	// le type de validation is est décrit dans valeur du tableau cols
 	public static function validate(array $cols,array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array) && !empty($cols))
 		{
@@ -347,7 +347,7 @@ class Column extends Root
 				
 				foreach ($cols as $k => $v) 
 				{
-					if(!\array_key_exists($k,$value) || !Validate::is($v,$value[$k]))
+					if(!array_key_exists($k,$value) || !Validate::is($v,$value[$k]))
 					{
 						$keep = false;
 						break;
@@ -413,7 +413,7 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function search(array $cols,array $array,bool $sensitive=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array) && !empty($cols))
 		{
@@ -423,7 +423,7 @@ class Column extends Root
 				
 				foreach ($cols as $k => $v) 
 				{
-					if(!\array_key_exists($k,$value))
+					if(!array_key_exists($k,$value))
 					$keep = false;
 					
 					elseif($sensitive === true && $value[$k] !== $v)
@@ -450,7 +450,7 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function searchFirst(array $cols,array $array,bool $sensitive=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array) && !empty($cols))
 		{
@@ -460,7 +460,7 @@ class Column extends Root
 				
 				foreach ($cols as $k => $v) 
 				{
-					if(!\array_key_exists($k,$value))
+					if(!array_key_exists($k,$value))
 					$keep = false;
 					
 					elseif($sensitive === true && $value[$k] !== $v)
@@ -487,9 +487,9 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function unique($value,array $array,bool $removeOriginal=false,bool $sensitive=true):array
 	{
-		$return = [];
-		$cols = [];
-		$search = [];
+		$return = array();
+		$cols = array();
+		$search = array();
 		$value = (array) $value;
 		
 		foreach ($value as $key => $col) 
@@ -506,7 +506,7 @@ class Column extends Root
 				{
 					$search[$key][$col] = null;
 					
-					if(\array_key_exists($col,$value))
+					if(array_key_exists($col,$value))
 					$search[$key][$col] = $value[$col];
 				}
 			}
@@ -529,7 +529,7 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function duplicate($col,array $array,bool $keepOriginal=false,bool $sensitive=true):array
 	{
-		$return = [];
+		$return = array();
 		
 		$unique = static::unique($col,$array,$keepOriginal,$sensitive);
 		if(!empty($unique))
@@ -546,7 +546,7 @@ class Column extends Root
 	{
 		if(static::keyExists($col,$return))
 		{
-			\uasort($return, function(array $first,array $second) use ($col,$sort)
+			uasort($return, function(array $first,array $second) use ($col,$sort)
 			{	
 				$return = 0;
 				$sort = Arr::getSortAscDesc($sort);
@@ -587,13 +587,13 @@ class Column extends Root
 	{	
 		if(static::is($return) && !empty($array))
 		{
-			\uasort($return, function(array $first,array $second) use ($array)
+			uasort($return, function(array $first,array $second) use ($array)
 			{	
 				$return = 0;
 				
 				foreach ($array as $col => $sort) 
 				{
-					if(\array_key_exists($col,$first) && \array_key_exists($col,$second))
+					if(array_key_exists($col,$first) && array_key_exists($col,$second))
 					{
 						$sort = Arr::getSortAscDesc($sort);
 						$a = $first[$col];
@@ -644,9 +644,9 @@ class Column extends Root
 		elseif($ascDesc === 'desc')
 		$sort = SORT_DESC;
 		
-		$counts = \array_map('count',$return);
+		$counts = array_map('count',$return);
 		
-		\array_multisort($counts,$sort,$return);
+		array_multisort($counts,$sort,$return);
 		
 		return $return;
 	}
@@ -663,7 +663,7 @@ class Column extends Root
 		{
 			foreach ($return as $key => $value) 
 			{
-				if(\array_key_exists($col,$value))
+				if(array_key_exists($col,$value))
 				{
 					$v = $value[$col];
 					
@@ -693,7 +693,7 @@ class Column extends Root
 			{
 				$result = false;
 				
-				if(\array_key_exists($col,$value))
+				if(array_key_exists($col,$value))
 				{
 					$v = $value[$col];
 					
@@ -725,10 +725,10 @@ class Column extends Root
 	// forme un tableau à partir de deux clés d'une colonne
 	public static function keyValue($key,$value,array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		if((Arr::isKey($key) || $key === null) && Arr::isKey($value))
-		$return = \array_column($array,$value,$key);
+		$return = array_column($array,$value,$key);
 		
 		return $return;
 	}
@@ -740,19 +740,19 @@ class Column extends Root
 	// fonctionne seulement si les tableaux ont le même count
 	public static function keyValueIndex(?int $key,int $value,array $array):array
 	{
-		$return = [];
+		$return = array();
 		$count = static::countSame($array);
 		
-		if(\is_int($count)) 
+		if(is_int($count)) 
 		{
-			if(\is_int($key))
+			if(is_int($key))
 			$key = Arr::indexPrepare($key,$count);
 			
 			$value = Arr::indexPrepare($value,$count);
 			$array = Arrs::values($array);
 			
-			if(\is_int($value))
-			$return = \array_column($array,$value,$key);
+			if(is_int($value))
+			$return = array_column($array,$value,$key);
 		}
 		
 		return $return;
@@ -764,15 +764,15 @@ class Column extends Root
 	// la clé doit exister pour que la ligne soit crée
 	public static function arrSegment($key,string $value,array $array,$delimiter=null):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array) && Arr::isKey($key))
 		{
 			foreach ($array as $k => $v) 
 			{
-				if(\array_key_exists($key,$v) && Arr::isKey($value))
+				if(array_key_exists($key,$v) && Arr::isKey($value))
 				{
-					if(\array_key_exists($value,$v))
+					if(array_key_exists($value,$v))
 					$return[$v[$key]] = $v[$value];
 					else
 					$return[$v[$key]] = Segment::sets($delimiter,$v,$value);
@@ -943,7 +943,7 @@ class Column extends Root
 		{
 			foreach ($return as $k => $v) 
 			{
-				if(\is_array($v))
+				if(is_array($v))
 				$return[$k][$key] = $k;
 			}
 		}
@@ -956,13 +956,13 @@ class Column extends Root
 	// remplace la clé par la valeur d'une colonne
 	public static function keyFrom($key,array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(Arr::isKey($key) && static::is($array))
 		{
 			foreach ($array as $k => $v) 
 			{
-				if(\array_key_exists($key,$v) && Arr::isKey($v[$key]))
+				if(array_key_exists($key,$v) && Arr::isKey($v[$key]))
 				$return[$v[$key]] = $v;
 			}
 		}
@@ -975,13 +975,13 @@ class Column extends Root
 	// remplace la clé par la valeur d'un index de colonne
 	public static function keyFromIndex(int $index,array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array))
 		{
 			$col = Arr::index(0,$array);
 			
-			if(\is_array($col))
+			if(is_array($col))
 			{
 				$key = Arr::indexKey($index,$col);
 
@@ -999,7 +999,7 @@ class Column extends Root
 	// pratique pour reformater $_FILES ou un tableau post multidimensionnel
 	public static function keySwap(array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array))
 		{
@@ -1007,7 +1007,7 @@ class Column extends Root
 			{
 				if(!empty($value)) 
 				{
-					foreach (\array_values($value) as $i => $v) 
+					foreach (array_values($value) as $i => $v) 
 					{
 						$return[$i][$key] = $v;
 					}
@@ -1024,10 +1024,10 @@ class Column extends Root
 	// retourne toutes les valeurs d'une colonne à partir d'une clé
 	public static function value($value,array $array):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(Arr::isKey($value))
-		$return = \array_column($array,$value);
+		$return = array_column($array,$value);
 		
 		return $return;
 	}
@@ -1039,16 +1039,16 @@ class Column extends Root
 	// fonctionne seulement si les tableaux ont le même count
 	public static function valueIndex(int $value,array $array):array
 	{
-		$return = [];
+		$return = array();
 		$count = static::countSame($array);
 		
-		if(\is_int($count)) 
+		if(is_int($count)) 
 		{
 			$value = Arr::indexPrepare($value,$count);
 			$array = Arrs::values($array);
 			
-			if(\is_int($value))
-			$return = \array_column($array,$value);
+			if(is_int($value))
+			$return = array_column($array,$value);
 		}
 		
 		return $return;
@@ -1060,13 +1060,13 @@ class Column extends Root
 	// permet de mettre plusieurs valeurs dans le tableau de retour
 	public static function valueSegment(string $value,array $array,$delimiter=null):array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::is($array) && Arr::isKey($value))
 		{
 			foreach ($array as $k => $v) 
 			{
-				if(\array_key_exists($value,$v))
+				if(array_key_exists($value,$v))
 				$return[] = $v[$value];
 				else
 				$return[] = Segment::sets($delimiter,$v,$value);

@@ -6,24 +6,24 @@ namespace Quid\Base;
 class Ip extends Root
 {
 	// config
-	public static $config = [
-		'allowed'=>[ // option par défaut pour la méthode allowed
-			'whiteList'=>null,'blackList'=>null,'range'=>true,'level'=>null],
+	public static $config = array(
+		'allowed'=>array( // option par défaut pour la méthode allowed
+			'whiteList'=>null,'blackList'=>null,'range'=>true,'level'=>null),
 		'range'=>'*', // caractère pour range
-		'reformat'=>[ // défini le nombre de groupe de 256 ips par niveaux
+		'reformat'=>array( // défini le nombre de groupe de 256 ips par niveaux
 			20=>16,
 			21=>8,
 			22=>4,
 			23=>2,
-			24=>1]
-	];
+			24=>1)
+	);
 	
 	
 	// is
 	// retourne vrai si la valeur est un ip
 	public static function is($value):bool
 	{
-		return (\is_string($value) && Validate::regex('ip',$value))? true:false;
+		return (is_string($value) && Validate::regex('ip',$value))? true:false;
 	}
 	
 	
@@ -31,7 +31,7 @@ class Ip extends Root
 	// retourne vrai si l'ip est local
 	public static function isLocal($value):bool
 	{
-		return (static::is($value) && ($value === '127.0.0.1' || \strpos($value,"192.168.") === 0))? true:false;
+		return (static::is($value) && ($value === '127.0.0.1' || strpos($value,"192.168.") === 0))? true:false;
 	}
 	
 	
@@ -43,24 +43,24 @@ class Ip extends Root
 		$return = false;
 		
 		if(Arr::isIndexed($option))
-		$option = ['whiteList'=>$option];
+		$option = array('whiteList'=>$option);
 		
 		$option = Arr::plus(static::$config['allowed'],$option);
 		
-		if(!empty($option['whiteList']) && !\is_array($option['whiteList']))
+		if(!empty($option['whiteList']) && !is_array($option['whiteList']))
 		$option['whiteList'] = (array) $option['whiteList'];
 		
-		if(!empty($option['blackList']) && !\is_array($option['blackList']))
+		if(!empty($option['blackList']) && !is_array($option['blackList']))
 		$option['blackList'] = (array) $option['blackList'];
 		
-		if(static::is($value) && \is_bool($option['range']))
+		if(static::is($value) && is_bool($option['range']))
 		{
 			$return = true;
 			
-			if(\is_array($option['whiteList']) && !static::in($value,$option['whiteList'],$option['range'],$option['level']))
+			if(is_array($option['whiteList']) && !static::in($value,$option['whiteList'],$option['range'],$option['level']))
 			$return = false;
 			
-			elseif(\is_array($option['blackList']) && static::in($value,$option['blackList'],$option['range'],$option['level']))
+			elseif(is_array($option['blackList']) && static::in($value,$option['blackList'],$option['range'],$option['level']))
 			$return = false;
 		}
 		
@@ -83,7 +83,7 @@ class Ip extends Root
 			
 			foreach ($value as $k => $v) 
 			{
-				if(!\is_numeric($v) || ($range[$k] !== static::$config['range'] && $range[$k] !== $v))
+				if(!is_numeric($v) || ($range[$k] !== static::$config['range'] && $range[$k] !== $v))
 				{
 					$return = false;
 					break;
@@ -114,7 +114,7 @@ class Ip extends Root
 				
 				while ($i < $level) 
 				{
-					if(!\is_numeric($value[$i]) || $value[$i] !== $compare[$i])
+					if(!is_numeric($value[$i]) || $value[$i] !== $compare[$i])
 					{
 						$return = false;
 						break;
@@ -138,7 +138,7 @@ class Ip extends Root
 		
 		if(static::is($value))
 		{
-			if(\in_array($value,$array,true))
+			if(in_array($value,$array,true))
 			$return = true;
 			
 			else
@@ -151,7 +151,7 @@ class Ip extends Root
 						break;
 					}
 					
-					elseif(\is_int($level) && static::compareLevel($value,$ip,$level))
+					elseif(is_int($level) && static::compareLevel($value,$ip,$level))
 					{
 						$return = true;
 						break;
@@ -172,18 +172,18 @@ class Ip extends Root
 		$return = null;
 		$explode = static::explode($value);
 		
-		if(!empty($explode) && \count($explode) === 4)
+		if(!empty($explode) && count($explode) === 4)
 		{
-			$x = \explode('/',$explode[3]);
+			$x = explode('/',$explode[3]);
 			$start = $explode[2];
 			unset($explode[2]);
 			unset($explode[3]);
 			$explode = Arr::cast($explode);
 			$x = Arr::cast($x);
 			
-			if(\count($x) === 2 && $x[0] === 0 && \is_int($x[1]) && \array_key_exists($x[1],static::$config['reformat']))
+			if(count($x) === 2 && $x[0] === 0 && is_int($x[1]) && array_key_exists($x[1],static::$config['reformat']))
 			{
-				$return = [];
+				$return = array();
 				$i = 0;
 				$group = static::$config['reformat'][$x[1]];
 				
@@ -211,7 +211,7 @@ class Ip extends Root
 	// un tableau multidimensionnel est retourné
 	public static function reformats(string ...$values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -227,7 +227,7 @@ class Ip extends Root
 	// un tableau unidimensionnel avec les ips unique sont retournés
 	public static function reformatsUnique(string ...$values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -247,8 +247,8 @@ class Ip extends Root
 	{
 		$return = null;
 		
-		$long = \ip2long($value);
-		if(\is_int($long) && !empty($long))
+		$long = ip2long($value);
+		if(is_int($long) && !empty($long))
 		$return = $long;
 		
 		return $return;
@@ -261,8 +261,8 @@ class Ip extends Root
 	{
 		$return = null;
 		
-		$ip = \long2ip($long);
-		if(\is_string($ip) && !empty($ip))
+		$ip = long2ip($long);
+		if(is_string($ip) && !empty($ip))
 		$return = $ip;
 		
 		return $return;
@@ -275,8 +275,8 @@ class Ip extends Root
 	{
 		$return = null;
 		
-		$explode = \explode('.',$value);
-		if(\count($explode) === 4)
+		$explode = explode('.',$value);
+		if(count($explode) === 4)
 		$return = $explode;
 		
 		return $return;
@@ -289,8 +289,8 @@ class Ip extends Root
 	{
 		$return = null;
 		
-		if(\count($value) === 4)
-		$return = \implode('.',$value);
+		if(count($value) === 4)
+		$return = implode('.',$value);
 		
 		return $return;
 	}

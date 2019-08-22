@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Csv extends File
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'mimeGroup'=>'csv', // mime groupe de la classe
-		'format'=>['delimiter'=>';','enclosure'=>'"','escape'=>"\\"],
+		'format'=>array('delimiter'=>';','enclosure'=>'"','escape'=>"\\"),
 		'load'=>'csv', // extension permise pour la méthode csv::load
-		'option'=>['csv'=>true], // option pour la classe
-		'prefix'=>[ // option csv file::temp
-			'extension'=>'csv']
-	];
+		'option'=>array('csv'=>true), // option pour la classe
+		'prefix'=>array( // option csv file::temp
+			'extension'=>'csv')
+	);
 	
 	
 	// getFormat
@@ -45,7 +45,7 @@ class Csv extends File
 			{
 				$remove = true;
 				
-				if(!empty($value) && \is_array($value))
+				if(!empty($value) && is_array($value))
 				{
 					foreach ($value as $k => $v) 
 					{
@@ -71,17 +71,17 @@ class Csv extends File
 	// le nom des headers est appliqué comme clé à chaque colonne
 	public static function assoc(array $array):array 
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::same($array))
 		{
-			$header = \array_shift($array);
+			$header = array_shift($array);
 			
 			if(!empty($header) && !empty($array))
 			{
 				foreach ($array as $key => $value) 
 				{
-					foreach (\array_values($value) as $k => $v) 
+					foreach (array_values($value) as $k => $v) 
 					{
 						$newKey = Arr::index($k,$header);
 						
@@ -102,12 +102,12 @@ class Csv extends File
 	// retourne un tableau avec headers et des colonnes indexés
 	public static function list(array $array):array 
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::same($array))
 		{
-			$return[0] = [];
-			$first = \current($array);
+			$return[0] = array();
+			$first = current($array);
 			
 			foreach ($first as $key => $value) 
 			{
@@ -117,7 +117,7 @@ class Csv extends File
 			foreach ($array as $key => $value) 
 			{
 				$newKey = $key + 1;
-				$return[$newKey] = \array_values($value);
+				$return[$newKey] = array_values($value);
 			}
 		}
 		
@@ -132,17 +132,17 @@ class Csv extends File
 		$return = null;
 		$option = Arr::plus(static::getFormat(),$option);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\is_string($v) && !empty($v))
-				$return[] = \str_getcsv($v,$option['delimiter'],$option['enclosure'],$option['escape']);
+				if(is_string($v) && !empty($v))
+				$return[] = str_getcsv($v,$option['delimiter'],$option['enclosure'],$option['escape']);
 			}
 		}
 		
-		elseif(\is_string($value) && !empty($value))
-		$return = \str_getcsv($value,$option['delimiter'],$option['enclosure'],$option['escape']);
+		elseif(is_string($value) && !empty($value))
+		$return = str_getcsv($value,$option['delimiter'],$option['enclosure'],$option['escape']);
 		
 		return $return;
 	}
@@ -174,16 +174,16 @@ class Csv extends File
 	{
 		$return = null;
 		
-		if(\is_string($value))
-		$return = [[$value]];
+		if(is_string($value))
+		$return = array(array($value));
 		
-		elseif(\is_array($value))
+		elseif(is_array($value))
 		{
 			if(Arrs::is($value))
 			$return = $value;
 			
 			else
-			$return = [$value];
+			$return = array($value);
 		}
 		
 		return $return;
@@ -201,7 +201,7 @@ class Csv extends File
 		{
 			$append = static::getLines($value,true,true,$option);
 			
-			if(\is_array($append))
+			if(is_array($append))
 			$return = Arr::append($prepend,$append);
 		}
 		
@@ -218,7 +218,7 @@ class Csv extends File
 		
 		if(static::isResource($value))
 		{
-			$return = \fgetcsv($value,0,$option['delimiter'],$option['enclosure'],$option['escape']);
+			$return = fgetcsv($value,0,$option['delimiter'],$option['enclosure'],$option['escape']);
 			
 			if($return === false)
 			$return = null;
@@ -244,15 +244,15 @@ class Csv extends File
 			{
 				foreach ($content as $w) 
 				{
-					if(\is_array($w))
-					$put = \fputcsv($value,$w,$option['delimiter'],$option['enclosure'],$option['escape']);
+					if(is_array($w))
+					$put = fputcsv($value,$w,$option['delimiter'],$option['enclosure'],$option['escape']);
 				}
 			}
 			
 			else
-			$put = \fputcsv($value,$content,$option['delimiter'],$option['enclosure'],$option['escape']);
+			$put = fputcsv($value,$content,$option['delimiter'],$option['enclosure'],$option['escape']);
 			
-			if(\is_int($put))
+			if(is_int($put))
 			$return = true;
 		}
 		

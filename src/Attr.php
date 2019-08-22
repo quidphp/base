@@ -6,8 +6,8 @@ namespace Quid\Base;
 class Attr extends Listing
 {
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
+	public static $config = array(
+		'option'=>array( // tableau d'options
 			'explode'=>1, // index du séparateur à utiliser lors du explode
 			'trim'=>false, // chaque partie de attr est trim
 			'clean'=>false, // une partie attr vide est retiré
@@ -17,32 +17,32 @@ class Attr extends Listing
 			'uri'=>null, // option pour uri, html passe un tableau différent pour chaque tag
 			'encode'=>true, // si les attributs sont passés dans htmlspecialchars ou htmlentities lors du implode, true est specialchars
 			'quote'=>false, // null est pas de quote, false est single quote, true est double quote
-			'href'=>[
+			'href'=>array(
 				'active'=>true, // permet d'activer ou désactiver les options href selected, targetExternal et lang
 				'selected'=>'selected', // classe pour les selected href
 				'targetExternal'=>'_blank', // target si le href est externe
 				'lang'=>true, // détecte la lang pour href
 				'mailto'=>true, // détecte les courriels
-				'extension'=>null], // extension par défaut pour href si non fourni et uri relative
-			'src'=>[
-				'extension'=>'jpg'], // extension par défaut pour src si non fourni et uri relative
-			'action'=>[
-				'extension'=>null]], // extension par défaut pour action si non fourni et uri relative
-		'separator'=>[ // les séparateurs de attr, le troisième index est pour explode
-			[' '," "],
-			['=','=']], 
+				'extension'=>null), // extension par défaut pour href si non fourni et uri relative
+			'src'=>array(
+				'extension'=>'jpg'), // extension par défaut pour src si non fourni et uri relative
+			'action'=>array(
+				'extension'=>null)), // extension par défaut pour action si non fourni et uri relative
+		'separator'=>array( // les séparateurs de attr, le troisième index est pour explode
+			array(' '," "),
+			array('=','=')), 
 		'id'=>'#', // ce caractère sert à identifier un id
-		'randomId'=>[10], // argument par défaut pour randomId
+		'randomId'=>array(10), // argument par défaut pour randomId
 		'class'=>'.', // ce caractère sert à identifier une classe
-		'oddEven'=>['odd','even'], // les classes pour oddEven
-		'selectedUri'=>[], // tableau qui contient les uri sélectionnés
-		'mirror'=>['multiple','selected','checked','required','disabled'], // attributs mirror
-		'pattern'=>['pattern','data-pattern'], // noms d'attributs qui contiennent pattern et doivent être passés dans validate/pattern
+		'oddEven'=>array('odd','even'), // les classes pour oddEven
+		'selectedUri'=>array(), // tableau qui contient les uri sélectionnés
+		'mirror'=>array('multiple','selected','checked','required','disabled'), // attributs mirror
+		'pattern'=>array('pattern','data-pattern'), // noms d'attributs qui contiennent pattern et doivent être passés dans validate/pattern
 		'method'=>'post', // si method est true
 		'target'=>'_blank', // si target est true
-		'group'=>[ // group d'attributs
-			'ajax'=>['ajax','rel'=>'nofollow']],
-		'style'=>[ // si ces clés se retrouvent au premier niveau de attr, ils sont envoyés dans un tableau style
+		'group'=>array( // group d'attributs
+			'ajax'=>array('ajax','rel'=>'nofollow')),
+		'style'=>array( // si ces clés se retrouvent au premier niveau de attr, ils sont envoyés dans un tableau style
 			'color',
 			'padding',
 			'margin',
@@ -51,15 +51,15 @@ class Attr extends Listing
 			'background',
 			'background-image',
 			'bgimg',
-			'background-position']
-	];
+			'background-position')
+	);
 	
 	
 	// isDataKey
 	// retourne vrai si l'attribut est data
 	public static function isDataKey($value):bool 
 	{
-		return (\is_string($value) && \strpos($value,'data-') === 0 && \strlen($value) > 5)? true:false;
+		return (is_string($value) && strpos($value,'data-') === 0 && strlen($value) > 5)? true:false;
 	}
 	
 	
@@ -67,7 +67,7 @@ class Attr extends Listing
 	// retourne vrai si l'attribut est une data-uri -> string encodé en base 64
 	public static function isDataUri($value):bool 
 	{
-		return (\is_string($value) && \strpos($value,'data:') === 0 && \strpos($value,';base64,') !== false)? true:false;
+		return (is_string($value) && strpos($value,'data:') === 0 && strpos($value,';base64,') !== false)? true:false;
 	}
 	
 	
@@ -75,7 +75,7 @@ class Attr extends Listing
 	// retourne vrai si l'uri fourni est sélectionné
 	public static function isSelectedUri($value):bool 
 	{
-		return (\is_string($value) && \array_key_exists($value,static::$config['selectedUri']))? true:false;
+		return (is_string($value) && array_key_exists($value,static::$config['selectedUri']))? true:false;
 	}
 	
 	
@@ -134,7 +134,7 @@ class Attr extends Listing
 		$data = static::data($attr,$option);
 		$dataKeys = static::parseDataKeys($keys);
 		
-		if(!empty($data) && \count($keys) === \count($dataKeys))
+		if(!empty($data) && count($keys) === count($dataKeys))
 		$return = Arr::keysExists($dataKeys,$data,static::getSensitive());
 		
 		return $return;
@@ -149,14 +149,14 @@ class Attr extends Listing
 	{
 		$return = false;
 		
-		if(\count($values) > 1)
+		if(count($values) > 1)
 		{
 			foreach ($values as $key => $value) 
 			{
 				$values[$key] = static::arr($value);
 				
 				if(!empty($values[$key]['class']))
-				$values[$key]['class'] = \array_fill_keys($values[$key]['class'],true);
+				$values[$key]['class'] = array_fill_keys($values[$key]['class'],true);
 				
 				$values[$key] = Arrs::keysSort($values[$key]);
 			}
@@ -175,24 +175,24 @@ class Attr extends Listing
 	protected static function prepareParse(array $return,array $option):array 
 	{
 		// prepareStyle
-		if(\array_key_exists('style',$return) && !\is_array($return['style']))
+		if(array_key_exists('style',$return) && !is_array($return['style']))
 		$return['style'] = static::parseStyle($return['style'],$option['style'] ?? null);
 		
 		// parseClass
-		if(\array_key_exists('class',$return) && !\is_array($return['class']))
+		if(array_key_exists('class',$return) && !is_array($return['class']))
 		$return['class'] = (array) static::parseClass($return['class']);
 		
 		// clé numérique
-		foreach (\array_keys($return) as $key)
+		foreach (array_keys($return) as $key)
 		{
-			if(\is_numeric($key))
+			if(is_numeric($key))
 			{
 				$basic = static::parseBasic($return[$key]);
 				if(!empty($basic['id']))
 				$return['id'] = $basic['id'];
 				
 				if(!empty($basic['class']))
-				$return = static::parseMerge(['class'=>$basic['class']],$return);
+				$return = static::parseMerge(array('class'=>$basic['class']),$return);
 				
 				unset($return[$key]);
 			}
@@ -200,20 +200,20 @@ class Attr extends Listing
 		
 		foreach ($return as $key => $value)
 		{
-			if(\is_string($key))
+			if(is_string($key))
 			{
 				// style key
-				if(\in_array($key,static::$config['style'],true))
+				if(in_array($key,static::$config['style'],true))
 				{
 					$return['style'][$key] = $value;
 					unset($return[$key]);
 				}
 				
 				// oddEven
-				elseif($key === 'oddEven' && \is_numeric($value))
+				elseif($key === 'oddEven' && is_numeric($value))
 				{
 					$oddEven = static::getOddEvenClass($value);
-					if(\is_string($oddEven))
+					if(is_string($oddEven))
 					$return['class'][] = $oddEven;
 					unset($return[$key]);
 				}
@@ -242,11 +242,11 @@ class Attr extends Listing
 		{
 			$value = static::parseUri($value,$option[$key]['extension'] ?? null);
 			
-			if(\is_string($value))
+			if(is_string($value))
 			{
 				if($href['active'] === true)
 				{
-					if(\is_string($href['targetExternal']) && !\array_key_exists('target',$return) && Uri::isExternal($value))
+					if(is_string($href['targetExternal']) && !array_key_exists('target',$return) && Uri::isExternal($value))
 					$return['target'] = $href['targetExternal'];
 					
 					if(!empty($href['selected']) && static::isSelectedUri($value))
@@ -268,7 +268,7 @@ class Attr extends Listing
 			}
 		}
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return[$key] = $value;
 		
 		return $return;
@@ -283,18 +283,18 @@ class Attr extends Listing
 	{
 		$return = null;
 		
-		if(\array_key_exists('group',$array))
+		if(array_key_exists('group',$array))
 		{
 			$groups = (array) $array['group'];
 			unset($array['group']);
 			
 			if(!empty($groups))
 			{
-				$append = [];
+				$append = array();
 				
 				foreach ($groups as $group) 
 				{
-					if(\array_key_exists($group,static::$config['group']))
+					if(array_key_exists($group,static::$config['group']))
 					$append[] = static::$config['group'][$group];
 				}
 
@@ -312,17 +312,17 @@ class Attr extends Listing
 	// si le tableau contient un ou des groupes, il n'est pas parse à nouveau
 	public static function parse(array $array,array $option):array
 	{
-		$return = [];
+		$return = array();
 		$group = static::prepareGroup($array,$option);
 		
-		if(\is_array($group))
+		if(is_array($group))
 		$return = $group;
 		
 		else 
 		{
 			foreach (static::prepareParse($array,$option) as $key => $value) 
 			{
-				if(\is_string($key) && !empty($key))
+				if(is_string($key) && !empty($key))
 				{
 					if($key === 'alt')
 					$value = static::parseAlt($value,$option['alt']);
@@ -333,18 +333,18 @@ class Attr extends Listing
 					elseif($key === 'class')
 					$value = static::parseClass($value);
 					
-					elseif(\in_array($key,['src','action'],true) && static::isDataUri($value) === false)
+					elseif(in_array($key,array('src','action'),true) && static::isDataUri($value) === false)
 					{
 						$value = static::parseUri($value,$option[$key]['extension'] ?? null);
 						
-						if(\is_string($value))
+						if(is_string($value))
 						$value = static::outputUri($value,$option['uri']);
 					}
 					
 					elseif($key === 'style')
 					$value = static::parseStyle($value,$option['style'] ?? null);
 					
-					elseif($key === 'data' && \is_array($value))
+					elseif($key === 'data' && is_array($value))
 					$value = static::parseData($value,$option['case']);
 					
 					elseif($key === 'target' && $value === true)
@@ -353,11 +353,11 @@ class Attr extends Listing
 					elseif($key === 'method' && $value === true)
 					$value = static::$config['method'] ?? null;
 					
-					elseif(\in_array($key,static::$config['mirror'],true) && $value === true)
+					elseif(in_array($key,static::$config['mirror'],true) && $value === true)
 					$value = $key;
 					
-					if(\is_string($key) && !empty($key) && $value !==null)
-					$return = static::parseMerge([$key=>$value],$return);
+					if(is_string($key) && !empty($key) && $value !==null)
+					$return = static::parseMerge(array($key=>$value),$return);
 				}
 			}
 		}
@@ -375,41 +375,41 @@ class Attr extends Listing
 		$return = null;
 		$id = static::$config['id'];
 		$class = static::$config['class'];
-		$classes = [];
+		$classes = array();
 
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			if(Arrs::is($value))
 			$value = Arrs::implode(' ',$value);
 			
 			else
-			$value = \implode(' ',$value);
+			$value = implode(' ',$value);
 		}
 		
-		if(\is_string($value) && !empty($value))
+		if(is_string($value) && !empty($value))
 		{
-			if(!empty($id) && \strpos($value,$id) !== false)
-			$value = \str_replace($id," $id",$value);
+			if(!empty($id) && strpos($value,$id) !== false)
+			$value = str_replace($id," $id",$value);
 			
-			if(!empty($class) && \strpos($value,$class) !== false)
-			$value = \str_replace($class," $class",$value);
+			if(!empty($class) && strpos($value,$class) !== false)
+			$value = str_replace($class," $class",$value);
 			
 			foreach (Str::wordExplode($value) as $key => $value) 
 			{
-				if(\strlen($value) > 1)
+				if(strlen($value) > 1)
 				{
-					if(!empty($id) && \strpos($value,$id) === 0)
+					if(!empty($id) && strpos($value,$id) === 0)
 					{
-						$id = \substr($value,\strlen($id));
+						$id = substr($value,strlen($id));
 						$parse = static::parseId($id);
 						if(!empty($parse))
-						$return = ['id'=>$parse];
+						$return = array('id'=>$parse);
 					}
 					
 					else
 					{
-						if(!empty($class) && \strpos($value,$class) === 0)
-						$value = \substr($value,\strlen($class));
+						if(!empty($class) && strpos($value,$class) === 0)
+						$value = substr($value,strlen($class));
 						
 						$classes[] = $value;
 					}
@@ -438,7 +438,7 @@ class Attr extends Listing
 		if($value === true)
 		$return = static::randomId();
 		
-		elseif(\is_string($value) && Validate::isAlphanumericDash($value))
+		elseif(is_string($value) && Validate::isAlphanumericDash($value))
 		$return = $value;
 		
 		return $return;
@@ -450,7 +450,7 @@ class Attr extends Listing
 	// le retour est une slug
 	public static function parseAlt($value,?array $option=null):?string
 	{
-		return (\is_string($value) && !empty($value))? Slug::str($value,$option):null;
+		return (is_string($value) && !empty($value))? Slug::str($value,$option):null;
 	}
 	
 	
@@ -461,14 +461,14 @@ class Attr extends Listing
 	{
 		if(!empty($value))
 		{
-			if(\is_string($value) && !\is_numeric($value))
-			$value = [$value];
+			if(is_string($value) && !is_numeric($value))
+			$value = array($value);
 			
-			if(\is_array($value))
+			if(is_array($value))
 			{
 				foreach ($value as $v) 
 				{
-					if(\is_string($v))
+					if(is_string($v))
 					$return = static::explodeClass($v,$return);
 				}
 			}
@@ -485,11 +485,11 @@ class Attr extends Listing
 	{
 		$return = null;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$return = Str::cast($value);
 			
-			if(\is_string($extension) && !Uri::isAbsolute($return))
+			if(is_string($extension) && !Uri::isAbsolute($return))
 			{
 				$ext = Path::extension($return);
 				if(empty($ext))
@@ -507,7 +507,7 @@ class Attr extends Listing
 	public static function outputUri(string $value,?array $option=null):string 
 	{
 		$return = null;
-		$option = Arr::plus(['append'=>null],$option);
+		$option = Arr::plus(array('append'=>null),$option);
 		
 		if(!empty($option['append']) && Uri::isAbsolute($value))
 		$option['append'] = null;
@@ -524,7 +524,7 @@ class Attr extends Listing
 	{
 		$return = null;
 		
-		if(!empty($value) && (\is_string($value) || \is_array($value)))
+		if(!empty($value) && (is_string($value) || is_array($value)))
 		$return = Style::arr($value,$option);
 
 		return $return;
@@ -539,7 +539,7 @@ class Attr extends Listing
 		
 		if(!empty($value))
 		{
-			$return = [];
+			$return = array();
 			
 			if($case !== null)
 			$value = Arr::keysChangeCase($case,$value);
@@ -547,7 +547,7 @@ class Attr extends Listing
 			foreach ($value as $k => $v) 
 			{
 				$k = static::parseDataKey($k);
-				if(\is_string($k))
+				if(is_string($k))
 				$return[$k] = $v;
 			}
 		}
@@ -564,15 +564,15 @@ class Attr extends Listing
 		if(!static::isDataKey($return))
 		$return = "data-".$return;
 		
-		if(\strtolower($return) !== $return)
+		if(strtolower($return) !== $return)
 		{
 			$camelCase = Str::fromCamelCase($return);
 
 			if(!empty($camelCase))
 			{
 				$camelCase = Arr::map('trim',$camelCase,'-');
-				$camelCase = \array_map('strtolower',$camelCase);
-				$return = \implode('-',$camelCase);
+				$camelCase = array_map('strtolower',$camelCase);
+				$return = implode('-',$camelCase);
 			}
 		}
 		
@@ -584,11 +584,11 @@ class Attr extends Listing
 	// parse un tableau de clés data
 	public static function parseDataKeys(array $keys):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($keys as $i => $key) 
 		{
-			if(\is_string($key))
+			if(is_string($key))
 			$return[$i] = static::parseDataKey($key);
 		}
 		
@@ -599,13 +599,13 @@ class Attr extends Listing
 	// parseMerge
 	// merge un tableau parse sur un tableau existant
 	// seules les clés data peuvent accepter une valeur bool, pas les attributs normaux
-	public static function parseMerge(array $array,array $return=[]):array
+	public static function parseMerge(array $array,array $return=array()):array
 	{
 		foreach ($array as $key => $value) 
 		{
-			if(\is_string($key) && !empty($key) && $value !==null)
+			if(is_string($key) && !empty($key) && $value !==null)
 			{
-				if(($key === 'class' || $key === 'style') && \array_key_exists($key,$return) && \is_array($value) && \is_array($return[$key]))
+				if(($key === 'class' || $key === 'style') && array_key_exists($key,$return) && is_array($value) && is_array($return[$key]))
 				{
 					if($key === 'class')
 					$return[$key] = Arr::appendUnique($return[$key],$value);
@@ -614,13 +614,13 @@ class Attr extends Listing
 					$return[$key] = Arr::replace($return[$key],$value);
 				}
 				
-				elseif($key === 'data' && \is_array($value))
+				elseif($key === 'data' && is_array($value))
 				{
 					foreach ($value as $k => $v) 
 					{
-						if(\is_string($k))
+						if(is_string($k))
 						{
-							if(\in_array($k,static::$config['pattern'],true))
+							if(in_array($k,static::$config['pattern'],true))
 							$v = Validate::pattern($v);
 							
 							$return[$k] = $v;
@@ -628,12 +628,12 @@ class Attr extends Listing
 					}
 				}
 				
-				elseif(\in_array($key,static::$config['pattern'],true))
+				elseif(in_array($key,static::$config['pattern'],true))
 				$return[$key] = Validate::pattern($value);
 
 				else
 				{
-					if(\is_bool($value))
+					if(is_bool($value))
 					{
 						if(static::isDataKey($key) || $key === 'value')
 						$return[$key] = $value;
@@ -653,7 +653,7 @@ class Attr extends Listing
 	// append plusieurs valeurs attributes et retourne un grand tableau parsed
 	public static function append(...$values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -678,26 +678,26 @@ class Attr extends Listing
 	// retourne un tableau unidimensionnel avec clé numérique
 	public static function list($array,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 		$option = static::option($option);
 		$separator = static::getSeparator(1,$option['implode']);
 		$array = static::arr($array,$option);
 		$array = static::keyValue($array,$option);
 
-		if(\is_array($array) && !empty($array))
+		if(is_array($array) && !empty($array))
 		{
 			foreach ($array as $key => $value) 
 			{
-				if(\is_string($key) && (\is_scalar($value) || \is_array($value)))
+				if(is_string($key) && (is_scalar($value) || is_array($value)))
 				{
 					$value = (array) $value;
 					
 					foreach ($value as $v) 
 					{
-						if(\is_scalar($v))
+						if(is_scalar($v))
 						{
 							$v = Str::cast($v);
-							$return[] = \implode($separator,[$key,$v]);
+							$return[] = implode($separator,array($key,$v));
 						}
 					}
 				}
@@ -712,11 +712,11 @@ class Attr extends Listing
 	// prépare une string dans la méthode arr
 	public static function prepareStr(string $value,array $option):array 
 	{
-		$return = [];
+		$return = array();
 		$separator = static::getSeparator(1,$option['explode']);
 		
-		if(\strpos($value,$separator) === false)
-		$return = [$value];
+		if(strpos($value,$separator) === false)
+		$return = array($value);
 		
 		else
 		$return = static::explodeStr($value,$option);
@@ -738,16 +738,16 @@ class Attr extends Listing
 	// ne peut pas fonctionner si un attribut contient un single ou double quote à l'intérieur des quotes
 	public static function explodeStr(string $value):array 
 	{
-		$return = [];
-		$match = [];
+		$return = array();
+		$match = array();
 		$value = Str::doubleToSingleQuote($value);
-		\preg_match_all("%(.*)=\'(.*)\'%Uis",$value,$match,PREG_SET_ORDER);
+		preg_match_all("%(.*)=\'(.*)\'%Uis",$value,$match,PREG_SET_ORDER);
 
 		if(!empty($match))
 		{
 			foreach ($match as $key => $value) 
 			{
-				if(\is_array($value) && \count($value) === 3)
+				if(is_array($value) && count($value) === 3)
 				{
 					$value = Arr::trim($value);
 					$k = Str::unquote($value[1],true,false);
@@ -764,25 +764,25 @@ class Attr extends Listing
 	// explodeClass
 	// explose une string de classe
 	// sensible à la case
-	public static function explodeClass(string $value,?array $return=[]):array 
+	public static function explodeClass(string $value,?array $return=array()):array 
 	{
-		$return = ($return === null)? []:$return;
+		$return = ($return === null)? array():$return;
 		
-		if(\strpos($value," ") !== false)
+		if(strpos($value," ") !== false)
 		{
-			$value = \explode(" ",$value);
+			$value = explode(" ",$value);
 			
 			if(!empty($value))
 			{
 				foreach ($value as $v) 
 				{
-					if(!\is_numeric($v) && !empty($v) && Validate::isAlphanumericDash($v) && !\in_array($v,$return,true))
+					if(!is_numeric($v) && !empty($v) && Validate::isAlphanumericDash($v) && !in_array($v,$return,true))
 					$return[] = $v;
 				}
 			}
 		}
 		
-		elseif(!\is_numeric($value) && !empty($value) && Validate::isAlphanumericDash($value) && !\in_array($value,$return,true))
+		elseif(!is_numeric($value) && !empty($value) && Validate::isAlphanumericDash($value) && !in_array($value,$return,true))
 		$return[] = $value;
 		
 		return $return;
@@ -810,7 +810,7 @@ class Attr extends Listing
 		$return = null;
 		$value = static::parseClass($value);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		$return = static::classImplode($value);
 		
 		return $return;
@@ -823,20 +823,20 @@ class Attr extends Listing
 	// les valeurs sont passés dans quote et entities ou specialchars par défaut
 	public static function keyValue(array $array,array $option):array
 	{
-		$return = [];
-		$option['encode'] = (\is_string($option['encode']) || $option['encode'] === true)? [$option['encode']]:$option['encode'];
+		$return = array();
+		$option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? array($option['encode']):$option['encode'];
 		
 		if($option['caseImplode'] !== null)
 		$array = Arr::keysChangeCase($option['caseImplode'],$array);
 
 		foreach ($array as $key => $value) 
 		{
-			if(\is_string($key) && !empty($key))
+			if(is_string($key) && !empty($key))
 			{
-				if(\is_scalar($value))
+				if(is_scalar($value))
 				$value = Str::cast($value);
 				
-				elseif(\is_array($value) && !empty($value))
+				elseif(is_array($value) && !empty($value))
 				{
 					if($key === 'class')
 					$value = static::classImplode($value);
@@ -848,15 +848,15 @@ class Attr extends Listing
 					$value = Json::encode($value,$option['json']);
 				}
 				
-				elseif(\is_object($value))
+				elseif(is_object($value))
 				$value = Json::encode($value,$option['json']);
 				
-				if(\is_string($value))
+				if(is_string($value))
 				{
-					if(!empty($option['encode']) && \is_array($option['encode']))
+					if(!empty($option['encode']) && is_array($option['encode']))
 					$value = Html::encode($value,...$option['encode']);
 					
-					if(\is_bool($option['quote']))
+					if(is_bool($option['quote']))
 					$value = Str::quote($value,$option['quote']);
 					
 					$return[$key] = $value;
@@ -894,7 +894,7 @@ class Attr extends Listing
 	// génère un id random
 	public static function randomId(?string $name=null,?array $option=null):string 
 	{
-		return Str::randomPrefix((\is_string($name))? $name:'',...\array_values(Arr::plus(static::$config['randomId'],$option)));
+		return Str::randomPrefix((is_string($name))? $name:'',...array_values(Arr::plus(static::$config['randomId'],$option)));
 	}
 	
 	
@@ -912,7 +912,7 @@ class Attr extends Listing
 	{
 		$return = null;
 		
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		{
 			if(Number::isOdd($value))
 			$return = static::getOddClass();
@@ -981,11 +981,11 @@ class Attr extends Listing
 		$value = (array) static::parseClass($value);
 		$class = (array) static::getClass($assoc,$option);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\in_array($v,$class,true))
+				if(in_array($v,$class,true))
 				$class = Arr::valueStrip($v,$class,static::getSensitive());
 				
 				else
@@ -1142,7 +1142,7 @@ class Attr extends Listing
 		$data = static::data($assoc,$option);
 		
 		if(!empty($data))
-		$return = static::unsets(\array_keys($data),$assoc,$option);
+		$return = static::unsets(array_keys($data),$assoc,$option);
 		
 		return $return;
 	}
@@ -1160,7 +1160,7 @@ class Attr extends Listing
 	// retourne le tableau des uri sélectionnés, sans les classes
 	public static function selectedUriArray():array 
 	{
-		return \array_keys(static::$config['selectedUri']);
+		return array_keys(static::$config['selectedUri']);
 	}
 	
 	
@@ -1168,7 +1168,7 @@ class Attr extends Listing
 	// retourne la classe à utiliser pour une uri sélectionnée
 	public static function getSelectedUri(string $key)
 	{
-		return (\array_key_exists($key,static::$config['selectedUri']))? static::$config['selectedUri'][$key]:null;
+		return (array_key_exists($key,static::$config['selectedUri']))? static::$config['selectedUri'][$key]:null;
 	}
 	
 	
@@ -1191,7 +1191,7 @@ class Attr extends Listing
 		
 		foreach ($uris as $uri) 
 		{
-			if(\array_key_exists($uri,static::$config['selectedUri']))
+			if(array_key_exists($uri,static::$config['selectedUri']))
 			unset(static::$config['selectedUri'][$uri]);
 		}
 		

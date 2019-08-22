@@ -6,18 +6,18 @@ namespace Quid\Base;
 class File extends Finder
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'mimeGroup'=>null, // mime groupe de la classe, pour les classes qui étendent
-		'load'=>['php','html'], // extension permise pour la méthode file::load, peut être une string
-		'notFoundCallable'=>[Error::class,'trigger'], // callable à déclencher si un path n'est pas chargable dans la méthode load
+		'load'=>array('php','html'), // extension permise pour la méthode file::load, peut être une string
+		'notFoundCallable'=>array(Error::class,'trigger'), // callable à déclencher si un path n'est pas chargable dans la méthode load
 		'defaultPermission'=>644, // permission par défaut pour un fichier
 		'option'=>null, // option à surcharger dans la méthode option
-		'prefix'=>[ // option pour file::temp
+		'prefix'=>array( // option pour file::temp
 			'extension'=>'txt',
 			'dateFormat'=>'YmdHis',
 			'separator'=>'_',
-			'random'=>11] 
-	];
+			'random'=>11) 
+	);
 	
 	
 	// is
@@ -30,17 +30,17 @@ class File extends Finder
 		if($makePath === true)
 		$path = static::path($path);
 		
-		if(\is_string($path) && \is_file($path))
+		if(is_string($path) && is_file($path))
 		{
 			$return = true;
 			
 			if($posix === true)
-			$return = \posix_access($path,POSIX_F_OK);
+			$return = posix_access($path,POSIX_F_OK);
 			
 			if($return === true)
 			{
 				$mimeGroup = static::$config['mimeGroup'];
-				if(\is_string($mimeGroup))
+				if(is_string($mimeGroup))
 				$return = Mime::isGroup($mimeGroup,$path,true);
 			}
 		}
@@ -75,7 +75,7 @@ class File extends Finder
 		$return = false;
 		$value = static::path($value);
 		
-		if(static::is($value,false) && \is_uploaded_file($value))
+		if(static::is($value,false) && is_uploaded_file($value))
 		$return = true;
 		
 		return $return;
@@ -90,7 +90,7 @@ class File extends Finder
 		
 		foreach ($values as $value) 
 		{
-			$return = (\is_array($value) && Arr::keysExists(['name','type','tmp_name','error','size'],$value))? true:false;
+			$return = (is_array($value) && Arr::keysExists(array('name','type','tmp_name','error','size'),$value))? true:false;
 			
 			if($return === false)
 			break;
@@ -152,7 +152,7 @@ class File extends Finder
 		{
 			foreach ($values as $value) 
 			{
-				if(\in_array($value['error'],[1,2],true))
+				if(in_array($value['error'],array(1,2),true))
 				{
 					$return = true;
 					break;
@@ -173,7 +173,7 @@ class File extends Finder
 		$return = false;
 		$value = static::getLoadPath($value);
 		
-		if(!empty($value) && \in_array($value,static::loaded(),true))
+		if(!empty($value) && in_array($value,static::loaded(),true))
 		$return = true;
 		
 		return $return;
@@ -185,12 +185,12 @@ class File extends Finder
 	// gère aussi le mime group pour les classes qui étendent
 	public static function isResource($value):bool 
 	{
-		$return = (\is_resource($value) && Res::isFileLike($value))? true:false;
+		$return = (is_resource($value) && Res::isFileLike($value))? true:false;
 		
 		if($return === true)
 		{
 			$mimeGroup = static::$config['mimeGroup'];
-			if(\is_string($mimeGroup))
+			if(is_string($mimeGroup))
 			$return = Mime::isGroup($mimeGroup,$value,true);
 		}
 		
@@ -221,7 +221,7 @@ class File extends Finder
 		$return = false;
 		$v = static::size($value);
 		
-		if(\is_int($v) && $size >= $v)
+		if(is_int($v) && $size >= $v)
 		$return = true;
 		
 		return $return;
@@ -262,7 +262,7 @@ class File extends Finder
 	{
 		$return = null;
 		
-		if(\is_object($value))
+		if(is_object($value))
 		$value = Obj::cast($value);
 		
 		if(static::isResource($value))
@@ -270,15 +270,15 @@ class File extends Finder
 		
 		else
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$value = static::uploadPath($value);
 			
-			if(\is_string($value))
+			if(is_string($value))
 			{
 				$return = parent::path($value,$isSafe,$option);
 				
 				$mimeGroup = static::$config['mimeGroup'];
-				if(!empty($return) && \is_string($mimeGroup))
+				if(!empty($return) && is_string($mimeGroup))
 				{
 					$extension = Path::extension($return);
 					if(!empty($extension) && !Mime::isExtensionInGroup($extension,$mimeGroup))
@@ -297,7 +297,7 @@ class File extends Finder
 	{
 		$return = null;
 		
-		if(\is_object($value))
+		if(is_object($value))
 		$value = Obj::cast($value);
 		
 		if(static::isResource($value))
@@ -305,10 +305,10 @@ class File extends Finder
 		
 		else
 		{
-			if(\is_array($value))
+			if(is_array($value))
 			$value = static::uploadPath($value);
 			
-			if(\is_string($value))
+			if(is_string($value))
 			$return = static::open($value,$option);
 		}
 		
@@ -320,7 +320,7 @@ class File extends Finder
 	// retourne les resources ou les resources de plusieurs paths 
 	public static function resources(...$values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $key => $value) 
 		{
@@ -339,8 +339,8 @@ class File extends Finder
 		$return = null;
 		$value = $args[$v];
 		$option = $args[$o];
-		$close = (\is_resource($value))? false:true;
-		$args[$v] = static::resource($value,['create'=>$create]);
+		$close = (is_resource($value))? false:true;
+		$args[$v] = static::resource($value,array('create'=>$create));
 		$args[$o] = static::option($option);
 		
 		if(!empty($args[$v]))
@@ -359,7 +359,7 @@ class File extends Finder
 	// permet de mettre à jour le tableau d'option selon la classe
 	public static function option(?array $option=null):array
 	{
-		return Arr::plus(['useIncludePath'=>true],$option,static::$config['option']);
+		return Arr::plus(array('useIncludePath'=>true),$option,static::$config['option']);
 	}
 	
 	
@@ -372,7 +372,7 @@ class File extends Finder
 		$return = '';
 		$value = static::path($value);
 		
-		if(\is_string($value) && \strlen($value))
+		if(is_string($value) && strlen($value))
 		{
 			if(Path::isSafe($value))
 			{
@@ -384,7 +384,7 @@ class File extends Finder
 			if(empty($return))
 			{
 				$path = static::path($value,true);
-				if(\is_string($path))
+				if(is_string($path))
 				$return = $path;
 			}
 			
@@ -394,7 +394,7 @@ class File extends Finder
 				
 				// utilise relative, ne force pas l'ajout d'un forward slash pour compatibilité avec realpath
 				if(empty(Path::extension($return)))
-				$return = PathTrack::changeExtension(\current($load),$return);
+				$return = PathTrack::changeExtension(current($load),$return);
 			}
 		}
 		
@@ -411,12 +411,12 @@ class File extends Finder
 		$return = '';
 		$value = static::getLoadPath($value);
 		
-		if(\strlen($value) && !empty(static::$config['load']))
+		if(strlen($value) && !empty(static::$config['load']))
 		{
 			$extension = Path::extension($value);
 			$load = (array) static::$config['load'];
 			
-			if(!empty($extension) && \in_array($extension,$load,true))
+			if(!empty($extension) && in_array($extension,$load,true))
 			$return = $value;
 		}
 		
@@ -436,13 +436,13 @@ class File extends Finder
 		$original = $value;
 		$value = static::makeLoadPath($value);
 		
-		if(\strlen($value) && static::isReadable($value))
+		if(strlen($value) && static::isReadable($value))
 		{
 			unset($extension);
 			unset($original);
 			
-			if(\is_array($extract))
-			\extract($extract,EXTR_SKIP);
+			if(is_array($extract))
+			extract($extract,EXTR_SKIP);
 			unset($extract);
 			
 			if($once === true)
@@ -454,7 +454,7 @@ class File extends Finder
 			
 			if($definedVars === true)
 			{
-				$return = \get_defined_vars();
+				$return = get_defined_vars();
 				unset($return['return']);
 				unset($return['definedVars']);
 			}
@@ -465,10 +465,10 @@ class File extends Finder
 		
 		elseif(static::classIsCallable(static::$config['notFoundCallable']))
 		{
-			if(empty($value) && \is_string($original))
+			if(empty($value) && is_string($original))
 			$value = $original;
 			
-			$return = static::$config['notFoundCallable']([$value]);
+			$return = static::$config['notFoundCallable'](array($value));
 		}
 		
 		return $return;
@@ -489,7 +489,7 @@ class File extends Finder
 	// on ne peut pas utiliser extract et defined vars
 	public static function loads(...$values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -504,7 +504,7 @@ class File extends Finder
 	// retournes les fichiers inclus
 	public static function loaded():array
 	{
-		return \get_included_files();
+		return get_included_files();
 	}
 	
 	
@@ -515,7 +515,7 @@ class File extends Finder
 		$return = null;
 		$path = static::path($value);
 		
-		if(\is_string($path))
+		if(is_string($path))
 		{
 			$basename = Path::basename($path);
 			$return = Path::safeBasename($basename);
@@ -534,13 +534,13 @@ class File extends Finder
 		$return = null;
 		$path = static::path($value);
 		
-		if(\is_string($path))
+		if(is_string($path))
 		{
-			$basename = (\is_string($basename))? $basename:Path::basename($path);
+			$basename = (is_string($basename))? $basename:Path::basename($path);
 			$extension = static::mimeExtension($path);
 			
 			if(empty($extension))
-			$extension = (\is_string($basename))? Path::extension($basename):Path::extension($path);
+			$extension = (is_string($basename))? Path::extension($basename):Path::extension($path);
 			
 			$return = Path::changeBasenameExtension($extension,$basename);
 		}
@@ -643,19 +643,19 @@ class File extends Finder
 		$return = null;
 		$option = Arr::plus(static::$config['prefix'],$option);
 		$separator = (!empty($option['separator']))? $option['separator']:'';
-		$basename = [];
+		$basename = array();
 		
-		if(\is_string($prefix))
+		if(is_string($prefix))
 		$array[] = $prefix;
 		
-		if(!empty($option['dateFormat']) && \is_string($option['dateFormat']))
+		if(!empty($option['dateFormat']) && is_string($option['dateFormat']))
 		$array[] = Date::format($option['dateFormat']);
 		
-		if(!empty($option['random']) && \is_int($option['random']))
+		if(!empty($option['random']) && is_int($option['random']))
 		$array[] = Str::random($option['random']);
 		
 		if(!empty($array))
-		$return = \implode($separator,$array);
+		$return = implode($separator,$array);
 		
 		return $return;
 	}
@@ -669,9 +669,9 @@ class File extends Finder
 	{
 		$return = static::prefixFilename($prefix,$option);
 		$option = Arr::plus(static::$config['prefix'],$option);
-		$extension = (\is_string($extension))? $extension:$option['extension'];
+		$extension = (is_string($extension))? $extension:$option['extension'];
 
-		if(\is_string($return) && \is_string($extension))
+		if(is_string($return) && is_string($extension))
 		$return .= ".".$extension;
 		
 		return $return;
@@ -686,14 +686,14 @@ class File extends Finder
 	public static function prefix(?string $dirname=null,?string $prefix=null,?string $extension=null,?array $option=null):?string
 	{
 		$return = null;
-		$dirname = (\is_string($dirname))? parent::path($dirname):Dir::temp();
+		$dirname = (is_string($dirname))? parent::path($dirname):Dir::temp();
 		$basename = static::prefixBasename($prefix,$extension,$option);
 		
 		if(!empty($basename))
 		{
 			$path = Path::addBasename($basename,$dirname);
 			
-			if(!empty($path) && !\file_exists($path) && static::set($path))
+			if(!empty($path) && !file_exists($path) && static::set($path))
 			$return = $path;
 		}
 		
@@ -740,7 +740,7 @@ class File extends Finder
 	// comme open, mais force l'ouverture en mode binaire
 	public static function binary($value,?array $option=null) 
 	{
-		return static::open($value,Arr::plus($option,['binary'=>true]));
+		return static::open($value,Arr::plus($option,array('binary'=>true)));
 	}
 	
 	
@@ -748,7 +748,7 @@ class File extends Finder
 	// comme open, mais active l'option de création de fichier
 	public static function create($value,?array $option=null) 
 	{
-		return static::open($value,Arr::plus($option,['create'=>true]));
+		return static::open($value,Arr::plus($option,array('create'=>true)));
 	}
 	
 	
@@ -758,7 +758,7 @@ class File extends Finder
 	{
 		$return = null;
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$return = static::lineFirst($value,$option);
 		
 		elseif(static::isResource($value))
@@ -777,7 +777,7 @@ class File extends Finder
 	public static function get($value,$seek=true,$length=true,?array $option=null):?string
 	{
 		$return = null;
-		$close = (\is_resource($value))? false:true;
+		$close = (is_resource($value))? false:true;
 		$handle = static::resource($value);
 		$option = static::option($option);
 		
@@ -916,11 +916,11 @@ class File extends Finder
 	{
 		$return = false;
 		$dirname = parent::path($dirname);
-		$extension = (\is_string($extension))? $extension:static::$config['prefix']['extension'];
+		$extension = (is_string($extension))? $extension:static::$config['prefix']['extension'];
 		
 		if(!empty($dirname) && !empty($filename) && !empty($extension))
 		{
-			$path = Path::build(['dirname'=>$dirname,'filename'=>$filename,'extension'=>$extension]);
+			$path = Path::build(array('dirname'=>$dirname,'filename'=>$filename,'extension'=>$extension));
 			$return = static::set($path,$content,$append,$option);
 			
 			if($return === true)
@@ -1010,7 +1010,7 @@ class File extends Finder
 	// comme append, mais ajoute une newline au contenu
 	public static function appendNewline($content,$value,?array $option=null)
 	{
-		return static::append($content,$value,Arr::plus($option,['newline'=>true]));
+		return static::append($content,$value,Arr::plus($option,array('newline'=>true)));
 	}
 	
 	
@@ -1020,7 +1020,7 @@ class File extends Finder
 	// un séparateur doit être fourni, une callable peut être fourni
 	public static function concatenate($value,?callable $callable=null,string $separator,...$values)
 	{
-		return Res::concatenate(static::resource($value,['create'=>true]),$callable,$separator,...static::resources(...$values));
+		return Res::concatenate(static::resource($value,array('create'=>true)),$callable,$separator,...static::resources(...$values));
 	}
 	
 	
@@ -1113,7 +1113,7 @@ class File extends Finder
 		$target = parent::path($target);
 		$path = static::path($path);
 		
-		if(\is_link($path))
+		if(is_link($path))
 		{
 			$symlink = $path;
 			$path = Symlink::get($path);
@@ -1124,7 +1124,7 @@ class File extends Finder
 			$dirname = Path::dirname($target);
 			if(!empty($dirname) && Dir::setOrWritable($dirname))
 			{
-				$return = \link($path,$target);
+				$return = link($path,$target);
 				
 				if($return === true && !empty($symlink))
 				Symlink::reset($target,$symlink);
@@ -1184,11 +1184,11 @@ class File extends Finder
 		$path = static::path($path);
 		$target = static::path($target);
 
-		if(\is_string($path) && \is_uploaded_file($path) && static::isWritable($path,false) && self::isCreatable($target))
+		if(is_string($path) && is_uploaded_file($path) && static::isWritable($path,false) && self::isCreatable($target))
 		{
 			$dirname = Path::dirname($target);
 			if(!empty($dirname) && Dir::setOrWritable($dirname))
-			$return = \move_uploaded_file($path,$target);
+			$return = move_uploaded_file($path,$target);
 		}
 		
 		return $return;
@@ -1205,7 +1205,7 @@ class File extends Finder
 		
 		if($is === false || static::is($path,false))
 		{
-			$return = [];
+			$return = array();
 			$return['name'] = Path::basename($path);
 			$return['tmp_name'] = $path;
 			$return['error'] = $error;
@@ -1311,8 +1311,8 @@ class File extends Finder
 				
 				if($v !== true)
 				{
-					if(!\is_array($return))
-					$return = [];
+					if(!is_array($return))
+					$return = array();
 					
 					$return[$key] = $v;
 				}

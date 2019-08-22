@@ -7,63 +7,63 @@ use Quid\Base;
 class Fr extends Base\Config
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		// number 
-		'number'=>[
+		'number'=>array(
 			
 			// format
-			'format'=>[
+			'format'=>array(
 				'decimal'=>2,
 				'separator'=>'.',
 				'thousand'=>" "
-			],
+			),
 			
 			// moneyFormat
-			'moneyFormat'=>[
+			'moneyFormat'=>array(
 				'decimal'=>2,
 				'separator'=>'.',
 				'thousand'=>" ",
 				'output'=>'%v% $'
-			],
+			),
 			
 			// percentFormat
-			'percentFormat'=>[
+			'percentFormat'=>array(
 				'decimal'=>0,
 				'separator'=>'.',
 				'thousand'=>"",
 				'output'=>'%v%%'
-			],
+			),
 			
 			// phoneFormat
-			'phoneFormat'=>[
+			'phoneFormat'=>array(
 				'parenthesis'=>true,
 				'extension'=>'#'
-			],
+			),
 						
 			// sizeFormat
-			'sizeFormat'=>[
-				'round'=>[
+			'sizeFormat'=>array(
+				'round'=>array(
 					0=>0,
 					1=>0,
 					2=>1,
 					3=>2,
 					4=>2,
-					5=>3],
-				'text'=>[
+					5=>3),
+				'text'=>array(
 					0=>'Octet',
 					1=>'Ko',
 					2=>'Mo',
 					3=>'Go',
 					4=>'To',
-					5=>'Po']
-				]	
-		],
+					5=>'Po')
+				)	
+		),
 		
 		// date
-		'date'=>[
+		'date'=>array(
 			
 			// format
-			'format'=>[
+			'format'=>array(
 				0=>'j %n% Y',
 				1=>'j %n% Y H:i:s',
 				2=>'@n@ Y',
@@ -75,17 +75,17 @@ class Fr extends Base\Config
 				'short'=>'j %n% Y',
 				'long'=>'j %n% Y H:i:s',
 				'calendar'=>'@n@ Y'
-			],
+			),
 			
 			// placeholder
-			'placeholder'=>[
+			'placeholder'=>array(
 				'dateToDay'=>'DD-MM-YYYY',
 				'dateToMinute'=>'DD-MM-YYYY HH:MM',
 				'dateToSecond'=>'DD-MM-YYYY HH:MM:SS'
-			],
+			),
 			
 			// str
-			'str'=>[
+			'str'=>array(
 				'year'=>'année',
 				'month'=>'mois',
 				'day'=>'jour',
@@ -93,10 +93,10 @@ class Fr extends Base\Config
 				'minute'=>'minute',
 				'second'=>'seconde',
 				'and'=>'et'
-			],
+			),
 			
 			// month
-			'month'=>[
+			'month'=>array(
 				1=>'Janvier',
 				2=>'Février',
 				3=>'Mars',
@@ -109,10 +109,10 @@ class Fr extends Base\Config
 				10=>'Octobre',
 				11=>'Novembre',
 				12=>'Décembre'
-			],
+			),
 				
 			// dayShort
-			'dayShort'=>[
+			'dayShort'=>array(
 				0=>'D',
 				1=>'L',
 				2=>'M',
@@ -120,10 +120,10 @@ class Fr extends Base\Config
 				4=>'J',
 				5=>'V',
 				6=>'S'
-			],
+			),
 			
 			// day
-			'day'=>[
+			'day'=>array(
 				0=>'Dimanche',
 				1=>'Lundi',
 				2=>'Mardi',
@@ -131,14 +131,14 @@ class Fr extends Base\Config
 				4=>'Jeudi',
 				5=>'Vendredi',
 				6=>'Samedi'
-			]
-		],
+			)
+		),
 		
 		// header
-		'header'=>[
+		'header'=>array(
 			
 			// responseStatus
-			'responseStatus'=>[
+			'responseStatus'=>array(
 				100=>'Continuer', 
 				101=>'Changer de protocole',
 				200=>'OK',
@@ -200,12 +200,12 @@ class Fr extends Base\Config
 				508=>'Boucle détectée',
 				510=>'Non étendu',
 				511=>'Authentification réseau requise'
-			]
-		],
+			)
+		),
 		
 		// error
-		'error'=>[
-			'code'=>[
+		'error'=>array(
+			'code'=>array(
 				E_ERROR=>'E_ERROR',
 				E_WARNING=>'E_WARNING',
 				E_PARSE=>'E_PARSE',
@@ -222,11 +222,11 @@ class Fr extends Base\Config
 				E_DEPRECATED=>'E_DEPRECATED',
 				E_USER_DEPRECATED=>'E_USER_DEPRECATED',
 				E_ALL=>'E_ALL'
-			]
-		],
+			)
+		),
 		
 		// validate
-		'validate'=>[
+		'validate'=>array(
 			'array'=>'Doit être un tableau',
 			'bool'=>'Doit être un booléen',
 			'callable'=>'Doit être appelable',
@@ -339,25 +339,25 @@ class Fr extends Base\Config
 			'maxFilesizes'=>"La taille du ou des fichiers doit être plus petite que [%]",
 			'extension'=>"L'extension du fichier doit être: [%]",
 			'extensions'=>"L'extension du ou des fichiers doit être: [%]"
-		],
+		),
 		
 		// required
-		'required'=>[
+		'required'=>array(
 			'common'=>'Ne peut pas être vide'
-		],
+		),
 		
 		// unique
-		'unique'=>[
+		'unique'=>array(
 			'common'=>'Doit être unique[%]'
-		],
+		),
 		
 		// editable
-		'editable'=>[
+		'editable'=>array(
 			'common'=>'Ne peut pas être modifié'
-		],
+		),
 		
 		// compare
-		'compare'=>[
+		'compare'=>array(
 			'='=>'Doit être égal à [%]',
 			'=='=>'Doit être égal à [%]',
 			'==='=>'Doit être égal à [%]',
@@ -368,7 +368,7 @@ class Fr extends Base\Config
 			'!'=>'Ne doit pas être égal à [%]',
 			'!='=>'Ne doit pas être égal à [%]',
 			'!=='=>'Ne doit pas être égal à [%]'
-		]
-	];
+		)
+	);
 }
 ?>

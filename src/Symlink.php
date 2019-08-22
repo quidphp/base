@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Symlink extends Finder
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// is
@@ -19,12 +19,12 @@ class Symlink extends Finder
 		if($makePath === true)
 		$path = static::path($path);
 		
-		if(\is_string($path) && \is_link($path))
+		if(is_string($path) && is_link($path))
 		{
 			$return = true;
 			
 			if($posix === true)
-			$return = \posix_access($path,POSIX_F_OK);
+			$return = posix_access($path,POSIX_F_OK);
 		}
 		
 		return $return;
@@ -46,7 +46,7 @@ class Symlink extends Finder
 			$return = true;
 			
 			if($posix === true)
-			$return = \posix_access(static::path($path),POSIX_R_OK);
+			$return = posix_access(static::path($path),POSIX_R_OK);
 		}
 		
 		return $return;
@@ -68,7 +68,7 @@ class Symlink extends Finder
 			$return = true;
 			
 			if($posix === true)
-			$return = \posix_access(static::path($path),POSIX_W_OK);
+			$return = posix_access(static::path($path),POSIX_W_OK);
 		}
 		
 		return $return;
@@ -90,7 +90,7 @@ class Symlink extends Finder
 			$return = true;
 			
 			if($posix === true)
-			$return = \posix_access(static::path($path),POSIX_X_OK);
+			$return = posix_access(static::path($path),POSIX_X_OK);
 		}
 		
 		return $return;
@@ -104,7 +104,7 @@ class Symlink extends Finder
 		$return = null;
 		$ino = static::statValue('ino',$path);
 		
-		if(\is_int($ino))
+		if(is_int($ino))
 		$return = $ino;
 		
 		return $return;
@@ -118,7 +118,7 @@ class Symlink extends Finder
 		$return = null;
 		$mode = static::statValue('mode',$path);
 
-		if(\is_int($mode))
+		if(is_int($mode))
 		$return = ($format===true)? static::formatValue('permission',$mode):$mode;
 		
 		return $return;
@@ -132,7 +132,7 @@ class Symlink extends Finder
 		$return = null;
 		$owner = static::statValue('uid',$path);
 		
-		if(\is_int($owner))
+		if(is_int($owner))
 		$return = ($format===true)? static::formatValue('owner',$owner):$owner;
 		
 		return $return;
@@ -146,7 +146,7 @@ class Symlink extends Finder
 		$return = false;
 		$path = static::path($path);
 		
-		if(\is_scalar($user) && static::isWritable($path,false) && \lchown($path,$user))
+		if(is_scalar($user) && static::isWritable($path,false) && lchown($path,$user))
 		$return = true;
 		
 		return $return;
@@ -160,7 +160,7 @@ class Symlink extends Finder
 		$return = null;
 		$group = static::statValue('gid',$path);
 		
-		if(\is_int($group))
+		if(is_int($group))
 		$return = ($format===true)? static::formatValue('group',$group):$group;
 		
 		return $return;
@@ -174,7 +174,7 @@ class Symlink extends Finder
 		$return = false;
 		$path = static::path($path);
 		
-		if(\is_scalar($group) && static::isWritable($path,false) && \lchgrp($path,$group))
+		if(is_scalar($group) && static::isWritable($path,false) && lchgrp($path,$group))
 		$return = true;
 		
 		return $return;
@@ -188,7 +188,7 @@ class Symlink extends Finder
 		$return = null;
 		$size = static::statValue('size',$path);
 		
-		if(\is_int($size))
+		if(is_int($size))
 		$return = ($format===true)? static::formatValue('size',$size):$size;
 		
 		return $return;
@@ -202,7 +202,7 @@ class Symlink extends Finder
 		$return = null;
 		$atime = static::statValue('atime',$path);
 		
-		if(\is_int($atime))
+		if(is_int($atime))
 		$return = ($format===true)? static::formatValue('dateAccess',$atime):$atime;
 		
 		return $return;
@@ -216,7 +216,7 @@ class Symlink extends Finder
 		$return = null;
 		$mtime = static::statValue('mtime',$path);
 		
-		if(\is_int($mtime))
+		if(is_int($mtime))
 		$return = ($format===true)? static::formatValue('dateModify',$mtime):$mtime;
 		
 		return $return;
@@ -230,7 +230,7 @@ class Symlink extends Finder
 		$return = null;
 		$ctime = static::statValue('ctime',$path);
 		
-		if(\is_int($ctime))
+		if(is_int($ctime))
 		$return = ($format===true)? static::formatValue('dateInodeModify',$ctime):$ctime;
 		
 		return $return;
@@ -247,9 +247,9 @@ class Symlink extends Finder
 		
 		if(static::is($path,false))
 		{
-			$stat = \lstat($path);
+			$stat = lstat($path);
 			
-			if(\is_array($stat))
+			if(is_array($stat))
 			{
 				$return = $stat;
 				
@@ -273,20 +273,20 @@ class Symlink extends Finder
 
 		if($is === true)
 		{
-			$return = [];
+			$return = array();
 			
 			if($clearStatCache === true)
 			static::clearStatCache();
 			
 			$return['path'] = $path;
 			$return['target'] = static::get($path);
-			$return['type'] = \filetype($path);
+			$return['type'] = filetype($path);
 			$return['readable'] = $is;
 			$return['writable'] = static::isWritable($path,false);
 			$return['executable'] = static::isExecutable($path,false);
-			$return['dir'] = \is_dir($path);
-			$return['file'] = \is_file($path);
-			$return['link'] = \is_link($path);
+			$return['dir'] = is_dir($path);
+			$return['file'] = is_file($path);
+			$return['link'] = is_link($path);
 			$return['pathinfo'] = Path::info($path);
 			$return['stat'] = (array) static::stat($path,$format);
 		}
@@ -304,9 +304,9 @@ class Symlink extends Finder
 		
 		if(static::isReadable($path,false))
 		{
-			$link = \readlink($path);
+			$link = readlink($path);
 			
-			if(\is_string($link) && !empty($link))
+			if(is_string($link) && !empty($link))
 			$return = $link;
 		}
 		
@@ -353,11 +353,11 @@ class Symlink extends Finder
 		$target = static::path($target);
 		$path = static::path($path);
 		
-		if(\is_string($target) && \is_string($path))
+		if(is_string($target) && is_string($path))
 		{
 			if($replace === true && Finder::is($path,false))
 			{
-				if(\is_link($path))
+				if(is_link($path))
 				static::unset($path);
 				else
 				static::unlink($path);
@@ -368,7 +368,7 @@ class Symlink extends Finder
 				$dirname = Path::dirname($path);
 
 				if(!empty($dirname) && Dir::setOrWritable($dirname))
-				$return = \symlink($target,$path);
+				$return = symlink($target,$path);
 			}
 		}
 		
@@ -383,11 +383,11 @@ class Symlink extends Finder
 	// support pour catchAll
 	public static function sets(array $array,bool $replace=false):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($array as $from => $to) 
 		{
-			$r = ['status'=>null,'from'=>$from];
+			$r = array('status'=>null,'from'=>$from);
 			$get = static::get($to);
 			$from = static::shortcut($from);
 			
@@ -432,7 +432,7 @@ class Symlink extends Finder
 		{
 			$dirname = Path::dirname($target);
 			if(!empty($dirname) && Dir::setOrWritable($dirname))
-			$return = \rename($path,$target);
+			$return = rename($path,$target);
 		}
 		
 		return $return;
@@ -448,7 +448,7 @@ class Symlink extends Finder
 		$to = static::path($to);
 		$path = static::path($path);
 		
-		if(\is_string($to) && \is_string($path) && static::isReadable($path,false))
+		if(is_string($to) && is_string($path) && static::isReadable($path,false))
 		{
 			$target = static::get($path);
 			if(!empty($target))
@@ -466,7 +466,7 @@ class Symlink extends Finder
 		$return = false;
 		$path = static::path($path);
 		
-		if(static::isWritable($path,false) && \unlink($path))
+		if(static::isWritable($path,false) && unlink($path))
 		$return = true;
 		
 		return $return;
@@ -481,7 +481,7 @@ class Symlink extends Finder
 		$target = static::path($target);
 		$path = static::path($path);
 		
-		if(\is_string($target) && \is_string($path))
+		if(is_string($target) && is_string($path))
 		{
 			static::unset($path);
 			

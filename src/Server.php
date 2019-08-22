@@ -6,10 +6,10 @@ namespace Quid\Base;
 class Server extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'version'=>null, // version courante de quid
 		'online'=>'google.com' // domaine à utiliser pour tester si le serveur est online
-	];
+	);
 	
 	
 	// isMac
@@ -19,7 +19,7 @@ class Server extends Root
 		$return = false;
 		$os = static::os();
 
-		if(\stripos($os,'darwin') === 0)
+		if(stripos($os,'darwin') === 0)
 		$return = true;
 		
 		return $return;
@@ -33,7 +33,7 @@ class Server extends Root
 		$return = false;
 		$os = static::os();
 		
-		if(\stripos($os,'win') === 0)
+		if(stripos($os,'win') === 0)
 		$return = true;
 		
 		return $return;
@@ -47,7 +47,7 @@ class Server extends Root
 		$return = false;
 		$os = static::os();
 		
-		if(\stripos($os,'linux') === 0)
+		if(stripos($os,'linux') === 0)
 		$return = true;
 		
 		return $return;
@@ -58,7 +58,7 @@ class Server extends Root
 	// retourne vrai si le serveur est sur apache
 	public static function isApache():bool 
 	{
-		return (\strpos(static::software(),"Apache") !== false)? true:false;
+		return (strpos(static::software(),"Apache") !== false)? true:false;
 	}
 	
 	
@@ -66,7 +66,7 @@ class Server extends Root
 	// retourne vrai si le serveur est sur iis
 	public static function isIis():bool 
 	{
-		return (\strpos(static::software(),"IIS") !== false)? true:false;
+		return (strpos(static::software(),"IIS") !== false)? true:false;
 	}
 	
 	
@@ -74,7 +74,7 @@ class Server extends Root
 	// retourne vrai si le protocol http utilisé est 1.0 ou 1.1
 	public static function isHttp1():bool 
 	{
-		return (\in_array(static::httpProtocol(),['HTTP/1','HTTP/1.0','HTTP/1.1'],true))? true:false;
+		return (in_array(static::httpProtocol(),array('HTTP/1','HTTP/1.0','HTTP/1.1'),true))? true:false;
 	}
 	
 	
@@ -82,7 +82,7 @@ class Server extends Root
 	// retourne vrai si le protocol http utilisé est 2.0
 	public static function isHttp2():bool 
 	{
-		return (\in_array(static::httpProtocol(),['HTTP/2','HTTP/2.0'],true))? true:false;
+		return (in_array(static::httpProtocol(),array('HTTP/2','HTTP/2.0'),true))? true:false;
 	}
 	
 	
@@ -106,7 +106,7 @@ class Server extends Root
 	// retourne vrai si php roule à partir d'un commande line (plutôt qu'un browser)
 	public static function isCli():bool
 	{
-		return (static::sapi() === 'cli' || \defined('STDIN'))? true:false;
+		return (static::sapi() === 'cli' || defined('STDIN'))? true:false;
 	}
 	
 	
@@ -114,7 +114,7 @@ class Server extends Root
 	// retourne vrai si le filesystem est sensible à la casse
 	public static function isCaseSensitive():bool
 	{
-		return (!\file_exists(\strtoupper(__FILE__)) || !\file_exists(\strtolower(__FILE__)))? true:false;
+		return (!file_exists(strtoupper(__FILE__)) || !file_exists(strtolower(__FILE__)))? true:false;
 	}
 	
 	
@@ -130,7 +130,7 @@ class Server extends Root
 	// retourne vrai si la version php est égale
 	public static function isPhpVersion(string $value):bool
 	{
-		return (\version_compare(static::phpVersion(),$value) === 0)? true:false;
+		return (version_compare(static::phpVersion(),$value) === 0)? true:false;
 	}
 	
 	
@@ -138,7 +138,7 @@ class Server extends Root
 	// retourne vrai si la version php est plus vieille que celle fourni
 	public static function isPhpVersionOlder(string $value):bool
 	{
-		return (\version_compare(static::phpVersion(),$value) === -1)? true:false;
+		return (version_compare(static::phpVersion(),$value) === -1)? true:false;
 	}
 	
 	
@@ -146,7 +146,7 @@ class Server extends Root
 	// retourne vrai si la version php est plus récente que celle fourni
 	public static function isPhpVersionNewer(string $value):bool
 	{
-		return (\version_compare(static::phpVersion(),$value) === 1)? true:false;
+		return (version_compare(static::phpVersion(),$value) === 1)? true:false;
 	}
 	
 	
@@ -154,7 +154,7 @@ class Server extends Root
 	// retourne vrai les fonctions d'apache sont chargés
 	public static function hasApacheFunctions():bool 
 	{
-		return (\function_exists('apache_get_modules'))? true:false;
+		return (function_exists('apache_get_modules'))? true:false;
 	}
 	
 	
@@ -165,7 +165,7 @@ class Server extends Root
 		$return = false;
 		$modules = static::apacheModules();
 		
-		if(\is_array($modules) && \in_array($value,$modules,true))
+		if(is_array($modules) && in_array($value,$modules,true))
 		$return = true;
 		
 		return $return;
@@ -220,7 +220,7 @@ class Server extends Root
 	// retourne vrai si la connection est aborted
 	public static function isConnectionAborted():bool
 	{
-		return (\connection_aborted() === 1)? true:false;
+		return (connection_aborted() === 1)? true:false;
 	}
 	
 	
@@ -228,7 +228,7 @@ class Server extends Root
 	// alias pour set_time_limit
 	public static function timeLimit(int $value=0):bool 
 	{
-		return \set_time_limit($value);
+		return set_time_limit($value);
 	}
 	
 	
@@ -237,7 +237,7 @@ class Server extends Root
 	// 0 normal, 1 aborted, 2 timeout, 3 aborted and timeout
 	public static function connectionStatus():int
 	{
-		return \connection_status();
+		return connection_status();
 	}
 	
 
@@ -247,10 +247,10 @@ class Server extends Root
 	public static function ignoreUserAbort(bool $value=true):bool 
 	{
 		$return = false;
-		$int = \ignore_user_abort($value);
+		$int = ignore_user_abort($value);
 		
-		if(\is_int($int))
-		$return = (bool) \ignore_user_abort();
+		if(is_int($int))
+		$return = (bool) ignore_user_abort();
 		
 		return $return;
 	}
@@ -262,11 +262,11 @@ class Server extends Root
 	{
 		$return = null;
 		
-		if(\is_string($extension))
-		$return = \phpversion($extension);
+		if(is_string($extension))
+		$return = phpversion($extension);
 		
 		else
-		$return = \phpversion();
+		$return = phpversion();
 		
 		return $return;
 	}
@@ -284,7 +284,7 @@ class Server extends Root
 	// retourne la version de Zend
 	public static function zendVersion():string
 	{
-		return \zend_version();
+		return zend_version();
 	}
 	
 	
@@ -332,7 +332,7 @@ class Server extends Root
 	// retourne un tableau d'informations à propos du système
 	public static function uname():array 
 	{
-		return \posix_uname();
+		return posix_uname();
 	}
 	
 	
@@ -342,7 +342,7 @@ class Server extends Root
 	{
 		$return = null;
 		$uname = static::uname();
-		if(\array_key_exists($key,$uname))
+		if(array_key_exists($key,$uname))
 		$return = $uname[$key];
 		
 		return $return;
@@ -426,7 +426,7 @@ class Server extends Root
 	// retourne le hostname du serveur
 	public static function hostname():string
 	{
-		return \gethostname();
+		return gethostname();
 	}
 	
 	
@@ -452,7 +452,7 @@ class Server extends Root
 	public static function ipPublic():?string 
 	{
 		$return = null;
-		$ip = \gethostbyname(\gethostname());
+		$ip = gethostbyname(gethostname());
 		
 		if(Ip::is($ip))
 		$return = $ip;
@@ -481,7 +481,7 @@ class Server extends Root
 	// retourne le protocol http utilisé, toujours en strtoupper
 	public static function httpProtocol():?string 
 	{
-		return \strtoupper(Superglobal::getServer('SERVER_PROTOCOL'));
+		return strtoupper(Superglobal::getServer('SERVER_PROTOCOL'));
 	}
 	
 
@@ -489,7 +489,7 @@ class Server extends Root
 	// retourne le nom de l'interface de liaison entre le serveur et php
 	public static function sapi():string
 	{
-		return \php_sapi_name();
+		return php_sapi_name();
 	}
 	
 	
@@ -497,14 +497,14 @@ class Server extends Root
 	// retourne des informations sur le script courant
 	public static function script():array
 	{
-		$return = [];
+		$return = array();
 		
-		$return['processId'] = \getmypid();
-		$return['groupId'] = \getmygid();
-		$return['userId'] = \getmyuid();
-		$return['inode'] = \getmyinode();
-		$return['username'] = \get_current_user();
-		$return['lastModification'] = \getlastmod();
+		$return['processId'] = getmypid();
+		$return['groupId'] = getmygid();
+		$return['userId'] = getmyuid();
+		$return['inode'] = getmyinode();
+		$return['username'] = get_current_user();
+		$return['lastModification'] = getlastmod();
 		
 		return $return;
 	}
@@ -514,7 +514,7 @@ class Server extends Root
 	// retourne le id du process courant
 	public static function processId():int 
 	{
-		return \posix_getpid();
+		return posix_getpid();
 	}
 	
 	
@@ -522,19 +522,19 @@ class Server extends Root
 	// retourne un tableau d'information sur le process
 	public static function process():array
 	{
-		$return = [];
+		$return = array();
 		
-		$return['id'] = \posix_getpid();
-		$return['parentId'] = \posix_getppid();
-		$return['sessionId'] = \posix_getsid(0);
-		$return['effectiveUserId'] = \posix_geteuid();
-		$return['realUserId'] = \posix_getuid();
-		$return['effectiveGroupId'] = \posix_getegid();
-		$return['realGroupId'] = \posix_getgid();
-		$return['groupIdentifier'] = \posix_getpgrp();
-		$return['groupSet'] = \posix_getgroups();
-		$return['ownerLoginName'] = \posix_getlogin();
-		$return['pathControllingTerminal'] = \posix_ctermid();
+		$return['id'] = posix_getpid();
+		$return['parentId'] = posix_getppid();
+		$return['sessionId'] = posix_getsid(0);
+		$return['effectiveUserId'] = posix_geteuid();
+		$return['realUserId'] = posix_getuid();
+		$return['effectiveGroupId'] = posix_getegid();
+		$return['realGroupId'] = posix_getgid();
+		$return['groupIdentifier'] = posix_getpgrp();
+		$return['groupSet'] = posix_getgroups();
+		$return['ownerLoginName'] = posix_getlogin();
+		$return['pathControllingTerminal'] = posix_ctermid();
 		
 		return $return;
 	}
@@ -544,7 +544,7 @@ class Server extends Root
 	// retourne l'utilisateur courant
 	public static function currentUser():int
 	{
-		return \posix_getuid();
+		return posix_getuid();
 	}
 	
 	
@@ -559,16 +559,16 @@ class Server extends Root
 		if($value === null)
 		$value = static::currentUser();
 		
-		if(\is_int($value))
-		$return = \posix_getpwuid($value);
+		if(is_int($value))
+		$return = posix_getpwuid($value);
 		
-		elseif(\is_string($value))
-		$return = \posix_getpwnam($value);
+		elseif(is_string($value))
+		$return = posix_getpwnam($value);
 		
 		if(empty($return))
 		$return = null;
 		
-		if(\is_array($return) && $name === true)
+		if(is_array($return) && $name === true)
 		$return = $return['name'] ?? null;
 		
 		return $return;
@@ -579,7 +579,7 @@ class Server extends Root
 	// retourne le groupe courant
 	public static function currentGroup():int
 	{
-		return \posix_getgid();
+		return posix_getgid();
 	}
 	
 	
@@ -594,16 +594,16 @@ class Server extends Root
 		if($value === null)
 		$value = static::currentGroup();
 		
-		if(\is_int($value))
-		$return = \posix_getgrgid($value);
+		if(is_int($value))
+		$return = posix_getgrgid($value);
 		
-		elseif(\is_string($value))
-		$return = \posix_getgrnam($value);
+		elseif(is_string($value))
+		$return = posix_getgrnam($value);
 		
 		if(empty($return))
 		$return = null;
 		
-		if(\is_array($return) && $name === true)
+		if(is_array($return) && $name === true)
 		$return = $return['name'] ?? null;
 		
 		return $return;
@@ -622,7 +622,7 @@ class Server extends Root
 	// retourne un tableau décrivant les limites resources du système
 	public static function resourceLimit():array
 	{
-		return \posix_getrlimit();
+		return posix_getrlimit();
 	}
 	
 	
@@ -630,7 +630,7 @@ class Server extends Root
 	// retourne le niveau d'utilisation des resources
 	public static function resourceUsage(int $who=0):array
 	{
-		return \getrusage($who);
+		return getrusage($who);
 	}
 	
 	
@@ -638,7 +638,7 @@ class Server extends Root
 	// retourne des informations sur les process et leurs utilisation du cpu
 	public static function processUsage():array
 	{
-		return \posix_times();
+		return posix_times();
 	}
 	
 	
@@ -646,8 +646,8 @@ class Server extends Root
 	// retourne la charge du serveur
 	public static function loadAverage():array
 	{
-		$return = \sys_getloadavg();
-		$return = Arr::keysChange([0=>'1_min',1=>'5_min',2=>'15_min'],$return);
+		$return = sys_getloadavg();
+		$return = Arr::keysChange(array(0=>'1_min',1=>'5_min',2=>'15_min'),$return);
 		
 		return $return;
 	}
@@ -657,14 +657,14 @@ class Server extends Root
 	// retourne l'usage de mémoire par PHP
 	public static function memory(bool $format=true):array
 	{
-		$return = [];
-		$return['usage'] = \memory_get_usage();
-		$return['realUsage'] = \memory_get_usage(true);
-		$return['peakUsage'] = \memory_get_peak_usage();
-		$return['peakRealUsage'] = \memory_get_peak_usage(true);
+		$return = array();
+		$return['usage'] = memory_get_usage();
+		$return['realUsage'] = memory_get_usage(true);
+		$return['peakUsage'] = memory_get_peak_usage();
+		$return['peakRealUsage'] = memory_get_peak_usage(true);
 		
 		if($format === true)
-		$return = \array_map([Number::class,'sizeFormat'],$return);
+		$return = array_map(array(Number::class,'sizeFormat'),$return);
 		
 		return $return;
 	}
@@ -674,12 +674,12 @@ class Server extends Root
 	// retourne l'espace disque sur le serveur
 	public static function diskSpace(string $directory='/',bool $format=true):array 
 	{
-		$return = [];
-		$return['free'] = \disk_free_space($directory);
-		$return['total'] = \disk_total_space($directory);
+		$return = array();
+		$return['free'] = disk_free_space($directory);
+		$return['total'] = disk_total_space($directory);
 		
 		if($format === true)
-		$return = \array_map([Number::class,'sizeFormat'],$return);
+		$return = array_map(array(Number::class,'sizeFormat'),$return);
 		
 		return $return;
 	}
@@ -689,8 +689,8 @@ class Server extends Root
 	// affiche les informations php
 	public static function phpInfo($what=null):void
 	{
-		$what = (\is_int($what))? $what:INFO_ALL;
-		\phpinfo($what);
+		$what = (is_int($what))? $what:INFO_ALL;
+		phpinfo($what);
 	}
 	
 	
@@ -698,7 +698,7 @@ class Server extends Root
 	// génère un overview du serveur courant
 	public static function overview():array 
 	{
-		$return = [];
+		$return = array();
 		$return['quid'] = static::quidVersion();
 		$return['protocol'] = static::httpProtocol();
 		$return['software'] = static::software();
@@ -722,7 +722,7 @@ class Server extends Root
 	// génère un tableau d'information complet sur le serveur courant
 	public static function info():array 
 	{
-		$return = [];
+		$return = array();
 		$return['quid'] = static::quidVersion();
 		$return['protocol'] = static::httpProtocol();
 		$return['software'] = static::software();
@@ -761,7 +761,7 @@ class Server extends Root
 	// lance les tests de requirement
 	public static function requirement():array
 	{
-		$return = [];
+		$return = array();
 		
 		if(static::isPhpVersionOlder('7.1'))
 		$return[] = 'phpVersion';
@@ -777,7 +777,7 @@ class Server extends Root
 	// change la version de quid
 	public static function setQuidVersion($version):void 
 	{
-		if(\is_scalar($version))
+		if(is_scalar($version))
 		static::$config['version'] = $version;
 		
 		return;

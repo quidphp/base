@@ -6,10 +6,10 @@ namespace Quid\Base;
 class Validate extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		
 		// regex
-		'regex'=>[ // liste de regex utilisé à travers le site
+		'regex'=>array( // liste de regex utilisé à travers le site
 			'alpha'=>'/^[A-Za-z]{1,}$/',
 			'alphanumeric'=>'/^[A-Za-z0-9]{1,}$/',
 			'alphanumericDash'=> '/^[A-Za-z0-9\-\_]{1,}$/',
@@ -39,10 +39,10 @@ class Validate extends Root
 			'fqcn'=>'/^[A-z\\\\]{1,}$/',
 			'table'=>'/^[A-Za-z]{1}[A-Za-z0-9_]{1,}$/',
 			'col'=>'/^[A-Za-z]{1}[A-Za-z0-9_]{1,}$/'
-		],
+		),
 		
 		// pattern
-		'pattern'=>[ // liste de regex utilisé dans les attributs pattern de html
+		'pattern'=>array( // liste de regex utilisé dans les attributs pattern de html
 			'int'=>'[0-9]',
 			'numberWholeNotEmpty'=>'^[1-9][0-9]*$',
 			'password'=>'^(?=.{5,30})(?=.*\\d)(?=.*[A-z]).*',
@@ -50,10 +50,10 @@ class Validate extends Root
 			'minLength'=>".{%%%,}",
 			'email'=>'^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{1,4})+$',
 			'phone'=>'([^\d]*\d){10}'
-		],
+		),
 		
 		// compare
-		'compare'=>[ // liste de symboles pour les comparaisons
+		'compare'=>array( // liste de symboles pour les comparaisons
 			'='=>'===',
 			'=='=>'==',
 			'==='=>'===',
@@ -64,11 +64,11 @@ class Validate extends Root
 			'!'=>'!==',
 			'!='=>'!=',
 			'!=='=>'!=='
-		],
+		),
 		
 		// one
 		// liste de méthodes de validation de type avec un argument
-		'one'=>[
+		'one'=>array(
 			'array'=>'is_array',
 			'bool'=>'is_bool',
 			'callable'=>'is_callable',
@@ -80,63 +80,63 @@ class Validate extends Root
 			'resource'=>'is_resource',
 			'scalar'=>'is_scalar',
 			'string'=>'is_string',
-			'empty'=>[self::class,'isEmpty'],
-			'notEmpty'=>[self::class,'isNotEmpty'],
-			'reallyEmpty'=>[self::class,'isReallyEmpty'],
-			'notReallyEmpty'=>[self::class,'isNotReallyEmpty'],
-			'arrKey'=>[Arr::class,'isKey'],
-			'arrNotEmpty'=>[Arr::class,'isNotEmpty'],
-			'dateToDay'=>[Date::class,'isFormatDateToDay'],
-			'dateToMinute'=>[Date::class,'isFormatDateToMinute'],
-			'dateToSecond'=>[Date::class,'isFormatDateToSecond'],
-			'numberNotEmpty'=>[Number::class,'isNotEmpty'],
-			'numberPositive'=>[Number::class,'isPositive'],
-			'numberNegative'=>[Number::class,'isNegative'],
-			'numberOdd'=>[Number::class,'isOdd'],
-			'numberEven'=>[Number::class,'isEven'],
-			'numberWhole'=>[Number::class,'isWhole'],
-			'numberWholeNotEmpty'=>[Number::class,'isWholeNotEmpty'],
-			'numberDecimal'=>[Number::class,'isDecimal'],
-			'scalarNotBool'=>[Scalar::class,'isNotBool'],
-			'slug'=>[Slug::class,'is'],
-			'slugPath'=>[SlugPath::class,'is'],
-			'fragment'=>[Slug::class,'is'],
-			'strNotEmpty'=>[Str::class,"isNotEmpty"],
-			'strLatin'=>[Str::class,"isLatin"],
-			'uriRelative'=>[Uri::class,"isRelative"],
-			'uriAbsolute'=>[Uri::class,"isAbsolute"],
-			'fileUpload'=>[File::class,'uploadValidate'],
-			'fileUploads'=>[File::class,'uploadValidates']
-		],
+			'empty'=>array(self::class,'isEmpty'),
+			'notEmpty'=>array(self::class,'isNotEmpty'),
+			'reallyEmpty'=>array(self::class,'isReallyEmpty'),
+			'notReallyEmpty'=>array(self::class,'isNotReallyEmpty'),
+			'arrKey'=>array(Arr::class,'isKey'),
+			'arrNotEmpty'=>array(Arr::class,'isNotEmpty'),
+			'dateToDay'=>array(Date::class,'isFormatDateToDay'),
+			'dateToMinute'=>array(Date::class,'isFormatDateToMinute'),
+			'dateToSecond'=>array(Date::class,'isFormatDateToSecond'),
+			'numberNotEmpty'=>array(Number::class,'isNotEmpty'),
+			'numberPositive'=>array(Number::class,'isPositive'),
+			'numberNegative'=>array(Number::class,'isNegative'),
+			'numberOdd'=>array(Number::class,'isOdd'),
+			'numberEven'=>array(Number::class,'isEven'),
+			'numberWhole'=>array(Number::class,'isWhole'),
+			'numberWholeNotEmpty'=>array(Number::class,'isWholeNotEmpty'),
+			'numberDecimal'=>array(Number::class,'isDecimal'),
+			'scalarNotBool'=>array(Scalar::class,'isNotBool'),
+			'slug'=>array(Slug::class,'is'),
+			'slugPath'=>array(SlugPath::class,'is'),
+			'fragment'=>array(Slug::class,'is'),
+			'strNotEmpty'=>array(Str::class,"isNotEmpty"),
+			'strLatin'=>array(Str::class,"isLatin"),
+			'uriRelative'=>array(Uri::class,"isRelative"),
+			'uriAbsolute'=>array(Uri::class,"isAbsolute"),
+			'fileUpload'=>array(File::class,'uploadValidate'),
+			'fileUploads'=>array(File::class,'uploadValidates')
+		),
 		
 		// two
 		// liste de méthodes de validation de type avec deux arguments
-		'two'=>[
-			'length'=>[Scalar::class,'isLength'],
-			'minLength'=>[Scalar::class,'isMinLength'],
-			'maxLength'=>[Scalar::class,'isMaxLength'],
-			'arrCount'=>[Arr::class,'isCount'],
-			'arrMinCount'=>[Arr::class,'isMinCount'],
-			'arrMaxCount'=>[Arr::class,'isMaxCount'],
-			'dateFormat'=>[Date::class,'isFormat'],
-			'fileCount'=>[File::class,'isCount'],
-			'fileMinCount'=>[File::class,'isMinCount'],
-			'fileMaxCount'=>[File::class,'isMaxCount'],
-			'numberLength'=>[Number::class,'isLength'],
-			'numberMinLength'=>[Number::class,'isMinLength'],
-			'numberMaxLength'=>[Number::class,'isMaxLength'],
-			'jsonCount'=>[Json::class,'isCount'],
-			'jsonMinCount'=>[Json::class,'isMinCount'],
-			'jsonMaxCount'=>[Json::class,'isMaxCount'],
-			'setCount'=>[Set::class,'isCount'],
-			'setMinCount'=>[Set::class,'isMinCount'],
-			'setMaxCount'=>[Set::class,'isMaxCount'],
-			'strLength'=>[Str::class,'isLength'],
-			'strMinLength'=>[Str::class,'isMinLength'],
-			'strMaxLength'=>[Str::class,'isMaxLength'],
-			'uriHost'=>[Uri::class,'isHost'],
-			'extension'=>[Path::class,'isExtension']]
-	];
+		'two'=>array(
+			'length'=>array(Scalar::class,'isLength'),
+			'minLength'=>array(Scalar::class,'isMinLength'),
+			'maxLength'=>array(Scalar::class,'isMaxLength'),
+			'arrCount'=>array(Arr::class,'isCount'),
+			'arrMinCount'=>array(Arr::class,'isMinCount'),
+			'arrMaxCount'=>array(Arr::class,'isMaxCount'),
+			'dateFormat'=>array(Date::class,'isFormat'),
+			'fileCount'=>array(File::class,'isCount'),
+			'fileMinCount'=>array(File::class,'isMinCount'),
+			'fileMaxCount'=>array(File::class,'isMaxCount'),
+			'numberLength'=>array(Number::class,'isLength'),
+			'numberMinLength'=>array(Number::class,'isMinLength'),
+			'numberMaxLength'=>array(Number::class,'isMaxLength'),
+			'jsonCount'=>array(Json::class,'isCount'),
+			'jsonMinCount'=>array(Json::class,'isMinCount'),
+			'jsonMaxCount'=>array(Json::class,'isMaxCount'),
+			'setCount'=>array(Set::class,'isCount'),
+			'setMinCount'=>array(Set::class,'isMinCount'),
+			'setMaxCount'=>array(Set::class,'isMaxCount'),
+			'strLength'=>array(Str::class,'isLength'),
+			'strMinLength'=>array(Str::class,'isMinLength'),
+			'strMaxLength'=>array(Str::class,'isMaxLength'),
+			'uriHost'=>array(Uri::class,'isHost'),
+			'extension'=>array(Path::class,'isExtension'))
+	);
 	
 	
 	// is
@@ -145,12 +145,12 @@ class Validate extends Root
 	{
 		$return = null;
 		
-		if(\is_string($condition))
+		if(is_string($condition))
 		{
 			if(!empty(static::$config['one'][$condition]))
 			$return = static::$config['one'][$condition]($value);
 			
-			elseif(\is_object($value) && \is_a($value,$condition))
+			elseif(is_object($value) && is_a($value,$condition))
 			$return = true;
 			
 			else
@@ -160,13 +160,13 @@ class Validate extends Root
 		elseif($condition instanceof \Closure)
 		$return = $condition($value);
 		
-		elseif(\is_object($condition))
+		elseif(is_object($condition))
 		$return = static::instance($condition,$value);
 		
-		elseif(\is_array($condition) && \count($condition) === 1)
+		elseif(is_array($condition) && count($condition) === 1)
 		{
-			$k = \key($condition);
-			$v = \current($condition);
+			$k = key($condition);
+			$v = current($condition);
 
 			if(!empty(static::$config['compare'][$k]))
 			$return = static::compare($value,$k,$v);
@@ -175,12 +175,12 @@ class Validate extends Root
 			$return = static::two($k,$v,$value);
 		}
 		
-		if(!\is_bool($return))
+		if(!is_bool($return))
 		{
 			if(static::classIsCallable($condition))
 			$return = $condition($value);
 			
-			if(!\is_bool($return) && $onlyBool === true)
+			if(!is_bool($return) && $onlyBool === true)
 			$return = false;
 		}
 
@@ -204,21 +204,21 @@ class Validate extends Root
 	{
 		$return = static::is($condition,$value,false);
 
-		if($return !== true && !\is_string($return) && !\is_array($return))
+		if($return !== true && !is_string($return) && !is_array($return))
 		{
-			if(\is_string($condition))
+			if(is_string($condition))
 			$return = $condition;
 			
 			elseif($condition instanceof \Closure)
-			$return = (\is_string($key))? $key:'closure';
+			$return = (is_string($key))? $key:'closure';
 			
 			elseif(static::classIsCallable($condition))
-			$return = (\is_string($key))? $key:'callable';
+			$return = (is_string($key))? $key:'callable';
 			
-			elseif(\is_object($condition))
-			$return = ['instance'=>\get_class($condition)];
+			elseif(is_object($condition))
+			$return = array('instance'=>get_class($condition));
 			
-			elseif(\is_array($condition) && \count($condition) === 1)
+			elseif(is_array($condition) && count($condition) === 1)
 			$return = $condition;
 		}
 		
@@ -250,7 +250,7 @@ class Validate extends Root
 	// retourne true ou un tableau utilisé pour générer des messages d'explications sur l'erreur de validation
 	public static function isAndCom(array $conditions,$value)
 	{
-		$return = [];
+		$return = array();
 
 		foreach (static::prepareConditions($conditions) as $k => $condition) 
 		{
@@ -322,7 +322,7 @@ class Validate extends Root
 		$return = false;
 		$callable = null;
 		
-		if(\is_string($condition) && !empty(static::$config['type'][$condition]))
+		if(is_string($condition) && !empty(static::$config['type'][$condition]))
 		$callable = static::$config['type'][$condition];
 			
 		elseif($condition instanceof \Closure)
@@ -419,7 +419,7 @@ class Validate extends Root
 		{
 			$return = static::$config['one'][$key]($arg);
 			
-			if(!\is_bool($return))
+			if(!is_bool($return))
 			$return = false;
 		}
 		
@@ -433,11 +433,11 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		if(\array_key_exists($key,static::$config['two']) && static::classIsCallable(static::$config['two'][$key]))
+		if(array_key_exists($key,static::$config['two']) && static::classIsCallable(static::$config['two'][$key]))
 		{
 			$return = static::$config['two'][$key]($value,$arg);
 			
-			if(!\is_bool($return))
+			if(!is_bool($return))
 			$return = false;
 		}
 		
@@ -452,7 +452,7 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		if(\is_scalar($value) && !\is_bool($value))
+		if(is_scalar($value) && !is_bool($value))
 		{
 			$regex = null;
 			$value = (string) $value;
@@ -460,10 +460,10 @@ class Validate extends Root
 			if(!empty(static::$config['regex'][$input]))
 			$regex = static::$config['regex'][$input];
 			
-			elseif(\strpos($input,'/') !== false)
+			elseif(strpos($input,'/') !== false)
 			$regex = $input;
 			
-			if(\is_string($regex) && \preg_match($regex,$value))
+			if(is_string($regex) && preg_match($regex,$value))
 			$return = true;
 		}
 		
@@ -477,10 +477,10 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
-			if(\preg_match($regex,$value))
+			if(preg_match($regex,$value))
 			$return = true;
 		}
 		
@@ -494,10 +494,10 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		if((\is_object($class) || \is_string($class)) && (\is_object($value) || \is_string($value)))
+		if((is_object($class) || is_string($class)) && (is_object($value) || is_string($value)))
 		{
-			$class = \get_class($class);
-			if(\is_a($value,$class,true))
+			$class = get_class($class);
+			if(is_a($value,$class,true))
 			$return = true;
 		}
 		
@@ -509,7 +509,7 @@ class Validate extends Root
 	// retourne vrai si le symbole est un symbol de comparaison valide
 	public static function isCompareSymbol($symbol):bool 
 	{
-		return (\is_string($symbol) && \array_key_exists($symbol,static::$config['compare']))? true:false;
+		return (is_string($symbol) && array_key_exists($symbol,static::$config['compare']))? true:false;
 	}
 	
 	
@@ -564,25 +564,25 @@ class Validate extends Root
 		
 		if($key !== null)
 		{
-			if(\is_string($key))
+			if(is_string($key))
 			$return = static::$config['pattern'][$key] ?? null;
 			
-			elseif(\is_array($key) && \count($key) === 1)
+			elseif(is_array($key) && count($key) === 1)
 			{
-				$k = \key($key);
-				$v = \current($key);
+				$k = key($key);
+				$v = current($key);
 				
 				$return = static::$config['pattern'][$k] ?? null;
 				
-				if(\is_scalar($v) && !\is_bool($v) && \is_string($return))
+				if(is_scalar($v) && !is_bool($v) && is_string($return))
 				{
 					$v = (string) $v;
-					$return = \str_replace("%%%",$v,$return);
+					$return = str_replace("%%%",$v,$return);
 				}
 			}
 		}
 
-		if(empty($return) && \is_string($value) && !empty($value))
+		if(empty($return) && is_string($value) && !empty($value))
 		$return = $value;
 		
 		return $return;
@@ -595,15 +595,15 @@ class Validate extends Root
 	public static function patternKey($value) 
 	{
 		$return = null;
-		$array = (!\is_array($value))? [$value]:$value;
+		$array = (!is_array($value))? array($value):$value;
 		
 		foreach ($array as $k => $v) 
 		{
-			if(\is_numeric($k) && \is_string($v) && \array_key_exists($v,static::$config['pattern']))
+			if(is_numeric($k) && is_string($v) && array_key_exists($v,static::$config['pattern']))
 			$return = $v;
 			
-			elseif(\is_string($k) && \array_key_exists($k,static::$config['pattern']))
-			$return = [$k=>$v];
+			elseif(is_string($k) && array_key_exists($k,static::$config['pattern']))
+			$return = array($k=>$v);
 			
 			if($return !== null)
 			break;
@@ -618,18 +618,18 @@ class Validate extends Root
 	// méthode protégé
 	protected static function prepareConditions(array $conditions):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($conditions as $key => $value) 
 		{
-			if(\is_numeric($key))
+			if(is_numeric($key))
 			$return[] = $value;
 			
 			elseif(static::classIsCallable($value))
 			$return[$key] = $value;
 			
 			else
-			$return[] = [$key=>$value];
+			$return[] = array($key=>$value);
 		}
 		
 		return $return;
@@ -646,10 +646,10 @@ class Validate extends Root
 		{
 			if(!empty($type))
 			{
-				if(\gettype($v) !== $type)
+				if(gettype($v) !== $type)
 				$return = false;
 				
-				elseif(!empty($class) && (!\is_object($v) || !\is_a($v,$class)))
+				elseif(!empty($class) && (!is_object($v) || !is_a($v,$class)))
 				$return = false;
 				
 				else
@@ -659,8 +659,8 @@ class Validate extends Root
 				break;
 			}
 			
-			$type = \gettype($v);
-			$class = (\is_object($v))? \get_class($v):false;
+			$type = gettype($v);
+			$class = (is_object($v))? get_class($v):false;
 		}
 		
 		return $return;
@@ -691,10 +691,10 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		if($removeWhiteSpace === true && \is_string($value))
+		if($removeWhiteSpace === true && is_string($value))
 		$value = Str::removeWhiteSpace($value);
 		
-		$return = (empty($value) && !\is_numeric($value) && !\is_bool($value) && !(\is_string($value) && \strlen($value)))? true:false;
+		$return = (empty($value) && !is_numeric($value) && !is_bool($value) && !(is_string($value) && strlen($value)))? true:false;
 		
 		return $return;
 	}
@@ -769,7 +769,7 @@ class Validate extends Root
 	// possible de spécifier un niveau de sécurité pour le regex
 	public static function isUsername($value,?string $security=null):bool
 	{
-		return static::regex('username'.((\is_string($security))? \ucfirst($security):''),$value);
+		return static::regex('username'.((is_string($security))? ucfirst($security):''),$value);
 	}
 	
 	
@@ -778,7 +778,7 @@ class Validate extends Root
 	// possible de spécifier un niveau de sécurité pour le regex
 	public static function isPassword($value,?string $security=null):bool
 	{
-		return static::regex('password'.((\is_string($security))? \ucfirst($security):''),$value);
+		return static::regex('password'.((is_string($security))? ucfirst($security):''),$value);
 	}
 	
 	
@@ -992,14 +992,14 @@ class Validate extends Root
 		elseif($is === false && empty($array))
 		$return = true;
 		
-		elseif(\is_int($is) && \count($array) === $is)
+		elseif(is_int($is) && count($array) === $is)
 		$return = true;
 		
-		elseif(\is_string($is) && \array_key_exists($is,$array))
+		elseif(is_string($is) && array_key_exists($is,$array))
 		$return = true;
 		
 		// array
-		elseif(\is_array($is))
+		elseif(is_array($is))
 		{
 			$r = false;
 			
@@ -1007,10 +1007,10 @@ class Validate extends Root
 			{
 				$r = false;
 				
-				if(\is_numeric($k) && \is_string($v) && \array_key_exists($v,$array))
+				if(is_numeric($k) && is_string($v) && array_key_exists($v,$array))
 				$r = true;
 				
-				elseif(\is_string($k) && \array_key_exists($k,$array))
+				elseif(is_string($k) && array_key_exists($k,$array))
 				{
 					if($v === true && static::isNotReallyEmpty($array[$k],$removeWhiteSpace))
 					$r = true;
@@ -1018,7 +1018,7 @@ class Validate extends Root
 					elseif($v === false && static::isReallyEmpty($array[$k],$removeWhiteSpace))
 					$r = true;
 					
-					elseif(\is_int($v) && $array[$k] === $v)
+					elseif(is_int($v) && $array[$k] === $v)
 					$r = true;
 					
 					elseif(!empty($v) && static::is($v,$array[$k]))
@@ -1044,24 +1044,24 @@ class Validate extends Root
 	{
 		$return = false;
 
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			foreach ($value as $v) 
 			{
-				if(\is_array($v))
+				if(is_array($v))
 				{
 					$return = static::dig($condition,$v);
 				}
 				
 				else
-				$return = static::is($condition,$v);
+				$return = Validate::is($condition,$v);
 				
 				if($return === false)
 				break;
 			}
 		}
 		
-		elseif(static::is($condition,$value))
+		elseif(Validate::is($condition,$value))
 		$return = true;
 		
 		return $return;

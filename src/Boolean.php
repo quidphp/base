@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Boolean extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// typecast
@@ -29,13 +29,13 @@ class Boolean extends Root
 	{	
 		$return = null;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$return = $value;
 			
-			if(\is_string($value))
+			if(is_string($value))
 			{
-				$value = \strtolower($value);
+				$value = strtolower($value);
 				
 				if($value === 'true')
 				$return = true;
@@ -49,7 +49,7 @@ class Boolean extends Root
 			
 			if($extra === true)
 			{
-				if(\is_numeric($value))
+				if(is_numeric($value))
 				{
 					if((int) $value === 1)
 					$return = true;
@@ -58,7 +58,7 @@ class Boolean extends Root
 					$return = false;
 				}
 				
-				elseif(\is_string($value))
+				elseif(is_string($value))
 				{
 					if($value === 'on')
 					$return = true;
@@ -80,7 +80,7 @@ class Boolean extends Root
 	// retourne vrai si la valeur est boolean
 	public static function is($value):bool
 	{
-		return (\is_bool($value))? true:false;
+		return (is_bool($value))? true:false;
 	}
 	
 	
@@ -120,7 +120,7 @@ class Boolean extends Root
 		$return = Crypt::randomBool($min,$max);
 		else
 		{
-			$int = \mt_rand($min,$max);
+			$int = mt_rand($min,$max);
 			$return = ($int === 1)? true:false;
 		}
 		

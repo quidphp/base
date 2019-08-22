@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Number extends Root
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'intMaxLength'=>11, // longueur maximale d'une int pour le cast
-		'alias'=>[ // alias de méthode pour math
+		'alias'=>array( // alias de méthode pour math
 			'avg'=>'average',
 			'average'=>'average',
 			'min'=>'min',
-			'max'=>'max'],
-		'symbol'=>[ // symbol pour méthode math
+			'max'=>'max'),
+		'symbol'=>array( // symbol pour méthode math
 			'+'=>'addition',
 			'-'=>'subtraction',
 			'*'=>'multiplication',
@@ -21,8 +21,8 @@ class Number extends Root
 			'/'=>'division',
 			'%'=>'modulo',
 			'>'=>'max',
-			'<'=>'min']
-	];
+			'<'=>'min')
+	);
 
 	
 	// typecast
@@ -71,7 +71,7 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$return = $value;
 			$string = Str::cast($value);
@@ -80,14 +80,14 @@ class Number extends Root
 			if($extra === true)
 			$string = Str::commaToDecimal($string);
 			
-			if(\is_numeric($string))
+			if(is_numeric($string))
 			{
-				$stringLength = \strlen($string);
+				$stringLength = strlen($string);
 				$float = (float) $string;
 				$int = (int) $float;
 
 				// string si longueur trop longue
-				if(\strpos($string,'.') === false && $stringLength > static::$config['intMaxLength'])
+				if(strpos($string,'.') === false && $stringLength > static::$config['intMaxLength'])
 				$return = $string;
 				
 				// si premier caractère est zéro, contient plus d'un caractère et extra est false
@@ -114,7 +114,7 @@ class Number extends Root
 	{
 		$return = null;
 		$value = static::cast($value,$extra);
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		$return = (int) $value;
 		
 		return $return;
@@ -127,7 +127,7 @@ class Number extends Root
 	{
 		$return = null;
 		$value = static::cast($value,$extra);
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		$return = (float) $value;
 		
 		return $return;
@@ -142,7 +142,7 @@ class Number extends Root
 		$value = Str::keepNumeric($value);
 		$value = static::cast($value);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		$return = $value;
 		
 		return $return;
@@ -153,7 +153,7 @@ class Number extends Root
 	// retourne vrai si la valeur est numerique
 	public static function is($value):bool
 	{
-		return (\is_numeric($value))? true:false;
+		return (is_numeric($value))? true:false;
 	}
 	
 	
@@ -161,7 +161,7 @@ class Number extends Root
 	// retourne vrai si la valeur est numerique et vide
 	public static function isEmpty($value):bool
 	{
-		return (\is_numeric($value) && empty($value))? true:false;
+		return (is_numeric($value) && empty($value))? true:false;
 	}
 	
 	
@@ -169,7 +169,7 @@ class Number extends Root
 	// retourne vrai si la valeur est numerique et non vide
 	public static function isNotEmpty($value):bool
 	{
-		return (\is_numeric($value) && !empty($value))? true:false;
+		return (is_numeric($value) && !empty($value))? true:false;
 	}
 	
 	
@@ -177,7 +177,7 @@ class Number extends Root
 	// retourne vrai si la valeur est numérique et string
 	public static function isString($value):bool
 	{
-		return (\is_numeric($value) && \is_string($value))? true:false;
+		return (is_numeric($value) && is_string($value))? true:false;
 	}
 	
 	
@@ -185,7 +185,7 @@ class Number extends Root
 	// retourne vrai si la valeur est int
 	public static function isInt($value):bool
 	{
-		return (\is_int($value))? true:false;
+		return (is_int($value))? true:false;
 	}
 	
 	
@@ -193,7 +193,7 @@ class Number extends Root
 	// retourne vrai si la valeur est float
 	public static function isFloat($value):bool
 	{
-		return (\is_float($value))? true:false;
+		return (is_float($value))? true:false;
 	}
 	
 
@@ -201,7 +201,7 @@ class Number extends Root
 	// retourne vrai si le nombre est fini
 	public static function isFinite($value):bool
 	{
-		return (\is_numeric($value) && \is_finite((float) $value))? true:false;
+		return (is_numeric($value) && is_finite((float) $value))? true:false;
 	}
 	
 	
@@ -209,7 +209,7 @@ class Number extends Root
 	// retourne vrai si le nombre est infini
 	public static function isInfinite($value):bool
 	{
-		return (\is_numeric($value) && \is_infinite((float) $value))? true:false;
+		return (is_numeric($value) && is_infinite((float) $value))? true:false;
 	}
 	
 	
@@ -217,7 +217,7 @@ class Number extends Root
 	// retourne vrai si le nombre est nan
 	public static function isNan($value):bool
 	{
-		return (\is_numeric($value) && \is_nan((float) $value))? true:false;
+		return (is_numeric($value) && is_nan((float) $value))? true:false;
 	}
 	
 	
@@ -256,7 +256,7 @@ class Number extends Root
 		$return = false;
 		static::typecast($value);
 		
-		if(\is_int($value) && \is_float($value/2))
+		if(is_int($value) && is_float($value/2))
 		$return = true;
 		
 		return $return;
@@ -270,7 +270,7 @@ class Number extends Root
 		$return = false;
 		static::typecast($value);
 		
-		if(\is_int($value) && \is_int($value/2))
+		if(is_int($value) && is_int($value/2))
 		$return = true;
 		
 		return $return;
@@ -283,11 +283,11 @@ class Number extends Root
 	{
 		$return = false;
 		
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		{
 			static::typecast($value);
 			
-			if(\is_int($value))
+			if(is_int($value))
 			$return = true;
 		}
 		
@@ -301,11 +301,11 @@ class Number extends Root
 	{
 		$return = false;
 		
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		{
 			static::typecast($value);
 			
-			if(\is_int($value) && !empty($value))
+			if(is_int($value) && !empty($value))
 			$return = true;
 		}
 		
@@ -319,11 +319,11 @@ class Number extends Root
 	{
 		$return = false;
 		
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		{
 			static::typecast($value);
 			
-			if(\is_float($value))
+			if(is_float($value))
 			$return = true;
 		}
 		
@@ -338,11 +338,11 @@ class Number extends Root
 	{
 		$return = false;
 		
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		{
 			static::typecast($value);
 			
-			if(\is_string($value))
+			if(is_string($value))
 			$return = true;
 		}
 		
@@ -355,7 +355,7 @@ class Number extends Root
 	public static function isLength(int $length,$value):bool
 	{
 		static::typecast($value);
-		return (\is_numeric($value) && static::len($value) === $length)? true:false;
+		return (is_numeric($value) && static::len($value) === $length)? true:false;
 	}
 	
 	
@@ -364,7 +364,7 @@ class Number extends Root
 	public static function isMinLength(int $length,$value):bool
 	{
 		static::typecast($value);
-		return (\is_numeric($value) && static::len($value) >= $length)? true:false;
+		return (is_numeric($value) && static::len($value) >= $length)? true:false;
 	}
 	
 	
@@ -373,7 +373,7 @@ class Number extends Root
 	public static function isMaxLength(int $length,$value):bool
 	{
 		static::typecast($value);
-		return (\is_numeric($value) && static::len($value) <= $length)? true:false;
+		return (is_numeric($value) && static::len($value) <= $length)? true:false;
 	}
 	
 	
@@ -382,7 +382,7 @@ class Number extends Root
 	// cette méthode est inutile en php 7.3
 	public static function isCountable($value):bool 
 	{
-		return (\is_array($value) || $value instanceof \Countable)? true:false;
+		return (is_array($value) || $value instanceof \Countable)? true:false;
 	}
 	
 	
@@ -430,7 +430,7 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			$return = Str::commaToDecimal($value);
@@ -470,7 +470,7 @@ class Number extends Root
 		$return = null;
 		static::typecast($value);
 		
-		$return = \round($value,$round,$mode);
+		$return = round($value,$round,$mode);
 		static::typecast($return);
 		
 		return $return;
@@ -492,7 +492,7 @@ class Number extends Root
 		$return = null;
 		static::typecast($value);
 		
-		$return = (int) \ceil($value);
+		$return = (int) ceil($value);
 		
 		return $return;
 	}
@@ -505,7 +505,7 @@ class Number extends Root
 		$return = null;
 		static::typecast($value);
 		
-		$return = (int) \floor($value);
+		$return = (int) floor($value);
 		
 		return $return;
 	}
@@ -518,7 +518,7 @@ class Number extends Root
 		$return = null;
 		static::typecast($value);
 		
-		$return = \abs($value);
+		$return = abs($value);
 		
 		return $return;
 	}
@@ -531,7 +531,7 @@ class Number extends Root
 		$return = false;
 		static::typecast($value);
 		
-		$return = \abs($value)*-1;
+		$return = abs($value)*-1;
 		
 		return $return;
 	}
@@ -545,10 +545,10 @@ class Number extends Root
 		static::typecast($value);
 		
 		if($value < 0)
-		$return = \abs($value);
+		$return = abs($value);
 		
 		else
-		$return = \abs($value)*-1;
+		$return = abs($value)*-1;
 		
 		return $return;
 	}
@@ -615,9 +615,9 @@ class Number extends Root
 	// retourne pi, peut être arrondi
 	public static function pi(?int $round=null):float 
 	{
-		$return = \pi();
+		$return = pi();
 		
-		if(\is_int($round))
+		if(is_int($round))
 		$return = static::round($return,$round);
 		
 		return $return;
@@ -637,12 +637,12 @@ class Number extends Root
 		elseif(!empty(static::$config['alias'][$operation]))
 		$method = static::$config['alias'][$operation];
 		
-		if(\is_string($method) && \method_exists(static::class,$method))
+		if(is_string($method) && method_exists(static::class,$method))
 		{
-			$values = \array_values($values);
+			$values = array_values($values);
 			$return = static::$method(...$values);
 			
-			if(\is_numeric($round))
+			if(is_numeric($round))
 			$return = static::round($return,$round);
 		}
 		
@@ -655,19 +655,19 @@ class Number extends Root
 	// les valeurs non numériques ne sont pas conservés
 	public static function combine(string $operation,array ...$values):array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $key => $value) 
 		{
 			foreach ($value as $k => $v) 
 			{
-				if(\is_numeric($v))
+				if(is_numeric($v))
 				{
-					if(!\array_key_exists($k,$return))
+					if(!array_key_exists($k,$return))
 					$return[$k] = $v;
 					
 					else
-					$return[$k] = static::math($operation,[$return[$k],$v]);
+					$return[$k] = static::math($operation,array($return[$k],$v));
 				}
 			}
 		}
@@ -683,14 +683,14 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(!empty($args) && \is_scalar($args[0]))
+		if(!empty($args) && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
 			foreach ($args as $z) 
 			{
-				if(\is_scalar($z))
+				if(is_scalar($z))
 				{
 					static::typecast($z);
 					$return += $z;
@@ -709,14 +709,14 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(!empty($args) && \is_scalar($args[0]))
+		if(!empty($args) && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
 			foreach ($args as $z) 
 			{
-				if(\is_scalar($z))
+				if(is_scalar($z))
 				{
 					static::typecast($z);
 					$return -= $z;
@@ -735,14 +735,14 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\count($args) > 1 && \is_scalar($args[0]))
+		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
 			foreach ($args as $z) 
 			{
-				if(\is_scalar($z))
+				if(is_scalar($z))
 				{
 					static::typecast($z);
 					$return *= $z;
@@ -761,14 +761,14 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\count($args) > 1 && \is_scalar($args[0]))
+		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
 			foreach ($args as $z) 
 			{
-				if(\is_scalar($z))
+				if(is_scalar($z))
 				{
 					static::typecast($z);
 					$return **= $z;
@@ -787,14 +787,14 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\count($args) > 1 && \is_scalar($args[0]))
+		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
 			foreach ($args as $z) 
 			{
-				if(\is_scalar($z))
+				if(is_scalar($z))
 				{
 					static::typecast($z);
 					
@@ -820,14 +820,14 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\count($args) > 1 && \is_scalar($args[0]))
+		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
 			foreach ($args as $z) 
 			{
-				if(\is_scalar($z))
+				if(is_scalar($z))
 				{
 					static::typecast($z);
 					$return %= $z;
@@ -848,11 +848,11 @@ class Number extends Root
 		$total = 0;
 		$count = 0;
 		
-		if(\count($args) > 1)
+		if(count($args) > 1)
 		{
 			foreach ($args as $z) 
 			{
-				if(\is_scalar($z))
+				if(is_scalar($z))
 				{
 					static::typecast($z);
 					$total += $z;
@@ -876,7 +876,7 @@ class Number extends Root
 		
 		static::typecast(...$values);
 		$values = Arr::validateSlice('numeric',$values);
-		$return = \min(...$values);
+		$return = min(...$values);
 		
 		return $return;
 	}
@@ -890,7 +890,7 @@ class Number extends Root
 		
 		static::typecast(...$values);
 		$values = Arr::validateSlice('numeric',$values);
-		$return = \max(...$values);
+		$return = max(...$values);
 		
 		return $return;
 	}
@@ -907,9 +907,9 @@ class Number extends Root
 		
 		else
 		{
-			$rand = \mt_rand($min,$max);
+			$rand = mt_rand($min,$max);
 			
-			if(\is_int($length))
+			if(is_int($length))
 			$return = static::sub(0,$length,$rand);
 		}
 		
@@ -931,10 +931,10 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\is_numeric($value))
+		if(is_numeric($value))
 		{
 			$value = (string) $value;
-			$return = \octdec($value);
+			$return = octdec($value);
 		}
 		
 		return $return;
@@ -948,14 +948,14 @@ class Number extends Root
 		$return = null;
 		static::typecast($value);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
-			$return = \decoct($value);
+			$return = decoct($value);
 			
 			if(!empty($format))
 			{
-				if(\is_int($format))
-				$return = \substr($return,$format);
+				if(is_int($format))
+				$return = substr($return,$format);
 				
 				$return = (int) $return;
 			}
@@ -977,15 +977,15 @@ class Number extends Root
 		{
 			static::typecast($value);
 			
-			if(\is_numeric($value))
+			if(is_numeric($value))
 			{
-				if(!\is_string($value))
-				$return = \number_format($value,$option['decimal'],$option['separator'],$option['thousand']);
+				if(!is_string($value))
+				$return = number_format($value,$option['decimal'],$option['separator'],$option['thousand']);
 				else
 				$return = $value;
 				
-				if(\is_string($return) && !empty($option['output']) && \is_string($option['output']))
-				$return = \str_replace("%v%",$return,$option['output']);
+				if(is_string($return) && !empty($option['output']) && is_string($option['output']))
+				$return = str_replace("%v%",$return,$option['output']);
 			}
 		}
 		
@@ -1000,7 +1000,7 @@ class Number extends Root
 	{
 		$method = static::formatsMethod($type);
 		
-		if(\is_string($method))
+		if(is_string($method))
 		{
 			foreach ($return as $key => $value) 
 			{
@@ -1025,19 +1025,19 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(\in_array($type,['number','format'],true))
+		if(in_array($type,array('number','format'),true))
 		$return = 'format';
 		
-		elseif(\in_array($type,['%','percent','percentFormat'],true))
+		elseif(in_array($type,array('%','percent','percentFormat'),true))
 		$return = 'percentFormat';
 		
-		elseif(\in_array($type,['$','money','moneyFormat'],true))
+		elseif(in_array($type,array('$','money','moneyFormat'),true))
 		$return = 'moneyFormat';
 		
-		elseif(\in_array($type,['phone','phoneFormat'],true))
+		elseif(in_array($type,array('phone','phoneFormat'),true))
 		$return = 'phoneFormat';
 		
-		elseif(\in_array($type,['size','sizeFormat'],true))
+		elseif(in_array($type,array('size','sizeFormat'),true))
 		$return = 'sizeFormat';
 		
 		return $return;
@@ -1092,15 +1092,15 @@ class Number extends Root
 		$return = null;
 		$option = static::getPhoneFormat($lang,$option);
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			$value = Str::keepNumber($value);
-			$valueLength = \strlen($value);
+			$valueLength = strlen($value);
 			
 			if($valueLength >= 10)
 			{
-				\preg_match("/(\d{3})(\d{3})(\d{4})\.?(\d+)?/",$value,$match);  
+				preg_match("/(\d{3})(\d{3})(\d{4})\.?(\d+)?/",$value,$match);  
 				if(!empty($match[0]) && $match[0] === $value)
 				{
 					$return = '';
@@ -1114,7 +1114,7 @@ class Number extends Root
 					$return .= "{$match[2]}-{$match[3]}";
 					
 					// extension
-					if(\is_string($option['extension']) && !empty($match[4]))
+					if(is_string($option['extension']) && !empty($match[4]))
 					{
 						$return .= ' ';
 						$return .= $option['extension'];
@@ -1146,22 +1146,22 @@ class Number extends Root
 		$texts = $option['text'];
 		$rounds = $option['round'];
 		
-		if(\is_numeric($size) && $size >= 0 && !empty($option))
+		if(is_numeric($size) && $size >= 0 && !empty($option))
 		{
-			$log = \log($size,1024);
-			$log = (int) \floor($log);
-			$pow = \pow(1024,$log);
+			$log = log($size,1024);
+			$log = (int) floor($log);
+			$pow = pow(1024,$log);
 			
-			if(\array_key_exists($log,$texts) && \is_string($texts[$log]))
+			if(array_key_exists($log,$texts) && is_string($texts[$log]))
 			{
 				$text = $texts[$log];
 				if($log === 0)
 				$text .= Str::s($size);
 				
-				if($round === true && \array_key_exists($log,$rounds) && \is_int($rounds[$log]))
+				if($round === true && array_key_exists($log,$rounds) && is_int($rounds[$log]))
 				$round = $rounds[$log];
 				
-				if(\is_int($round))
+				if(is_int($round))
 				$return = static::round(($size/$pow),$round);
 				
 				$return = (string) $return;
@@ -1192,11 +1192,11 @@ class Number extends Root
 		$formatOriginal = Lang\En::$config['number']['sizeFormat'];
 		$format = static::getSizeFormat($lang,$option);
 		$alpha = Str::keepAlpha($value);
-		$alpha = \strtolower($alpha);
+		$alpha = strtolower($alpha);
 		$alpha = Str::stripEnd("s",$alpha,false);
 		$value = static::castFromString($value);
 		
-		if(!empty($formatOriginal['text']) && \strlen($alpha) && \is_int($value))
+		if(!empty($formatOriginal['text']) && strlen($alpha) && is_int($value))
 		{
 			if($alpha === 'm')
 			$key = 2;
@@ -1209,10 +1209,10 @@ class Number extends Root
 				$key = Arr::search($alpha,$format['text'],false);
 			}
 			
-			if(\is_int($key))
+			if(is_int($key))
 			{
 				$return = $value;
-				$pow = \pow(1024,$key);
+				$pow = pow(1024,$key);
 				
 				if($pow > 0)
 				$return *= $pow;
@@ -1231,9 +1231,9 @@ class Number extends Root
 		$return = null;
 		$value = static::castFromString($value);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		{
-			$pow = \pow(1024,2);
+			$pow = pow(1024,2);
 			$return = ($value * $pow);
 		}
 		
@@ -1246,7 +1246,7 @@ class Number extends Root
 	// si la variable adjustTotal est vrai, le tableau est envoyé dans la méthode percentAdjustTotal
 	public static function percentCalc(array $array,bool $adjustTotal=true,int $round=1,int $total=100):array
 	{
-		$return = [];
+		$return = array();
 		$count = 0;
 		
 		// type cast et count
@@ -1254,7 +1254,7 @@ class Number extends Root
 		{
 			static::typecast($value);
 			
-			if(\is_numeric($value))
+			if(is_numeric($value))
 			{
 				$count += $value;
 				$array[$key] = $value;
@@ -1265,7 +1265,7 @@ class Number extends Root
 		{
 			foreach ($array as $key => $value) 
 			{
-				if(\is_numeric($value))
+				if(is_numeric($value))
 				{
 					$calc = (($value / $count) * $total);
 					$return[$key] = static::round($calc,$round);
@@ -1291,7 +1291,7 @@ class Number extends Root
 		{
 			static::typecast($value);
 			
-			if(\is_numeric($value))
+			if(is_numeric($value))
 			{
 				$array[$key] = $value;
 				
@@ -1300,7 +1300,7 @@ class Number extends Root
 			}
 		}
 		
-		if((\is_string($adjustKey) || \is_numeric($adjustKey)) && \array_key_exists($adjustKey,$return))
+		if((is_string($adjustKey) || is_numeric($adjustKey)) && array_key_exists($adjustKey,$return))
 		{
 			// calc
 			$calc = static::math('+',$return);

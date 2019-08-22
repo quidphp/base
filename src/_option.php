@@ -51,8 +51,8 @@ trait _option
 
 		if($value !== null)
 		{
-			if(\array_keys($value) !== \array_keys(static::$config['option']))
-			$return = \array_replace_recursive(static::$config['option'],$value);
+			if(array_keys($value) !== array_keys(static::$config['option']))
+			$return = array_replace_recursive(static::$config['option'],$value);
 			
 			else
 			$return = $value;

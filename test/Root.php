@@ -10,14 +10,14 @@ class Root extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// root
-		\assert(Base\Root::classFqcn() === Base\Root::class);
-		\assert(Base\Root::classNamespace() === 'Quid\Base');
-		\assert(Base\Root::classRoot() === 'Quid');
-		\assert(Base\Root::className() === 'Root');
-		\assert(Base\Root::classParents() === []);
-		\assert(\count(Base\Root::classHelp()) === 9);
-		\assert(Base\Root::classIsCallable([Base\Str::class,'upper']));
-		\assert(!Base\Root::classIsCallable('strtoupper'));
+		assert(Base\Root::classFqcn() === Base\Root::class);
+		assert(Base\Root::classNamespace() === 'Quid\Base');
+		assert(Base\Root::classRoot() === 'Quid');
+		assert(Base\Root::className() === 'Root');
+		assert(Base\Root::classParents() === array());
+		assert(count(Base\Root::classHelp()) === 9);
+		assert(Base\Root::classIsCallable(array(Base\Str::class,'upper')));
+		assert(!Base\Root::classIsCallable('strtoupper'));
 		
 		return true;
 	}

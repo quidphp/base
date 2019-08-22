@@ -12,7 +12,7 @@ class Autoload extends Base\Test
 		// call
 
 		// getExtensions
-		\assert(Base\Autoload::getExtensions() === ".inc,.php");
+		assert(Base\Autoload::getExtensions() === ".inc,.php");
 
 		// setExtensions
 
@@ -23,10 +23,10 @@ class Autoload extends Base\Test
 		// unregisterAll
 				
 		// all
-		\assert(\count(Base\Autoload::all()) >= 3);
+		assert(count(Base\Autoload::all()) >= 3);
 		
 		// index
-		\assert(\is_callable(Base\Autoload::index(0)));
+		assert(is_callable(Base\Autoload::index(0)));
 
 		// getPath
 		
@@ -35,7 +35,7 @@ class Autoload extends Base\Test
 		// getDirPath
 		
 		// getPsr4
-		\assert(Base\Autoload::getPsr4('Appz') === null);
+		assert(Base\Autoload::getPsr4('Appz') === null);
 		
 		// setPsr4
 		Base\Autoload::setPsr4('Appz','test');
@@ -43,14 +43,14 @@ class Autoload extends Base\Test
 		// setsPsr4
 
 		// unsetPsr4
-		\assert(Base\Autoload::getPsr4('Appz') === ['Appz'=>'test']);
+		assert(Base\Autoload::getPsr4('Appz') === array('Appz'=>'test'));
 		Base\Autoload::unsetPsr4('Appz');
 
 		// allPsr4
-		\assert(!empty(Base\Autoload::allPsr4()));
+		assert(!empty(Base\Autoload::allPsr4()));
 		
 		// removeAlias
-		\assert(\count(Base\Autoload::removeAlias([static::class,'jamesAlias','row\rowalias'])) === 2);
+		assert(count(Base\Autoload::removeAlias(array(static::class,'jamesAlias','row\rowalias'))) === 2);
 		
 		// overview
 		

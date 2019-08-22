@@ -6,20 +6,20 @@ namespace Quid\Base;
 class Fqcn extends Set
 {
 	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
-			'extension'=>'php'], // extension du path
-		'separator'=>['\\'], // séparateur pour les fully qualified classname
+	public static $config = array(
+		'option'=>array( // tableau d'options
+			'extension'=>'php'), // extension du path
+		'separator'=>array('\\'), // séparateur pour les fully qualified classname
 		'plusSeperator'=>'+', // séparateur pour la méthode many
 		'sensitive'=>false // la classe est sensible ou non à la case
-	];
+	);
 	
 	
 	// is
 	// retourne vrai si la valeur est un fqcn
 	public static function is($value):bool
 	{
-		return (\is_string($value) && Validate::regex('fqcn',$value))? true:false;
+		return (is_string($value) && Validate::regex('fqcn',$value))? true:false;
 	}
 	
 	
@@ -32,7 +32,7 @@ class Fqcn extends Set
 		$same = (string) static::name($same);
 		$value = (string) static::name($value);
 		
-		if($same === $value || \strtolower($same) === \strtolower($value))
+		if($same === $value || strtolower($same) === strtolower($value))
 		$return = true;
 		
 		return $return;
@@ -48,7 +48,7 @@ class Fqcn extends Set
 		$same = (string) static::namespace($same);
 		$value = (string) static::namespace($value);
 		
-		if($same === $value || \strtolower($same) === \strtolower($value))
+		if($same === $value || strtolower($same) === strtolower($value))
 		$return = true;
 		
 		return $return;
@@ -68,7 +68,7 @@ class Fqcn extends Set
 			$namespace = static::str($namespace);
 			$value = (string) static::namespace($value);
 			
-			if($namespace === $value || \strtolower($namespace) === \strtolower($value))
+			if($namespace === $value || strtolower($namespace) === strtolower($value))
 			$return = true;
 		}
 		
@@ -85,7 +85,7 @@ class Fqcn extends Set
 		$namespace = static::str($namespace);
 		$value = static::str($value);
 		
-		if(!empty($namespace) && !empty($value) && \stripos($value,$namespace) === 0)
+		if(!empty($namespace) && !empty($value) && stripos($value,$namespace) === 0)
 		$return = true;
 		
 		return $return;
@@ -99,10 +99,10 @@ class Fqcn extends Set
 	{
 		$return = '';
 		
-		if(\is_object($value))
-		$return = \get_class($value);
+		if(is_object($value))
+		$return = get_class($value);
 		
-		elseif(\is_string($value) && (\strpos($value,"\\") > 0 || \class_exists($value,false)))
+		elseif(is_string($value) && (strpos($value,"\\") > 0 || class_exists($value,false)))
 		$return = $value;
 		
 		else
@@ -117,13 +117,13 @@ class Fqcn extends Set
 	// étend la méthode de la classe set
 	public static function arr($value,?array $option=null):array
 	{
-		$return = [];
+		$return = array();
 
-		if(\is_object($value))
-		$value = \get_class($value);
+		if(is_object($value))
+		$value = get_class($value);
 		
-		elseif(\is_string($value) && (\strpos($value,"\\") > 0 || \class_exists($value,false)))
-		$return = \explode("\\",$value);
+		elseif(is_string($value) && (strpos($value,"\\") > 0 || class_exists($value,false)))
+		$return = explode("\\",$value);
 		
 		else
 		$return = parent::arr($value,$option);
@@ -140,12 +140,12 @@ class Fqcn extends Set
 		$return = null;
 		$value = static::str($value);
 		
-		if(\is_string($value) && \strpos($value,"\\") !== false)
+		if(is_string($value) && strpos($value,"\\") !== false)
 		{
-			$array = \explode("\\",$value);
-			$root = \array_shift($array);
+			$array = explode("\\",$value);
+			$root = array_shift($array);
 			
-			if(\is_string($root) && \strlen($root))
+			if(is_string($root) && strlen($root))
 			$return = $root;
 		}
 		
@@ -160,18 +160,18 @@ class Fqcn extends Set
 		$return = null;
 		$value = static::str($value);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		{
-			if(\strpos($value,"\\") !== false)
+			if(strpos($value,"\\") !== false)
 			{
-				$array = \explode("\\",$value);
-				$name = \array_pop($array);
+				$array = explode("\\",$value);
+				$name = array_pop($array);
 				
-				if(\is_string($name) && \strlen($name))
+				if(is_string($name) && strlen($name))
 				$return = $name;
 			}
 			
-			elseif(\strlen($value))
+			elseif(strlen($value))
 			$return = $value;
 		}
 		
@@ -186,13 +186,13 @@ class Fqcn extends Set
 		$return = null;
 		$value = static::str($value);
 		
-		if(\is_string($value) && \strpos($value,"\\") !== false)
+		if(is_string($value) && strpos($value,"\\") !== false)
 		{
-			$array = \explode("\\",$value);
-			\array_pop($array);
+			$array = explode("\\",$value);
+			array_pop($array);
 			
 			if(!empty($array))
-			$return = \implode("\\",$array);
+			$return = implode("\\",$array);
 		}
 		
 		return $return;
@@ -211,7 +211,7 @@ class Fqcn extends Set
 	// retoure un fqcn sans le root et le nom de classe
 	public static function sliceMiddle($value):string
 	{
-		return static::unsets([0,-1],static::str($value));
+		return static::unsets(array(0,-1),static::str($value));
 	}
 	
 	
@@ -220,20 +220,20 @@ class Fqcn extends Set
 	// retourne un tableau
 	public static function many($value):array 
 	{
-		$return = [];
+		$return = array();
 		$plusSeperator = static::$config['plusSeperator'];
 		
-		if(\is_array($value))
+		if(is_array($value))
 		$value = static::str($value);
 		
-		if(\is_string($value) && \strlen($value))
+		if(is_string($value) && strlen($value))
 		{
-			$explodes = Str::explodes(['\\',$plusSeperator],$value);
+			$explodes = Str::explodes(array('\\',$plusSeperator),$value);
 			if(!empty($explodes))
 			{
 				foreach (Arrs::valuesCrush($explodes) as $v) 
 				{
-					if(\is_array($v) && !empty($v))
+					if(is_array($v) && !empty($v))
 					$return[] = static::str($v);
 				}
 			}
@@ -319,9 +319,9 @@ class Fqcn extends Set
 		
 		foreach ($roots as $k => $root)
 		{
-			if(\is_string($root))
+			if(is_string($root))
 			{
-				$v = static::fromPathRoot($value,$root,(\is_string($k))? Arr::plus($option,['root'=>$k]):$option);
+				$v = static::fromPathRoot($value,$root,(is_string($k))? Arr::plus($option,array('root'=>$k)):$option);
 				if(!empty($v))
 				{
 					$return = $v;
