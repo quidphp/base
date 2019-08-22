@@ -6,33 +6,33 @@ namespace Quid\Base;
 class Mime extends Root
 {
 	// config
-	public static $config = array( 
-		'groupToExtension'=>array( // permet de lier des extensions à des groupes
+	public static $config = [ 
+		'groupToExtension'=>[ // permet de lier des extensions à des groupes
 			'audio'=>'mp3',
 			'calendar'=>'ics',
-			'css'=>array('css','scss'),
+			'css'=>['css','scss'],
 			'csv'=>'csv',
-			'doc'=>array('doc','doct','docx','docxt'),
+			'doc'=>['doc','doct','docx','docxt'],
 			'font'=>'ttf',
 			'html'=>'html',
-			'imageRaster'=>array('jpg','gif','jpeg','png'),
+			'imageRaster'=>['jpg','gif','jpeg','png'],
 			'imageVector'=>'svg',
 			'js'=>'js',
 			'json'=>'json',
 			'pdf'=>'pdf',
 			'php'=>'php',
 			'txt'=>'txt',
-			'video'=>array('mp4','mov'),
+			'video'=>['mp4','mov'],
 			'xml'=>'xml',
-			'zip'=>'zip'),
-		'mimeToExtension'=>array( // liste de mimetype commun avec leur extension
+			'zip'=>'zip'],
+		'mimeToExtension'=>[ // liste de mimetype commun avec leur extension
 			'audio/mpeg'=>'mp3',
 			'text/calendar'=>'ics',
 			'text/csv'=>'csv',
-			'application/octet-stream'=>array('ttf'),
+			'application/octet-stream'=>['ttf'],
 			'text/html'=>'html',
 			'image/gif'=>'gif',
-			'image/jpeg'=>array('jpg','jpeg'),
+			'image/jpeg'=>['jpg','jpeg'],
 			'image/png'=>'png',
 			'image/svg'=>'svg',
 			'text/json'=>'json',
@@ -43,20 +43,20 @@ class Mime extends Root
 			'text/x-scss'=>'scss',
 			'text/javascript'=>'js',
 			'text/x-php'=>'php',
-			'application/msword'=>array('doc','doct'),
+			'application/msword'=>['doc','doct'],
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document'=>'docx',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.template'=>'docxt',
 			'video/mp4'=>'mp4',
 			'video/quicktime'=>'mov',
 			'text/xml'=>'xml',
-			'application/zip'=>'zip'),
-		'strictExtension'=>array( // liste de mimetype strict, l'extension dicte le mime type, pas finfo
-			'notebook'=>'application/x-smarttech-notebook'),
-		'family'=>array( // permet de lier des groupes à des familles
-			'image'=>array('imageRaster','imageVector'),
-			'binary'=>array('audio','font','imageRaster','imageVector','pdf','video','zip'),
-			'text'=>array('calendar','css','csv','doc','html','js','json','php','txt','xml'))
-	);
+			'application/zip'=>'zip'],
+		'strictExtension'=>[ // liste de mimetype strict, l'extension dicte le mime type, pas finfo
+			'notebook'=>'application/x-smarttech-notebook'],
+		'family'=>[ // permet de lier des groupes à des familles
+			'image'=>['imageRaster','imageVector'],
+			'binary'=>['audio','font','imageRaster','imageVector','pdf','video','zip'],
+			'text'=>['calendar','css','csv','doc','html','js','json','php','txt','xml']]
+	];
 	
 	
 	// isEmpty
@@ -319,7 +319,7 @@ class Mime extends Root
 	// retourne toutes les familles contenant le groupe donné en argument
 	public static function families(string $value):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach (static::$config['family'] as $key => $array) 
 		{
@@ -439,7 +439,7 @@ class Mime extends Root
 	// retourne toutes les extensions admises pour un groupe
 	public static function extensionsFromGroup(string $value):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(array_key_exists($value,static::$config['groupToExtension']))
 		$return = (array) static::$config['groupToExtension'][$value];

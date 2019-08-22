@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Str extends Root
 {	
 	// config
-	public static $config = array(
+	public static $config = [
 		'charset'=>'UTF-8', // charset, peut être changé via encoding
-		'plural'=>array('letter'=>'s','wrap'=>'%'), // pour la fonction plural
-		'excerpt'=>array('suffix'=>'...'), // suffix pour la méthode excerpt
+		'plural'=>['letter'=>'s','wrap'=>'%'], // pour la fonction plural
+		'excerpt'=>['suffix'=>'...'], // suffix pour la méthode excerpt
 		'trim'=>" \t\n\r\0\x0B", // liste des caractères trimmés par défaut par les fonctions trim
 		'search'=>' ', // séparateur pour prepareSearch
 		'pointer'=>'/', // séparateur pour pointer
-		'loremIpsum'=>array( // contenu source pour la méthode loremIpsum
+		'loremIpsum'=>[ // contenu source pour la méthode loremIpsum
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 			'Aenean ullamcorper nunc non gravida ornare. Interdum et malesuada fames ac ante ipsum primis in faucibus.',
 			'Vestibulum lacinia sapien posuere risus viverra accumsan. Curabitur tempor lorem accumsan nunc scelerisque vehicula.',
@@ -35,8 +35,8 @@ class Str extends Root
 			'Vestibulum sodales iaculis convallis.',
 			'Nam ut luctus sapien.',
 			'Nulla facilisi.',
-			'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.')
-	);
+			'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.']
+	];
 
 	
 	// typecast
@@ -260,7 +260,7 @@ class Str extends Root
 				$value = static::lower($value,true);
 				
 				elseif(is_array($value))
-				$value = static::map(array(Str::class,'lower'),$value,true);
+				$value = static::map([Str::class,'lower'],$value,true);
 				
 				if($compare === null)
 				{
@@ -664,7 +664,7 @@ class Str extends Root
 			if($prepare === true)
 			$needle = static::prepareSearch($needle,$separator);
 			else
-			$needle = array($needle);
+			$needle = [$needle];
 		}
 		
 		if(is_array($needle) && !empty($needle))
@@ -696,7 +696,7 @@ class Str extends Root
 	// par défaut support pour espace pour diviser le terme
 	public static function prepareSearch($value,?string $separator=null):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = (is_string($separator))? $separator:static::$config['search'];
 		
 		if(is_scalar($value))
@@ -1506,7 +1506,7 @@ class Str extends Root
 	// length permet de définir la longueur du split
 	public static function split(int $length=1,string $str,?bool $mb=null):array
 	{
-		$return = array();
+		$return = [];
 		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
 
 		if($length > 0)
@@ -1541,7 +1541,7 @@ class Str extends Root
 	// si mb est numérique, on envoie à la fonction count_chars qui retourne les octets pour des caractères
 	public static function charCount(string $str,$mb=null):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if(is_int($mb))
 		$return = count_chars($str,$mb);
@@ -1578,7 +1578,7 @@ class Str extends Root
 	// permet de régurilariser la situation des line breaks dans une chaîne
 	public static function lineBreaks(string $str,string $separator=PHP_EOL):string
 	{
-		return str_replace(array("\r\n","\n\r","\r","\n"),$separator,$str);
+		return str_replace(["\r\n","\n\r","\r","\n"],$separator,$str);
 	}
 	
 	
@@ -1616,7 +1616,7 @@ class Str extends Root
 	// lineSplice
 	// permet d'ajouter ou remplacer une ou plusieurs lignes dans la chaîne
 	// replace peut être array, string ou null
-	public static function lineSplice(int $offset,?int $length,$replace=array(),string $str):string
+	public static function lineSplice(int $offset,?int $length,$replace=[],string $str):string
 	{
 		$return = '';
 		$lines = static::lines($str);
@@ -1639,7 +1639,7 @@ class Str extends Root
 	// str_word_count n'est pas utilisé pour pour cette méthode car les résultats de la fonction sont inconsistents
 	public static function words(string $str,?bool $mb=null):array
 	{
-		$return = array();
+		$return = [];
 		$i = 0;
 		
 		foreach (explode(" ",$str) as $v) 
@@ -1670,7 +1670,7 @@ class Str extends Root
 	// explode un tableau de mot, plus rapide que words
 	public static function wordExplode(string $value,?int $limit=null,bool $trim=false,bool $clean=false):array 
 	{
-		$return = array();
+		$return = [];
 		$value = static::removeWhiteSpace($value);
 		$return = static::explode(" ",$value,$limit,$trim,$clean);
 		
@@ -1697,7 +1697,7 @@ class Str extends Root
 	// wordSplice
 	// permet d'ajouter ou remplacer un ou plusieurs mots dans la chaîne
 	// replace peut être array, string ou null
-	public static function wordSplice(int $offset,?int $length,$replace=array(),string $str,?bool $mb=null):string
+	public static function wordSplice(int $offset,?int $length,$replace=[],string $str,?bool $mb=null):string
 	{
 		$return = '';
 		$words = static::words($str,$mb);
@@ -1722,7 +1722,7 @@ class Str extends Root
 		$return = '';
 		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
 		$max = ($max === null)? PHP_INT_MAX:$max;
-		$array = array();
+		$array = [];
 		
 		foreach (static::words($str,$mb) as $word) 
 		{
@@ -1745,7 +1745,7 @@ class Str extends Root
 	{
 		$return = '';
 		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
-		$array = array();
+		$array = [];
 		$max = ($max === null)? PHP_INT_MAX:$max;
 		
 		foreach (static::words($str,$mb) as $word) 
@@ -1776,7 +1776,7 @@ class Str extends Root
 		
 		else
 		{
-			$array = array();
+			$array = [];
 			$inLength = 0;
 			
 			foreach ($words = static::words($str) as $word) 
@@ -1816,7 +1816,7 @@ class Str extends Root
 		{
 			if($mb === true)
 			{
-				$array = array();
+				$array = [];
 				
 				foreach (explode($break,$str) as $line) 
 				{
@@ -1993,7 +1993,7 @@ class Str extends Root
 	// explose les valeurs d'une string et retourne un tableau sous une forme clé -> valeur
 	public static function explodekeyValue(string $delimiter,string $value,bool $trim=false,bool $clean=false):array
 	{
-		$return = array();
+		$return = [];
 		
 		$x = static::explode($delimiter,$value,2,$trim,$clean);
 		if(count($x) === 2 && Arr::isKey($x[0]))
@@ -2007,7 +2007,7 @@ class Str extends Root
 	// explosion d'une chaîne en fonction de multiples delimiteurs
 	public static function explodes(array $delimiters,string $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
 	{
-		$return = array();
+		$return = [];
 		$delimiter = array_shift($delimiters);
 		
 		if(is_string($delimiter) && !empty($delimiter))
@@ -2016,7 +2016,7 @@ class Str extends Root
 			
 			if(!empty($delimiters))
 			{
-				$explodes = array();
+				$explodes = [];
 				foreach ($return as $v) 
 				{
 					$explodes[] = static::explodes($delimiters,$v,$limit,$trim,$clean);
@@ -2301,7 +2301,7 @@ class Str extends Root
 		if(is_array($value))
 		{
 			$i = 0;
-			$camelCase = array();
+			$camelCase = [];
 			
 			foreach ($value as $v) 
 			{
@@ -2459,9 +2459,9 @@ class Str extends Root
 	{                  
 		if(Encoding::isMb($return))
 		{
-			$from = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ');
+			$from = ['À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ'];
 			
-			$to = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o');
+			$to = ['A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o'];
 
 			$return = str_replace($from,$to,$return);
 		}
@@ -2476,7 +2476,7 @@ class Str extends Root
 	{
 		if(Encoding::isMb($return))
 		{
-			$from = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ');
+			$from = ['À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ'];
 			
 			$return = str_replace($from,"",$return);
 		}
@@ -2531,7 +2531,7 @@ class Str extends Root
 	// enleve les line breaks d'une string
 	public static function removeLineBreaks(string $return):string
 	{
-		return str_replace(array("\n","\r","\r\n","\t"),'',$return);
+		return str_replace(["\n","\r","\r\n","\t"],'',$return);
 	}
 	
 	
@@ -2548,7 +2548,7 @@ class Str extends Root
 	// enlève aussi un caractère espace qui peut apparaître après avoir encode une string iso en utf8 via utf8_encode
 	public static function removeWhitespace(string $return):string
 	{
-		$return = str_replace(array("\n","\r","\r\n","\t",'&nbsp;',' '),' ',$return);
+		$return = str_replace(["\n","\r","\r\n","\t",'&nbsp;',' '],' ',$return);
 		$return = static::removeConsecutive(' ',$return);
 		$return = trim($return);
 
@@ -2560,7 +2560,7 @@ class Str extends Root
 	// enleve toutes les whitespace d'une string (saut de ligne, tab, &nbsp; et espace)
 	public static function removeAllWhitespace(string $return):string
 	{
-		$return = str_replace(array("\n","\r","\r\n","\t",'&nbsp;'),'',$return);
+		$return = str_replace(["\n","\r","\r\n","\t",'&nbsp;'],'',$return);
 		$return = str_replace(' ','',$return);
 		$return = trim($return);
 		
@@ -2581,7 +2581,7 @@ class Str extends Root
 	// enlève un ou plusieurs caractères d'une chaîne en utilisant str_replace
 	public static function remove($remove,string $return):string
 	{
-		$replace = array();
+		$replace = [];
 		$remove = (array) $remove;
 		
 		foreach ($remove as $v) 
@@ -2716,7 +2716,7 @@ class Str extends Root
 	// remplace _ par espace, cleanKeepSpace, lower, capitalizeTitle et trim
 	public static function def(string $return,string $keep=''):string
 	{
-		$return = static::replace(array("_"=>" "),$return);
+		$return = static::replace(["_"=>" "],$return);
 		$return = static::cleanKeepSpace($return,$keep);
 		$return = strtolower($return);
 		$return = ucfirst($return);
@@ -2783,7 +2783,7 @@ class Str extends Root
 	// prendre note que le suffix est maintenant comptabilisé dans la longueur de la string
 	public static function excerpt(?int $length,string $return,?array $option=null):string
 	{       		  
-		$option = Arr::plus(array('removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true),$option);
+		$option = Arr::plus(['removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true],$option);
 		
 		// enleve les sauts de ligne et les tabulations
 		if(!empty($option['removeLineBreaks']))
@@ -2817,8 +2817,8 @@ class Str extends Root
 	// important: mb est null par défaut
 	public static function lengthTrimSuffix(int $length,string $value,?array $option=null):array
 	{
-		$return = array('str'=>'','strSuffix'=>'','suffix'=>null);
-		$option = Arr::plus(array('mb'=>null,'rtrim'=>null,'suffix'=>static::$config['excerpt']['suffix']),$option);
+		$return = ['str'=>'','strSuffix'=>'','suffix'=>null];
+		$option = Arr::plus(['mb'=>null,'rtrim'=>null,'suffix'=>static::$config['excerpt']['suffix']],$option);
 		$mb = Encoding::getMb($option['mb'],$value);
 		$suffix = $option['suffix'];
 		$sliced = static::wordTotalLength($length,$value,$mb);
@@ -2851,7 +2851,7 @@ class Str extends Root
 	// removeUnicode et trim
 	public static function output(string $return,?array $option=null):string
 	{
-		$option = Arr::plus(array('removeLineBreaks'=>false,'removeUnicode'=>true,'trim'=>true),$option);
+		$option = Arr::plus(['removeLineBreaks'=>false,'removeUnicode'=>true,'trim'=>true],$option);
 		
 		// enleve les sauts de ligne et les tabulations
 		if(!empty($option['removeLineBreaks']))

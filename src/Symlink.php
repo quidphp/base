@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Symlink extends Finder
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// is
@@ -273,7 +273,7 @@ class Symlink extends Finder
 
 		if($is === true)
 		{
-			$return = array();
+			$return = [];
 			
 			if($clearStatCache === true)
 			static::clearStatCache();
@@ -383,11 +383,11 @@ class Symlink extends Finder
 	// support pour catchAll
 	public static function sets(array $array,bool $replace=false):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($array as $from => $to) 
 		{
-			$r = array('status'=>null,'from'=>$from);
+			$r = ['status'=>null,'from'=>$from];
 			$get = static::get($to);
 			$from = static::shortcut($from);
 			

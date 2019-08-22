@@ -10,7 +10,7 @@ class Assoc extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// prepare
-		$array = array('test'=>2,1,2);
+		$array = ['test'=>2,1,2];
 
 		// arr
 		assert(Base\Assoc::arr($array) === $array);
@@ -19,7 +19,7 @@ class Assoc extends Base\Test
 		assert(Base\Assoc::exist("test",$array));
 
 		// exists
-		assert(Base\Assoc::exists(array("test"),$array));
+		assert(Base\Assoc::exists(["test"],$array));
 
 		// same
 		assert(Base\Assoc::same($array,$array));
@@ -45,10 +45,10 @@ class Assoc extends Base\Test
 		assert(Base\Assoc::getSensitive());
 
 		// prepend
-		assert(Base\Assoc::prepend(array('bla'=>4),$array)['bla'] === 4);
+		assert(Base\Assoc::prepend(['bla'=>4],$array)['bla'] === 4);
 
 		// append
-		assert(Base\Assoc::append(array('bla'=>4),$array)['bla'] === 4);
+		assert(Base\Assoc::append(['bla'=>4],$array)['bla'] === 4);
 
 		// count
 		assert(Base\Assoc::count($array) === 3);
@@ -57,25 +57,25 @@ class Assoc extends Base\Test
 		assert(Base\Assoc::index(0,$array) === 2);
 
 		// indexes
-		assert(Base\Assoc::indexes(array(0),$array) === array(2));
+		assert(Base\Assoc::indexes([0],$array) === [2]);
 
 		// get
 		assert(Base\Assoc::index("test",$array) === 2);
 
 		// gets
-		assert(Base\Assoc::indexes(array("test"),$array) === array("test"=>2));
+		assert(Base\Assoc::indexes(["test"],$array) === ["test"=>2]);
 
 		// set
 		assert(Base\Assoc::set("test2","ok",$array)['test2'] === 'ok');
 
 		// sets
-		assert(Base\Assoc::sets(array("test2"=>"ok"),$array)['test2'] === 'ok');
+		assert(Base\Assoc::sets(["test2"=>"ok"],$array)['test2'] === 'ok');
 
 		// unset
 		assert(count(Base\Assoc::unset('test',$array)));
 
 		// unsets
-		assert(count(Base\Assoc::unsets(array('test'),$array)));
+		assert(count(Base\Assoc::unsets(['test'],$array)));
 
 		// slice
 		assert(Base\Assoc::slice('test','test',$array)['test'] === 2);
@@ -84,16 +84,16 @@ class Assoc extends Base\Test
 		assert(Base\Assoc::sliceIndex(0,1,$array)['test'] === 2);
 
 		// splice
-		assert(Base\Assoc::splice('test','test',$array) === array(1,2));
+		assert(Base\Assoc::splice('test','test',$array) === [1,2]);
 
 		// spliceIndex
-		assert(Base\Assoc::spliceIndex(0,1,$array) === array(1,2));
+		assert(Base\Assoc::spliceIndex(0,1,$array) === [1,2]);
 
 		// spliceFirst
-		assert(Base\Assoc::spliceFirst($array) === array(1,2));
+		assert(Base\Assoc::spliceFirst($array) === [1,2]);
 
 		// spliceLast
-		assert(Base\Assoc::spliceLast($array) === array('test'=>2,1));
+		assert(Base\Assoc::spliceLast($array) === ['test'=>2,1]);
 
 		// insert
 		assert(Base\Assoc::insert(1,'bla',$array)[1] === 'bla');
@@ -111,7 +111,7 @@ class Assoc extends Base\Test
 		assert(Base\Assoc::keysEnd('st',$array)['test'] === 2);
 
 		// option
-		assert(count(Base\Assoc::option(array('test'=>2))) === 3);
+		assert(count(Base\Assoc::option(['test'=>2])) === 3);
 		
 		return true;
 	}

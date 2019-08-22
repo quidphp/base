@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Assert extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// call

@@ -6,8 +6,8 @@ namespace Quid\Base;
 class Session extends Root
 {
 	// config
-	public static $config = array(
-		'default'=>array(
+	public static $config = [
+		'default'=>[
 			'name'=>true, // le nom de la session, si true utilise type
 			'prefix'=>true, // prefix du sid, si true utilise type
 			'lifetime'=>null, // spécifie la lifetime de la session
@@ -16,52 +16,52 @@ class Session extends Root
 			'module'=>'files', // le module utilisé
 			'serializeHandler'=>'php_serialize', // handler de serialization
 			'savePath'=>null, // la valeur savePath
-			'cookieParams'=>array(
+			'cookieParams'=>[
 				'lifetime'=>(3600 * 24 * 30), // durée de vie, 0 signifie fermeture du browser
 				'expire'=>null, // timestamp d'expiration de la session, a priorité sur lifetime
 				'path'=>'/', // chemin dans le domaine 
 				'domain'=>'', // ce paramètre est étrange, le plus strict est de laisser domain comme chaîne vide
 				'secure'=>null, // cookie doit être servis via https
-				'httponly'=>true), // cookie ne peut pas être modifié dans javaScript
-			'garbageCollect'=>array(
+				'httponly'=>true], // cookie ne peut pas être modifié dans javaScript
+			'garbageCollect'=>[
 				'probability'=>1, // probabilité de garbage collect, mettre 0 pour off
 				'divisor'=>1000, // probabilité de garbage collect - diviseur
 				'lifetime'=>(3600 * 24 * 30), // durée de vie d'une session, peut effacer après ce délai
 				'expire'=>null, // timestamp d'expiration de la session, a priorité sur lifetime
-				'buffer'=>3600), // temps additionnelle, à additionner sur lifetime et expire
-			'ini'=>array( // autres ini à mettre comme défaut
+				'buffer'=>3600], // temps additionnelle, à additionner sur lifetime et expire
+			'ini'=>[ // autres ini à mettre comme défaut
 				'session.use_strict_mode'=>1,
 				'session.use_cookies'=>1,
 				'session.use_only_cookies'=>1,
 				'session.sid_length'=>40,
 				'session.sid_bits_per_character'=>5,
-				'session.lazy_write'=>1),
+				'session.lazy_write'=>1],
 			'versionMatch'=>true, // si la version doit match lors de structureHistory
 			'userAgentMatch'=>true, // si le userAgent doit match lors de structureUserAgent
-			'fingerprintKeys'=>null), // les clés à utiliser pour générer le fingerprint, si vide pas de validation de fingerprint
+			'fingerprintKeys'=>null], // les clés à utiliser pour générer le fingerprint, si vide pas de validation de fingerprint
 		'env'=>null, // environnement, pour structureEnv
 		'type'=>null, // type, pour structureType
 		'version'=>null, // version, pour structureVersion
-		'cacheLimiter'=>array('public','private_no_expire','private','nocache',''), // valeur possible pour cacheLimiter
-		'module'=>array('files','user','memcached','redis','rediscluster'), // valeur possible pour module
-		'serializeHandler'=>array('php_serialize','php','php_binary','wddx','igbinary'), // valeur possible pour serializer handler
-		'captcha'=>array('name'=>'-captcha-','possible'=>'alphaUpper','length'=>6,'csprng'=>false,'sensitive'=>false), // configuration pour générer une chaîne captcha
-		'csrf'=>array('name'=>'-csrf-','possible'=>null,'length'=>40,'csprng'=>false), // configuration pour générer une clé csrf
-		'structure'=>array(  // structure de la session avec clé et callback
-			'env'=>array(self::class,'structureEnv'),
-			'type'=>array(self::class,'structureType'),
-			'version'=>array(self::class,'structureVersion'),
-			'expire'=>array(self::class,'structureExpire'),
-			'timestamp'=>array(self::class,'structureTimestamp'),
-			'requestCount'=>array(self::class,'structureRequestCount'),
-			'userAgent'=>array(self::class,'structureUserAgent'),
-			'ip'=>array(self::class,'structureIp'),
-			'fingerprint'=>array(self::class,'structureFingerprint'),
-			'lang'=>array(self::class,'structureLang'),
-			'csrf'=>array(self::class,'structureCsrf'),
-			'captcha'=>array(self::class,'structureCaptcha'),
-			'remember'=>array(self::class,'structureRemember'))
-	);
+		'cacheLimiter'=>['public','private_no_expire','private','nocache',''], // valeur possible pour cacheLimiter
+		'module'=>['files','user','memcached','redis','rediscluster'], // valeur possible pour module
+		'serializeHandler'=>['php_serialize','php','php_binary','wddx','igbinary'], // valeur possible pour serializer handler
+		'captcha'=>['name'=>'-captcha-','possible'=>'alphaUpper','length'=>6,'csprng'=>false,'sensitive'=>false], // configuration pour générer une chaîne captcha
+		'csrf'=>['name'=>'-csrf-','possible'=>null,'length'=>40,'csprng'=>false], // configuration pour générer une clé csrf
+		'structure'=>[  // structure de la session avec clé et callback
+			'env'=>[self::class,'structureEnv'],
+			'type'=>[self::class,'structureType'],
+			'version'=>[self::class,'structureVersion'],
+			'expire'=>[self::class,'structureExpire'],
+			'timestamp'=>[self::class,'structureTimestamp'],
+			'requestCount'=>[self::class,'structureRequestCount'],
+			'userAgent'=>[self::class,'structureUserAgent'],
+			'ip'=>[self::class,'structureIp'],
+			'fingerprint'=>[self::class,'structureFingerprint'],
+			'lang'=>[self::class,'structureLang'],
+			'csrf'=>[self::class,'structureCsrf'],
+			'captcha'=>[self::class,'structureCaptcha'],
+			'remember'=>[self::class,'structureRemember']]
+	];
 	
 	
 	// handler
@@ -628,7 +628,7 @@ class Session extends Root
 	// retourne les paramètres de garbage collect
 	public static function getGarbageCollect():array
 	{
-		$return = array();
+		$return = [];
 		$return['probability'] = Ini::get('session.gc_probability');
 		$return['divisor'] = Ini::get('session.gc_divisor');
 		$return['lifetime'] = Ini::get('session.gc_maxlifetime');
@@ -652,7 +652,7 @@ class Session extends Root
 			if(array_key_exists('expire',$value) && is_int($value['expire']) && $value['expire'] > $time)
 			$value['lifetime'] = $value['expire'] - $time;
 			
-			if(Arr::keysFirst(array('probability','divisor','lifetime'),$value))
+			if(Arr::keysFirst(['probability','divisor','lifetime'],$value))
 			{
 				if(array_key_exists('probability',$value) && is_int($value['probability']))
 				Ini::set('session.gc_probability',$value['probability']);
@@ -716,7 +716,7 @@ class Session extends Root
 		
 		if(!static::isStarted())
 		{
-			$return = array();
+			$return = [];
 			$option = static::$config['default'] = Arrs::replace(static::$config['default'],$option);
 			$lifetime = null;
 			
@@ -800,7 +800,7 @@ class Session extends Root
 	// retourne un tableau contenant un maximum d'information sur la session
 	public static function info():array
 	{
-		$return = array();
+		$return = [];
 		
 		$return['isStarted'] = static::isStarted();
 		$return['hasSaveHandler'] = static::hasSaveHandler();
@@ -830,7 +830,7 @@ class Session extends Root
 	// si value est array, merge le array avec les structures dans config
 	public static function getStructure($value=true):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if($value !== null)
 		{
@@ -853,9 +853,9 @@ class Session extends Root
 	{
 		$return = null;
 		
-		if(static::isStarted() && in_array($type,array('init','insert','update'),true))
+		if(static::isStarted() && in_array($type,['init','insert','update'],true))
 		{
-			$return = array();
+			$return = [];
 			$callback = static::getStructure($value);
 			
 			if(!empty($callback))
@@ -960,7 +960,7 @@ class Session extends Root
 		$return = $value;
 		
 		if($mode === 'insert')
-		$return = array('current'=>Date::timestamp(),'previous'=>null);
+		$return = ['current'=>Date::timestamp(),'previous'=>null];
 		
 		elseif($mode === 'update')
 		{
@@ -969,7 +969,7 @@ class Session extends Root
 		}
 		
 		elseif($mode === 'is')
-		$return = (is_array($value) && Arr::keysAre(array('current','previous'),$value) && is_int($return['current']))? true:false;
+		$return = (is_array($value) && Arr::keysAre(['current','previous'],$value) && is_int($return['current']))? true:false;
 		
 		return $return;
 	}
@@ -1168,7 +1168,7 @@ class Session extends Root
 		if(!static::isStarted())
 		{
 			if($option=== true)
-			$option = array('read_and_close'=>true);
+			$option = ['read_and_close'=>true];
 			
 			if(is_array($option))
 			$return = session_start($option);
@@ -1369,7 +1369,7 @@ class Session extends Root
 	// la session n'a pas à être active
 	public static function unsetArray():void
 	{
-		$_SESSION = array();
+		$_SESSION = [];
 		
 		return;
 	}
@@ -1772,7 +1772,7 @@ class Session extends Root
 	// la session doit être active
 	public static function setRemember(string $key,$value,bool $cast=true):void
 	{
-		static::set(array('remember',$key),$value,$cast);
+		static::set(['remember',$key],$value,$cast);
 		
 		return;
 	}
@@ -1795,7 +1795,7 @@ class Session extends Root
 	// enlève une valeur du tableau remember
 	public static function unsetRemember(string $key):void 
 	{
-		static::unset(array('remember',$key));
+		static::unset(['remember',$key]);
 		
 		return;
 	}

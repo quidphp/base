@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Call extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// typecast
@@ -139,7 +139,7 @@ class Call extends Root
 	// ableArgs
 	// fonction static pour créer un callable
 	// callable en argument 0, et tableau arg en argument 1
-	public static function ableArgs(callable $callable,array $args=array())
+	public static function ableArgs(callable $callable,array $args=[])
 	{
 		return $callable(...array_values($args));
 	}
@@ -194,7 +194,7 @@ class Call extends Root
 	// possible de fournir des arguments
 	public static function staticClasses(array $classes,string $method,...$arg):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($classes as $class) 
 		{

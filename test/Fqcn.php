@@ -42,52 +42,52 @@ class Fqcn extends Base\Test
 
 		// str
 		assert(Base\Fqcn::str("\Quid\Base\Test\TestBla") === 'Quid\Base\Test\TestBla');
-		assert(Base\Fqcn::str(array('Quid','Base\Test','Bla')) === 'Quid\Base\Test\Bla');
+		assert(Base\Fqcn::str(['Quid','Base\Test','Bla']) === 'Quid\Base\Test\Bla');
 		assert(Base\Fqcn::str(Base\Classe::class) === Base\Classe::class);
 		assert(Base\Fqcn::str(Base\Classe::class) === Base\Classe::class);
 		assert(Base\Fqcn::str($datetime) === 'DateTime');
-		assert(Base\Fqcn::str(array("Quid","Base","Classe")) === Base\Classe::class);
-		assert(Base\Fqcn::str(array("Quid\Base","Classe")) === Base\Classe::class);
-		assert(Base\Fqcn::str(array("Quid\Base\\ Test\TestBla",'jAmes')) === "Quid\Base\Test\TestBla\jAmes");
+		assert(Base\Fqcn::str(["Quid","Base","Classe"]) === Base\Classe::class);
+		assert(Base\Fqcn::str(["Quid\Base","Classe"]) === Base\Classe::class);
+		assert(Base\Fqcn::str(["Quid\Base\\ Test\TestBla",'jAmes']) === "Quid\Base\Test\TestBla\jAmes");
 
 		// arr
-		assert(Base\Fqcn::arr("\Quid\Base\Test\TestBla") === array('Quid','Base','Test','TestBla'));
+		assert(Base\Fqcn::arr("\Quid\Base\Test\TestBla") === ['Quid','Base','Test','TestBla']);
 
 		// root
 		assert(Base\Fqcn::root(\Datetime::class) === null);
 		assert(Base\Fqcn::root("\Quid\Base\Test\TestBla") === 'Quid');
-		assert(Base\Fqcn::root(array('Quid','Base','Test','TestBla')) === 'Quid');
+		assert(Base\Fqcn::root(['Quid','Base','Test','TestBla']) === 'Quid');
 		assert(Base\Fqcn::root(null) === null);
 
 		// name
 		assert(Base\Fqcn::name("\Quid\Base\Test\TestBla") === 'TestBla');
-		assert(Base\Fqcn::name(array('Quid','Root','Test','TestBla')) === 'TestBla');
+		assert(Base\Fqcn::name(['Quid','Root','Test','TestBla']) === 'TestBla');
 		assert(Base\Fqcn::name(null) === null);
 
 		// namespace
 		assert(Base\Fqcn::namespace("\Quid\Base\Test\TestBla") === 'Quid\Base\Test');
 		assert(Base\Fqcn::namespace("Quid\Base\Test\TestBla") === 'Quid\Base\Test');
 		assert(Base\Fqcn::namespace("\\\Quid\Base\Test\TestBla") === 'Quid\Base\Test');
-		assert(Base\Fqcn::namespace(array('Quid','Base','Test','TestBla')) === 'Quid\Base\Test');
-		assert(Base\Fqcn::namespace(array('','Quid','Base','Test','TestBla')) === 'Quid\Base\Test');
-		assert(Base\Fqcn::namespace(array('Quid','Base','Test','TestBla')) === 'Quid\Base\Test');
+		assert(Base\Fqcn::namespace(['Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
+		assert(Base\Fqcn::namespace(['','Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
+		assert(Base\Fqcn::namespace(['Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
 		assert(Base\Fqcn::namespace(null) === null);
 
 		// stripRoot
 		assert(Base\Fqcn::stripRoot("\Quid\Base\Test\TestBla") === 'Base\Test\TestBla');
-		assert(Base\Fqcn::stripRoot(array('Quid','Base','Test','TestBla')) === 'Base\Test\TestBla');
+		assert(Base\Fqcn::stripRoot(['Quid','Base','Test','TestBla']) === 'Base\Test\TestBla');
 		assert(Base\Fqcn::stripRoot(null) === '');
 
 		// sliceMiddle
 		assert(Base\Fqcn::sliceMiddle("\Quid\Base\Test\TestBla") === 'Base\Test');
-		assert(Base\Fqcn::sliceMiddle(array('Quid','Base','Test','TestBla')) === 'Base\Test');
+		assert(Base\Fqcn::sliceMiddle(['Quid','Base','Test','TestBla']) === 'Base\Test');
 		assert(Base\Fqcn::sliceMiddle(null) === '');
 		
 		// many
 		assert(count(Base\Fqcn::many('Quid+App+ James\Base+ MEH + Core\Assert+ James+Lol+ OK\Final+James')) === 72);
-		assert(Base\Fqcn::many('Quid\Core+Base\James+James2+James3') === array('Quid\Core\James','Quid\Core\James2','Quid\Core\James3','Quid\Base\James','Quid\Base\James2','Quid\Base\James3'));
-		assert(Base\Fqcn::many('Quid\Core\James+James2+James3') === array('Quid\Core\James','Quid\Core\James2','Quid\Core\James3'));
-		assert(Base\Fqcn::many('Quid\Core\James') === array('Quid\Core\James'));
+		assert(Base\Fqcn::many('Quid\Core+Base\James+James2+James3') === ['Quid\Core\James','Quid\Core\James2','Quid\Core\James3','Quid\Base\James','Quid\Base\James2','Quid\Base\James3']);
+		assert(Base\Fqcn::many('Quid\Core\James+James2+James3') === ['Quid\Core\James','Quid\Core\James2','Quid\Core\James3']);
+		assert(Base\Fqcn::many('Quid\Core\James') === ['Quid\Core\James']);
 		
 		// path
 		assert(Base\Fqcn::path("Testa") === "/Testa.php");
@@ -106,13 +106,13 @@ class Fqcn extends Base\Test
 		assert(Base\Fqcn::fromPathRoot($current,$storage) === 'private\assert\current');
 
 		// fromPathRoots
-		assert(Base\Fqcn::fromPathRoots($current,array('james'=>$storage)) === 'james\private\assert\current');
+		assert(Base\Fqcn::fromPathRoots($current,['james'=>$storage]) === 'james\private\assert\current');
 		
 		// extension
 		assert(Base\Fqcn::extension("bla") === 'bla.php');
 
 		// other
-		assert(Base\Fqcn::append("Quid\Base\Request",'Test',array('James','landreville')) === 'Quid\Base\Request\Test\James\landreville');
+		assert(Base\Fqcn::append("Quid\Base\Request",'Test',['James','landreville']) === 'Quid\Base\Request\Test\James\landreville');
 		
 		return true;
 	}

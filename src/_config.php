@@ -6,7 +6,7 @@ namespace Quid\Base;
 trait _config
 {
 	// static
-	protected static $initConfig = array(); // tableau qui garde en mémoire les classes qui ont été init
+	protected static $initConfig = []; // tableau qui garde en mémoire les classes qui ont été init
 	protected static $callableConfig = null; // garde une copie de la callable à utiliser, par défaut array_replace_recursive
 	
 	
@@ -28,7 +28,7 @@ trait _config
 				$init = false;
 				$callable = static::getConfigCallable();
 				
-				$merge = array();
+				$merge = [];
 				$vars = get_class_vars($class);
 				foreach ($vars as $key => $value) 
 				{
@@ -43,7 +43,7 @@ trait _config
 					$init = true;
 				}
 				
-				$merge = array();
+				$merge = [];
 				
 				$parent = get_parent_class($class);
 				if(!empty($parent) && property_exists($parent,'config') && is_array($parent::$config) && !empty($parent::$config))
@@ -98,7 +98,7 @@ trait _config
 	// retourne le tableau des clés à ne pas merger recursivement
 	public static function configReplaceMode():array
 	{
-		return array();
+		return [];
 	}
 	
 	

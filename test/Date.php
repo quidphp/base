@@ -19,7 +19,7 @@ class Date extends Base\Test
 		// isValid
 		assert(Base\Date::isValid(2017,12,12));
 		assert(!Base\Date::isValid(2017,12,50));
-		assert(Base\Date::isValid(array('year'=>2017,'month'=>12,'day'=>1)));
+		assert(Base\Date::isValid(['year'=>2017,'month'=>12,'day'=>1]));
 
 		// isYearValid
 		assert(Base\Date::isYearValid(2017));
@@ -29,7 +29,7 @@ class Date extends Base\Test
 		assert(!Base\Date::isYearLeap());
 		assert(Base\Date::isYearLeap(2016));
 		assert(!Base\Date::isYearLeap(2017));
-		assert(Base\Date::isYearLeap(Base\Date::make(array(2016,2,2))));
+		assert(Base\Date::isYearLeap(Base\Date::make([2016,2,2])));
 
 		// isToday
 		assert(Base\Date::isToday(Base\Date::getTimestamp()));
@@ -144,8 +144,8 @@ class Date extends Base\Test
 		assert(Base\Date::strtotime("3 weeks from now") === null);
 		assert(Base\Date::strtotime("+3 weeks") > Base\Date::time());
 		assert(Base\Date::strtotime("-3 weeks") < Base\Date::time());
-		assert(is_int(Base\Date::strtotime("tomorrow",Base\Date::make(array(2017)))));
-		assert(Base\Date::sql(Base\Date::strtotime("tomorrow",Base\Date::make(array(2017)))) === "2017-01-02 00:00:00");
+		assert(is_int(Base\Date::strtotime("tomorrow",Base\Date::make([2017]))));
+		assert(Base\Date::sql(Base\Date::strtotime("tomorrow",Base\Date::make([2017]))) === "2017-01-02 00:00:00");
 
 		// getLocaleFormat
 		assert(Base\Date::getLocaleFormat('ymd') === "%G-%m-%d");
@@ -169,7 +169,7 @@ class Date extends Base\Test
 		assert(Base\Date::getFormat(0) === "F j, Y");
 
 		// getFormatReplace
-		assert(Base\Date::getFormatReplace('sql') === array('format'=>"Y-m-d H:i:s",'replace'=>null));
+		assert(Base\Date::getFormatReplace('sql') === ['format'=>"Y-m-d H:i:s",'replace'=>null]);
 		assert(count(Base\Date::getFormatReplace('j %m% Y')['replace']['%']) === 12);
 
 		// setFormat
@@ -181,22 +181,22 @@ class Date extends Base\Test
 		assert(Base\Date::format('yearz') !== "2017");
 
 		// parseFormat
-		assert(Base\Date::parseFormat('ymd') === array('format'=>'Y-m-d','timezone'=>null,'replace'=>null));
-		assert(Base\Date::parseFormat(array('ymd','America/New_York')) === array('format'=>'Y-m-d','timezone'=>'America/New_York','replace'=>null));
-		assert(Base\Date::parseFormat(array('timezone'=>'America/New_York','format'=>'ymd')) === array('format'=>'Y-m-d','timezone'=>'America/New_York','replace'=>null));
+		assert(Base\Date::parseFormat('ymd') === ['format'=>'Y-m-d','timezone'=>null,'replace'=>null]);
+		assert(Base\Date::parseFormat(['ymd','America/New_York']) === ['format'=>'Y-m-d','timezone'=>'America/New_York','replace'=>null]);
+		assert(Base\Date::parseFormat(['timezone'=>'America/New_York','format'=>'ymd']) === ['format'=>'Y-m-d','timezone'=>'America/New_York','replace'=>null]);
 		assert(count(Base\Date::parseFormat('j %m% Y')['replace']['%']) === 12);
-		assert(Base\Date::parseFormat(array('format'=>'j %m% Y','replace'=>array('%'=>array(12=>'James'))))['replace']['%'][12] === 'James');
+		assert(Base\Date::parseFormat(['format'=>'j %m% Y','replace'=>['%'=>[12=>'James']]])['replace']['%'][12] === 'James');
 
 		// format
 		assert(Base\Date::format('d-m-Y h:i:s','12-03-2017','d-m-Y') === '12-03-2017 12:00:00');
 		assert(Base\Date::format('d-m-Y h:i:s',$timestamp) === "01-12-2017 09:40:42");
 		assert(Base\Date::format('sql',$timestamp) === "2017-12-01 09:40:42");
 		assert(Base\Date::format('ymdhis',$timestamp) === "2017-12-01 09:40:42");
-		assert(Base\Date::format(array('sql','Europe/Prague'),$timestamp) === "2017-12-01 15:40:42");
-		assert(Base\Date::format(array('sql','America/New_York'),$timestamp) === "2017-12-01 09:40:42");
-		assert(Base\Date::format(array('sql',true),$timestamp) === "2017-12-01 14:40:42");
+		assert(Base\Date::format(['sql','Europe/Prague'],$timestamp) === "2017-12-01 15:40:42");
+		assert(Base\Date::format(['sql','America/New_York'],$timestamp) === "2017-12-01 09:40:42");
+		assert(Base\Date::format(['sql',true],$timestamp) === "2017-12-01 14:40:42");
 		assert(Base\Date::format('j %m% Y',$timestamp) === "1 december 2017");
-		assert(Base\Date::format(array('j %m% Y','replace'=>array('%'=>array(12=>'James'))),$timestamp) === "1 James 2017");
+		assert(Base\Date::format(['j %m% Y','replace'=>['%'=>[12=>'James']]],$timestamp) === "1 James 2017");
 		assert(Base\Date::format(0,$timestamp) === "December 1, 2017");
 		assert(Base\Date::format(true,$timestamp) === "December 1, 2017");
 		assert(Base\Date::format(1,$timestamp) === "December 1, 2017 09:40:42");
@@ -216,7 +216,7 @@ class Date extends Base\Test
 		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,0,0,0),Base\Date::mk(2018,12,13,12,12,14)) === "2018-12-12 00:00:00 - 2018-12-13 12:12:14");
 		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,12,12,12),Base\Date::mk(2018,12,12,12,12,12)) === "2018-12-12 12:12:12");
 		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,0,0,0),Base\Date::mk(2018,12,12,0,0,0)) === "2018-12-12");
-		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,0,0,0),Base\Date::mk(2018,12,12,0,0,0),array('dayStart'=>false)) === "2018-12-12 00:00:00");
+		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,0,0,0),Base\Date::mk(2018,12,12,0,0,0),['dayStart'=>false]) === "2018-12-12 00:00:00");
 		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,0,0,0),Base\Date::mk(2018,12,13,0,0,0)) === "2018-12-12 - 2018-12-13");
 		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,0,0,0),Base\Date::mk(2018,12,13,0,0,1)) === "2018-12-12 00:00:00 - 2018-12-13 00:00:01");
 		assert(Base\Date::formatStartEnd(Base\Date::mk(2018,12,12,0,0,1),Base\Date::mk(2018,12,13,0,0,0)) === "2018-12-12 00:00:01 - 2018-12-13 00:00:00");
@@ -226,11 +226,11 @@ class Date extends Base\Test
 		assert(Base\Date::gmtFormat('ymdhis',$timestamp) === "2017-12-01 14:40:42");
 
 		// formats
-		assert(Base\Date::formats('ymd',array($timestamp,array('year'=>2017))) === array('2017-12-01','2017-01-01'));
-		assert(Base\Date::formats(0,array($timestamp,array('year'=>2017))) === array('December 1, 2017','January 1, 2017'));
+		assert(Base\Date::formats('ymd',[$timestamp,['year'=>2017]]) === ['2017-12-01','2017-01-01']);
+		assert(Base\Date::formats(0,[$timestamp,['year'=>2017]]) === ['December 1, 2017','January 1, 2017']);
 
 		// formatReplace
-		assert(Base\Date::formatReplace('1 %2% 2017',array('%'=>array('2'=>'octobre'))) === "1 octobre 2017");
+		assert(Base\Date::formatReplace('1 %2% 2017',['%'=>['2'=>'octobre']]) === "1 octobre 2017");
 
 		// getPlaceholders
 		assert(count(Base\Date::getPlaceholders('fr')) === 3);
@@ -268,15 +268,15 @@ class Date extends Base\Test
 		assert(Base\Date::iformat('Y',$timestamp) === 2017);
 		assert(Base\Date::iformat('year',$timestamp) === 2017);
 		assert(Base\Date::iformat('Y-m-d',$timestamp) === null);
-		assert(Base\Date::iformat(array('h','Europe/Prague'),$timestamp) === 3);
-		assert(Base\Date::iformat(array('h','America/New_York'),$timestamp) === 9);
+		assert(Base\Date::iformat(['h','Europe/Prague'],$timestamp) === 3);
+		assert(Base\Date::iformat(['h','America/New_York'],$timestamp) === 9);
 
 		// countDaysInMonth
 		assert(Base\Date::countDaysInMonth($timestamp) === 31);
-		assert(Base\Date::countDaysInMonth(array('year'=>2018,'month'=>11)) === 30);
-		assert(Base\Date::countDaysInMonth(array('year'=>2018,'month'=>2)) === 28);
-		assert(Base\Date::countDaysInMonth(Base\Date::make(array(2017,2,2,10,0,0))) === 28);
-		assert(Base\Date::countDaysInMonth(array(2017,2,2,10,0,0)) === 28);
+		assert(Base\Date::countDaysInMonth(['year'=>2018,'month'=>11]) === 30);
+		assert(Base\Date::countDaysInMonth(['year'=>2018,'month'=>2]) === 28);
+		assert(Base\Date::countDaysInMonth(Base\Date::make([2017,2,2,10,0,0])) === 28);
+		assert(Base\Date::countDaysInMonth([2017,2,2,10,0,0]) === 28);
 
 		// weekNo
 		assert(Base\Date::weekNo($timestamp) === 48);
@@ -305,8 +305,8 @@ class Date extends Base\Test
 		assert(Base\Date::second($timestamp) === 42);
 
 		// parse
-		assert(Base\Date::parse('j %m% Y',"1 december 2017") === array('year'=>2017,'month'=>12,'day'=>1));
-		assert(Base\Date::parse(array('j %m% Y','replace'=>array('%'=>array(12=>'James'))),"1 James 2017") === array('year'=>2017,'month'=>12,'day'=>1));
+		assert(Base\Date::parse('j %m% Y',"1 december 2017") === ['year'=>2017,'month'=>12,'day'=>1]);
+		assert(Base\Date::parse(['j %m% Y','replace'=>['%'=>[12=>'James']]],"1 James 2017") === ['year'=>2017,'month'=>12,'day'=>1]);
 		assert(count(Base\Date::parse('sql','2017-12-01 09:40:42')) === 6);
 		assert(Base\Date::parse('gmt','2017-12-01 09:40:42') === null);
 		assert(count(Base\Date::parse('gmt','Fri, 01 Dec 2017 09:40:42 GMT')) === 6);
@@ -314,9 +314,9 @@ class Date extends Base\Test
 		// parseMake
 		assert(Base\Date::parseMake('sql','2017-12-01 09:40:42') === $timestamp);
 		assert(Base\Date::parseMake('gmt','Fri, 01 Dec 2017 09:40:42 GMT') === $timestamp);
-		assert(Base\Date::parseMake(array('sql','America/New_York'),'2017-12-01 09:40:42') === 1512139242);
-		assert(Base\Date::parseMake(array('sql','Europe/Prague'),'2017-12-01 09:40:42') === 1512117642);
-		assert(Base\Date::format(array('sql','Europe/Prague'),1512117642) === '2017-12-01 09:40:42');
+		assert(Base\Date::parseMake(['sql','America/New_York'],'2017-12-01 09:40:42') === 1512139242);
+		assert(Base\Date::parseMake(['sql','Europe/Prague'],'2017-12-01 09:40:42') === 1512117642);
+		assert(Base\Date::format(['sql','Europe/Prague'],1512117642) === '2017-12-01 09:40:42');
 
 		// parseLocale
 		assert(count(Base\Date::parseLocale('%Y',"2017")) === 8);
@@ -328,16 +328,16 @@ class Date extends Base\Test
 		assert(Base\Date::sql(Base\Date::make(Base\Date::parseStr("2017-12-10 12:20 -1day"))) === "2017-12-09 12:20:00");
 
 		// parseReplace
-		assert(Base\Date::parseReplace("1 december 2017",array('%'=>array(12=>'december'))) === "1 %12% 2017");
+		assert(Base\Date::parseReplace("1 december 2017",['%'=>[12=>'december']]) === "1 %12% 2017");
 
 		// parsePrepare
-		assert(Base\Date::parsePrepare(array('warning'=>0)) === array());
+		assert(Base\Date::parsePrepare(['warning'=>0]) === []);
 
 		// time
 		assert(Base\Date::time($timestamp) === $timestamp);
-		assert(Base\Date::make(array(2017,1)) === Base\Date::time(array('year'=>2017,'month'=>1)));
-		assert(Base\Date::time(array('year'=>2017,'month'=>1,'day'=>1,'hour'=>1,'minute'=>1,'second'=>1),array('timezone'=>true)) === 1483232461);
-		assert(Base\Date::time(array('year'=>2017,'month'=>1,'day'=>1,'hour'=>1,'minute'=>1,'second'=>1),array(true,"Asia/Bangkok")) === 1483207261);
+		assert(Base\Date::make([2017,1]) === Base\Date::time(['year'=>2017,'month'=>1]));
+		assert(Base\Date::time(['year'=>2017,'month'=>1,'day'=>1,'hour'=>1,'minute'=>1,'second'=>1],['timezone'=>true]) === 1483232461);
+		assert(Base\Date::time(['year'=>2017,'month'=>1,'day'=>1,'hour'=>1,'minute'=>1,'second'=>1],[true,"Asia/Bangkok"]) === 1483207261);
 		assert(Base\Date::time() !== $timestamp);
 		assert(Base\Date::time(2017,null,true) === 1483246800);
 		assert(Base\Date::time(2017) === 2017);
@@ -345,12 +345,12 @@ class Date extends Base\Test
 		assert(Base\Date::time() === Base\Date::time());
 		assert(Base\Date::time('2017-12-01','ymd') === 1512104400);
 		assert(Base\Date::time(-1212212121121) === -1212212121121);
-		assert(Base\Date::time("1 december 2017",array("j %m% Y",null,array('december'=>'12'))) === 1512104400);
+		assert(Base\Date::time("1 december 2017",["j %m% Y",null,['december'=>'12']]) === 1512104400);
 		assert(Base\Date::time(0) === 0);
 		assert(Base\Date::time(123,null,true) < 0);
 		assert(Base\Date::time(123) === 123);
 		assert(Base\Date::time('1483246800') === 1483246800);
-		assert(Base\Date::time("20 décembre 2017",array('format'=>'j %m% Y','lang'=>'en')) === null);
+		assert(Base\Date::time("20 décembre 2017",['format'=>'j %m% Y','lang'=>'en']) === null);
 
 		// get
 		assert(count(Base\Date::get($timestamp)) === 6);
@@ -358,94 +358,94 @@ class Date extends Base\Test
 		assert(Base\Date::isValid(Base\Date::get(1)));
 		assert(Base\Date::make(Base\Date::get(1)) === 1);
 		assert(Base\Date::make(Base\Date::get($timestamp)) === $timestamp);
-		assert(Base\Date::get(array('year'=>2017))['month'] === 1);
+		assert(Base\Date::get(['year'=>2017])['month'] === 1);
 		assert(Base\Date::get('1483246802')['second'] === 2);
 		assert(Base\Date::get($timestamp,'Europe/Prague')['hour'] === 15);
 		assert(Base\Date::get($timestamp,true)['hour'] === 14);
 
 		// keep
-		assert(Base\Date::keep(2,$timestamp) === array('year'=>2017,'month'=>12));
-		assert(Base\Date::keep(4,$timestamp) === array('year'=>2017,'month'=>12,'day'=>1,'hour'=>9));
-		assert(Base\Date::keep(3,3720) === array('year'=>1969,'month'=>12,'day'=>31));
-		assert(Base\Date::keep(2,array('year'=>0,'month'=>0,'day'=>14,'hour'=>10)) === array('day'=>14,'hour'=>10));
+		assert(Base\Date::keep(2,$timestamp) === ['year'=>2017,'month'=>12]);
+		assert(Base\Date::keep(4,$timestamp) === ['year'=>2017,'month'=>12,'day'=>1,'hour'=>9]);
+		assert(Base\Date::keep(3,3720) === ['year'=>1969,'month'=>12,'day'=>31]);
+		assert(Base\Date::keep(2,['year'=>0,'month'=>0,'day'=>14,'hour'=>10]) === ['day'=>14,'hour'=>10]);
 
 		// str
-		assert(Base\Date::str(6,array('year'=>0,'month'=>0,'day'=>14,'hour'=>10)) === "14 days and 10 hours");
-		assert(Base\Date::str(6,array('year'=>12,'month'=>3,'day'=>14,'hour'=>10)) === "12 years 3 months 14 days and 10 hours");
-		assert(Base\Date::str(1,array('year'=>12,'month'=>3,'day'=>14,'hour'=>10)) === "12 years");
+		assert(Base\Date::str(6,['year'=>0,'month'=>0,'day'=>14,'hour'=>10]) === "14 days and 10 hours");
+		assert(Base\Date::str(6,['year'=>12,'month'=>3,'day'=>14,'hour'=>10]) === "12 years 3 months 14 days and 10 hours");
+		assert(Base\Date::str(1,['year'=>12,'month'=>3,'day'=>14,'hour'=>10]) === "12 years");
 
 		// make
-		assert(Base\Date::make(array(2017)) === 1483246800);
-		assert(Base\Date::make(array(2017,2)) === 1485925200);
-		assert(Base\Date::sql(Base\Date::make(array(2017))) === "2017-01-01 00:00:00");
-		assert(Base\Date::make(array('year'=>2017,'month'=>2)) === 1485925200);
-		assert(Base\Date::make(array('year'=>2017,'month'=>'2')) === 1485925200);
-		assert(Base\Date::make(array(2017)) === Base\Date::make(array(2017,1,1)));
-		assert(Base\Date::make(array(2017,0,0)) !== Base\Date::make(array(2017,1,1)));
-		assert(Base\Date::make(array(2017,1,1,1,1,1),true) === 1483232461);
-		assert(Base\Date::make(array(2017,1,1,1,1,1),"America/New_York") === 1483250461);
+		assert(Base\Date::make([2017]) === 1483246800);
+		assert(Base\Date::make([2017,2]) === 1485925200);
+		assert(Base\Date::sql(Base\Date::make([2017])) === "2017-01-01 00:00:00");
+		assert(Base\Date::make(['year'=>2017,'month'=>2]) === 1485925200);
+		assert(Base\Date::make(['year'=>2017,'month'=>'2']) === 1485925200);
+		assert(Base\Date::make([2017]) === Base\Date::make([2017,1,1]));
+		assert(Base\Date::make([2017,0,0]) !== Base\Date::make([2017,1,1]));
+		assert(Base\Date::make([2017,1,1,1,1,1],true) === 1483232461);
+		assert(Base\Date::make([2017,1,1,1,1,1],"America/New_York") === 1483250461);
 
 		// gmtMake
-		assert(Base\Date::gmtMake(array(2017,2)) === 1485907200);
-		assert(Base\Date::gmtMake(array(2017,1,1,1,1,1)) === 1483232461);
+		assert(Base\Date::gmtMake([2017,2]) === 1485907200);
+		assert(Base\Date::gmtMake([2017,1,1,1,1,1]) === 1483232461);
 
 		// mk
 		assert(Base\Date::mk(2017,1,1,1,1,1,true) === 1483232461);
 		assert(Base\Date::mk(2017,1,1,1,1,1,"America/New_York") === 1483250461);
 
 		// add
-		assert(Base\Date::add(array('year'=>1),$timestamp) === 1543675242);
-		assert(Base\Date::sql(Base\Date::add(array('year'=>1),$timestamp)) === "2018-12-01 09:40:42");
-		assert(Base\Date::sql(Base\Date::add(array('year'=>-1),$timestamp)) === "2016-12-01 09:40:42");
-		assert(Base\Date::ymd(Base\Date::add(array('year'=>1),'2017-08-23','ymd')) === "2018-08-23");
-		assert(Base\Date::sql(Base\Date::add(array('day'=>1),"2017-12-02 4:40:42",array('sql','Europe/Prague')),'Europe/Prague') === "2017-12-03 04:40:42");
+		assert(Base\Date::add(['year'=>1],$timestamp) === 1543675242);
+		assert(Base\Date::sql(Base\Date::add(['year'=>1],$timestamp)) === "2018-12-01 09:40:42");
+		assert(Base\Date::sql(Base\Date::add(['year'=>-1],$timestamp)) === "2016-12-01 09:40:42");
+		assert(Base\Date::ymd(Base\Date::add(['year'=>1],'2017-08-23','ymd')) === "2018-08-23");
+		assert(Base\Date::sql(Base\Date::add(['day'=>1],"2017-12-02 4:40:42",['sql','Europe/Prague']),'Europe/Prague') === "2017-12-03 04:40:42");
 
 		// change
-		assert(Base\Date::sql(Base\Date::change(array('year'=>2010,'month'=>'4'),$timestamp)) === "2010-04-01 09:40:42");
+		assert(Base\Date::sql(Base\Date::change(['year'=>2010,'month'=>'4'],$timestamp)) === "2010-04-01 09:40:42");
 
 		// remove
-		assert(Base\Date::sql(Base\Date::remove(array('year','month','day','hour','minute','second'),$timestamp)) === "2000-01-01 00:00:00");
-		assert(Base\Date::sql(Base\Date::remove(array('year','month','day','hour'),$timestamp)) === "2000-01-01 00:40:42");
+		assert(Base\Date::sql(Base\Date::remove(['year','month','day','hour','minute','second'],$timestamp)) === "2000-01-01 00:00:00");
+		assert(Base\Date::sql(Base\Date::remove(['year','month','day','hour'],$timestamp)) === "2000-01-01 00:40:42");
 
 		// getFloor
 		assert(Base\Date::sql(Base\Date::getFloor('month',$timestamp)) === "2017-12-01 00:00:00");
 		assert(Base\Date::sql(Base\Date::getFloor('minute',$timestamp)) === "2017-12-01 09:40:00");
 		assert(Base\Date::sql(Base\Date::getFloor('day',2017)) === "2017-01-01 00:00:00");
-		assert(Base\Date::sql(Base\Date::getFloor('year',array('year'=>2017,'month'=>2))) === "2017-01-01 00:00:00");
+		assert(Base\Date::sql(Base\Date::getFloor('year',['year'=>2017,'month'=>2])) === "2017-01-01 00:00:00");
 		assert(Base\Date::sql(Base\Date::getFloor('day',"2017-12-02 09:40:42",'sql')) === "2017-12-02 00:00:00");
-		assert(Base\Date::sql(Base\Date::getFloor('day',"2017-12-02 09:40:42",array('sql','Europe/Prague'))) === "2017-12-02 00:00:00");
-		assert(Base\Date::sql(Base\Date::getFloor('day',"2017-12-02 4:40:42",array('sql','Europe/Prague'))) === "2017-12-01 00:00:00");
+		assert(Base\Date::sql(Base\Date::getFloor('day',"2017-12-02 09:40:42",['sql','Europe/Prague'])) === "2017-12-02 00:00:00");
+		assert(Base\Date::sql(Base\Date::getFloor('day',"2017-12-02 4:40:42",['sql','Europe/Prague'])) === "2017-12-01 00:00:00");
 
 		// getCeil
-		assert(Base\Date::sql(Base\Date::getCeil('day',array(2017,2,1))) === "2017-02-01 23:59:59");
-		assert(Base\Date::sql(Base\Date::getCeil('month',array(2017,2,1))) === "2017-02-28 23:59:59");
-		assert(Base\Date::sql(Base\Date::getCeil('year',array(2017,2,1))) === "2017-12-31 23:59:59");
-		assert(Base\Date::sql(Base\Date::getCeil('hour',array(2017,2,1,5))) === "2017-02-01 05:59:59");
-		assert(Base\Date::sql(Base\Date::getCeil('minute',array(2017,2,1,0,0))) === "2017-02-01 00:00:59");
+		assert(Base\Date::sql(Base\Date::getCeil('day',[2017,2,1])) === "2017-02-01 23:59:59");
+		assert(Base\Date::sql(Base\Date::getCeil('month',[2017,2,1])) === "2017-02-28 23:59:59");
+		assert(Base\Date::sql(Base\Date::getCeil('year',[2017,2,1])) === "2017-12-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::getCeil('hour',[2017,2,1,5])) === "2017-02-01 05:59:59");
+		assert(Base\Date::sql(Base\Date::getCeil('minute',[2017,2,1,0,0])) === "2017-02-01 00:00:59");
 
 		// getFloorCeil
-		assert(count(Base\Date::getFloorCeil('day',array(2017,2,1,5))) === 2);
+		assert(count(Base\Date::getFloorCeil('day',[2017,2,1,5])) === 2);
 
 		// floor
 		assert(Base\Date::sql(Base\Date::floor('month',$timestamp)) === "2017-12-01 00:00:00");
 
 		// ceil
 		assert(Base\Date::sql(Base\Date::ceil('day',Base\Date::mk(2017,1,1,0,0,0))) === "2017-01-01 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceil('month',Base\Date::make(array(2017,1,1,0,0,0)))) === "2017-01-31 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceil('year',Base\Date::make(array(2017,1,1,0,0,0)))) === "2017-12-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceil('month',Base\Date::make([2017,1,1,0,0,0]))) === "2017-01-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceil('year',Base\Date::make([2017,1,1,0,0,0]))) === "2017-12-31 23:59:59");
 		assert(Base\Date::sql($timestamp) === "2017-12-01 09:40:42");
 		assert(Base\Date::sql(Base\Date::ceil('day',$timestamp)) === "2017-12-01 23:59:59");
 		assert(Base\Date::sql(Base\Date::ceil('minute',$timestamp)) === "2017-12-01 09:40:59");
 		assert(Base\Date::sql(Base\Date::ceil('day',2017)) === "2017-01-01 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceil('day',Base\Date::make(array(2017,1,1,0,0,0)))) === "2017-01-01 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceil('day',Base\Date::make([2017,1,1,0,0,0]))) === "2017-01-01 23:59:59");
 		assert(Base\Date::sql(Base\Date::ceil('day',Base\Date::mk(2017,1,1,0,0,1))) === "2017-01-01 23:59:59");
 		assert(Base\Date::ceil('day',2017) !== Base\Date::ceil('month',2017));
-		assert(Base\Date::sql(Base\Date::ceil('year',array('year'=>2017,'month'=>2))) === "2017-12-31 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceil('day',"2017-12-02 09:40:42",array('sql','Europe/Prague'))) === "2017-12-02 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceil('day',"2017-12-03 5:40:42",array('sql','Europe/Prague'))) === "2017-12-02 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceil('year',['year'=>2017,'month'=>2])) === "2017-12-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceil('day',"2017-12-02 09:40:42",['sql','Europe/Prague'])) === "2017-12-02 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceil('day',"2017-12-03 5:40:42",['sql','Europe/Prague'])) === "2017-12-02 23:59:59");
 
 		// floorCeil
-		assert(count(Base\Date::floorCeil('day',array(2017,2,1,5))) === 2);
+		assert(count(Base\Date::floorCeil('day',[2017,2,1,5])) === 2);
 
 		// addYear
 		assert(Base\Date::sql(Base\Date::addYear(1,$timestamp)) === "2018-12-01 09:40:42");
@@ -461,8 +461,8 @@ class Date extends Base\Test
 		assert(Base\Date::sql(Base\Date::floorYear($timestamp)) === "2017-01-01 00:00:00");
 
 		// ceilYear
-		assert(Base\Date::sql(Base\Date::ceilYear(array('year'=>2017,'month'=>1))) === "2017-12-31 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceilYear(array('year'=>2017,'month'=>2))) === "2017-12-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceilYear(['year'=>2017,'month'=>1])) === "2017-12-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceilYear(['year'=>2017,'month'=>2])) === "2017-12-31 23:59:59");
 
 		// floorCeilYear
 		assert(count(Base\Date::floorCeilYear($timestamp)) === 2);
@@ -481,8 +481,8 @@ class Date extends Base\Test
 		assert(Base\Date::sql(Base\Date::floorMonth($timestamp)) === "2017-12-01 00:00:00");
 
 		// ceilMonth
-		assert(Base\Date::sql(Base\Date::ceilMonth(array('year'=>2017,'month'=>1,'hour'=>0))) === "2017-01-31 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceilMonth(array('year'=>2017,'month'=>1,'second'=>1))) === "2017-01-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceilMonth(['year'=>2017,'month'=>1,'hour'=>0])) === "2017-01-31 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceilMonth(['year'=>2017,'month'=>1,'second'=>1])) === "2017-01-31 23:59:59");
 
 		// floorCeilMonth
 		assert(count(Base\Date::floorCeilMonth($timestamp)) === 2);
@@ -506,8 +506,8 @@ class Date extends Base\Test
 		assert(Base\Date::sql(Base\Date::floorDay("2017-12-04 4:00:00",'sql')) === "2017-12-04 00:00:00");
 
 		// ceilDay
-		assert(Base\Date::sql(Base\Date::ceilDay(array('year'=>2017,'month'=>1,'day'=>2,'hour'=>0))) === "2017-01-02 23:59:59");
-		assert(Base\Date::sql(Base\Date::ceilDay(array('year'=>2017,'month'=>1,'day'=>2,'second'=>1))) === "2017-01-02 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceilDay(['year'=>2017,'month'=>1,'day'=>2,'hour'=>0])) === "2017-01-02 23:59:59");
+		assert(Base\Date::sql(Base\Date::ceilDay(['year'=>2017,'month'=>1,'day'=>2,'second'=>1])) === "2017-01-02 23:59:59");
 
 		// floorCeilDay
 		assert(count(Base\Date::floorCeilDay($timestamp)) === 2);
@@ -526,8 +526,8 @@ class Date extends Base\Test
 		assert(Base\Date::sql(Base\Date::floorHour($timestamp)) === "2017-12-01 09:00:00");
 
 		// ceilHour
-		assert(Base\Date::sql(Base\Date::ceilHour(array('year'=>2017,'month'=>1,'day'=>2,'hour'=>1))) === "2017-01-02 01:59:59");
-		assert(Base\Date::sql(Base\Date::ceilHour(array('year'=>2017,'month'=>1,'day'=>2,'hour'=>1,'second'=>1))) === "2017-01-02 01:59:59");
+		assert(Base\Date::sql(Base\Date::ceilHour(['year'=>2017,'month'=>1,'day'=>2,'hour'=>1])) === "2017-01-02 01:59:59");
+		assert(Base\Date::sql(Base\Date::ceilHour(['year'=>2017,'month'=>1,'day'=>2,'hour'=>1,'second'=>1])) === "2017-01-02 01:59:59");
 
 		// floorCeilHour
 		assert(count(Base\Date::floorCeilHour($timestamp)) === 2);
@@ -546,8 +546,8 @@ class Date extends Base\Test
 		assert(Base\Date::sql(Base\Date::floorMinute($timestamp)) === "2017-12-01 09:40:00");
 
 		// ceilMinute
-		assert(Base\Date::sql(Base\Date::ceilMinute(array('year'=>2017,'month'=>1,'day'=>2,'minute'=>1))) === "2017-01-02 00:01:59");
-		assert(Base\Date::sql(Base\Date::ceilMinute(array('year'=>2017,'month'=>1,'day'=>2,'hour'=>1,'minute'=>1,'second'=>1))) === "2017-01-02 01:01:59");
+		assert(Base\Date::sql(Base\Date::ceilMinute(['year'=>2017,'month'=>1,'day'=>2,'minute'=>1])) === "2017-01-02 00:01:59");
+		assert(Base\Date::sql(Base\Date::ceilMinute(['year'=>2017,'month'=>1,'day'=>2,'hour'=>1,'minute'=>1,'second'=>1])) === "2017-01-02 01:01:59");
 
 		// floorCeilMinute
 		assert(count(Base\Date::floorCeilMinute($timestamp)) === 2);
@@ -563,7 +563,7 @@ class Date extends Base\Test
 		assert(Base\Date::sql(Base\Date::removeSecond($timestamp)) === "2017-12-01 09:40:00");
 
 		// diff
-		assert(Base\Date::diff("2017-12-01 09:40:00","2017-12-01 09:40:00",array('sql','timezone'=>true),array('sql','timezone'=>'Asia/Bangkok'))['hour'] === 7);
+		assert(Base\Date::diff("2017-12-01 09:40:00","2017-12-01 09:40:00",['sql','timezone'=>true],['sql','timezone'=>'Asia/Bangkok'])['hour'] === 7);
 		assert(Base\Date::diff(7201)['hour'] === 2);
 		assert(count(Base\Date::diff($timestamp)) === 6);
 		assert(Base\Date::diff($timestamp,($timestamp-9002))['hour'] === 2);
@@ -571,13 +571,13 @@ class Date extends Base\Test
 		assert(Base\Date::diff(400,200)['minute'] === 3);
 
 		// diffTotal
-		assert(Base\Date::diffTotal(Base\Date::make(array(2016,1,1)),Base\Date::make(array(2019,4,28,12,7,54)),false) === array('year'=>3,'month'=>39,'day'=>1213,'hour'=>29123,'minute'=>1747387,'second'=>104843274));
-		assert(Base\Date::diffTotal(Base\Date::make(array(2016,1,1)),Base\Date::make(array(2019,4,28,12,7,54)),true)['year'] === 4);
-		assert(Base\Date::diffTotal("2017-12-01 09:40:00","2017-12-01 09:40:00",true,array('sql','timezone'=>'America/New_York'),array('sql','timezone'=>'Asia/Bangkok'))['hour'] === 13);
+		assert(Base\Date::diffTotal(Base\Date::make([2016,1,1]),Base\Date::make([2019,4,28,12,7,54]),false) === ['year'=>3,'month'=>39,'day'=>1213,'hour'=>29123,'minute'=>1747387,'second'=>104843274]);
+		assert(Base\Date::diffTotal(Base\Date::make([2016,1,1]),Base\Date::make([2019,4,28,12,7,54]),true)['year'] === 4);
+		assert(Base\Date::diffTotal("2017-12-01 09:40:00","2017-12-01 09:40:00",true,['sql','timezone'=>'America/New_York'],['sql','timezone'=>'Asia/Bangkok'])['hour'] === 13);
 
 		// diffNow
-		assert(count(Base\Date::diffNow(Base\Date::make(array(2016,1,1)))) === 6);
-		assert(Base\Date::diffNow("2017-12-01 09:40:00",array('sql',true)) !== Base\Date::diffNow("2017-12-01 09:40:00",array('sql','Asia/Bangkok')));
+		assert(count(Base\Date::diffNow(Base\Date::make([2016,1,1]))) === 6);
+		assert(Base\Date::diffNow("2017-12-01 09:40:00",['sql',true]) !== Base\Date::diffNow("2017-12-01 09:40:00",['sql','Asia/Bangkok']));
 		assert(count(Base\Date::diffNow(Base\Date::mk(2020,1,1))) === 6);
 
 		// ago
@@ -585,7 +585,7 @@ class Date extends Base\Test
 		assert(count(Base\Date::ago(Base\Date::mk(2014,1,1)))=== 6);
 
 		// diffKeep
-		assert(Base\Date::diffKeep(4,Base\Date::mk(2018,1,2),Base\Date::mk(2021,3,4)) === array('year'=>3,'month'=>2,'day'=>2));
+		assert(Base\Date::diffKeep(4,Base\Date::mk(2018,1,2),Base\Date::mk(2021,3,4)) === ['year'=>3,'month'=>2,'day'=>2]);
 
 		// diffStr
 		assert(Base\Date::diffStr(4,Base\Date::mk(2018,1,2),Base\Date::mk(2021,3,4)) === "3 years 2 months and 2 days");
@@ -605,12 +605,12 @@ class Date extends Base\Test
 		assert(Base\Date::agoStr(5,Base\Date::mk(2040,1,9)) === '');
 
 		// calendar
-		$calendar = Base\Date::calendar(array(2018,6),true,false);
+		$calendar = Base\Date::calendar([2018,6],true,false);
 		assert(Base\Arrs::is($calendar));
-		assert(count(Base\Date::calendar(array(2018,12),true,false)) === 6);
-		assert(count(Base\Date::calendar(array(2018,12),true,true)) === 6);
-		assert(count(Base\Date::calendar(array(2010,1),false,true)) === 5);
-		assert(count(Base\Date::calendar(array(2010,1),true,true)) === 6);
+		assert(count(Base\Date::calendar([2018,12],true,false)) === 6);
+		assert(count(Base\Date::calendar([2018,12],true,true)) === 6);
+		assert(count(Base\Date::calendar([2010,1],false,true)) === 5);
+		assert(count(Base\Date::calendar([2010,1],true,true)) === 6);
 
 		// fillCalendar
 		assert(Base\Date::fillCalendar($calendar) !== $calendar);
@@ -618,43 +618,43 @@ class Date extends Base\Test
 		// daysDiff
 		assert(Base\Date::daysDiff($timestamp,$timestamp) === 0);
 		assert(Base\Date::daysDiff(null,null) === 0);
-		assert(Base\Date::daysDiff(Base\Date::make(array(2018,1,1)),Base\Date::make(array(2018,1,1))) === 0);
-		assert(Base\Date::daysDiff(array(2015,1,1),array(2016,1,1)) === 365);
+		assert(Base\Date::daysDiff(Base\Date::make([2018,1,1]),Base\Date::make([2018,1,1])) === 0);
+		assert(Base\Date::daysDiff([2015,1,1],[2016,1,1]) === 365);
 		assert(Base\Date::daysDiff(2016,2015) === 365);
-		assert(Base\Date::daysDiff(array(2016,1,2),array(2015,1,1)) === 366);
-		assert(Base\Date::daysDiff(2015,Base\Date::make(array(2016,null,null,0,0,1)),null) === 365);
-		assert(Base\Date::daysDiff(2015,Base\Date::make(array(2016,null,null,0,0,1)),false) === null);
-		assert(Base\Date::daysDiff(2015,Base\Date::make(array(2016,1,2,0,0,0))) === 366);
-		assert(Base\Date::daysDiff(array(2016,1,3),array(2016,1,5)) === 2);
-		assert(Base\Date::daysDiff(array(2016,1,5),array(2016,1,3)) === 2);
-		assert(Base\Date::daysDiff("2017-12-01 11:40:00","2017-12-01 10:40:00",array('sql','timezone'=>'America/New_York'),array('sql','timezone'=>'Asia/Bangkok')) === 1);
-		assert(Base\Date::daysDiff("2017-12-01 11:40:00","2017-12-01 12:40:00",array('sql','timezone'=>'America/New_York'),array('sql','timezone'=>'Asia/Bangkok')) === 0);
+		assert(Base\Date::daysDiff([2016,1,2],[2015,1,1]) === 366);
+		assert(Base\Date::daysDiff(2015,Base\Date::make([2016,null,null,0,0,1]),null) === 365);
+		assert(Base\Date::daysDiff(2015,Base\Date::make([2016,null,null,0,0,1]),false) === null);
+		assert(Base\Date::daysDiff(2015,Base\Date::make([2016,1,2,0,0,0])) === 366);
+		assert(Base\Date::daysDiff([2016,1,3],[2016,1,5]) === 2);
+		assert(Base\Date::daysDiff([2016,1,5],[2016,1,3]) === 2);
+		assert(Base\Date::daysDiff("2017-12-01 11:40:00","2017-12-01 10:40:00",['sql','timezone'=>'America/New_York'],['sql','timezone'=>'Asia/Bangkok']) === 1);
+		assert(Base\Date::daysDiff("2017-12-01 11:40:00","2017-12-01 12:40:00",['sql','timezone'=>'America/New_York'],['sql','timezone'=>'Asia/Bangkok']) === 0);
 
 		// monthsDiff
 		assert(Base\Date::monthsDiff(2016,2017) === 12);
 		assert(Base\Date::monthsDiff($timestamp,2019) === 13);
-		assert(Base\Date::monthsDiff(2016,Base\Date::make(array(2017,null,null,1))) === 12);
+		assert(Base\Date::monthsDiff(2016,Base\Date::make([2017,null,null,1])) === 12);
 		assert(Base\Date::monthsDiff(null,null) === 0);
-		assert(Base\Date::monthsDiff(Base\Date::make(array(2018,1,5)),Base\Date::make(array(2018,1,5))) === 0);
-		assert(Base\Date::monthsDiff(Base\Date::make(array(2018,1,3)),Base\Date::make(array(2018,1,6))) === 0);
+		assert(Base\Date::monthsDiff(Base\Date::make([2018,1,5]),Base\Date::make([2018,1,5])) === 0);
+		assert(Base\Date::monthsDiff(Base\Date::make([2018,1,3]),Base\Date::make([2018,1,6])) === 0);
 		assert(Base\Date::monthsDiff("2017-01-01 00:00:00","2017-01-01 00:00:01",'sql','sql') === 0);
 		assert(Base\Date::monthsDiff("2017-01-01 00:00:00","2017-03-03 00:00:01",'sql','sql') === 2);
-		assert(Base\Date::monthsDiff("2017-01-01 00:00:00","2017-01-01 00:00:00",array('sql','America/New_York'),array('sql','Asia/Bangkok')) === 1);
+		assert(Base\Date::monthsDiff("2017-01-01 00:00:00","2017-01-01 00:00:00",['sql','America/New_York'],['sql','Asia/Bangkok']) === 1);
 
 		// yearsDiff
 		assert(Base\Date::yearsDiff(2016,2018) === 2);
-		assert(Base\Date::yearsDiff(2016,Base\Date::make(array(2018,2))) === 2);
+		assert(Base\Date::yearsDiff(2016,Base\Date::make([2018,2])) === 2);
 		assert(Base\Date::yearsDiff(2016,2016) === 0);
 		assert(Base\Date::yearsDiff(null,null) === 0);
 		assert(Base\Date::yearsDiff("2017-01-01 00:00:00","2017-01-01 00:00:00",'sql','sql') === 0);
-		assert(Base\Date::yearsDiff("2017-12-31 23:40:00","2018-1-1 03:40:00",array('sql','America/New_York'),array('sql','timezone'=>'Asia/Bangkok')) === 0);
+		assert(Base\Date::yearsDiff("2017-12-31 23:40:00","2018-1-1 03:40:00",['sql','America/New_York'],['sql','timezone'=>'Asia/Bangkok']) === 0);
 		assert(Base\Date::yearsDiff("2017-12-31 23:40:00","2018-1-1 03:40:00",'sql','sql') === 1);
 
 		// days
 		assert(Base\Date::days(2016,2017,20,'sql')[1451624400] === '2016-01-01 00:00:00');
-		assert(count(Base\Date::days(2016,Base\Date::make(array(2017,null,null,0,0,1)),20)) === 19);
+		assert(count(Base\Date::days(2016,Base\Date::make([2017,null,null,0,0,1]),20)) === 19);
 		assert(count(Base\Date::days(2015,2016)) === count(Base\Date::days(2016,2015)));
-		assert(Base\Date::days(Base\Date::mk(2017,1,2),Base\Date::mk(2017,1,2)) === array(1=>1483333200));
+		assert(Base\Date::days(Base\Date::mk(2017,1,2),Base\Date::mk(2017,1,2)) === [1=>1483333200]);
 		assert(current(Base\Date::days(Base\Date::mk(2017,1,1),Base\Date::mk(2017,1,4),null,'sql')) === '2017-01-01 00:00:00');
 		assert(current(Base\Date::days(Base\Date::mk(2017,1,4),Base\Date::mk(2017,1,1),null,'sql')) === '2017-01-04 00:00:00');
 		assert(current(Base\Date::days(Base\Date::mk(2017,1,2,12),Base\Date::mk(2017,1,4),null,'sql',false)) === '2017-01-02 12:00:00');
@@ -668,9 +668,9 @@ class Date extends Base\Test
 
 		// daysInMonth
 		assert(count(Base\Date::daysInMonth()) >= 28);
-		assert(count(Base\Date::daysInMonth(array(2017,02,20),20,'sql')) === 2);
-		assert(Base\Date::daysInMonth(array(2017,02,20),1,'sql')[1485925200] === '2017-02-01 00:00:00');
-		assert(count(Base\Date::daysInMonth(array(2010,1))) === 31);
+		assert(count(Base\Date::daysInMonth([2017,02,20],20,'sql')) === 2);
+		assert(Base\Date::daysInMonth([2017,02,20],1,'sql')[1485925200] === '2017-02-01 00:00:00');
+		assert(count(Base\Date::daysInMonth([2010,1])) === 31);
 
 		// daysDefault
 		assert(count(Base\Date::daysDefault()) === 31);
@@ -697,7 +697,7 @@ class Date extends Base\Test
 		assert(count(Base\Date::years(1984,1994)) === 11);
 		assert(Base\Date::years(1984,1994,1,'sql')[441781200] === '1984-01-01 00:00:00');
 		assert(Base\Date::years(1994,1992,null,'sql') !== Base\Date::years(1992,1994,null,'sql'));
-		assert(Base\Date::years(array(1994,03,03),1992,null,'sql',false) !== Base\Date::years(array(1994,03,03),1992,null,'sql'));
+		assert(Base\Date::years([1994,03,03],1992,null,'sql',false) !== Base\Date::years([1994,03,03],1992,null,'sql'));
 
 		// yearsDefault
 		assert(count(Base\Date::yearsDefault(-100,0,null,'sql')) === 101);

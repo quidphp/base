@@ -143,8 +143,8 @@ class Finder extends Base\Test
 		assert(is_int(Base\Finder::permission($_file_,false)));
 		assert(is_array(Base\Finder::permission($_file_,true)));
 		assert(Base\Finder::permission($_dir_) !== 755);
-		assert(in_array(current(Base\Finder::permission($_dir_,true)),array(755,775),true));
-		assert(in_array(current(Base\Finder::permission($_file_,true)),array(644,664,775,755),true));
+		assert(in_array(current(Base\Finder::permission($_dir_,true)),[755,775],true));
+		assert(in_array(current(Base\Finder::permission($_file_,true)),[644,664,775,755],true));
 		assert(Base\Finder::permission($common."/myclass.phpz") === null);
 
 		// permissionFormat
@@ -321,7 +321,7 @@ class Finder extends Base\Test
 		assert(count(Base\Finder::realpathCache()) === 2);
 		
 		// getHostPaths
-		assert(Base\Finder::getHostPaths(Base\Request::host()) === array($publicPath,$storagePublicPath));
+		assert(Base\Finder::getHostPaths(Base\Request::host()) === [$publicPath,$storagePublicPath]);
 		
 		// getHostPath
 		assert(Base\Finder::getHostPath(Base\Request::host()) === $publicPath);
@@ -341,7 +341,7 @@ class Finder extends Base\Test
 		assert(Base\Finder::pathToUri($common."/test/lala.jpg",false) === null);
 
 		// host
-		assert(Base\Finder::host() === array(Base\Request::host()=>array($publicPath,$storagePublicPath)));
+		assert(Base\Finder::host() === [Base\Request::host()=>[$publicPath,$storagePublicPath]]);
 		assert(Base\Finder::host() === Base\File::host());
 
 		// umaskGroupWritable
@@ -358,7 +358,7 @@ class Finder extends Base\Test
 
 		// config
 		assert(Base\Finder::getConfigCallable() instanceof \Closure);
-		assert(Base\Finder::config(array('test'=>2),false)['test'] === 2);
+		assert(Base\Finder::config(['test'=>2],false)['test'] === 2);
 		assert(empty(Base\Finder::$config['test']));
 
 		// cleanup

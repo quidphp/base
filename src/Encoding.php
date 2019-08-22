@@ -6,11 +6,11 @@ namespace Quid\Base;
 class Encoding extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'charset'=>null, // charset
-		'charsetMb'=>array('UTF-8'), // charset qui retourne vrai à la méthode isCharsetMb
+		'charsetMb'=>['UTF-8'], // charset qui retourne vrai à la méthode isCharsetMb
 		'mb'=>false // active les fonctions multibyte
-	);
+	];
 	
 	
 	// is

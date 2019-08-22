@@ -6,25 +6,25 @@ namespace Quid\Base;
 class Path extends Set
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
-			'start'=>true), // ajoute le séparateur au début lors du implode
-		'separator'=>array('/'), // sépareur de chemin, n'utilise pas directorySeparator
-		'safe'=>array(
+	public static $config = [
+		'option'=>[ // tableau d'options
+			'start'=>true], // ajoute le séparateur au début lors du implode
+		'separator'=>['/'], // sépareur de chemin, n'utilise pas directorySeparator
+		'safe'=>[
 			'length'=>250, // longueur maximale permise pour un path
 			'extension'=>null, // extension permises, tout est permis si null
-			'pattern'=>array('./','/.','..','//','?',' ')), // pattern de chemin non sécuritaire
-		'safeBasenameReplace'=>array(' '=>'_','-'=>'_','.'=>'_',','=>'_'), // caractère à remplacer sur un safebasename
-		'extensionReplace'=>array('jpeg'=>'jpg'), // gère le remplacement d'extension, utiliser par safeBasename
-		'build'=>array( // pour reconstuire à partir d'un array
+			'pattern'=>['./','/.','..','//','?',' ']], // pattern de chemin non sécuritaire
+		'safeBasenameReplace'=>[' '=>'_','-'=>'_','.'=>'_',','=>'_'], // caractère à remplacer sur un safebasename
+		'extensionReplace'=>['jpeg'=>'jpg'], // gère le remplacement d'extension, utiliser par safeBasename
+		'build'=>[ // pour reconstuire à partir d'un array
 			'dirname'=>'/',
 			'basename'=>null,
 			'filename'=>null,
-			'extension'=>'.'),
-		'lang'=>array( // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
+			'extension'=>'.'],
+		'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
 			'length'=>2, // longueur de lang
-			'all'=>null) // possibilité de lang
-	);
+			'all'=>null] // possibilité de lang
+	];
 	
 	
 	// is
@@ -196,7 +196,7 @@ class Path extends Set
 		
 		if(array_key_exists('dirname',$return))
 		{
-			if(in_array($return['dirname'],array(false,'','.'),true))
+			if(in_array($return['dirname'],[false,'','.'],true))
 			unset($return['dirname']);
 			
 			elseif(is_string($return['dirname']))
@@ -317,7 +317,7 @@ class Path extends Set
 		{
 			$change = (array) $change;
 			
-			if(array_key_exists('basename',$info) && Arr::inFirst(array('filename','extension'),$change) !== null)
+			if(array_key_exists('basename',$info) && Arr::inFirst(['filename','extension'],$change) !== null)
 			unset($info['basename']);
 			
 			$info = Arr::keysStrip($change,$info);
@@ -386,7 +386,7 @@ class Path extends Set
 	// retourne les chemins absolus de tous les parents
 	public static function parents(string $path):array
 	{
-		$return = array();
+		$return = [];
 		$path = static::stripStart($path);
 		$x = static::arr($path);
 		
@@ -648,7 +648,7 @@ class Path extends Set
 	// enlève une extension à un path
 	public static function removeExtension(string $path):string 
 	{
-		return static::remove(array('extension'),$path);
+		return static::remove(['extension'],$path);
 	}
 	
 
@@ -820,7 +820,7 @@ class Path extends Set
 				
 				if(empty($lang) && !empty($langDefault))
 				{
-					$path = static::str(array($langDefault,$path));
+					$path = static::str([$langDefault,$path]);
 					$return = (static::isSafe($path,$safeOpt))? $path:static::wrapStart('');
 				}
 			}

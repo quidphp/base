@@ -39,7 +39,7 @@ class Ini extends Base\Test
 		assert(Base\Ini::get('display_errors') === true);
 
 		// sets
-		assert(count(Base\Ini::sets(array('display_errors'=>true))) === 1);
+		assert(count(Base\Ini::sets(['display_errors'=>true])) === 1);
 
 		// unset
 		assert(Base\Ini::get('display_errors') === 1);
@@ -54,7 +54,7 @@ class Ini extends Base\Test
 		// all
 		assert(count(Base\Ini::all('mbstring')) < 20);
 		assert(count(Base\Ini::all()) > 100);
-		assert(Base\Ini::all('test') === array());
+		assert(Base\Ini::all('test') === []);
 
 		// parse
 		$files = Base\Ini::files();

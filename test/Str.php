@@ -29,7 +29,7 @@ class Str extends Base\Test
 		// is
 		assert(Base\Str::is("test2"));
 		assert(Base\Str::is(""));
-		assert(!Base\Str::is(array()));
+		assert(!Base\Str::is([]));
 
 		// isEmpty
 		assert(!Base\Str::isEmpty(null));
@@ -39,7 +39,7 @@ class Str extends Base\Test
 		assert(!Base\Str::isNotEmpty(null));
 		assert(Base\Str::isNotEmpty("test2"));
 		assert(!Base\Str::isNotEmpty(""));
-		assert(!Base\Str::isNotEmpty(array()));
+		assert(!Base\Str::isNotEmpty([]));
 
 		// isLength
 		assert(Base\Str::isLength(2,"te"));
@@ -109,10 +109,10 @@ class Str extends Base\Test
 		assert(Base\Str::icompare("string","string"));
 		assert(Base\Str::icompare("ÉÈstring","Éèstring"));
 
-		assert(Base\Str::icompare(array(array('é')),array(array('É'))));
-		assert(Base\Str::icompare(array(array('é')),array(array('É')),array(array('é'))));
-		assert(Base\Str::icompare(array(array('é','la','B')),array(array('É','LA','b'))));
-		assert(!Base\Str::icompare(array(array('é')),null,array(array('É')),array(array('é'))));
+		assert(Base\Str::icompare([['é']],[['É']]));
+		assert(Base\Str::icompare([['é']],[['É']],[['é']]));
+		assert(Base\Str::icompare([['é','la','B']],[['É','LA','b']]));
+		assert(!Base\Str::icompare([['é']],null,[['É']],[['é']]));
 		assert(Base\Str::icompare("string","String"));
 		assert(Base\Str::icompare("string","string"));
 		assert(Base\Str::icompare("ÉÈstring","Éèstring"));
@@ -124,15 +124,15 @@ class Str extends Base\Test
 		assert(Base\Str::append("test",1,2.4,'what') === 'test12.4what');
 
 		// cast
-		assert(Base\Str::cast(array(1,2)) === "[1,2]");
+		assert(Base\Str::cast([1,2]) === "[1,2]");
 		assert(Base\Str::cast(2) === "2");
 		assert(Base\Str::cast(new \stdclass) === 'O:8:"stdClass":0:{}');
-		assert(Base\Str::cast(array(1,2),'-') === '1-2');
+		assert(Base\Str::cast([1,2],'-') === '1-2');
 		assert(Base\Str::cast(true) === '1');
 		assert(Base\Str::cast(false) === '0');
 
 		// castFix
-		assert(Base\Str::castFix(array(1,2)) === "[1,2]");
+		assert(Base\Str::castFix([1,2]) === "[1,2]");
 
 		// toNumeric
 		assert((float) 1.2 === Base\Str::toNumeric("1.2"));
@@ -241,16 +241,16 @@ class Str extends Base\Test
 
 		// ins
 		$string = "testlalablabla";
-		assert(!Base\Str::ins(array("test","blaz"),$string));
-		assert(Base\Str::ins(array("test","bla"),"Testlalablabla",false));
-		assert(Base\Str::ins(array("test","aé"),"Testlalablablaée",false));
-		assert(Base\Str::ins(array("TEST","AÉ"),"Testlalablablaée",false));
+		assert(!Base\Str::ins(["test","blaz"],$string));
+		assert(Base\Str::ins(["test","bla"],"Testlalablabla",false));
+		assert(Base\Str::ins(["test","aé"],"Testlalablablaée",false));
+		assert(Base\Str::ins(["TEST","AÉ"],"Testlalablablaée",false));
 
 		// inFirst
 		$string = "testlalablabla";
-		assert(Base\Str::inFirst(array("test","blaz"),$string) === 'test');
-		assert(Base\Str::inFirst(array("testz","blaz"),$string) === null);
-		assert(Base\Str::inFirst(array("testz","blaz","t"),$string) === 't');
+		assert(Base\Str::inFirst(["test","blaz"],$string) === 'test');
+		assert(Base\Str::inFirst(["testz","blaz"],$string) === null);
+		assert(Base\Str::inFirst(["testz","blaz","t"],$string) === 't');
 
 		// search
 		assert(Base\Str::search('james','james2',true));
@@ -269,9 +269,9 @@ class Str extends Base\Test
 		assert(Base\Str::search('ja + MES','jamés',false,false,true,'+'));
 
 		// prepareSearch
-		assert(Base\Str::prepareSearch('test +  james','+') === array('test','james'));
-		assert(Base\Str::prepareSearch('test +  james') === array('test','+','james'));
-		assert(Base\Str::prepareSearch(2) === array('2'));
+		assert(Base\Str::prepareSearch('test +  james','+') === ['test','james']);
+		assert(Base\Str::prepareSearch('test +  james') === ['test','+','james']);
+		assert(Base\Str::prepareSearch(2) === ['2']);
 
 		// sub
 		assert("este" === Base\Str::sub(1,null,"teste"));
@@ -314,7 +314,7 @@ class Str extends Base\Test
 		assert(Base\Str::subReplace(-25,25," éenndd ",$string,false) === 'etesté test test t éenndd ');
 		assert(Base\Str::subReplace(-25,25," éenndd ",$string,true) === 'etesté test test t éenndd ');
 		assert(Base\Str::subReplace(0,0," éenndd ","",true) === ' éenndd ');
-		assert(Base\Str::subReplace(1,2,array("o","k"),$string) === 'eoksté test test test test test blabla test');
+		assert(Base\Str::subReplace(1,2,["o","k"],$string) === 'eoksté test test test test test blabla test');
 
 		// subCompare
 		assert(Base\Str::subCompare("lala",1,4,"ilalai") === 0);
@@ -565,13 +565,13 @@ class Str extends Base\Test
 		assert(Base\Str::padRight("a|s",4,"",false)  === 'a|sa');
 
 		// split
-		assert(array('t','a',' ','a',' ') === Base\Str::split(1,'ta a '));
+		assert(['t','a',' ','a',' '] === Base\Str::split(1,'ta a '));
 		assert(count(Base\Str::split(1,'ta a é')) === 7);
-		assert(array('ta',' a',' ') === Base\Str::split(2,'ta a '));
-		assert(array('ta a ') === Base\Str::split(20,'ta a '));
-		assert(array('t','é','a') !== Base\Str::split(1,'téa'));
-		assert(array('t','é','a') === Base\Str::split(1,'téa',true));
-		assert(array('té','è ','à') === Base\Str::split(2,'téè à',true));
+		assert(['ta',' a',' '] === Base\Str::split(2,'ta a '));
+		assert(['ta a '] === Base\Str::split(20,'ta a '));
+		assert(['t','é','a'] !== Base\Str::split(1,'téa'));
+		assert(['t','é','a'] === Base\Str::split(1,'téa',true));
+		assert(['té','è ','à'] === Base\Str::split(2,'téè à',true));
 
 		// chars
 		assert(count(Base\Str::chars("lavieé",true)) === 6);
@@ -584,7 +584,7 @@ class Str extends Base\Test
 		assert(count(Base\Str::charCount($string)) === 19);
 
 		// charImplode
-		assert(Base\Str::charImplode(array("a","É","e")) === "aÉe");
+		assert(Base\Str::charImplode(["a","É","e"]) === "aÉe");
 
 		// charSplice
 		assert(Base\Str::charSplice(1,2,"ok","blabla") === 'bokbla');
@@ -603,47 +603,47 @@ class Str extends Base\Test
 		assert(Base\Str::lineCount($x) === 4);
 
 		// lineImplode
-		assert(Base\Str::lineImplode(array("test","test2")) === "test".PHP_EOL."test2");
+		assert(Base\Str::lineImplode(["test","test2"]) === "test".PHP_EOL."test2");
 
 		// lineSplice
 		$x = "test\rlala\nok\r\nbla";
 		assert(Base\Str::lineSplice(1,1,"WHAT",$x) === "test".PHP_EOL."WHAT".PHP_EOL."ok".PHP_EOL."bla");
 		assert(Base\Str::lineSplice(1,1,2,$x) === "test".PHP_EOL."2".PHP_EOL."ok".PHP_EOL."bla");
-		assert(Base\Str::lineSplice(0,2,array(1,"ok",3),$x) === "1".PHP_EOL."ok".PHP_EOL."3".PHP_EOL."ok".PHP_EOL."bla");
+		assert(Base\Str::lineSplice(0,2,[1,"ok",3],$x) === "1".PHP_EOL."ok".PHP_EOL."3".PHP_EOL."ok".PHP_EOL."bla");
 		assert(Base\Str::lineSplice(1,null,null,$x) === "test".PHP_EOL."ok".PHP_EOL."bla");
 
 		// words
-		assert(Base\Str::words('asddas@asd.la.ca') === array('asddas@asd.la.ca'));
-		assert(Base\Str::words('james()') === array('james()')); 
-		assert(array('ééé',4=>'èè') === Base\Str::words("ééé èè",true));
-		assert(array('eee',7=>'ee') === Base\Str::words("eee  \n ee",false));
-		assert(array('eee',7=>'ee') === Base\Str::words("eee  \n ee",true));
-		assert(array(0=>"la",3=>"petite",10=>"ecole") === Base\Str::words("la petite ecole",false));
-		assert(array(0=>"la",3=>"petite",10=>"ecole") === Base\Str::words("la petite ecole",true));
-		assert(array(0=>"la",3=>"petite",10=>"école") === Base\Str::words("la petite école",false));
-		assert(array(0=>"la",3=>"petite",10=>"école") === Base\Str::words("la petite école",true));
-		assert(array(0=>"la",3=>"petite",11=>"école") === Base\Str::words("la petite  école",true));
-		assert(array(0=>"la",3=>"petite",11=>"école") === Base\Str::words("la petite  école",false));
+		assert(Base\Str::words('asddas@asd.la.ca') === ['asddas@asd.la.ca']);
+		assert(Base\Str::words('james()') === ['james()']); 
+		assert(['ééé',4=>'èè'] === Base\Str::words("ééé èè",true));
+		assert(['eee',7=>'ee'] === Base\Str::words("eee  \n ee",false));
+		assert(['eee',7=>'ee'] === Base\Str::words("eee  \n ee",true));
+		assert([0=>"la",3=>"petite",10=>"ecole"] === Base\Str::words("la petite ecole",false));
+		assert([0=>"la",3=>"petite",10=>"ecole"] === Base\Str::words("la petite ecole",true));
+		assert([0=>"la",3=>"petite",10=>"école"] === Base\Str::words("la petite école",false));
+		assert([0=>"la",3=>"petite",10=>"école"] === Base\Str::words("la petite école",true));
+		assert([0=>"la",3=>"petite",11=>"école"] === Base\Str::words("la petite  école",true));
+		assert([0=>"la",3=>"petite",11=>"école"] === Base\Str::words("la petite  école",false));
 
 		// wordCount
 		assert(3 === Base\Str::wordCount("la petite école"));
 		assert(4 === Base\Str::wordCount("la petite  écoleé éèa"));
 
 		// wordExplode
-		assert(Base\Str::wordExplode("test test2      test4") === array('test','test2','test4'));
+		assert(Base\Str::wordExplode("test test2      test4") === ['test','test2','test4']);
 
 		// wordExplodeIndex
 		assert(Base\Str::wordExplodeIndex(0," test test2      test4") === 'test');
 
 		// wordImplode
-		assert(Base\Str::wordImplode(array('a','b','c')) === 'a b c');
+		assert(Base\Str::wordImplode(['a','b','c']) === 'a b c');
 
 		// wordSplice
 		$string = "etesté test test test test test blabla test";
 		assert(Base\Str::wordSplice(0,3,'hahaha',$string) === 'hahaha test test test blabla test');
 		assert(Base\Str::wordSplice(0,3,2,$string) === '2 test test test blabla test');
-		assert(Base\Str::wordSplice(0,0,array('hahahaè','hihi'),$string) === 'hahahaè hihi etesté test test test test test blabla test');
-		assert(Base\Str::wordSplice(3,7,array('hahaha','hihi'),$string) === 'etesté test test hahaha hihi');
+		assert(Base\Str::wordSplice(0,0,['hahahaè','hihi'],$string) === 'hahahaè hihi etesté test test test test test blabla test');
+		assert(Base\Str::wordSplice(3,7,['hahaha','hihi'],$string) === 'etesté test test hahaha hihi');
 		assert(Base\Str::wordSplice(6,null,null,$string) === 'etesté test test test test test test');
 
 		// wordSliceLength
@@ -688,45 +688,45 @@ class Str extends Base\Test
 
 		// replace
 		$string = "La petites %a%venir";
-		assert("Le petites %e%venir" === Base\Str::replace(array("a"=>"e"),$string));
-		assert("La petites evenir" === Base\Str::replace(array("%a%"=>"e"),$string));
-		assert("234" === Base\Str::replace(array("%a%"=>"e"),"234"));
-		assert("234" === Base\Str::replace(array("%a%"=>"e"),"234"));
-		assert("true" === Base\Str::replace(array("%a%"=>"e"),"true"));
-		assert("bla" === Base\Str::replace(array("%a%"=>array("e")),"bla"));
-		assert($string === Base\Str::replace(array("PETITE"=>"grandé"),$string));
-		assert("La grandés %a%venir" === Base\Str::replace(array("PETITE"=>"grandé"),$string,false));
+		assert("Le petites %e%venir" === Base\Str::replace(["a"=>"e"],$string));
+		assert("La petites evenir" === Base\Str::replace(["%a%"=>"e"],$string));
+		assert("234" === Base\Str::replace(["%a%"=>"e"],"234"));
+		assert("234" === Base\Str::replace(["%a%"=>"e"],"234"));
+		assert("true" === Base\Str::replace(["%a%"=>"e"],"true"));
+		assert("bla" === Base\Str::replace(["%a%"=>["e"]],"bla"));
+		assert($string === Base\Str::replace(["PETITE"=>"grandé"],$string));
+		assert("La grandés %a%venir" === Base\Str::replace(["PETITE"=>"grandé"],$string,false));
 		$string = "éÉè";
-		assert("eEe" === Base\Str::replace(array("éÉè"=>"eEe"),$string));
-		assert("eEe" === Base\Str::replace(array("éÉè"=>"eEe"),$string));
-		assert("éÉè" === Base\Str::replace(array("ééè"=>"eEe"),$string,false));
-		assert(Base\Str::replace(array('É'=>null),$string) === 'éè');
-		assert(Base\Str::replace(array('É'=>''),$string) === 'éè');
+		assert("eEe" === Base\Str::replace(["éÉè"=>"eEe"],$string));
+		assert("eEe" === Base\Str::replace(["éÉè"=>"eEe"],$string));
+		assert("éÉè" === Base\Str::replace(["ééè"=>"eEe"],$string,false));
+		assert(Base\Str::replace(['É'=>null],$string) === 'éè');
+		assert(Base\Str::replace(['É'=>''],$string) === 'éè');
 
 		// ireplace
 		$string = "La petites %a%venir";
-		assert("La grandés %a%venir" === Base\Str::ireplace(array("PETITE"=>"grandé"),$string));
+		assert("La grandés %a%venir" === Base\Str::ireplace(["PETITE"=>"grandé"],$string));
 		$string = "La pétites %a%venir";
-		assert(Base\Str::ireplace(array("PéTITE"=>"grandé"),$string) === 'La grandés %a%venir');
-		assert(Base\Str::ireplace(array("PÉTITE"=>"grandé"),$string) === 'La pétites %a%venir'); // ireplace ne remplace pas les caractère accentés pas dans la bonne case
+		assert(Base\Str::ireplace(["PéTITE"=>"grandé"],$string) === 'La grandés %a%venir');
+		assert(Base\Str::ireplace(["PÉTITE"=>"grandé"],$string) === 'La pétites %a%venir'); // ireplace ne remplace pas les caractère accentés pas dans la bonne case
 
 		// explode
-		assert(array("test","test2","test3") === Base\Str::explode('|','test|test2|test3'));
-		assert(array("test"," test2 ","test3") === Base\Str::explode('|','test| test2 |test3'));
-		assert(array("") === Base\Str::explode('|',''));
-		assert(array("test",'test2|test3') === Base\Str::explode('|','test|test2|test3',2));
-		assert(array("test","test2","test3") === Base\Str::explode('|','test| test2 |test3 ',null,true));
-		assert(array("test","test2","test3") === Base\Str::explode('|','test||test2|test3',null,true,true));
-		assert(array("test","test2 |test3") === Base\Str::explode('|','test| test2 |test3 ',2,true));
+		assert(["test","test2","test3"] === Base\Str::explode('|','test|test2|test3'));
+		assert(["test"," test2 ","test3"] === Base\Str::explode('|','test| test2 |test3'));
+		assert([""] === Base\Str::explode('|',''));
+		assert(["test",'test2|test3'] === Base\Str::explode('|','test|test2|test3',2));
+		assert(["test","test2","test3"] === Base\Str::explode('|','test| test2 |test3 ',null,true));
+		assert(["test","test2","test3"] === Base\Str::explode('|','test||test2|test3',null,true,true));
+		assert(["test","test2 |test3"] === Base\Str::explode('|','test| test2 |test3 ',2,true));
 
 		// explodeTrim
-		assert(array("test","test2","test3") === Base\Str::explodeTrim('|','test| test2 |test3 '));
+		assert(["test","test2","test3"] === Base\Str::explodeTrim('|','test| test2 |test3 '));
 
 		// explodeClean
-		assert(array("test","test2","test3") === Base\Str::explodeClean('|','test||test2|test3'));
+		assert(["test","test2","test3"] === Base\Str::explodeClean('|','test||test2|test3'));
 
 		// explodeTrimClean
-		assert(array("test","test2","test3") === Base\Str::explodeTrimClean('|','test|| test2|test3'));
+		assert(["test","test2","test3"] === Base\Str::explodeTrimClean('|','test|| test2|test3'));
 
 		// explodeIndex
 		assert('test' === Base\Str::explodeIndex(0,'|','test|test2|test3',2));
@@ -734,24 +734,24 @@ class Str extends Base\Test
 		assert(null === Base\Str::explodeIndex(4,'|','test|test2|test3',2));
 
 		// explodeIndexes
-		assert(array('test','test2|test3') === Base\Str::explodeIndexes(array(0,-1),'|','test|test2|test3',2));
-		assert(array('test',2=>'test3') === Base\Str::explodeIndexes(array(0,-1),'|','test|test2|test3'));
-		assert(array('test',-4=>null) === Base\Str::explodeIndexes(array(0,-4),'|','test|test2|test3'));
+		assert(['test','test2|test3'] === Base\Str::explodeIndexes([0,-1],'|','test|test2|test3',2));
+		assert(['test',2=>'test3'] === Base\Str::explodeIndexes([0,-1],'|','test|test2|test3'));
+		assert(['test',-4=>null] === Base\Str::explodeIndexes([0,-4],'|','test|test2|test3'));
 
 		// explodeIndexesExists
-		assert(array('test','test2','test3') === Base\Str::explodeIndexesExists(array(0),'|','test|test2|test3'));
-		assert(null === Base\Str::explodeIndexesExists(array(0,-4),'|','test|test2|test3'));
+		assert(['test','test2','test3'] === Base\Str::explodeIndexesExists([0],'|','test|test2|test3'));
+		assert(null === Base\Str::explodeIndexesExists([0,-4],'|','test|test2|test3'));
 
 		// explodekeyValue
-		assert(Base\Str::explodekeyValue(":","test: bla",true,true) === array('test'=>'bla'));
-		assert(Base\Str::explodekeyValue(":","test: bla: ok ",true,true) === array('test'=>'bla: ok'));
-		assert(Base\Str::explodekeyValue(":","test",true,true) === array());
+		assert(Base\Str::explodekeyValue(":","test: bla",true,true) === ['test'=>'bla']);
+		assert(Base\Str::explodekeyValue(":","test: bla: ok ",true,true) === ['test'=>'bla: ok']);
+		assert(Base\Str::explodekeyValue(":","test",true,true) === []);
 
 		// explodes
 		$string = "test:test,test2:test2,test3:test3";
-		assert(array(array("test","test"),array("test2","test2"),array("test3","test3")) === Base\Str::explodes(array(',',':'),$string));
+		assert([["test","test"],["test2","test2"],["test3","test3"]] === Base\Str::explodes([',',':'],$string));
 		$string = "te|st:te|st,te|st2:te|st2,te|st3:te/st3";
-		assert(Base\Str::explodes(array(',',':','|'),$string)[2][0][1] === 'st3');
+		assert(Base\Str::explodes([',',':','|'],$string)[2][0][1] === 'st3');
 
 		// trim
 		assert(Base\Str::trim(" asdasdé ") === 'asdasdé');
@@ -802,7 +802,7 @@ class Str extends Base\Test
 
 		// quoteChar
 		assert(Base\Str::quoteChar("te@st+@ok_wel\l","@_") === "te\@st+\@ok\_wel\l");
-		assert(Base\Str::quoteChar("te@st+@ok_wel\l",array('@','_')) === "te\@st+\@ok\_wel\l");
+		assert(Base\Str::quoteChar("te@st+@ok_wel\l",['@','_']) === "te\@st+\@ok\_wel\l");
 		assert(Base\Str::quoteChar("@","@") === "\@");
 
 		// commaToDecimal
@@ -833,21 +833,21 @@ class Str extends Base\Test
 		assert(strlen(Base\Str::randomPrefix("WHAT",10)) === 14);
 
 		// fromCamelCase
-		assert(array() === Base\Str::fromCamelCase(""));
-		assert(array(0=>'camel') === Base\Str::fromCamelCase("camel"));
-		assert(array(0=>'camel',1=>'Case') === Base\Str::fromCamelCase("camelCase"));
-		assert(array(0=>'camel',1=>'CaseÉtest') === Base\Str::fromCamelCase("camelCaseÉtest"));
-		assert(array(0=>'camel',1=>'Case',2=>'Eest') === Base\Str::fromCamelCase("camelCaseEest"));
-		assert(Base\Str::fromCamelCase("jAmesOk") === array('j','Ames','Ok'));
-		assert(Base\Str::fromCamelCase("JAmesOk") === array('J','Ames','Ok'));
-		assert(Base\Str::fromCamelCase("JamesOk") === array('James','Ok'));
+		assert([] === Base\Str::fromCamelCase(""));
+		assert([0=>'camel'] === Base\Str::fromCamelCase("camel"));
+		assert([0=>'camel',1=>'Case'] === Base\Str::fromCamelCase("camelCase"));
+		assert([0=>'camel',1=>'CaseÉtest'] === Base\Str::fromCamelCase("camelCaseÉtest"));
+		assert([0=>'camel',1=>'Case',2=>'Eest'] === Base\Str::fromCamelCase("camelCaseEest"));
+		assert(Base\Str::fromCamelCase("jAmesOk") === ['j','Ames','Ok']);
+		assert(Base\Str::fromCamelCase("JAmesOk") === ['J','Ames','Ok']);
+		assert(Base\Str::fromCamelCase("JamesOk") === ['James','Ok']);
 
 		// toCamelCase
 		assert("camelCaseTest" === Base\Str::toCamelCase('_',"camel_case_test"));
 		assert("cameléCaseTest" === Base\Str::toCamelCase('_',"camelé_case_test"));
 		assert("camelCaseTest23" === Base\Str::toCamelCase('_',"camel_case_test_2_3"));
-		assert("testTest23Test4" === Base\Str::toCamelCase('_',array("test","test2",3,"3","test4")));
-		assert("testÉtst23Test4" === Base\Str::toCamelCase('_',array("test","étst2",3,"3","test4"),true));
+		assert("testTest23Test4" === Base\Str::toCamelCase('_',["test","test2",3,"3","test4"]));
+		assert("testÉtst23Test4" === Base\Str::toCamelCase('_',["test","étst2",3,"3","test4"],true));
 		assert(Base\Str::toCamelCase('_',"Camel_CAse_Test") === 'camelCaseTest');
 
 		// loremIpsum
@@ -858,16 +858,16 @@ class Str extends Base\Test
 		assert('s' === Base\Str::s(2));
 		assert('y' === Base\Str::s(2,'y'));
 		assert(Base\Str::s("asdas") === 's');
-		assert(Base\Str::s(array(1)) === '');
-		assert(Base\Str::s(array(1,2)) === 's');
+		assert(Base\Str::s([1]) === '');
+		assert(Base\Str::s([1,2]) === 's');
 
 		// plural
 		assert('test' === Base\Str::plural(0,"test"));
-		assert('tests' === Base\Str::plural(array(1,2),"test"));
+		assert('tests' === Base\Str::plural([1,2],"test"));
 		assert('mois' === Base\Str::plural(2,"mois"));
 		$string = "Le%s% cheva%l% %est% grand%s%";
-		assert('Le cheval est grand' === Base\Str::plural(array(),$string,array("l"=>"ux",'est'=>'sont')));
-		assert('Les chevaux sont grands' === Base\Str::plural(2,$string,array("l"=>"ux",'est'=>'sont')));
+		assert('Le cheval est grand' === Base\Str::plural([],$string,["l"=>"ux",'est'=>'sont']));
+		assert('Les chevaux sont grands' === Base\Str::plural(2,$string,["l"=>"ux",'est'=>'sont']));
 
 		// replaceChar
 		assert(Base\Str::replaceChar("abc","zyx","La betice") === 'Lz yetixe');
@@ -934,7 +934,7 @@ class Str extends Base\Test
 		// remove
 		$string = "La petites avenir";
 		assert("La ptits avnir" === Base\Str::remove("e",$string));
-		assert("La ptits avni" === Base\Str::remove(array("e","r"),$string));
+		assert("La ptits avni" === Base\Str::remove(["e","r"],$string));
 
 		// keepNumeric
 		assert("123.40" === Base\Str::keepNumeric("123.40"));
@@ -990,7 +990,7 @@ class Str extends Base\Test
 		assert('Test lala' === Base\Str::def(" tést_lala!❄❄❄-| +<@ "));
 
 		// pointer
-		assert(Base\Str::pointer('user/2') === array('user',2));
+		assert(Base\Str::pointer('user/2') === ['user',2]);
 		assert(Base\Str::pointer('user/a') === null);
 
 		// toPointer
@@ -998,19 +998,19 @@ class Str extends Base\Test
 		assert(Base\Str::toPointer('user',2,'-') === 'user-2');
 
 		// map
-		$array = array(" test ",2=>' test2',3,array());
-		assert(Base\Str::map('trim',$array) === array('test',2=>'test2',3,array()));
+		$array = [" test ",2=>' test2',3,[]];
+		assert(Base\Str::map('trim',$array) === ['test',2=>'test2',3,[]]);
 
 		// excerpt
-		assert(Base\Str::excerpt(22,'emondppph@hotmail.com.ca',array('trim'=>false)) === 'emondppph@hotmail.c...');
+		assert(Base\Str::excerpt(22,'emondppph@hotmail.com.ca',['trim'=>false]) === 'emondppph@hotmail.c...');
 		assert("la <b>petite</b> école" === Base\Str::excerpt(null," la <b>petite</b>\n école "));
 		assert("la petite école" === Base\Str::excerpt(0," la petite\n école "));
 		assert("la" === Base\Str::excerpt(3,"la petite école"));
-		assert("la petit..." === Base\Str::excerpt(13,"la petite.,; école",array('rtrim'=>'e')));
-		assert("la" === Base\Str::excerpt(3,"la petite école",array('suffix'=>false)));
-		assert("l::" === Base\Str::excerpt(3,"la petite école",array('suffix'=>"::")));
+		assert("la petit..." === Base\Str::excerpt(13,"la petite.,; école",['rtrim'=>'e']));
+		assert("la" === Base\Str::excerpt(3,"la petite école",['suffix'=>false]));
+		assert("l::" === Base\Str::excerpt(3,"la petite école",['suffix'=>"::"]));
 		assert(Base\Str::excerpt(21,"Centre d'hébergement Cédicl-Goidnasd ok dsad sa") === "Centre d'hébergem...");
-		assert(Base\Str::excerpt(20,"Centre d'hébergement Cédicl-Goidnasd ok dsad sa",array('mb'=>true)) === "Centre d'hébergem...");
+		assert(Base\Str::excerpt(20,"Centre d'hébergement Cédicl-Goidnasd ok dsad sa",['mb'=>true]) === "Centre d'hébergem...");
 		assert(Base\Str::excerpt(6,'ééééé') === 'é...');
 		assert(Base\Str::excerpt(5,'ééééé') === 'é...');
 		assert(strlen(Base\Str::excerpt(75,"Accueillir un stagiaire – des avantages à découvrir | Intranet du CISSSMO")) === 72);

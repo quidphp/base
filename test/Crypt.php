@@ -11,8 +11,8 @@ class Crypt extends Base\Test
 	{
 		// prepare
 		$empty = Base\Crypt::passwordHash("");
-		$hash = Base\Crypt::passwordHash("test010110",array('options'=>array('cost'=>5)));
-		$hash4 = Base\Crypt::passwordHash("test010110",array('options'=>array('cost'=>4)));
+		$hash = Base\Crypt::passwordHash("test010110",['options'=>['cost'=>5]]);
+		$hash4 = Base\Crypt::passwordHash("test010110",['options'=>['cost'=>4]]);
 
 		// passwordInfo
 		assert(Base\Crypt::passwordInfo($hash)['algoName'] === 'bcrypt');
@@ -29,7 +29,7 @@ class Crypt extends Base\Test
 		assert(!Base\Crypt::passwordVerify("",''));
 
 		// passwordNeedsRehash
-		assert(Base\Crypt::passwordNeedsRehash($hash,array('options'=>array('cost'=>4))));
+		assert(Base\Crypt::passwordNeedsRehash($hash,['options'=>['cost'=>4]]));
 
 		// passwordNew
 		assert(strlen(Base\Crypt::passwordNew()) === 10);
@@ -74,7 +74,7 @@ class Crypt extends Base\Test
 		assert(strlen(Base\Crypt::getRandomString('alpha')) === 52);
 
 		// randomArray
-		assert(count(Base\Crypt::randomArray(array(1,2,3,4),2)) === 2);
+		assert(count(Base\Crypt::randomArray([1,2,3,4],2)) === 2);
 
 		// microtime
 		assert(strlen(Base\Crypt::microtime()) === 13);
@@ -111,7 +111,7 @@ class Crypt extends Base\Test
 		assert(Base\Crypt::unserialize($x,$d) instanceof \DateTime);
 		assert(Base\Obj::isIncomplete(Base\Crypt::unserialize($x,"Quid\Base\Arr")));
 		assert(Base\Obj::isIncomplete(Base\Crypt::unserialize($x,false)));
-		assert(Base\Crypt::unserialize($x,array('DateTime')) instanceof \DateTime);
+		assert(Base\Crypt::unserialize($x,['DateTime']) instanceof \DateTime);
 
 		// onSetSerialize
 

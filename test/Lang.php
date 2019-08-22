@@ -10,7 +10,7 @@ class Lang extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// prepare
-		assert(Base\Lang::set('en',array('fr','en','de')));
+		assert(Base\Lang::set('en',['fr','en','de']));
 
 		// is
 		assert(Base\Lang::is('en'));
@@ -43,11 +43,11 @@ class Lang extends Base\Test
 		assert(Base\Lang::other(0,'fr') === 'en');
 
 		// others
-		assert(Base\Lang::others() === array('fr','de'));
-		assert(Base\Lang::others('fr') === array('en','de'));
+		assert(Base\Lang::others() === ['fr','de']);
+		assert(Base\Lang::others('fr') === ['en','de']);
 
 		// all
-		assert(Base\Lang::all() === array('fr','en','de'));
+		assert(Base\Lang::all() === ['fr','en','de']);
 
 		// count
 		assert(Base\Lang::count() === 3);
@@ -62,37 +62,37 @@ class Lang extends Base\Test
 		assert(Base\Lang::prepareCode('FRz') === null);
 
 		// set
-		assert(Base\Lang::set('de',array('de','fr','en')));
+		assert(Base\Lang::set('de',['de','fr','en']));
 		assert(Base\Lang::default() === 'de');
 		assert(Base\Lang::current() === 'de');
 
 		// onChange
 
 		// add
-		assert(Base\Lang::add('ge') === array('ge'=>true));
-		assert(Base\Lang::add('ge') === array('ge'=>false));
+		assert(Base\Lang::add('ge') === ['ge'=>true]);
+		assert(Base\Lang::add('ge') === ['ge'=>false]);
 		assert(Base\Lang::change('ge'));
 		assert(Base\Lang::current() === 'ge');
-		assert(Base\Lang::add('le','ba') === array('le'=>true,'ba'=>true));
+		assert(Base\Lang::add('le','ba') === ['le'=>true,'ba'=>true]);
 		assert(Base\Lang::count() === 6);
 
 		// remove
-		assert(Base\Lang::remove('le') === array('le'=>true));
-		assert(Base\Lang::remove('le') === array('le'=>false));
+		assert(Base\Lang::remove('le') === ['le'=>true]);
+		assert(Base\Lang::remove('le') === ['le'=>false]);
 		assert(Base\Lang::current() === 'ge');
-		assert(Base\Lang::remove('ge') === array('ge'=>false));
+		assert(Base\Lang::remove('ge') === ['ge'=>false]);
 		assert(Base\Lang::change('de'));
-		assert(Base\Lang::remove('ge') === array('ge'=>true));
+		assert(Base\Lang::remove('ge') === ['ge'=>true]);
 		assert(Base\Lang::current() === 'de');
-		assert(Base\Lang::remove('de','fr','en','le') === array('de'=>false,'fr'=>true,'en'=>true,'le'=>false));
+		assert(Base\Lang::remove('de','fr','en','le') === ['de'=>false,'fr'=>true,'en'=>true,'le'=>false]);
 		assert(Base\Lang::current() === 'de');
-		assert(Base\Lang::remove('ba') === array('ba'=>true));
+		assert(Base\Lang::remove('ba') === ['ba'=>true]);
 		assert(Base\Lang::count() === 1);
-		assert(Base\Lang::all() === array('de'));
+		assert(Base\Lang::all() === ['de']);
 		assert(Base\Lang::current() === 'de');
-		assert(Base\Lang::add('fr','en') === array('fr'=>true,'en'=>true));
+		assert(Base\Lang::add('fr','en') === ['fr'=>true,'en'=>true]);
 		assert(Base\Lang::change('fr'));
-		assert(Base\Lang::remove('de') === array('de'=>true));
+		assert(Base\Lang::remove('de') === ['de'=>true]);
 
 		// change
 		assert(Base\Lang::change('en'));
@@ -144,8 +144,8 @@ class Lang extends Base\Test
 		// editable
 
 		// content
-		assert(Base\Lang::content(array(1,2)) === array(1,2));
-		assert(Base\Lang::content(array('test/james'=>2,'test/james2'=>3,'test/james'=>4)) === array('test'=>array('james'=>4,'james2'=>3)));
+		assert(Base\Lang::content([1,2]) === [1,2]);
+		assert(Base\Lang::content(['test/james'=>2,'test/james2'=>3,'test/james'=>4]) === ['test'=>['james'=>4,'james2'=>3]]);
 
 		// field
 		assert(Base\Lang::change('en'));
@@ -153,27 +153,27 @@ class Lang extends Base\Test
 		assert(Base\Lang::field('name','fr','+') === 'name+fr');
 
 		// arr
-		$array = array('name_en'=>'test','name+fr'=>'OK');
+		$array = ['name_en'=>'test','name+fr'=>'OK'];
 		assert(Base\Lang::arr("name",$array) === 'test');
 		assert(Base\Lang::arr("name",$array,'fr','+') === 'OK');
 		assert(Base\Lang::arr("name",$array,'fr') === null);
 
 		// arrs
-		$array = array(array('name_en'=>'ok','id'=>2),array('name_en'=>'deuxie','id'=>3));
-		assert(Base\Lang::arrs("name",$array) === array('0/name_en'=>'ok','1/name_en'=>'deuxie'));
+		$array = [['name_en'=>'ok','id'=>2],['name_en'=>'deuxie','id'=>3]];
+		assert(Base\Lang::arrs("name",$array) === ['0/name_en'=>'ok','1/name_en'=>'deuxie']);
 
 		// reformat
-		$array = array('name_en'=>'ok','name_fr'=>'james','name'=>'LOL','ok'=>2);
-		assert(Base\Lang::reformat($array) === array('name'=>'ok','ok'=>2));
+		$array = ['name_en'=>'ok','name_fr'=>'james','name'=>'LOL','ok'=>2];
+		assert(Base\Lang::reformat($array) === ['name'=>'ok','ok'=>2]);
 
 		// reformatColumn
-		$array = array(array('name_en'=>'ok','name_fr'=>'james','name'=>'LOL','ok'=>2),array('name_en'=>'ok2','name_fr'=>'james2','name'=>'LOL2','ok'=>3));
-		assert(Base\Lang::reformatColumn($array) === array(array('name'=>'ok','ok'=>2),array('name'=>'ok2','ok'=>3)));
+		$array = [['name_en'=>'ok','name_fr'=>'james','name'=>'LOL','ok'=>2],['name_en'=>'ok2','name_fr'=>'james2','name'=>'LOL2','ok'=>3]];
+		assert(Base\Lang::reformatColumn($array) === [['name'=>'ok','ok'=>2],['name'=>'ok2','ok'=>3]]);
 
 		// cleanup
-		assert(Base\Lang::set('en',array('en','fr')));
+		assert(Base\Lang::set('en',['en','fr']));
 		assert(Base\Lang::current() === 'en');
-		assert(Base\Lang::all() === array('en','fr'));
+		assert(Base\Lang::all() === ['en','fr']);
 		
 		return true;
 	}

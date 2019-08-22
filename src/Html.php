@@ -6,187 +6,187 @@ namespace Quid\Base;
 class Html extends Root
 {	
 	// config
-	public static $config = array(
+	public static $config = [
 		'default'=>'specialChars', // méthode par défaut pour encode/décode
-		'entities'=>array( // pour htmlentities
+		'entities'=>[ // pour htmlentities
 			'flag'=>ENT_QUOTES|ENT_SUBSTITUTE, // flag utilisé par la fonction
-			'doubleEncode'=>true), // active ou non le double encodage
-		'specialChars'=>array( // pour specialchars
+			'doubleEncode'=>true], // active ou non le double encodage
+		'specialChars'=>[ // pour specialchars
 			'flag'=>ENT_QUOTES|ENT_HTML5|ENT_SUBSTITUTE, // flag utilisé par la fonction
-			'doubleEncode'=>true), // active ou non le double encodage
+			'doubleEncode'=>true], // active ou non le double encodage
 		'excerptSuffix'=>"<span class='excerptSuffix'>...</span>", // suffix utilisé par excerpt
-		'alias'=>array( // alias de tag
-			'anchor'=>'a'), 
-		'wrap'=>array( // liste de wrap
-			'divele'=>array("<div class='element'>","</div>"),
-			'divtable'=>array("<div class='table'><div class='table-row'><div class='table-cell'>","</div></div></div>"),
-			'ie8'=>array("<!--[if lte IE 8>","<![endif]-->")),
-		'formWrap'=>array( // liste de wrap pour form avec replace
+		'alias'=>[ // alias de tag
+			'anchor'=>'a'], 
+		'wrap'=>[ // liste de wrap
+			'divele'=>["<div class='element'>","</div>"],
+			'divtable'=>["<div class='table'><div class='table-row'><div class='table-cell'>","</div></div></div>"],
+			'ie8'=>["<!--[if lte IE 8>","<![endif]-->"]],
+		'formWrap'=>[ // liste de wrap pour form avec replace
 			'default'=>"%label%%form%",
 			'reverse'=>"%form%%label%",
 			'br'=>"%label%<br/>%form%",
 			'table'=>"<table><tr><td>%label%</td><td>%form%</td></tr></table>",
 			'divtable'=>"<div class='table'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
 			'divtableClass'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
-			'div'=>"<div>%label%</div><div>%form%</div>"),
-		'static'=>array( // terme accepté pour callStatic
-			'special'=>array('cond','many','or','loop'),
-			'openClose'=>array('open','close','op','cl')),
+			'div'=>"<div>%label%</div><div>%form%</div>"],
+		'static'=>[ // terme accepté pour callStatic
+			'special'=>['cond','many','or','loop'],
+			'openClose'=>['open','close','op','cl']],
 		'multi'=>'[]', // caractère pour nom multi
-		'clickOpen'=>array('popup'=>'popup','trigger'=>'trigger','title'=>'title','icon'=>'ico'), // classes pour clickOpen
-		'fakeSelect'=>array('selected'=>'selected'), // classes pour fakeSelect
+		'clickOpen'=>['popup'=>'popup','trigger'=>'trigger','title'=>'title','icon'=>'ico'], // classes pour clickOpen
+		'fakeSelect'=>['selected'=>'selected'], // classes pour fakeSelect
 		'separator'=>PHP_EOL, // caractère séparateur new line
 		'genuine'=>'-genuine-', // nom pour l'input genuine
 		'randomNameWrap'=>'-', // caractère utilisé pour wrapper un name qui est true
-		'bool'=>array( // relation bool
-			0=>array(
+		'bool'=>[ // relation bool
+			0=>[
 				0=>'false',
-				1=>'true')),
-		'option'=>array( // tableau d'options
+				1=>'true']],
+		'option'=>[ // tableau d'options
 			'attr'=>null, // option pour attr
 			'html'=>null, // wrap html autour de la tag
-			'encode'=>null), // si les valeurs sont passés dans htmlspecialchars ou htmlentities, true est specialchars
-		'docOpen'=>array( 
-			'default'=>array( // défaut pour docOpen
+			'encode'=>null], // si les valeurs sont passés dans htmlspecialchars ou htmlentities, true est specialchars
+		'docOpen'=>[ 
+			'default'=>[ // défaut pour docOpen
 				'doctype'=>true,
 				'html'=>true,
-				'head'=>array(
-					'meta'=>array(
-						'charset'=>true)),
-				'body'=>true),
-			'order'=>array('doctype','html','head','body','wrapper')), // ordre pour docOpen
-		'docClose'=>array( // défaut pour docClose
-			'default'=>array(
+				'head'=>[
+					'meta'=>[
+						'charset'=>true]],
+				'body'=>true],
+			'order'=>['doctype','html','head','body','wrapper']], // ordre pour docOpen
+		'docClose'=>[ // défaut pour docClose
+			'default'=>[
 				'body'=>true,
-				'html'=>true),
-			'order'=>array('wrapper','script','js','body','html')), // order pour docClose
-		'tag'=>array( // config pour les tags
-			'title'=>array( // config pour title
-				'valueCallable'=>array(self::class,'titleValue'),
-				'option'=>array(
-					'excerpt'=>array(
-						'encode'=>null),
+				'html'=>true],
+			'order'=>['wrapper','script','js','body','html']], // order pour docClose
+		'tag'=>[ // config pour les tags
+			'title'=>[ // config pour title
+				'valueCallable'=>[self::class,'titleValue'],
+				'option'=>[
+					'excerpt'=>[
+						'encode'=>null],
 					'case'=>'upperFirst',
 					'maxLength'=>75,
 					'separator'=>' | ',
-					'encode'=>true)),
-			'a'=>array( // config pour a
-				'scalarAttr'=>array('bool'=>'target','true'=>'_blank'),
-				'option'=>array('attr'=>array('uri'=>array()))),
-			'br'=>array( // config pour br
+					'encode'=>true]],
+			'a'=>[ // config pour a
+				'scalarAttr'=>['bool'=>'target','true'=>'_blank'],
+				'option'=>['attr'=>['uri'=>[]]]],
+			'br'=>[ // config pour br
 				'valueAttr'=>'data-value',
-				'selfClosing'=>true),
-			'hr'=>array( // config pour hr
+				'selfClosing'=>true],
+			'hr'=>[ // config pour hr
 				'valueAttr'=>'data-value',
-				'selfClosing'=>true),
-			'img'=>array( // config pour img
-				'valueCallable'=>array(self::class,'imgValue'),
+				'selfClosing'=>true],
+			'img'=>[ // config pour img
+				'valueCallable'=>[self::class,'imgValue'],
 				'valueAttr'=>'src',
 				'selfClosing'=>true,
-				'attrCallable'=>array(self::class,'imgAttr'),
-				'option'=>array('attr'=>array('uri'=>array()))),
-			'label'=>array( // config pour label
-				'scalarAttr'=>'for'),
-			'head'=>array( // config pour head
-				'valueCallable'=>array(self::class,'headValue'),
-				'option'=>array(
-					'separator'=>null),
-				'order'=>array('title','description','keywords','meta','link','script','css','js')),
-			'table'=>array( // config pour table
-				'option'=>array(
-					'strict'=>false)),
-			'meta'=>array( // config pour meta
-				'attrCallable'=>array(self::class,'metaAttr'),
-				'valueCallable'=>array(self::class,'metaValue'),
+				'attrCallable'=>[self::class,'imgAttr'],
+				'option'=>['attr'=>['uri'=>[]]]],
+			'label'=>[ // config pour label
+				'scalarAttr'=>'for'],
+			'head'=>[ // config pour head
+				'valueCallable'=>[self::class,'headValue'],
+				'option'=>[
+					'separator'=>null],
+				'order'=>['title','description','keywords','meta','link','script','css','js']],
+			'table'=>[ // config pour table
+				'option'=>[
+					'strict'=>false]],
+			'meta'=>[ // config pour meta
+				'attrCallable'=>[self::class,'metaAttr'],
+				'valueCallable'=>[self::class,'metaValue'],
 				'selfClosing'=>true,
 				'valueAttr'=>'content',
 				'scalarAttr'=>'name',
 				'typeAttr'=>'name',
-				'property'=>array('og:title','og:description','og:url','og:type','og:image','fb:app_id'), // liste de meta qui utilise property plutôt que name
-				'uri'=>array(
-					'key'=>array('og:url','og:image'), // liste de meta qui repésente des uri
-					'option'=>array('absolute'=>true)), // option pour les uri
-				'description'=>array(
-					'option'=>array( // option meta description
+				'property'=>['og:title','og:description','og:url','og:type','og:image','fb:app_id'], // liste de meta qui utilise property plutôt que name
+				'uri'=>[
+					'key'=>['og:url','og:image'], // liste de meta qui repésente des uri
+					'option'=>['absolute'=>true]], // option pour les uri
+				'description'=>[
+					'option'=>[ // option meta description
 						'case'=>'upperFirst',
 						'maxLength'=>150,
-						'separator'=>' - ')), 
-				'keywords'=>array(
-					'option'=>array( // option pour meta keywords
+						'separator'=>' - ']], 
+				'keywords'=>[
+					'option'=>[ // option pour meta keywords
 						'maxLength'=>150,
 						'separator'=>', ',
-						'excerpt'=>array('suffix'=>false)))),
-			'iframe'=>array(
-				'valueAttr'=>'srcdoc'),
-			'link'=>array( // config pour link
-				'valueCallable'=>array(self::class,'linkValue'),
+						'excerpt'=>['suffix'=>false]]]],
+			'iframe'=>[
+				'valueAttr'=>'srcdoc'],
+			'link'=>[ // config pour link
+				'valueCallable'=>[self::class,'linkValue'],
 				'selfClosing'=>true,
 				'valueAttr'=>'href',
-				'scalarAttr'=>array('rel','true'=>'stylesheet'),
+				'scalarAttr'=>['rel','true'=>'stylesheet'],
 				'typeAttr'=>'rel',
-				'prev'=>array(
-					'option'=>array('absolute'=>true)), // option pour rel prev
-				'next'=>array(
-					'option'=>array('absolute'=>true)), // option pour rel next
-				'stylesheet'=>array(
-					'option'=>array(
-						'attr'=>array('href'=>array('active'=>false,'extension'=>'css'))),
-					'attr'=>array( // attr par défaut pour stylesheet
+				'prev'=>[
+					'option'=>['absolute'=>true]], // option pour rel prev
+				'next'=>[
+					'option'=>['absolute'=>true]], // option pour rel next
+				'stylesheet'=>[
+					'option'=>[
+						'attr'=>['href'=>['active'=>false,'extension'=>'css']]],
+					'attr'=>[ // attr par défaut pour stylesheet
 						'rel'=>'stylesheet',
 						'type'=>'text/css',
-						'media'=>'screen,print')),
-				'option'=>array(
-					'attr'=>array(
-						'uri'=>array(),
-						'href'=>array('active'=>false)))),
-			'script'=>array( // config pour script
-				'valueCallable'=>array(self::class,'scriptValue'),
-				'option'=>array(
+						'media'=>'screen,print']],
+				'option'=>[
+					'attr'=>[
+						'uri'=>[],
+						'href'=>['active'=>false]]]],
+			'script'=>[ // config pour script
+				'valueCallable'=>[self::class,'scriptValue'],
+				'option'=>[
 					'var'=>null,
-					'attr'=>array('uri'=>array(),'src'=>array('extension'=>'js'))),
-				'attr'=>array()),
-			'form'=>array( // config pour form
-				'attrCallable'=>array(self::class,'formAttr'),
-				'valueCallable'=>array(self::class,'formValue'),
-				'scalarAttr'=>array('method','true'=>'post'),
-				'all'=>array('input'=>'text','textarea'=>'text','select'=>'enum','radio'=>'enum','multiselect'=>'set','checkbox'=>'set'),
-				'option'=>array( // à ajouter après l'ouverture du form
+					'attr'=>['uri'=>[],'src'=>['extension'=>'js']]],
+				'attr'=>[]],
+			'form'=>[ // config pour form
+				'attrCallable'=>[self::class,'formAttr'],
+				'valueCallable'=>[self::class,'formValue'],
+				'scalarAttr'=>['method','true'=>'post'],
+				'all'=>['input'=>'text','textarea'=>'text','select'=>'enum','radio'=>'enum','multiselect'=>'set','checkbox'=>'set'],
+				'option'=>[ // à ajouter après l'ouverture du form
 					'method'=>'post',
-					'attr'=>array('uri'=>array()),
-					'csrf'=>array('get'=>false,'post'=>true),
-					'genuine'=>array('get'=>false,'post'=>true),
-					'enctype'=>array('get'=>null,'post'=>'multipart/form-data'))),
-			'button'=>array(
-				'attrCallable'=>array(self::class,'buttonAttr'),
-				'scalarAttr'=>array('name'),
-				'typeAttr'=>'type'),
-			'input'=>array( // config pour input
-				'attrCallable'=>array(self::class,'inputAttr'),
+					'attr'=>['uri'=>[]],
+					'csrf'=>['get'=>false,'post'=>true],
+					'genuine'=>['get'=>false,'post'=>true],
+					'enctype'=>['get'=>null,'post'=>'multipart/form-data']]],
+			'button'=>[
+				'attrCallable'=>[self::class,'buttonAttr'],
+				'scalarAttr'=>['name'],
+				'typeAttr'=>'type'],
+			'input'=>[ // config pour input
+				'attrCallable'=>[self::class,'inputAttr'],
 				'selfClosing'=>true,
-				'valueAttr'=>array('default'=>'value','image'=>'src'),
-				'scalarAttr'=>array('name'),
+				'valueAttr'=>['default'=>'value','image'=>'src'],
+				'scalarAttr'=>['name'],
 				'typeAttr'=>'type',
-				'attr'=>array( // attribut par défaut
-					'type'=>'text'),
-				'option'=>array(
+				'attr'=>[ // attribut par défaut
+					'type'=>'text'],
+				'option'=>[
 					'label'=>null, // si le input a un label
 					'position'=>1,
-					'multi'=>null),
-				'text'=>array(
-					'attr'=>array('maxlength'=>255)),
-				'email'=>array(
-					'attr'=>array('maxlength'=>255)),
-				'radio'=>array(
-					'option'=>array(
+					'multi'=>null],
+				'text'=>[
+					'attr'=>['maxlength'=>255]],
+				'email'=>[
+					'attr'=>['maxlength'=>255]],
+				'radio'=>[
+					'option'=>[
 						'position'=>2,
-						'checked'=>null)),
-				'checkbox'=>array(
-					'option'=>array(
+						'checked'=>null]],
+				'checkbox'=>[
+					'option'=>[
 						'position'=>2,
 						'multi'=>true,
-						'checked'=>null)),
+						'checked'=>null]],
 				'default'=>'text', // type de input par défaut
-				'all'=>array( // type de input en clé et groupe en valeur
+				'all'=>[ // type de input en clé et groupe en valeur
 					'submit'=>null,
 					'image'=>null,
 					'hidden'=>'hidden',
@@ -197,32 +197,32 @@ class Html extends Root
 					'checkbox'=>'set',
 					'file'=>null,
 					'password'=>'text',
-					'button'=>null)), // tous les types de input
-			'select'=>array( // config pour select
-				'attrCallable'=>array(self::class,'selectAttr'),
-				'valueCallable'=>array(self::class,'selectValue'),
-				'scalarAttr'=>array('name'),
-				'option'=>array( // option à merge aux options de base
+					'button'=>null]], // tous les types de input
+			'select'=>[ // config pour select
+				'attrCallable'=>[self::class,'selectAttr'],
+				'valueCallable'=>[self::class,'selectValue'],
+				'scalarAttr'=>['name'],
+				'option'=>[ // option à merge aux options de base
 					'label'=>null,
 					'position'=>1,
 					'multi'=>null,
 					'title'=>null,
-					'selected'=>null)),
-			'option'=>array( // config pour option
-				'attrCallable'=>array(self::class,'optionAttr'),
+					'selected'=>null]],
+			'option'=>[ // config pour option
+				'attrCallable'=>[self::class,'optionAttr'],
 				'scalarAttr'=>'value',
-				'option'=>array( // option à merge aux options de base
+				'option'=>[ // option à merge aux options de base
 					'title'=>null,
-					'selected'=>null)),
-			'textarea'=>array( // config pour textarea
-				'attrCallable'=>array(self::class,'textareaAttr'),
-				'scalarAttr'=>array('name'),
-				'option'=>array( // option à merge aux options de base
+					'selected'=>null]],
+			'textarea'=>[ // config pour textarea
+				'attrCallable'=>[self::class,'textareaAttr'],
+				'scalarAttr'=>['name'],
+				'option'=>[ // option à merge aux options de base
 					'encode'=>true,
 					'label'=>null,
 					'position'=>1,
-					'multi'=>null)))
-	);
+					'multi'=>null]]]
+	];
 	
 	
 	// is
@@ -437,7 +437,7 @@ class Html extends Root
 	// retourne tous les inputs à partir d'un ou plusieurs groupes
 	public static function inputsFromGroups($groups,$not=null):array 
 	{
-		$return = array();
+		$return = [];
 		$groups = (array) $groups;
 		$not = (array) $not;
 		
@@ -458,7 +458,7 @@ class Html extends Root
 	// retourne tous les tag de relation
 	public static function relationTag($not=null):array
 	{
-		return static::inputsFromGroups(array('enum','set'),$not);
+		return static::inputsFromGroups(['enum','set'],$not);
 	}
 	
 	
@@ -505,7 +505,7 @@ class Html extends Root
 	public static function specialChars(string $value,?array $option=null):string
 	{
 		$return = '';
-		$option = Arr::plus(array('charset'=>Encoding::getCharset()),static::$config['specialChars'],$option);
+		$option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['specialChars'],$option);
 		
 		if(!empty($option))
 		$return = htmlspecialchars($value,$option['flag'],$option['charset'],$option['doubleEncode']);
@@ -519,7 +519,7 @@ class Html extends Root
 	public static function specialCharsDecode(string $value,?array $option=null):string
 	{
 		$return = '';
-		$option = Arr::plus(array('charset'=>Encoding::getCharset()),static::$config['specialChars'],$option);
+		$option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['specialChars'],$option);
 		
 		if(!empty($option))
 		$return = htmlspecialchars_decode($value,$option['flag']);
@@ -532,8 +532,8 @@ class Html extends Root
 	// retourne la table de traduction pour specialChars
 	public static function specialCharsTable(?array $option=null):array
 	{
-		$return = array();
-		$option = Arr::plus(array('charset'=>Encoding::getCharset()),static::$config['specialChars'],$option);
+		$return = [];
+		$option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['specialChars'],$option);
 		$return = get_html_translation_table(HTML_SPECIALCHARS,$option['flag'],$option['charset']);
 		
 		return $return;
@@ -545,7 +545,7 @@ class Html extends Root
 	public static function entities(string $value,?array $option=null):string
 	{
 		$return = '';
-		$option = Arr::plus(array('charset'=>Encoding::getCharset()),static::$config['entities'],$option);
+		$option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['entities'],$option);
 		
 		if(!empty($option))
 		$return = htmlentities($value,$option['flag'],$option['charset'],$option['doubleEncode']);
@@ -559,7 +559,7 @@ class Html extends Root
 	public static function entitiesDecode(string $value,?array $option=null):string
 	{
 		$return = '';
-		$option = Arr::plus(array('charset'=>Encoding::getCharset()),static::$config['entities'],$option);
+		$option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['entities'],$option);
 
 		if(!empty($option))
 		$return = html_entity_decode($value,$option['flag'],$option['charset']);
@@ -572,8 +572,8 @@ class Html extends Root
 	// retourne la table de traduction pour entities
 	public static function entitiesTable(?array $option=null):array
 	{
-		$return = array();
-		$option = Arr::plus(array('charset'=>Encoding::getCharset()),static::$config['entities'],$option);
+		$return = [];
+		$option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['entities'],$option);
 		$return = get_html_translation_table(HTML_ENTITIES,$option['flag'],$option['charset']);
 		
 		return $return;
@@ -601,7 +601,7 @@ class Html extends Root
 		$keepStr = '';
 		
 		if(is_string($keep))
-		$keep = array($keep);
+		$keep = [$keep];
 		
 		if(is_array($keep))
 		{
@@ -721,7 +721,7 @@ class Html extends Root
 	// possibilité de mettre un type
 	public static function getAttr(string $tag,?string $type=null,$attr=null):array 
 	{
-		$return = array();
+		$return = [];
 		$attr = Obj::cast($attr);
 		
 		if(is_scalar($attr))
@@ -773,17 +773,17 @@ class Html extends Root
 				$value = ($return === true && array_key_exists('true',$scalar))? $scalar['true']:$return;
 				
 				if(is_string($return) && array_key_exists('string',$scalar))
-				$return = array($scalar['string']=>$value);
+				$return = [$scalar['string']=>$value];
 				
 				elseif(is_bool($return) && array_key_exists('bool',$scalar))
-				$return = array($scalar['bool']=>$value);
+				$return = [$scalar['bool']=>$value];
 				
 				elseif(array_key_exists(0,$scalar))
-				$return = array($scalar[0]=>$value);
+				$return = [$scalar[0]=>$value];
 			}
 			
 			elseif(is_string($scalar))
-			$return = array($scalar=>$return);
+			$return = [$scalar=>$return];
 		}
 
 		if(!is_array($return))
@@ -817,7 +817,7 @@ class Html extends Root
 	// possibilité de mettre un type
 	public static function getOption(string $tag,?string $type=null,?array $option=null):array 
 	{
-		$return = array();
+		$return = [];
 		$merge[] = static::$config['option'];
 		
 		if(!empty(static::$config['tag'][$tag]['option']))
@@ -836,7 +836,7 @@ class Html extends Root
 			if($tag === 'option' && array_key_exists('value',$option))
 			$option['selected'] = $option['value'];
 			
-			foreach (array('checked'=>'input','selected'=>'option') as $k => $v) 
+			foreach (['checked'=>'input','selected'=>'option'] as $k => $v) 
 			{
 				if(array_key_exists($k,$option))
 				{
@@ -846,7 +846,7 @@ class Html extends Root
 						$option[$k] = Set::arr($option[$k]);
 						
 						else
-						$option[$k] = array($option[$k]);
+						$option[$k] = [$option[$k]];
 					}
 					
 					$option[$k] = Arr::cast($option[$k]);
@@ -882,7 +882,7 @@ class Html extends Root
 	// passe à travers le tableau en provenance de getCallStatic
 	public static function parseCallStatic(array $array):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($array as $value) 
 		{
@@ -910,16 +910,16 @@ class Html extends Root
 	
 	// getCallStatic
 	// retourne la méthode et les arguments à partir d'un tableau camelCase
-	public static function getCallStatic($value,array $args=array()):array
+	public static function getCallStatic($value,array $args=[]):array
 	{
-		$return = array();
+		$return = [];
 
 		if(!is_array($value))
-		$value = array($value);
+		$value = [$value];
 		
 		$value = static::parseCallStatic($value);
 		$method = null;
-		$arg = array();
+		$arg = [];
 		
 		if(!empty($value))
 		{
@@ -1042,7 +1042,7 @@ class Html extends Root
 		
 		if(!empty($tag))
 		{
-			$return = array($tag);
+			$return = [$tag];
 			
 			if(is_array($tags))
 			$return = Arr::spliceLast($tags,$return);
@@ -1072,7 +1072,7 @@ class Html extends Root
 		if(is_string($arg))
 		{
 			$explode = static::argStrExplode($arg);
-			$arg = array($arg);
+			$arg = [$arg];
 		}
 		
 		if(!empty($explode))
@@ -1107,7 +1107,7 @@ class Html extends Root
 		if(is_string($arg))
 		{
 			$explode = static::argStrExplode($arg);
-			$arg = array($arg);
+			$arg = [$arg];
 		}
 		
 		if(!empty($explode))
@@ -1130,13 +1130,13 @@ class Html extends Root
 	{
 		$return = null;
 		
-		foreach (array(1=>'%<',2=>'>%') as $key => $char) 
+		foreach ([1=>'%<',2=>'>%'] as $key => $char) 
 		{
 			$pos = strpos($value,$char);
 			
 			if($pos !== false)
 			{
-				$return = array();
+				$return = [];
 				$return[] = substr($value,0,($pos+$key-1));
 				$return[] = substr($value,($pos+$key));
 				
@@ -1179,7 +1179,7 @@ class Html extends Root
 		foreach ($array as $value) 
 		{
 			if(!is_array($value))
-			$value = array($value);
+			$value = [$value];
 			
 			$return .= static::make(...$value);
 		}
@@ -1242,7 +1242,7 @@ class Html extends Root
 		foreach ($array as $value) 
 		{
 			if(!is_array($value))
-			$value = array($value);
+			$value = [$value];
 			
 			$return .= static::open(...$value);
 		}
@@ -1271,7 +1271,7 @@ class Html extends Root
 		foreach ($array as $value) 
 		{
 			if(!is_array($value))
-			$value = array($value);
+			$value = [$value];
 			
 			$return .= static::op(...$value);
 		}
@@ -1327,7 +1327,7 @@ class Html extends Root
 		foreach ($array as $value) 
 		{
 			if(!is_array($value))
-			$value = array($value);
+			$value = [$value];
 			
 			$return .= static::close(...$value);
 		}
@@ -1378,7 +1378,7 @@ class Html extends Root
 		foreach ($array as $value) 
 		{
 			if(!is_array($value))
-			$value = array($value);
+			$value = [$value];
 			
 			$return .= (strlen($return) && is_string($separator))? $separator:'';
 			$return .= static::make($tags,...$value);
@@ -1398,7 +1398,7 @@ class Html extends Root
 		foreach ($array as $value) 
 		{
 			if(!is_array($value))
-			$value = array($value);
+			$value = [$value];
 			
 			$return .= (strlen($return) && is_string($separator))? $separator:'';
 			$return .= static::open($tags,...$value);
@@ -1515,7 +1515,7 @@ class Html extends Root
 			if(is_string($return) && strlen($return))
 			{
 				$key = (static::isMetaProperty($return))? 'property':'name';
-				$return = array($key=>$return);
+				$return = [$key=>$return];
 			}
 			
 			elseif(is_array($return))
@@ -1607,7 +1607,7 @@ class Html extends Root
 		{
 			if(array_key_exists('type',$return))
 			{
-				if(in_array($return['type'],array('hidden','file')) && array_key_exists('maxlength',$return))
+				if(in_array($return['type'],['hidden','file']) && array_key_exists('maxlength',$return))
 				unset($return['maxlength']);
 				
 				if($return['type'] === 'image')
@@ -1764,7 +1764,7 @@ class Html extends Root
 		elseif($key === 'og:title')
 		$return = static::titleValue($return,$option);
 		
-		elseif(in_array($key,array('description','og:description'),true))
+		elseif(in_array($key,['description','og:description'],true))
 		$return = static::metaDescriptionValue($return,$option);
 
 		elseif($key === 'keywords')
@@ -1923,13 +1923,13 @@ class Html extends Root
 		if(!empty($option['separator']))
 		{
 			if(is_scalar($value))
-			$value = array(Str::castFix($value));
+			$value = [Str::castFix($value)];
 			
 			if(is_array($value))
 			{
 				$value = Arr::trimClean($value);
 				if(!empty($option['case']))
-				$value = Arr::map(array(Str::class,$option['case']),$value,true);
+				$value = Arr::map([Str::class,$option['case']],$value,true);
 				
 				$return = implode($option['separator'],$value);
 			}
@@ -2064,7 +2064,7 @@ class Html extends Root
 			
 			if(!empty($option['conditional']))
 			{
-				$arg = (is_array($option['conditional']))? $option['conditional']:array();
+				$arg = (is_array($option['conditional']))? $option['conditional']:[];
 				$return = static::conditionalCommentsOpen(...$arg).$return;
 			}
 		}
@@ -2106,7 +2106,7 @@ class Html extends Root
 	// génère un tag metaCharset
 	public static function metaCharset($value=null,$attr=null,?array $option=null):string 
 	{
-		return static::meta($value,Arr::plus($attr,array('name'=>'charset')),$option);
+		return static::meta($value,Arr::plus($attr,['name'=>'charset']),$option);
 	}
 	
 	
@@ -2114,7 +2114,7 @@ class Html extends Root
 	// génère un tag meta description
 	public static function metaDescription($value,$attr=null,?array $option=null):string 
 	{
-		return static::meta($value,Arr::plus($attr,array('name'=>'description')),$option);
+		return static::meta($value,Arr::plus($attr,['name'=>'description']),$option);
 	}
 	
 	
@@ -2122,7 +2122,7 @@ class Html extends Root
 	// génère un tag meta keywords
 	public static function metaKeywords($value,$attr=null,?array $option=null):string 
 	{
-		return static::meta($value,Arr::plus($attr,array('name'=>'keywords')),$option);
+		return static::meta($value,Arr::plus($attr,['name'=>'keywords']),$option);
 	}
 	
 	
@@ -2130,7 +2130,7 @@ class Html extends Root
 	// génère un tag meta og
 	public static function metaOg($value,string $name,$attr=null,?array $option=null):string
 	{
-		return static::meta($value,Arr::plus($attr,array('property'=>'og:'.$name)),$option);
+		return static::meta($value,Arr::plus($attr,['property'=>'og:'.$name]),$option);
 	}
 	
 	
@@ -2138,7 +2138,7 @@ class Html extends Root
 	// ouvre un tag css -> link
 	public static function cssOpen(string $value,$attr=null,?array $option=null):string
 	{
-		return static::linkOpen($value,Arr::plus($attr,array('rel'=>'stylesheet')),$option);
+		return static::linkOpen($value,Arr::plus($attr,['rel'=>'stylesheet']),$option);
 	}
 	
 	
@@ -2155,7 +2155,7 @@ class Html extends Root
 	// possible de spécifier une valeur pour transférer la variable php en javascript
 	public static function scriptOpen($value=null,?string $var=null,$attr=null,?array $option=null):string
 	{
-		return static::start('script',$value,$attr,Arr::plus($option,array('var'=>$var)));
+		return static::start('script',$value,$attr,Arr::plus($option,['var'=>$var]));
 	}
 	
 	
@@ -2163,7 +2163,7 @@ class Html extends Root
 	// fait un tag js -> script
 	public static function jsOpen(string $value,$attr=null,?array $option=null):string
 	{
-		return static::scriptOpen(null,null,Arr::plus(array('src'=>$value),$attr),$option);
+		return static::scriptOpen(null,null,Arr::plus(['src'=>$value],$attr),$option);
 	}
 	
 	
@@ -2179,7 +2179,7 @@ class Html extends Root
 	// ouvre un tag a
 	public static function aOpen($href=null,$title=null,$attr=null,?array $option=null):string
 	{
-		return static::start('a',($title === true)? $href:$title,Arr::plus(static::getAttrScalar('a',$attr),array('href'=>$href)),$option);
+		return static::start('a',($title === true)? $href:$title,Arr::plus(static::getAttrScalar('a',$attr),['href'=>$href]),$option);
 	}
 	
 	
@@ -2187,7 +2187,7 @@ class Html extends Root
 	// ouvre un tag img
 	public static function imgOpen($src=null,$alt=null,$attr=null,?array $option=null):string
 	{
-		return static::start('img',$src,Arr::plus($attr,array('alt'=>$alt)),$option);
+		return static::start('img',$src,Arr::plus($attr,['alt'=>$alt]),$option);
 	}
 	
 	
@@ -2224,7 +2224,7 @@ class Html extends Root
 	// ouvre une tag img, le contenu est forcé en base64
 	public static function img64($src=null,$alt=null,$attr=null,?array $option=null):string 
 	{
-		return static::img($src,$alt,$attr,Arr::plus($option,array('base64'=>true)));
+		return static::img($src,$alt,$attr,Arr::plus($option,['base64'=>true]));
 	}
 	
 	
@@ -2240,7 +2240,7 @@ class Html extends Root
 		
 		if($option['strict'] === true)
 		{
-			$rows = array();
+			$rows = [];
 			
 			if(!empty($thead))
 			$rows[] = $thead;
@@ -2276,7 +2276,7 @@ class Html extends Root
 	// ouvre et ferme une table seulement si toutes les rangées ont le même nombre de colonne
 	public static function tableStrict(?array $thead=null,?array $tbody=null,?array $tfoot=null,$attr=null,?array $option=null):string 
 	{
-		return static::table($thead,$tbody,$tfoot,$attr,Arr::plus($option,array('strict'=>true)));
+		return static::table($thead,$tbody,$tfoot,$attr,Arr::plus($option,['strict'=>true]));
 	}
 	
 	
@@ -2394,7 +2394,7 @@ class Html extends Root
 	// note: pas de valeur, mais csrf et genuine peuvent s'ajouter automatiquement à la valeur si les options sont activés
 	public static function formOpen($action=null,$attr=null,?array $option=null):string
 	{
-		return static::start('form',null,Arr::plus(static::getAttrScalar('form',$attr),array('action'=>$action)),$option);
+		return static::start('form',null,Arr::plus(static::getAttrScalar('form',$attr),['action'=>$action]),$option);
 	}
 	
 	
@@ -2466,10 +2466,10 @@ class Html extends Root
 		
 		if(is_string($label))
 		{
-			if(in_array($position,array(1,'before'),true))
+			if(in_array($position,[1,'before'],true))
 			$return = static::label($label,$attr,$option).$value;
 			
-			elseif(in_array($position,array(2,'after'),true))
+			elseif(in_array($position,[2,'after'],true))
 			$return = $value.static::label($label,$attr,$option);
 			
 			else
@@ -2512,7 +2512,7 @@ class Html extends Root
 			
 			$name = (!empty($value[1]['name']))? $value[1]['name']:null;
 			
-			if(in_array($id,array(null,true),true) && !static::isRelationTag($tag))
+			if(in_array($id,[null,true],true) && !static::isRelationTag($tag))
 			$id = Attr::randomId($name ?? null);
 			
 			if(is_string($id))
@@ -2575,7 +2575,7 @@ class Html extends Root
 	public static function formWrapArray($value,array $array,?string $wrap=null,$attr=null,?array $replace=null,$id=null,?array $option=null):string
 	{
 		$return = '';
-		$option = Arr::plus(array('descriptionClass'=>'description','requiredClass'=>'required','choiceClass'=>'choice'),$option);
+		$option = Arr::plus(['descriptionClass'=>'description','requiredClass'=>'required','choiceClass'=>'choice'],$option);
 		
 		if(!empty($array))
 		{
@@ -2589,7 +2589,7 @@ class Html extends Root
 			$htmlLabel = '';
 			$htmlForm = '';
 			
-			if(in_array($id,array(null,true),true) && !static::isRelationTag($type))
+			if(in_array($id,[null,true],true) && !static::isRelationTag($type))
 			{
 				$slug = (!empty($label))? Slug::str($label):null;
 				$id = Attr::randomId($slug);
@@ -2613,19 +2613,19 @@ class Html extends Root
 			
 			if($isRelation === true)
 			{
-				$choices = $array['choices'] ?? array();
+				$choices = $array['choices'] ?? [];
 				$option['value'] = $value;
 				
-				if(in_array($type,array('select','multiselect'),true) && !array_key_exists('title',$option))
+				if(in_array($type,['select','multiselect'],true) && !array_key_exists('title',$option))
 				$option['title'] = true;
 				
-				elseif(in_array($type,array('radio','checkbox'),true))
+				elseif(in_array($type,['radio','checkbox'],true))
 				{
 					if(!array_key_exists('autoHidden',$option))
 					$option['autoHidden'] = true;
 					
 					if(!array_key_exists('html',$option))
-					$option['html'] = array('div',$option['choiceClass']);
+					$option['html'] = ['div',$option['choiceClass']];
 				}
 				
 				$htmlForm .= static::$type($choices,$attr,$option);
@@ -2649,7 +2649,7 @@ class Html extends Root
 		$return = '';
 		
 		if(!is_array($value))
-		$value = array($value);
+		$value = [$value];
 		
 		if($attr !== null)
 		{
@@ -2672,8 +2672,8 @@ class Html extends Root
 	protected static function autoHidden($attr=null,?array $option=null):string 
 	{
 		$return = '';
-		$autoAttr = Arr::plus($attr,array('type'=>'hidden','id'=>null,'data-required'=>null));
-		$autoOpt = Arr::plus($option,array('html'=>null,'multi'=>false));
+		$autoAttr = Arr::plus($attr,['type'=>'hidden','id'=>null,'data-required'=>null]);
+		$autoOpt = Arr::plus($option,['html'=>null,'multi'=>false]);
 		$return .= static::inputHidden(null,$autoAttr,$autoOpt);
 		
 		return $return;
@@ -2709,7 +2709,7 @@ class Html extends Root
 		{
 			foreach ($value as $val => $label) 
 			{
-				$return .= static::inputRadio($val,$attr,Arr::plus($option,array('label'=>$label)));
+				$return .= static::inputRadio($val,$attr,Arr::plus($option,['label'=>$label]));
 			}
 		}
 		
@@ -2722,7 +2722,7 @@ class Html extends Root
 	// un champ hidden est ajouté au début du html
 	public static function radiosWithHidden($value,$attr=null,?array $option=null):string
 	{
-		return static::radios($value,$attr,Arr::plus($option,array('autoHidden'=>true)));
+		return static::radios($value,$attr,Arr::plus($option,['autoHidden'=>true]));
 	}
 	
 	
@@ -2756,7 +2756,7 @@ class Html extends Root
 		{
 			foreach ($value as $val => $label) 
 			{
-				$return .= static::inputCheckbox($val,$attr,Arr::plus($option,array('label'=>$label)));
+				$return .= static::inputCheckbox($val,$attr,Arr::plus($option,['label'=>$label]));
 			}
 		}
 		
@@ -2769,7 +2769,7 @@ class Html extends Root
 	// un champ hidden est ajouté au début du html
 	public static function checkboxesWithHidden($value,$attr=null,?array $option=null):string
 	{
-		return static::checkboxes($value,$attr,Arr::plus($option,array('autoHidden'=>true)));
+		return static::checkboxes($value,$attr,Arr::plus($option,['autoHidden'=>true]));
 	}
 	
 	
@@ -2804,7 +2804,7 @@ class Html extends Root
 		if(!is_string($title))
 		$title = true;
 		
-		$option = Arr::plus($option,array('title'=>$title));
+		$option = Arr::plus($option,['title'=>$title]);
 		$return = static::select($value,$attr,$option);
 		
 		return $return;
@@ -2815,7 +2815,7 @@ class Html extends Root
 	// construit un menu de sélection avec multiple choix
 	public static function multiselect($value,$attr=null,?array $option=null):string 
 	{
-		return static::select($value,Arr::plus(static::getAttrScalar('select',$attr),array('multiple'=>true)),Arr::plus($option,array('multi'=>true)));
+		return static::select($value,Arr::plus(static::getAttrScalar('select',$attr),['multiple'=>true]),Arr::plus($option,['multi'=>true]));
 	}
 	
 	
@@ -2825,7 +2825,7 @@ class Html extends Root
 	public static function clickOpen(?string $value=null,?string $title=null,?string $after=null,$attr=null,?array $option=null):string 
 	{
 		$return = '';
-		$option = Arrs::replace(array('class'=>static::$config['clickOpen']),$option);
+		$option = Arrs::replace(['class'=>static::$config['clickOpen']],$option);
 		$class = $option['class'];
 		$return .= static::divOpen(null,$attr);
 		
@@ -2877,19 +2877,19 @@ class Html extends Root
 		if($value === true || is_int($value))
 		$value = static::getBool($value);
 		
-		$option = Arrs::replace(array('class'=>static::$config['fakeSelect']),$option);
+		$option = Arrs::replace(['class'=>static::$config['fakeSelect']],$option);
 		$option = static::getOption('option',null,$option);
 		$selectedClass = $option['class']['selected'] ?? null;
 		$selected = (array_key_exists('selected',$option))? $option['selected']:null;
-		$selected = (!is_array($selected))? array($selected):$selected;
+		$selected = (!is_array($selected))? [$selected]:$selected;
 		$multi = (array_key_exists('multi',$option) && $option['multi'] === true)? true:false;
 		$after = static::hidden($selected,$attr,$multi);
 		$title = $option['title'] ?? null;
-		$divAttr = ($multi === true)? array('fakemultiselect','data-multiple'=>true):'fakeselect';
+		$divAttr = ($multi === true)? ['fakemultiselect','data-multiple'=>true]:'fakeselect';
 		$divAttr = Attr::append($option['attr'] ?? null,$divAttr);
 		
 		if(is_string($title))
-		$return .= static::li($title,array('data-value'=>''));
+		$return .= static::li($title,['data-value'=>'']);
 		
 		if(!empty($value))
 		{
@@ -2897,7 +2897,7 @@ class Html extends Root
 			{
 				$val = Scalar::cast($val);
 				$class = (in_array($val,$selected,true))? $selectedClass:null;
-				$return .= static::li($label,array($class,'data-value'=>$val));
+				$return .= static::li($label,[$class,'data-value'=>$val]);
 			}
 		}
 		
@@ -2915,7 +2915,7 @@ class Html extends Root
 	// génère un fakemultiselect à partir d'un tableau de relation
 	public static function fakemultiselect(array $value,$attr=null,?array $option=null):string
 	{
-		return static::fakeselect($value,$attr,Arr::plus($option,array('multi'=>true)));
+		return static::fakeselect($value,$attr,Arr::plus($option,['multi'=>true]));
 	}
 	
 	
@@ -2954,8 +2954,8 @@ class Html extends Root
 		{
 			$label = array_values((array) $captcha);
 			$captcha = static::captcha(...$label);
-			$attr = array('name'=>$name,'placeholder'=>$placeholder,'data-required'=>true);
-			$input = array('inputText',null,$attr);
+			$attr = ['name'=>$name,'placeholder'=>$placeholder,'data-required'=>true];
+			$input = ['inputText',null,$attr];
 			
 			if(is_string($captcha))
 			$return = static::formWrap($captcha,$input,$wrap,$replace);
@@ -2975,7 +2975,7 @@ class Html extends Root
 		if(!empty($csrf))
 		{
 			$value = ($value === null)? Session::csrf():$value;
-			$attr = Arr::plus($attr,array('name'=>$csrf['name']));
+			$attr = Arr::plus($attr,['name'=>$csrf['name']]);
 			
 			if(!empty($value))
 			$return = static::input($type,$value,$attr,$option);
@@ -3129,7 +3129,7 @@ class Html extends Root
 					
 					// head
 					elseif($k === 'head')
-					$r = static::head($arg,null,array('separator'=>$separator));
+					$r = static::head($arg,null,['separator'=>$separator]);
 					
 					// body
 					elseif($k === 'body')
@@ -3169,7 +3169,7 @@ class Html extends Root
 				if(array_key_exists($k,$value) && $value[$k] !== false)
 				{
 					$arg = (array) $value[$k];
-					$removeAssocKey = in_array($k,array('link','script','css','js'),true);
+					$removeAssocKey = in_array($k,['link','script','css','js'],true);
 					$arg = static::headArgReformat($arg,$removeAssocKey);
 					
 					if(!empty($arg))
@@ -3215,14 +3215,14 @@ class Html extends Root
 	// méthode protégé
 	protected static function headArgReformat(array $array,bool $removeAssocKey):array 
 	{
-		$return = array();
+		$return = [];
 		$array = Arr::clean($array);
 		$array = Arr::sortNumbersFirst($array);
 		
 		foreach ($array as $key => $value) 
 		{
 			if(is_string($key) && $removeAssocKey === false)
-			$return[] = array($value,$key);
+			$return[] = [$value,$key];
 			
 			else
 			$return[] = $value;
@@ -3260,14 +3260,14 @@ class Html extends Root
 					$r = static::divClose((array) $arg);
 					
 					// script et js
-					elseif(in_array($k,array('script','js'),true) && is_array($arg) && !empty($arg))
+					elseif(in_array($k,['script','js'],true) && is_array($arg) && !empty($arg))
 					$r = static::many($k,$separator,...array_values($arg));
 					
 					// body
 					elseif($k === 'body')
 					{
 						if($closeBody === true)
-						$r = (string) Buffer::startCallGet(array(Response::class,'closeBody'));
+						$r = (string) Buffer::startCallGet([Response::class,'closeBody']);
 						
 						$r .= static::bodyClose((array) $arg);
 					}
@@ -3320,8 +3320,8 @@ class Html extends Root
 	// prendre note que le suffix sans le html (strip tags) est maintenant comptabilisé dans la longueur de la string
 	public static function excerpt(?int $length,string $return,?array $option=null):string
 	{
-		$option = Arr::plus(array('mb'=>true,'removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true,'stripTags'=>true,'rtrim'=>null,'suffix'=>static::getExcerptSuffix(),'encode'=>'specialChars'),$option);
-		$option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? array($option['encode']):$option['encode'];
+		$option = Arr::plus(['mb'=>true,'removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true,'stripTags'=>true,'rtrim'=>null,'suffix'=>static::getExcerptSuffix(),'encode'=>'specialChars'],$option);
+		$option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? [$option['encode']]:$option['encode'];
 		$mb = (is_bool($option['mb']))? $option['mb']:Encoding::getMb($option['mb'],$return);
 		$suffix = null;
 		
@@ -3336,7 +3336,7 @@ class Html extends Root
 		if(!empty($length))
 		{
 			$suffixStrip = (is_string($option['suffix']) && strlen($option['suffix']))? static::stripTags($option['suffix']):null;
-			$lts = Str::lengthTrimSuffix($length,$return,Arr::plus($option,array('suffix'=>$suffixStrip)));
+			$lts = Str::lengthTrimSuffix($length,$return,Arr::plus($option,['suffix'=>$suffixStrip]));
 			$return = $lts['str'];
 			
 			if(is_string($lts['suffix']))
@@ -3363,7 +3363,7 @@ class Html extends Root
 	// removeLineBreaks, removeUnicode, excerpt par length (rtrim et suffix), trim, stripTags, convert (entities)
 	public static function excerptEntities(?int $length,string $return,?array $option=null):string
 	{
-		return static::excerpt($length,$return,Arr::plus($option,array('encode'=>'entities')));
+		return static::excerpt($length,$return,Arr::plus($option,['encode'=>'entities']));
 	}
 	
 	
@@ -3371,7 +3371,7 @@ class Html extends Root
 	// comme excerpt mais le suffix est ... (pas de html)
 	public static function excerptStrSuffix(?int $length,string $return,?array $option=null):string
 	{
-		return static::excerpt($length,$return,Arr::plus($option,array('suffix'=>Str::$config['excerpt']['suffix'])));
+		return static::excerpt($length,$return,Arr::plus($option,['suffix'=>Str::$config['excerpt']['suffix']]));
 	}
 	
 	
@@ -3389,8 +3389,8 @@ class Html extends Root
 	// mb est true par défaut
 	public static function output(string $return,?array $option=null):string
 	{
-		$option = Arr::plus(array('mb'=>true,'removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true,'stripTags'=>false,'encode'=>'specialChars'),$option);
-		$option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? array($option['encode']):$option['encode'];
+		$option = Arr::plus(['mb'=>true,'removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true,'stripTags'=>false,'encode'=>'specialChars'],$option);
+		$option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? [$option['encode']]:$option['encode'];
 		$return = Str::output($return,$option);
 		
 		// stripTags
@@ -3413,7 +3413,7 @@ class Html extends Root
 	// removeLineBreaks, removeUnicode, trim et convert (entities)
 	public static function outputEntities(string $return,?array $option=null):string
 	{
-		return static::output($return,Arr::plus($option,array('encode'=>'entities')));
+		return static::output($return,Arr::plus($option,['encode'=>'entities']));
 	}
 	
 	
@@ -3421,7 +3421,7 @@ class Html extends Root
 	// removeLineBreaks, removeUnicode, trim, stripTags et convert (specialchars)
 	public static function outputStripTags(string $return,?array $option=null):string
 	{
-		return static::output($return,Arr::plus($option,array('stripTags'=>true)));
+		return static::output($return,Arr::plus($option,['stripTags'=>true]));
 	}
 	
 	
@@ -3429,7 +3429,7 @@ class Html extends Root
 	// removeLineBreaks, trim et convert (specialchars)
 	public static function unicode(string $return,?array $option=null):string
 	{
-		return static::output($return,Arr::plus($option,array('removeUnicode'=>false)));
+		return static::output($return,Arr::plus($option,['removeUnicode'=>false]));
 	}
 	
 
@@ -3437,7 +3437,7 @@ class Html extends Root
 	// removeLineBreaks, trim et convert (entities)
 	public static function unicodeEntities(string $return,?array $option=null):string
 	{
-		return static::output($return,Arr::plus($option,array('removeUnicode'=>false,'encode'=>'entities')));
+		return static::output($return,Arr::plus($option,['removeUnicode'=>false,'encode'=>'entities']));
 	}
 	
 	
@@ -3445,7 +3445,7 @@ class Html extends Root
 	// removeLineBreaks, trim, stripTags et convert (specialchars)
 	public static function unicodeStripTags(string $return,?array $option=null):string
 	{
-		return static::output($return,Arr::plus($option,array('removeUnicode'=>false,'stripTags'=>true)));
+		return static::output($return,Arr::plus($option,['removeUnicode'=>false,'stripTags'=>true]));
 	}
 	
 	

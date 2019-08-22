@@ -68,7 +68,7 @@ trait _cacheFile
 		{
 			$return = Finder::shortcut(static::$cacheFile);
 			$class = str_replace('\\','',static::class);
-			$return = Str::replace(array('%class%'=>$class),$return);
+			$return = Str::replace(['%class%'=>$class],$return);
 		}
 		
 		return $return;

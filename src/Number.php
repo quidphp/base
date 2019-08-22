@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Number extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'intMaxLength'=>11, // longueur maximale d'une int pour le cast
-		'alias'=>array( // alias de méthode pour math
+		'alias'=>[ // alias de méthode pour math
 			'avg'=>'average',
 			'average'=>'average',
 			'min'=>'min',
-			'max'=>'max'),
-		'symbol'=>array( // symbol pour méthode math
+			'max'=>'max'],
+		'symbol'=>[ // symbol pour méthode math
 			'+'=>'addition',
 			'-'=>'subtraction',
 			'*'=>'multiplication',
@@ -21,8 +21,8 @@ class Number extends Root
 			'/'=>'division',
 			'%'=>'modulo',
 			'>'=>'max',
-			'<'=>'min')
-	);
+			'<'=>'min']
+	];
 
 	
 	// typecast
@@ -655,7 +655,7 @@ class Number extends Root
 	// les valeurs non numériques ne sont pas conservés
 	public static function combine(string $operation,array ...$values):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $key => $value) 
 		{
@@ -667,7 +667,7 @@ class Number extends Root
 					$return[$k] = $v;
 					
 					else
-					$return[$k] = static::math($operation,array($return[$k],$v));
+					$return[$k] = static::math($operation,[$return[$k],$v]);
 				}
 			}
 		}
@@ -1025,19 +1025,19 @@ class Number extends Root
 	{
 		$return = null;
 		
-		if(in_array($type,array('number','format'),true))
+		if(in_array($type,['number','format'],true))
 		$return = 'format';
 		
-		elseif(in_array($type,array('%','percent','percentFormat'),true))
+		elseif(in_array($type,['%','percent','percentFormat'],true))
 		$return = 'percentFormat';
 		
-		elseif(in_array($type,array('$','money','moneyFormat'),true))
+		elseif(in_array($type,['$','money','moneyFormat'],true))
 		$return = 'moneyFormat';
 		
-		elseif(in_array($type,array('phone','phoneFormat'),true))
+		elseif(in_array($type,['phone','phoneFormat'],true))
 		$return = 'phoneFormat';
 		
-		elseif(in_array($type,array('size','sizeFormat'),true))
+		elseif(in_array($type,['size','sizeFormat'],true))
 		$return = 'sizeFormat';
 		
 		return $return;
@@ -1246,7 +1246,7 @@ class Number extends Root
 	// si la variable adjustTotal est vrai, le tableau est envoyé dans la méthode percentAdjustTotal
 	public static function percentCalc(array $array,bool $adjustTotal=true,int $round=1,int $total=100):array
 	{
-		$return = array();
+		$return = [];
 		$count = 0;
 		
 		// type cast et count

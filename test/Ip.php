@@ -22,12 +22,12 @@ class Ip extends Base\Test
 		assert(!Base\Ip::isLocal("2.2.2.2.3.4"));
 
 		// allowed
-		assert(Base\Ip::allowed("127.0.0.1",array('whiteList'=>array("127.0.*.*"))));
-		assert(!Base\Ip::allowed("127.0.0.1",array('whiteList'=>array("127.0.1.1"))));
-		assert(!Base\Ip::allowed("127.0.0.1",array('whiteList'=>array("127.0.*.2"))));
-		assert(!Base\Ip::allowed("127.0.0.1",array('blackList'=>array("127.0.*.*"))));
-		assert(Base\Ip::allowed("127.0.0.1",array('blackList'=>array("127.0.1.1"))));
-		assert(Base\Ip::allowed("127.0.0.1",array('blackList'=>array("127.0.*.2"))));
+		assert(Base\Ip::allowed("127.0.0.1",['whiteList'=>["127.0.*.*"]]));
+		assert(!Base\Ip::allowed("127.0.0.1",['whiteList'=>["127.0.1.1"]]));
+		assert(!Base\Ip::allowed("127.0.0.1",['whiteList'=>["127.0.*.2"]]));
+		assert(!Base\Ip::allowed("127.0.0.1",['blackList'=>["127.0.*.*"]]));
+		assert(Base\Ip::allowed("127.0.0.1",['blackList'=>["127.0.1.1"]]));
+		assert(Base\Ip::allowed("127.0.0.1",['blackList'=>["127.0.*.2"]]));
 
 		// compareRange
 		assert(Base\Ip::compareRange("127.0.0.1",'127.0.*.*'));
@@ -46,12 +46,12 @@ class Ip extends Base\Test
 		assert(Base\Ip::compareLevel("1.2.3.4","1.2.3.4",4));
 
 		// in
-		assert(Base\Ip::in('1.2.3.4',array('1.2.3.4')));
-		assert(!Base\Ip::in('1.2.3.4',array('1.2.3.5')));
-		assert(Base\Ip::in('1.2.3.4',array('1.2.3.*')));
-		assert(!Base\Ip::in('2.2.3.4',array('1.2.3.*')));
-		assert(Base\Ip::in('2.2.3.4',array('1.2.3.*','2.2.3.4')));
-		assert(Base\Ip::in('2.2.3.4',array('1.2.3.*','2.2.3.5'),true,3));
+		assert(Base\Ip::in('1.2.3.4',['1.2.3.4']));
+		assert(!Base\Ip::in('1.2.3.4',['1.2.3.5']));
+		assert(Base\Ip::in('1.2.3.4',['1.2.3.*']));
+		assert(!Base\Ip::in('2.2.3.4',['1.2.3.*']));
+		assert(Base\Ip::in('2.2.3.4',['1.2.3.*','2.2.3.4']));
+		assert(Base\Ip::in('2.2.3.4',['1.2.3.*','2.2.3.5'],true,3));
 
 		// reformat
 		assert(count(Base\Ip::reformat('10.105.100.0/22')) === 4);
@@ -76,12 +76,12 @@ class Ip extends Base\Test
 		assert(Base\Ip::fromLong(16909060222222) === '242.135.45.14');
 
 		// explode
-		assert(Base\Ip::explode("1.2.3.4") === array('1','2','3','4'));
-		assert(Base\Ip::explode("1.2.3.4a") === array('1','2','3','4a'));
+		assert(Base\Ip::explode("1.2.3.4") === ['1','2','3','4']);
+		assert(Base\Ip::explode("1.2.3.4a") === ['1','2','3','4a']);
 
 		// implode
-		assert(Base\Ip::implode(array('1','2','3','4')) === '1.2.3.4');
-		assert(Base\Ip::implode(array('1','2','3','4z')) === '1.2.3.4z');
+		assert(Base\Ip::implode(['1','2','3','4']) === '1.2.3.4');
+		assert(Base\Ip::implode(['1','2','3','4z']) === '1.2.3.4z');
 		
 		return true;
 	}

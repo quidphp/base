@@ -10,12 +10,12 @@ class Assoc extends Root
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'trim'=>false, // chaque partie de assoc est trim
-			'clean'=>false), // une partie assoc vide est retiré
+			'clean'=>false], // une partie assoc vide est retiré
 		'sensitive'=>true // la classe est sensible ou non à la case
-	);
+	];
 	
 	
 	// arr
@@ -23,7 +23,7 @@ class Assoc extends Root
 	// de même si assoc est déjà un array, retourne le après parse
 	public static function arr($value,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = static::option($option);
 		$value = Obj::cast($value);
 		
@@ -151,7 +151,7 @@ class Assoc extends Root
 	public static function append(...$values):array
 	{
 		$return = '';
-		$array = array();
+		$array = [];
 		
 		foreach ($values as $k => $value) 
 		{	

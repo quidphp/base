@@ -17,7 +17,7 @@ class Validate extends Base\Test
 		$nonUtf8 = "\xF0";
 		$_file_ = Base\Finder::shortcut("[assertCommon]/class.php");
 		$current = Base\Res::open($_file_);
-		$headers = array("HTTP/1.0 200 OK","Content-Type: text/json; charset=UTF-8","test: ok");
+		$headers = ["HTTP/1.0 200 OK","Content-Type: text/json; charset=UTF-8","test: ok"];
 		Base\Response::setContentType("html");
 
 		// is
@@ -26,10 +26,10 @@ class Validate extends Base\Test
 		assert(Base\Validate::is('string',"lololooo@mail.zom"));
 		assert(Base\Validate::is(function($x) { if(is_string($x)) return true; },"lololooo@mail.zom"));
 		assert(!Base\Validate::is("arr","lololooo@mail.zom"));
-		assert(Base\Validate::is(array('='=>"test"),"test"));
-		assert(Base\Validate::is(array('>='=>2),2));
-		assert(!Base\Validate::is(array('>='=>3),2));
-		assert(!Base\Validate::is(array('!='=>"test"),"test"));
+		assert(Base\Validate::is(['='=>"test"],"test"));
+		assert(Base\Validate::is(['>='=>2],2));
+		assert(!Base\Validate::is(['>='=>3],2));
+		assert(!Base\Validate::is(['!='=>"test"],"test"));
 		assert(Base\Validate::is(new \DateTime("now"),new \DateTime("now")));
 		assert(Base\Validate::is(\DateTime::class,new \DateTime("now")));
 		assert(Base\Validate::is(function($x) { if(is_object($x)) return true; },new \DateTime("now")));
@@ -39,69 +39,69 @@ class Validate extends Base\Test
 		assert(!Base\Validate::is(\DateTime::class,\DateTime::class));
 
 		// isNot
-		assert(Base\Validate::isNot(array('strLength'=>23),'lop'));
+		assert(Base\Validate::isNot(['strLength'=>23],'lop'));
 
 		// isCom
-		assert(Base\Validate::isCom('string',array()) === 'string');
-		assert(Base\Validate::isCom('email',array()) === 'email');
-		assert(Base\Validate::isCom(function() { },array()) === 'closure');
-		assert(Base\Validate::isCom(new \DateTime("now"),array()) === array('instance'=>'DateTime'));
-		assert(Base\Validate::isCom(array('<'=>3),3) === array('<'=>3));
-		assert(Base\Validate::isCom(array('strLength'=>3),3) === array('strLength'=>3));
+		assert(Base\Validate::isCom('string',[]) === 'string');
+		assert(Base\Validate::isCom('email',[]) === 'email');
+		assert(Base\Validate::isCom(function() { },[]) === 'closure');
+		assert(Base\Validate::isCom(new \DateTime("now"),[]) === ['instance'=>'DateTime']);
+		assert(Base\Validate::isCom(['<'=>3],3) === ['<'=>3]);
+		assert(Base\Validate::isCom(['strLength'=>3],3) === ['strLength'=>3]);
 		assert(Base\Validate::isCom(\James::class,new \DateTime("now")) === 'James');
 		assert(Base\Validate::isCom(function() { return 'well'; },2) === 'well');
-		assert(Base\Validate::isCom(array('extension'=>'jpg'),$_file_) === array('extension'=>'jpg'));
-		assert(Base\Validate::isCom(array('extension'=>array('jpg','php')),$_file_));
-		assert(Base\Validate::isCom(array('extensions'=>array('jpg','php')),array($_file_)));
-		assert(Base\Validate::isCom(array('maxFilesize'=>524288000),$_file_));
-		assert(Base\Validate::isCom(array('maxFilesize'=>3000),$_file_) === array('maxFilesize'=>3000));
-		assert(Base\Validate::isCom(array('maxFilesizes'=>524288000),array($_file_)));
+		assert(Base\Validate::isCom(['extension'=>'jpg'],$_file_) === ['extension'=>'jpg']);
+		assert(Base\Validate::isCom(['extension'=>['jpg','php']],$_file_));
+		assert(Base\Validate::isCom(['extensions'=>['jpg','php']],[$_file_]));
+		assert(Base\Validate::isCom(['maxFilesize'=>524288000],$_file_));
+		assert(Base\Validate::isCom(['maxFilesize'=>3000],$_file_) === ['maxFilesize'=>3000]);
+		assert(Base\Validate::isCom(['maxFilesizes'=>524288000],[$_file_]));
 		assert(Base\Validate::isCom('strLatin','Привет') === 'strLatin');
 
 		// isAnd
-		assert(Base\Validate::isAnd(array('string','strNotEmpty',array('strLength'=>3)),'lop'));
-		assert(!Base\Validate::isAnd(array('string','strNotEmpty',array('strLength'=>2)),'lop'));
-		assert(Base\Validate::isAnd(array('string','strNotEmpty','strLength'=>3),'lop'));
-		assert(Base\Validate::isAnd(array('>'=>2,'>='=>3),3));
-		assert(!Base\Validate::isAnd(array('>'=>2,'>='=>3),2));
+		assert(Base\Validate::isAnd(['string','strNotEmpty',['strLength'=>3]],'lop'));
+		assert(!Base\Validate::isAnd(['string','strNotEmpty',['strLength'=>2]],'lop'));
+		assert(Base\Validate::isAnd(['string','strNotEmpty','strLength'=>3],'lop'));
+		assert(Base\Validate::isAnd(['>'=>2,'>='=>3],3));
+		assert(!Base\Validate::isAnd(['>'=>2,'>='=>3],2));
 
 		// isAndCom
-		assert(Base\Validate::isAndCom(array('string','strNotEmpty',array('strLength'=>2)),'lop') === array(array('strLength'=>2)));
-		assert(Base\Validate::isAndCom(array('string','strNotEmpty','strLength'=>3),'lop'));
+		assert(Base\Validate::isAndCom(['string','strNotEmpty',['strLength'=>2]],'lop') === [['strLength'=>2]]);
+		assert(Base\Validate::isAndCom(['string','strNotEmpty','strLength'=>3],'lop'));
 
 		// isOr
-		assert(Base\Validate::isOr(array('string','strNotEmpty',array('strLength'=>3)),'lop'));
-		assert(Base\Validate::isOr(array('string','strNotEmpty',array('strLength'=>2)),'lop'));
-		assert(Base\Validate::isOr(array('array','strEmpty','strLength'=>3),'lop'));
+		assert(Base\Validate::isOr(['string','strNotEmpty',['strLength'=>3]],'lop'));
+		assert(Base\Validate::isOr(['string','strNotEmpty',['strLength'=>2]],'lop'));
+		assert(Base\Validate::isOr(['array','strEmpty','strLength'=>3],'lop'));
 
 		// isXor
-		assert(!Base\Validate::isXor(array('string','strNotEmpty',array('strLength'=>3)),'lop'));
-		assert(!Base\Validate::isXor(array('string','strNotEmpty',array('strLength'=>2)),'lop'));
-		assert(Base\Validate::isXor(array('string','strEmpty',array('strLength'=>2)),'lop'));
-		assert(Base\Validate::isXor(array('array','strEmpty','strLength'=>3),'lop'));
+		assert(!Base\Validate::isXor(['string','strNotEmpty',['strLength'=>3]],'lop'));
+		assert(!Base\Validate::isXor(['string','strNotEmpty',['strLength'=>2]],'lop'));
+		assert(Base\Validate::isXor(['string','strEmpty',['strLength'=>2]],'lop'));
+		assert(Base\Validate::isXor(['array','strEmpty','strLength'=>3],'lop'));
 
 		// are
 		assert(Base\Validate::are(function($x) { return true; },'lop','zip'));
-		assert(Base\Validate::are(array('strLength'=>3),'lop','zip'));
-		assert(!Base\Validate::are(array('strLength'=>3),'lozp','zip'));
+		assert(Base\Validate::are(['strLength'=>3],'lop','zip'));
+		assert(!Base\Validate::are(['strLength'=>3],'lozp','zip'));
 
 		// areNot
-		assert(!Base\Validate::areNot(array('strLength'=>3),'lop','zip'));
-		assert(Base\Validate::areNot(array('strLength'=>3),'lozp','zip'));
+		assert(!Base\Validate::areNot(['strLength'=>3],'lop','zip'));
+		assert(Base\Validate::areNot(['strLength'=>3],'lozp','zip'));
 
 		// areAnd 
-		assert(Base\Validate::areAnd(array('strNotEmpty',array('strLength'=>3)),'lop','zip'));
-		assert(!Base\Validate::areAnd(array('strEmpty',array('strLength'=>3)),'lop','zip'));
+		assert(Base\Validate::areAnd(['strNotEmpty',['strLength'=>3]],'lop','zip'));
+		assert(!Base\Validate::areAnd(['strEmpty',['strLength'=>3]],'lop','zip'));
 
 		// areOr
-		assert(Base\Validate::areOr(array('strEmpty',array('strLength'=>3)),'lop','zip'));
+		assert(Base\Validate::areOr(['strEmpty',['strLength'=>3]],'lop','zip'));
 
 		// areXor
-		assert(Base\Validate::areXor(array('strEmpty',array('strLength'=>3)),'lop','zip'));
-		assert(!Base\Validate::areXor(array('strNotEmpty',array('strLength'=>3)),'lop','zip'));
+		assert(Base\Validate::areXor(['strEmpty',['strLength'=>3]],'lop','zip'));
+		assert(!Base\Validate::areXor(['strNotEmpty',['strLength'=>3]],'lop','zip'));
 
 		// one
-		assert(Base\Validate::one('array',array()));
+		assert(Base\Validate::one('array',[]));
 		assert(Base\Validate::one('bool',true));
 		assert(Base\Validate::one('callable','strlen'));
 		assert(Base\Validate::one('float',1.2));
@@ -112,12 +112,12 @@ class Validate extends Base\Test
 		assert(Base\Validate::one('resource',$fp));
 		assert(Base\Validate::one('scalar',2));
 		assert(Base\Validate::one('string',"ok"));
-		assert(Base\Validate::one('empty',array()));
-		assert(Base\Validate::one('notEmpty',array(1)));
-		assert(Base\Validate::one('reallyEmpty',array()));
+		assert(Base\Validate::one('empty',[]));
+		assert(Base\Validate::one('notEmpty',[1]));
+		assert(Base\Validate::one('reallyEmpty',[]));
 		assert(Base\Validate::one('notReallyEmpty',0));
 		assert(Base\Validate::one('arrKey',2));
-		assert(Base\Validate::one('arrNotEmpty',array(1)));
+		assert(Base\Validate::one('arrNotEmpty',[1]));
 		assert(Base\Validate::one('dateToDay','12-03-2017'));
 		assert(Base\Validate::one('dateToDay','01-08-2016'));
 		assert(Base\Validate::one('dateToMinute','12-03-2017 11:40'));
@@ -139,17 +139,17 @@ class Validate extends Base\Test
 		assert(Base\Validate::one('strNotEmpty','o'));
 		assert(Base\Validate::one('uriRelative','/james.php'));
 		assert(Base\Validate::one('uriAbsolute','https://google.com'));
-		assert(!Base\Validate::one('fileUploads',array(array())));
+		assert(!Base\Validate::one('fileUploads',[[]]));
 
 		// two
 		assert(Base\Validate::two('length',2,'te'));
 		assert(Base\Validate::two('minLength',1,2));
 		assert(Base\Validate::two('maxLength',2,'te'));
-		assert(Base\Validate::two('arrCount',2,array(1,2)));
-		assert(Base\Validate::two('arrMinCount',2,array(1,2)));
-		assert(Base\Validate::two('arrMaxCount',2,array(1,2)));
-		assert(Base\Validate::two('fileCount',2,array(1,2)));
-		assert(Base\Validate::two('fileMinCount',2,array(1,2)));
+		assert(Base\Validate::two('arrCount',2,[1,2]));
+		assert(Base\Validate::two('arrMinCount',2,[1,2]));
+		assert(Base\Validate::two('arrMaxCount',2,[1,2]));
+		assert(Base\Validate::two('fileCount',2,[1,2]));
+		assert(Base\Validate::two('fileMinCount',2,[1,2]));
 		assert(Base\Validate::two('fileMaxCount',2,"[1,2]"));
 		assert(Base\Validate::two('dateFormat','d-m-Y','12-03-2017'));
 		assert(Base\Validate::two('numberLength',3,1.3));
@@ -162,7 +162,7 @@ class Validate extends Base\Test
 		assert(Base\Validate::two('strMinLength',1,'te'));
 		assert(Base\Validate::two('strMaxLength',2,'te'));
 		assert(Base\Validate::two('uriHost','vimeo.com','https://vimeo.com/ok'));
-		assert(Base\Validate::two('extension',array('jpg','php'),$_file_));
+		assert(Base\Validate::two('extension',['jpg','php'],$_file_));
 
 		// regex
 		assert(Base\Validate::regex('email','lololooo@mailz.com'));
@@ -189,14 +189,14 @@ class Validate extends Base\Test
 		assert(!Base\Validate::compare(3,'<',3));
 
 		// pattern
-		assert(Base\Validate::pattern(array('minLength'=>2)) === '.{2,}');
-		assert(Base\Validate::pattern(array('james','minLength'=>'3')) === '.{3,}');
-		assert(Base\Validate::pattern(array('minLength'=>array())) === '.{%%%,}');
-		assert(Base\Validate::pattern(array('james','password','minLength'=>array())) === '^(?=.{5,30})(?=.*\d)(?=.*[A-z]).*');
+		assert(Base\Validate::pattern(['minLength'=>2]) === '.{2,}');
+		assert(Base\Validate::pattern(['james','minLength'=>'3']) === '.{3,}');
+		assert(Base\Validate::pattern(['minLength'=>[]]) === '.{%%%,}');
+		assert(Base\Validate::pattern(['james','password','minLength'=>[]]) === '^(?=.{5,30})(?=.*\d)(?=.*[A-z]).*');
 		assert(Base\Validate::pattern('^(?=.{5,30})(?=.*\d)(?=.*[A-z]).*') === '^(?=.{5,30})(?=.*\d)(?=.*[A-z]).*');
 
 		// patternKey
-		assert(Base\Validate::patternKey(array('james','minLength'=>'3')) === array('minLength'=>'3'));
+		assert(Base\Validate::patternKey(['james','minLength'=>'3']) === ['minLength'=>'3']);
 
 		// prepareConditions
 
@@ -220,7 +220,7 @@ class Validate extends Base\Test
 		// isReallyEmpty
 		assert(Base\Validate::isReallyEmpty(''));
 		assert(Base\Validate::isReallyEmpty(null));
-		assert(Base\Validate::isReallyEmpty(array()));
+		assert(Base\Validate::isReallyEmpty([]));
 		assert(!Base\Validate::isReallyEmpty(false));
 		assert(!Base\Validate::isReallyEmpty(0));
 		assert(!Base\Validate::isReallyEmpty('0'));
@@ -398,36 +398,36 @@ class Validate extends Base\Test
 		assert(Base\Validate::isSmallerOrEqual(2,2));
 
 		// arr
-		assert(Base\Validate::arr(null,array()));
-		assert(!Base\Validate::arr(true,array()));
-		assert(Base\Validate::arr(true,array(1,2,3)));
-		assert(Base\Validate::arr(false,array()));
-		assert(!Base\Validate::arr(false,array(1,2,3)));
-		assert(Base\Validate::arr(3,array(1,2,3)));
-		assert(!Base\Validate::arr(3,array(1,3)));
-		$array = array('key'=>1,'james'=>'bla','ok'=>0,'z'=>null);
+		assert(Base\Validate::arr(null,[]));
+		assert(!Base\Validate::arr(true,[]));
+		assert(Base\Validate::arr(true,[1,2,3]));
+		assert(Base\Validate::arr(false,[]));
+		assert(!Base\Validate::arr(false,[1,2,3]));
+		assert(Base\Validate::arr(3,[1,2,3]));
+		assert(!Base\Validate::arr(3,[1,3]));
+		$array = ['key'=>1,'james'=>'bla','ok'=>0,'z'=>null];
 		assert(Base\Validate::arr('key',$array));
 		assert(!Base\Validate::arr('key2',$array));
-		assert(Base\Validate::arr(array('key','james','ok'),$array));
-		assert(!Base\Validate::arr(array('key','james','okz'),$array));
-		assert(Base\Validate::arr(array('ok'=>true),$array));
-		assert(Base\Validate::arr(array('james'=>true),$array));
-		assert(!Base\Validate::arr(array('z'=>true),$array));
-		assert(!Base\Validate::arr(array('ok'=>false),$array));
-		assert(Base\Validate::arr(array('z'=>false),$array));
-		assert(Base\Validate::arr(array('key'=>1,'ok'=>true),$array));
-		assert(!Base\Validate::arr(array('key'=>1,'ok'=>false),$array));
-		assert(Base\Validate::arr(array('james'=>'string','ok'=>'int'),$array));
-		assert(!Base\Validate::arr(array('james'=>'string','ok'=>'array'),$array));
-		assert(Base\Validate::arr(array('key'=>array('='=>1)),$array));
+		assert(Base\Validate::arr(['key','james','ok'],$array));
+		assert(!Base\Validate::arr(['key','james','okz'],$array));
+		assert(Base\Validate::arr(['ok'=>true],$array));
+		assert(Base\Validate::arr(['james'=>true],$array));
+		assert(!Base\Validate::arr(['z'=>true],$array));
+		assert(!Base\Validate::arr(['ok'=>false],$array));
+		assert(Base\Validate::arr(['z'=>false],$array));
+		assert(Base\Validate::arr(['key'=>1,'ok'=>true],$array));
+		assert(!Base\Validate::arr(['key'=>1,'ok'=>false],$array));
+		assert(Base\Validate::arr(['james'=>'string','ok'=>'int'],$array));
+		assert(!Base\Validate::arr(['james'=>'string','ok'=>'array'],$array));
+		assert(Base\Validate::arr(['key'=>['='=>1]],$array));
 
 		// dig
-		assert(Base\Validate::dig(array('minLength'=>2),'test'));
-		assert(!Base\Validate::dig(array('minLength'=>2),'t'));
-		assert(Base\Validate::dig(array('minLength'=>2),array('test','ok')));
-		assert(Base\Validate::dig(array('minLength'=>2),array('test',array('ok','well'))));
-		assert(!Base\Validate::dig(array('minLength'=>2),array('test',array('ok','n'))));
-		assert(!Base\Validate::dig(array('minLength'=>2),array('test',array('n','nk'))));
+		assert(Base\Validate::dig(['minLength'=>2],'test'));
+		assert(!Base\Validate::dig(['minLength'=>2],'t'));
+		assert(Base\Validate::dig(['minLength'=>2],['test','ok']));
+		assert(Base\Validate::dig(['minLength'=>2],['test',['ok','well']]));
+		assert(!Base\Validate::dig(['minLength'=>2],['test',['ok','n']]));
+		assert(!Base\Validate::dig(['minLength'=>2],['test',['n','nk']]));
 		
 		return true;
 	}

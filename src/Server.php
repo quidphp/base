@@ -6,10 +6,10 @@ namespace Quid\Base;
 class Server extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'version'=>null, // version courante de quid
 		'online'=>'google.com' // domaine à utiliser pour tester si le serveur est online
-	);
+	];
 	
 	
 	// isMac
@@ -74,7 +74,7 @@ class Server extends Root
 	// retourne vrai si le protocol http utilisé est 1.0 ou 1.1
 	public static function isHttp1():bool 
 	{
-		return (in_array(static::httpProtocol(),array('HTTP/1','HTTP/1.0','HTTP/1.1'),true))? true:false;
+		return (in_array(static::httpProtocol(),['HTTP/1','HTTP/1.0','HTTP/1.1'],true))? true:false;
 	}
 	
 	
@@ -82,7 +82,7 @@ class Server extends Root
 	// retourne vrai si le protocol http utilisé est 2.0
 	public static function isHttp2():bool 
 	{
-		return (in_array(static::httpProtocol(),array('HTTP/2','HTTP/2.0'),true))? true:false;
+		return (in_array(static::httpProtocol(),['HTTP/2','HTTP/2.0'],true))? true:false;
 	}
 	
 	
@@ -497,7 +497,7 @@ class Server extends Root
 	// retourne des informations sur le script courant
 	public static function script():array
 	{
-		$return = array();
+		$return = [];
 		
 		$return['processId'] = getmypid();
 		$return['groupId'] = getmygid();
@@ -522,7 +522,7 @@ class Server extends Root
 	// retourne un tableau d'information sur le process
 	public static function process():array
 	{
-		$return = array();
+		$return = [];
 		
 		$return['id'] = posix_getpid();
 		$return['parentId'] = posix_getppid();
@@ -647,7 +647,7 @@ class Server extends Root
 	public static function loadAverage():array
 	{
 		$return = sys_getloadavg();
-		$return = Arr::keysChange(array(0=>'1_min',1=>'5_min',2=>'15_min'),$return);
+		$return = Arr::keysChange([0=>'1_min',1=>'5_min',2=>'15_min'],$return);
 		
 		return $return;
 	}
@@ -657,14 +657,14 @@ class Server extends Root
 	// retourne l'usage de mémoire par PHP
 	public static function memory(bool $format=true):array
 	{
-		$return = array();
+		$return = [];
 		$return['usage'] = memory_get_usage();
 		$return['realUsage'] = memory_get_usage(true);
 		$return['peakUsage'] = memory_get_peak_usage();
 		$return['peakRealUsage'] = memory_get_peak_usage(true);
 		
 		if($format === true)
-		$return = array_map(array(Number::class,'sizeFormat'),$return);
+		$return = array_map([Number::class,'sizeFormat'],$return);
 		
 		return $return;
 	}
@@ -674,12 +674,12 @@ class Server extends Root
 	// retourne l'espace disque sur le serveur
 	public static function diskSpace(string $directory='/',bool $format=true):array 
 	{
-		$return = array();
+		$return = [];
 		$return['free'] = disk_free_space($directory);
 		$return['total'] = disk_total_space($directory);
 		
 		if($format === true)
-		$return = array_map(array(Number::class,'sizeFormat'),$return);
+		$return = array_map([Number::class,'sizeFormat'],$return);
 		
 		return $return;
 	}
@@ -698,7 +698,7 @@ class Server extends Root
 	// génère un overview du serveur courant
 	public static function overview():array 
 	{
-		$return = array();
+		$return = [];
 		$return['quid'] = static::quidVersion();
 		$return['protocol'] = static::httpProtocol();
 		$return['software'] = static::software();
@@ -722,7 +722,7 @@ class Server extends Root
 	// génère un tableau d'information complet sur le serveur courant
 	public static function info():array 
 	{
-		$return = array();
+		$return = [];
 		$return['quid'] = static::quidVersion();
 		$return['protocol'] = static::httpProtocol();
 		$return['software'] = static::software();
@@ -761,7 +761,7 @@ class Server extends Root
 	// lance les tests de requirement
 	public static function requirement():array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::isPhpVersionOlder('7.1'))
 		$return[] = 'phpVersion';

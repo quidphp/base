@@ -10,12 +10,12 @@ class Finder extends Root
 	
 	
 	// config
-	public static $config = array(
-		'perms'=>array( // les numéros de permission valables selon le type d'accès
-			'readable'=>array(4,5,6,7),
-			'writable'=>array(2,3,6,7),
-			'executable'=>array(1,3,5,7)),
-		'stat'=>array( // renomme les clés de stat
+	public static $config = [
+		'perms'=>[ // les numéros de permission valables selon le type d'accès
+			'readable'=>[4,5,6,7],
+			'writable'=>[2,3,6,7],
+			'executable'=>[1,3,5,7]],
+		'stat'=>[ // renomme les clés de stat
 			'dev'=>'volume',
 			'ino'=>'inode',
 			'mode'=>'permission',
@@ -28,12 +28,12 @@ class Finder extends Root
 			'mtime'=>'dateModify',
 			'ctime'=>'dateInodeModify',
 			'blksize'=>'blockSize',
-			'blocks'=>'blockAmount')
-	);
+			'blocks'=>'blockAmount']
+	];
 	
 	
 	// host
-	protected static $host = array(); // tableau associatif entre host et chemin serveur, le même tableau est utilisé par toutes les classes
+	protected static $host = []; // tableau associatif entre host et chemin serveur, le même tableau est utilisé par toutes les classes
 	
 
 	// is
@@ -263,7 +263,7 @@ class Finder extends Root
 	// ne vérifie pas l'existence du chemin
 	public static function isDot(string $path):bool
 	{
-		return (in_array(Path::basename(static::path($path)),array('.','..'),true))? true:false;
+		return (in_array(Path::basename(static::path($path)),['.','..'],true))? true:false;
 	}
 	
 	
@@ -756,7 +756,7 @@ class Finder extends Root
 	// les champs formatables sont également formattés
 	public static function statReformat(array $stat,bool $format=false):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if(!empty($stat))
 		{
@@ -808,7 +808,7 @@ class Finder extends Root
 		
 		if($is === true && !empty($path))
 		{
-			$return = array();
+			$return = [];
 			
 			if($clearStatCache === true)
 			static::clearStatCache();
@@ -873,7 +873,7 @@ class Finder extends Root
 	public static function formatValue(string $format,int $return) 
 	{
 		if($format === 'permission')
-		$return = array($return=>static::permissionFormat($return));
+		$return = [$return=>static::permissionFormat($return)];
 		
 		elseif($format === 'owner')
 		$return = Server::user($return);
@@ -1210,7 +1210,7 @@ class Finder extends Root
 	// retourne la taille et le contenu de la cache realpath
 	public static function realpathCache():array
 	{
-		return array('size'=>realpath_cache_size(),'cache'=>realpath_cache_get());
+		return ['size'=>realpath_cache_size(),'cache'=>realpath_cache_get()];
 	}
 	
 	
@@ -1288,7 +1288,7 @@ class Finder extends Root
 					if(strpos($value,$path) === 0)
 					{
 						$return = Str::stripStart($path,$value);
-						$return = Uri::output($return,array('schemeHost'=>$host,'absolute'=>$absolute));
+						$return = Uri::output($return,['schemeHost'=>$host,'absolute'=>$absolute]);
 						
 						break 2;
 					}
@@ -1344,7 +1344,7 @@ class Finder extends Root
 			{
 				if(is_string($value))
 				{
-					$res = array();
+					$res = [];
 					
 					if(Dir::is($value))
 					$res = Dir::getExtension($value,$extension);

@@ -43,14 +43,14 @@ class Autoload extends Base\Test
 		// setsPsr4
 
 		// unsetPsr4
-		assert(Base\Autoload::getPsr4('Appz') === array('Appz'=>'test'));
+		assert(Base\Autoload::getPsr4('Appz') === ['Appz'=>'test']);
 		Base\Autoload::unsetPsr4('Appz');
 
 		// allPsr4
 		assert(!empty(Base\Autoload::allPsr4()));
 		
 		// removeAlias
-		assert(count(Base\Autoload::removeAlias(array(static::class,'jamesAlias','row\rowalias'))) === 2);
+		assert(count(Base\Autoload::removeAlias([static::class,'jamesAlias','row\rowalias'])) === 2);
 		
 		// overview
 		

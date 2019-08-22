@@ -19,25 +19,25 @@ class ImageRaster extends Base\Test
 		assert(Base\Res::size($captcha) > 4000);
 		
 		// bestFit
-		assert(Base\ImageRaster::bestFit(1000,600,300,300,true) === array('width'=>600,'height'=>600));
-		assert(Base\ImageRaster::bestFit(1000,600,200,500,true) === array('width'=>240,'height'=>600));
-		assert(Base\ImageRaster::bestFit(600,1000,200,500,true) === array('width'=>400,'height'=>1000));
-		assert(Base\ImageRaster::bestFit(600,1000,200,500) === array('width'=>200,'height'=>500));
-		assert(Base\ImageRaster::bestFit(500,150,500,250) === array('width'=>300,'height'=>150));
-		assert(Base\ImageRaster::bestFit(500,150,500,134) === array('width'=>500,'height'=>134));
-		assert(Base\ImageRaster::bestFit(1000,600,4032,3024) === array('width'=>800,'height'=>600));
-		assert(Base\ImageRaster::bestFit(1000,600,450,600) === array('width'=>450,'height'=>600));
-		assert(Base\ImageRaster::bestFit(1000,600,500,1200) === array('width'=>250,'height'=>600));
-		assert(Base\ImageRaster::bestFit(1000,600,2400,1200) === array('width'=>1000,'height'=>500));
-		assert(Base\ImageRaster::bestFit(1000,600,1000,1200) === array('width'=>500,'height'=>600));
-		assert(Base\ImageRaster::bestFit(1000,600,1000,1200) === array('width'=>500,'height'=>600));
-		assert(Base\ImageRaster::bestFit(1000,600,1500,1200) === array('width'=>750,'height'=>600));
-		assert(Base\ImageRaster::bestFit(600,1000,800,500) === array('width'=>600,'height'=>375));
+		assert(Base\ImageRaster::bestFit(1000,600,300,300,true) === ['width'=>600,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(1000,600,200,500,true) === ['width'=>240,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(600,1000,200,500,true) === ['width'=>400,'height'=>1000]);
+		assert(Base\ImageRaster::bestFit(600,1000,200,500) === ['width'=>200,'height'=>500]);
+		assert(Base\ImageRaster::bestFit(500,150,500,250) === ['width'=>300,'height'=>150]);
+		assert(Base\ImageRaster::bestFit(500,150,500,134) === ['width'=>500,'height'=>134]);
+		assert(Base\ImageRaster::bestFit(1000,600,4032,3024) === ['width'=>800,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(1000,600,450,600) === ['width'=>450,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(1000,600,500,1200) === ['width'=>250,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(1000,600,2400,1200) === ['width'=>1000,'height'=>500]);
+		assert(Base\ImageRaster::bestFit(1000,600,1000,1200) === ['width'=>500,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(1000,600,1000,1200) === ['width'=>500,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(1000,600,1500,1200) === ['width'=>750,'height'=>600]);
+		assert(Base\ImageRaster::bestFit(600,1000,800,500) === ['width'=>600,'height'=>375]);
 		
 		// bestFitExpand
-		assert(Base\ImageRaster::bestFitExpand(600,800,200,250) === array('width'=>600,'height'=>750));
-		assert(Base\ImageRaster::bestFitExpand(600,800,700,250) === array('width'=>700,'height'=>250));
-		assert(Base\ImageRaster::bestFitExpand(600,800,600,800) === array('width'=>600,'height'=>800));
+		assert(Base\ImageRaster::bestFitExpand(600,800,200,250) === ['width'=>600,'height'=>750]);
+		assert(Base\ImageRaster::bestFitExpand(600,800,700,250) === ['width'=>700,'height'=>250]);
+		assert(Base\ImageRaster::bestFitExpand(600,800,600,800) === ['width'=>600,'height'=>800]);
 		
 		// file
 		assert(!Base\ImageRaster::is($currentFile));
@@ -46,7 +46,7 @@ class ImageRaster extends Base\Test
 		assert(!Base\ImageRaster::isResource($currentFile));
 		assert(!Base\ImageRaster::isResource($mediaJpg));
 		assert(Base\ImageRaster::isResource($res));
-		assert(Base\ImageRaster::option() === array('useIncludePath'=>true));
+		assert(Base\ImageRaster::option() === ['useIncludePath'=>true]);
 		
 		return true;
 	}

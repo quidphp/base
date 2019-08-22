@@ -71,7 +71,7 @@ class Browser extends Base\Test
 		// cacheStatic
 		assert(count(Base\Browser::allCacheStatic()) === 9);
 		assert(Base\Browser::emptyCacheStatic() === true);
-		assert(Base\Browser::allCacheStatic() === array());
+		assert(Base\Browser::allCacheStatic() === []);
 
 		// cacheFile
 		

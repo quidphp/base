@@ -178,7 +178,7 @@ class Request extends Base\Test
 		Base\Request::setPath($requestUri);
 
 		// setLangs
-		Base\Request::setLangs(array('en','fr'));
+		Base\Request::setLangs(['en','fr']);
 
 		// parse
 		assert(count(Base\Request::parse()) === 8);
@@ -197,7 +197,7 @@ class Request extends Base\Test
 		assert(!Base\Request::isAjax());
 
 		// scheme
-		assert(in_array(Base\Request::scheme(),array('http','https'),true));
+		assert(in_array(Base\Request::scheme(),['http','https'],true));
 
 		// setScheme
 		Base\Request::setScheme("https");
@@ -275,13 +275,13 @@ class Request extends Base\Test
 		assert(Base\Request::pathGet(0) === 'test');
 
 		// pathGets
-		assert(Base\Request::pathGets(array(-1,1000)) === array(2=>'james',1000=>null));
+		assert(Base\Request::pathGets([-1,1000]) === [2=>'james',1000=>null]);
 
 		// pathCount
 		assert(Base\Request::pathCount() === 3);
 
 		// pathSlice
-		assert(Base\Request::pathSlice(0,2) === array('test','blabla'));
+		assert(Base\Request::pathSlice(0,2) === ['test','blabla']);
 		$_SERVER['REQUEST_URI'] = $requestUri;
 
 		// pathQuery
@@ -298,17 +298,17 @@ class Request extends Base\Test
 		// setQuery
 		Base\Request::setQuery("testé=2&bla=oké");
 		assert(Base\Request::query() === "testé=2&bla=oké");
-		assert($_GET === array("testé"=>2,"bla"=>"oké"));
-		Base\Request::setQuery(array("testé"=>2,"bla"=>"oké"));
+		assert($_GET === ["testé"=>2,"bla"=>"oké"]);
+		Base\Request::setQuery(["testé"=>2,"bla"=>"oké"]);
 		assert(Base\Request::query() === "testé=2&bla=oké");
-		Base\Request::setQuery(array("testé"=>2,"bla"=>"oké"),true);
+		Base\Request::setQuery(["testé"=>2,"bla"=>"oké"],true);
 		assert(Base\Request::query() === "test%C3%A9=2&bla=ok%C3%A9");
-		assert($_GET === array("testé"=>2,"bla"=>"oké"));
+		assert($_GET === ["testé"=>2,"bla"=>"oké"]);
 
 		// removeQuery
 		Base\Request::removeQuery();
 		assert(Base\Request::query() === '');
-		assert($_GET === array());
+		assert($_GET === []);
 
 		// fragment
 		assert(!Base\Request::fragment());
@@ -348,10 +348,10 @@ class Request extends Base\Test
 		assert($_GET === Base\Request::get());
 
 		// post
-		assert(array() === Base\Request::post());
+		assert([] === Base\Request::post());
 
 		// files
-		assert(Base\Request::files() === array());
+		assert(Base\Request::files() === []);
 
 		// csrf
 		assert(Base\Request::csrf() === null);
@@ -363,10 +363,10 @@ class Request extends Base\Test
 		assert(Base\Request::csrf() === null);
 
 		// setPost
-		Base\Request::setPost(array('test'=>2,'-what-'=>'ok','MAX_FILE_SIZE'=>200));
-		assert(Base\Request::post() === array('test'=>2,'-what-'=>'ok','MAX_FILE_SIZE'=>200));
-		assert(Base\Request::post(true,true) === array('test'=>2));
-		Base\Request::setPost(array());
+		Base\Request::setPost(['test'=>2,'-what-'=>'ok','MAX_FILE_SIZE'=>200]);
+		assert(Base\Request::post() === ['test'=>2,'-what-'=>'ok','MAX_FILE_SIZE'=>200]);
+		assert(Base\Request::post(true,true) === ['test'=>2]);
+		Base\Request::setPost([]);
 
 		// headers
 		assert(is_array(Base\Request::headers()));
@@ -442,7 +442,7 @@ class Request extends Base\Test
 		assert(Base\Request::langHeader() === 'de');
 
 		// fingerprint
-		assert(strlen(Base\Request::fingerprint(array('User-Agent'))) === 40);
+		assert(strlen(Base\Request::fingerprint(['User-Agent'])) === 40);
 
 		// redirect
 		Base\Request::setPath("/test/../bla");
@@ -487,7 +487,7 @@ class Request extends Base\Test
 		assert(!empty(Base\Request::relative()));
 		assert(Base\Request::relative() !== Base\Request::absolute());
 		assert(Base\Request::relative() === '/');
-		Base\Request::setQuery(array('test'=>'ok','blaé'=>'ok'));
+		Base\Request::setQuery(['test'=>'ok','blaé'=>'ok']);
 		Base\Request::setFragment("BAH");
 		assert(Base\Request::relative() === '/?test=ok&bla%C3%A9=ok#BAH');
 

@@ -6,16 +6,16 @@ namespace Quid\Base;
 class Request extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'idLength'=>10, // longueur du id de la requête
 		'safe'=>null, // paramètre par défaut pour la méhode isPathSafe
-		'lang'=>array( // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
+		'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
 			'length'=>2, // longueur de lang
-			'all'=>array('en')), // possibilité de lang
-		'default'=>array(
+			'all'=>['en']], // possibilité de lang
+		'default'=>[
 			'scheme'=>'http', // scheme par défaut si le tableau serveur est vide
-			'port'=>80) // port par défaut si le tableau serveur est vide
-	);
+			'port'=>80] // port par défaut si le tableau serveur est vide
+	];
 	
 	
 	// id
@@ -438,7 +438,7 @@ class Request extends Root
 	// comme parse_str
 	public static function parse():array
 	{
-		$return = array();
+		$return = [];
 		
 		$return['scheme'] = static::scheme();
 		$return['user'] = static::user();
@@ -521,7 +521,7 @@ class Request extends Root
 	// change la valeur du scheme de la requête courante
 	public static function setScheme(string $value):void
 	{
-		if(in_array($value,array('http','https'),true))
+		if(in_array($value,['http','https'],true))
 		static::setSsl(($value === 'https')? true:false);
 		
 		return;
@@ -768,7 +768,7 @@ class Request extends Root
 	public static function setQuery($value,bool $encode=false):void 
 	{
 		$string = '';
-		$array = array();
+		$array = [];
 		
 		if(is_string($value) && strlen($value))
 		$value = Uri::parseQuery($value);
@@ -836,7 +836,7 @@ class Request extends Root
 	{
 		$value = strtoupper($value);
 		
-		if(in_array($value,array('GET','POST'),true))
+		if(in_array($value,['GET','POST'],true))
 		Superglobal::setServer('REQUEST_METHOD',$value);
 		
 		return;
@@ -888,7 +888,7 @@ class Request extends Root
 		$host = static::host();
 		
 		if(!empty($scheme) && !empty($host))
-		$return = Uri::build(array('scheme'=>$scheme,'host'=>$host));
+		$return = Uri::build(['scheme'=>$scheme,'host'=>$host]);
 		
 		return $return;
 	}
@@ -1179,7 +1179,7 @@ class Request extends Root
 		if($absolute === true)
 		$parse = static::parse();
 		else
-		$parse = array('path'=>static::path(),'query'=>static::query(),'fragment'=>static::fragment());
+		$parse = ['path'=>static::path(),'query'=>static::query(),'fragment'=>static::fragment()];
 		
 		$return = Uri::build($parse,false);
 		

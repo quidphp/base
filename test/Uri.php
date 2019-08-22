@@ -12,7 +12,7 @@ class Uri extends Base\Test
 		// prepare
 		Base\Uri::setShortcut('tdn','https://tdn.google.com');
 		Base\Uri::setShortcut('extra','https://tdn.google.com/relative/ok');
-		assert(!empty(Base\Uri::schemeStatic(array('scheme.com'=>true,'james.com'=>443,'notScheme.com'=>'http'))));
+		assert(!empty(Base\Uri::schemeStatic(['scheme.com'=>true,'james.com'=>443,'notScheme.com'=>'http'])));
 
 		// is
 		assert(Base\Uri::is("/test.php?test=yeah"));
@@ -34,7 +34,7 @@ class Uri extends Base\Test
 		assert(!Base\Uri::is('zx'));
 		assert(Base\Uri::is('/james.jom'));
 		assert(!Base\Uri::is(''));
-		assert(!Base\Uri::is(array()));
+		assert(!Base\Uri::is([]));
 		assert(Base\Uri::is('/'));
 		assert(Base\Uri::is("http%3A%2F%2Fwww.google.com%2F%20test.php%3Fg%3D3%26test%C3%A9%3D4",true));
 
@@ -102,8 +102,8 @@ class Uri extends Base\Test
 		assert(Base\Uri::isInternal("/test.jpg"));
 		assert(!Base\Uri::isInternal("http://google.com/test"));
 		assert(Base\Uri::isInternal("http://google.com/test",'google.com'));
-		assert(Base\Uri::isInternal("http://google.com/test",array('abc.dev','google.com')));
-		assert(!Base\Uri::isInternal("http://google.com/test",array('abc.dev','googlez.com')));
+		assert(Base\Uri::isInternal("http://google.com/test",['abc.dev','google.com']));
+		assert(!Base\Uri::isInternal("http://google.com/test",['abc.dev','googlez.com']));
 		assert(Base\Uri::isInternal(Base\Request::absolute()));
 
 		// isExternal
@@ -112,8 +112,8 @@ class Uri extends Base\Test
 		assert(!Base\Uri::isExternal("http://google.com/test",'google.com'));
 		assert(!Base\Uri::isExternal(Base\Request::absolute()));
 		assert(Base\Uri::isExternal("//google.tdn.com/test.js"));
-		assert(!Base\Uri::isExternal("http://google.com/test",array('abc.dev','google.com')));
-		assert(Base\Uri::isExternal("http://google.com/test",array('abc.dev','googlez.com')));
+		assert(!Base\Uri::isExternal("http://google.com/test",['abc.dev','google.com']));
+		assert(Base\Uri::isExternal("http://google.com/test",['abc.dev','googlez.com']));
 
 		// isScheme
 		assert(Base\Uri::isScheme('https',"https://www.google.com"));
@@ -125,8 +125,8 @@ class Uri extends Base\Test
 		assert(Base\Uri::isHost("google.com","https://google.com"));
 		assert(!Base\Uri::isHost("google.ca","http://google.com"));
 		assert(!Base\Uri::isHost("google.com","https://www.google.com"));
-		assert(Base\Uri::isHost(array("google.com",'www.google.com'),"https://www.google.com"));
-		assert(Base\Uri::isHost(array("google.com",'www.GOOgle.com'),"https://www.google.com"));
+		assert(Base\Uri::isHost(["google.com",'www.google.com'],"https://www.google.com"));
+		assert(Base\Uri::isHost(["google.com",'www.GOOgle.com'],"https://www.google.com"));
 
 		// isSchemeHost
 		assert(Base\Uri::isSchemeHost("https://google.com","https://google.com"));
@@ -134,14 +134,14 @@ class Uri extends Base\Test
 
 		// isExtension
 		assert(true === Base\Uri::isExtension("php","http://www.google.com/test.php#test"));
-		assert(false === Base\Uri::isExtension(array("php",'jpgz'),"http://www.google.com/test.jpg?what=blabla"));
-		assert(true === Base\Uri::isExtension(array("php",'jpg'),"http://www.google.com/test.jpg?what=blabla"));
+		assert(false === Base\Uri::isExtension(["php",'jpgz'],"http://www.google.com/test.jpg?what=blabla"));
+		assert(true === Base\Uri::isExtension(["php",'jpg'],"http://www.google.com/test.jpg?what=blabla"));
 		assert(true === Base\Uri::isExtension("PHP","http://www.google.com/test.php#test"));
 
 		// isQuery
 		assert(Base\Uri::isQuery('bla',"http://www.google.com/test/ta?bla=lala#asdas"));
 		assert(!Base\Uri::isQuery('blaz',"http://www.google.com/test/ta?bla=lala#asdas"));
-		assert(Base\Uri::isQuery(array('bla','lala'),"http://www.google.com/test/ta?bla=lala&lala=bla"));
+		assert(Base\Uri::isQuery(['bla','lala'],"http://www.google.com/test/ta?bla=lala&lala=bla"));
 
 		// isLang
 		assert(Base\Uri::isLang('en',"https://google.com/en/test"));
@@ -159,12 +159,12 @@ class Uri extends Base\Test
 		// output
 		assert('http://google.com/test/%C3%A9ol/la%20vie/i.php?james=lala&ka=%C3%A9o&space=la%20uy#hash%20a' === $uri = Base\Uri::output("http://google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a"));
 		assert(Base\Request::scheme().'://google.com/test/%C3%A9ol/la%20vie/i.php?james=lala&ka=%C3%A9o&space=la%20uy#hash%20a' === Base\Uri::output("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a"));
-		assert(Base\Request::scheme().'://google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a' === Base\Uri::output("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a",array('encode'=>false)));
+		assert(Base\Request::scheme().'://google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a' === Base\Uri::output("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a",['encode'=>false]));
 		assert('https://tdn.google.com/what/now.js' === Base\Uri::output("[tdn]/what/now.js"));
-		assert(Base\Uri::output("[tdn]/what/now.js",array('absolute'=>false)) === '/what/now.js');
-		assert(Base\Uri::output("[tdn]/what/now.js",array('absolute'=>true)) === 'https://tdn.google.com/what/now.js');
+		assert(Base\Uri::output("[tdn]/what/now.js",['absolute'=>false]) === '/what/now.js');
+		assert(Base\Uri::output("[tdn]/what/now.js",['absolute'=>true]) === 'https://tdn.google.com/what/now.js');
 		assert('/%5Btdn2%5D/what/now.js' === Base\Uri::output("[tdn2]/what/now.js"));
-		assert(Base\Uri::output('/test.jpg',array('schemeHost'=>'https://google.com')) === "https://google.com/test.jpg");
+		assert(Base\Uri::output('/test.jpg',['schemeHost'=>'https://google.com']) === "https://google.com/test.jpg");
 		assert(Base\Uri::output('0') === '/0');
 		assert(Base\Uri::output("#test") === '#test');
 		assert(Base\Uri::output(Base\Request::absolute()) === Base\Request::relative());
@@ -186,7 +186,7 @@ class Uri extends Base\Test
 		assert("/" === Base\Uri::relative(""));
 		assert("/oups.php" === Base\Uri::relative("oups.php"));
 		assert('/test/%C3%A9ol/la%20vie/i.php?james=lala&ka=%C3%A9o&space=la%20uy#hash%20a' === Base\Uri::relative("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a"));
-		assert('/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a' === Base\Uri::relative("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a",array('encode'=>false)));
+		assert('/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a' === Base\Uri::relative("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a",['encode'=>false]));
 		assert(Base\Uri::relative("[tdn]/test.jpg") === '/test.jpg');
 		assert(Base\Uri::relative("[extra]/test.jpg") === '/relative/ok/test.jpg');
 		assert(Base\Uri::relative('http://google.com/') === '/');
@@ -200,17 +200,17 @@ class Uri extends Base\Test
 		assert(Base\Request::scheme().'://james.com/what/ok' === Base\Uri::absolute("/what//ok",'//james.com'));
 		assert('http://james.com/what/ok' === Base\Uri::absolute("/what//ok",'http://james.com'));
 		assert(Base\Request::scheme().'://google.com/test/%C3%A9ol/la%20vie/i.php?james=lala&ka=%C3%A9o&space=la%20uy#hash%20a' === Base\Uri::absolute("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a"));
-		assert(Base\Request::scheme().'://google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a' === Base\Uri::absolute("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a",null,array('encode'=>false)));
+		assert(Base\Request::scheme().'://google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a' === Base\Uri::absolute("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a",null,['encode'=>false]));
 		assert('https://tdn.google.com/what/now.js' === Base\Uri::absolute("[tdn]/what/now.js"));
 		assert(Base\Request::schemeHost().'/%5Btdn2%5D/what/now.js' === Base\Uri::absolute("[tdn2]/what/now.js"));
 		assert(Base\Uri::absolute("https://google.com/[tdn]/what/now.js") === 'https://google.com/https%3A/tdn.google.com/what/now.js');
-		assert(Base\Uri::absolute("//google.com/ok",null,array('encode'=>false)) === Base\Request::scheme().'://google.com/ok');
+		assert(Base\Uri::absolute("//google.com/ok",null,['encode'=>false]) === Base\Request::scheme().'://google.com/ok');
 		assert(Base\Uri::absolute("/test/ok",'google.com') === Base\Request::scheme()."://google.com/test/ok");
 		assert(Base\Uri::absolute("/test/ok",'https://google.com') === "https://google.com/test/ok");
 		assert(Base\Uri::absolute('http://gogle.com/test/slash/') === 'http://gogle.com/test/slash/');
-		assert(Base\Uri::absolute('http://gogle.com/test/slash/',null,array('encode'=>false)) === 'http://gogle.com/test/slash/');
-		assert(Base\Uri::absolute('http://gogle.com/test/slash/',null,array('append'=>array('q'=>2))) === 'http://gogle.com/test/slash/?q=2');
-		assert(Base\Uri::absolute('/test/slash/','google.com',array('append'=>array('q'=>2))) === Base\Request::scheme().'://google.com/test/slash/?q=2');
+		assert(Base\Uri::absolute('http://gogle.com/test/slash/',null,['encode'=>false]) === 'http://gogle.com/test/slash/');
+		assert(Base\Uri::absolute('http://gogle.com/test/slash/',null,['append'=>['q'=>2]]) === 'http://gogle.com/test/slash/?q=2');
+		assert(Base\Uri::absolute('/test/slash/','google.com',['append'=>['q'=>2]]) === Base\Request::scheme().'://google.com/test/slash/?q=2');
 
 		// existsCallable
 
@@ -218,7 +218,7 @@ class Uri extends Base\Test
 		assert(strlen(Base\Uri::append(true,Base\Request::schemeHost().'/what/now.js')) >= 40);
 		assert(strlen(Base\Uri::append(true,Base\Request::schemeHost().'/what/now.js?j=true')) >= 45);
 		assert(strlen(Base\Uri::append(true,Base\Request::schemeHost().'/what/now.js?j=true')) >= 45);
-		assert(strlen(Base\Uri::append(array('b'=>'érikaz'),Base\Request::schemeHost().'/what/now.js?j=true')) >= 40);
+		assert(strlen(Base\Uri::append(['b'=>'érikaz'],Base\Request::schemeHost().'/what/now.js?j=true')) >= 40);
 
 		// encode
 		assert(rawurlencode('test é ') === Base\Uri::encode('test é '));
@@ -242,18 +242,18 @@ class Uri extends Base\Test
 		assert('james=lala&ka=%C3%A9o&space=la%20uy' === Base\Uri::encodeQuery("james=lala&ka=éo&space=la uy"));
 
 		// parseQuery
-		assert(Base\Uri::parseQuery("géèßæ2v=æß∂∑œ¡",true,false) === array('géèßæ2v'=>'æß∂∑œ¡'));
-		assert(Base\Uri::parseQuery("géèßæ2v=æß∂∑œ¡",true,true) === array('géèßæ2v'=>'æß∂∑œ¡'));
-		assert(array("g"=>2,"v"=>"a") === Base\Uri::parseQuery("g=2&v=a"));
-		assert(array("g"=>2,"v"=>"a") === Base\Uri::parseQuery("g=2&v=a"));
-		assert(array("g"=>2,"v"=>"true") === Base\Uri::parseQuery("g=2&v=true"));
-		assert(Base\Uri::parseQuery("g=2&v=test%20%2B%20james") === array('g'=>2,'v'=>'test + james'));
+		assert(Base\Uri::parseQuery("géèßæ2v=æß∂∑œ¡",true,false) === ['géèßæ2v'=>'æß∂∑œ¡']);
+		assert(Base\Uri::parseQuery("géèßæ2v=æß∂∑œ¡",true,true) === ['géèßæ2v'=>'æß∂∑œ¡']);
+		assert(["g"=>2,"v"=>"a"] === Base\Uri::parseQuery("g=2&v=a"));
+		assert(["g"=>2,"v"=>"a"] === Base\Uri::parseQuery("g=2&v=a"));
+		assert(["g"=>2,"v"=>"true"] === Base\Uri::parseQuery("g=2&v=true"));
+		assert(Base\Uri::parseQuery("g=2&v=test%20%2B%20james") === ['g'=>2,'v'=>'test + james']);
 
 		// buildQuery
-		assert(Base\Uri::buildQuery(array("g"=>2,'bla'=>'stringé','space'=>'wh + as')) === 'g=2&bla=stringé&space=wh + as');
-		assert(Base\Uri::buildQuery(array("g"=>2,'bla'=>'stringé','space'=>'wh + as'),true) === 'g=2&bla=string%C3%A9&space=wh%20%2B%20as');
-		assert('g=2&bla=stringé&space=wh as' === Base\Uri::buildQuery(array("g"=>2,'bla'=>'stringé','space'=>'wh as')));
-		assert('g=2&bla=string%C3%A9&space=wh%20as' === Base\Uri::buildQuery(array("g"=>2,'bla'=>'stringé','space'=>'wh as'),true));
+		assert(Base\Uri::buildQuery(["g"=>2,'bla'=>'stringé','space'=>'wh + as']) === 'g=2&bla=stringé&space=wh + as');
+		assert(Base\Uri::buildQuery(["g"=>2,'bla'=>'stringé','space'=>'wh + as'],true) === 'g=2&bla=string%C3%A9&space=wh%20%2B%20as');
+		assert('g=2&bla=stringé&space=wh as' === Base\Uri::buildQuery(["g"=>2,'bla'=>'stringé','space'=>'wh as']));
+		assert('g=2&bla=string%C3%A9&space=wh%20as' === Base\Uri::buildQuery(["g"=>2,'bla'=>'stringé','space'=>'wh as'],true));
 
 		// parse
 		assert(Base\Uri::parse("http%3A%2F%2Fwww.google.com%2F%20test.php%3Fg%3D3%26test%C3%A9%3D4",true)['path'] === '/ test.php');
@@ -392,15 +392,15 @@ class Uri extends Base\Test
 		assert(Base\Uri::pathinfoOne(PHP_URL_PATH,"http://www.google.com/test/ta.jpg") === '/test');
 
 		// changePathinfo
-		assert(Base\Uri::changePathinfo(array('extension'=>'jpg'),"http://www.google.com/test/ta?bla=lala") === 'http://www.google.com/test/ta.jpg?bla=lala');
+		assert(Base\Uri::changePathinfo(['extension'=>'jpg'],"http://www.google.com/test/ta?bla=lala") === 'http://www.google.com/test/ta.jpg?bla=lala');
 
 		// keepPathinfo
-		assert(Base\Uri::keepPathinfo(array('dirname'),"http://www.google.com/test/ta.jpg?bla=lala") === 'http://www.google.com/test?bla=lala');
+		assert(Base\Uri::keepPathinfo(['dirname'],"http://www.google.com/test/ta.jpg?bla=lala") === 'http://www.google.com/test?bla=lala');
 		assert(Base\Uri::keepPathinfo('basename',"http://www.google.com/test/ta.jpg?bla=lala") === 'http://www.google.com/ta.jpg?bla=lala');
 
 		// removePathinfo 
 		assert(Base\Uri::removePathinfo('extension',"http://www.google.com/test/ta.jpg?bla=lala") === 'http://www.google.com/test/ta?bla=lala');
-		assert(Base\Uri::removePathinfo(array('filename','extension'),"http://www.google.com/test/ta.jpg?bla=lala") === 'http://www.google.com/test?bla=lala');
+		assert(Base\Uri::removePathinfo(['filename','extension'],"http://www.google.com/test/ta.jpg?bla=lala") === 'http://www.google.com/test?bla=lala');
 
 		// dirname
 		assert(Base\Uri::dirname("http://www.google.com/test/taa/ta.jpg") === '/test/taa');
@@ -496,18 +496,18 @@ class Uri extends Base\Test
 		assert(Base\Uri::pathCount("http://www.google.com/test/taa/ta.jpg?test=james") === 3);
 
 		// pathSlice
-		assert(Base\Uri::pathSlice(0,2,"http://www.google.com/test/taa/ta.jpg?test=james") === array('test','taa'));
-		assert(Base\Uri::pathSlice(-1,1,"http://www.google.com/test/taa/ta.jpg?test=james") === array(2=>'ta.jpg'));
+		assert(Base\Uri::pathSlice(0,2,"http://www.google.com/test/taa/ta.jpg?test=james") === ['test','taa']);
+		assert(Base\Uri::pathSlice(-1,1,"http://www.google.com/test/taa/ta.jpg?test=james") === [2=>'ta.jpg']);
 
 		// pathSplice
 		assert(Base\Uri::pathSplice(0,1,"http://www.google.com/test/taa/ta.jpg?test=james") === "http://www.google.com/taa/ta.jpg?test=james");
 		assert(Base\Uri::pathSplice(1,2,"http://www.google.com/test/taa/ta.jpg?test=james") === "http://www.google.com/test?test=james");
 		assert(Base\Uri::pathSplice(1,1,"http://www.google.com/test/taa/ta.jpg?test=james",'ok') === "http://www.google.com/test/ok/ta.jpg?test=james");
-		assert(Base\Uri::pathSplice(1,1,"http://www.google.com/test/taa/ta.jpg?test=james",array('ok','yeah')) === "http://www.google.com/test/ok/yeah/ta.jpg?test=james");
+		assert(Base\Uri::pathSplice(1,1,"http://www.google.com/test/taa/ta.jpg?test=james",['ok','yeah']) === "http://www.google.com/test/ok/yeah/ta.jpg?test=james");
 
 		// pathInsert
 		assert(Base\Uri::pathInsert(0,'haha',"http://www.google.com/test/taa/ta.jpg?test=james") === "http://www.google.com/haha/test/taa/ta.jpg?test=james");
-		assert(Base\Uri::pathInsert(0,array('hi','ho'),"http://www.google.com/test/taa/ta.jpg?test=james") === "http://www.google.com/hi/ho/test/taa/ta.jpg?test=james");
+		assert(Base\Uri::pathInsert(0,['hi','ho'],"http://www.google.com/test/taa/ta.jpg?test=james") === "http://www.google.com/hi/ho/test/taa/ta.jpg?test=james");
 
 		// query
 		assert('bla=lala' === Base\Uri::query("http://www.google.com/test/ta?bla=lala#asdas"));
@@ -520,8 +520,8 @@ class Uri extends Base\Test
 
 		// changeQuery
 		assert(Base\Uri::changeQuery('ko=yes',"http://www.google.com/test/ta?bla=lala") === 'http://www.google.com/test/ta?ko=yes');
-		assert(Base\Uri::changeQuery(array('ko'=>'yes','o'=>2),"http://www.google.com/test/ta?bla=lala") === "http://www.google.com/test/ta?ko=yes&o=2");
-		assert(Base\Uri::changeQuery(array('t'=>'/'),'/james.php/ok') === "/james.php/ok?t=/");
+		assert(Base\Uri::changeQuery(['ko'=>'yes','o'=>2],"http://www.google.com/test/ta?bla=lala") === "http://www.google.com/test/ta?ko=yes&o=2");
+		assert(Base\Uri::changeQuery(['t'=>'/'],'/james.php/ok') === "/james.php/ok?t=/");
 
 		// removeQuery
 		assert(Base\Uri::removeQuery("http://www.google.com/test/ta?bla=lala") === 'http://www.google.com/test/ta');
@@ -532,8 +532,8 @@ class Uri extends Base\Test
 		assert(null === Base\Uri::getQuery('v',"http://www.google.com?g=3&teste=4"));
 
 		// getsQuery
-		assert(array('g'=>3,'teste'=>4) === Base\Uri::getsQuery(array('g','teste'),"http://www.google.com?g=3&teste=4"));
-		assert(array('g'=>3,'testez'=>null) === Base\Uri::getsQuery(array('g','testez'),"http://www.google.com?g=3&teste=4"));
+		assert(['g'=>3,'teste'=>4] === Base\Uri::getsQuery(['g','teste'],"http://www.google.com?g=3&teste=4"));
+		assert(['g'=>3,'testez'=>null] === Base\Uri::getsQuery(['g','testez'],"http://www.google.com?g=3&teste=4"));
 
 		// setQuery
 		$uri = "http://www.google.com";
@@ -547,9 +547,9 @@ class Uri extends Base\Test
 
 		// setsQuery
 		$uri = "http://www.google.com";
-		assert("http://www.google.com/?g=3" === $uri = Base\Uri::setsQuery(array('g'=>3),$uri));
-		assert("http://www.google.com" === $uri = Base\Uri::setsQuery(array('g'=>null),$uri));
-		assert("http://www.google.com/?g=3&blaé=1" === $uri = Base\Uri::setsQuery(array('g'=>3,'blaé'=>true),$uri));
+		assert("http://www.google.com/?g=3" === $uri = Base\Uri::setsQuery(['g'=>3],$uri));
+		assert("http://www.google.com" === $uri = Base\Uri::setsQuery(['g'=>null],$uri));
+		assert("http://www.google.com/?g=3&blaé=1" === $uri = Base\Uri::setsQuery(['g'=>3,'blaé'=>true],$uri));
 
 		// unsetQuery
 		assert("http://www.google.com/test.php?g=3" === Base\Uri::unsetQuery("t","http://www.google.com/test.php?g=3&t=3"));
@@ -557,7 +557,7 @@ class Uri extends Base\Test
 		assert("https://tdn.google.com/test.php?g=3&bla=2" === Base\Uri::unsetQuery("t","[tdn]/test.php?g=3&t=3&bla=2"));
 
 		// unsetsQuery
-		assert("http://www.google.com/test.php" === Base\Uri::unsetsQuery(array('g','t'),"http://www.google.com/test.php?g=3&t=3"));
+		assert("http://www.google.com/test.php" === Base\Uri::unsetsQuery(['g','t'],"http://www.google.com/test.php?g=3&t=3"));
 
 		// fragment
 		assert('asdas' === Base\Uri::fragment("http://www.google.com/test/ta?bla=lala#asdas"));
@@ -589,37 +589,37 @@ class Uri extends Base\Test
 		// build
 		$info = Base\Uri::info("https://bla.com/path/to/heaven?what=lala#yeah");
 		assert($info['source'] === Base\Uri::build($info['parse']));
-		assert('http://bla.com' === Base\Uri::build(array('scheme'=>'http','host'=>'bla.com')));
-		assert('http://bla.com/test' === Base\Uri::build(array('path'=>'test','host'=>'bla.com','scheme'=>'http',)));
-		assert('http://bla.com' === Base\Uri::build(array('scheme'=>'http','host'=>'bla.com','query'=>'')));
-		assert(strlen(Base\Uri::build(array('scheme'=>'http','host'=>'bla.com','query'=>array('test'=>'deux','james'=>'ok')))) === 34);
-		assert(strlen(Base\Uri::build(array('scheme'=>'http','host'=>'bla.com','path'=>'/ookkk/','query'=>array('test'=>'deux','james'=>'ok')))) === 40);
-		assert(Base\Uri::build(array('scheme'=>'http','host'=>'bla.com','port'=>80,'path'=>'/test','query'=>'')) === 'http://bla.com/test');
-		assert(Base\Uri::build(array('scheme'=>'http','host'=>'bla.com','port'=>81,'path'=>'/test','query'=>'')) === 'http://bla.com:81/test');
-		assert(Base\Uri::build(array('scheme'=>'http','host'=>'bla.com','path'=>'/test/slash/')) === 'http://bla.com/test/slash/');
-		assert(Base\Uri::build(array('scheme'=>'http','host'=>'bla.com','port'=>80,'path'=>'/','query'=>'')) === 'http://bla.com');
-		assert(Base\Uri::build(array('fragment'=>'test')) === '#test');
-		assert(Base\Uri::build(array('scheme'=>'http','host'=>'google.com','path'=>'/','query'=>null)) === 'http://google.com');
+		assert('http://bla.com' === Base\Uri::build(['scheme'=>'http','host'=>'bla.com']));
+		assert('http://bla.com/test' === Base\Uri::build(['path'=>'test','host'=>'bla.com','scheme'=>'http',]));
+		assert('http://bla.com' === Base\Uri::build(['scheme'=>'http','host'=>'bla.com','query'=>'']));
+		assert(strlen(Base\Uri::build(['scheme'=>'http','host'=>'bla.com','query'=>['test'=>'deux','james'=>'ok']])) === 34);
+		assert(strlen(Base\Uri::build(['scheme'=>'http','host'=>'bla.com','path'=>'/ookkk/','query'=>['test'=>'deux','james'=>'ok']])) === 40);
+		assert(Base\Uri::build(['scheme'=>'http','host'=>'bla.com','port'=>80,'path'=>'/test','query'=>'']) === 'http://bla.com/test');
+		assert(Base\Uri::build(['scheme'=>'http','host'=>'bla.com','port'=>81,'path'=>'/test','query'=>'']) === 'http://bla.com:81/test');
+		assert(Base\Uri::build(['scheme'=>'http','host'=>'bla.com','path'=>'/test/slash/']) === 'http://bla.com/test/slash/');
+		assert(Base\Uri::build(['scheme'=>'http','host'=>'bla.com','port'=>80,'path'=>'/','query'=>'']) === 'http://bla.com');
+		assert(Base\Uri::build(['fragment'=>'test']) === '#test');
+		assert(Base\Uri::build(['scheme'=>'http','host'=>'google.com','path'=>'/','query'=>null]) === 'http://google.com');
 
 		// rebuild
 		assert(Base\Request::scheme().'://google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a' === Base\Uri::rebuild("//google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hash a",false));
 
 		// change
-		assert(Base\Request::scheme()."://ma.com/path/to/heaven?what=lala#yeah" === Base\Uri::change(array('host'=>'ma.com','scheme'=>'//'),"https://bla.com/path/to/heaven?what=lala#yeah"));
-		assert("http://ma.com/path/to/heaven?what=lala#yeah" === Base\Uri::change(array('host'=>'ma.com','scheme'=>'http'),"https://bla.com/path/to/heaven?what=lala#yeah"));
-		assert("https://bla.com/path/to/heaven?what=lala#bla" === Base\Uri::change(array('fragment'=>'bla'),"https://bla.com/path/to/heaven?what=lala#yeah"));
-		assert(Base\Uri::change(array('fragment'=>'bla'),"[tdn]/heaven?what=lala#yeah") === 'https://tdn.google.com/heaven?what=lala#bla');
+		assert(Base\Request::scheme()."://ma.com/path/to/heaven?what=lala#yeah" === Base\Uri::change(['host'=>'ma.com','scheme'=>'//'],"https://bla.com/path/to/heaven?what=lala#yeah"));
+		assert("http://ma.com/path/to/heaven?what=lala#yeah" === Base\Uri::change(['host'=>'ma.com','scheme'=>'http'],"https://bla.com/path/to/heaven?what=lala#yeah"));
+		assert("https://bla.com/path/to/heaven?what=lala#bla" === Base\Uri::change(['fragment'=>'bla'],"https://bla.com/path/to/heaven?what=lala#yeah"));
+		assert(Base\Uri::change(['fragment'=>'bla'],"[tdn]/heaven?what=lala#yeah") === 'https://tdn.google.com/heaven?what=lala#bla');
 
 		// keep
-		assert('http://username:passwordz:9090/path#anchor' === Base\Uri::keep(array('scheme','user','pass','path','port','fragment'),"http://username:passwordz@hostname.com:9090/path?arg=value#anchor"));
+		assert('http://username:passwordz:9090/path#anchor' === Base\Uri::keep(['scheme','user','pass','path','port','fragment'],"http://username:passwordz@hostname.com:9090/path?arg=value#anchor"));
 
 		// remove
-		assert('http://username:passwordz@hostname.com/path?arg=value' === Base\Uri::remove(array('port','fragment'),"http://username:passwordz@hostname.com:9090/path?arg=value#anchor"));
+		assert('http://username:passwordz@hostname.com/path?arg=value' === Base\Uri::remove(['port','fragment'],"http://username:passwordz@hostname.com:9090/path?arg=value#anchor"));
 		assert('http://username:passwordz@hostname.com:9090/?arg=value#anchor' === Base\Uri::remove('path',"http://username:passwordz@hostname.com:9090/path?arg=value#anchor"));
 		assert("http://www.google.com/test.php?g=3&testé=4" === Base\Uri::remove('fragment',"http://www.google.com/test.php?g=3&testé=4#blabla"));
-		assert("http://www.google.com/test.php" === Base\Uri::remove(array("fragment","query"),"http://www.google.com/test.php?g=3&testé=4"));
-		assert("http://www.google.com" === Base\Uri::remove(array("fragment","query","path"),"http://www.google.com/test.php?g=3&testé=4"));
-		assert("http" === Base\Uri::remove(array("fragment","query","path","host"),"http://www.google.com/test.php?g=3&testé=4"));
+		assert("http://www.google.com/test.php" === Base\Uri::remove(["fragment","query"],"http://www.google.com/test.php?g=3&testé=4"));
+		assert("http://www.google.com" === Base\Uri::remove(["fragment","query","path"],"http://www.google.com/test.php?g=3&testé=4"));
+		assert("http" === Base\Uri::remove(["fragment","query","path","host"],"http://www.google.com/test.php?g=3&testé=4"));
 		assert("http://www.google.com/test.php?g=3&testé=4" === Base\Uri::remove('fragment',"http://www.google.com/test.php?g=3&testé=4#blabla"));
 		assert("http://username:passwordz@hostname.com:9090/path?arg=value" === Base\Uri::remove('fragment',"http://username:passwordz@hostname.com:9090/path?arg=value#anchor"));
 		assert("http://username@hostname.com:9090/path?arg=value#anchor" === Base\Uri::remove('pass',"http://username:passwordz@hostname.com:9090/path?arg=value#anchor"));
@@ -645,7 +645,7 @@ class Uri extends Base\Test
 		assert("https://google.com/what" === Base\Uri::combine("https://googlez.com","http://google.com/what",'host'));
 
 		// redirection
-		$array = array('test2'=>'test3','test2/ok*'=>'test3*','test4*'=>'https://google.com','80.12.9.2'=>'https://google.com/ok');
+		$array = ['test2'=>'test3','test2/ok*'=>'test3*','test4*'=>'https://google.com','80.12.9.2'=>'https://google.com/ok'];
 		assert(Base\Uri::redirection('test2',$array) === 'test3');
 		assert(Base\Uri::redirection('test2/ok/james/lavie',$array) === 'test3/james/lavie');
 		assert(Base\Uri::redirection('test2/ok',$array) === 'test3');
@@ -669,8 +669,8 @@ class Uri extends Base\Test
 		assert(Base\Uri::getSchemeHostStatic('notScheme.comz') === null);
 
 		// schemeStatic
-		assert(Base\Uri::output('http://scheme.com/ok',array('schemeHost'=>'scheme.com')) === 'http://scheme.com/ok');
-		assert(Base\Uri::output('/ok',array('schemeHost'=>'scheme.com')) === 'https://scheme.com/ok');
+		assert(Base\Uri::output('http://scheme.com/ok',['schemeHost'=>'scheme.com']) === 'http://scheme.com/ok');
+		assert(Base\Uri::output('/ok',['schemeHost'=>'scheme.com']) === 'https://scheme.com/ok');
 		assert(Base\Uri::scheme('//scheme.com/ok') === 'https');
 		assert(Base\Uri::scheme('//notScheme.com/ok') === 'http');
 		assert(Base\Uri::changeProtocolRelativeScheme('//scheme.com/ok') === 'https://scheme.com/ok');

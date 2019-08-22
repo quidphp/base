@@ -6,8 +6,8 @@ namespace Quid\Base;
 class Ini extends Root
 {
 	// config
-	public static $config = array(
-		'default'=>array( // ini à appliquer par défaut lors du chargement
+	public static $config = [
+		'default'=>[ // ini à appliquer par défaut lors du chargement
 			'default_charset'=>'UTF-8',
 			'auto_detect_line_endings'=>true,
 			'error_log'=>'error_log',
@@ -15,8 +15,8 @@ class Ini extends Root
 			'html_errors'=>true,
 			'display_errors'=>true,
 			'error_reporting'=>-1,
-			'date.timezone'=>'America/New_York'),
-		'important'=>array( // ini considéré importante
+			'date.timezone'=>'America/New_York'],
+		'important'=>[ // ini considéré importante
 			'opcache.enable',
 			'always_populate_raw_post_data',
 			'register_argc_argv',
@@ -50,8 +50,8 @@ class Ini extends Root
 			'apc.enabled',
 			'apc.shm_size',
 			'apc.ttl',
-			'apc.enable_cli'),
-		'session'=>array( // ini lié à session
+			'apc.enable_cli'],
+		'session'=>[ // ini lié à session
 			'session.save_path',
 			'session.name',
 			'session.save_handler',
@@ -82,9 +82,9 @@ class Ini extends Root
 			'session.upload_progress.name',
 			'session.upload_progress.freq',
 			'session.upload_progress.min_freq',
-			'session.lazy_write'),
+			'session.lazy_write'],
 		'includePath'=>':' // séparateur pour includePath
-	);
+	];
 	
 	
 	// is
@@ -134,7 +134,7 @@ class Ini extends Root
 	// retourne plusieurs valeurs ini
 	public static function gets(string ...$keys):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($keys as $key) 
 		{
@@ -168,7 +168,7 @@ class Ini extends Root
 	// change pluieurs valeurs ini
 	public static function sets(array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($array as $key => $value) 
 		{
@@ -197,7 +197,7 @@ class Ini extends Root
 	// retourne toutes les configurations ini
 	public static function all(?string $extension=null,bool $details=false):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(is_string($extension))
 		{
@@ -234,7 +234,7 @@ class Ini extends Root
 	// retourne tous les fichiers ini loaded ou scanned
 	public static function files():array
 	{
-		$return = array();
+		$return = [];
 		$return['loaded'] = php_ini_loaded_file();
 		
 		$scanned = php_ini_scanned_files();
@@ -385,7 +385,7 @@ class Ini extends Root
 	// retourne un tableau
 	public static function getIncludePath():array
 	{
-		$return = array();
+		$return = [];
 		
 		$paths = static::get('include_path');
 		if(is_string($paths) && !empty($paths))
@@ -457,7 +457,7 @@ class Ini extends Root
 	// retourne toutes les ini importantes
 	public static function important(?int $format=null):array 
 	{
-		$return = array();
+		$return = [];
 		$important = (array) static::$config['important'];
 		
 		foreach ($important as $key => $value) 
@@ -473,7 +473,7 @@ class Ini extends Root
 	// retourne toutes les ini de session
 	public static function session(?int $format=null):array 
 	{
-		$return = array();
+		$return = [];
 		$session = (array) static::$config['session'];
 		
 		foreach ($session as $key => $value) 
@@ -489,7 +489,7 @@ class Ini extends Root
 	// lance les tests de requirement
 	public static function requirement():array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::postMaxSize() <= 1)
 		$return[] = 'post_max_size_too_small';
@@ -511,7 +511,7 @@ class Ini extends Root
 	// fait les changements ini par défaut
 	public static function setDefault(?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = Arr::plus(static::$config['default'],$option);
 
 		if(is_array($option) && !empty($option))

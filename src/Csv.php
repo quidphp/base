@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Csv extends File
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'mimeGroup'=>'csv', // mime groupe de la classe
-		'format'=>array('delimiter'=>';','enclosure'=>'"','escape'=>"\\"),
+		'format'=>['delimiter'=>';','enclosure'=>'"','escape'=>"\\"],
 		'load'=>'csv', // extension permise pour la méthode csv::load
-		'option'=>array('csv'=>true), // option pour la classe
-		'prefix'=>array( // option csv file::temp
-			'extension'=>'csv')
-	);
+		'option'=>['csv'=>true], // option pour la classe
+		'prefix'=>[ // option csv file::temp
+			'extension'=>'csv']
+	];
 	
 	
 	// getFormat
@@ -71,7 +71,7 @@ class Csv extends File
 	// le nom des headers est appliqué comme clé à chaque colonne
 	public static function assoc(array $array):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::same($array))
 		{
@@ -102,11 +102,11 @@ class Csv extends File
 	// retourne un tableau avec headers et des colonnes indexés
 	public static function list(array $array):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::same($array))
 		{
-			$return[0] = array();
+			$return[0] = [];
 			$first = current($array);
 			
 			foreach ($first as $key => $value) 
@@ -175,7 +175,7 @@ class Csv extends File
 		$return = null;
 		
 		if(is_string($value))
-		$return = array(array($value));
+		$return = [[$value]];
 		
 		elseif(is_array($value))
 		{
@@ -183,7 +183,7 @@ class Csv extends File
 			$return = $value;
 			
 			else
-			$return = array($value);
+			$return = [$value];
 		}
 		
 		return $return;

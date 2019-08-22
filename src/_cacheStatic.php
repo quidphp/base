@@ -6,7 +6,7 @@ namespace Quid\Base;
 trait _cacheStatic
 {
 	// cacheStatic
-	protected static $cacheStatic = array(); // conserve les données de la cache statique, important de recréer la propriété dans chaque classe sinon la cache sera partagée
+	protected static $cacheStatic = []; // conserve les données de la cache statique, important de recréer la propriété dans chaque classe sinon la cache sera partagée
 	
 	
 	// cacheStatic
@@ -52,7 +52,7 @@ trait _cacheStatic
 	public static function emptyCacheStatic():bool 
 	{
 		$return = true;
-		static::$cacheStatic = array();
+		static::$cacheStatic = [];
 		
 		return $return;
 	}

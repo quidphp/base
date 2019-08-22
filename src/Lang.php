@@ -6,15 +6,15 @@ namespace Quid\Base;
 class Lang extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'default'=>'en', // langue par défaut à appliquer au chargement de la classe
 		'field'=>'_', // délimiteur pour les méthodes field
-	);
+	];
 	
 	
 	// static
 	protected static $current = null; // langue courante
-	protected static $all = array(); // toute les langues, la première est la langue par défaut
+	protected static $all = []; // toute les langues, la première est la langue par défaut
 	protected static $callable = null; // callable d'un objet lang
 	
 	
@@ -111,7 +111,7 @@ class Lang extends Root
 	// retourne un tableau avec toutes les autres langues
 	public static function others(?string $value=null):array 
 	{
-		$return = array();
+		$return = [];
 		$value = static::code($value);
 		$return = Arr::valueStrip($value,static::all());
 		$return = array_values($return);
@@ -167,12 +167,12 @@ class Lang extends Root
 		$current = static::prepareCode($value);
 		
 		if(is_string($all))
-		$all = array($all);
+		$all = [$all];
 		
 		if(is_array($all) && !empty($all) && ($value === null || in_array($value,$all,true)))
 		{
 			$return = true;
-			static::$all = array();
+			static::$all = [];
 			static::add(...array_values($all));
 			
 			if($value === null)
@@ -206,7 +206,7 @@ class Lang extends Root
 	// ajoute une ou plusieurs langues
 	public static function add(string ...$values):array 
 	{
-		$return = array();
+		$return = [];
 		$change = false;
 		
 		foreach ($values as $value) 
@@ -239,7 +239,7 @@ class Lang extends Root
 	// la langue doit exister et ne pas être la courante
 	public static function remove(string ...$values):array 
 	{
-		$return = array();
+		$return = [];
 		$change = false;
 		
 		foreach ($values as $value) 
@@ -491,7 +491,7 @@ class Lang extends Root
 		$return = File::load($value);
 		
 		if(Arr::isUni($return))
-		$return = Arrs::sets($return,array());
+		$return = Arrs::sets($return,[]);
 		
 		return $return;
 	}
@@ -547,11 +547,11 @@ class Lang extends Root
 	// accepte un tableau unidimensionnel seulement
 	public static function reformat(array $array,?string $lang=null,?string $delimiter=null) 
 	{
-		$return = array();
+		$return = [];
 		$lang = static::code($lang);
 		$others = static::others();
 		$delimiter = (is_string($delimiter))? $delimiter:static::$config['field'];
-		$not = array();
+		$not = [];
 		
 		if(!empty($lang) && !empty($others) && strlen($delimiter) && !empty($array))
 		{
@@ -595,7 +595,7 @@ class Lang extends Root
 	// accepte seulement un tableau column
 	public static function reformatColumn(array $array,?string $lang=null,?string $delimiter=null) 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($array as $key => $value) 
 		{

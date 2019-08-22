@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Network extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// isOnline
@@ -64,13 +64,13 @@ class Network extends Root
 	// retourne les enregistrements mx pour un hostname 
 	public static function mx(string $hostname,bool $weight=true):array
 	{
-		$return = array();
-		$weights = array();
+		$return = [];
+		$weights = [];
 		
 		if(getmxrr($hostname,$return,$weights))
 		{
 			if($weight === true)
-			$return = array('mx'=>$return,'weight'=>$weights);
+			$return = ['mx'=>$return,'weight'=>$weights];
 		}
 		
 		return $return;

@@ -6,9 +6,9 @@ namespace Quid\Base;
 class Autoload
 {
 	// config
-	public static $config = array(
-		'psr4'=>array() // garde une copie du racine de l'auto chargement des classes
-	);
+	public static $config = [
+		'psr4'=>[] // garde une copie du racine de l'auto chargement des classes
+	];
 	
 	
 	// construct
@@ -97,7 +97,7 @@ class Autoload
 	// enlève toutes les fonctions autoload enregistrés
 	public static function unregisterAll():array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach (static::all() as $key => $value) 
 		{
@@ -115,7 +115,7 @@ class Autoload
 		$return = spl_autoload_functions();
 		
 		if(!is_array($return))
-		$return = array();
+		$return = [];
 		
 		return $return;
 	}
@@ -203,7 +203,7 @@ class Autoload
 			{
 				if(strpos($class,$key) === 0)
 				{
-					$return = array($key=>$value);
+					$return = [$key=>$value];
 					break;
 				}
 			}
@@ -303,12 +303,12 @@ class Autoload
 	// possible de filtrer par début de namespace
 	public static function overview(?string $start=null,?string $end=null,bool $endContains=true,bool $sort=true):array 
 	{
-		$return = array();
+		$return = [];
 		$extension = static::phpExtension();
 		
 		foreach (static::allPsr4($start,$end,$endContains) as $key => $value) 
 		{
-			$array = array();
+			$array = [];
 			$array['count'] = Dir::count($value,$extension,true);
 			$array['size'] = Dir::size($value,true);
 			$array['line'] = Dir::line($value);

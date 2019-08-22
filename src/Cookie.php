@@ -6,14 +6,14 @@ namespace Quid\Base;
 class Cookie extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'lifetime'=>3600, // durée de vie, 0 signifie fermeture du browser, a priorité sur expire car le timestamp courant est ajouté
 		'expire'=>null, // expiration, 0 signifie fermeture du browser, le timestamp n'est pas additionné, a priorité sur lifetime
 		'path'=>'/', // chemin dans le domaine 
 		'domain'=>'', // ce paramètre est étrange, le plus strict est de laisser domain comme chaîne vide
 		'secure'=>null, // cookie doit être servis via https
 		'httponly'=>true // cookie ne peut pas être modifié dans javaScript
-	);
+	];
 	
 	
 	// is
@@ -66,11 +66,11 @@ class Cookie extends Root
 	// prépare le tableau option pour cookie
 	public static function option(string $mode,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = Arr::plus(static::$config,$option);
 		$time = Date::time();
 		
-		if(in_array($mode,array('set','unset'),true))
+		if(in_array($mode,['set','unset'],true))
 		{
 			$return = $option;
 			

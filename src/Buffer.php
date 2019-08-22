@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Buffer extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// has
@@ -76,7 +76,7 @@ class Buffer extends Root
 
 	// startCallGet
 	// démarre un buffer, lance le callable, ferme le buffer et retourne les données
-	public static function startCallGet(callable $callable,array $arg=array(),?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):?string
+	public static function startCallGet(callable $callable,array $arg=[],?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):?string
 	{
 		$return = null;
 		static::start($callback,$chunk,$flag);
@@ -109,7 +109,7 @@ class Buffer extends Root
 	public static function getAll(bool $keep=true):string 
 	{
 		$return = '';
-		$buffer = array();
+		$buffer = [];
 		
 		while (($level = ob_get_level())) 
 		{
@@ -158,7 +158,7 @@ class Buffer extends Root
 	// par défaut les buffer sont retournés dans l'ordre inverse
 	public static function getCleanAll():array
 	{
-		$return = array();
+		$return = [];
 		
 		while (ob_get_level()) 
 		{
@@ -230,7 +230,7 @@ class Buffer extends Root
 	// flush les buffers et ferme les buffers
 	public static function endFlushAll(bool $flush=true):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(ob_get_level())
 		{
@@ -280,7 +280,7 @@ class Buffer extends Root
 	// note que ob_clean sur le dernier buffer envoie quand même le contenu dans la fonction callback même s'il le buffer ne ferme pas
 	public static function cleanAll():array 
 	{
-		$return = array();
+		$return = [];
 		
 		while (($level = ob_get_level())) 
 		{
@@ -378,7 +378,7 @@ class Buffer extends Root
 	// vide les buffer, ferme les buffer et rien d'afficher
 	public static function endCleanAll():array
 	{
-		$return = array();
+		$return = [];
 		
 		while (ob_get_level()) 
 		{

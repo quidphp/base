@@ -159,7 +159,7 @@ class Server extends Base\Test
 		assert(is_string(Base\Server::gatewayInterface()));
 
 		// httpProtocol
-		assert(in_array(Base\Server::httpProtocol(),array('HTTP/1.1','HTTP/2.0'),true));
+		assert(in_array(Base\Server::httpProtocol(),['HTTP/1.1','HTTP/2.0'],true));
 
 		// sapi
 		assert(is_string(Base\Server::sapi()));

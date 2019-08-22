@@ -14,9 +14,9 @@ class Root extends Base\Test
 		assert(Base\Root::classNamespace() === 'Quid\Base');
 		assert(Base\Root::classRoot() === 'Quid');
 		assert(Base\Root::className() === 'Root');
-		assert(Base\Root::classParents() === array());
+		assert(Base\Root::classParents() === []);
 		assert(count(Base\Root::classHelp()) === 9);
-		assert(Base\Root::classIsCallable(array(Base\Str::class,'upper')));
+		assert(Base\Root::classIsCallable([Base\Str::class,'upper']));
 		assert(!Base\Root::classIsCallable('strtoupper'));
 		
 		return true;

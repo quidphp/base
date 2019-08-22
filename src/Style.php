@@ -6,19 +6,19 @@ namespace Quid\Base;
 class Style extends Listing
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'implode'=>1, // index du séparateur à utiliser lors du implode
 			'end'=>true, // ajoute le premier séparateur à la fin lors du implode
 			'extension'=>'jpg', // extension par défaut pour uri si non fourni
-			'uri'=>null), // option pour uri,
-		'separator'=>array( // les séparateurs de style
-			array(';','; '),
-			array(':',': ')), 
+			'uri'=>null], // option pour uri,
+		'separator'=>[ // les séparateurs de style
+			[';','; '],
+			[':',': ']], 
 		'default'=>'background-image', // clé par défaut si style est string
-		'shortcut'=>array( // shortcut pour clé style
-			'bgimg'=>'background-image'),
-		'unit'=>array( // unit par défaut si la valeur est int ou float
+		'shortcut'=>[ // shortcut pour clé style
+			'bgimg'=>'background-image'],
+		'unit'=>[ // unit par défaut si la valeur est int ou float
 			'border-radius'=>'%',
 			'padding'=>'px',
 			'margin'=>'px',
@@ -33,8 +33,8 @@ class Style extends Listing
 			'top'=>'%',
 			'left'=>'%',
 			'right'=>'%',
-			'botton'=>'%')
-	);
+			'botton'=>'%']
+	];
 
 	
 	// parse
@@ -45,7 +45,7 @@ class Style extends Listing
 	// les clés du tableau sont insensible à la case
 	public static function parse(array $array,array $option):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($array as $key => $value) 
 		{
@@ -115,14 +115,14 @@ class Style extends Listing
 	// prépare une string dans la méthode arr
 	public static function prepareStr(string $value,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator(1,$option['explode']);
 		
 		if(!empty($separator) && strpos($value,$separator))
 		$return = static::explodeStr($value,$option);
 		
 		else
-		$return = array(static::$config['default']=>$value);
+		$return = [static::$config['default']=>$value];
 
 		return $return;
 	}
@@ -132,7 +132,7 @@ class Style extends Listing
 	// explode une string style
 	public static function explodeStr(string $value,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator(0,$option['explode']);
 		$separator2 = static::getSeparator(1,$option['explode']);
 		

@@ -6,17 +6,17 @@ namespace Quid\Base;
 class Ip extends Root
 {
 	// config
-	public static $config = array(
-		'allowed'=>array( // option par défaut pour la méthode allowed
-			'whiteList'=>null,'blackList'=>null,'range'=>true,'level'=>null),
+	public static $config = [
+		'allowed'=>[ // option par défaut pour la méthode allowed
+			'whiteList'=>null,'blackList'=>null,'range'=>true,'level'=>null],
 		'range'=>'*', // caractère pour range
-		'reformat'=>array( // défini le nombre de groupe de 256 ips par niveaux
+		'reformat'=>[ // défini le nombre de groupe de 256 ips par niveaux
 			20=>16,
 			21=>8,
 			22=>4,
 			23=>2,
-			24=>1)
-	);
+			24=>1]
+	];
 	
 	
 	// is
@@ -43,7 +43,7 @@ class Ip extends Root
 		$return = false;
 		
 		if(Arr::isIndexed($option))
-		$option = array('whiteList'=>$option);
+		$option = ['whiteList'=>$option];
 		
 		$option = Arr::plus(static::$config['allowed'],$option);
 		
@@ -183,7 +183,7 @@ class Ip extends Root
 			
 			if(count($x) === 2 && $x[0] === 0 && is_int($x[1]) && array_key_exists($x[1],static::$config['reformat']))
 			{
-				$return = array();
+				$return = [];
 				$i = 0;
 				$group = static::$config['reformat'][$x[1]];
 				
@@ -211,7 +211,7 @@ class Ip extends Root
 	// un tableau multidimensionnel est retourné
 	public static function reformats(string ...$values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $value) 
 		{
@@ -227,7 +227,7 @@ class Ip extends Root
 	// un tableau unidimensionnel avec les ips unique sont retournés
 	public static function reformatsUnique(string ...$values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $value) 
 		{

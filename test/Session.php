@@ -16,7 +16,7 @@ class Session extends Base\Test
 		$time = Base\Date::time();
 		$boot = $data['boot'];
 		$type = $boot->type();
-		$default = array('type'=>$type,'env'=>$boot->env(),'version'=>$boot->version());
+		$default = ['type'=>$type,'env'=>$boot->env(),'version'=>$boot->version()];
 		Base\Session::setDefault($default);
 		Base\Session::destroy();
 		assert(count(Base\Session::setDefault()) === 8);
@@ -164,19 +164,19 @@ class Session extends Base\Test
 		assert(count(Base\Session::getGarbageCollect()) === 3);
 
 		// setGarbageCollect
-		assert(Base\Session::setGarbageCollect(array('probability'=>555,'divisor'=>666,'lifetime'=>777)));
-		assert(Base\Session::setGarbageCollect(array('probability'=>1,'divisor'=>1000,'lifetime'=>7200)));
-		assert(Base\Session::setGarbageCollect(array('probability'=>1,'divisor'=>1000,'expire'=>$time+20,'buffer'=>10)));
+		assert(Base\Session::setGarbageCollect(['probability'=>555,'divisor'=>666,'lifetime'=>777]));
+		assert(Base\Session::setGarbageCollect(['probability'=>1,'divisor'=>1000,'lifetime'=>7200]));
+		assert(Base\Session::setGarbageCollect(['probability'=>1,'divisor'=>1000,'expire'=>$time+20,'buffer'=>10]));
 		assert(Base\Session::getGarbageCollect()['lifetime'] === 30);
-		assert(Base\Session::setGarbageCollect(array('probability'=>1,'divisor'=>1000,'lifetime'=>1000,'buffer'=>10)));
+		assert(Base\Session::setGarbageCollect(['probability'=>1,'divisor'=>1000,'lifetime'=>1000,'buffer'=>10]));
 		assert(Base\Session::getGarbageCollect()['lifetime'] === 1010);
 
 		// getCookieParams
-		assert(in_array(count(Base\Session::getCookieParams()),array(5,6),true));
+		assert(in_array(count(Base\Session::getCookieParams()),[5,6],true));
 
 		// setCookieParams
-		assert(Base\Session::setCookieParams(array('domain'=>Base\Request::host())));
-		assert(Base\Session::setCookieParams(array('domain'=>'')));
+		assert(Base\Session::setCookieParams(['domain'=>Base\Request::host()]));
+		assert(Base\Session::setCookieParams(['domain'=>'']));
 
 		// setDefault
 
@@ -190,7 +190,7 @@ class Session extends Base\Test
 		assert(count(Base\Session::info()) === 16);
 
 		// getStructure
-		assert(Base\Session::getStructure(null) === array());
+		assert(Base\Session::getStructure(null) === []);
 		assert(count(Base\Session::getStructure(true)) === 13);
 
 		// prepareStructure
@@ -403,13 +403,13 @@ class Session extends Base\Test
 		assert(Base\Session::remember('username') === 'test');
 
 		// setsRemember
-		Base\Session::setsRemember(array('username'=>'test2'));
+		Base\Session::setsRemember(['username'=>'test2']);
 		assert(Base\Session::remember('username') === 'test2');
-		assert(Base\Session::remember() === array('username'=>'test2'));
+		assert(Base\Session::remember() === ['username'=>'test2']);
 
 		// unsetRemember
 		Base\Session::unsetRemember('username');
-		assert(Base\Session::remember() === array());
+		assert(Base\Session::remember() === []);
 
 		// emptyRemember
 		Base\Session::emptyRemember();

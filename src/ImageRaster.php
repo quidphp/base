@@ -6,12 +6,12 @@ namespace Quid\Base;
 class ImageRaster extends File
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'mimeGroup'=>'imageRaster', // mime groupe de la classe
 		'load'=>null, // extension permise pour la méthode imageRaster::load
-		'prefix'=>array( // option image file::temp
-			'extension'=>'jpg')
-	);
+		'prefix'=>[ // option image file::temp
+			'extension'=>'jpg']
+	];
 	
 	
 	// captcha
@@ -20,7 +20,7 @@ class ImageRaster extends File
 	public static function captcha(string $value,?string $font=null,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(array('background'=>array(0,0,0),'line'=>array(155,155,155),'pixel'=>array(155,155,155),'text'=>array(255,255,255)),$option);
+		$option = Arr::plus(['background'=>[0,0,0],'line'=>[155,155,155],'pixel'=>[155,155,155],'text'=>[255,255,255]],$option);
 		$image = null;
 		$length = strlen($value);
 		
@@ -123,7 +123,7 @@ class ImageRaster extends File
 			if($expand === true)
 			$image = static::bestFitExpand($maxWidth,$maxHeight,$newWidth,$newHeight);
 			else
-			$image = array('width'=>$newWidth,'height'=>$newHeight);
+			$image = ['width'=>$newWidth,'height'=>$newHeight];
 		}
 		
 		return $image;
@@ -151,7 +151,7 @@ class ImageRaster extends File
 				$newHeight *= $ratio;
 			}
 			
-			$image = array('width'=>(int) $newWidth,'height'=>(int) $newHeight);
+			$image = ['width'=>(int) $newWidth,'height'=>(int) $newHeight];
 		}
 		
 		return $image;

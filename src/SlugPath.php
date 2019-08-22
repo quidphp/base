@@ -6,13 +6,13 @@ namespace Quid\Base;
 class SlugPath extends Listing
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
-			'slug'=>null), 
-		'separator'=>array( // les séparateurs de listing, le deuxième index est la version avec espace
-			array("/","/"),
-			array('-','-'))
-	);
+	public static $config = [
+		'option'=>[ // tableau d'options
+			'slug'=>null], 
+		'separator'=>[ // les séparateurs de listing, le deuxième index est la version avec espace
+			["/","/"],
+			['-','-']]
+	];
 	
 	
 	// is
@@ -27,7 +27,7 @@ class SlugPath extends Listing
 	// parse un tableau pathSlug
 	public static function parse(array $array,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$slugOption = $option['slug'] ?? null;
 		
 		foreach ($array as $key => $value) 
@@ -36,7 +36,7 @@ class SlugPath extends Listing
 			$slug = $value;
 			
 			elseif(is_string($key))
-			$slug = array($key,$value);
+			$slug = [$key,$value];
 
 			$return[] = $slug;
 		}
@@ -60,8 +60,8 @@ class SlugPath extends Listing
 	// traitement particulier de l'option totalLength qui est divisé par le nombre d'entrée dans le tableau
 	public static function makeSlugs(array $array,?array $option=null):array 
 	{
-		$return = array();
-		$option = Arr::plus(array('totalLength'=>null),$option);
+		$return = [];
+		$option = Arr::plus(['totalLength'=>null],$option);
 		
 		if(!empty($array))
 		{

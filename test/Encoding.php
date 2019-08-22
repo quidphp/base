@@ -93,7 +93,7 @@ class Encoding extends Base\Test
 		assert(count(Base\Encoding::info()) >= 14);
 
 		// all
-		assert(in_array(count(Base\Encoding::all()),array(86,87),true));
+		assert(in_array(count(Base\Encoding::all()),[86,87],true));
 		
 		return true;
 	}

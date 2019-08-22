@@ -97,8 +97,8 @@ class Response extends Base\Test
 		assert(!Base\Response::headerExists("asdasdds"));
 
 		// headersExists
-		assert(Base\Response::headersExists(array("PRAGMA")));
-		assert(!Base\Response::headersExists(array("PRAGMA",'test')));
+		assert(Base\Response::headersExists(["PRAGMA"]));
+		assert(!Base\Response::headersExists(["PRAGMA",'test']));
 
 		// id
 		assert(strlen(Base\Response::id()) === 10);
@@ -183,7 +183,7 @@ class Response extends Base\Test
 		assert(is_string(Base\Response::getHeader("pragma")));
 
 		// getsHeader
-		assert(count(Base\Response::getsHeader(array("praGma"))) === 1);
+		assert(count(Base\Response::getsHeader(["praGma"])) === 1);
 
 		// contentType
 		assert(Base\Response::setContentType('html'));
@@ -199,14 +199,14 @@ class Response extends Base\Test
 		// setHeader
 		assert(Base\Response::setHeader("test","OK") === 1);
 		assert(Base\Response::setHeader("test","OK2") === 1);
-		assert(Base\Response::setHeader("test",array("OK3",'OK4'),false) === 2);
-		assert(Base\Response::getHeader('test') === array('OK2','OK3','OK4'));
-		assert(Base\Response::headersExists(array('test')));
+		assert(Base\Response::setHeader("test",["OK3",'OK4'],false) === 2);
+		assert(Base\Response::getHeader('test') === ['OK2','OK3','OK4']);
+		assert(Base\Response::headersExists(['test']));
 
 		// setsHeader
-		assert(Base\Response::setsHeader(array('test2'=>'ok')) === array('test2'=>1));
-		assert(Base\Response::setsHeader(array('test2'=>array('ok3','ok2'))) === array('test2'=>2));
-		assert(Base\Response::getHeader('test2') === array('ok3','ok2'));
+		assert(Base\Response::setsHeader(['test2'=>'ok']) === ['test2'=>1]);
+		assert(Base\Response::setsHeader(['test2'=>['ok3','ok2']]) === ['test2'=>2]);
+		assert(Base\Response::getHeader('test2') === ['ok3','ok2']);
 		assert(Base\Response::headerExists('test2'));
 		assert(Base\Response::setHeader("Last-Modified",Base\Date::gmt(Base\Date::getTimestamp())) === 1);
 		assert(Base\Response::setHeader("last-modified",Base\Date::gmt(Base\Date::getTimestamp()+1)) === 1);
@@ -221,7 +221,7 @@ class Response extends Base\Test
 		assert(Base\Response::unsetHeader('content-type'));
 
 		// unsetsHeader
-		assert(Base\Response::unsetsHeader(array('test','test2')) === array('test'=>true,'test2'=>false));
+		assert(Base\Response::unsetsHeader(['test','test2']) === ['test'=>true,'test2'=>false]);
 		assert(Base\Response::getHeader('test2') === null);
 
 		// emptyHeader

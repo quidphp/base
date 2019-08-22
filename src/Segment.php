@@ -6,18 +6,18 @@ namespace Quid\Base;
 class Segment extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'default'=>'[]', // délimiteur par défaut
 		'column'=>'/', // séparateur pour column
 		'lang'=>'%lang%', // à remplacer lors du prepare, pour mettre %lang% dans un segment
-		'escape'=>array('[',']','(',')','{','}',',','.','|','$','?','*','+','/'), // délimiteur qu'il faut escape
-		'delimiter'=>array( // liste des délimiteurs strings
-			'[]'=>array('[',']'),
-			'()'=>array('(',')'),
-			'{}'=>array('{','}'),
-			'``'=>array('`','`'),
-			'%%'=>array('%','%'))
-	);
+		'escape'=>['[',']','(',')','{','}',',','.','|','$','?','*','+','/'], // délimiteur qu'il faut escape
+		'delimiter'=>[ // liste des délimiteurs strings
+			'[]'=>['[',']'],
+			'()'=>['(',')'],
+			'{}'=>['{','}'],
+			'``'=>['`','`'],
+			'%%'=>['%','%']]
+	];
 	
 	
 	// isWrapped
@@ -68,7 +68,7 @@ class Segment extends Root
 			$delimiter = static::$config['delimiter'][$delimiter];
 			
 			else
-			$delimiter = array($delimiter,$delimiter);
+			$delimiter = [$delimiter,$delimiter];
 		}
 
 		if(is_array($delimiter) && count($delimiter) === 2)
@@ -176,12 +176,12 @@ class Segment extends Root
 	// si un même segment est présent à multiples reprises, il est retourné plusieurs fois dans le bon ordre
 	public static function get($delimiter,string $str,bool $prepare=false):array 
 	{
-		$return = array();
+		$return = [];
 		$delimiter = static::getDelimiter($delimiter,true);
 		
 		if(!empty($delimiter))
 		{
-			$match = array();
+			$match = [];
 			
 			preg_match_all("/{$delimiter[0]}(.*?){$delimiter[1]}/",$str,$match);
 			
@@ -208,7 +208,7 @@ class Segment extends Root
 	// support pour column si value est un tableau
 	public static function set($delimiter,$key,$value,string $return):string
 	{
-		$replace = array();
+		$replace = [];
 		$delimiter = static::getDelimiter($delimiter);
 		
 		if(!empty($delimiter) && is_scalar($key) && strpos($return,$delimiter[0]) !== false)
@@ -217,13 +217,13 @@ class Segment extends Root
 			$return = static::prepare($return);
 			$delimiter[0] = static::escape($delimiter[0]);
 			$delimiter[1] = static::escape($delimiter[1]);
-			$replace = array($key=>'');
+			$replace = [$key=>''];
 			
 			if(is_scalar($value))
 			{
 				$value = (string) $value;
-				$replace = array($key=>$value);
-				$replace = Arr::keysReplace(array('/'=>'\/'),$replace);
+				$replace = [$key=>$value];
+				$replace = Arr::keysReplace(['/'=>'\/'],$replace);
 			}
 			
 			elseif(is_array($value))
@@ -285,12 +285,12 @@ class Segment extends Root
 			if(Arrs::is($replace))
 			{
 				$replace = Arrs::crush($replace);
-				$keysReplace = array(static::$config['column']=>static::escape(static::$config['column']));
+				$keysReplace = [static::$config['column']=>static::escape(static::$config['column'])];
 				$replace = Arr::keysReplace($keysReplace,$replace);
 			}
 			
 			else
-			$replace = Arr::keysReplace(array('/'=>'\/'),$replace);
+			$replace = Arr::keysReplace(['/'=>'\/'],$replace);
 			
 			foreach ($replace as $key => $value) 
 			{

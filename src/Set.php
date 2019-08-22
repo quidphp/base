@@ -10,8 +10,8 @@ class Set extends Root
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'implode'=>0, // index du séparateur à utiliser lors du implode
 			'explode'=>0, // index du séparateur à utiliser lors du explode
 			'case'=>null, // les valeurs sont ramenés dans cette case lors du explode
@@ -22,10 +22,10 @@ class Set extends Root
 			'clean'=>true, // une partie du set vide est retiré
 			'start'=>false, // ajoute le séparateur au début lors du implode
 			'end'=>false, // ajoute le séparateur à la fin lors du implode
-			'sort'=>null), // les valeurs sont sort
-		'separator'=>array(',',', '), // séparateur du set
+			'sort'=>null], // les valeurs sont sort
+		'separator'=>[',',', '], // séparateur du set
 		'sensitive'=>true // la classe est sensible ou non à la case
-	);
+	];
 	
 	
 	// isSeparatorStart
@@ -218,7 +218,7 @@ class Set extends Root
 	public static function append(...$values):string
 	{
 		$return = '';
-		$array = array();
+		$array = [];
 		
 		if(!empty($values))
 		{
@@ -381,7 +381,7 @@ class Set extends Root
 	// de même si set est déjà un array, retourne le simplement
 	public static function arr($value,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = static::option($option);
 		$value = Obj::cast($value);
 		
@@ -416,7 +416,7 @@ class Set extends Root
 	// prépare une string dans la méthode arr
 	public static function prepareStr(string $value,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator($option['explode']);
 		$return = Str::explode($separator,$value,$option['limit'],$option['trim'],$option['clean']);
 
@@ -428,7 +428,7 @@ class Set extends Root
 	// prépare un array dans la méthode arr
 	public static function prepareArr(array $value,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator($option['explode']);
 		$return = Arr::explode($separator,$value,$option['limit'],$option['trim'],$option['clean']);
 		
@@ -574,7 +574,7 @@ class Set extends Root
 		
 		if(count($pattern) === count($set))
 		{
-			$return = array();
+			$return = [];
 			
 			foreach ($pattern as $key => $value) 
 			{
@@ -648,7 +648,7 @@ class Set extends Root
 	public static function onGet($return) 
 	{
 		if(is_scalar($return))
-		$return = static::arr($return,array('cast'=>true));
+		$return = static::arr($return,['cast'=>true]);
 		
 		return $return;
 	}

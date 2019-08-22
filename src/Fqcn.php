@@ -6,13 +6,13 @@ namespace Quid\Base;
 class Fqcn extends Set
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
-			'extension'=>'php'), // extension du path
-		'separator'=>array('\\'), // séparateur pour les fully qualified classname
+	public static $config = [
+		'option'=>[ // tableau d'options
+			'extension'=>'php'], // extension du path
+		'separator'=>['\\'], // séparateur pour les fully qualified classname
 		'plusSeperator'=>'+', // séparateur pour la méthode many
 		'sensitive'=>false // la classe est sensible ou non à la case
-	);
+	];
 	
 	
 	// is
@@ -117,7 +117,7 @@ class Fqcn extends Set
 	// étend la méthode de la classe set
 	public static function arr($value,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 
 		if(is_object($value))
 		$value = get_class($value);
@@ -211,7 +211,7 @@ class Fqcn extends Set
 	// retoure un fqcn sans le root et le nom de classe
 	public static function sliceMiddle($value):string
 	{
-		return static::unsets(array(0,-1),static::str($value));
+		return static::unsets([0,-1],static::str($value));
 	}
 	
 	
@@ -220,7 +220,7 @@ class Fqcn extends Set
 	// retourne un tableau
 	public static function many($value):array 
 	{
-		$return = array();
+		$return = [];
 		$plusSeperator = static::$config['plusSeperator'];
 		
 		if(is_array($value))
@@ -228,7 +228,7 @@ class Fqcn extends Set
 		
 		if(is_string($value) && strlen($value))
 		{
-			$explodes = Str::explodes(array('\\',$plusSeperator),$value);
+			$explodes = Str::explodes(['\\',$plusSeperator],$value);
 			if(!empty($explodes))
 			{
 				foreach (Arrs::valuesCrush($explodes) as $v) 
@@ -321,7 +321,7 @@ class Fqcn extends Set
 		{
 			if(is_string($root))
 			{
-				$v = static::fromPathRoot($value,$root,(is_string($k))? Arr::plus($option,array('root'=>$k)):$option);
+				$v = static::fromPathRoot($value,$root,(is_string($k))? Arr::plus($option,['root'=>$k]):$option);
 				if(!empty($v))
 				{
 					$return = $v;

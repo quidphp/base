@@ -6,10 +6,10 @@ namespace Quid\Base;
 class Obj extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'method'=>'_cast', // méthode pour cast
 		'cast'=>null // méthode à appeler si cast ne respecte pas le type
-	);
+	];
 	
 	
 	// typecast
@@ -309,7 +309,7 @@ class Obj extends Root
 	// les propriétés doivent être public, pas accès au variable protégé ou privé
 	public static function gets(array $properties,object $object):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($properties as $property) 
 		{
@@ -397,7 +397,7 @@ class Obj extends Root
 	
 	// createArgs
 	// créer un objet à partir d'un nom de classe et et d'un tableau d'arguments
-	public static function createArgs($class,array $args=array()):?object
+	public static function createArgs($class,array $args=[]):?object
 	{
 		$return = null;
 		$class = Fqcn::str($class);

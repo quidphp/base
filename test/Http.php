@@ -50,7 +50,7 @@ class Http extends Base\Test
 		assert(Base\Str::isStart(Base\Request::absolute(),Base\Http::str(Base\Request::info())));
 		assert(Base\Str::isEnd(strtoupper(Base\Request::method()),Base\Http::str(Base\Request::info())));
 		assert(!empty(Base\Http::str(Base\Request::info())));
-		assert(Base\Str::isEnd('FALSE',Base\Http::str(Base\Request::info(),array('ajax'))));
+		assert(Base\Str::isEnd('FALSE',Base\Http::str(Base\Request::info(),['ajax'])));
 
 		// arr
 		assert(count(Base\Http::arr(Base\Http::str(Base\Request::info()))) === 3);

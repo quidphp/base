@@ -6,9 +6,9 @@ namespace Quid\Base;
 class Superglobal extends Root
 {
 	// config
-	public static $config = array(
-		'postKeys'=>array('MAX_FILE_SIZE') // clés post pouvant être enlevés
-	);
+	public static $config = [
+		'postKeys'=>['MAX_FILE_SIZE'] // clés post pouvant être enlevés
+	];
 	
 	
 	// hasSession
@@ -275,7 +275,7 @@ class Superglobal extends Root
 	// possible d'envoyer le retour dans la méthode format
 	public static function getServerStart(string $key,bool $sensitive=true,bool $format=false):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach (static::server() as $k => $v) 
 		{
@@ -304,7 +304,7 @@ class Superglobal extends Root
 	// la clé est ramener en strtolower et ucfirst
 	public static function reformatServer(array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(!empty($array))
 		{
@@ -562,7 +562,7 @@ class Superglobal extends Root
 	// retourne un tableau multidimensionnel si plusieurs fichiers
 	public static function filesReformat(array $value):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($value as $key => $value) 
 		{

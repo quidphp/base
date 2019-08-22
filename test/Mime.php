@@ -78,8 +78,8 @@ class Mime extends Base\Test
 		assert(Base\Mime::getGroup("/Server/what.jpg",false) === null);
 		
 		// getFamilies
-		assert(Base\Mime::getFamilies($file) === array('text'));
-		assert(Base\Mime::getFamilies($mediaRes) === array('image','binary'));
+		assert(Base\Mime::getFamilies($file) === ['text']);
+		assert(Base\Mime::getFamilies($mediaRes) === ['image','binary']);
 		
 		// getFamily
 		assert(Base\Mime::getFamily($file) === 'text');
@@ -93,8 +93,8 @@ class Mime extends Base\Test
 		assert(Base\Mime::group('image/jpeg') === 'imageRaster');
 		
 		// families
-		assert(Base\Mime::families('imageRaster') === array('image','binary'));
-		assert(Base\Mime::families('imageRasterz') === array());
+		assert(Base\Mime::families('imageRaster') === ['image','binary']);
+		assert(Base\Mime::families('imageRasterz') === []);
 		
 		// family
 		assert(Base\Mime::family('imageRaster') === 'image');

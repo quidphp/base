@@ -21,15 +21,15 @@ class Superglobal extends Base\Test
 		assert(!Base\Superglobal::getExists('TEST'));
 
 		// getsExists
-		assert(Base\Superglobal::getsExists(array('test')));
-		assert(!Base\Superglobal::getsExists(array('TEST')));
+		assert(Base\Superglobal::getsExists(['test']));
+		assert(!Base\Superglobal::getsExists(['TEST']));
 
 		// postExists
 		assert(Base\Superglobal::postExists('tes2t'));
 
 		// postsExists
-		assert(Base\Superglobal::postsExists(array('tes2t')));
-		assert(!Base\Superglobal::postsExists(array('Tes2t')));
+		assert(Base\Superglobal::postsExists(['tes2t']));
+		assert(!Base\Superglobal::postsExists(['Tes2t']));
 
 		// cookieExists
 		assert(!Base\Superglobal::cookieExists('tes2t'));
@@ -194,22 +194,22 @@ class Superglobal extends Base\Test
 		assert(Base\Superglobal::formatServerKey("test-James") === 'TEST_JAMES');
 
 		// postReformat
-		$post = array('-test-'=>'non','oui'=>'OK','MAX_FILE_SIZE'=>200);
-		assert(Base\Superglobal::postReformat($post,true,true) === array('oui'=>'OK'));
+		$post = ['-test-'=>'non','oui'=>'OK','MAX_FILE_SIZE'=>200];
+		assert(Base\Superglobal::postReformat($post,true,true) === ['oui'=>'OK']);
 
 		// filesReformat
-		$single = array('ok'=>array('name'=>'test.jpg','error'=>2),'ok2'=>array('name'=>'test2.jpg','error'=>3));
-		$multi = array('ok'=>array('name'=>array('test.jpg','ok.lala'),'error'=>array(2,3)));
-		$multis = array('ok'=>array('name'=>array('test.jpg','ok.lala'),'error'=>array(2,3)),'ok3'=>array('name'=>'test.jpg','error'=>2),'ok2'=>array('name'=>array('test2.jpg','ok2.lala'),'error'=>array(22,32)));
-		assert(Base\Superglobal::filesReformat($single)['ok2'] === array('name'=>'test2.jpg','error'=>3));
-		assert(Base\Superglobal::filesReformat($multi)['ok'][0] === array('name'=>'test.jpg','error'=>2));
+		$single = ['ok'=>['name'=>'test.jpg','error'=>2],'ok2'=>['name'=>'test2.jpg','error'=>3]];
+		$multi = ['ok'=>['name'=>['test.jpg','ok.lala'],'error'=>[2,3]]];
+		$multis = ['ok'=>['name'=>['test.jpg','ok.lala'],'error'=>[2,3]],'ok3'=>['name'=>'test.jpg','error'=>2],'ok2'=>['name'=>['test2.jpg','ok2.lala'],'error'=>[22,32]]];
+		assert(Base\Superglobal::filesReformat($single)['ok2'] === ['name'=>'test2.jpg','error'=>3]);
+		assert(Base\Superglobal::filesReformat($multi)['ok'][0] === ['name'=>'test.jpg','error'=>2]);
 		assert(count(Base\Superglobal::filesReformat($multis)) === 3);
 
 		// cleanup
-		$_GET = array();
-		$_POST = array();
-		$_REQUEST = array();
-		$_FILES = array();
+		$_GET = [];
+		$_POST = [];
+		$_REQUEST = [];
+		$_FILES = [];
 		
 		return true;
 	}

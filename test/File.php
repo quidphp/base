@@ -57,29 +57,29 @@ class File extends Base\Test
 		assert(!Base\File::isUploaded($array));
 
 		// isUploadArray
-		assert(Base\File::isUploadArray(array('name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0),array('name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0)));
-		assert(!Base\File::isUploadArray(array('namez'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0)));
-		assert(!Base\File::isUploadArray(array('name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0),array('namze'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0)));
+		assert(Base\File::isUploadArray(['name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0],['name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0]));
+		assert(!Base\File::isUploadArray(['namez'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0]));
+		assert(!Base\File::isUploadArray(['name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0],['namze'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>0]));
 		assert(Base\File::isUploadArray($array));
 
 		// isUploadEmptyNotEmpty
 
 		// isUploadEmpty
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>4,'size'=>0);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>4,'size'=>0];
 		assert(Base\File::isUploadEmpty($file));
 
 		// isUploadNotEmpty
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>4,'size'=>0);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>4,'size'=>0];
 		assert(!Base\File::isUploadNotEmpty($file));
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>2,'size'=>2);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>2,'size'=>2];
 		assert(Base\File::isUploadNotEmpty($file));
 
 		// isUploadTooBig
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>2,'size'=>2);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>2,'size'=>2];
 		assert(Base\File::isUploadTooBig($file));
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>2);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>2];
 		assert(Base\File::isUploadTooBig($file));
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>3,'size'=>2);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>3,'size'=>2];
 		assert(!Base\File::isUploadTooBig($file));
 
 		// isLoaded
@@ -106,14 +106,14 @@ class File extends Base\Test
 		assert(Base\File::size($currentFile) === Base\File::size($array));
 
 		// isCount
-		assert(Base\File::isCount(2,array(1,2)));
-		assert(!Base\File::isCount(2,array(1)));
+		assert(Base\File::isCount(2,[1,2]));
+		assert(!Base\File::isCount(2,[1]));
 
 		// isMinCount
-		assert(!Base\File::isMinCount(3,array(1,2)));
+		assert(!Base\File::isMinCount(3,[1,2]));
 
 		// isMaxCount
-		assert(Base\File::isMaxCount(2,array(1,2)));
+		assert(Base\File::isMaxCount(2,[1,2]));
 
 		// path
 		assert(Base\File::path($currentFile) === $currentFile);
@@ -132,7 +132,7 @@ class File extends Base\Test
 		// res
 
 		// option
-		assert(Base\File::option(array('test'=>'deux')) === array('test'=>'deux','useIncludePath'=>true));
+		assert(Base\File::option(['test'=>'deux']) === ['test'=>'deux','useIncludePath'=>true]);
 
 		// getLoadPath
 		assert(Base\File::getLoadPath($currentFile) === $currentFile);
@@ -144,9 +144,9 @@ class File extends Base\Test
 		assert(file_exists(Base\File::makeLoadPath($common."/load")));
 
 		// load
-		assert(Base\File::load($common."/load") === array('test'=>42,'b'=>'a'));
-		assert(Base\File::load($common."/load.php",array('james'=>2)) === array('test'=>2,'b'=>'a'));
-		assert(Base\File::load($common."/load.php",array('james'=>2),true) === array('james'=>2,'a'=>2,'b'=>'c'));
+		assert(Base\File::load($common."/load") === ['test'=>42,'b'=>'a']);
+		assert(Base\File::load($common."/load.php",['james'=>2]) === ['test'=>2,'b'=>'a']);
+		assert(Base\File::load($common."/load.php",['james'=>2],true) === ['james'=>2,'a'=>2,'b'=>'c']);
 		assert(Base\File::isLoaded($common."/load.php"));
 
 		// loadOnce
@@ -177,7 +177,7 @@ class File extends Base\Test
 		assert(Base\File::mimeGroup($array) === 'php');
 		
 		// mimeFamilies
-		assert(Base\File::mimeFamilies($currentFile) === array('text'));
+		assert(Base\File::mimeFamilies($currentFile) === ['text']);
 		
 		// mimeFamily
 		assert(Base\File::mimeFamily($currentFile) === 'text');
@@ -205,17 +205,17 @@ class File extends Base\Test
 		assert(strlen(Base\File::prefixBasename()) === 30);
 		assert(strlen(Base\File::prefixBasename('bla')) === 34);
 		assert(strlen(Base\File::prefixBasename('bla','jpgz')) === 35);
-		assert(strlen(Base\File::prefixBasename('bla','txt',array('dateFormat'=>'Ymd+His','separator'=>'-','random'=>10))) === 34);
+		assert(strlen(Base\File::prefixBasename('bla','txt',['dateFormat'=>'Ymd+His','separator'=>'-','random'=>10])) === 34);
 
 		// prefix
-		$prefix = Base\File::prefix("[assertCurrent]","QUID",null,array('dateformat'=>'Ymd+His','separator'=>'-','random'=>10));
+		$prefix = Base\File::prefix("[assertCurrent]","QUID",null,['dateformat'=>'Ymd+His','separator'=>'-','random'=>10]);
 		assert(is_string($prefix));
 		assert(Base\Path::extension($prefix) === 'txt');
 		assert(is_string(Base\File::prefix("[assertCurrent]")));
 		assert(Base\Path::str(dirname(Base\File::prefix())) === Base\Path::str(Base\Dir::temp()));
 
 		// prefixResource
-		assert(count(Base\Res::info(Base\File::prefixResource("[assertCurrent]","QUID","jpg",array('dateformat'=>'Ymd+His','separator'=>'-','random'=>10)))) === 18);
+		assert(count(Base\Res::info(Base\File::prefixResource("[assertCurrent]","QUID","jpg",['dateformat'=>'Ymd+His','separator'=>'-','random'=>10]))) === 18);
 		assert(Base\Res::isFile(Base\File::prefixResource("[assertCurrent]")));
 		assert(Base\Res::isFile(Base\File::prefixResource()));
 
@@ -225,8 +225,8 @@ class File extends Base\Test
 		assert(Base\File::open("[assertCurrent]") === null);
 		$new = Base\File::create("[assertCurrent]/new.php");
 		assert(Base\Res::meta($new)['mode'] === 'c+');
-		assert(Base\Res::param($new) === array('options'=>array()));
-		assert(Base\Res::option($new) === array());
+		assert(Base\Res::param($new) === ['options'=>[]]);
+		assert(Base\Res::option($new) === []);
 		assert(Base\File::info(Base\File::open("[assertCurrent]/sym"))['path'] === $currentFile);
 		assert(Base\File::open("[assertCurrent]/bla.txt") === null);
 		assert(is_resource(Base\File::open($array)));
@@ -264,7 +264,7 @@ class File extends Base\Test
 		// getLines
 		assert(count(Base\File::getLines($res)) > 100);
 		assert(count(Base\File::getLines($currentFile)) > 100);
-		assert(count(Base\File::getLines($currentFile,true,true,array('skipEmpty'=>true))) < count(Base\File::getLines($currentFile)));
+		assert(count(Base\File::getLines($currentFile,true,true,['skipEmpty'=>true])) < count(Base\File::getLines($currentFile)));
 		assert(Base\File::set("[assertCurrent]/slices.php",Base\File::getLines($currentFile)));
 		assert(Base\File::get($currentFile) === Base\File::get("[assertCurrent]/slices.php"));
 		assert(!empty(Base\File::getLines($array)));
@@ -333,7 +333,7 @@ class File extends Base\Test
 		assert(Base\File::get("[assertCurrent]/what/ok/file4.txt") === 'FIRST');
 
 		// setPrefix
-		assert(is_string(Base\File::setPrefix("[assertCurrent]/temp",'QUID',"php",array('ok','yes'))));
+		assert(is_string(Base\File::setPrefix("[assertCurrent]/temp",'QUID',"php",['ok','yes'])));
 		
 		// base64
 		assert(is_string(Base\File::base64("[assertCurrent]/what/ok/file4.txt")));
@@ -360,16 +360,16 @@ class File extends Base\Test
 		assert(Base\File::prepend("TEST3",$path) === true);
 		assert(Base\File::prepend("TEST3",$res) === true);
 		assert(Base\File::read(0,true,$path) === Base\File::read(0,true,$res));
-		assert(Base\File::prepend("TESTX",$path,array('newline'=>true)) === true);
-		assert(Base\File::prepend("TESTX",$res,array('newline'=>true)) === true);
+		assert(Base\File::prepend("TESTX",$path,['newline'=>true]) === true);
+		assert(Base\File::prepend("TESTX",$res,['newline'=>true]) === true);
 		assert(Base\File::read(0,true,$path) === Base\File::read(0,true,$res));
 
 		// append
 		assert(Base\File::prepend("TEST4",$path) === true);
 		assert(Base\File::prepend("TEST4",$res) === true);
 		assert(Base\File::read(0,true,$path) === Base\File::read(0,true,$res));
-		assert(Base\File::prepend("TEST5",$path,array('newline'=>true)) === true);
-		assert(Base\File::prepend("TEST5",$res,array('newline'=>true)) === true);
+		assert(Base\File::prepend("TEST5",$path,['newline'=>true]) === true);
+		assert(Base\File::prepend("TEST5",$res,['newline'=>true]) === true);
 		assert(Base\File::read(0,true,$path) === Base\File::read(0,true,$res));
 
 		// appendNewline
@@ -389,7 +389,7 @@ class File extends Base\Test
 		assert(Base\File::set($write));
 		assert(Base\File::overwrite($original,$write));
 		assert(Base\File::lineSplice(0,1,$write,'OK',true));
-		assert(Base\Arr::slice(1,3,Base\File::lineSplice(1,1,$write,array('WHAT','OK','JAMES'),true)) === array(1=>'WHAT',2=>'OK',3=>'JAMES'));
+		assert(Base\Arr::slice(1,3,Base\File::lineSplice(1,1,$write,['WHAT','OK','JAMES'],true)) === [1=>'WHAT',2=>'OK',3=>'JAMES']);
 		assert(strpos(Base\File::get($write),'OK') === 0);
 
 		// lineSpliceFirst
@@ -450,35 +450,35 @@ class File extends Base\Test
 		assert(Base\File::makeUploadArray($currentFile."asd") === null);
 
 		// uploadBasename
-		assert(Base\File::uploadBasename(array('name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile,'error'=>0,'size'=>231)) === 'james.php');
-		assert(Base\File::uploadBasename(array('name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile."a",'error'=>0,'size'=>231)) === 'james.php');
+		assert(Base\File::uploadBasename(['name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile,'error'=>0,'size'=>231]) === 'james.php');
+		assert(Base\File::uploadBasename(['name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile."a",'error'=>0,'size'=>231]) === 'james.php');
 
 		// uploadPath
-		assert(Base\File::uploadPath(array('name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile,'error'=>0,'size'=>231)) === $currentFile);
+		assert(Base\File::uploadPath(['name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile,'error'=>0,'size'=>231]) === $currentFile);
 
 		// uploadSize
-		assert(Base\File::uploadSize(array('name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile,'error'=>0,'size'=>231)) === 231);
+		assert(Base\File::uploadSize(['name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile,'error'=>0,'size'=>231]) === 231);
 
 		// uploadValidate
-		$file = array();
+		$file = [];
 		assert(Base\File::uploadValidate(null) === 'fileUploadInvalid');
 		assert(Base\File::uploadValidate($file) === 'fileUploadInvalid');
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>223);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>223];
 		assert(Base\File::uploadValidate($file) === 'fileUploadSizeIni');
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>2,'size'=>23);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>2,'size'=>23];
 		assert(Base\File::uploadValidate($file) === 'fileUploadSizeForm');
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>3,'size'=>23);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>3,'size'=>23];
 		assert(Base\File::uploadValidate($file) === 'fileUploadPartial');
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>6,'size'=>123);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>6,'size'=>123];
 		assert(Base\File::uploadValidate($file) === 'fileUploadTmpDir');
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>7,'size'=>123);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>7,'size'=>123];
 		assert(Base\File::uploadValidate($file) === 'fileUploadWrite');
-		$file = array('name'=>'','type'=>'','tmp_name'=>'','error'=>0,'size'=>123);
+		$file = ['name'=>'','type'=>'','tmp_name'=>'','error'=>0,'size'=>123];
 		assert(Base\File::uploadValidate($file) === 'fileUploadExists');
 
 		// uploadValidates
-		assert(Base\File::uploadValidates(array(array('name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>23),array('name'=>'','type'=>'','tmp_name'=>'','error'=>6,'size'=>123))) === array('fileUploadSizeIni','fileUploadTmpDir'));
-		assert(Base\File::uploadValidates(array(null)));
+		assert(Base\File::uploadValidates([['name'=>'','type'=>'','tmp_name'=>'','error'=>1,'size'=>23],['name'=>'','type'=>'','tmp_name'=>'','error'=>6,'size'=>123]]) === ['fileUploadSizeIni','fileUploadTmpDir']);
+		assert(Base\File::uploadValidates([null]));
 
 		// getUmaskFromPermission
 		assert(Base\File::getUmaskFromPermission(664,false) === 2);

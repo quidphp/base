@@ -36,7 +36,7 @@ class Error extends Base\Test
 		assert(Base\Error::logFile('what',$tmp));
 
 		// logPrepareMessage
-		assert(Base\Error::logPrepareMessage(array('lol','ok')) === "lol ok");
+		assert(Base\Error::logPrepareMessage(['lol','ok']) === "lol ok");
 		assert(Base\Error::logPrepareMessage('lol') === "lol");
 
 		// trigger

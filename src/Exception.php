@@ -6,9 +6,9 @@ namespace Quid\Base;
 class Exception extends Root
 {
 	// config
-	public static $config = array(
-		'separator'=>array(' -> ',', ',': ') // séparateur si le message est un tableau
-	);
+	public static $config = [
+		'separator'=>[' -> ',', ',': '] // séparateur si le message est un tableau
+	];
 	
 	
 	// setHandler

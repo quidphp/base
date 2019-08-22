@@ -17,10 +17,10 @@ class Scalar extends Base\Test
 		assert($x === 1.1);
 
 		// typecastMore
-		$array = array(true,'true','null',1.2,'3.5','4,8');
+		$array = [true,'true','null',1.2,'3.5','4,8'];
 		Base\Scalar::typecastMore(...$array);
-		assert($array === array(true,true,null,1.2,3.5,4.8));
-		$array = array(true,'true','null',1.2,'3.5','4,8');
+		assert($array === [true,true,null,1.2,3.5,4.8]);
+		$array = [true,'true','null',1.2,'3.5','4,8'];
 		Base\Scalar::typecastMore($array);
 		assert($array === null);
 
@@ -42,7 +42,7 @@ class Scalar extends Base\Test
 		// is
 		assert(Base\Scalar::is(1));
 		assert(Base\Scalar::is('2'));
-		assert(!Base\Scalar::is(array()));
+		assert(!Base\Scalar::is([]));
 
 		// isEmpty
 		assert(Base\Scalar::isEmpty(false));

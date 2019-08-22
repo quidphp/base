@@ -6,22 +6,22 @@ namespace Quid\Base;
 class Response extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'idLength'=>10, // longueur du id de la réponse
-		'closeDown'=>array(), // callbacks à lancer lors d'un closeDown
-		'closeBody'=>array(), // callbacks à lancer lors d'un closeBody
-		'default'=>array(
+		'closeDown'=>[], // callbacks à lancer lors d'un closeDown
+		'closeBody'=>[], // callbacks à lancer lors d'un closeBody
+		'default'=>[
 			'code'=>200, // code de réponse par défaut
-			'headers'=>array( // header par défaut, le cacheLimiter dans session peut prendre le dessus sur certains de ces défauts
+			'headers'=>[ // header par défaut, le cacheLimiter dans session peut prendre le dessus sur certains de ces défauts
 				"Expires"=>0, // temps d'expiration d'une réponse (maintenant)
 				"Cache-Control"=>'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
 				"Pragma"=>'no-cache',
 				"Connection"=>"keep-alive",
 				"Last-Modified"=>0,
-				'X-UA-Compatible'=>'IE=Edge'), // désactive compatibility mode pour IE
+				'X-UA-Compatible'=>'IE=Edge'], // désactive compatibility mode pour IE
 			'headersCallbackSpeed'=>null, // nom du header pour le speed, avant c'était un tableau headersCallback mais ça causait un bug bizarre sur php 7.3
-			'contentType'=>true) // contentType par défaut, si true alors utilise le callback autoContentType
-	);
+			'contentType'=>true] // contentType par défaut, si true alors utilise le callback autoContentType
+	];
 	
 
 	// id
@@ -255,7 +255,7 @@ class Response extends Root
 		$headersSent = headers_sent($file,$line);
 		
 		if($headersSent === true)
-		$return = array('file'=>$file,'line'=>$line);
+		$return = ['file'=>$file,'line'=>$line];
 		
 		return $return;
 	}
@@ -509,9 +509,9 @@ class Response extends Root
 	protected static function downloadToScreen(string $method,$value,?array $option=null):bool
 	{
 		$return = false;
-		$option = Arr::plus(array('kill'=>true,'length'=>true,'sleep'=>false,'mime'=>null,'basename'=>null),$option);
+		$option = Arr::plus(['kill'=>true,'length'=>true,'sleep'=>false,'mime'=>null,'basename'=>null],$option);
 		
-		if(in_array($method,array('download','toScreen'),true))
+		if(in_array($method,['download','toScreen'],true))
 		{
 			if(is_object($value))
 			$value = Obj::cast($value);
@@ -604,7 +604,7 @@ class Response extends Root
 	public static function setHeader(string $key,$value,bool $replace=true):?int
 	{
 		$return = null;
-		$sets = static::setsHeader(array($key=>$value),$replace);
+		$sets = static::setsHeader([$key=>$value],$replace);
 		
 		if(!empty($sets))
 		$return = current($sets);
@@ -623,12 +623,12 @@ class Response extends Root
 		
 		if(!static::areHeadersSent())
 		{
-			$return = array();
+			$return = [];
 			
 			foreach ($values as $key => $value) 
 			{
 				$return[$key] = 0;
-				$list = Header::list(array($key=>$value));
+				$list = Header::list([$key=>$value]);
 				
 				foreach ($list as $i => $header)
 				{
@@ -688,7 +688,7 @@ class Response extends Root
 		
 		if(!static::areHeadersSent())
 		{
-			$return = array();
+			$return = [];
 			
 			foreach ($keys as $key) 
 			{
@@ -721,7 +721,7 @@ class Response extends Root
 	// note headersCallbackSpeed -> avant c'était un tableau headersCallback mais ça causait un bug bizarre sur php 7.3
 	public static function prepare(?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = Arr::plus(static::$config['default'],$option);
 		$bufferCallback = null;
 		
@@ -751,7 +751,7 @@ class Response extends Root
 			$return['setContentType'] = static::setContentType($option['contentType']);
 			
 			elseif($option['contentType'] === true)
-			$bufferCallback = array(static::class,'autoContentType');
+			$bufferCallback = [static::class,'autoContentType'];
 		}
 		
 		// buffer
@@ -924,7 +924,7 @@ class Response extends Root
 	// enregistre une callable à appeler au close down, des arguments peuvent être passés au callable
 	public static function onCloseDown(callable $call,...$args):void 
 	{
-		static::$config['closeDown'][] = array($call,$args);
+		static::$config['closeDown'][] = [$call,$args];
 		
 		return;
 	}
@@ -935,7 +935,7 @@ class Response extends Root
 	// remet on closeBody sur closeDown
 	public static function emptyCloseDown():void 
 	{
-		static::$config['closeDown'] = array();
+		static::$config['closeDown'] = [];
 		static::onCloseDownCloseBody();
 		
 		return;
@@ -956,7 +956,7 @@ class Response extends Root
 	// sur shutDown lance closeDown
 	public static function onShutDownCloseDown():void 
 	{
-		static::onShutDown(array(static::class,'closeDown'));
+		static::onShutDown([static::class,'closeDown']);
 		
 		return;
 	}
@@ -966,7 +966,7 @@ class Response extends Root
 	// enregistre une callable à appeler au close doc, des arguments peuvent être passés au callable
 	public static function onCloseBody(callable $call,...$args):void 
 	{
-		static::$config['closeBody'][] = array($call,$args);
+		static::$config['closeBody'][] = [$call,$args];
 		
 		return;
 	}
@@ -976,7 +976,7 @@ class Response extends Root
 	// vide le tableau des callbacks sur closeBody
 	public static function emptyCloseBody():void 
 	{
-		static::$config['closeBody'] = array();
+		static::$config['closeBody'] = [];
 		
 		return;
 	}
@@ -996,7 +996,7 @@ class Response extends Root
 	// sur closeDown lance closeBody
 	public static function onCloseDownCloseBody():void 
 	{
-		static::onCloseDown(array(static::class,'closeBody'));
+		static::onCloseDown([static::class,'closeBody']);
 		
 		return;
 	}
@@ -1020,7 +1020,7 @@ class Response extends Root
 	// méthode protégé
 	protected static function closeDownBody(string $type):void 
 	{
-		if(in_array($type,array('closeDown','closeBody',true)))
+		if(in_array($type,['closeDown','closeBody',true]))
 		{
 			foreach (static::$config[$type] as $key => $callback) 
 			{

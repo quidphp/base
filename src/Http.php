@@ -6,18 +6,18 @@ namespace Quid\Base;
 class Http extends Root
 {	
 	// config
-	public static $config = array(
-		'str'=>array( // configuration pour la méthode str
-			'all'=>array('absolute','timestamp','method'),
-			'delimiter'=>'|')
-	);
+	public static $config = [
+		'str'=>[ // configuration pour la méthode str
+			'all'=>['absolute','timestamp','method'],
+			'delimiter'=>'|']
+	];
 	
 	
 	// isScheme
 	// retourne vrai si le scheme est compatible http
 	public static function isScheme($value):bool 
 	{
-		return (is_string($value) && in_array(strtolower($value),array('http','https'),true))? true:false;
+		return (is_string($value) && in_array(strtolower($value),['http','https'],true))? true:false;
 	}
 	
 
@@ -47,7 +47,7 @@ class Http extends Root
 		{
 			$value = strtolower($value);
 			
-			if(in_array($value,array('get','post'),true))
+			if(in_array($value,['get','post'],true))
 			$return = true;
 		}
 		
@@ -69,7 +69,7 @@ class Http extends Root
 			elseif($value === 80 || $value === false)
 			$return = 'http';
 			
-			elseif(in_array($value,array('http','https'),true))
+			elseif(in_array($value,['http','https'],true))
 			$return = $value;
 		}
 		
@@ -92,7 +92,7 @@ class Http extends Root
 			elseif($value === 'http' || $value === false)
 			$return = 80;
 			
-			elseif(in_array($value,array(80,443),true))
+			elseif(in_array($value,[80,443],true))
 			$return = $value;
 		}
 		
@@ -121,7 +121,7 @@ class Http extends Root
 	{
 		$return = '';
 		$option = Arr::append(static::$config['str']['all'],$option);
-		$str = array();
+		$str = [];
 		
 		foreach ($option as $key) 
 		{
@@ -151,7 +151,7 @@ class Http extends Root
 	// possible de donner des all en plus via option
 	public static function arr(string $value,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = Arr::append(static::$config['str']['all'],$option);
 		$explode = Arr::castMore(Str::explode(static::$config['str']['delimiter'],$value));
 		

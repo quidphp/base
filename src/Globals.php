@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Globals extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// is

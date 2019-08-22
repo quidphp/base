@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Nav extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// isPage
@@ -107,7 +107,7 @@ class Nav extends Root
 		}
 		
 		if(is_int($offset) && is_int($limit) && is_int($page))
-		$return = array('offset'=>$offset,'limit'=>$limit,'page'=>$page);
+		$return = ['offset'=>$offset,'limit'=>$limit,'page'=>$page];
 		
 		return $return;
 	}
@@ -123,7 +123,7 @@ class Nav extends Root
 		if($page > 0 && $limit > 0)
 		{
 			$offset = ($page * $limit) - $limit;
-			$return = array($offset,$limit);
+			$return = [$offset,$limit];
 		}
 		
 		return $return;
@@ -134,7 +134,7 @@ class Nav extends Root
 	// comme pour limitPage mais retourne le tableau array slicé aux bons index
 	public static function pageSlice(int $page,int $limit,array $array):array
 	{
-		$return = array();
+		$return = [];
 		$limitPage = static::limitPage($page,$limit);
 		
 		if(!empty($limitPage))
@@ -148,7 +148,7 @@ class Nav extends Root
 	// comme pageSlice mais value peut être de n'importe quel format compatible avec limit dans sql
 	public static function slice($value,array $array):array 
 	{
-		$return = array();
+		$return = [];
 		$page = 1;
 		$value = static::parseLimit($value);
 		
@@ -199,7 +199,7 @@ class Nav extends Root
 	// nav peut être un int ou un tableau
 	public static function pages($nav,int $limit):array
 	{
-		$return = array();
+		$return = [];
 		$max = static::pageMax($nav,$limit);
 		
 		if(is_int($max))
@@ -225,7 +225,7 @@ class Nav extends Root
 		
 		if(is_int($max) && $value > 0 && $value <= $max)
 		{
-			$return = array();
+			$return = [];
 			
 			for ($i=1; $i<=$max; $i++) 
 			{
@@ -352,7 +352,7 @@ class Nav extends Root
 
 		if(static::isPage($value,$nav,$limit))
 		{
-			$return = array();
+			$return = [];
 			$first = static::pageFirst($nav,$limit);
 			$last = static::pageLast($nav,$limit);
 			$prev = static::pagePrev($value,$nav,$limit);
@@ -378,7 +378,7 @@ class Nav extends Root
 	// nav doit être un array
 	public static function pagesWithSpecific(array $nav,int $limit):array
 	{
-		$return = array();
+		$return = [];
 		
 		if($limit > 0)
 		{
@@ -568,7 +568,7 @@ class Nav extends Root
 		
 		if(is_int($index))
 		{
-			$return = array();
+			$return = [];
 			$first = static::specificFirst($nav);
 			$prev = static::specificPrev($specific,$nav);
 			$next = static::specificNext($specific,$nav);

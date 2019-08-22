@@ -6,8 +6,8 @@ namespace Quid\Base;
 class Attr extends Listing
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'explode'=>1, // index du séparateur à utiliser lors du explode
 			'trim'=>false, // chaque partie de attr est trim
 			'clean'=>false, // une partie attr vide est retiré
@@ -17,32 +17,32 @@ class Attr extends Listing
 			'uri'=>null, // option pour uri, html passe un tableau différent pour chaque tag
 			'encode'=>true, // si les attributs sont passés dans htmlspecialchars ou htmlentities lors du implode, true est specialchars
 			'quote'=>false, // null est pas de quote, false est single quote, true est double quote
-			'href'=>array(
+			'href'=>[
 				'active'=>true, // permet d'activer ou désactiver les options href selected, targetExternal et lang
 				'selected'=>'selected', // classe pour les selected href
 				'targetExternal'=>'_blank', // target si le href est externe
 				'lang'=>true, // détecte la lang pour href
 				'mailto'=>true, // détecte les courriels
-				'extension'=>null), // extension par défaut pour href si non fourni et uri relative
-			'src'=>array(
-				'extension'=>'jpg'), // extension par défaut pour src si non fourni et uri relative
-			'action'=>array(
-				'extension'=>null)), // extension par défaut pour action si non fourni et uri relative
-		'separator'=>array( // les séparateurs de attr, le troisième index est pour explode
-			array(' '," "),
-			array('=','=')), 
+				'extension'=>null], // extension par défaut pour href si non fourni et uri relative
+			'src'=>[
+				'extension'=>'jpg'], // extension par défaut pour src si non fourni et uri relative
+			'action'=>[
+				'extension'=>null]], // extension par défaut pour action si non fourni et uri relative
+		'separator'=>[ // les séparateurs de attr, le troisième index est pour explode
+			[' '," "],
+			['=','=']], 
 		'id'=>'#', // ce caractère sert à identifier un id
-		'randomId'=>array(10), // argument par défaut pour randomId
+		'randomId'=>[10], // argument par défaut pour randomId
 		'class'=>'.', // ce caractère sert à identifier une classe
-		'oddEven'=>array('odd','even'), // les classes pour oddEven
-		'selectedUri'=>array(), // tableau qui contient les uri sélectionnés
-		'mirror'=>array('multiple','selected','checked','required','disabled'), // attributs mirror
-		'pattern'=>array('pattern','data-pattern'), // noms d'attributs qui contiennent pattern et doivent être passés dans validate/pattern
+		'oddEven'=>['odd','even'], // les classes pour oddEven
+		'selectedUri'=>[], // tableau qui contient les uri sélectionnés
+		'mirror'=>['multiple','selected','checked','required','disabled'], // attributs mirror
+		'pattern'=>['pattern','data-pattern'], // noms d'attributs qui contiennent pattern et doivent être passés dans validate/pattern
 		'method'=>'post', // si method est true
 		'target'=>'_blank', // si target est true
-		'group'=>array( // group d'attributs
-			'ajax'=>array('ajax','rel'=>'nofollow')),
-		'style'=>array( // si ces clés se retrouvent au premier niveau de attr, ils sont envoyés dans un tableau style
+		'group'=>[ // group d'attributs
+			'ajax'=>['ajax','rel'=>'nofollow']],
+		'style'=>[ // si ces clés se retrouvent au premier niveau de attr, ils sont envoyés dans un tableau style
 			'color',
 			'padding',
 			'margin',
@@ -51,8 +51,8 @@ class Attr extends Listing
 			'background',
 			'background-image',
 			'bgimg',
-			'background-position')
-	);
+			'background-position']
+	];
 	
 	
 	// isDataKey
@@ -192,7 +192,7 @@ class Attr extends Listing
 				$return['id'] = $basic['id'];
 				
 				if(!empty($basic['class']))
-				$return = static::parseMerge(array('class'=>$basic['class']),$return);
+				$return = static::parseMerge(['class'=>$basic['class']],$return);
 				
 				unset($return[$key]);
 			}
@@ -290,7 +290,7 @@ class Attr extends Listing
 			
 			if(!empty($groups))
 			{
-				$append = array();
+				$append = [];
 				
 				foreach ($groups as $group) 
 				{
@@ -312,7 +312,7 @@ class Attr extends Listing
 	// si le tableau contient un ou des groupes, il n'est pas parse à nouveau
 	public static function parse(array $array,array $option):array
 	{
-		$return = array();
+		$return = [];
 		$group = static::prepareGroup($array,$option);
 		
 		if(is_array($group))
@@ -333,7 +333,7 @@ class Attr extends Listing
 					elseif($key === 'class')
 					$value = static::parseClass($value);
 					
-					elseif(in_array($key,array('src','action'),true) && static::isDataUri($value) === false)
+					elseif(in_array($key,['src','action'],true) && static::isDataUri($value) === false)
 					{
 						$value = static::parseUri($value,$option[$key]['extension'] ?? null);
 						
@@ -357,7 +357,7 @@ class Attr extends Listing
 					$value = $key;
 					
 					if(is_string($key) && !empty($key) && $value !==null)
-					$return = static::parseMerge(array($key=>$value),$return);
+					$return = static::parseMerge([$key=>$value],$return);
 				}
 			}
 		}
@@ -375,7 +375,7 @@ class Attr extends Listing
 		$return = null;
 		$id = static::$config['id'];
 		$class = static::$config['class'];
-		$classes = array();
+		$classes = [];
 
 		if(is_array($value))
 		{
@@ -403,7 +403,7 @@ class Attr extends Listing
 						$id = substr($value,strlen($id));
 						$parse = static::parseId($id);
 						if(!empty($parse))
-						$return = array('id'=>$parse);
+						$return = ['id'=>$parse];
 					}
 					
 					else
@@ -462,7 +462,7 @@ class Attr extends Listing
 		if(!empty($value))
 		{
 			if(is_string($value) && !is_numeric($value))
-			$value = array($value);
+			$value = [$value];
 			
 			if(is_array($value))
 			{
@@ -507,7 +507,7 @@ class Attr extends Listing
 	public static function outputUri(string $value,?array $option=null):string 
 	{
 		$return = null;
-		$option = Arr::plus(array('append'=>null),$option);
+		$option = Arr::plus(['append'=>null],$option);
 		
 		if(!empty($option['append']) && Uri::isAbsolute($value))
 		$option['append'] = null;
@@ -539,7 +539,7 @@ class Attr extends Listing
 		
 		if(!empty($value))
 		{
-			$return = array();
+			$return = [];
 			
 			if($case !== null)
 			$value = Arr::keysChangeCase($case,$value);
@@ -584,7 +584,7 @@ class Attr extends Listing
 	// parse un tableau de clés data
 	public static function parseDataKeys(array $keys):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($keys as $i => $key) 
 		{
@@ -599,7 +599,7 @@ class Attr extends Listing
 	// parseMerge
 	// merge un tableau parse sur un tableau existant
 	// seules les clés data peuvent accepter une valeur bool, pas les attributs normaux
-	public static function parseMerge(array $array,array $return=array()):array
+	public static function parseMerge(array $array,array $return=[]):array
 	{
 		foreach ($array as $key => $value) 
 		{
@@ -653,7 +653,7 @@ class Attr extends Listing
 	// append plusieurs valeurs attributes et retourne un grand tableau parsed
 	public static function append(...$values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $value) 
 		{
@@ -678,7 +678,7 @@ class Attr extends Listing
 	// retourne un tableau unidimensionnel avec clé numérique
 	public static function list($array,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = static::option($option);
 		$separator = static::getSeparator(1,$option['implode']);
 		$array = static::arr($array,$option);
@@ -697,7 +697,7 @@ class Attr extends Listing
 						if(is_scalar($v))
 						{
 							$v = Str::cast($v);
-							$return[] = implode($separator,array($key,$v));
+							$return[] = implode($separator,[$key,$v]);
 						}
 					}
 				}
@@ -712,11 +712,11 @@ class Attr extends Listing
 	// prépare une string dans la méthode arr
 	public static function prepareStr(string $value,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator(1,$option['explode']);
 		
 		if(strpos($value,$separator) === false)
-		$return = array($value);
+		$return = [$value];
 		
 		else
 		$return = static::explodeStr($value,$option);
@@ -738,8 +738,8 @@ class Attr extends Listing
 	// ne peut pas fonctionner si un attribut contient un single ou double quote à l'intérieur des quotes
 	public static function explodeStr(string $value):array 
 	{
-		$return = array();
-		$match = array();
+		$return = [];
+		$match = [];
 		$value = Str::doubleToSingleQuote($value);
 		preg_match_all("%(.*)=\'(.*)\'%Uis",$value,$match,PREG_SET_ORDER);
 
@@ -764,9 +764,9 @@ class Attr extends Listing
 	// explodeClass
 	// explose une string de classe
 	// sensible à la case
-	public static function explodeClass(string $value,?array $return=array()):array 
+	public static function explodeClass(string $value,?array $return=[]):array 
 	{
-		$return = ($return === null)? array():$return;
+		$return = ($return === null)? []:$return;
 		
 		if(strpos($value," ") !== false)
 		{
@@ -823,8 +823,8 @@ class Attr extends Listing
 	// les valeurs sont passés dans quote et entities ou specialchars par défaut
 	public static function keyValue(array $array,array $option):array
 	{
-		$return = array();
-		$option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? array($option['encode']):$option['encode'];
+		$return = [];
+		$option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? [$option['encode']]:$option['encode'];
 		
 		if($option['caseImplode'] !== null)
 		$array = Arr::keysChangeCase($option['caseImplode'],$array);

@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Func extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// is
@@ -42,7 +42,7 @@ class Func extends Root
 	// retourne les fonctions définis par l'utilisateur
 	public static function user():array
 	{
-		$return = array();
+		$return = [];
 		
 		$all = static::all();
 		if(array_key_exists('user',$all) && is_array($all['user']))

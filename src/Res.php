@@ -6,17 +6,17 @@ namespace Quid\Base;
 class Res extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'binary'=>'b', // caractère pour représenter un mode binaire
-		'readable'=>array('r','r+','w+','a+','x+','c+'), // mode de stream readable
-		'writable'=>array('r+','w','w+','a','a+','x','x+','c','c+'), // mode de resource writable
-		'creatable'=>array('c+','w','w+'),
-		'base64'=>array( // si convert est true dans la méthode base64, converti un mime en un autre
-			'image/svg'=>'image/svg+xml'),
-		'phpStream'=>array( // paramètre par défaut pour stream php
+		'readable'=>['r','r+','w+','a+','x+','c+'], // mode de stream readable
+		'writable'=>['r+','w','w+','a','a+','x','x+','c','c+'], // mode de resource writable
+		'creatable'=>['c+','w','w+'],
+		'base64'=>[ // si convert est true dans la méthode base64, converti un mime en un autre
+			'image/svg'=>'image/svg+xml'],
+		'phpStream'=>[ // paramètre par défaut pour stream php
 			'mime'=>'txt',
-			'basenameLength'=>10),
-		'openKind'=>array( // kind de resource qui se détermine selon le nom
+			'basenameLength'=>10],
+		'openKind'=>[ // kind de resource qui se détermine selon le nom
 			'finfo'=>'finfo',
 			'file_info'=>'finfo',
 			'context'=>'context',
@@ -24,15 +24,15 @@ class Res extends Root
 			'php://output'=>'phpOutput',
 			'php://input'=>'phpInput',
 			'php://temp'=>'phpTemp',
-			'php://memory'=>'phpMemory'),
-		'mode'=>array( // mode pour l'ouverture des resources
+			'php://memory'=>'phpMemory'],
+		'mode'=>[ // mode pour l'ouverture des resources
 			'read'=>'r',
 			'readWrite'=>'r+',
 			'readWriteCreate'=>'c+',
 			'writeCreate'=>'a',
 			'writeTruncateCreate'=>'w',
-			'readWriteTruncateCreate'=>'w+'),
-		'curl'=>array( // option par défaut pour curl
+			'readWriteTruncateCreate'=>'w+'],
+		'curl'=>[ // option par défaut pour curl
 			'timeout'=>10,
 			'dnsGlobalCache'=>false,
 			'userPassword'=>null,
@@ -44,8 +44,8 @@ class Res extends Root
 			'port'=>null,
 			'sslCipher'=>null,
 			'userAgent'=>null,
-			'postJson'=>false)
-	);
+			'postJson'=>false]
+	];
 	
 	
 	// is
@@ -69,7 +69,7 @@ class Res extends Root
 			$kind = static::kind($value);
 			
 			if($kind === 'dir')
-			$return = (static::readDir(null,1,$value,array('dot'=>false)) === null)? true:false;
+			$return = (static::readDir(null,1,$value,['dot'=>false]) === null)? true:false;
 			
 			else
 			$return = empty(static::size($value))? true:false;
@@ -147,7 +147,7 @@ class Res extends Root
 		$return = false;
 		$type = static::type($value);
 		
-		if(is_string($type) && !in_array($type,array('curl','file_info'),true))
+		if(is_string($type) && !in_array($type,['curl','file_info'],true))
 		$return = true;
 		
 		return $return;
@@ -801,7 +801,7 @@ class Res extends Root
 		
 		elseif(static::isCurl($value))
 		{
-			$return = array();
+			$return = [];
 			$info = curl_getinfo($value);
 			
 			if(!empty($info['url']))
@@ -1191,7 +1191,7 @@ class Res extends Root
 	// retournes les resources actives
 	public static function all(?string $type=null):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(!empty($type))
 		$return = get_resources($type);
@@ -1234,7 +1234,7 @@ class Res extends Root
 	public static function open($value,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(array('useIncludePath'=>false,'context'=>null),$option);
+		$option = Arr::plus(['useIncludePath'=>false,'context'=>null],$option);
 		
 		if($value === true)
 		$return = static::phpWritable('temp',$option);
@@ -1347,7 +1347,7 @@ class Res extends Root
 		{
 			$scheme = Uri::scheme($value);
 			
-			if(is_string($scheme) && in_array($scheme,array('http','https'),true))
+			if(is_string($scheme) && in_array($scheme,['http','https'],true))
 			$return = 'http';
 		}
 		
@@ -1365,7 +1365,7 @@ class Res extends Root
 	public static function openMode(string $value,string $kind,?array $option=null):?string 
 	{
 		$return = null;
-		$option = Arr::plus(array('mode'=>null,'create'=>false,'binary'=>false),$option);
+		$option = Arr::plus(['mode'=>null,'create'=>false,'binary'=>false],$option);
 		
 		if(is_string($option['mode']))
 		{
@@ -1434,7 +1434,7 @@ class Res extends Root
 	// comme open, mais force l'ouverture en mode binaire
 	public static function binary($value,?array $option=null) 
 	{
-		return static::open($value,Arr::plus($option,array('binary'=>true)));
+		return static::open($value,Arr::plus($option,['binary'=>true]));
 	}
 	
 	
@@ -1442,7 +1442,7 @@ class Res extends Root
 	// comme open, mais active l'option de création de fichier
 	public static function create($value,?array $option=null) 
 	{
-		return static::open($value,Arr::plus($option,array('create'=>true)));
+		return static::open($value,Arr::plus($option,['create'=>true]));
 	}
 	
 	
@@ -1454,13 +1454,13 @@ class Res extends Root
 	public static function phpWritable(string $type,?array $option=null) 
 	{
 		$return = null;
-		$option = Arr::plus(array('basename'=>null,'mime'=>null,'binary'=>true,'write'=>null),$option);
+		$option = Arr::plus(['basename'=>null,'mime'=>null,'binary'=>true,'write'=>null],$option);
 		
-		if(in_array($type,array('output','temp','memory'),true))
+		if(in_array($type,['output','temp','memory'],true))
 		{
 			$basename = $option['basename'] ?? File::prefixFilename();
 			$mime = $option['mime'];
-			$option = Arr::unsets(array('basename','mime'),$option);
+			$option = Arr::unsets(['basename','mime'],$option);
 			
 			$return = static::open("php://".$type,$option);
 			$mime = ($mime === null)? static::$config['phpStream']['mime']:$mime;
@@ -1528,7 +1528,7 @@ class Res extends Root
 	// par défaut le buffer actuel est clean
 	public static function output(?string $mime=null,?string $basename=null,?array $option=null) 
 	{
-		$option = Arr::plus(array('clean'=>true,'mime'=>$mime,'basename'=>$basename),$option);
+		$option = Arr::plus(['clean'=>true,'mime'=>$mime,'basename'=>$basename],$option);
 		$return = static::phpWritable('output',$option);
 		
 		if(!empty($return) && $option['clean'] === true)
@@ -1542,7 +1542,7 @@ class Res extends Root
 	// ouvre une resource de type php temp
 	public static function temp(?string $mime=null,$basename=null,?array $option=null) 
 	{
-		return static::phpWritable('temp',Arr::plus(array('mime'=>$mime,'basename'=>$basename),$option));
+		return static::phpWritable('temp',Arr::plus(['mime'=>$mime,'basename'=>$basename],$option));
 	}
 	
 	
@@ -1550,7 +1550,7 @@ class Res extends Root
 	// ouvre une resource de type php temp
 	public static function memory(?string $mime=null,?string $basename=null,?array $option=null) 
 	{
-		return static::phpWritable('memory',Arr::plus(array('mime'=>$mime,'basename'=>$basename),$option));
+		return static::phpWritable('memory',Arr::plus(['mime'=>$mime,'basename'=>$basename],$option));
 	}
 	
 	
@@ -1565,8 +1565,8 @@ class Res extends Root
 		
 		if(Uri::isAbsolute($value))
 		{
-			$return = array('code'=>null,'contentType'=>null,'basename'=>null,'meta'=>null,'header'=>null,'resource'=>null);
-			$context = array();
+			$return = ['code'=>null,'contentType'=>null,'basename'=>null,'meta'=>null,'header'=>null,'resource'=>null];
+			$context = [];
 			
 			if(!empty($post))
 			$context['post'] = $post;
@@ -1574,7 +1574,7 @@ class Res extends Root
 			if(!empty($header))
 			$context['header'] = $header;
 
-			$resource = static::open($value,array('context'=>$context));
+			$resource = static::open($value,['context'=>$context]);
 			$header = static::headers($resource);
 			
 			$return['basename'] = static::basename($resource);
@@ -1708,12 +1708,12 @@ class Res extends Root
 		if(is_array($value) && !empty($value))
 		{
 			if(!array_key_exists($kind,$value))
-			$value = array($kind=>$value);
+			$value = [$kind=>$value];
 			
 			// http
 			if($kind === 'http')
 			{
-				$header = (array_key_exists('header',$value[$kind]))? Header::arr($value[$kind]['header']):array();
+				$header = (array_key_exists('header',$value[$kind]))? Header::arr($value[$kind]['header']):[];
 				
 				if(array_key_exists('post',$value[$kind]))
 				{
@@ -1757,7 +1757,7 @@ class Res extends Root
 		
 		if(static::isCurl($value))
 		{
-			$return = array('code'=>null,'contentType'=>null,'basename'=>null,'meta'=>null,'header'=>null,'resource'=>null);
+			$return = ['code'=>null,'contentType'=>null,'basename'=>null,'meta'=>null,'header'=>null,'resource'=>null];
 			$exec = curl_exec($value);
 			$meta = static::meta($value);
 			$basename = static::basename($value);
@@ -1786,8 +1786,8 @@ class Res extends Root
 						
 						if(is_string($body))
 						{
-							$write = array('meta'=>$return['meta'],'header'=>$return['header']);
-							$resource = static::temp($contentType,$basename,array('write'=>$write));
+							$write = ['meta'=>$return['meta'],'header'=>$return['header']];
+							$resource = static::temp($contentType,$basename,['write'=>$write]);
 							
 							if(!empty($resource) && static::write($body,$resource))
 							$return['resource'] = $resource;
@@ -1997,7 +1997,7 @@ class Res extends Root
 	public static function passthru($value,?array $option=null):bool
 	{
 		$return = false;
-		$option = Arr::plus(array('clean'=>true,'rewind'=>true,'flush'=>true),$option);
+		$option = Arr::plus(['clean'=>true,'rewind'=>true,'flush'=>true],$option);
 		
 		if(static::isReadable($value) && !static::isDir($value))
 		{
@@ -2033,7 +2033,7 @@ class Res extends Root
 	public static function passthruChunk($length,$value,?array $option=null):?int
 	{
 		$return = null;
-		$option = Arr::plus(array('clean'=>true,'rewind'=>true,'flush'=>true,'sleep'=>null),$option);
+		$option = Arr::plus(['clean'=>true,'rewind'=>true,'flush'=>true,'sleep'=>null],$option);
 		
 		if(static::isReadable($value) && !static::isDir($value))
 		{
@@ -2083,7 +2083,7 @@ class Res extends Root
 	public static function line($value,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(array('csv'=>false,'amount'=>PHP_INT_MAX,'separator'=>PHP_EOL),$option);
+		$option = Arr::plus(['csv'=>false,'amount'=>PHP_INT_MAX,'separator'=>PHP_EOL],$option);
 		
 		if(is_resource($value))
 		{
@@ -2186,7 +2186,7 @@ class Res extends Root
 		
 		elseif(static::isReadable($value))
 		{
-			$option = Arr::plus(array('callback'=>null),$option);
+			$option = Arr::plus(['callback'=>null],$option);
 			$seekTo = -1;
 			
 			if(static::isSeekable($value))
@@ -2219,7 +2219,7 @@ class Res extends Root
 	protected static function readDir($seek,$amount,$handle,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(array('dot'=>false),$option);
+		$option = Arr::plus(['dot'=>false],$option);
 		
 		if($amount === true)
 		$amount = PHP_INT_MAX;
@@ -2232,7 +2232,7 @@ class Res extends Root
 			elseif(is_int($seek))
 			static::seek($seek,$handle,SEEK_SET,$option);
 			
-			$return = array();
+			$return = [];
 			$array = ($amount > 1)? true:false;
 			
 			while ($amount > 0) 
@@ -2274,11 +2274,11 @@ class Res extends Root
 	public static function lines($offset,$length,$value,?array $option=null):?array
 	{
 		$return = null;
-		$option = Arr::plus(array('skipEmpty'=>false,'trim'=>false),$option);
+		$option = Arr::plus(['skipEmpty'=>false,'trim'=>false],$option);
 		
 		if(static::isSeekable($value) && static::isReadable($value))
 		{
-			$return = array();
+			$return = [];
 			
 			if($offset === null)
 			$offset = ftell($value);
@@ -2336,7 +2336,7 @@ class Res extends Root
 	public static function lineCount($value,?array $option=null):?int
 	{
 		$return = null;
-		$option = Arr::plus(array('rewind'=>true),$option);
+		$option = Arr::plus(['rewind'=>true],$option);
 		
 		if(static::isSeekable($value) && static::isReadable($value))
 		{
@@ -2369,7 +2369,7 @@ class Res extends Root
 	public static function subCount(string $sub,$value,?array $option=null):?int
 	{
 		$return = null;
-		$option = Arr::plus(array('rewind'=>true,'mb'=>null,'separator'=>PHP_EOL),$option,array('csv'=>false));
+		$option = Arr::plus(['rewind'=>true,'mb'=>null,'separator'=>PHP_EOL],$option,['csv'=>false]);
 		
 		if(static::isSeekable($value) && static::isReadable($value) && !empty($sub))
 		{
@@ -2540,7 +2540,7 @@ class Res extends Root
 	public static function prepareContent($value,array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(array('separator'=>PHP_EOL,'csv'=>false,'replace'=>false),$option);
+		$option = Arr::plus(['separator'=>PHP_EOL,'csv'=>false,'replace'=>false],$option);
 		$value = static::prepareType($value);
 		
 		if($option['csv'] === true)
@@ -2551,7 +2551,7 @@ class Res extends Root
 			if($option['replace'] === true)
 			{
 				if(is_string($value))
-				$return = array($value);
+				$return = [$value];
 				
 				elseif(is_array($value))
 				$return = $value;
@@ -2624,7 +2624,7 @@ class Res extends Root
 	public static function write($content,$value,?array $option=null)
 	{
 		$return = false;
-		$option = Arr::plus(array('callback'=>null,'seek'=>null,'lock'=>false,'flush'=>false,'csv'=>false,'separator'=>PHP_EOL),$option);
+		$option = Arr::plus(['callback'=>null,'seek'=>null,'lock'=>false,'flush'=>false,'csv'=>false,'separator'=>PHP_EOL],$option);
 		
 		if(static::classIsCallable($option['callback']))
 		$content = $option['callback']($content);
@@ -2691,7 +2691,7 @@ class Res extends Root
 	public static function overwrite($content,$value,?array $option=null) 
 	{
 		$return = false;
-		$option = Arr::plus(array('lock'=>false),$option);
+		$option = Arr::plus(['lock'=>false],$option);
 		
 		if(static::isWritable($value))
 		{
@@ -2699,7 +2699,7 @@ class Res extends Root
 			{
 				if(static::empty($value,0))
 				{
-					$return = static::write($content,$value,Arr::plus($option,array('lock'=>false)));
+					$return = static::write($content,$value,Arr::plus($option,['lock'=>false]));
 
 					if($option['lock'] === true)
 					static::unlock($value);
@@ -2718,7 +2718,7 @@ class Res extends Root
 	public static function prepend($content,$value,?array $option=null)
 	{
 		$return = false;
-		$option = Arr::plus(array('newline'=>false,'separator'=>PHP_EOL,'csv'=>false),$option);
+		$option = Arr::plus(['newline'=>false,'separator'=>PHP_EOL,'csv'=>false],$option);
 		
 		if(static::isWritable($value) && static::isSeekable($value))
 		{
@@ -2743,7 +2743,7 @@ class Res extends Root
 			}
 			
 			if($write !== null)
-			$return = static::overwrite($write,$value,Arr::plus($option,array('newline'=>false)));
+			$return = static::overwrite($write,$value,Arr::plus($option,['newline'=>false]));
 		}
 		
 		return $return;
@@ -2813,7 +2813,7 @@ class Res extends Root
 		
 		if(!empty($lines))
 		{
-			$replace = static::prepareContent($replace,Arr::plus($option,array('replace'=>true)));
+			$replace = static::prepareContent($replace,Arr::plus($option,['replace'=>true]));
 			$return = Arr::spliceIndex($offset,$length,$lines,$replace);
 			
 			if($overwrite === true)
@@ -2835,7 +2835,7 @@ class Res extends Root
 
 		if(!empty($lines))
 		{
-			$replace = static::prepareContent($replace,Arr::plus($option,array('replace'=>true)));
+			$replace = static::prepareContent($replace,Arr::plus($option,['replace'=>true]));
 			$return = Arr::spliceFirst($lines,$replace);
 			
 			if($overwrite === true)
@@ -2856,7 +2856,7 @@ class Res extends Root
 
 		if(!empty($lines))
 		{
-			$replace = static::prepareContent($replace,Arr::plus($option,array('replace'=>true)));
+			$replace = static::prepareContent($replace,Arr::plus($option,['replace'=>true]));
 			$return = Arr::spliceLast($lines,$replace);
 			
 			if($overwrite === true)
@@ -2879,7 +2879,7 @@ class Res extends Root
 		
 		if(!empty($lines))
 		{
-			$replace = static::prepareContent($replace,Arr::plus($option,array('replace'=>true)));
+			$replace = static::prepareContent($replace,Arr::plus($option,['replace'=>true]));
 			$return = Arr::insertIndex($offset,$replace,$lines);
 			
 			if($overwrite === true)
@@ -2949,7 +2949,7 @@ class Res extends Root
 	public static function empty($value,int $size=0,?array $option=null):bool 
 	{
 		$return = false;
-		$option = Arr::plus(array('rewind'=>true,'lock'=>false),$option);
+		$option = Arr::plus(['rewind'=>true,'lock'=>false],$option);
 		
 		if(static::isSeekable($value) && static::isWritable($value))
 		{
@@ -3225,7 +3225,7 @@ class Res extends Root
 	// ferme plusieurs ressources
 	public static function closes(...$values):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $key => &$value) 
 		{

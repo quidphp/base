@@ -6,18 +6,18 @@ namespace Quid\Base;
 class Slug extends Set
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'caseImplode'=>'lower', // les valeurs sont ramenés dans cette case lors du implode
 			'replaceAccent'=>true, // replace les accents par les caractères non accentés
 			'prepend'=>null, // prepend une valeur au slug
 			'append'=>null, // append une valeur au slug
-			'sliceLength'=>array(2,20), // garde seulement les slugs entre une certaine longueur
+			'sliceLength'=>[2,20], // garde seulement les slugs entre une certaine longueur
 			'keepLast'=>true, // garde le dernier slice peu importe la longueur
 			'keepNumeric'=>true, // garde toutes les slices numériques
-			'totalLength'=>null), // longueur total du slug admise
-		'separator'=>array('-','-') // séparateur pour les slug
-	);
+			'totalLength'=>null], // longueur total du slug admise
+		'separator'=>['-','-'] // séparateur pour les slug
+	];
 	
 	
 	// is
@@ -41,7 +41,7 @@ class Slug extends Set
 	// parse le tableau arr de slug
 	public static function parse(array $array,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator(1);
 		$segment = Segment::getDelimiter(null,true);
 		

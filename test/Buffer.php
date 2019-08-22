@@ -42,7 +42,7 @@ class Buffer extends Base\Test
 		assert(Base\Buffer::count() === 2);
 
 		// startCallGet
-		assert(Base\Buffer::startCallGet('print_r',array('JAMES')) === 'JAMES');
+		assert(Base\Buffer::startCallGet('print_r',['JAMES']) === 'JAMES');
 
 		// get
 		echo "TEST";
@@ -96,7 +96,7 @@ class Buffer extends Base\Test
 
 		// cleanAll
 		echo "BLA";
-		assert(Base\Buffer::cleanAll() === array(3=>true,2=>true,1=>true));
+		assert(Base\Buffer::cleanAll() === [3=>true,2=>true,1=>true]);
 		assert(Base\Buffer::count() === 1);
 		assert(Base\Buffer::start());
 		assert(Base\Buffer::start());
@@ -123,7 +123,7 @@ class Buffer extends Base\Test
 		assert(Base\Buffer::endCleanAll());
 		assert(Base\Buffer::count() === 0);
 		assert(Base\Buffer::size() === null);
-		Base\Buffer::start(array(Base\Response::class,'autoContentType'));
+		Base\Buffer::start([Base\Response::class,'autoContentType']);
 		assert(Base\Buffer::count() === 1);
 
 		// startEchoEndFlush

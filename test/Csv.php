@@ -29,7 +29,7 @@ class Csv extends Base\Test
 		// same
 		$get = Base\Csv::getLines($csvRes);
 		assert(Base\Csv::same($get));
-		assert(!Base\Csv::same(array(array(1),array(2,3))));
+		assert(!Base\Csv::same([[1],[2,3]]));
 		assert(count($get) === 15);
 		
 		// clean
@@ -44,21 +44,21 @@ class Csv extends Base\Test
 		assert(Base\Csv::list($assoc) === $get);
 		
 		// str
-		assert(Base\Csv::str("test;test2é;\"test3\ntest4\";\"testqu;ote\"") === array("test","test2é","test3\ntest4","testqu;ote"));
+		assert(Base\Csv::str("test;test2é;\"test3\ntest4\";\"testqu;ote\"") === ["test","test2é","test3\ntest4","testqu;ote"]);
 		assert(Base\Csv::str("") === null);
-		assert(count(Base\Csv::str(array("test;test2é;\"test3\ntest4\";\"testqu;ote\"","","test;test2é;\"test3\ntest4\";\"testqu;ote\""))) === 2);
+		assert(count(Base\Csv::str(["test;test2é;\"test3\ntest4\";\"testqu;ote\"","","test;test2é;\"test3\ntest4\";\"testqu;ote\""])) === 2);
 		
 		// put
 		assert(strlen(Base\Csv::put($splice[0])) === 83);
 		assert(strlen(Base\Csv::put($splice)) > 100);
 		
 		// prepareContent
-		assert(Base\Csv::prepareContent('ok') === array(array('ok')));
-		assert(Base\Csv::prepareContent(array('ok','what')) === array(array('ok','what')));
-		$line = array(array('ok','what'));
+		assert(Base\Csv::prepareContent('ok') === [['ok']]);
+		assert(Base\Csv::prepareContent(['ok','what']) === [['ok','what']]);
+		$line = [['ok','what']];
 		
 		// prepareContentPrepend
-		assert(Base\Csv::prepareContentPrepend($line,$csvRes)[0] === array('ok','what'));
+		assert(Base\Csv::prepareContentPrepend($line,$csvRes)[0] === ['ok','what']);
 		assert(Base\Res::seekRewind($csvRes));
 		
 		// resLine
@@ -86,7 +86,7 @@ class Csv extends Base\Test
 		assert(!Base\Csv::isNotEmpty($_dir_));
 		assert(Base\Csv::isNotEmpty($mediaCsv));
 		assert(Base\Csv::isNotEmpty($csvRes));
-		assert(Base\Csv::option(array('test'=>'deux')) === array('csv'=>true,'test'=>'deux','useIncludePath'=>true));
+		assert(Base\Csv::option(['test'=>'deux']) === ['csv'=>true,'test'=>'deux','useIncludePath'=>true]);
 		assert(Base\Csv::stat($_dir_) === null);
 		assert(is_array(Base\Csv::stat($csvRes)));
 		assert(Base\Csv::stat($fileRes) === null);
@@ -113,28 +113,28 @@ class Csv extends Base\Test
 		assert(Base\Csv::subCount("King",$csvRes) === Base\File::subCount("King",$csvRes));
 		assert(count(Base\Csv::lineChunk(10,$csvRes)) === 2);
 		assert(Base\Csv::set("[assertCurrent]/test.php") === null);
-		assert(Base\Csv::set("[assertCurrent]/test.csv",array(array('WHAT','ok'),array('TE" ST','LOL'))));
+		assert(Base\Csv::set("[assertCurrent]/test.csv",[['WHAT','ok'],['TE" ST','LOL']]));
 		assert(strlen(Base\Csv::get("[assertCurrent]/test.csv")) === 22);
-		assert(Base\File::set("[assertCurrent]/test.txt",array(array('WHAT','ok'),array('TE" ST','LOL'))));
+		assert(Base\File::set("[assertCurrent]/test.txt",[['WHAT','ok'],['TE" ST','LOL']]));
 		assert(strlen(Base\File::get("[assertCurrent]/test.txt")) === 33);
 		assert(Base\Path::isExtension("csv",Base\Csv::setFilenameExtension("[assertCurrent]","filenameext")));
-		assert(Base\Csv::write(array('WRITE','OKzzzdasds'),"[assertCurrent]/test.csv"));
+		assert(Base\Csv::write(['WRITE','OKzzzdasds'],"[assertCurrent]/test.csv"));
 		assert(strlen(Base\Csv::get("[assertCurrent]/test.csv")) === 22);
-		assert(Base\Csv::overwrite(array(array('WRITEwqewe','OKzzzdasds'),array('LOL','OUI')),"[assertCurrent]/test.csv"));
+		assert(Base\Csv::overwrite([['WRITEwqewe','OKzzzdasds'],['LOL','OUI']],"[assertCurrent]/test.csv"));
 		assert(strlen(Base\Csv::get("[assertCurrent]/test.csv")) === 30);
-		assert(Base\Csv::prepend(array('pré','deux'),"[assertCurrent]/test.csv"));
+		assert(Base\Csv::prepend(['pré','deux'],"[assertCurrent]/test.csv"));
 		assert(strlen(Base\Csv::get("[assertCurrent]/test.csv")) === 40);
-		assert(Base\Csv::append(array('appé','troi'),"[assertCurrent]/test.csv"));
+		assert(Base\Csv::append(['appé','troi'],"[assertCurrent]/test.csv"));
 		assert(strlen(Base\Csv::get("[assertCurrent]/test.csv")) === 51);
-		assert(Base\Csv::appendNewline(array('appé','troi'),"[assertCurrent]/test.csv"));
+		assert(Base\Csv::appendNewline(['appé','troi'],"[assertCurrent]/test.csv"));
 		assert(strlen(Base\Csv::get("[assertCurrent]/test.csv")) === 62);
-		assert(Base\Csv::lineSplice(0,1,"[assertCurrent]/test.csv",array('testzzz','test2zzz'))[0] === array('testzzz','test2zzz'));
-		assert(Base\Csv::lineSplice(1,3,"[assertCurrent]/test.csv",array(array('test','test2'),array('test3','test4')),true)[1] === array('test','test2'));
-		assert(Base\Csv::getLines("[assertCurrent]/test.csv")[1] === array('test','test2'));
+		assert(Base\Csv::lineSplice(0,1,"[assertCurrent]/test.csv",['testzzz','test2zzz'])[0] === ['testzzz','test2zzz']);
+		assert(Base\Csv::lineSplice(1,3,"[assertCurrent]/test.csv",[['test','test2'],['test3','test4']],true)[1] === ['test','test2']);
+		assert(Base\Csv::getLines("[assertCurrent]/test.csv")[1] === ['test','test2']);
 		assert(count(Base\Csv::lineSpliceFirst("[assertCurrent]/test.csv",null,true)) === 3);
 		assert(count(Base\Csv::lineSpliceLast("[assertCurrent]/test.csv",null,true)) === 2);
 		assert(count(Base\Csv::getLines("[assertCurrent]/test.csv")) === 2);
-		assert(Base\Csv::lineInsert(0,array(array('what',2),array('ok',array('TEST'))),"[assertCurrent]/test.csv",false)[1][1] === array('TEST'));
+		assert(Base\Csv::lineInsert(0,[['what',2],['ok',['TEST']]],"[assertCurrent]/test.csv",false)[1][1] === ['TEST']);
 		assert(count(Base\Csv::lineFilter(function($v,$k,$lines) {
 			assert(is_array($v));
 			return true;
@@ -142,7 +142,7 @@ class Csv extends Base\Test
 		assert(Base\Csv::lineMap(function($v,$k,$lines) {
 			$v[2] = 'TEST';
 			return $v;
-		},"[assertCurrent]/test.csv")[0] === array('test','test2','TEST'));
+		},"[assertCurrent]/test.csv")[0] === ['test','test2','TEST']);
 		assert(Base\Csv::changeBasename("test2.csv","[assertCurrent]/test.csv"));
 		assert(Base\Csv::empty("[assertCurrent]/test2.csv"));
 		assert(!Base\Csv::is($currentFile));

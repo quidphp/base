@@ -25,7 +25,7 @@ class Res extends Base\Test
 		$array = Base\Res::open(Base\File::makeUploadArray($_file_));
 		$fp = tmpfile();
 		$current = Base\File::open("file://".$_file_);
-		$currentNoIP = Base\File::open("file://".$_file_,array('useIncludePath'=>false));
+		$currentNoIP = Base\File::open("file://".$_file_,['useIncludePath'=>false]);
 		$output = Base\Res::open("php://output");
 		$input = Base\Res::open("php://input");
 		$temp = Base\Res::open("php://temp");
@@ -37,11 +37,11 @@ class Res extends Base\Test
 		assert(Base\Symlink::set($_file_,$sym));
 		$true = Base\Res::open(true);
 		$symRes = Base\Res::open($sym);
-		$write = Base\Res::open($storage."/write.txt",array('create'=>true));
-		$splice = Base\Res::open($storage."/splice.txt",array('create'=>true));
-		$csvPublic = Base\Res::open($mediaCsv,array('create'=>true));
-		$moveAround = Base\Res::open($storage."/moveAround.txt",array('create'=>true));
-		$context = stream_context_create(array('http'=>array()));
+		$write = Base\Res::open($storage."/write.txt",['create'=>true]);
+		$splice = Base\Res::open($storage."/splice.txt",['create'=>true]);
+		$csvPublic = Base\Res::open($mediaCsv,['create'=>true]);
+		$moveAround = Base\Res::open($storage."/moveAround.txt",['create'=>true]);
+		$context = stream_context_create(['http'=>[]]);
 		$finfo = finfo_open();
 		$captcha = Base\ImageRaster::captcha("test","[assertCommon]/ttf.ttf");
 		$zip = Base\Res::open("[assertCommon]/zip.zip");
@@ -435,7 +435,7 @@ class Res extends Base\Test
 		assert(count(Base\Res::responseMeta($current)) === 4);
 		assert(count(Base\Res::responseMeta($http)) === 4);
 		assert(Base\Res::responseMeta($output) === null);
-		$output2 = Base\Res::output("jpg","test.jpg",array('clean'=>false,'binary'=>false));
+		$output2 = Base\Res::output("jpg","test.jpg",['clean'=>false,'binary'=>false]);
 		assert(count(Base\Res::responseMeta($output2)) === 4);
 		assert(Base\Res::close($output2));
 		assert(Base\Res::responseMeta($curl) === null);
@@ -596,7 +596,7 @@ class Res extends Base\Test
 		assert(Base\Res::mimeGroup($http) === 'imageRaster');
 		
 		// mimeFamilies
-		assert(Base\Res::mimeFamilies($http) === array('image','binary'));
+		assert(Base\Res::mimeFamilies($http) === ['image','binary']);
 		
 		// mimeFamily
 		assert(Base\Res::mimeFamily($http) === 'image');
@@ -643,12 +643,12 @@ class Res extends Base\Test
 		assert(Base\Res::openKind("php://output") === 'phpOutput');
 
 		// openMode
-		assert(Base\Res::openMode($_file_,'file',array('mode'=>'readWrite')) === 'r+');
-		assert(Base\Res::openMode($_file_,'file',array('mode'=>'r+')) === 'r+');
-		assert(Base\Res::openMode("$storage/what",'file',array('create'=>true)) === 'c+');
+		assert(Base\Res::openMode($_file_,'file',['mode'=>'readWrite']) === 'r+');
+		assert(Base\Res::openMode($_file_,'file',['mode'=>'r+']) === 'r+');
+		assert(Base\Res::openMode("$storage/what",'file',['create'=>true]) === 'c+');
 		assert(Base\Res::openMode($storage,'file') === null);
 		assert(Base\Res::openMode($_dir_,'dir') === 'r');
-		assert(Base\Res::openMode($_dir_,'dir',array('binary'=>true)) === 'rb');
+		assert(Base\Res::openMode($_dir_,'dir',['binary'=>true]) === 'rb');
 
 		// binary
 		$binary = Base\Res::binary($_file_);
@@ -674,7 +674,7 @@ class Res extends Base\Test
 		assert(Base\Res::basename($current) === 'class.php');
 
 		// output
-		$output = Base\Res::output("jpg","test.jpg",array('clean'=>false));
+		$output = Base\Res::output("jpg","test.jpg",['clean'=>false]);
 		assert(Base\Res::isPhp($output));
 		assert(Base\Res::isPhpOutput($output));
 		assert(Base\Res::isResponsable($output));
@@ -682,7 +682,7 @@ class Res extends Base\Test
 		assert(Base\Res::close($output));
 
 		// temp
-		$temp = Base\Res::temp('jpg','test.jpg',array('write'=>array('test'=>'ok','test2'=>array(true))));
+		$temp = Base\Res::temp('jpg','test.jpg',['write'=>['test'=>'ok','test2'=>[true]]]);
 		assert(Base\Res::write('bla',$temp));
 		assert(Base\Res::mime($temp) === 'image/jpeg');
 		assert(Base\Res::size($temp) === 3);
@@ -692,7 +692,7 @@ class Res extends Base\Test
 		assert(Base\Res::empty($temp));
 
 		// memory
-		$memory = Base\Res::memory('jpg','test.jpg',array('write'=>array('test'=>'ok','test2'=>array(true))));
+		$memory = Base\Res::memory('jpg','test.jpg',['write'=>['test'=>'ok','test2'=>[true]]]);
 		assert(Base\Res::isPhpMemory($memory));
 
 		// http
@@ -700,7 +700,7 @@ class Res extends Base\Test
 		// curl
 
 		// context
-		$context = Base\Res::context(array('post'=>array('test'=>2,'whaté'=>"JEMBAQEUÉÉ"),'header'=>array('Header'=>'ok','James'=>'LOL')),'http');
+		$context = Base\Res::context(['post'=>['test'=>2,'whaté'=>"JEMBAQEUÉÉ"],'header'=>['Header'=>'ok','James'=>'LOL']],'http');
 		assert(Base\Res::isContext($context));
 		assert(is_string(Base\Res::option($context)['http']['header']));
 		assert(is_string(Base\Res::option($context)['http']['content']));
@@ -814,11 +814,11 @@ class Res extends Base\Test
 		assert(!empty(Base\Res::line($current)));
 		assert(Base\Res::line($current) !== Base\Res::line($current));
 		assert(is_string(Base\Res::line($csvPublic)));
-		assert(is_array(Base\Res::line($csvPublic,array('csv'=>true))));
+		assert(is_array(Base\Res::line($csvPublic,['csv'=>true])));
 
 		// lineRef
 		$i = 6;
-		assert(!empty(Base\Res::lineRef($csvPublic,true,true,$i,array('csv'=>true))));
+		assert(!empty(Base\Res::lineRef($csvPublic,true,true,$i,['csv'=>true])));
 
 		// get
 		assert(count(Base\Res::get($dir,0,true)) > 5);
@@ -826,7 +826,7 @@ class Res extends Base\Test
 
 		// read
 		assert(count(Base\Res::read(0,true,$dir)) > 5);
-		assert(Base\Res::read(false,true,$dir) === array());
+		assert(Base\Res::read(false,true,$dir) === []);
 		assert(strlen(Base\Res::get($current)) > 500);
 		assert(Base\Res::read(true,20,$current) === "<?php\ndeclare(strict");
 		assert(Base\Res::read(true,20,$current) === "<?php\ndeclare(strict");
@@ -835,7 +835,7 @@ class Res extends Base\Test
 		assert(Base\Res::get($curl) === 'lorem ipsum lorem ipsum');
 		assert(Base\Res::get($curl) !== '');
 		assert(is_string(Base\Res::read(true,5550,$http)));
-		assert(Base\Res::read(null,2,$current,array('callback'=>array(Base\Str::class,'upper'))) === 'QU');
+		assert(Base\Res::read(null,2,$current,['callback'=>[Base\Str::class,'upper']]) === 'QU');
 
 		// readDir
 
@@ -888,17 +888,17 @@ class Res extends Base\Test
 		assert(Base\Res::prepareContent(2) === '2');
 		assert(Base\Res::prepareContent(true) === '1');
 		assert(Base\Res::prepareContent(null) === '');
-		assert(Base\Res::prepareContent(array('test','test2')) === "test\ntest2");
-		assert(Base\Res::prepareContent(array('test','test2',array('test3','ok'=>'test4'))) === Base\Json::encode(array('test','test2',array('test3','ok'=>'test4'))));
+		assert(Base\Res::prepareContent(['test','test2']) === "test\ntest2");
+		assert(Base\Res::prepareContent(['test','test2',['test3','ok'=>'test4']]) === Base\Json::encode(['test','test2',['test3','ok'=>'test4']]));
 		$x = new \DateTime("now");
 		assert(Base\Res::prepareContent($x) === serialize($x));
 		assert(strlen(Base\Res::prepareContent(Base\File::open($_file_))) > 2000);
-		assert(Base\Res::prepareContent("test",array('replace'=>true)) === array('test'));
+		assert(Base\Res::prepareContent("test",['replace'=>true]) === ['test']);
 		$x = new \DateTime("now");
-		assert(Base\Res::prepareContent($x,array('replace'=>true)) === array(serialize($x)));
-		assert(is_string(Base\Res::prepareContent(array(2,new \DateTime("now"),array($dir,'OK')))));
-		assert(is_array(Base\Res::prepareContent(array(2,new \DateTime("now"),array($dir,'OK')),array('csv'=>true))));
-		assert(is_array(Base\Res::prepareContent(array(2,new \DateTime("now"),array($dir,'OK')),array('replace'=>true))));
+		assert(Base\Res::prepareContent($x,['replace'=>true]) === [serialize($x)]);
+		assert(is_string(Base\Res::prepareContent([2,new \DateTime("now"),[$dir,'OK']])));
+		assert(is_array(Base\Res::prepareContent([2,new \DateTime("now"),[$dir,'OK']],['csv'=>true])));
+		assert(is_array(Base\Res::prepareContent([2,new \DateTime("now"),[$dir,'OK']],['replace'=>true])));
 
 		// set
 		assert(Base\Res::set($storage."/set.txt","WHAT"));
@@ -909,38 +909,38 @@ class Res extends Base\Test
 		assert(Base\Res::get($storage."/set.txt") === 'TESTWHAT');
 
 		// write
-		$output = Base\Res::output("jpg","test.jpg",array('clean'=>false));
+		$output = Base\Res::output("jpg","test.jpg",['clean'=>false]);
 		assert(Base\Res::seekRewind($write));
 		assert(Base\Res::write("TEST",$write) === true);
-		assert(Base\Res::write("TEST2",$write,array('amount'=>2,'lock'=>true,'flush'=>true)) === true);
+		assert(Base\Res::write("TEST2",$write,['amount'=>2,'lock'=>true,'flush'=>true]) === true);
 		assert(Base\Res::get($write) === 'TESTTE');
 		assert(Base\Res::isEnd($write));
-		$csv = Base\Res::open($storage."/csv.csv",array('create'=>true));
-		assert(Base\Res::write(array('test','test2','test3;test4','test5','"quote"','test6'),$csv,array('csv'=>true)));
+		$csv = Base\Res::open($storage."/csv.csv",['create'=>true]);
+		assert(Base\Res::write(['test','test2','test3;test4','test5','"quote"','test6'],$csv,['csv'=>true]));
 		assert(Base\Res::get($csv) === "test;test2;\"test3;test4\";test5;\"\"\"quote\"\"\";test6\n");
 		assert(Base\Res::write($captcha,$write));
 		assert(Base\Res::get($write) !== 'TESTTE');
 		assert(Base\Res::empty($write));
-		assert(Base\Res::write('TEsTTE',$write,array('callback'=>array(Base\Str::class,'upper'))));
+		assert(Base\Res::write('TEsTTE',$write,['callback'=>[Base\Str::class,'upper']]));
 		assert(Base\Res::seekEnd(0,$csv));
-		assert(Base\Res::write(array(array('testz','test2','test3;test4','test5','"quote"','test6')),$csv,array('csv'=>true)));
-		assert(count(Base\Res::lines(true,true,$csv,array('csv'=>true))) === 2);
-		assert(Base\Res::write(array('testz','test2','test3;test4','test5','"quote"','test6'),$csv,array('csv'=>true)));
-		assert(count(Base\Res::lines(true,true,$csv,array('csv'=>true))) === 3);
+		assert(Base\Res::write([['testz','test2','test3;test4','test5','"quote"','test6']],$csv,['csv'=>true]));
+		assert(count(Base\Res::lines(true,true,$csv,['csv'=>true])) === 2);
+		assert(Base\Res::write(['testz','test2','test3;test4','test5','"quote"','test6'],$csv,['csv'=>true]));
+		assert(count(Base\Res::lines(true,true,$csv,['csv'=>true])) === 3);
 
 		// writeStream
 		assert(Base\Res::get($write) === 'TESTTE');
-		assert(Base\Res::writeStream("blabla",$write,array('newline'=>true,'separator'=>PHP_EOL)));
+		assert(Base\Res::writeStream("blabla",$write,['newline'=>true,'separator'=>PHP_EOL]));
 		assert(Base\Res::get($write) === "TESTTE\nblabla");
 		assert(Base\Res::writeStream("za\nas\n\n\ndsa",$write));
-		assert(count(Base\Res::lines(true,true,$write,array())) === 6);
-		assert(count(Base\Res::lines(true,true,$write,array('skipEmpty'=>true))) === 4);
+		assert(count(Base\Res::lines(true,true,$write,[])) === 6);
+		assert(count(Base\Res::lines(true,true,$write,['skipEmpty'=>true])) === 4);
 
 		// overwrite
 		assert(Base\Res::overwrite("TEST",$write) === true);
 		assert(Base\Res::isEnd($write));
 		assert(Base\Res::get($write) === 'TEST');
-		assert(Base\Res::overwrite("TEST",$write,array('amount'=>2)) === true);
+		assert(Base\Res::overwrite("TEST",$write,['amount'=>2]) === true);
 		assert(Base\Res::isEnd($write));
 		assert(Base\Res::get($write) === 'TE');
 		assert(Base\Res::overwrite("TESTTEST2",$write) === true);
@@ -949,18 +949,18 @@ class Res extends Base\Test
 		assert(Base\Res::prepend("TEST0",$write) === true);
 		assert(Base\Res::isEnd($write));
 		assert(Base\Res::get($write) === 'TEST0TESTTEST2');
-		assert(Base\Res::prepend("TEST-1",$write,array('lock'=>true,'flush'=>true)) === true);
+		assert(Base\Res::prepend("TEST-1",$write,['lock'=>true,'flush'=>true]) === true);
 		assert(Base\Res::get($write) === 'TEST-1TEST0TESTTEST2');
 		assert(Base\Res::isEnd($write));
 		assert(!Base\Res::prepend("Test",$output) === true);
 		assert(Base\Res::empty($write));
-		assert(Base\Res::prepend(array('TEST','TEST2',new \Datetime("now"),2,1.2,true,false,null,'ok'),$write) === true);
-		assert(Base\Res::prepend(array('zTEST','zTEST2'),$write,array('newline'=>true)) === true);
+		assert(Base\Res::prepend(['TEST','TEST2',new \Datetime("now"),2,1.2,true,false,null,'ok'],$write) === true);
+		assert(Base\Res::prepend(['zTEST','zTEST2'],$write,['newline'=>true]) === true);
 		assert(strlen(Base\Res::get($write)) === 166);
 		assert(Base\Res::seekEnd(0,$csv));
-		assert(count(Base\Res::getLines($csv,true,true,array('csv'=>true))) === 3);
-		assert(Base\Res::prepend(array(array('test','test2èz'),array('ztest','y@tesét2z')),$csv,array('csv'=>true)));
-		assert(count(Base\Res::getLines($csv,true,true,array('csv'=>true))) === 5);
+		assert(count(Base\Res::getLines($csv,true,true,['csv'=>true])) === 3);
+		assert(Base\Res::prepend([['test','test2èz'],['ztest','y@tesét2z']],$csv,['csv'=>true]));
+		assert(count(Base\Res::getLines($csv,true,true,['csv'=>true])) === 5);
 
 		// append
 		assert(Base\Res::empty($write));
@@ -968,13 +968,13 @@ class Res extends Base\Test
 		assert(Base\Res::append("TEST4",$write) === true);
 		assert(Base\Res::isEnd($write));
 		assert(Base\Res::get($write) === 'TEST3TEST4');
-		assert(Base\Res::append("TEST4",$write,array('newline'=>true,'lock'=>true,'flush'=>true)) === true);
+		assert(Base\Res::append("TEST4",$write,['newline'=>true,'lock'=>true,'flush'=>true]) === true);
 		assert(Base\Res::get($write) === "TEST3TEST4\nTEST4");
 		assert(Base\Res::isEnd($write));
 		assert(Base\Res::seekEnd(0,$csv));
-		assert(Base\Res::append(array(array('test','test2èz'),array('ztest','y@tesét2z')),$csv,array('csv'=>true)));
-		assert(Base\Res::append(array('what','sadad'),$csv,array('csv'=>true)));
-		assert(count(Base\Res::getLines($csv,true,true,array('csv'=>true))) === 8);
+		assert(Base\Res::append([['test','test2èz'],['ztest','y@tesét2z']],$csv,['csv'=>true]));
+		assert(Base\Res::append(['what','sadad'],$csv,['csv'=>true]));
+		assert(count(Base\Res::getLines($csv,true,true,['csv'=>true])) === 8);
 
 		// concatenate
 		$concatTemp = Base\Res::temp();
@@ -988,30 +988,30 @@ class Res extends Base\Test
 		// lineSplice
 		assert(Base\Res::overwrite(Base\File::get($_file_),$splice));
 		$original = Base\Res::read(0,true,$splice);
-		assert(Base\Res::lineSplice(-100,100,$splice,array('OK','LOL'),true));
+		assert(Base\Res::lineSplice(-100,100,$splice,['OK','LOL'],true));
 		assert(strlen(Base\Res::read(0,true,$splice)) < strlen($original));
-		assert(Base\Res::lineSplice(0,1,$splice,array('OK'),true));
+		assert(Base\Res::lineSplice(0,1,$splice,['OK'],true));
 		assert(strpos(Base\Res::read(0,true,$splice),'OK') === 0);
-		assert(Base\Res::lineSplice(1,1,$csv,array(array('plat','james'),array('lala','garf','"OK"')),true,array('csv'=>true)) === Base\Res::getLines($csv,true,true,array('csv'=>true)));
-		assert(Base\Res::lineSplice(-2,1,$csv,array('avantderi','james'),true,array('csv'=>true))[7][0] === 'avantderi');
+		assert(Base\Res::lineSplice(1,1,$csv,[['plat','james'],['lala','garf','"OK"']],true,['csv'=>true]) === Base\Res::getLines($csv,true,true,['csv'=>true]));
+		assert(Base\Res::lineSplice(-2,1,$csv,['avantderi','james'],true,['csv'=>true])[7][0] === 'avantderi');
 
 		// lineSpliceFirst
 		assert(Base\Res::lineSpliceFirst($splice,null,true));
-		assert(Base\Res::lineSpliceFirst($splice,array('WHAT'),true));
+		assert(Base\Res::lineSpliceFirst($splice,['WHAT'],true));
 		assert(strpos(Base\Res::read(0,true,$splice),'WHAT') === 0);
-		assert(Base\Res::lineSpliceFirst($csv,array(array('spliceFirs','james'),array('un autre LOL')),true,array('csv'=>true))[1][0] === 'un autre LOL');
+		assert(Base\Res::lineSpliceFirst($csv,[['spliceFirs','james'],['un autre LOL']],true,['csv'=>true])[1][0] === 'un autre LOL');
 
 		// lineSpliceLast
 		assert(Base\Res::lineSpliceLast($splice,null,true));
-		assert(Base\Res::lineSpliceLast($splice,array('LOL'),true));
+		assert(Base\Res::lineSpliceLast($splice,['LOL'],true));
 		assert(strrpos(Base\Res::read(0,true,$splice),'LOL') !== false);
-		assert(Base\Res::lineSpliceLast($csv,array(array('LAST','james'),array('what!')),true,array('csv'=>true))[10][0] === 'what!');
+		assert(Base\Res::lineSpliceLast($csv,[['LAST','james'],['what!']],true,['csv'=>true])[10][0] === 'what!');
 
 		// lineInsert
-		assert(Base\Res::lineInsert(2,array('LOLI'),$splice,true));
-		assert(Base\Res::lineInsert(0,array('LOLI2','BLA'),$splice,true));
+		assert(Base\Res::lineInsert(2,['LOLI'],$splice,true));
+		assert(Base\Res::lineInsert(0,['LOLI2','BLA'],$splice,true));
 		assert(strpos(Base\Res::read(0,true,$splice),'LOLI2') === 0);
-		assert(Base\Res::lineInsert(4,array('QUATREINSERT','james'),$csv,true,array('csv'=>true))[4][0] === 'QUATREINSERT');
+		assert(Base\Res::lineInsert(4,['QUATREINSERT','james'],$csv,true,['csv'=>true])[4][0] === 'QUATREINSERT');
 		assert(strlen(Base\Res::get($csv)) === 277);
 
 		// lineFilter
@@ -1023,7 +1023,7 @@ class Res extends Base\Test
 		assert(count(Base\Res::lineFilter(function($v,$k) {
 			if($k === 2 || $k === 4)
 			return true;
-		},$csv,true,array('csv'=>true))) === 2);
+		},$csv,true,['csv'=>true])) === 2);
 
 		// lineMap
 		assert(Base\Res::lineMap(function($v,$k) {
@@ -1037,7 +1037,7 @@ class Res extends Base\Test
 		assert(count(Base\Res::lineMap(function($v,$k) {
 			$v[2] = 'WHAT';
 			return $v;
-		},$csv,true,array('csv'=>true))[0]) === 3);
+		},$csv,true,['csv'=>true])[0]) === 3);
 
 		// empty
 		Base\File::set("[assertCurrent]/empty.txt","aaaWHATÉWHATWHATÉWHATWHATÉWHATWHATÉWHATWHATÉWHATbbb");

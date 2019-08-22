@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Constant extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// is
@@ -47,7 +47,7 @@ class Constant extends Root
 	// retourne toutes les constantes définis
 	public static function all(?string $key=null,bool $categorize=true):array
 	{
-		$return = array();
+		$return = [];
 		$constants = get_defined_constants($categorize);
 		
 		if(!empty($key))

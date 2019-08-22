@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Column extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// is
@@ -261,7 +261,7 @@ class Column extends Root
 	// enlève toutes les colonnes qui n'ont pas le même count et les mêmes clés que la première colonne
 	public static function clean(array $array):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array))
 		{
@@ -287,7 +287,7 @@ class Column extends Root
 	// retoure un tableau avec les différents counts
 	public static function count(array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($array as $key => $value) 
 		{
@@ -337,7 +337,7 @@ class Column extends Root
 	// le type de validation is est décrit dans valeur du tableau cols
 	public static function validate(array $cols,array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array) && !empty($cols))
 		{
@@ -413,7 +413,7 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function search(array $cols,array $array,bool $sensitive=true):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array) && !empty($cols))
 		{
@@ -450,7 +450,7 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function searchFirst(array $cols,array $array,bool $sensitive=true):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array) && !empty($cols))
 		{
@@ -487,9 +487,9 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function unique($value,array $array,bool $removeOriginal=false,bool $sensitive=true):array
 	{
-		$return = array();
-		$cols = array();
-		$search = array();
+		$return = [];
+		$cols = [];
+		$search = [];
 		$value = (array) $value;
 		
 		foreach ($value as $key => $col) 
@@ -529,7 +529,7 @@ class Column extends Root
 	// support pour recherche insensible à la case
 	public static function duplicate($col,array $array,bool $keepOriginal=false,bool $sensitive=true):array
 	{
-		$return = array();
+		$return = [];
 		
 		$unique = static::unique($col,$array,$keepOriginal,$sensitive);
 		if(!empty($unique))
@@ -725,7 +725,7 @@ class Column extends Root
 	// forme un tableau à partir de deux clés d'une colonne
 	public static function keyValue($key,$value,array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		if((Arr::isKey($key) || $key === null) && Arr::isKey($value))
 		$return = array_column($array,$value,$key);
@@ -740,7 +740,7 @@ class Column extends Root
 	// fonctionne seulement si les tableaux ont le même count
 	public static function keyValueIndex(?int $key,int $value,array $array):array
 	{
-		$return = array();
+		$return = [];
 		$count = static::countSame($array);
 		
 		if(is_int($count)) 
@@ -764,7 +764,7 @@ class Column extends Root
 	// la clé doit exister pour que la ligne soit crée
 	public static function arrSegment($key,string $value,array $array,$delimiter=null):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array) && Arr::isKey($key))
 		{
@@ -956,7 +956,7 @@ class Column extends Root
 	// remplace la clé par la valeur d'une colonne
 	public static function keyFrom($key,array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(Arr::isKey($key) && static::is($array))
 		{
@@ -975,7 +975,7 @@ class Column extends Root
 	// remplace la clé par la valeur d'un index de colonne
 	public static function keyFromIndex(int $index,array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array))
 		{
@@ -999,7 +999,7 @@ class Column extends Root
 	// pratique pour reformater $_FILES ou un tableau post multidimensionnel
 	public static function keySwap(array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array))
 		{
@@ -1024,7 +1024,7 @@ class Column extends Root
 	// retourne toutes les valeurs d'une colonne à partir d'une clé
 	public static function value($value,array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(Arr::isKey($value))
 		$return = array_column($array,$value);
@@ -1039,7 +1039,7 @@ class Column extends Root
 	// fonctionne seulement si les tableaux ont le même count
 	public static function valueIndex(int $value,array $array):array
 	{
-		$return = array();
+		$return = [];
 		$count = static::countSame($array);
 		
 		if(is_int($count)) 
@@ -1060,7 +1060,7 @@ class Column extends Root
 	// permet de mettre plusieurs valeurs dans le tableau de retour
 	public static function valueSegment(string $value,array $array,$delimiter=null):array
 	{
-		$return = array();
+		$return = [];
 		
 		if(static::is($array) && Arr::isKey($value))
 		{

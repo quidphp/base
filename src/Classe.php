@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Classe extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// is
@@ -419,7 +419,7 @@ class Classe extends Root
 	// crée plusieurs alias de classe, interface ou trait
 	public static function aliases(array $aliases,bool $autoload=true):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($aliases as $alias => $value) 
 		{
@@ -581,7 +581,7 @@ class Classe extends Root
 			
 			if(!empty($class))
 			{
-				$return = array();
+				$return = [];
 				
 				$parents = class_parents($class,$autoload);
 				if($parents !== false)
@@ -677,10 +677,10 @@ class Classe extends Root
 	// retourne la callable à utiliser pour le propertyMerge
 	public static function propertyMergeCallable($value):callable 
 	{
-		$return = array(Arrs::class,'replace');
+		$return = [Arrs::class,'replace'];
 		
 		if($value === false)
-		$return = array(Arr::class,'replace');
+		$return = [Arr::class,'replace'];
 		
 		elseif(static::classIsCallable($value))
 		$return = $value;
@@ -730,7 +730,7 @@ class Classe extends Root
 		
 		if(!empty($value))
 		{
-			$return = array();
+			$return = [];
 			
 			if(property_exists($class,$property) && is_array($class::$$property))
 			$return[] = $class::$$property;
@@ -833,7 +833,7 @@ class Classe extends Root
 					
 					if($deep === true)
 					{
-						$deep = array();
+						$deep = [];
 						
 						// trait
 						foreach ($return as $v) 
@@ -864,7 +864,7 @@ class Classe extends Root
 	// ne vérifie pas l'existence des éléments
 	public static function namespaces(array $array):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($array as $value) 
 		{
@@ -892,7 +892,7 @@ class Classe extends Root
 	// dig permet de retenir aussi les namespaces non exact (mais contenant la valeur namespace)
 	public static function declared(?string $namespace=null,bool $onlyClass=true,bool $dig=false):array 
 	{
-		$return = array();
+		$return = [];
 		$declared = get_declared_classes();
 		
 		if($onlyClass === false)
@@ -937,7 +937,7 @@ class Classe extends Root
 	// si méthode true, classe interface et trait sont passé dans methods, enfin le nombre total de méthode est retourné
 	public static function overview($filter=null,bool $namespace=false,bool $method=false,bool $sort=false):array
 	{
-		$return = array();
+		$return = [];
 		
 		$return['class'] = get_declared_classes();
 		$return['interface'] = get_declared_interfaces();
@@ -958,7 +958,7 @@ class Classe extends Root
 		
 		if($method === true)
 		{
-			foreach (array('class','interface','trait') as $k) 
+			foreach (['class','interface','trait'] as $k) 
 			{
 				foreach ($return[$k] as $key => $value) 
 				{
@@ -981,7 +981,7 @@ class Classe extends Root
 	// possible d'appliquer un filtre
 	public static function total($filter=null,bool $method=true):array
 	{
-		$return = array('class'=>0,'interface'=>0,'trait'=>0,'namespace'=>0);
+		$return = ['class'=>0,'interface'=>0,'trait'=>0,'namespace'=>0];
 		$all = static::overview($filter,true);
 		
 		$return['class'] = count($all['class']);
@@ -993,7 +993,7 @@ class Classe extends Root
 		{
 			$return['method'] = 0;
 			
-			foreach (array('class','interface','trait') as $key) 
+			foreach (['class','interface','trait'] as $key) 
 			{
 				foreach ($all[$key] as $value) 
 				{
@@ -1018,9 +1018,9 @@ class Classe extends Root
 	// ne vérifie pas l'existence des éléments
 	public static function filter($filter,array $values,bool $autoload=true):array 
 	{
-		$return = array();
-		$filter = (is_scalar($filter))? array('namespace'=>$filter):$filter;
-		$filter = Arr::plus(array('fqcn'=>null,'namespace'=>null,'interface'=>null,'trait'=>null),$filter);
+		$return = [];
+		$filter = (is_scalar($filter))? ['namespace'=>$filter]:$filter;
+		$filter = Arr::plus(['fqcn'=>null,'namespace'=>null,'interface'=>null,'trait'=>null],$filter);
 		
 		foreach ($values as $value) 
 		{
@@ -1100,7 +1100,7 @@ class Classe extends Root
 		
 		if(!empty($value))
 		{
-			$return = array();
+			$return = [];
 			$return['fqcn'] = static::fqcn($value);
 			$return['namespace'] = static::namespace($value);
 			$return['name'] = static::name($value);

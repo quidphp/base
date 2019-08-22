@@ -6,15 +6,15 @@ namespace Quid\Base {
 class Debug extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'method'=>true, // méthode par défaut pour générer l'affichage des détails d'une variable, si true c'est automatique
 		'helper'=>null, // closure pour helper
 		'inc'=>0 // permet de test le nombre d'appel
-	);
+	];
 	
 	
 	// data
-	public static $data = array(); // peut être utilisé comme variable statique pour le débogagge
+	public static $data = []; // peut être utilisé comme variable statique pour le débogagge
 	
 	
 	// helper
@@ -76,7 +76,7 @@ class Debug extends Root
 	// echo et retourne un array
 	public static function vars(...$values):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $value) 
 		{
@@ -92,7 +92,7 @@ class Debug extends Root
 	// echo, et retourne un array, flush est utilisé
 	public static function varsFlush(...$values):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $value) 
 		{
@@ -278,7 +278,7 @@ class Debug extends Root
 		}
 		
 		if($unwrap === true)
-		$return = str_replace(array('&lt;?php<br />','&lt;?php&nbsp;','<span style="color: #0000BB">?&gt;</span>','?&gt;'),'',$return);
+		$return = str_replace(['&lt;?php<br />','&lt;?php&nbsp;','<span style="color: #0000BB">?&gt;</span>','?&gt;'],'',$return);
 		
 		return $return;
 	}
@@ -316,7 +316,7 @@ class Debug extends Root
 	// showArgs permet d'enlever les arguments
 	public static function traceStart(string $file,?int $line=null,bool $showArgs=false,?array $trace=null):array
 	{
-		$return = array();
+		$return = [];
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		$capture = false;
 		
@@ -367,7 +367,7 @@ class Debug extends Root
 	// les arguments de traceStart peuvent aussi être fournis en 3e et 4e position
 	public static function traceSlice(int $offset,?int $length=null,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):array
 	{
-		$return = array();
+		$return = [];
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		
 		if(is_string($file))
@@ -420,7 +420,7 @@ class Debug extends Root
 	{
 		$return = null;
 		$trace = ($trace === null)? static::trace(false,1):$trace;
-		$class = (empty($class))? array(static::class):Arr::append($class,static::class);
+		$class = (empty($class))? [static::class]:Arr::append($class,static::class);
 		
 		foreach ($trace as $key => $value) 
 		{

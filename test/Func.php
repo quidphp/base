@@ -12,8 +12,8 @@ class Func extends Base\Test
 		// is
 		assert(Base\Func::is('strlen'));
 		assert(!Base\Func::is('strlenz'));
-		assert(!Base\Func::is(array(Base\Func::class,'is')));
-		assert(!Base\Func::is(array(new \DateTime,'setDate')));
+		assert(!Base\Func::is([Base\Func::class,'is']));
+		assert(!Base\Func::is([new \DateTime,'setDate']));
 
 		// call
 		assert(Base\Func::call('strlen','lala') === 4);

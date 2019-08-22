@@ -6,11 +6,11 @@ namespace Quid\Base;
 class Email extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'active'=>true, // permet d'activer ou non l'envoie d'email
-		'message'=>array( // contenu par défaut pour un tableau message
+		'message'=>[ // contenu par défaut pour un tableau message
 			'priority'=>null,
-			'xmailer'=>array(self::class,'xmailer'),
+			'xmailer'=>[self::class,'xmailer'],
 			'mimeVersion'=>'1.0',
 			'charset'=>'UTF-8',
 			'contentType'=>'txt',
@@ -22,11 +22,11 @@ class Email extends Root
 			'subject'=>null,
 			'body'=>null,
 			'from'=>null,
-			'header'=>null),
-		'contact'=>array('to','cc','bcc','replyTo'), // champs contact qui supportent multiples addresses, from n'accepte que un
-		'headers'=>array( 
-			'default'=>array(), // headers par défaut à ajouter à chaque message
-			'message'=>array( // nom des headers pour le champ additional_headers
+			'header'=>null],
+		'contact'=>['to','cc','bcc','replyTo'], // champs contact qui supportent multiples addresses, from n'accepte que un
+		'headers'=>[ 
+			'default'=>[], // headers par défaut à ajouter à chaque message
+			'message'=>[ // nom des headers pour le champ additional_headers
 				'mimeVersion'=>'MIME-Version',
 				'priority'=>'X-Priority',
 				'xmailer'=>'X-Mailer',
@@ -35,20 +35,20 @@ class Email extends Root
 				'cc'=>'Cc',
 				'bcc'=>'Bcc',
 				'replyTo'=>'Reply-To',
-				'from'=>'From')),
-		'test'=>array( // contenu par défaut pour un message test
-			'destination'=>array(
+				'from'=>'From']],
+		'test'=>[ // contenu par défaut pour un message test
+			'destination'=>[
 				'to'=>null,
 				'from'=>null,
 				'cc'=>null,
-				'bcc'=>null),
-			'message'=>array(
+				'bcc'=>null],
+			'message'=>[
 				'subject'=>'Test',
-				'body'=>'Test')),
-		'contentType'=>array( // différents contentType supportés, supporte le remplacement par clé
+				'body'=>'Test']],
+		'contentType'=>[ // différents contentType supportés, supporte le remplacement par clé
 			1=>'text/plain',
-			2=>'text/html'),
-	);
+			2=>'text/html'],
+	];
 	
 	
 	// is
@@ -83,7 +83,7 @@ class Email extends Root
 		{
 			$explode = explode("@",$value);
 			if(count($explode) === 2)
-			$return = array('name'=>$explode[0],'host'=>$explode[1]);
+			$return = ['name'=>$explode[0],'host'=>$explode[1]];
 		}
 		
 		return $return;
@@ -163,7 +163,7 @@ class Email extends Root
 	// permet d'envoyer plusieurs messages à partir d'un tableau multidimensionnel
 	public static function sendLoop(array $values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $key => $value) 
 		{
@@ -222,7 +222,7 @@ class Email extends Root
 	// est utilisé dans prepareMessage
 	public static function prepareContentTypeCharset($value=null,?string $charset=null):array
 	{
-		$return = array();
+		$return = [];
 		$charset = $charset ?? Encoding::getCharset();
 		$contentType = 'txt';
 		$contentTypes = static::$config['contentType'];
@@ -250,7 +250,7 @@ class Email extends Root
 	// le tableau value doit avoir été préparé au préalable à partir de la méthode prepareMessage
 	public static function prepareHeader(array $value,bool $headerMessage=true):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if(!empty(static::$config['headers']['default']))
 		$return = static::$config['headers']['default'];
@@ -294,7 +294,7 @@ class Email extends Root
 		$return = '';
 		
 		if(Arr::isUni($values))
-		$values = array($values);
+		$values = [$values];
 		
 		foreach ($values as $value) 
 		{
@@ -325,10 +325,10 @@ class Email extends Root
 	// retourne un tableau multidimensionnel
 	public static function addresses($values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if(!is_array($values))
-		$values = array($values);
+		$values = [$values];
 		
 		if(array_key_exists('email',$values))
 		{
@@ -349,7 +349,7 @@ class Email extends Root
 		foreach ($values as $key => $value) 
 		{
 			if(is_string($key))
-			$value = array($key=>$value);
+			$value = [$key=>$value];
 			
 			$prepare = static::address($value);
 			
@@ -371,7 +371,7 @@ class Email extends Root
 		$return = null;
 
 		if(is_string($value))
-		$value = array($value=>null);
+		$value = [$value=>null];
 		
 		if(is_array($value))
 		{
@@ -406,7 +406,7 @@ class Email extends Root
 			if(static::is($email))
 			{
 				$name = ($name === null)? static::name($email):$name;
-				$return = array('email'=>$email,'name'=>$name);
+				$return = ['email'=>$email,'name'=>$name];
 			}
 		}
 		

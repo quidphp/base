@@ -6,17 +6,17 @@ namespace Quid\Base;
 class Header extends Listing
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'implode'=>1, // index du séparateur à utiliser lors du implode
-			'caseImplode'=>array(self::class,'keyCase')), // les clés sont ramenés dans cette case lors du implode
-		'separator'=>array( // les séparateurs de header
-			array("\r\n","\r\n"),
-			array(":",": "),
-			array(';')), // séparateur pour content-type
+			'caseImplode'=>[self::class,'keyCase']], // les clés sont ramenés dans cette case lors du implode
+		'separator'=>[ // les séparateurs de header
+			["\r\n","\r\n"],
+			[":",": "],
+			[';']], // séparateur pour content-type
 		'sensitive'=>false, // la classe est sensible ou non à la case
 		'status'=>'status' // clé réservé pour header status
-	);
+	];
 	
 	
 	// isStatus
@@ -131,7 +131,7 @@ class Header extends Listing
 			if(is_int($code))
 			{
 				if(!is_array($value))
-				$value = array($value);
+				$value = [$value];
 				
 				foreach ($value as $v) 
 				{
@@ -204,7 +204,7 @@ class Header extends Listing
 					$parsedContentType = static::parseContentType($contentType,false);
 					$mimedContentType = static::parseContentType($contentType,true);
 
-					if(in_array($value,array($parsedContentType,$mimedContentType),true))
+					if(in_array($value,[$parsedContentType,$mimedContentType],true))
 					$return = true;
 				}
 			}
@@ -218,7 +218,7 @@ class Header extends Listing
 	// retourne vrai si le protocol est http1
 	public static function isHttp1($value):bool
 	{
-		return (in_array(static::protocol($value),array('HTTP/1','HTTP/1.0','HTTP/1.1'),true))? true:false;
+		return (in_array(static::protocol($value),['HTTP/1','HTTP/1.0','HTTP/1.1'],true))? true:false;
 	}
 	
 	
@@ -226,7 +226,7 @@ class Header extends Listing
 	// retourne vrai si le protocol est http2
 	public static function isHttp2($value):bool
 	{
-		return (in_array(static::protocol($value),array('HTTP/2','HTTP/2.0'),true))? true:false;
+		return (in_array(static::protocol($value),['HTTP/2','HTTP/2.0'],true))? true:false;
 	}
 	
 	
@@ -244,7 +244,7 @@ class Header extends Listing
 	// peut retourner un tableau multidimensionnel
 	public static function parse(array $array,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator(1,$option['explode']);
 		$statusKey = static::$config['status'];
 		
@@ -273,7 +273,7 @@ class Header extends Listing
 					if(array_key_exists($key,$return))
 					$return[$key] = $value;
 					else
-					$return = Arr::prepend($return,array($key=>$value));
+					$return = Arr::prepend($return,[$key=>$value]);
 				}
 				
 				elseif(Arr::keyExists($key,$return,static::getSensitive()))
@@ -281,7 +281,7 @@ class Header extends Listing
 					$target = Arr::ikey($key,$return);
 					
 					if(is_scalar($return[$target]))
-					$return[$target] = array($return[$target]);
+					$return[$target] = [$return[$target]];
 					
 					if(is_array($return[$target]))
 					$return[$target] = Arr::append($return[$target],$value);
@@ -315,7 +315,7 @@ class Header extends Listing
 					
 					if(count($explode) >= 2 && is_numeric($explode[1]))
 					{
-						$return = array();
+						$return = [];
 						$return['protocol'] = strtoupper($explode[0]);
 						$return['code'] = (int) $explode[1];
 						$text = $explode[2] ?? static::statusTextFromCode($return['code']);
@@ -357,7 +357,7 @@ class Header extends Listing
 	// retourne un tableau unidimensionnel avec clé numérique, parfait pour ajouter dans la fonction header
 	public static function list($array,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 
 		$option = static::option($option);
 		$arr = static::arr($array,$option);
@@ -372,7 +372,7 @@ class Header extends Listing
 	// gère les case implode
 	public static function keyValue(array $array,array $option):array
 	{
-		$return = array();
+		$return = [];
 		$separator = static::getSeparator(1,$option['implode']);
 		$statusKey = static::$config['status'];
 		
@@ -403,7 +403,7 @@ class Header extends Listing
 						if(is_scalar($v))
 						{
 							$v = Str::cast($v);
-							$return[] = implode($separator,array($key,$v));
+							$return[] = implode($separator,[$key,$v]);
 						}
 					}
 				}
@@ -601,7 +601,7 @@ class Header extends Listing
 	{
 		$return = null;
 		
-		if(Arr::keysAre(array('protocol','code','text'),$value) && is_int($value['code']) && is_string($value['text']))
+		if(Arr::keysAre(['protocol','code','text'],$value) && is_int($value['code']) && is_string($value['text']))
 		$return = $value['protocol']." ".$value['code']." ".$value['text'];
 		
 		return $return;
@@ -655,7 +655,7 @@ class Header extends Listing
 	// setContentType
 	// change la valeur du content type dans le tableau de headers
 	// retourne un tableau header assoc
-	public static function setContentType(string $value,array $return=array()):array
+	public static function setContentType(string $value,array $return=[]):array
 	{
 		return static::set("Content-Type",static::prepareContentType($value),$return);
 	}
@@ -689,7 +689,7 @@ class Header extends Listing
 	// setCode
 	// comme setStatus mais s'il y a un protocol existant dans le tableau de réponse, la méthode le garde
 	// sinon envoi à setStatus
-	public static function setCode(int $value,array $return=array()):array
+	public static function setCode(int $value,array $return=[]):array
 	{
 		$status = static::parseStatus($return);
 		if(!empty($status))
@@ -726,7 +726,7 @@ class Header extends Listing
 	// setStatus
 	// change le header status du tableau
 	// accepte un int, string ou array
-	public static function setStatus($value,array $return=array()):array 
+	public static function setStatus($value,array $return=[]):array 
 	{
 		$status = static::status($value);
 		$statusKey = static::$config['status'];
@@ -740,7 +740,7 @@ class Header extends Listing
 	
 	// ok
 	// change le code du tableau header pour 200
-	public static function ok(array $return=array()):array
+	public static function ok(array $return=[]):array
 	{
 		return static::setCode(200,$return);
 	}
@@ -749,7 +749,7 @@ class Header extends Listing
 	// moved
 	// change le code du tableau header pour 301 ou 302 ou un autre code
 	// par défaut 301
-	public static function moved($code=null,array $return=array()):array 
+	public static function moved($code=null,array $return=[]):array 
 	{
 		if($code === true || $code === null)
 		$code = 301;
@@ -766,7 +766,7 @@ class Header extends Listing
 	
 	// notFound
 	// change le code du tableau header pour 404
-	public static function notFound(array $return=array()):array
+	public static function notFound(array $return=[]):array
 	{
 		return static::setCode(404,$return);
 	}
@@ -775,7 +775,7 @@ class Header extends Listing
 	// redirect
 	// crée une redirection dans le tableau header
 	// permanent permet de spécifier si le code est 301 ou 302
-	public static function redirect(string $value,$code=null,array $return=array()):array
+	public static function redirect(string $value,$code=null,array $return=[]):array
 	{
 		$return = static::moved($code,$return);
 		$return = static::set("Location",$value,$return);
@@ -786,17 +786,17 @@ class Header extends Listing
 	
 	// download
 	// crée un téléchargement dans le tableau header à partir d'un tableau resource::responseMeta
-	public static function download(array $value,array $return=array()):array
+	public static function download(array $value,array $return=[]):array
 	{
-		if(Arr::keysExists(array('mime','size','basename'),$value))
+		if(Arr::keysExists(['mime','size','basename'],$value))
 		{
 			$return = static::setContentType($value['mime'],$return);
-			$return = static::sets(array(
+			$return = static::sets([
 				"Content-Transfer-Encoding"=>"binary",
 				"Content-Description"=>"File Transfer",
 				"Content-Length"=>$value['size'],
 				"Content-Disposition"=>'attachment; filename="'.$value['basename'].'"'
-			),$return);
+			],$return);
 		}
 		
 		return $return;
@@ -805,15 +805,15 @@ class Header extends Listing
 	
 	// toScreen
 	// crée un affichage dans le tableau header à partir d'un tableau resource::responseMeta
-	public static function toScreen(array $value,array $return=array()):array
+	public static function toScreen(array $value,array $return=[]):array
 	{
-		if(Arr::keysExists(array('mime','size'),$value))
+		if(Arr::keysExists(['mime','size'],$value))
 		{
 			$return = static::setContentType($value['mime'],$return);
-			$return = static::sets(array(
+			$return = static::sets([
 				"Content-Length"=>$value['size'],
 				"Content-Disposition"=>'inline; filename="'.$value['basename'].'"'
-			),$return);
+			],$return);
 		}
 		
 		return $return;
@@ -825,7 +825,7 @@ class Header extends Listing
 	public static function fingerprint(array $headers,array $keys):?string
 	{
 		$return = null;
-		$fingerprint = array();
+		$fingerprint = [];
 		
 		foreach ($keys as $key)
 		{

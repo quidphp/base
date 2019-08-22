@@ -50,7 +50,7 @@ class Dir extends Base\Test
 		// get 
 		assert(count(Base\Dir::get($common)) <= 14);
 		assert(!Base\Arrs::is(Base\Dir::get($common)));
-		$get = Base\Dir::get($common,true,array('in'=>array('visible'=>true),'out'=>array('type'=>'dir','extension'=>array('scss','js','php','sql','ini','txt','json','md','ttf'))));
+		$get = Base\Dir::get($common,true,['in'=>['visible'=>true],'out'=>['type'=>'dir','extension'=>['scss','js','php','sql','ini','txt','json','md','ttf']]]);
 		assert(count($get) === 6);
 		
 		// getKeepInOut
@@ -64,7 +64,7 @@ class Dir extends Base\Test
 		assert(is_array(Base\Dir::getInvisible($common)));
 
 		// getIn
-		assert(is_file(Base\Dir::getIn($common,array('type'=>'file'),true)[0]));
+		assert(is_file(Base\Dir::getIn($common,['type'=>'file'],true)[0]));
 
 		// getExtension
 		assert(count(Base\Dir::getExtension("[storage]","log",true)) === 1);
@@ -73,7 +73,7 @@ class Dir extends Base\Test
 		assert(count(Base\Dir::getPhp("[public]",true)) < 10);
 
 		// getOut
-		assert(count(Base\Dir::getOut($common,array('type'=>array('dir','link')),true)) > 5);
+		assert(count(Base\Dir::getOut($common,['type'=>['dir','link']],true)) > 5);
 
 		// getFormat
 		assert(is_int(current(Base\Dir::getFormat(dirname($_dir_),'size'))));
@@ -84,7 +84,7 @@ class Dir extends Base\Test
 
 		// getSize
 		assert(count(Base\Dir::getSize(dirname($_dir_),null,true)) > 5);
-		assert(is_int(current(Base\Dir::getSize(dirname($_dir_),null,true,array('formatExtra'=>false)))));
+		assert(is_int(current(Base\Dir::getSize(dirname($_dir_),null,true,['formatExtra'=>false]))));
 
 		// getLine
 		assert(count(Base\Dir::getLine($common,'php')) > 5);
@@ -93,7 +93,7 @@ class Dir extends Base\Test
 		assert(count(Base\Dir::getEmptyDir("[storage]")) >= 1);
 
 		// getRelative
-		assert(!empty(Base\Dir::getRelative($common,array('in'=>array('type'=>'file','visible'=>true)))));
+		assert(!empty(Base\Dir::getRelative($common,['in'=>['type'=>'file','visible'=>true]])));
 
 		// getFqcn
 		assert(count(Base\Dir::getFqcn($common,'Quid\James',true,'php')) > 5);
@@ -117,18 +117,18 @@ class Dir extends Base\Test
 		
 		// getTree
 		assert(count(Base\Dir::getTree(dirname($common))) < 15);
-		assert(count(Base\Dir::getTree(dirname($common),true,array('format'=>'size'))) < 15);
+		assert(count(Base\Dir::getTree(dirname($common),true,['format'=>'size'])) < 15);
 
 		// getTemp
 
 		// gets
-		assert(count(Base\Dir::gets(array("[assertCommon]","[storage]"))) === 2);
+		assert(count(Base\Dir::gets(["[assertCommon]","[storage]"])) === 2);
 
 		// getsAppend
-		assert(count(Base\Dir::getsAppend(array("[assertCommon]","[storage]"))) > 2);
+		assert(count(Base\Dir::getsAppend(["[assertCommon]","[storage]"])) > 2);
 		
 		// fromToCatchAll
-		assert(count(Base\Dir::fromToCatchAll(array(dirname($common)."/*"=>"[public]"))) === 2);
+		assert(count(Base\Dir::fromToCatchAll([dirname($common)."/*"=>"[public]"])) === 2);
 		
 		// getChangeBasename
 		assert(Base\Dir::set($storage.'/what'));
@@ -137,7 +137,7 @@ class Dir extends Base\Test
 
 		// sortPriority
 		$get = Base\Dir::get($common);
-		assert(Base\Dir::sortPriority($get,array('zip.zip'),$common) !== $get);
+		assert(Base\Dir::sortPriority($get,['zip.zip'],$common) !== $get);
 		assert(Base\Dir::sortPriority($get,'zip.zip',$common) !== $get);
 		
 		// remove
@@ -145,7 +145,7 @@ class Dir extends Base\Test
 		assert(Base\Dir::remove($get,'classz.php',$common) === $get);
 		
 		// parent
-		$current = Base\Dir::parent($common,false,array('out'=>array('visible'=>false),'self'=>false));
+		$current = Base\Dir::parent($common,false,['out'=>['visible'=>false],'self'=>false]);
 		assert(is_array($current));
 
 		// concatenate

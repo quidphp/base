@@ -6,8 +6,8 @@ namespace Quid\Base;
 class Browser extends Root
 {
 	// config
-	public static $config = array(
- 		'bots'=>array( // noms pouvant se retrouver dans le user-agent signifiant un bot
+	public static $config = [
+ 		'bots'=>[ // noms pouvant se retrouver dans le user-agent signifiant un bot
 			'msnbot',
 			'googlebot',
 			'bingbot',
@@ -24,12 +24,12 @@ class Browser extends Root
 			'feedburner',
 			'monitoring',
 			'garlikcrawler',
-			'blexbot')
-	);
+			'blexbot']
+	];
 	
 	
 	// cacheStatic
-	protected static $cacheStatic = array(); // conserve les données de la cache statique
+	protected static $cacheStatic = []; // conserve les données de la cache statique
 	
 	
 	// is
@@ -134,7 +134,7 @@ class Browser extends Root
 	// utilise la fonction php get_browser
 	public static function cap(string $value):?array
 	{
-		return static::cacheStatic(array(__METHOD__,$value),function() use ($value) {
+		return static::cacheStatic([__METHOD__,$value],function() use ($value) {
 			return (strlen($value))? get_browser($value,true):null;
 		});
 	}

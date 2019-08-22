@@ -6,15 +6,15 @@ namespace Quid\Base;
 class Json extends Assoc
 {
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'encode'=>JSON_INVALID_UTF8_IGNORE|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES, // flag encode
 			'decode'=>JSON_INVALID_UTF8_IGNORE|JSON_BIGINT_AS_STRING, // flag decode
 			'depth'=>512, // depth pour encode et decode
 			'assoc'=>true, // option assoc pour decode
 			'case'=>null, // les clés sont ramenés dans cette case dans arr
-			'sort'=>null) // les clés sont sort
-	);
+			'sort'=>null] // les clés sont sort
+	];
 	
 	
 	// is
@@ -178,7 +178,7 @@ class Json extends Assoc
 	// retourne les informations sur la dernière erreur json
 	public static function error():array
 	{
-		return array('code'=>json_last_error(),'msg'=>json_last_error_msg());
+		return ['code'=>json_last_error(),'msg'=>json_last_error_msg()];
 	}
 	
 	
@@ -187,7 +187,7 @@ class Json extends Assoc
 	// retourne tableau vide si après decode ce n'est pas un tableau
 	public static function arr($value,?array $option=null):array
 	{
-		$return = array();
+		$return = [];
 		$option = static::option($option);
 		
 		if(is_scalar($value))

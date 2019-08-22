@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Error extends Root
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// setHandler
@@ -179,9 +179,9 @@ class Error extends Root
 	// initialise la prise en charge des erreurs
 	public static function init():void
 	{
-		Uri::setNotFound(array(static::class,'trigger'));
-		File::setNotFound(array(static::class,'trigger'));
-		Obj::setCastError(array(static::class,'trigger'));
+		Uri::setNotFound([static::class,'trigger']);
+		File::setNotFound([static::class,'trigger']);
+		Obj::setCastError([static::class,'trigger']);
 		
 		return;
 	}

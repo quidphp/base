@@ -6,20 +6,20 @@ namespace Quid\Base;
 class Crypt extends Root
 {
 	// config
-	public static $config = array(
-		'passwordHash'=>array( // configuration pour password_hash et password_verify
+	public static $config = [
+		'passwordHash'=>[ // configuration pour password_hash et password_verify
 			'algo'=>PASSWORD_DEFAULT,
-			'options'=>array('cost'=>11)),
+			'options'=>['cost'=>11]],
 		'passwordNew'=>10, // longueur d'un nouveau mot de passe
-		'openssl'=>array( // configuration pour encrypt/decrypt openssl
+		'openssl'=>[ // configuration pour encrypt/decrypt openssl
 			'method'=>'AES-256-CBC',
-			'sha'=>256),
-		'randomString'=>array(
+			'sha'=>256],
+		'randomString'=>[
 			'alphanumeric'=>'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvXxYyWwZz0123456789', // caractère possible pour alphanumeric
 			'alpha'=>'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvXxYyWwZz', // caractère possible pour alpha
 			'alphaUpper'=>'ABCDEFGHIJKLMNOPQRSTUVXYWZ', // caractère possible pour alphaUpper
-			'alphaLower'=>'abcdefghijklmnopqrstuvxywz') // caractère possible pour alphaLower
-	);
+			'alphaLower'=>'abcdefghijklmnopqrstuvxywz'] // caractère possible pour alphaLower
+	];
 	
 	
 	// passwordInfo
@@ -246,7 +246,7 @@ class Crypt extends Root
 	// random généré à partir d'une fonction CSPRNG
 	public static function randomArray(array $array,int $length=1):array
 	{
-		$return = array();
+		$return = [];
 		
 		for ($i=0; $i < $length; $i++) 
 		{ 
@@ -372,17 +372,17 @@ class Crypt extends Root
 	public static function unserialize(string $value,$allowedClasses=true)
 	{
 		$return = null;
-		$option = array('allowed_classes'=>($allowedClasses === false)? $allowedClasses:true);
+		$option = ['allowed_classes'=>($allowedClasses === false)? $allowedClasses:true];
 		
 		if(is_object($allowedClasses))
 		$allowedClasses = get_class($allowedClasses);
 		
 		if(is_string($allowedClasses))
-		$allowedClasses = array($allowedClasses);
+		$allowedClasses = [$allowedClasses];
 		
 		if(is_array($allowedClasses))
 		{
-			$allowed = array();
+			$allowed = [];
 			foreach ($allowedClasses as $v) 
 			{
 				$v = Fqcn::str($v);

@@ -6,10 +6,10 @@ namespace Quid\Base;
 class Timezone extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'current'=>null, // conserve le timezone courant pour le set/reset
 		'default'=>'UTC' // timezone par défaut, lorsque value est true
-	);
+	];
 	
 	
 	// is
@@ -92,7 +92,7 @@ class Timezone extends Root
 	// retourne les transitions d'un timezone à partir d'un nom de timezone
 	public static function transitions(string $value,?int $begin=null,?int $end=null):array
 	{
-		$return = array();
+		$return = [];
 		$timezone = timezone_open($value);
 		
 		if(!empty($begin))
@@ -115,7 +115,7 @@ class Timezone extends Root
 	public static function sunrise($value,$timestamp=null,$format=null,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(array('zenith'=>Ini::get('date.sunrise_zenith'),'gmtOffset'=>0),$option);
+		$option = Arr::plus(['zenith'=>Ini::get('date.sunrise_zenith'),'gmtOffset'=>0],$option);
 		$timestamp = Date::time($timestamp);
 		$timezone = null;
 		
@@ -148,7 +148,7 @@ class Timezone extends Root
 	public static function sunset($value,$timestamp=null,$format=null,?array $option=null)
 	{
 		$return = null;
-		$option = Arr::plus(array('zenith'=>Ini::get('date.sunset_zenith'),'gmtOffset'=>0),$option);
+		$option = Arr::plus(['zenith'=>Ini::get('date.sunset_zenith'),'gmtOffset'=>0],$option);
 		$timestamp = Date::time($timestamp);
 		$timezone = null;
 		

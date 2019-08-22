@@ -53,10 +53,10 @@ class Debug extends Base\Test
 		}
 
 		// export
-		assert(strlen(Base\Debug::export(array(2,3,4,5))) === 892);
-		assert(strlen(Base\Debug::export(array(2,3,4,5),true,false)) === 877);
-		assert(strlen(Base\Debug::export(array(1,2,3),true)) === 710);
-		assert(strlen(Base\Debug::export(array(1,2,3),false)) === 43);
+		assert(strlen(Base\Debug::export([2,3,4,5])) === 892);
+		assert(strlen(Base\Debug::export([2,3,4,5],true,false)) === 877);
+		assert(strlen(Base\Debug::export([1,2,3],true)) === 710);
+		assert(strlen(Base\Debug::export([1,2,3],false)) === 43);
 		assert(Base\Debug::export("test",false,false) === "'test'");
 		assert(strlen(Base\Debug::export(1.24)) === 98);
 
@@ -74,7 +74,7 @@ class Debug extends Base\Test
 
 		// traceStart
 		assert(Base\Debug::traceStart(__FILE__,__LINE__)[0]['file'] === __FILE__);
-		assert(Base\Debug::traceStart("james.php") === array());
+		assert(Base\Debug::traceStart("james.php") === []);
 
 		// traceIndex
 		assert(Base\Debug::traceIndex(0,__FILE__)['file'] === __FILE__);

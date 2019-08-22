@@ -36,7 +36,7 @@ class Number extends Base\Test
 		assert(Base\Number::cast("000000",false) === "000000");
 		assert(Base\Number::cast("000111",false) === "000111");
 		assert((float) '1.22323321213321222' === Base\Number::cast('1.22323321213321222'));
-		assert(null === Base\Number::cast(array()));
+		assert(null === Base\Number::cast([]));
 		assert((int) '2' === Base\Number::cast('2'));
 		assert((int) true === Base\Number::cast(true));
 		assert((int) false === Base\Number::cast(false));
@@ -177,7 +177,7 @@ class Number extends Base\Test
 
 		// isCountable
 		assert(!Base\Number::isCountable(1234));
-		assert(Base\Number::isCountable(array(1,2,3)));
+		assert(Base\Number::isCountable([1,2,3]));
 
 		// prepend
 		assert(Base\Number::prepend('23',4.2,4) === 44.223);
@@ -274,31 +274,31 @@ class Number extends Base\Test
 		assert(Base\Number::pi(4) === 3.1416);
 
 		// math
-		assert(1 === Base\Number::math('+',array(1)));
-		assert(3 === Base\Number::math('+',array(2,1)));
-		assert(1 === Base\Number::math('-',array(2,1)));
-		assert(4 === Base\Number::math('*',array(2,2)));
-		assert(null === Base\Number::math('*',array(2)));
-		assert(8 === Base\Number::math('**',array(2,3)));
-		assert(1 === Base\Number::math('%',array(5,2)));
-		assert(1 === Base\Number::math('avg',array(1,1)));
-		assert(1 === Base\Number::math('/',array(2,2)));
-		assert(5 === Base\Number::math('avg',array(2,4,6,8)));
-		assert(5 === Base\Number::math('average',array(2,4,6,8)));
-		assert(6.044 === Base\Number::math('avg',array(2,4,6,8,10.22)));
-		assert(6.04 === Base\Number::math('avg',array(2,4,6,8,10.22),2));
-		assert(6 === Base\Number::math('avg',array(2,4,6,8,10.22),0));
-		assert(!Base\Number::math('/',array(2,0)));
-		assert(Base\Number::math('max',array(2,0)) === 2);
-		assert(Base\Number::math('min',array(2,0)) === 0);
-		assert(Base\Number::math('>',array(4,3)) === 4);
-		assert(Base\Number::math('<',array(4,1)) === 1);
+		assert(1 === Base\Number::math('+',[1]));
+		assert(3 === Base\Number::math('+',[2,1]));
+		assert(1 === Base\Number::math('-',[2,1]));
+		assert(4 === Base\Number::math('*',[2,2]));
+		assert(null === Base\Number::math('*',[2]));
+		assert(8 === Base\Number::math('**',[2,3]));
+		assert(1 === Base\Number::math('%',[5,2]));
+		assert(1 === Base\Number::math('avg',[1,1]));
+		assert(1 === Base\Number::math('/',[2,2]));
+		assert(5 === Base\Number::math('avg',[2,4,6,8]));
+		assert(5 === Base\Number::math('average',[2,4,6,8]));
+		assert(6.044 === Base\Number::math('avg',[2,4,6,8,10.22]));
+		assert(6.04 === Base\Number::math('avg',[2,4,6,8,10.22],2));
+		assert(6 === Base\Number::math('avg',[2,4,6,8,10.22],0));
+		assert(!Base\Number::math('/',[2,0]));
+		assert(Base\Number::math('max',[2,0]) === 2);
+		assert(Base\Number::math('min',[2,0]) === 0);
+		assert(Base\Number::math('>',[4,3]) === 4);
+		assert(Base\Number::math('<',[4,1]) === 1);
 
 		// combine
-		assert(Base\Number::combine('+',array(1,2),array(3,4),array(1,2,3)) === array(5,8,3));
-		assert(Base\Number::combine('*',array(1,2),array(3,4),array(1,2,3),array('test',array())) === array(3,16,3));
-		assert(Base\Number::combine('/',array(1,0),array(0,0),array(0,2,3)) === array(null,null,3));
-		assert(Base\Number::combine('>',array(1,0),array(3,0),array(0,2,3)) === array(3,2,3));
+		assert(Base\Number::combine('+',[1,2],[3,4],[1,2,3]) === [5,8,3]);
+		assert(Base\Number::combine('*',[1,2],[3,4],[1,2,3],['test',[]]) === [3,16,3]);
+		assert(Base\Number::combine('/',[1,0],[0,0],[0,2,3]) === [null,null,3]);
+		assert(Base\Number::combine('>',[1,0],[3,0],[0,2,3]) === [3,2,3]);
 
 		// addition
 		assert(Base\Number::addition(2) === 2);
@@ -345,7 +345,7 @@ class Number extends Base\Test
 		assert(Base\Number::min(1,'2','3.4','james') === 1);
 
 		// max
-		assert(Base\Number::max(1,'2','3.4',array(),'bla','z') === 3.4);
+		assert(Base\Number::max(1,'2','3.4',[],'bla','z') === 3.4);
 
 		// random
 		assert(1 === Base\Number::random(1,1,1));
@@ -374,24 +374,24 @@ class Number extends Base\Test
 		assert("2.22" === Base\Number::format(2.22));
 		assert("2.24" === Base\Number::format(2.238));
 		assert("2.23" === Base\Number::format(2.232));
-		assert("2.238" === Base\Number::format(2.238,null,array('decimal'=>3)));
+		assert("2.238" === Base\Number::format(2.238,null,['decimal'=>3]));
 		assert('200021321312312321321123321' === Base\Number::format('200021321312312321321123321'));
-		assert(null === Base\Number::format(array()));
-		assert("2|000,000" === Base\Number::format(2000,null,array('decimal'=>3,'separator'=>',','thousand'=>'|')));
+		assert(null === Base\Number::format([]));
+		assert("2|000,000" === Base\Number::format(2000,null,['decimal'=>3,'separator'=>',','thousand'=>'|']));
 		assert("2.00" === Base\Number::format(2));
 
 		// formats
-		assert(Base\Number::formats('%',array(2,3,4,5))[0] === '2%');
-		assert(Base\Number::formats('$',array(2,3,4,5))[0] === '$2.00');
-		assert(Base\Number::formats('size',array(200,3000,4000,5000))[0] === '200 Bytes');
-		assert(Base\Number::formats('number',array(200,3000,4000,5000))[0] === '200.00');
-		assert(Base\Number::formats('phone',array(5145140000))[0] === '(514) 514-0000');
+		assert(Base\Number::formats('%',[2,3,4,5])[0] === '2%');
+		assert(Base\Number::formats('$',[2,3,4,5])[0] === '$2.00');
+		assert(Base\Number::formats('size',[200,3000,4000,5000])[0] === '200 Bytes');
+		assert(Base\Number::formats('number',[200,3000,4000,5000])[0] === '200.00');
+		assert(Base\Number::formats('phone',[5145140000])[0] === '(514) 514-0000');
 
 		// formatsMethod
 		assert(Base\Number::formatsMethod('$') === 'moneyFormat');
 
 		// getFormat
-		assert(Base\Number::getFormat('en',array('decimal'=>3)) === array('decimal'=>3,'separator'=>'.','thousand'=>','));
+		assert(Base\Number::getFormat('en',['decimal'=>3]) === ['decimal'=>3,'separator'=>'.','thousand'=>',']);
 
 		// percentFormat
 		assert(Base\Number::percentFormat('100') === '100%');
@@ -402,11 +402,11 @@ class Number extends Base\Test
 
 		// moneyFormat
 		assert("$2,000.00" === Base\Number::moneyFormat(2000));
-		assert("$2:000.00" === Base\Number::moneyFormat(2000,null,array('thousand'=>':','output'=>'$%v%')));
-		assert("$ 2,000|00" === Base\Number::moneyFormat(2000,null,array('thousand'=>',','separator'=>'|','output'=>'$ %v%')));
+		assert("$2:000.00" === Base\Number::moneyFormat(2000,null,['thousand'=>':','output'=>'$%v%']));
+		assert("$ 2,000|00" === Base\Number::moneyFormat(2000,null,['thousand'=>',','separator'=>'|','output'=>'$ %v%']));
 
 		// getMoneyFormat
-		assert(Base\Number::getMoneyFormat('en',array('decimal'=>3)) === array('decimal'=>3,'separator'=>'.','thousand'=>',','output'=>'$%v%'));
+		assert(Base\Number::getMoneyFormat('en',['decimal'=>3]) === ['decimal'=>3,'separator'=>'.','thousand'=>',','output'=>'$%v%']);
 
 		// phoneFormat
 		assert('(514) 483-5603' === Base\Number::phoneFormat("5144835603"));
@@ -415,8 +415,8 @@ class Number extends Base\Test
 		assert('(514) 483-5603' === Base\Number::phoneFormat(51.44835603));
 		assert(null === Base\Number::phoneFormat(514483560));
 		assert('(514) 483-5603 #212' === Base\Number::phoneFormat("5144835603212"));
-		assert('(514) 483-5603' === Base\Number::phoneFormat("5144835603212",null,array('extension'=>false)));
-		assert(Base\Number::phoneFormat("5144835603212",null,array('parenthesis'=>false,'extension'=>false)) === '514 483-5603');
+		assert('(514) 483-5603' === Base\Number::phoneFormat("5144835603212",null,['extension'=>false]));
+		assert(Base\Number::phoneFormat("5144835603212",null,['parenthesis'=>false,'extension'=>false]) === '514 483-5603');
 
 		// getPhoneFormat
 		assert(count(Base\Number::getPhoneFormat()) === 2);
@@ -432,7 +432,7 @@ class Number extends Base\Test
 		assert(Base\Number::sizeFormat(0) === '0 Byte');
 
 		// getSizeFormat
-		assert(count(Base\Number::getSizeFormat('en',array('text'=>array(1=>'James')))) === 2);
+		assert(count(Base\Number::getSizeFormat('en',['text'=>[1=>'James']])) === 2);
 		assert(Base\Number::getSizeFormat('en')['text'][0] === 'Byte');
 
 		// fromSizeFormat
@@ -452,20 +452,20 @@ class Number extends Base\Test
 		assert(Base\Number::fromSizeFormatMb('2 MBS') === 2097152);
 
 		// percentCalc
-		assert(array(4.6,35.9,31.3,26.6,1.6,0) === Base\Number::percentCalc(array(3,'23',20,'17',1.0,0)));
-		$percent = array(1213,222,1223.124,'6124');
-		assert(array(13.9,2.5,13.9,69.7) === Base\Number::percentCalc($percent));
-		assert(array(10,20,30,40) === Base\Number::percentCalc(array(1,2,3,4)));
-		assert(array(0,0,7.1,92.8) === Base\Number::percentCalc(array(1,2,323,4213),false));
-		assert(array(0,0,7.2,92.8) === Base\Number::percentCalc(array(1,2,323,4213)));
-		assert(array(0,0,7,93) === Base\Number::percentCalc(array(1,2,323,4213),true,0));
+		assert([4.6,35.9,31.3,26.6,1.6,0] === Base\Number::percentCalc([3,'23',20,'17',1.0,0]));
+		$percent = [1213,222,1223.124,'6124'];
+		assert([13.9,2.5,13.9,69.7] === Base\Number::percentCalc($percent));
+		assert([10,20,30,40] === Base\Number::percentCalc([1,2,3,4]));
+		assert([0,0,7.1,92.8] === Base\Number::percentCalc([1,2,323,4213],false));
+		assert([0,0,7.2,92.8] === Base\Number::percentCalc([1,2,323,4213]));
+		assert([0,0,7,93] === Base\Number::percentCalc([1,2,323,4213],true,0));
 
 		// percentAdjustTotal
-		assert(array(100) === Base\Number::percentAdjustTotal(array(1)));
-		assert(array(1,99) === Base\Number::percentAdjustTotal(array(1,99)));
-		assert(array(2,98) === Base\Number::percentAdjustTotal(array(1,98)));
-		assert(array(3,98) === Base\Number::percentAdjustTotal(array(1,98),null,1,101));
-		assert(array(5,96) === Base\Number::percentAdjustTotal(array(5,98),1,1,101));
+		assert([100] === Base\Number::percentAdjustTotal([1]));
+		assert([1,99] === Base\Number::percentAdjustTotal([1,99]));
+		assert([2,98] === Base\Number::percentAdjustTotal([1,98]));
+		assert([3,98] === Base\Number::percentAdjustTotal([1,98],null,1,101));
+		assert([5,96] === Base\Number::percentAdjustTotal([5,98],1,1,101));
 		
 		return true;
 	}

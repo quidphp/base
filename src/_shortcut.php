@@ -6,7 +6,7 @@ namespace Quid\Base;
 trait _shortcut
 {	
 	// config
-	protected static $shortcut = array(); // conserve les shortcuts de la classe
+	protected static $shortcut = []; // conserve les shortcuts de la classe
 	
 	
 	// isShortcut
