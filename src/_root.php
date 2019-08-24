@@ -6,7 +6,11 @@ namespace Quid\Base;
 trait _root
 {
 	// trait
-	use _config; use _cacheStatic; use _cacheFile;
+	use _config;
+	use _cacheStatic;
+	use _cacheFile;
+	
+	
 	// classFqcn
 	// retourne le fqcn de la classe
 	public static function classFqcn():string

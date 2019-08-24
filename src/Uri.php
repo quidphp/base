@@ -6,7 +6,10 @@ namespace Quid\Base;
 class Uri extends Root
 {
 	// trait
-	use _option; use _shortcut;
+	use _option;
+	use _shortcut;
+	
+	
 	// config
 	public static $config = [
 		'option'=>[ // tableau d'options
