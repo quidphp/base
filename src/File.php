@@ -672,7 +672,7 @@ class File extends Finder
 		$extension = (is_string($extension))? $extension:$option['extension'];
 
 		if(is_string($return) && is_string($extension))
-		$return .= ".".$extension;
+		$return .= '.'.$extension;
 		
 		return $return;
 	}

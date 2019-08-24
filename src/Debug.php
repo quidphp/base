@@ -403,7 +403,7 @@ class Debug extends Root
 				$return .= $value['class'];
 
 				if(!empty($value['function']))
-				$return .= (empty($return))? $value['function']:"::".$value['function'];
+				$return .= (empty($return))? $value['function']:'::'.$value['function'];
 				
 				break;
 			}

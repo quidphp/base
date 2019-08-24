@@ -270,7 +270,7 @@ class Ini extends Root
 	// retourne la valeur de uploadMaxFilesize
 	public static function uploadMaxFilesize(?int $format=0)
 	{
-		return static::get("upload_max_filesize",$format);
+		return static::get('upload_max_filesize',$format);
 	}
 	
 	
@@ -278,7 +278,7 @@ class Ini extends Root
 	// retourne la valeur de postMaxSize
 	public static function postMaxSize(?int $format=0)
 	{
-		return static::get("post_max_size",$format);
+		return static::get('post_max_size',$format);
 	}
 	
 	
@@ -286,7 +286,7 @@ class Ini extends Root
 	// retourne la valeur de memoryLimit
 	public static function memoryLimit(?int $format=0)
 	{
-		return static::get("memory_limit",$format);
+		return static::get('memory_limit',$format);
 	}
 	
 	
@@ -433,7 +433,7 @@ class Ini extends Root
 	// retourne vrai si opcache roule
 	public static function opcache():bool 
 	{
-		return (!empty(static::get("opcache.enable")))? true:false;
+		return (!empty(static::get('opcache.enable')))? true:false;
 	}
 	
 	
@@ -500,7 +500,7 @@ class Ini extends Root
 		if(static::memoryLimit() < 128)
 		$return[] = 'memory_limit';
 		
-		if(!static::get("browscap"))
+		if(!static::get('browscap'))
 		$return[] = 'browscap';
 		
 		return $return;

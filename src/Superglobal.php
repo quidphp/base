@@ -294,7 +294,7 @@ class Superglobal extends Root
 	// retourne les headers du tableau server
 	public static function getServerHeader(bool $format=false):array 
 	{
-		return static::getServerStart("HTTP_",true,$format);
+		return static::getServerStart('HTTP_',true,$format);
 	}
 	
 	
@@ -310,7 +310,7 @@ class Superglobal extends Root
 		{
 			foreach ($array as $key => $value) 
 			{
-				$explode = explode("_",$key);
+				$explode = explode('_',$key);
 				if(is_array($explode))
 				{
 					if(count($explode) > 1)
@@ -511,7 +511,7 @@ class Superglobal extends Root
 	// enlève tous les headers du tableau serveur
 	public static function unsetServerHeader():void
 	{
-		static::unsetServerStart("HTTP_");
+		static::unsetServerStart('HTTP_');
 		
 		return;
 	}
@@ -521,7 +521,7 @@ class Superglobal extends Root
 	// format une chaîne dans le format du tableau serveur
 	public static function formatServerKey(string $return):string 
 	{
-		return str_replace("-","_",strtoupper($return));
+		return str_replace('-','_',strtoupper($return));
 	}
 	
 	

@@ -29,7 +29,7 @@ class Attr extends Listing
 			'action'=>[
 				'extension'=>null]], // extension par défaut pour action si non fourni et uri relative
 		'separator'=>[ // les séparateurs de attr, le troisième index est pour explode
-			[' '," "],
+			[' ',' '],
 			['=','=']], 
 		'id'=>'#', // ce caractère sert à identifier un id
 		'randomId'=>[10], // argument par défaut pour randomId
@@ -562,7 +562,7 @@ class Attr extends Listing
 	public static function parseDataKey(string $return):string 
 	{
 		if(!static::isDataKey($return))
-		$return = "data-".$return;
+		$return = 'data-'.$return;
 		
 		if(strtolower($return) !== $return)
 		{
@@ -768,9 +768,9 @@ class Attr extends Listing
 	{
 		$return = ($return === null)? []:$return;
 		
-		if(strpos($value," ") !== false)
+		if(strpos($value,' ') !== false)
 		{
-			$value = explode(" ",$value);
+			$value = explode(' ',$value);
 			
 			if(!empty($value))
 			{

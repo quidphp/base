@@ -98,24 +98,24 @@ class Crypt extends Root
 		$return = 'invalidValues';
 		
 		elseif(!Validate::isPassword($newPassword,$security))
-		$return = "invalidPassword";
+		$return = 'invalidPassword';
 		
 		elseif(is_string($newPasswordConfirm) && $newPassword !== $newPasswordConfirm)
-		$return = "newPasswordMismatch";
+		$return = 'newPasswordMismatch';
 		
 		elseif(is_string($oldPasswordHash) && !empty($oldPasswordHash) && !static::passwordNeedsRehash($oldPasswordHash,$option) && static::passwordVerify($newPassword,$oldPasswordHash,$option))
-		$return = "noChange";
+		$return = 'noChange';
 		
 		elseif(is_string($oldPassword))
 		{
 			if(!Validate::isPassword($oldPassword,$security))
-			$return = "invalidOldPassword";
+			$return = 'invalidOldPassword';
 			
 			elseif($newPassword === $oldPassword)
-			$return = "noChange";
+			$return = 'noChange';
 			
 			elseif(is_string($oldPasswordHash) && !empty($oldPasswordHash) && !static::passwordVerify($oldPassword,$oldPasswordHash))
-			$return = "oldPasswordMismatch";
+			$return = 'oldPasswordMismatch';
 		}
 		
 		return $return;
@@ -142,7 +142,7 @@ class Crypt extends Root
 	// retourne un hash sha
 	public static function sha(string $value,int $type=256):?string
 	{
-		return hash("sha".$type,$value);
+		return hash('sha'.$type,$value);
 	}
 	
 	

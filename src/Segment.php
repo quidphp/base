@@ -117,7 +117,7 @@ class Segment extends Root
 	public static function escape(string $return):string
 	{
 		if(in_array($return,static::$config['escape']))
-		$return = "\\".$return;
+		$return = '\\'.$return;
 		
 		return $return;
 	}
@@ -240,7 +240,7 @@ class Segment extends Root
 			
 			if(!empty($replace))
 			{
-				$replace = Arr::keysWrap("/".$delimiter[0],$delimiter[1]."/",$replace);
+				$replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
 				$pattern = array_keys($replace);
 				$replacement = array_values($replace);
 				$return = preg_replace($pattern,$replacement,$return);
@@ -300,7 +300,7 @@ class Segment extends Root
 			
 			if(!empty($replace))
 			{
-				$replace = Arr::keysWrap("/".$delimiter[0],$delimiter[1]."/",$replace);
+				$replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
 				$pattern = array_keys($replace);
 				$replacement = array_values($replace);
 				$return = preg_replace($pattern,$replacement,$return);
@@ -333,7 +333,7 @@ class Segment extends Root
 	// enlève un segment de la chaîne
 	public static function unset($delimiter,$key,string $return):string 
 	{
-		return static::set($delimiter,$key,"",$return);
+		return static::set($delimiter,$key,'',$return);
 	}
 	
 	
@@ -344,7 +344,7 @@ class Segment extends Root
 		if(!empty($replace))
 		{
 			$replace = Arr::values($replace,'scalar');
-			$replace = array_fill_keys($replace,"");
+			$replace = array_fill_keys($replace,'');
 			$return = static::sets($delimiter,$replace,$return);
 		}
 		

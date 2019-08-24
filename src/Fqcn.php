@@ -102,7 +102,7 @@ class Fqcn extends Set
 		if(is_object($value))
 		$return = get_class($value);
 		
-		elseif(is_string($value) && (strpos($value,"\\") > 0 || class_exists($value,false)))
+		elseif(is_string($value) && (strpos($value,'\\') > 0 || class_exists($value,false)))
 		$return = $value;
 		
 		else
@@ -122,8 +122,8 @@ class Fqcn extends Set
 		if(is_object($value))
 		$value = get_class($value);
 		
-		elseif(is_string($value) && (strpos($value,"\\") > 0 || class_exists($value,false)))
-		$return = explode("\\",$value);
+		elseif(is_string($value) && (strpos($value,'\\') > 0 || class_exists($value,false)))
+		$return = explode('\\',$value);
 		
 		else
 		$return = parent::arr($value,$option);
@@ -140,9 +140,9 @@ class Fqcn extends Set
 		$return = null;
 		$value = static::str($value);
 		
-		if(is_string($value) && strpos($value,"\\") !== false)
+		if(is_string($value) && strpos($value,'\\') !== false)
 		{
-			$array = explode("\\",$value);
+			$array = explode('\\',$value);
 			$root = array_shift($array);
 			
 			if(is_string($root) && strlen($root))
@@ -162,9 +162,9 @@ class Fqcn extends Set
 		
 		if(is_string($value))
 		{
-			if(strpos($value,"\\") !== false)
+			if(strpos($value,'\\') !== false)
 			{
-				$array = explode("\\",$value);
+				$array = explode('\\',$value);
 				$name = array_pop($array);
 				
 				if(is_string($name) && strlen($name))
@@ -186,13 +186,13 @@ class Fqcn extends Set
 		$return = null;
 		$value = static::str($value);
 		
-		if(is_string($value) && strpos($value,"\\") !== false)
+		if(is_string($value) && strpos($value,'\\') !== false)
 		{
-			$array = explode("\\",$value);
+			$array = explode('\\',$value);
 			array_pop($array);
 			
 			if(!empty($array))
-			$return = implode("\\",$array);
+			$return = implode('\\',$array);
 		}
 		
 		return $return;

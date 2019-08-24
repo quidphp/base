@@ -109,7 +109,7 @@ class Date extends Root
 		$return = false;
 		$value = static::time($value,$format,true);
 		
-		if(is_int($value) && date('L',$value) === "1")
+		if(is_int($value) && date('L',$value) === '1')
 		$return = true;
 		
 		return $return;
@@ -1261,11 +1261,11 @@ class Date extends Root
 				if(is_string($key) && array_key_exists($key,$str) && is_int($value) && $value > 0)
 				{
 					if($i === $count && !empty($return) && array_key_exists('and',$str))
-					$return .= " ".$str['and'];
+					$return .= ' '.$str['and'];
 					
 					$return .= (!empty($return))? ' ':'';
 					$return .= (string)  $value;
-					$return .= " ";
+					$return .= ' ';
 					$return .= Str::plural($value,$str[$key]);
 				}
 			}

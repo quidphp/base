@@ -8,7 +8,7 @@ class Csv extends File
 	// config
 	public static $config = [
 		'mimeGroup'=>'csv', // mime groupe de la classe
-		'format'=>['delimiter'=>';','enclosure'=>'"','escape'=>"\\"],
+		'format'=>['delimiter'=>';','enclosure'=>'"','escape'=>'\\'],
 		'load'=>'csv', // extension permise pour la méthode csv::load
 		'option'=>['csv'=>true], // option pour la classe
 		'prefix'=>[ // option csv file::temp

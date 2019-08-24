@@ -427,7 +427,7 @@ class Path extends Set
 	{
 		if(is_string($extension))
 		{
-			$return .= ".";
+			$return .= '.';
 			if($lowerCase === true)
 			$extension = strtolower($extension);
 			

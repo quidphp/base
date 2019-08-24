@@ -905,7 +905,7 @@ class Classe extends Root
 		{
 			foreach ($declared as $class) 
 			{
-				if(strpos($class,"\\") !== false)
+				if(strpos($class,'\\') !== false)
 				{
 					$classNamespace = Fqcn::namespace($class);
 					

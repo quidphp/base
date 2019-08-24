@@ -23,7 +23,7 @@ trait _cacheFile
 			
 			if(is_string($key) && strlen($key))
 			{
-				$key = str_replace(".","_",$key);
+				$key = str_replace('.','_',$key);
 				$key = Path::safeBasename($key);
 				$storage = static::getCacheFileStorage();
 				$path = Path::addBasename($key,$storage);

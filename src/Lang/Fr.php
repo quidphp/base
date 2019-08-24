@@ -15,14 +15,14 @@ class Fr extends Base\Config
 			'format'=>[
 				'decimal'=>2,
 				'separator'=>'.',
-				'thousand'=>" "
+				'thousand'=>' '
 			],
 			
 			// moneyFormat
 			'moneyFormat'=>[
 				'decimal'=>2,
 				'separator'=>'.',
-				'thousand'=>" ",
+				'thousand'=>' ',
 				'output'=>'%v% $'
 			],
 			
@@ -30,7 +30,7 @@ class Fr extends Base\Config
 			'percentFormat'=>[
 				'decimal'=>0,
 				'separator'=>'.',
-				'thousand'=>"",
+				'thousand'=>'',
 				'output'=>'%v%%'
 			],
 			
@@ -178,7 +178,7 @@ class Fr extends Base\Config
 				415=>'Type de média non supporté',
 				416=>'La plage demandée ne peut être satisfaite',
 				417=>'Les attentes ne peuvent être satisfaite',
-				418=>"Je suis une théière",
+				418=>'Je suis une théière',
 				421=>'Requête mal dirigée',
 				422=>'Entité non traitable',
 				423=>'Barré',
@@ -287,7 +287,7 @@ class Fr extends Base\Config
 			'strLength'=>'Doit être une chaîne avec [%] caractère%s%',
 			'strMinLength'=>'Doit avoir une longueur minimale de [%] caractère%s%',
 			'strMaxLength'=>'Doit avoir une longueur maximale de [%] caractère%s%',
-			'uriHost'=>"Doit avoir le domaine [%]",
+			'uriHost'=>'Doit avoir le domaine [%]',
 			'alpha'=>'Doit être une chaîne alpha (A-z)',
 			'alphanumeric'=>'Doit être une chaîne alpha numérique (A-z 0-9)',
 			'alphanumericSlug'=> 'Doit être une chaîne alpha numérique (A-z 0-9 _-)',
@@ -327,16 +327,16 @@ class Fr extends Base\Config
 			'!=='=>'Ne doit pas être égal à [%]',
 			'fileUpload'=>'Doit être un fichier téléversé',
 			'fileUploads'=>'Doit être un ou plusieurs fichiers téléversés',
-			'fileUploadInvalid'=>"Le tableau de chargement du fichier est invalide.",
-			'fileUploadSizeIni'=>"La taille du fichier téléversé est trop volumineuse. Voir PHP Ini.",
-			'fileUploadSizeForm'=>"La taille du fichier téléversé est trop volumineuse. Voir le formulaire.",
-			'fileUploadPartial'=>"Le téléversement du fichier est partiel. Réesayer.",
-			'fileUploadSizeEmpty'=>"Le fichier téléversé est vide.",
-			'fileUploadTmpDir'=>"Erreur serveur: aucun dossier temporaire.",
+			'fileUploadInvalid'=>'Le tableau de chargement du fichier est invalide.',
+			'fileUploadSizeIni'=>'La taille du fichier téléversé est trop volumineuse. Voir PHP Ini.',
+			'fileUploadSizeForm'=>'La taille du fichier téléversé est trop volumineuse. Voir le formulaire.',
+			'fileUploadPartial'=>'Le téléversement du fichier est partiel. Réesayer.',
+			'fileUploadSizeEmpty'=>'Le fichier téléversé est vide.',
+			'fileUploadTmpDir'=>'Erreur serveur: aucun dossier temporaire.',
 			'fileUploadWrite'=>"Impossible d'écrire le fichier téléversé sur le serveur.",
 			'fileUploadExists'=>"Le fichier téléversé n'existe pas sur le serveur.",
-			'maxFilesize'=>"La taille du fichier doit être plus petite que [%]",
-			'maxFilesizes'=>"La taille du ou des fichiers doit être plus petite que [%]",
+			'maxFilesize'=>'La taille du fichier doit être plus petite que [%]',
+			'maxFilesizes'=>'La taille du ou des fichiers doit être plus petite que [%]',
 			'extension'=>"L'extension du fichier doit être: [%]",
 			'extensions'=>"L'extension du ou des fichiers doit être: [%]"
 		],

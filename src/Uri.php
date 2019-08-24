@@ -772,7 +772,7 @@ class Uri extends Root
 		$uriScheme = static::scheme($uri,$decode);
 		
 		if($uriScheme === null && is_string($scheme))
-		$uri = $scheme."://".$uri;
+		$uri = $scheme.'://'.$uri;
 		
 		$return = static::change(['scheme'=>$scheme],$uri,$decode);
 		
@@ -1832,7 +1832,7 @@ class Uri extends Root
 	// génère une string avec un host et un port
 	public static function makeHostPort(string $host,int $port):string 
 	{
-		return $host.":".$port;
+		return $host.':'.$port;
 	}
 	
 	

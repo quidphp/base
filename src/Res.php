@@ -844,7 +844,7 @@ class Res extends Root
 			$return = $mode;
 			
 			if($removeBinary === true)
-			$return = str_replace(static::$config['binary'],"",$return);
+			$return = str_replace(static::$config['binary'],'',$return);
 		}
 		
 		return $return;
@@ -1462,7 +1462,7 @@ class Res extends Root
 			$mime = $option['mime'];
 			$option = Arr::unsets(['basename','mime'],$option);
 			
-			$return = static::open("php://".$type,$option);
+			$return = static::open('php://'.$type,$option);
 			$mime = ($mime === null)? static::$config['phpStream']['mime']:$mime;
 			
 			if(!empty($return))
@@ -1732,7 +1732,7 @@ class Res extends Root
 					unset($value[$kind]['post']);
 					
 					if(empty($contentType))
-					$header = Header::setContentType("application/x-www-form-urlencoded",$header);
+					$header = Header::setContentType('application/x-www-form-urlencoded',$header);
 				}
 				
 				if(!empty($header))

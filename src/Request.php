@@ -34,7 +34,7 @@ class Request extends Root
 	// retourne vrai si la requête courante est ajax
 	public static function isAjax():bool
 	{
-		return (static::getHeader("X-Requested-With") === 'XMLHttpRequest')? true:false;
+		return (static::getHeader('X-Requested-With') === 'XMLHttpRequest')? true:false;
 	}
 	
 	
@@ -488,9 +488,9 @@ class Request extends Root
 	// change la valeur ssl de la requête courante
 	public static function setSsl(bool $value=true):void
 	{
-		Superglobal::setServer("REQUEST_SCHEME",Http::scheme($value));
-		Superglobal::setServer("SERVER_PORT",Http::port($value));
-		Superglobal::setServer("HTTPS",($value === true)? "on":"off");
+		Superglobal::setServer('REQUEST_SCHEME',Http::scheme($value));
+		Superglobal::setServer('SERVER_PORT',Http::port($value));
+		Superglobal::setServer('HTTPS',($value === true)? 'on':'off');
 		
 		return;
 	}
@@ -501,9 +501,9 @@ class Request extends Root
 	public static function setAjax(bool $value=true):void 
 	{
 		if($value === true)
-		static::setHeader("X-Requested-With",'XMLHttpRequest');
+		static::setHeader('X-Requested-With','XMLHttpRequest');
 		else
-		static::unsetHeader("X-Requested-With");
+		static::unsetHeader('X-Requested-With');
 		
 		return;
 	}
@@ -583,7 +583,7 @@ class Request extends Root
 		if(($serverName = Superglobal::getServer('SERVER_NAME')) !== null)
 		$return = $serverName;
 		
-		elseif(($httpHost = static::getHeader("Host")) !== null)
+		elseif(($httpHost = static::getHeader('Host')) !== null)
 		$return = $httpHost;
 		
 		return $return;
@@ -781,7 +781,7 @@ class Request extends Root
 		
 		if(is_string($string))
 		{
-			Globals::set("_GET",$array);
+			Globals::set('_GET',$array);
 			Superglobal::setServer('QUERY_STRING',$string);
 		}
 		
@@ -940,7 +940,7 @@ class Request extends Root
 	// remplace les donnés de post
 	public static function setPost(array $value):void 
 	{
-		Globals::set("_POST",$value);
+		Globals::set('_POST',$value);
 		
 		return;
 	}
@@ -994,7 +994,7 @@ class Request extends Root
 		
 		foreach ($values as $key => $value) 
 		{
-			$key = Superglobal::formatServerKey("HTTP_".$key);
+			$key = Superglobal::formatServerKey('HTTP_'.$key);
 			Superglobal::setServer($key,$value);
 		}
 		
@@ -1009,7 +1009,7 @@ class Request extends Root
 	{
 		$return = null;
 		
-		if(($forwardedFor = static::getHeader("X-Forwarded-For")) !== null)
+		if(($forwardedFor = static::getHeader('X-Forwarded-For')) !== null)
 		$return = $forwardedFor;
 		
 		elseif(($remoteAddr = Superglobal::getServer('REMOTE_ADDR')) !== null)
@@ -1028,8 +1028,8 @@ class Request extends Root
 	{
 		if(Ip::is($value))
 		{
-			if(static::headerExists("X-Forwarded-For"))
-			static::setHeader("X-Forwarded-For",$value);
+			if(static::headerExists('X-Forwarded-For'))
+			static::setHeader('X-Forwarded-For',$value);
 			
 			Superglobal::setServer('REMOTE_ADDR',$value);
 		}
@@ -1042,7 +1042,7 @@ class Request extends Root
 	// retourne le user agent courant
 	public static function userAgent():?string
 	{
-		return static::getHeader("User-Agent");
+		return static::getHeader('User-Agent');
 	}
 	
 	
@@ -1051,7 +1051,7 @@ class Request extends Root
 	// peut être null pour retirer le header
 	public static function setUserAgent(?string $value):void 
 	{
-		static::setHeader("User-Agent",$value);
+		static::setHeader('User-Agent',$value);
 		
 		return;
 	}
@@ -1080,7 +1080,7 @@ class Request extends Root
 	// peut être null pour retirer le header
 	public static function setReferer(?string $value):void 
 	{
-		static::setHeader("Referer",$value);
+		static::setHeader('Referer',$value);
 		
 		return;
 	}
@@ -1122,7 +1122,7 @@ class Request extends Root
 	// retourne la valeur du header lang de la requête courante
 	public static function langHeader():?string
 	{
-		return (is_string($acceptLanguage = static::getHeader("Accept-Language")))? substr($acceptLanguage,0,2):null;
+		return (is_string($acceptLanguage = static::getHeader('Accept-Language')))? substr($acceptLanguage,0,2):null;
 	}
 	
 	
@@ -1130,7 +1130,7 @@ class Request extends Root
 	// change la valeur du header lang de la requête courante
 	public static function setLangHeader(?string $value):void 
 	{
-		static::setHeader("Accept-Language",$value);
+		static::setHeader('Accept-Language',$value);
 		
 		return;
 	}

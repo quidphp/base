@@ -921,7 +921,7 @@ class Number extends Root
 	// retourne une string avec le int zérofill (à gauche)
 	public static function zerofill(int $length,int $value):string 
 	{
-		return Str::padLeft("0",$length,(string) $value);
+		return Str::padLeft('0',$length,(string) $value);
 	}
 	
 	
@@ -985,7 +985,7 @@ class Number extends Root
 				$return = $value;
 				
 				if(is_string($return) && !empty($option['output']) && is_string($option['output']))
-				$return = str_replace("%v%",$return,$option['output']);
+				$return = str_replace('%v%',$return,$option['output']);
 			}
 		}
 		
@@ -1165,7 +1165,7 @@ class Number extends Root
 				$return = static::round(($size/$pow),$round);
 				
 				$return = (string) $return;
-				$return .= " ".$text;
+				$return .= ' '.$text;
 			}
 		}
 
@@ -1193,7 +1193,7 @@ class Number extends Root
 		$format = static::getSizeFormat($lang,$option);
 		$alpha = Str::keepAlpha($value);
 		$alpha = strtolower($alpha);
-		$alpha = Str::stripEnd("s",$alpha,false);
+		$alpha = Str::stripEnd('s',$alpha,false);
 		$value = static::castFromString($value);
 		
 		if(!empty($formatOriginal['text']) && strlen($alpha) && is_int($value))

@@ -31,7 +31,7 @@ class Ip extends Root
 	// retourne vrai si l'ip est local
 	public static function isLocal($value):bool
 	{
-		return (static::is($value) && ($value === '127.0.0.1' || strpos($value,"192.168.") === 0))? true:false;
+		return (static::is($value) && ($value === '127.0.0.1' || strpos($value,'192.168.') === 0))? true:false;
 	}
 	
 	

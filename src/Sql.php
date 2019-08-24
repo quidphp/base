@@ -303,7 +303,7 @@ class Sql extends Root
 	// retourne vrai si la valeur a un dot
 	public static function hasDot($value):bool 
 	{
-		return (is_string($value) && strlen($value) > 1 && strpos($value,".") > 0);
+		return (is_string($value) && strlen($value) > 1 && strpos($value,'.') > 0);
 	}
 	
 	
@@ -502,10 +502,10 @@ class Sql extends Root
 					$return = $array[$key]['word'];
 					
 					if($type === 'drop' && !empty($option['dropExists']))
-					$return .= " IF EXISTS";
+					$return .= ' IF EXISTS';
 					
 					elseif($type === 'create' && !empty($option['createNotExists']))
-					$return .= " IF NOT EXISTS";
+					$return .= ' IF NOT EXISTS';
 				}
 			}
 		}
@@ -563,13 +563,13 @@ class Sql extends Root
 		{
 			if(static::hasDot($return) !== false)
 			{
-				$x = Str::explodeTrimClean(".",$return,2);
+				$x = Str::explodeTrimClean('.',$return,2);
 				$key = Arr::keyLast($x);
 				
 				if(strlen($x[$key]))
 				$x[$key] = Str::wrapStartEnd('`','`',$x[$key]);
 				
-				$return = implode(".",$x);
+				$return = implode('.',$x);
 			}
 			
 			elseif(!Str::isStartEnd('(',')',$return) && strpos($return,'@') !== 0)
@@ -581,7 +581,7 @@ class Sql extends Root
 				$return = static::functionFormat($option['function'])."($return)";
 				
 				if(!empty($option['binary']))
-				$return = "BINARY ".$return;
+				$return = 'BINARY '.$return;
 			}
 		}
 
@@ -597,14 +597,14 @@ class Sql extends Root
 		{
 			if(static::hasDot($return))
 			{
-				$x = Str::explodeTrimClean(".",$return,2);
+				$x = Str::explodeTrimClean('.',$return,2);
 				
 				foreach ($x as $i => $v) 
 				{
 					$x[$i] = Str::stripStartEnd('`','`',$x[$i]);
 				}
 				
-				$return = implode(".",$x);
+				$return = implode('.',$x);
 			}
 			
 			elseif(Str::isStartEnd('`','`',$return))
@@ -638,7 +638,7 @@ class Sql extends Root
 				}
 				
 				if(is_string($return) && $replaceDoubleEscape === true)
-				$return = str_replace("\\\\","\\",$return);
+				$return = str_replace('\\\\','\\',$return);
 			}
 			
 			else
@@ -660,7 +660,7 @@ class Sql extends Root
 		{
 			foreach ($value as $v) 
 			{
-				$return .= (strlen($return))? ",":'';
+				$return .= (strlen($return))? ',':'';
 				$return .= static::quote($v,$callable);
 			}
 		}
@@ -704,7 +704,7 @@ class Sql extends Root
 			$return = static::getWhereSeparator($separator);
 			
 			if($space === true)
-			$return = " ".$return." ";
+			$return = ' '.$return.' ';
 		}
 		
 		return $return;
@@ -1084,7 +1084,7 @@ class Sql extends Root
 			$return = static::whatThree($key,Str::stripEnd($separator,$as),$key,$option);
 			
 			else
-			$return['sql'] .= static::tick($key)." AS ".static::tick($as);
+			$return['sql'] .= static::tick($key).' AS '.static::tick($as);
 		}
 
 		return $return;
@@ -1105,14 +1105,14 @@ class Sql extends Root
 		
 		if(!empty($key) && !empty($function) && !empty($as))
 		{
-			$as = ($as !== $key)? " AS ".static::tick($as):'';
+			$as = ($as !== $key)? ' AS '.static::tick($as):'';
 			$return['sql'] .= $function['key'];
 			
 			if($function['parenthesis'] === true)
 			$return['sql'] .= static::parenthesis(static::tick($key)).$as;
 
 			else
-			$return['sql'] .= " ".static::tick($key).$as;
+			$return['sql'] .= ' '.static::tick($key).$as;
 			
 			$return['cast'] = true;
 		}
@@ -1199,7 +1199,7 @@ class Sql extends Root
 					
 					if(!empty($table['sql']) && !empty($on['sql']))
 					{
-						$on['sql'] = " ON(".$on['sql'].")";
+						$on['sql'] = ' ON('.$on['sql'].')';
 						
 						if(array_key_exists('table',$table))
 						unset($table['table']);
@@ -1570,10 +1570,10 @@ class Sql extends Root
 		if(is_scalar($value) || $value === null)
 		{
 			if(in_array($value,[null,'null'],true))
-			$return['sql'] .= $tick." IS NULL";
+			$return['sql'] .= $tick.' IS NULL';
 			
 			elseif($value === 'notNull')
-			$return['sql'] .= $tick." IS NOT NULL";
+			$return['sql'] .= $tick.' IS NOT NULL';
 			
 			elseif(in_array($value,[false,'empty'],true))
 			$return['sql'] .= static::parenthesis("$tick = '' OR $tick IS NULL");
@@ -1666,7 +1666,7 @@ class Sql extends Root
 			
 			else
 			{
-				$return['sql'] .= static::tick($key,$option)." ".$symbol." ";
+				$return['sql'] .= static::tick($key,$option).' '.$symbol.' ';
 				$return = static::value($value,$return,$option);
 			}
 		}
@@ -1706,7 +1706,7 @@ class Sql extends Root
 			{
 				$return['sql'] .= static::tick($key,$option)." $word(";
 				$return = static::valueSet($value,$return,$option);
-				$return['sql'] .= ")";
+				$return['sql'] .= ')';
 			}
 		}
 		
@@ -1757,10 +1757,10 @@ class Sql extends Root
 		$word = null;
 		
 		if(in_array($method,['find','findInSet'],true))
-		$word = "FIND_IN_SET";
+		$word = 'FIND_IN_SET';
 		
 		elseif(in_array($method,['notFind','notFindInSet'],true))
-		$word = "!FIND_IN_SET";
+		$word = '!FIND_IN_SET';
 		
 		if(is_string($word) && !empty($value))
 		{
@@ -1773,7 +1773,7 @@ class Sql extends Root
 					$return['sql'] .= static::whereSeparator($return['sql'],$separator);
 					$return['sql'] .= "$word(";
 					$return = static::value($v,$return,$option);
-					$return['sql'] .= ", ".static::tick($key,$option).")";
+					$return['sql'] .= ', '.static::tick($key,$option).')';
 					$count++;
 				}
 			}
@@ -1869,7 +1869,7 @@ class Sql extends Root
 					
 					if(!empty($current['sql']))
 					{
-						$current['sql'] = $base.str_replace("@",$current['sql'],$concat);
+						$current['sql'] = $base.str_replace('@',$current['sql'],$concat);
 						
 						$return['sql'] .= static::whereSeparator($return['sql'],$separator);
 						$return = static::returnMerge($return,$current);
@@ -1929,9 +1929,9 @@ class Sql extends Root
 					$current = ['sql'=>''];
 					$return['sql'] .= static::whereSeparator($return['sql'],$separator);
 					
-					$current['sql'] .= static::tick($key,$option)." >= ";
+					$current['sql'] .= static::tick($key,$option).' >= ';
 					$current = static::value($floorCeil['floor'],$current,$option);
-					$current['sql'] .= " AND ".static::tick($key)." <= ";
+					$current['sql'] .= ' AND '.static::tick($key).' <= ';
 					$current = static::value($floorCeil['ceil'],$current,$option);
 					$current['sql'] = static::parenthesis($current['sql']);
 					
@@ -2053,7 +2053,7 @@ class Sql extends Root
 		$return['sql'] = $key;
 		
 		elseif(!empty($key))
-		$return['sql'] = static::tick($key)." ".static::getOrderDirection(null);
+		$return['sql'] = static::tick($key).' '.static::getOrderDirection(null);
 		
 		return $return;
 	}
@@ -2066,7 +2066,7 @@ class Sql extends Root
 		$return = ['sql'=>''];
 		
 		if(!empty($key) && is_scalar($value))
-		$return['sql'] = static::tick($key)." ".static::getOrderDirection($value);
+		$return['sql'] = static::tick($key).' '.static::getOrderDirection($value);
 		
 		return $return;
 	}
@@ -2095,16 +2095,16 @@ class Sql extends Root
 		$word = null;
 		
 		if(in_array($method,['find','findInSet'],true))
-		$word = "FIND_IN_SET";
+		$word = 'FIND_IN_SET';
 		
 		elseif(in_array($method,['notFind','notFindInSet'],true))
-		$word = "!FIND_IN_SET";
+		$word = '!FIND_IN_SET';
 		
 		if(is_string($word) && is_string($value))
 		{
 			$return['sql'] = "$word(";
 			$return['sql'] .= static::tick($value);
-			$return['sql'] .= ", ".static::tick($key).")";
+			$return['sql'] .= ', '.static::tick($key).')';
 		}
 
 		return $return;
@@ -2137,7 +2137,7 @@ class Sql extends Root
 				
 				if(array_key_exists(1,$value) && is_numeric($value[1]) && $value[1] > 0)
 				{
-					$return['sql'] .= " OFFSET ";
+					$return['sql'] .= ' OFFSET ';
 					$return['sql'] .= Str::cast($value[1]);
 				}
 			}
@@ -2236,7 +2236,7 @@ class Sql extends Root
 		$return['sql'] .= $value;
 		
 		elseif(empty($value))
-		$return['sql'] = "() VALUES ()";
+		$return['sql'] = '() VALUES ()';
 		
 		elseif(is_array($value))
 		{
@@ -2247,12 +2247,12 @@ class Sql extends Root
 			if(strlen($fields['sql']))
 			{
 				$return['sql'] .= static::parenthesis($fields['sql']);
-				$return['sql'] .= " ";
+				$return['sql'] .= ' ';
 			}
 			
 			if(strlen($merge['sql'])) 
 			{
-				$return['sql'] .= "VALUES ";
+				$return['sql'] .= 'VALUES ';
 				$merge['sql'] = static::parenthesis($merge['sql']);
 				$return = static::returnMerge($return,$merge);
 			}
@@ -2375,9 +2375,9 @@ class Sql extends Root
 		$return = ['sql'=>''];
 		
 		$return['sql'] .= static::functionFormat($method);
-		$return['sql'] .= "(";
+		$return['sql'] .= '(';
 		$return = static::value($value,$return,$option);
-		$return['sql'] .= ")";
+		$return['sql'] .= ')';
 		
 		return $return;
 	}
@@ -2408,13 +2408,13 @@ class Sql extends Root
 		$return = ['sql'=>''];
 		
 		$return['sql'] .= 'REPLACE';
-		$return['sql'] .= "(";
+		$return['sql'] .= '(';
 		$return['sql'] .= static::tick($key);
 		$return['sql'] .= ',';
 		$return = static::value($from,$return,$option);
 		$return['sql'] .= ',';
 		$return = static::value($to,$return,$option);
-		$return['sql'] .= ")";
+		$return['sql'] .= ')';
 		
 		return $return;
 	}
@@ -2437,11 +2437,11 @@ class Sql extends Root
 			if(!empty($option['type']) && ($option['type'] === 'addCol' || $option['type'] === 'alterCol'))
 			{
 				if($option['type'] === 'addCol')
-				$return['sql'] .= "ADD COLUMN ".static::tick($name);
+				$return['sql'] .= 'ADD COLUMN '.static::tick($name);
 				
 				elseif($option['type'] === 'alterCol')
 				{
-					$return['sql'] .= "CHANGE ".static::tick($name)." ";
+					$return['sql'] .= 'CHANGE '.static::tick($name).' ';
 					$return['sql'] .= (!empty($attr['rename']) && is_string($attr['rename']))? static::tick($attr['rename']):static::tick($name);
 				}
 			}
@@ -2450,7 +2450,7 @@ class Sql extends Root
 			$return['sql'] .= static::tick($name);
 			
 			// type
-			$return['sql'] .= " ".$type;
+			$return['sql'] .= ' '.$type;
 			
 			// length
 			if(!empty($attr['length']) && is_numeric($attr['length']))
@@ -2461,18 +2461,18 @@ class Sql extends Root
 			
 			// unsigned
 			if(!empty($attr['unsigned']))
-			$return['sql'] .= " unsigned";
+			$return['sql'] .= ' unsigned';
 			
 			// zerofill
 			if(!empty($attr['zerofill']))
-			$return['sql'] .= " zerofill";
+			$return['sql'] .= ' zerofill';
 			
 			// charset
 			if(!empty($attr['charset']))
 			{
 				$attr['charset'] = ($attr['charset'] === true && !empty($option['charset']))? $option['charset']:$attr['charset'];
 				if(is_string($attr['charset']))
-				$return['sql'] .= " CHARACTER SET ".$attr['charset'];
+				$return['sql'] .= ' CHARACTER SET '.$attr['charset'];
 			}
 			
 			// collate
@@ -2480,34 +2480,34 @@ class Sql extends Root
 			{
 				$attr['collate'] = ($attr['collate'] === true && !empty($option['collate']))? $option['collate']:$attr['collate'];
 				if(is_string($attr['collate']))
-				$return['sql'] .= " COLLATE ".$attr['collate'];
+				$return['sql'] .= ' COLLATE '.$attr['collate'];
 			}
 			
 			// null
 			if(array_key_exists('null',$attr))
 			{
 				if($attr['null'] === false)
-				$return['sql'] .= " NOT NULL";
+				$return['sql'] .= ' NOT NULL';
 				
 				elseif($attr['null'] === true)
-				$return['sql'] .= " NULL";
+				$return['sql'] .= ' NULL';
 			}
 			
 			// default
-			if(array_key_exists("default",$attr) && $attr['default'] !== null && $attr['default'] !== 'NULL')
-			$return['sql'] .= " DEFAULT ".static::value($attr['default'],null,$option)['sql'];
+			if(array_key_exists('default',$attr) && $attr['default'] !== null && $attr['default'] !== 'NULL')
+			$return['sql'] .= ' DEFAULT '.static::value($attr['default'],null,$option)['sql'];
 			
 			// default null
 			elseif(!empty($attr['null']))
-			$return['sql'] .= " DEFAULT NULL";
+			$return['sql'] .= ' DEFAULT NULL';
 			
 			// auto increment
 			if(!empty($attr['autoIncrement']))
-			$return['sql'] .= " AUTO_INCREMENT";
+			$return['sql'] .= ' AUTO_INCREMENT';
 			
 			// after
 			if(!empty($attr['after']) && is_string($attr['after']))
-			$return['sql'] .= " AFTER ".static::tick($attr['after']);
+			$return['sql'] .= ' AFTER '.static::tick($attr['after']);
 		}
 		
 		return $return;
@@ -2590,7 +2590,7 @@ class Sql extends Root
 				if(is_string($v) && !empty($v))
 				{
 					$return['sql'] .= static::comma($return['sql']);
-					$return['sql'] .= "DROP COLUMN ".static::tick($v);
+					$return['sql'] .= 'DROP COLUMN '.static::tick($v);
 				}
 			}
 		}
@@ -2641,14 +2641,14 @@ class Sql extends Root
 					if(strlen($v))
 					{
 						if(!empty($option['type']) && $option['type'] === 'addKey')
-						$return['sql'] .= "ADD ";
+						$return['sql'] .= 'ADD ';
 						
 						$return['sql'] .= $keyWord;
 						
 						if(is_string($name))
-						$return['sql'] .= " ".static::tick($name);
+						$return['sql'] .= ' '.static::tick($name);
 						
-						$return['sql'] .= " ".static::parenthesis($v);
+						$return['sql'] .= ' '.static::parenthesis($v);
 					}
 				}
 			}
@@ -2725,7 +2725,7 @@ class Sql extends Root
 				if(is_string($v) && !empty($v))
 				{
 					$return['sql'] .= static::comma($return['sql']);
-					$return['sql'] .= "DROP KEY ".static::tick($v);
+					$return['sql'] .= 'DROP KEY '.static::tick($v);
 				}
 			}
 		}
@@ -2740,15 +2740,15 @@ class Sql extends Root
 	public static function createEnd(?array $option=null):array
 	{
 		$return = ['sql'=>''];
-		$return['sql'] .= ")";
+		$return['sql'] .= ')';
 
 		// engine
 		if(!empty($option['engine']))
-		$return['sql'] .= " ENGINE=".$option['engine'];
+		$return['sql'] .= ' ENGINE='.$option['engine'];
 
 		// charset
 		if(!empty($option['charset']))
-		$return['sql'] .= " DEFAULT CHARSET=".$option['charset'];
+		$return['sql'] .= ' DEFAULT CHARSET='.$option['charset'];
 		
 		return $return;
 	}
@@ -2819,13 +2819,13 @@ class Sql extends Root
 							$return['sql'] .= static::comma($return['sql']);
 							
 							elseif(!empty($return['sql']))
-							$return['sql'] .= " ";
+							$return['sql'] .= ' ';
 							
 							if(!empty($param['parenthesisOpen']))
-							$return['sql'] .= "(";
+							$return['sql'] .= '(';
 							
 							if(!empty($word))
-							$return['sql'] .= $word." ";
+							$return['sql'] .= $word.' ';
 							
 							$return = static::returnMerge($return,$merge);
 							
@@ -3206,7 +3206,7 @@ class Sql extends Root
 		$array['what'] = 'DATABASES';
 		
 		if(is_string($value))
-		$array['where'] = "LIKE ".static::value(static::shortcut($value),null,$option)['sql'];
+		$array['where'] = 'LIKE '.static::value(static::shortcut($value),null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
 		
@@ -3225,7 +3225,7 @@ class Sql extends Root
 		$array['what'] = 'VARIABLES';
 		
 		if(is_string($value))
-		$array['where'] = "LIKE ".static::value($value,null,$option)['sql'];
+		$array['where'] = 'LIKE '.static::value($value,null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
 		
@@ -3244,7 +3244,7 @@ class Sql extends Root
 		$array['what'] = 'TABLES';
 		
 		if(is_string($value))
-		$array['where'] = "LIKE ".static::value(static::shortcut($value),null,$option)['sql'];
+		$array['where'] = 'LIKE '.static::value(static::shortcut($value),null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
 		
@@ -3263,7 +3263,7 @@ class Sql extends Root
 		$array['what'] = 'TABLE STATUS';
 		
 		if(is_string($value))
-		$array['where'] = "LIKE ".static::value(static::shortcut($value),null,$option)['sql'];
+		$array['where'] = 'LIKE '.static::value(static::shortcut($value),null,$option)['sql'];
 		
 		$return = static::makeShow($array,$option);
 		
@@ -3293,7 +3293,7 @@ class Sql extends Root
 			
 			if(is_string($value))
 			{
-				$array['where'] = "WHERE FIELD = ";
+				$array['where'] = 'WHERE FIELD = ';
 				$array['where'] .= static::value(static::shortcut($value),null,$option)['sql'];
 			}
 			
@@ -3315,7 +3315,7 @@ class Sql extends Root
 		{
 			$table = static::shortcut($table);
 			$array['table'] = $table;
-			$array['sql'] = "AUTO_INCREMENT = ";
+			$array['sql'] = 'AUTO_INCREMENT = ';
 			$array['sql'] .= Str::cast($value);
 			$return = static::makeAlter($array,$option);
 			

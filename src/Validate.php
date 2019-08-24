@@ -47,7 +47,7 @@ class Validate extends Root
 			'numberWholeNotEmpty'=>'^[1-9][0-9]*$',
 			'password'=>'^(?=.{5,30})(?=.*\\d)(?=.*[A-z]).*',
 			'passwordLoose'=>'^.{4,50}$',
-			'minLength'=>".{%%%,}",
+			'minLength'=>'.{%%%,}',
 			'email'=>'^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{1,4})+$',
 			'phone'=>'([^\d]*\d){10}'
 		],
@@ -101,10 +101,10 @@ class Validate extends Root
 			'slug'=>[Slug::class,'is'],
 			'slugPath'=>[SlugPath::class,'is'],
 			'fragment'=>[Slug::class,'is'],
-			'strNotEmpty'=>[Str::class,"isNotEmpty"],
-			'strLatin'=>[Str::class,"isLatin"],
-			'uriRelative'=>[Uri::class,"isRelative"],
-			'uriAbsolute'=>[Uri::class,"isAbsolute"],
+			'strNotEmpty'=>[Str::class,'isNotEmpty'],
+			'strLatin'=>[Str::class,'isLatin'],
+			'uriRelative'=>[Uri::class,'isRelative'],
+			'uriAbsolute'=>[Uri::class,'isAbsolute'],
 			'fileUpload'=>[File::class,'uploadValidate'],
 			'fileUploads'=>[File::class,'uploadValidates']
 		],
@@ -577,7 +577,7 @@ class Validate extends Root
 				if(is_scalar($v) && !is_bool($v) && is_string($return))
 				{
 					$v = (string) $v;
-					$return = str_replace("%%%",$v,$return);
+					$return = str_replace('%%%',$v,$return);
 				}
 			}
 		}
@@ -712,7 +712,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex alpha
 	public static function isAlpha($value):bool
 	{
-		return static::regex("alpha",$value);
+		return static::regex('alpha',$value);
 	}
 	
 	
@@ -720,7 +720,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex alphanumeric
 	public static function isAlphanumeric($value):bool
 	{
-		return static::regex("alphanumeric",$value);
+		return static::regex('alphanumeric',$value);
 	}
 	
 	
@@ -728,7 +728,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex isAlphanumericDash
 	public static function isAlphanumericDash($value):bool
 	{
-		return static::regex("alphanumericDash",$value);
+		return static::regex('alphanumericDash',$value);
 	}
 	
 	
@@ -736,7 +736,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex alphanumericSlug
 	public static function isAlphanumericSlug($value):bool
 	{
-		return static::regex("alphanumericSlug",$value);
+		return static::regex('alphanumericSlug',$value);
 	}
 	
 	
@@ -744,7 +744,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex isAlphanumericSlugPath
 	public static function isAlphanumericSlugPath($value):bool
 	{
-		return static::regex("alphanumericSlugPath",$value);
+		return static::regex('alphanumericSlugPath',$value);
 	}
 	
 	
@@ -752,7 +752,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex alphanumericPlus
 	public static function isAlphanumericPlus($value):bool
 	{
-		return static::regex("alphanumericPlus",$value);
+		return static::regex('alphanumericPlus',$value);
 	}
 	
 	
@@ -760,7 +760,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex alphanumericPlusSpace
 	public static function isAlphanumericPlusSpace($value):bool
 	{
-		return static::regex("alphanumericPlusSpace",$value);
+		return static::regex('alphanumericPlusSpace',$value);
 	}
 	
 	
@@ -786,7 +786,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex email
 	public static function isEmail($value):bool
 	{
-		return static::regex("email",$value);
+		return static::regex('email',$value);
 	}
 	
 	
@@ -794,7 +794,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex hex
 	public static function isHex($value):bool
 	{
-		return static::regex("hex",$value);
+		return static::regex('hex',$value);
 	}
 	
 	
@@ -802,7 +802,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex tag
 	public static function isTag($value):bool
 	{
-		return static::regex("tag",$value);
+		return static::regex('tag',$value);
 	}
 	
 	
@@ -810,7 +810,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex year
 	public static function isYear($value):bool
 	{
-		return static::regex("year",$value);
+		return static::regex('year',$value);
 	}
 	
 	
@@ -818,7 +818,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex zipcode
 	public static function isAmericanZipcode($value):bool
 	{
-		return static::regex("americanZipcode",$value);
+		return static::regex('americanZipcode',$value);
 	}
 	
 	
@@ -826,7 +826,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex postalcode
 	public static function isCanadianPostalcode($value):bool
 	{
-		return static::regex("canadianPostalcode",$value);
+		return static::regex('canadianPostalcode',$value);
 	}
 	
 	
@@ -834,7 +834,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex americanPhone
 	public static function isNorthAmericanPhone($value):bool
 	{
-		return static::regex("northAmericanPhone",$value);
+		return static::regex('northAmericanPhone',$value);
 	}
 	
 	
@@ -842,7 +842,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex phone
 	public static function isPhone($value):bool
 	{
-		return static::regex("phone",$value);
+		return static::regex('phone',$value);
 	}
 	
 	
@@ -850,7 +850,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex ip
 	public static function isIp($value):bool
 	{
-		return static::regex("ip",$value);
+		return static::regex('ip',$value);
 	}
 	
 	
@@ -858,7 +858,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex date
 	public static function isDate($value):bool
 	{
-		return static::regex("date",$value);
+		return static::regex('date',$value);
 	}
 	
 	
@@ -866,7 +866,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex datetime
 	public static function isDatetime($value):bool
 	{
-		return static::regex("datetime",$value);
+		return static::regex('datetime',$value);
 	}
 	
 	
@@ -874,7 +874,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex time
 	public static function isTime($value):bool
 	{
-		return static::regex("time",$value);
+		return static::regex('time',$value);
 	}
 
 
@@ -882,7 +882,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex path
 	public static function isPath($value):bool
 	{
-		return static::regex("path",$value);
+		return static::regex('path',$value);
 	}
 
 
@@ -890,7 +890,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex fqcn
 	public static function isFqcn($value):bool
 	{
-		return static::regex("fqcn",$value);
+		return static::regex('fqcn',$value);
 	}
 	
 	
@@ -898,7 +898,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex table
 	public static function isTable($value):bool
 	{
-		return static::regex("table",$value);
+		return static::regex('table',$value);
 	}
 	
 	
@@ -906,7 +906,7 @@ class Validate extends Root
 	// retourne vrai si la valeur passe le regex col
 	public static function isCol($value):bool
 	{
-		return static::regex("col",$value);
+		return static::regex('col',$value);
 	}
 	
 	

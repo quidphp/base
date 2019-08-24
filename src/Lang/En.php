@@ -15,14 +15,14 @@ class En extends Base\Config
 			'format'=>[
 				'decimal'=>2,
 				'separator'=>'.',
-				'thousand'=>","
+				'thousand'=>','
 			],
 			
 			// moneyFormat
 			'moneyFormat'=>[
 				'decimal'=>2,
 				'separator'=>'.',
-				'thousand'=>",",
+				'thousand'=>',',
 				'output'=>'$%v%'
 			],
 			
@@ -30,7 +30,7 @@ class En extends Base\Config
 			'percentFormat'=>[
 				'decimal'=>0,
 				'separator'=>'.',
-				'thousand'=>"",
+				'thousand'=>'',
 				'output'=>'%v%%'
 			],
 				
@@ -258,9 +258,9 @@ class En extends Base\Config
 			'numberWholeNotEmpty'=>'Must be an whole number not empty',
 			'numberDecimal'=>'Must be a decimal number',
 			'scalarNotBool'=>'Must be scalar but not boolean',
-			'slug'=>"Must be an uri slug",
-			'slugPath'=>"Must be an uri slug-path",
-			'fragment'=>"Must be an uri fragment",
+			'slug'=>'Must be an uri slug',
+			'slugPath'=>'Must be an uri slug-path',
+			'fragment'=>'Must be an uri fragment',
 			'strLatin'=>'Must be a string only with latin characters',
 			'strNotEmpty'=>'Must be a non-empty string',
 			'uriRelative'=>'Must be a relative uri',
@@ -287,18 +287,18 @@ class En extends Base\Config
 			'setLength'=>'String length must be [%]',
 			'strMinLength'=>'String length must be at minimum [%]',
 			'strMaxLength'=>'String length must be at maximum [%]',
-			'uriHost'=>"Domain must be [%]",
+			'uriHost'=>'Domain must be [%]',
 			'alpha'=>'Must be only alpha (A-z)',
 			'alphanumeric'=>'Must be alphanumeric (A-z 0-9)',
 			'alphanumericSlug'=> 'Must be alphanumeric (A-z 0-9 _-)',
 			'alphanumericPlus'=> 'Must be alphanumeric (a-z 0-9 _-.@)',
 			'alphanumericPlusSpace'=> 'Must be alphanumeric, space allowed (a-z 0-9 _-.@)',
-			'username'=>"Must be a valid username with at least 4 characters (a-z 0-9 _-)",
-			'usernameLoose'=>"Must be a valid username with at least 4 characters (a-z 0-9 _-@)",
-			'password'=>"Must be a password with a letter, a number and at least 5 characters long.",
-			'passwordLoose'=>"Must be a password at least 4 characters long.",
-			'passwordHash'=>"Must be a password with a letter, a number and at least 5 characters long.",
-			'passwordHashLoose'=>"Must be a password at least 4 characters long.",
+			'username'=>'Must be a valid username with at least 4 characters (a-z 0-9 _-)',
+			'usernameLoose'=>'Must be a valid username with at least 4 characters (a-z 0-9 _-@)',
+			'password'=>'Must be a password with a letter, a number and at least 5 characters long.',
+			'passwordLoose'=>'Must be a password at least 4 characters long.',
+			'passwordHash'=>'Must be a password with a letter, a number and at least 5 characters long.',
+			'passwordHashLoose'=>'Must be a password at least 4 characters long.',
 			'email'=>'Must be a valid email (x@x.com)',
 			'hex'=>'Must be a valid HEX code (ffffff)',
 			'tag'=>'Must be a valid HTML tag (&lt;tag&gt;&lt;/tag&gt;)',
@@ -328,17 +328,17 @@ class En extends Base\Config
 			'fileUpload'=>'Must be an uploaded file',
 			'fileUploads'=>'Must be one or many uploaded files',
 			'fileUploadInvalid'=>'The file upload array is invalid.',
-			'fileUploadSizeIni'=>"The size of the uploaded file is too big. See PHP Ini.",
-			'fileUploadSizeForm'=>"The size of the uploaded file is too big. See the form.",
-			'fileUploadPartial'=>"The file upload was partial. Please retry.",
-			'fileUploadSizeEmpty'=>"The uploaded file is empty.",
-			'fileUploadTmpDir'=>"Servor error: no temporary folder.",
-			'fileUploadWrite'=>"Cannot write the uploaded file on the server.",
-			'fileUploadExists'=>"The temporary uploaded file was not found.",
-			'maxFilesize'=>"The uploaded file size must be smaller than [%]",
-			'maxFilesizes'=>"The uploaded file(s) size must be smaller than [%]",
-			'extension'=>"The extension of the file must be: [%]",
-			'extensions'=>"The extension of the file(s) must be: [%]"
+			'fileUploadSizeIni'=>'The size of the uploaded file is too big. See PHP Ini.',
+			'fileUploadSizeForm'=>'The size of the uploaded file is too big. See the form.',
+			'fileUploadPartial'=>'The file upload was partial. Please retry.',
+			'fileUploadSizeEmpty'=>'The uploaded file is empty.',
+			'fileUploadTmpDir'=>'Servor error: no temporary folder.',
+			'fileUploadWrite'=>'Cannot write the uploaded file on the server.',
+			'fileUploadExists'=>'The temporary uploaded file was not found.',
+			'maxFilesize'=>'The uploaded file size must be smaller than [%]',
+			'maxFilesizes'=>'The uploaded file(s) size must be smaller than [%]',
+			'extension'=>'The extension of the file must be: [%]',
+			'extensions'=>'The extension of the file(s) must be: [%]'
 		],
 		
 		// required

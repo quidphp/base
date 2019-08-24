@@ -49,7 +49,7 @@ class Autoload
 		$return = false;
 		
 		if($value === true)
-		$value = ".".static::phpExtension();
+		$value = '.'.static::phpExtension();
 		
 		if(is_array($value))
 		$value = implode(',',$value);
@@ -147,8 +147,8 @@ class Autoload
 			
 			if(is_string($after) && strlen($after))
 			{
-				$after = str_replace("\\","/",$after);
-				$return .= "/".$after;
+				$after = str_replace('\\','/',$after);
+				$return .= '/'.$after;
 			}
 		}
 		
@@ -165,7 +165,7 @@ class Autoload
 		
 		if(is_string($return))
 		{
-			$return .= ".".static::phpExtension();
+			$return .= '.'.static::phpExtension();
 			
 			if($exists === true && !file_exists($return))
 			$return = null;
@@ -290,7 +290,7 @@ class Autoload
 	{
 		foreach ($return as $key => $value) 
 		{
-			if(strtolower($value) === $value && strpos($value,"\\") && substr($value,-5) === 'alias')
+			if(strtolower($value) === $value && strpos($value,'\\') && substr($value,-5) === 'alias')
 			unset($return[$key]);
 		}
 		

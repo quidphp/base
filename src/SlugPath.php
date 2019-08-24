@@ -10,7 +10,7 @@ class SlugPath extends Listing
 		'option'=>[ // tableau d'options
 			'slug'=>null], 
 		'separator'=>[ // les séparateurs de listing, le deuxième index est la version avec espace
-			["/","/"],
+			['/','/'],
 			['-','-']]
 	];
 	

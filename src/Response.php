@@ -13,11 +13,11 @@ class Response extends Root
 		'default'=>[
 			'code'=>200, // code de réponse par défaut
 			'headers'=>[ // header par défaut, le cacheLimiter dans session peut prendre le dessus sur certains de ces défauts
-				"Expires"=>0, // temps d'expiration d'une réponse (maintenant)
-				"Cache-Control"=>'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
-				"Pragma"=>'no-cache',
-				"Connection"=>"keep-alive",
-				"Last-Modified"=>0,
+				'Expires'=>0, // temps d'expiration d'une réponse (maintenant)
+				'Cache-Control'=>'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+				'Pragma'=>'no-cache',
+				'Connection'=>'keep-alive',
+				'Last-Modified'=>0,
 				'X-UA-Compatible'=>'IE=Edge'], // désactive compatibility mode pour IE
 			'headersCallbackSpeed'=>null, // nom du header pour le speed, avant c'était un tableau headersCallback mais ça causait un bug bizarre sur php 7.3
 			'contentType'=>true] // contentType par défaut, si true alors utilise le callback autoContentType
@@ -444,7 +444,7 @@ class Response extends Root
 			if($encode === true)
 			$value = Uri::encodeAll($value);
 			
-			static::setHeader("Location",$value);
+			static::setHeader('Location',$value);
 			
 			if($kill !== false)
 			static::kill($kill);
@@ -650,7 +650,7 @@ class Response extends Root
 		$return = false;
 		$contentType = Header::prepareContentType($value);
 		
-		if(!empty($contentType) && static::setHeader("Content-Type",$contentType) === 1)
+		if(!empty($contentType) && static::setHeader('Content-Type',$contentType) === 1)
 		$return = true;
 		
 		return $return;
@@ -739,7 +739,7 @@ class Response extends Root
 			$name = $option['headersCallbackSpeed'];
 			$return['headersCallbackSpeed'] = static::setHeaderCallback(function() use ($name) {
 				$speed = Debug::speed();
-				$header = $name.": ".$speed;
+				$header = $name.': '.$speed;
 				header($header);
 			});
 		}

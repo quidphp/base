@@ -56,7 +56,7 @@ class Cookie extends Root
 		$option = static::option('unset',$option);
 		
 		if(!empty($option) && !Response::areHeadersSent())
-		$return = setcookie($name,"",$option['expire'],$option['path'],$option['domain'],$option['secure'],$option['httponly']);
+		$return = setcookie($name,'',$option['expire'],$option['path'],$option['domain'],$option['secure'],$option['httponly']);
 		
 		return $return;
 	}

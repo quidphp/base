@@ -70,7 +70,7 @@ class Style extends Listing
 				{
 					$value = Str::cast($value);
 					
-					if($key === 'background-image' && strpos($value,"url(") === false)
+					if($key === 'background-image' && strpos($value,'url(') === false)
 					{
 						$value = static::parseUri($value,$option);
 						if(!empty($value))

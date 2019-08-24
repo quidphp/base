@@ -1642,7 +1642,7 @@ class Str extends Root
 		$return = [];
 		$i = 0;
 		
-		foreach (explode(" ",$str) as $v) 
+		foreach (explode(' ',$str) as $v) 
 		{
 			$oriLen = static::len($v,$mb);
 			$v = static::removeWhiteSpace($v);
@@ -1672,7 +1672,7 @@ class Str extends Root
 	{
 		$return = [];
 		$value = static::removeWhiteSpace($value);
-		$return = static::explode(" ",$value,$limit,$trim,$clean);
+		$return = static::explode(' ',$value,$limit,$trim,$clean);
 		
 		return $return;
 	}
@@ -2478,7 +2478,7 @@ class Str extends Root
 		{
 			$from = ['À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ'];
 			
-			$return = str_replace($from,"",$return);
+			$return = str_replace($from,'',$return);
 		}
 
 		return $return;
@@ -2491,9 +2491,9 @@ class Str extends Root
 	// ces caractères invisibles proviennent parfois d'une copie de Microsoft Word
 	public static function fixUnicode(string $return):string
 	{
-		$return .= "....";
+		$return .= '....';
 		
-		$return = iconv("UTF-8", "UTF-8//IGNORE", $return);
+		$return = iconv('UTF-8', 'UTF-8//IGNORE', $return);
 		$return = substr($return,0,-4);
 		$return = preg_replace('/[\x{0092}]/u','',$return);
 		
@@ -2623,7 +2623,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlpha(string $value,string $keep=''):string
 	{
-		return preg_replace("/[^A-Za-z]/", '', $value);
+		return preg_replace('/[^A-Za-z]/', '', $value);
 	}
 
 
@@ -2661,7 +2661,7 @@ class Str extends Root
 		if($replaceAccent === true)
 		$return = static::replaceAccent($return);
 		
-		$return = preg_replace("/[^\x01-\x7F]/","",$return);
+		$return = preg_replace("/[^\x01-\x7F]/",'',$return);
 		
 		return $return;
 	}
@@ -2707,7 +2707,7 @@ class Str extends Root
 	// fonction pour nettoyer une string (trim, remplace accent, garde alphanumeric et espace)
 	public static function cleanKeepSpace(string $return):string
 	{
-		return static::clean($return," ");
+		return static::clean($return,' ');
 	}
 	
 	
@@ -2716,7 +2716,7 @@ class Str extends Root
 	// remplace _ par espace, cleanKeepSpace, lower, capitalizeTitle et trim
 	public static function def(string $return,string $keep=''):string
 	{
-		$return = static::replace(["_"=>" "],$return);
+		$return = static::replace(['_'=>' '],$return);
 		$return = static::cleanKeepSpace($return,$keep);
 		$return = strtolower($return);
 		$return = ucfirst($return);
@@ -2823,7 +2823,7 @@ class Str extends Root
 		$suffix = $option['suffix'];
 		$sliced = static::wordTotalLength($length,$value,$mb);
 		
-		$rtrim = ".,:;";
+		$rtrim = '.,:;';
 		$rtrim .= (!empty($option['rtrim']) && is_string($option['rtrim']))? $option['rtrim']:'';
 		$sliced = static::trimRight($sliced,$rtrim);
 		

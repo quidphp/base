@@ -18,17 +18,17 @@ class Html extends Root
 		'alias'=>[ // alias de tag
 			'anchor'=>'a'], 
 		'wrap'=>[ // liste de wrap
-			'divele'=>["<div class='element'>","</div>"],
-			'divtable'=>["<div class='table'><div class='table-row'><div class='table-cell'>","</div></div></div>"],
-			'ie8'=>["<!--[if lte IE 8>","<![endif]-->"]],
+			'divele'=>["<div class='element'>",'</div>'],
+			'divtable'=>["<div class='table'><div class='table-row'><div class='table-cell'>",'</div></div></div>'],
+			'ie8'=>['<!--[if lte IE 8>','<![endif]-->']],
 		'formWrap'=>[ // liste de wrap pour form avec replace
-			'default'=>"%label%%form%",
-			'reverse'=>"%form%%label%",
-			'br'=>"%label%<br/>%form%",
-			'table'=>"<table><tr><td>%label%</td><td>%form%</td></tr></table>",
+			'default'=>'%label%%form%',
+			'reverse'=>'%form%%label%',
+			'br'=>'%label%<br/>%form%',
+			'table'=>'<table><tr><td>%label%</td><td>%form%</td></tr></table>',
 			'divtable'=>"<div class='table'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
 			'divtableClass'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
-			'div'=>"<div>%label%</div><div>%form%</div>"],
+			'div'=>'<div>%label%</div><div>%form%</div>'],
 		'static'=>[ // terme accepté pour callStatic
 			'special'=>['cond','many','or','loop'],
 			'openClose'=>['open','close','op','cl']],
@@ -235,7 +235,7 @@ class Html extends Root
 		{
 			$value = trim($value);
 			
-			if(Str::isStart("<",$value) && !Str::isStart("<?xml",$value))
+			if(Str::isStart('<',$value) && !Str::isStart('<?xml',$value))
 			$return = true;
 		}
 
@@ -1196,7 +1196,7 @@ class Html extends Root
 		$return = '';
 		$tags = (array) $tags;
 		
-		if(count($tags) > 1 && method_exists(static::class,($method = implode('',$tags)."Open")))
+		if(count($tags) > 1 && method_exists(static::class,($method = implode('',$tags).'Open')))
 		$return = static::$method(...$arg);
 		
 		elseif(!empty($tags))
@@ -1208,7 +1208,7 @@ class Html extends Root
 				
 				if(!empty($tag))
 				{
-					$method = $tag."Open";
+					$method = $tag.'Open';
 					
 					if(method_exists(static::class,$method))
 					{
@@ -1288,7 +1288,7 @@ class Html extends Root
 		$return = '';
 		$tags = (array) $tags;
 		
-		if(count($tags) > 1 && method_exists(static::class,($method = implode('',$tags)."Close")))
+		if(count($tags) > 1 && method_exists(static::class,($method = implode('',$tags).'Close')))
 		$return = static::$method($option);
 		
 		elseif(!empty($tags))
@@ -1304,7 +1304,7 @@ class Html extends Root
 				
 				if(!empty($tag))
 				{
-					$method = $tag."Close";
+					$method = $tag.'Close';
 					
 					if(method_exists(static::class,$method))
 					$return .= static::$method($option);
@@ -2031,15 +2031,15 @@ class Html extends Root
 				
 				$attrStr = Attr::str($attr,$optionAttr);
 				if(!empty($attrStr))
-				$attrStr = " ".$attrStr;
+				$attrStr = ' '.$attrStr;
 			}
 			
 			if(static::isSelfClosing($tag))
-			$return = "<$tag".$attrStr."/>";
+			$return = "<$tag".$attrStr.'/>';
 			
 			else
 			{
-				$return = "<$tag".$attrStr.">";
+				$return = "<$tag".$attrStr.'>';
 				
 				if(empty($valueAttr))
 				{
@@ -3057,7 +3057,7 @@ class Html extends Root
 	// génère le doctype
 	public static function doctype():string
 	{
-		return "<!DOCTYPE html>";
+		return '<!DOCTYPE html>';
 	}
 	
 	
@@ -3076,7 +3076,7 @@ class Html extends Root
 		$return = "<!--[if $type IE $version]>";
 		
 		if($all === true)
-		$return .= "<!-->";
+		$return .= '<!-->';
 		
 		return $return;;
 	}
@@ -3089,9 +3089,9 @@ class Html extends Root
 		$return = '';
 		
 		if($all === true)
-		$return .= "<!--";
+		$return .= '<!--';
 		
-		$return .= "<![endif]-->";
+		$return .= '<![endif]-->';
 		
 		return $return;;
 	}

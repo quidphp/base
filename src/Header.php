@@ -12,7 +12,7 @@ class Header extends Listing
 			'caseImplode'=>[self::class,'keyCase']], // les clés sont ramenés dans cette case lors du implode
 		'separator'=>[ // les séparateurs de header
 			["\r\n","\r\n"],
-			[":",": "],
+			[':',': '],
 			[';']], // séparateur pour content-type
 		'sensitive'=>false, // la classe est sensible ou non à la case
 		'status'=>'status' // clé réservé pour header status
@@ -23,7 +23,7 @@ class Header extends Listing
 	// retourne vrai si la string header est une entrée status
 	public static function isStatus($value):bool 
 	{
-		return (is_string($value) && stripos($value,"HTTP/") === 0)? true:false;
+		return (is_string($value) && stripos($value,'HTTP/') === 0)? true:false;
 	}
 	
 	
@@ -311,7 +311,7 @@ class Header extends Listing
 			{
 				if(is_string($v) && static::isStatus($v))
 				{
-					$explode = Str::explodeTrim(" ",$v,3);
+					$explode = Str::explodeTrim(' ',$v,3);
 					
 					if(count($explode) >= 2 && is_numeric($explode[1]))
 					{
@@ -472,12 +472,12 @@ class Header extends Listing
 		{
 			$return = Mime::fromExtension($value) ?? $value;
 			
-			if($charset === true && Str::isStart("text",$return) && strpos($return,"charset") === false)
+			if($charset === true && Str::isStart('text',$return) && strpos($return,'charset') === false)
 			{
 				$charset = Encoding::getCharset();
 				$separator = static::getSeparator(2);
 				if(!empty($separator))
-				$return .= $separator." charset=".$charset;
+				$return .= $separator.' charset='.$charset;
 			}
 		}
 		
@@ -602,7 +602,7 @@ class Header extends Listing
 		$return = null;
 		
 		if(Arr::keysAre(['protocol','code','text'],$value) && is_int($value['code']) && is_string($value['text']))
-		$return = $value['protocol']." ".$value['code']." ".$value['text'];
+		$return = $value['protocol'].' '.$value['code'].' '.$value['text'];
 		
 		return $return;
 	}
@@ -616,7 +616,7 @@ class Header extends Listing
 	// si parse est true, parse devient 0 (garde le charset)
 	public static function contentType(array $header,$parse=1):?string
 	{
-		$return = static::get("Content-Type",$header);
+		$return = static::get('Content-Type',$header);
 		
 		if(is_array($return))
 		$return = current($return);
@@ -643,7 +643,7 @@ class Header extends Listing
 	public static function contentLength(array $header):?int
 	{
 		$return = null;
-		$contentLength = static::get("Content-Length",$header);
+		$contentLength = static::get('Content-Length',$header);
 		
 		if(is_numeric($contentLength))
 		$return = (int) $contentLength;
@@ -657,7 +657,7 @@ class Header extends Listing
 	// retourne un tableau header assoc
 	public static function setContentType(string $value,array $return=[]):array
 	{
-		return static::set("Content-Type",static::prepareContentType($value),$return);
+		return static::set('Content-Type',static::prepareContentType($value),$return);
 	}
 	
 	
@@ -675,7 +675,7 @@ class Header extends Listing
 			elseif(is_numeric($value))
 			{
 				$value = Str::cast($value);
-				$status['protocol'] = "HTTP/".$value;
+				$status['protocol'] = 'HTTP/'.$value;
 			}
 			
 			if(!empty($status['protocol']))
@@ -778,7 +778,7 @@ class Header extends Listing
 	public static function redirect(string $value,$code=null,array $return=[]):array
 	{
 		$return = static::moved($code,$return);
-		$return = static::set("Location",$value,$return);
+		$return = static::set('Location',$value,$return);
 		
 		return $return;
 	}
@@ -792,10 +792,10 @@ class Header extends Listing
 		{
 			$return = static::setContentType($value['mime'],$return);
 			$return = static::sets([
-				"Content-Transfer-Encoding"=>"binary",
-				"Content-Description"=>"File Transfer",
-				"Content-Length"=>$value['size'],
-				"Content-Disposition"=>'attachment; filename="'.$value['basename'].'"'
+				'Content-Transfer-Encoding'=>'binary',
+				'Content-Description'=>'File Transfer',
+				'Content-Length'=>$value['size'],
+				'Content-Disposition'=>'attachment; filename="'.$value['basename'].'"'
 			],$return);
 		}
 		
@@ -811,8 +811,8 @@ class Header extends Listing
 		{
 			$return = static::setContentType($value['mime'],$return);
 			$return = static::sets([
-				"Content-Length"=>$value['size'],
-				"Content-Disposition"=>'inline; filename="'.$value['basename'].'"'
+				'Content-Length'=>$value['size'],
+				'Content-Disposition'=>'inline; filename="'.$value['basename'].'"'
 			],$return);
 		}
 		

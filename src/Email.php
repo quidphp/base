@@ -81,7 +81,7 @@ class Email extends Root
 		
 		if(static::is($value))
 		{
-			$explode = explode("@",$value);
+			$explode = explode('@',$value);
 			if(count($explode) === 2)
 			$return = ['name'=>$explode[0],'host'=>$explode[1]];
 		}
@@ -305,7 +305,7 @@ class Email extends Root
 				if(!empty($string))
 				{
 					if(!empty($return))
-					$return .= ", ";
+					$return .= ', ';
 					
 					$return .= $string;
 					
@@ -421,7 +421,7 @@ class Email extends Root
 		$return = trim($email);
 		
 		if(is_string($name))
-		$return = trim($name)." <".$return.">";
+		$return = trim($name).' <'.$return.'>';
 
 		return $return;
 	}
@@ -431,7 +431,7 @@ class Email extends Root
 	// retourne le header xmailer
 	public static function xmailer():string 
 	{
-		return 'PHP/'.Server::phpVersion()."|QUID/".Server::quidVersion();
+		return 'PHP/'.Server::phpVersion().'|QUID/'.Server::quidVersion();
 	}
 	
 	

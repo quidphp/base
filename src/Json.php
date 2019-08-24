@@ -119,9 +119,9 @@ class Json extends Assoc
 	public static function var(string $var,string $value):string
 	{
 		$return = $var;
-		$return .= " = ";
+		$return .= ' = ';
 		$return .= $value;
-		$return .= ";";
+		$return .= ';';
 		
 		return $return;
 	}

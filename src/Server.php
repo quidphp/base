@@ -58,7 +58,7 @@ class Server extends Root
 	// retourne vrai si le serveur est sur apache
 	public static function isApache():bool 
 	{
-		return (strpos(static::software(),"Apache") !== false)? true:false;
+		return (strpos(static::software(),'Apache') !== false)? true:false;
 	}
 	
 	
@@ -66,7 +66,7 @@ class Server extends Root
 	// retourne vrai si le serveur est sur iis
 	public static function isIis():bool 
 	{
-		return (strpos(static::software(),"IIS") !== false)? true:false;
+		return (strpos(static::software(),'IIS') !== false)? true:false;
 	}
 	
 	
@@ -357,7 +357,7 @@ class Server extends Root
 		$return = static::sysname();
 		
 		if($release === true)
-		$return .= " ".static::release();
+		$return .= ' '.static::release();
 		
 		return $return;
 	}

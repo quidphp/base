@@ -357,7 +357,7 @@ class Session extends Root
 		{
 			$return = static::$config['type'] ?? null;
 			if(is_string($return))
-			$return .= "-";
+			$return .= '-';
 		}
 		
 		return $return;
