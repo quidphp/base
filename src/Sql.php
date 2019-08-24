@@ -6,7 +6,8 @@ namespace Quid\Base;
 class Sql extends Root
 {
 	// trait
-	use _option, _shortcut;
+	use _option;
+	use _shortcut;
 
 
 	// config
