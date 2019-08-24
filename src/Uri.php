@@ -692,7 +692,7 @@ class Uri extends Root
 		$return['pathinfo'] = ['dirname'=>null,'basename'=>null,'filename'=>null,'extension'=>null];
 		
 		// scheme
-		if(!empty($parse['scheme']) && $parse['scheme']==='https')
+		if(!empty($parse['scheme']) && $parse['scheme'] === 'https')
 		$return['ssl'] = true;
 		
 		// host
@@ -972,7 +972,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::change($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -986,7 +986,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::keep($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1000,7 +1000,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::remove($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1022,7 +1022,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::addDirname($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1036,7 +1036,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::changeDirname($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1050,7 +1050,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::removeDirname($path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1072,7 +1072,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::addBasename($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1086,7 +1086,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::changeBasename($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1100,7 +1100,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::removeBasename($path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1122,7 +1122,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::addFilename($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1136,7 +1136,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::changeFilename($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1150,7 +1150,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::removeFilename($path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1172,7 +1172,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::addExtension($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1186,7 +1186,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::changeExtension($change,$path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1200,7 +1200,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::removeExtension($path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1213,7 +1213,7 @@ class Uri extends Root
 	// ne vérifie pas l'existence du fichier
 	public static function mime(string $uri,bool $decode=false):?string 
 	{
-		return Path::mime(static::path($uri,$decode)?? '');
+		return Path::mime(static::path($uri,$decode) ?? '');
 	}
 	
 	
@@ -1225,7 +1225,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::addLang($change,$path) ?? '';
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1240,7 +1240,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::changeLang($change,$path) ?? '';
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1255,7 +1255,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::removeLang($path);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1270,7 +1270,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri)?? '';
+		$path = static::path($uri) ?? '';
 		$path = Path::prepend($path,...$values);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1285,7 +1285,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri)?? '';
+		$path = static::path($uri) ?? '';
 		$path = Path::append($path,...$values);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1297,7 +1297,7 @@ class Uri extends Root
 	// explode un path
 	public static function pathExplode(string $uri,bool $decode=false):array
 	{
-		return Path::arr(static::path($uri,$decode)?? '');
+		return Path::arr(static::path($uri,$decode) ?? '');
 	}
 	
 	
@@ -1305,7 +1305,7 @@ class Uri extends Root
 	// retourne un index du path
 	public static function pathGet(int $index,string $uri,bool $decode=false):?string
 	{
-		return Path::get($index,static::path($uri,$decode)?? '');
+		return Path::get($index,static::path($uri,$decode) ?? '');
 	}
 	
 	
@@ -1313,7 +1313,7 @@ class Uri extends Root
 	// count le nombre de niveau dans le path
 	public static function pathCount(string $uri,bool $decode=false):int
 	{
-		return Path::count(static::path($uri,$decode)?? '');
+		return Path::count(static::path($uri,$decode) ?? '');
 	}
 	
 	
@@ -1321,7 +1321,7 @@ class Uri extends Root
 	// tranche des slices d'un path en utilisant offset et length
 	public static function pathSlice(int $offset,?int $length,string $uri,bool $decode=false):array
 	{
-		return Path::slice($offset,$length,static::path($uri,$decode)?? '');
+		return Path::slice($offset,$length,static::path($uri,$decode) ?? '');
 	}
 	
 	
@@ -1331,7 +1331,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::splice($offset,$length,$path,$replace);
 		$return = static::change(['path'=>$path],$uri);
 		
@@ -1345,7 +1345,7 @@ class Uri extends Root
 	{
 		$return = '';
 		
-		$path = static::path($uri,$decode)?? '';
+		$path = static::path($uri,$decode) ?? '';
 		$path = Path::insert($offset,$replace,$path);
 		$return = static::change(['path'=>$path],$uri);
 		

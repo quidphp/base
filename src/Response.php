@@ -174,8 +174,8 @@ class Response extends Root
 		
 		if(is_int($value))
 		{
-			$from = (int) (floor($value/100) * 100);
-			$to = ($from+99);
+			$from = (int) (floor($value / 100) * 100);
+			$to = ($from + 99);
 			$return = static::isCodeBetween($from,$to,$code);
 		}
 		

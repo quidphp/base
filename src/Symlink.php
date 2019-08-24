@@ -119,7 +119,7 @@ class Symlink extends Finder
 		$mode = static::statValue('mode',$path);
 
 		if(is_int($mode))
-		$return = ($format===true)? static::formatValue('permission',$mode):$mode;
+		$return = ($format === true)? static::formatValue('permission',$mode):$mode;
 		
 		return $return;
 	}
@@ -133,7 +133,7 @@ class Symlink extends Finder
 		$owner = static::statValue('uid',$path);
 		
 		if(is_int($owner))
-		$return = ($format===true)? static::formatValue('owner',$owner):$owner;
+		$return = ($format === true)? static::formatValue('owner',$owner):$owner;
 		
 		return $return;
 	}
@@ -161,7 +161,7 @@ class Symlink extends Finder
 		$group = static::statValue('gid',$path);
 		
 		if(is_int($group))
-		$return = ($format===true)? static::formatValue('group',$group):$group;
+		$return = ($format === true)? static::formatValue('group',$group):$group;
 		
 		return $return;
 	}
@@ -189,7 +189,7 @@ class Symlink extends Finder
 		$size = static::statValue('size',$path);
 		
 		if(is_int($size))
-		$return = ($format===true)? static::formatValue('size',$size):$size;
+		$return = ($format === true)? static::formatValue('size',$size):$size;
 		
 		return $return;
 	}
@@ -203,7 +203,7 @@ class Symlink extends Finder
 		$atime = static::statValue('atime',$path);
 		
 		if(is_int($atime))
-		$return = ($format===true)? static::formatValue('dateAccess',$atime):$atime;
+		$return = ($format === true)? static::formatValue('dateAccess',$atime):$atime;
 		
 		return $return;
 	}
@@ -217,7 +217,7 @@ class Symlink extends Finder
 		$mtime = static::statValue('mtime',$path);
 		
 		if(is_int($mtime))
-		$return = ($format===true)? static::formatValue('dateModify',$mtime):$mtime;
+		$return = ($format === true)? static::formatValue('dateModify',$mtime):$mtime;
 		
 		return $return;
 	}
@@ -231,7 +231,7 @@ class Symlink extends Finder
 		$ctime = static::statValue('ctime',$path);
 		
 		if(is_int($ctime))
-		$return = ($format===true)? static::formatValue('dateInodeModify',$ctime):$ctime;
+		$return = ($format === true)? static::formatValue('dateInodeModify',$ctime):$ctime;
 		
 		return $return;
 	}

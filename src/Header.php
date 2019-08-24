@@ -174,8 +174,8 @@ class Header extends Listing
 		
 		if(is_int($value))
 		{
-			$from = (int) (floor($value/100) * 100);
-			$to = ($from+99);
+			$from = (int) (floor($value / 100) * 100);
+			$to = ($from + 99);
 			$return = static::isCodeBetween($from,$to,$header);
 		}
 		
@@ -342,7 +342,7 @@ class Header extends Listing
 		{
 			$return = $explode[0];
 			
-			if($mime===true)
+			if($mime === true)
 			$return = Mime::toExtension($explode[0]) ?? $explode[0];
 		}
 		

@@ -496,7 +496,7 @@ class Dir extends Finder
 		$return = null;
 		$gets = static::getFormatSort($path,$format,$sort,$dig,$option);
 		if(is_array($gets))
-		$return = Arr::unsetBeforeCount(($skip+1),$gets);
+		$return = Arr::unsetBeforeCount(($skip + 1),$gets);
 		
 		return $return;
 	}

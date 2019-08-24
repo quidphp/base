@@ -184,7 +184,7 @@ class Debug extends Root
 	{   
 		$return = print_r($value,true);
 
-		if($wrap===true)
+		if($wrap === true)
 		$return = "<pre>$return</pre>";
 
 		return $return;
@@ -303,7 +303,7 @@ class Debug extends Root
 	// shift permet d'enlever un nombre d'entrée au début du tableau
 	public static function trace(bool $showArgs=false,int $shift=0):array
 	{
-		$option = ($showArgs===true)? 0:DEBUG_BACKTRACE_IGNORE_ARGS;
+		$option = ($showArgs === true)? 0:DEBUG_BACKTRACE_IGNORE_ARGS;
 		$return = debug_backtrace($option);
 		Arr::shift($return,$shift);
 		
@@ -484,7 +484,7 @@ class Debug extends Root
 		$value = (is_numeric($value))? $value:Date::getMicrotime();
 
 		if(is_numeric($value))
-		$return = Number::round((Date::microtime()-$value),$round);
+		$return = Number::round((Date::microtime() - $value),$round);
 
 		return $return;
 	}

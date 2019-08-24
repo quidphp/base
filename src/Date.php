@@ -1264,7 +1264,7 @@ class Date extends Root
 					$return .= ' '.$str['and'];
 					
 					$return .= (!empty($return))? ' ':'';
-					$return .= (string)  $value;
+					$return .= (string) $value;
 					$return .= ' ';
 					$return .= Str::plural($value,$str[$key]);
 				}

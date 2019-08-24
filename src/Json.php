@@ -8,8 +8,8 @@ class Json extends Assoc
 	// config
 	public static $config = [
 		'option'=>[ // tableau d'options
-			'encode'=>JSON_INVALID_UTF8_IGNORE|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES, // flag encode
-			'decode'=>JSON_INVALID_UTF8_IGNORE|JSON_BIGINT_AS_STRING, // flag decode
+			'encode'=>JSON_INVALID_UTF8_IGNORE | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES, // flag encode
+			'decode'=>JSON_INVALID_UTF8_IGNORE | JSON_BIGINT_AS_STRING, // flag decode
 			'depth'=>512, // depth pour encode et decode
 			'assoc'=>true, // option assoc pour decode
 			'case'=>null, // les clés sont ramenés dans cette case dans arr
@@ -65,7 +65,7 @@ class Json extends Assoc
 	{
 		$return = null;
 		$option = static::option();
-		$flag = $option['encode']|$flag;
+		$flag = $option['encode'] | $flag;
 		$return = static::encode($value,$flag,$depth);
 		
 		return $return;		
@@ -79,7 +79,7 @@ class Json extends Assoc
 	{
 		$return = null;
 		$option = static::option();
-		$flag = $option['encode']|JSON_PRETTY_PRINT;
+		$flag = $option['encode'] | JSON_PRETTY_PRINT;
 		$return = static::encode($value,$flag,$depth);
 		
 		return $return;		

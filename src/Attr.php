@@ -356,7 +356,7 @@ class Attr extends Listing
 					elseif(in_array($key,static::$config['mirror'],true) && $value === true)
 					$value = $key;
 					
-					if(is_string($key) && !empty($key) && $value !==null)
+					if(is_string($key) && !empty($key) && $value !== null)
 					$return = static::parseMerge([$key=>$value],$return);
 				}
 			}
@@ -603,7 +603,7 @@ class Attr extends Listing
 	{
 		foreach ($array as $key => $value) 
 		{
-			if(is_string($key) && !empty($key) && $value !==null)
+			if(is_string($key) && !empty($key) && $value !== null)
 			{
 				if(($key === 'class' || $key === 'style') && array_key_exists($key,$return) && is_array($value) && is_array($return[$key]))
 				{

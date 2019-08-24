@@ -153,22 +153,22 @@ class Boolean extends Root
 	{
 		$return = null;
 		
-		if($value===true)
+		if($value === true)
 		$return = false;
 		
-		elseif($value===false)
+		elseif($value === false)
 		$return = true;
 		
-		elseif($value===1)
+		elseif($value === 1)
 		$return = 0;
 		
-		elseif($value===0)
+		elseif($value === 0)
 		$return = 1;
 		
-		elseif($value==='1')
+		elseif($value === '1')
 		$return = '0';
 		
-		elseif($value==='0')
+		elseif($value === '0')
 		$return = '1';
 		
 		return $return;

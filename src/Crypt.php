@@ -78,7 +78,7 @@ class Crypt extends Root
 		
 		if(is_int($length) && $length > 4)
 		{
-			$return = static::randomString($length-2,'alpha');
+			$return = static::randomString($length - 2,'alpha');
 			$return .= (string) static::randomInt(2);
 		}
 
@@ -256,7 +256,7 @@ class Crypt extends Root
 			
 			if($count > 0)
 			{
-				$max = $count-1;
+				$max = $count - 1;
 				
 				$index = random_int(0,$max);
 				$key = $keys[$index];

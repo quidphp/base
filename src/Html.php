@@ -9,10 +9,10 @@ class Html extends Root
 	public static $config = [
 		'default'=>'specialChars', // méthode par défaut pour encode/décode
 		'entities'=>[ // pour htmlentities
-			'flag'=>ENT_QUOTES|ENT_SUBSTITUTE, // flag utilisé par la fonction
+			'flag'=>ENT_QUOTES | ENT_SUBSTITUTE, // flag utilisé par la fonction
 			'doubleEncode'=>true], // active ou non le double encodage
 		'specialChars'=>[ // pour specialchars
-			'flag'=>ENT_QUOTES|ENT_HTML5|ENT_SUBSTITUTE, // flag utilisé par la fonction
+			'flag'=>ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE, // flag utilisé par la fonction
 			'doubleEncode'=>true], // active ou non le double encodage
 		'excerptSuffix'=>"<span class='excerptSuffix'>...</span>", // suffix utilisé par excerpt
 		'alias'=>[ // alias de tag
@@ -1137,8 +1137,8 @@ class Html extends Root
 			if($pos !== false)
 			{
 				$return = [];
-				$return[] = substr($value,0,($pos+$key-1));
-				$return[] = substr($value,($pos+$key));
+				$return[] = substr($value,0,($pos + $key - 1));
+				$return[] = substr($value,($pos + $key));
 				
 				break;
 			}
