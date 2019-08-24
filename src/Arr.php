@@ -472,7 +472,8 @@ class Arr extends Root
 	public static function plus(...$values):array
 	{
 		if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
-		return $values[0];
+		$return = $values[0];
+		
 		else
 		{
 			$return = [];
@@ -485,9 +486,9 @@ class Arr extends Root
 				
 				$return = (array) $v + $return;
 			}
-
-			return $return;
 		}
+		
+		return $return;
 	}
 	
 	
@@ -507,12 +508,15 @@ class Arr extends Root
 	public static function replace(...$values):array 
 	{
 		if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
-		return $values[0];
+		$return = $values[0];
+		
 		else
 		{
 			static::typecast(...$values);
-			return array_replace(...$values);
+			$return = array_replace(...$values);
 		}
+		
+		return $return;
 	}
 	
 	
