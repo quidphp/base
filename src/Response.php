@@ -1020,7 +1020,7 @@ class Response extends Root
 	// méthode protégé
 	protected static function closeDownBody(string $type):void
 	{
-		if(in_array($type,['closeDown','closeBody',true]))
+		if(in_array($type,['closeDown','closeBody'],true))
 		{
 			foreach (static::$config[$type] as $key => $callback)
 			{

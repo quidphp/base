@@ -1607,7 +1607,7 @@ class Html extends Root
 		{
 			if(array_key_exists('type',$return))
 			{
-				if(in_array($return['type'],['hidden','file']) && array_key_exists('maxlength',$return))
+				if(in_array($return['type'],['hidden','file'],true) && array_key_exists('maxlength',$return))
 				unset($return['maxlength']);
 
 				if($return['type'] === 'image')

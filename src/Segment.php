@@ -116,7 +116,7 @@ class Segment extends Root
 	// ajoute le caractère d'escape si la valeur est dans le tableau config:escape
 	public static function escape(string $return):string
 	{
-		if(in_array($return,static::$config['escape']))
+		if(in_array($return,static::$config['escape'],true))
 		$return = '\\'.$return;
 
 		return $return;

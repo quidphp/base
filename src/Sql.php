@@ -2294,7 +2294,7 @@ class Sql extends Root
 			if(is_string($k))
 			$return[] = [$k,$v];
 
-			elseif(is_numeric($k) && is_array($v) && in_array(count($v),[2,3,4]))
+			elseif(is_numeric($k) && is_array($v) && in_array(count($v),[2,3,4],true))
 			$return[] = array_values($v);
 		}
 
