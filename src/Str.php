@@ -374,7 +374,7 @@ class Str extends Root
 		if(!is_numeric($return))
 		$return = (float) $return;
 		
-		return $return; 
+		return $return;
 	}
 	
 	
@@ -387,7 +387,7 @@ class Str extends Root
 		$number = Number::cast($value);
 		$return = (int) $number;
 		
-		return $return; 
+		return $return;
 	}
 	
 	
@@ -401,7 +401,7 @@ class Str extends Root
 		$number = Number::cast($value,$extra);
 		$return = (float) $number;
 		
-		return $return; 
+		return $return;
 	}
 	
 	
@@ -729,7 +729,7 @@ class Str extends Root
 			$return = substr($value,$offset,$length);
 		}
 		
-		return $return;		
+		return $return;
 	}
 
 	
@@ -770,7 +770,7 @@ class Str extends Root
 			$return = substr($value,$offset,$length);
 		}
 		
-		return $return;		
+		return $return;
 	}
 	
 	
@@ -1335,7 +1335,7 @@ class Str extends Root
 		else
 		$return = ucfirst(strtolower($value));
 
-		return $return;		
+		return $return;
 	}
 	
 	
@@ -1351,7 +1351,7 @@ class Str extends Root
 		else
 		$return = ucwords(strtolower($value));
 
-		return $return;		
+		return $return;
 	}
 	
 
@@ -2153,7 +2153,7 @@ class Str extends Root
 	// transforme les single quotes en double quotes
 	public static function singleToDoubleQuote(string $return):string
 	{
-		return str_replace("'",'"',$return);	
+		return str_replace("'",'"',$return);
 	}
 	
 	
@@ -2632,7 +2632,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlphanumeric(string $value,string $keep=''):string
 	{
-		return preg_replace("/[^A-Za-z0-9$keep]/", '', $value);	
+		return preg_replace("/[^A-Za-z0-9$keep]/", '', $value);
 	}
 	
 	
@@ -2641,7 +2641,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlphanumericPlus(string $value,string $keep=''):string
 	{
-		return preg_replace("/[^A-Za-z0-9_\-\.\@$keep]/", '', $value);	
+		return preg_replace("/[^A-Za-z0-9_\-\.\@$keep]/", '', $value);
 	}
 	
 	
@@ -2650,7 +2650,7 @@ class Str extends Root
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlphanumericPlusSpace(string $value,string $keep=''):string
 	{
-		return preg_replace("/[^A-Za-z0-9_\-\.\@ $keep]/", '', $value);	
+		return preg_replace("/[^A-Za-z0-9_\-\.\@ $keep]/", '', $value);
 	}
 
 
@@ -2806,7 +2806,7 @@ class Str extends Root
 		if(!empty($option['trim']))
 		$return = trim($return);
 		
-		return $return;                     
+		return $return;
 	}
 	
 	

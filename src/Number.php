@@ -615,7 +615,7 @@ class Number extends Root
 	// retourne pi, peut être arrondi
 	public static function pi(?int $round=null):float 
 	{
-		$return = pi();
+		$return = M_PI;
 		
 		if(is_int($round))
 		$return = static::round($return,$round);

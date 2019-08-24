@@ -473,7 +473,6 @@ class Arr extends Root
 	{
 		if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
 		return $values[0];
-		
 		else
 		{
 			$return = [];
@@ -509,7 +508,6 @@ class Arr extends Root
 	{
 		if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
 		return $values[0];
-		
 		else
 		{
 			static::typecast(...$values);
@@ -3734,7 +3732,6 @@ class Arr extends Root
 		}
 		
 		return $return;
-		
 	}
 	
 	

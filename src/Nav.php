@@ -578,7 +578,7 @@ class Nav extends Root
 			$return['index'] = $index;
 			$return['position'] = ($index + 1);
 			$return['total'] = count($nav);
-			$return['page'] = static::specificPage($specific,$nav,$limit);;
+			$return['page'] = static::specificPage($specific,$nav,$limit);
 			
 			$return['first'] = ($first !== $specific && $first !== $prev)? $first:null;
 			$return['prev'] = $prev;

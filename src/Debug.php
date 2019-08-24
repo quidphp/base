@@ -293,7 +293,7 @@ class Debug extends Root
 		if(is_file($value))
 		$return = php_strip_whitespace($value);
 		
-		return $return; 
+		return $return;
 	}
 	
 	

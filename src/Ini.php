@@ -208,7 +208,7 @@ class Ini extends Root
 		else
 		$return = ini_get_all(null,$details);
 		
-		return $return; 
+		return $return;
 	}
 	
 	

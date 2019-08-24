@@ -54,7 +54,7 @@ class Json extends Assoc
 		$depth = ($depth === null)? $option['depth']:$depth;
 		$return = json_encode($value,$flag,$depth);
 		
-		return $return;		
+		return $return;
 	}
 	
 	
@@ -68,7 +68,7 @@ class Json extends Assoc
 		$flag = $option['encode'] | $flag;
 		$return = static::encode($value,$flag,$depth);
 		
-		return $return;		
+		return $return;
 	}
 	
 	
@@ -82,7 +82,7 @@ class Json extends Assoc
 		$flag = $option['encode'] | JSON_PRETTY_PRINT;
 		$return = static::encode($value,$flag,$depth);
 		
-		return $return;		
+		return $return;
 	}
 	
 	
