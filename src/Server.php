@@ -266,7 +266,7 @@ class Server extends Root
 		$return = phpversion($extension);
 		
 		else
-		$return = phpversion();
+		$return = PHP_VERSION;
 		
 		return $return;
 	}
@@ -489,7 +489,7 @@ class Server extends Root
 	// retourne le nom de l'interface de liaison entre le serveur et php
 	public static function sapi():string
 	{
-		return php_sapi_name();
+		return PHP_SAPI;
 	}
 	
 	

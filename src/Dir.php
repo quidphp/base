@@ -817,7 +817,7 @@ class Dir extends Finder
 			$return = Number::sizeFormat($return);
 		}
 		
-		return $return;		
+		return $return;
 	}
 	
 	

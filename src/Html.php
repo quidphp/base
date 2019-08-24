@@ -3078,7 +3078,7 @@ class Html extends Root
 		if($all === true)
 		$return .= '<!-->';
 		
-		return $return;;
+		return $return;
 	}
 	
 	
@@ -3093,7 +3093,7 @@ class Html extends Root
 		
 		$return .= '<![endif]-->';
 		
-		return $return;;
+		return $return;
 	}
 	
 	

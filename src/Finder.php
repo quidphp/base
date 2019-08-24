@@ -453,7 +453,7 @@ class Finder extends Root
 			$return = $type;
 		}
 		
-		return $return;		
+		return $return;
 	}
 	
 	

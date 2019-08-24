@@ -33,7 +33,7 @@ class Slug extends Set
 	// keep permet de garder des caractères supplémentaires
 	public static function keepAlphanumeric(string $value,string $keep=''):string
 	{
-		return preg_replace("/[^A-Za-z0-9_\-$keep]/", '', $value);	
+		return preg_replace("/[^A-Za-z0-9_\-$keep]/", '', $value);
 	}
 	
 	
