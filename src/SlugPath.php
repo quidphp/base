@@ -13,28 +13,28 @@ class SlugPath extends Listing
 			['/','/'],
 			['-','-']]
 	];
-	
-	
+
+
 	// is
 	// retourne vrai si la valeur est un slugPath
 	public static function is($value):bool
 	{
 		return (is_string($value) && Validate::regex('alphanumericSlugPath',$value))? true:false;
 	}
-	
-	
+
+
 	// parse
 	// parse un tableau pathSlug
 	public static function parse(array $array,array $option):array
 	{
 		$return = [];
 		$slugOption = $option['slug'] ?? null;
-		
+
 		foreach ($array as $key => $value)
 		{
 			if(is_numeric($key))
 			$slug = $value;
-			
+
 			elseif(is_string($key))
 			$slug = [$key,$value];
 
@@ -42,19 +42,19 @@ class SlugPath extends Listing
 		}
 
 		$return = static::makeSlugs($return,$slugOption);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// prepareArr
 	// prépare un array dans la méthode arr
 	public static function prepareArr(array $value,?array $option=null):array
 	{
 		return $value;
 	}
-	
-	
+
+
 	// makeSlugs
 	// génère les slugs dans pour le pathSlug
 	// traitement particulier de l'option totalLength qui est divisé par le nombre d'entrée dans le tableau
@@ -62,31 +62,31 @@ class SlugPath extends Listing
 	{
 		$return = [];
 		$option = Arr::plus(['totalLength'=>null],$option);
-		
+
 		if(!empty($array))
 		{
 			$count = count($array);
-			
+
 			if(is_int($option['totalLength']) && $option['totalLength'] > 0)
 			{
 				$option['totalLength'] -= $count;
-				
+
 				if($option['totalLength'] > 0)
 				$option['totalLength'] = (int) floor($option['totalLength'] / $count);
-				
+
 				else
 				$option['totalLength'] = null;
 			}
-			
+
 			foreach ($array as $key => $value)
 			{
 				$slug = Slug::str($value,$option);
-				
+
 				if(strlen($slug))
 				$return[$key] = $slug;
 			}
 		}
-		
+
 		return $return;
 	}
 }

@@ -11,36 +11,36 @@ trait _option
 	{
 		return Arrs::keyExists($key,static::$config['option']);
 	}
-	
-	
+
+
 	// getOption
 	// retourne une option du tableau d'option
 	public static function getOption($key)
 	{
 		return Arrs::get($key,static::$config['option']);
 	}
-	
-	
+
+
 	// setOption
 	// ajoute ou change une option dans le tableau d'option
 	public static function setOption($key,$value):void
 	{
 		Arrs::setRef($key,$value,static::$config['option']);
-		
+
 		return;
 	}
-	
-	
+
+
 	// unsetOption
 	// enlève une option du tableau d'option
 	public static function unsetOption($key):void
 	{
 		Arrs::unsetRef($key,static::$config['option']);
-		
+
 		return;
 	}
-	
-	
+
+
 	// option
 	// retourne le tableau d'options
 	// possibilité de faire un merge sur la valeur de retour, n'écrit pas dans la variable statique
@@ -53,14 +53,14 @@ trait _option
 		{
 			if(array_keys($value) !== array_keys(static::$config['option']))
 			$return = array_replace_recursive(static::$config['option'],$value);
-			
+
 			else
 			$return = $value;
-			
+
 			if($write === true)
 			static::$config['option'] = $return;
 		}
-		
+
 		return $return;
 	}
 }

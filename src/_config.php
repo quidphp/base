@@ -8,8 +8,8 @@ trait _config
 	// static
 	protected static $initConfig = []; // tableau qui garde en mémoire les classes qui ont été init
 	protected static $callableConfig = null; // garde une copie de la callable à utiliser, par défaut array_replace_recursive
-	
-	
+
+
 	// __config
 	// initialise la configuration de la classe ayant le trait
 	// merge le tableau config de la classe et/ou de tous ses parents
@@ -19,7 +19,7 @@ trait _config
 	public static function __config(bool $force=false):void
 	{
 		$class = static::class;
-		
+
 		if($force === true || empty(static::$initConfig[$class]))
 		{
 			if(property_exists($class,'config') && is_array(static::$config))
@@ -27,7 +27,7 @@ trait _config
 				$method = '__config';
 				$init = false;
 				$callable = static::getConfigCallable();
-				
+
 				$merge = [];
 				$vars = get_class_vars($class);
 				foreach ($vars as $key => $value)
@@ -35,20 +35,20 @@ trait _config
 					if($key !== 'config' && is_array($value) && !empty($value) && strpos($key,'config') === 0)
 					$merge[] = $value;
 				}
-				
+
 				if(!empty($merge))
 				{
 					$merge[] = static::$config;
 					static::$config = $callable($class,...$merge);
 					$init = true;
 				}
-				
+
 				$merge = [];
-				
+
 				$parent = get_parent_class($class);
 				if(!empty($parent) && property_exists($parent,'config') && is_array($parent::$config) && !empty($parent::$config))
 				$merge[] = $parent::$config;
-				
+
 				if(!empty($merge) || $init === false)
 				{
 					$merge[] = static::$config;
@@ -57,7 +57,7 @@ trait _config
 				}
 			}
 		}
-		
+
 		return;
 	}
 
@@ -67,7 +67,7 @@ trait _config
 	public static function getConfigCallable():\Closure
 	{
 		$return = static::$callableConfig;
-		
+
 		if(empty($return))
 		{
 			$return = function(string $class,...$values) {
@@ -75,33 +75,33 @@ trait _config
 				{
 					$value = (array) $value;
 				}
-				
+
 				return array_replace_recursive(...$values);
 			};
 		}
-		
+
 		return $return;
 	}
 
-	
+
 	// setConfigCallable
 	// permet de changer la closure à utiliser pour le merge de config
 	public static function setConfigCallable(?\Closure $value=null):void
 	{
 		static::$callableConfig = $value;
-		
+
 		return;
 	}
-	
-	
+
+
 	// configReplaceMode
 	// retourne le tableau des clés à ne pas merger recursivement
 	public static function configReplaceMode():array
 	{
 		return [];
 	}
-	
-	
+
+
 	// config
 	// retourne le tableau de config
 	// possibilité de faire un merge sur la valeur de retour
@@ -110,21 +110,21 @@ trait _config
 	{
 		$return = null;
 		$class = static::class;
-		
+
 		if(property_exists($class,'config') && is_array(static::$config))
 		{
 			$return = static::$config;
-			
+
 			if($value !== null)
 			{
 				$callable = static::getConfigCallable();
 				$return = $callable($class,$return,$value);
-				
+
 				if($write === true)
 				static::$config = $return;
 			}
 		}
-		
+
 		return $return;
 	}
 }

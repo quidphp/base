@@ -7,12 +7,12 @@ abstract class Root
 {
 	// trait
 	use _root;
-	
-	
+
+
 	// config
 	public static $config = [];
-	
-	
+
+
 	// static
 	// remet une copie des propriétés des traits incluent car c'est plus facile à gérer
 	protected static $initConfig = []; // voir _config

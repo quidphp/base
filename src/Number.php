@@ -24,7 +24,7 @@ class Number extends Root
 			'<'=>'min']
 	];
 
-	
+
 	// typecast
 	// typecasts des valeurs par référence
 	public static function typecast(&...$values):void
@@ -33,11 +33,11 @@ class Number extends Root
 		{
 			$value = static::cast($value);
 		}
-		
+
 		return;
 	}
-	
-	
+
+
 	// typecastInt
 	// typecasts des valeurs int par référence
 	public static function typecastInt(&...$values):void
@@ -46,11 +46,11 @@ class Number extends Root
 		{
 			$value = (int) $value;
 		}
-		
+
 		return;
 	}
-	
-	
+
+
 	// typecastFloat
 	// typecasts des valeurs float par référence
 	public static function typecastFloat(&...$values):void
@@ -59,27 +59,27 @@ class Number extends Root
 		{
 			$value = (float) $value;
 		}
-		
+
 		return;
 	}
-	
-	
+
+
 	// cast
 	// retourne la valeur dans le type (int ou float) si celle ci est numérique
 	// extra permet de remplacer la virgule par un décimal et aussi de forcer le cast des chaînes numériques commençant par zéro
 	public static function cast($value,bool $extra=true)
 	{
 		$return = null;
-		
+
 		if(is_scalar($value))
 		{
 			$return = $value;
 			$string = Str::cast($value);
-			
+
 			// commaToDecimal
 			if($extra === true)
 			$string = Str::commaToDecimal($string);
-			
+
 			if(is_numeric($string))
 			{
 				$stringLength = strlen($string);
@@ -89,25 +89,25 @@ class Number extends Root
 				// string si longueur trop longue
 				if(strpos($string,'.') === false && $stringLength > static::$config['intMaxLength'])
 				$return = $string;
-				
+
 				// si premier caractère est zéro, contient plus d'un caractère et extra est false
 				elseif($extra === false && $stringLength > 1 && $string[0] === '0')
 				$return = $string;
-				
+
 				// si valeur égale à int
 				elseif($int == $string)
 				$return = $int;
-				
+
 				// si valeur égale à int
 				elseif($float == $string)
 				$return = $float;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// castToInt
 	// comme cast, mais la valeur de retour est soit null ou int
 	public static function castToInt($value,bool $extra=true):?int
@@ -116,11 +116,11 @@ class Number extends Root
 		$value = static::cast($value,$extra);
 		if(is_numeric($value))
 		$return = (int) $value;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// castToFloat
 	// comme cast, mais la valeur de retour est soit null ou float
 	public static function castToFloat($value,bool $extra=true):?float
@@ -129,11 +129,11 @@ class Number extends Root
 		$value = static::cast($value,$extra);
 		if(is_numeric($value))
 		$return = (float) $value;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// castFromString
 	// permet de cast une valeur string en gardant seulement ces caractères numériques
 	public static function castFromString(string $value):?int
@@ -141,61 +141,61 @@ class Number extends Root
 		$return = null;
 		$value = Str::keepNumeric($value);
 		$value = static::cast($value);
-		
+
 		if(is_int($value))
 		$return = $value;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// is
 	// retourne vrai si la valeur est numerique
 	public static function is($value):bool
 	{
 		return (is_numeric($value))? true:false;
 	}
-	
-	
+
+
 	// isEmpty
 	// retourne vrai si la valeur est numerique et vide
 	public static function isEmpty($value):bool
 	{
 		return (is_numeric($value) && empty($value))? true:false;
 	}
-	
-	
+
+
 	// isNotEmpty
 	// retourne vrai si la valeur est numerique et non vide
 	public static function isNotEmpty($value):bool
 	{
 		return (is_numeric($value) && !empty($value))? true:false;
 	}
-	
-	
+
+
 	// isString
 	// retourne vrai si la valeur est numérique et string
 	public static function isString($value):bool
 	{
 		return (is_numeric($value) && is_string($value))? true:false;
 	}
-	
-	
+
+
 	// isInt
 	// retourne vrai si la valeur est int
 	public static function isInt($value):bool
 	{
 		return (is_int($value))? true:false;
 	}
-	
-	
+
+
 	// isFloat
 	// retourne vrai si la valeur est float
 	public static function isFloat($value):bool
 	{
 		return (is_float($value))? true:false;
 	}
-	
+
 
 	// isFinite
 	// retourne vrai si le nombre est fini
@@ -203,51 +203,51 @@ class Number extends Root
 	{
 		return (is_numeric($value) && is_finite((float) $value))? true:false;
 	}
-	
-	
+
+
 	// isInfinite
 	// retourne vrai si le nombre est infini
 	public static function isInfinite($value):bool
 	{
 		return (is_numeric($value) && is_infinite((float) $value))? true:false;
 	}
-	
-	
+
+
 	// isNan
 	// retourne vrai si le nombre est nan
 	public static function isNan($value):bool
 	{
 		return (is_numeric($value) && is_nan((float) $value))? true:false;
 	}
-	
-	
+
+
 	// isPositive
 	// vérifie que la valeur est un chiffre positif
 	public static function isPositive($value):bool
 	{
 		$return = false;
 		static::typecast($value);
-		
+
 		if($value > 0)
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isNegative
 	// vérifie que la valeur est un chiffre négatif
 	public static function isNegative($value):bool
 	{
 		$return = false;
 		static::typecast($value);
-		
+
 		if($value < 0)
 		$return = true;
-		
+
 		return $return;
 	}
-	
+
 
 	// isOdd
 	// vérifie que la valeur est un chiffre impair
@@ -255,101 +255,101 @@ class Number extends Root
 	{
 		$return = false;
 		static::typecast($value);
-		
+
 		if(is_int($value) && is_float($value / 2))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isEven
 	// vérifie que la valeur est un chiffre pair
 	public static function isEven($value):bool
 	{
 		$return = false;
 		static::typecast($value);
-		
+
 		if(is_int($value) && is_int($value / 2))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isWhole
 	// vérifie que la valeur est numérique et un int après cast
 	public static function isWhole($value):bool
 	{
 		$return = false;
-		
+
 		if(is_numeric($value))
 		{
 			static::typecast($value);
-			
+
 			if(is_int($value))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isWholeNotEmpty
 	// vérifie que la valeur est numérique et un int après cast et n'est pas 0
 	public static function isWholeNotEmpty($value):bool
 	{
 		$return = false;
-		
+
 		if(is_numeric($value))
 		{
 			static::typecast($value);
-			
+
 			if(is_int($value) && !empty($value))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isDecimal
 	// vérifie que la valeur est numérique et un chiffre flottant après cast
 	public static function isDecimal($value):bool
 	{
 		$return = false;
-		
+
 		if(is_numeric($value))
 		{
 			static::typecast($value);
-			
+
 			if(is_float($value))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isOverflow
 	// vérifie que la valeur est numérique et une string après cast
 	// peu signifé que le numéro est out of bounds (plus grand que php_int_max)
 	public static function isOverflow($value):bool
 	{
 		$return = false;
-		
+
 		if(is_numeric($value))
 		{
 			static::typecast($value);
-			
+
 			if(is_string($value))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isLength
 	// retourne vrai si la length est celle spécifié
 	public static function isLength(int $length,$value):bool
@@ -357,8 +357,8 @@ class Number extends Root
 		static::typecast($value);
 		return (is_numeric($value) && static::len($value) === $length)? true:false;
 	}
-	
-	
+
+
 	// isMinLength
 	// retourne vrai si la length est plus grande ou égale que celle spécifié
 	public static function isMinLength(int $length,$value):bool
@@ -366,8 +366,8 @@ class Number extends Root
 		static::typecast($value);
 		return (is_numeric($value) && static::len($value) >= $length)? true:false;
 	}
-	
-	
+
+
 	// isMaxLength
 	// retourne vrai si la length est plus petite ou égale que celui spécifié
 	public static function isMaxLength(int $length,$value):bool
@@ -375,8 +375,8 @@ class Number extends Root
 		static::typecast($value);
 		return (is_numeric($value) && static::len($value) <= $length)? true:false;
 	}
-	
-	
+
+
 	// isCountable
 	// retourne vrai si la valeur est countable par la méthode count
 	// cette méthode est inutile en php 7.3
@@ -384,8 +384,8 @@ class Number extends Root
 	{
 		return (is_array($value) || $value instanceof \Countable)? true:false;
 	}
-	
-	
+
+
 	// prepend
 	// ajoute des chaînes numériques une en arrière de l'autre
 	public static function prepend(...$values)
@@ -395,60 +395,60 @@ class Number extends Root
 
 		return $return;
 	}
-	
-	
+
+
 	// append
 	// ajoute des chaînes numériques une après l'autre
 	public static function append(...$values)
 	{
 		$return = Str::append(...$values);
 		static::typecast($return);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// fromBool
 	// retourne un numéro à partir d'un boolean
 	public static function fromBool(bool $bool):?int
 	{
 		$return = null;
-		
+
 		if($bool === true)
 		$return = 1;
-		
+
 		elseif($bool === false)
 		$return = 0;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// commaToDecimal
 	// transforme la virgule en decimal et cast
 	public static function commaToDecimal($value)
 	{
 		$return = null;
-		
+
 		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			$return = Str::commaToDecimal($value);
 			static::typecast($return);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// len
 	// retourne la longeur de la chaîne numérique
 	public static function len($value):?int
 	{
 		return Str::len((string) static::cast($value));
 	}
-	
-	
+
+
 	// sub
 	// coupe un numéro avec un début et un length
 	public static function sub(int $start,?int $length=null,$value)
@@ -458,101 +458,101 @@ class Number extends Root
 		$value = (string) $value;
 		$return = Str::sub($start,$length,$value);
 		static::typecast($return);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// round
 	// arrondie un chiffre
 	public static function round($value,int $round=0,int $mode=PHP_ROUND_HALF_UP)
 	{
 		$return = null;
 		static::typecast($value);
-		
+
 		$return = round($value,$round,$mode);
 		static::typecast($return);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// roundLower
 	// arrondie un chiffre
 	public static function roundLower($value,int $round=0)
 	{
 		return static::round($value,$round,PHP_ROUND_HALF_DOWN);
 	}
-	
-	
+
+
 	// ceil
 	// amène le float au int plus grand
 	public static function ceil($value):?int
 	{
 		$return = null;
 		static::typecast($value);
-		
+
 		$return = (int) ceil($value);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// floor
 	// amène le float au int plus petit
 	public static function floor($value):?int
 	{
 		$return = null;
 		static::typecast($value);
-		
+
 		$return = (int) floor($value);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// positive
 	// retourne la version positive d'un chiffre
 	public static function positive($value)
 	{
 		$return = null;
 		static::typecast($value);
-		
+
 		$return = abs($value);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// negative
 	// retourne la version négative d'un chiffre
 	public static function negative($value)
 	{
 		$return = false;
 		static::typecast($value);
-		
+
 		$return = abs($value) * -1;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// invert
 	// inverse un chiffre (négatif devient positif ou vice versa)
 	public static function invert($value)
 	{
 		$return = null;
 		static::typecast($value);
-		
+
 		if($value < 0)
 		$return = abs($value);
-		
+
 		else
 		$return = abs($value) * -1;
-		
+
 		return $return;
 	}
-	
+
 
 	// increment
 	// augment une valeur
@@ -562,11 +562,11 @@ class Number extends Root
 		static::typecast($value,$amount);
 
 		$return = $value + $amount;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// decrement
 	// réduit une valeur
 	public static function decrement($value,$amount=1)
@@ -575,10 +575,10 @@ class Number extends Root
 		static::typecast($value,$amount);
 
 		$return = $value - $amount;
-		
+
 		return $return;
 	}
-	
+
 
 	// in
 	// vérifie si un numéro est entre les valeurs incluses dans from et to
@@ -586,77 +586,77 @@ class Number extends Root
 	{
 		$return = null;
 		static::typecast($from,$value,$to);
-		
+
 		if($inclusive === true)
 		{
 			if($value >= $from && $value <= $to)
 			$return = true;
 		}
-		
+
 		else
 		{
 			if($value > $from && $value < $to)
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// inExclusive
 	// comme in, mais est inclusif
 	public static function inExclusive($from,$value,$to):?bool
 	{
 		return static::in($from,$value,$to,false);
 	}
-	
-	
+
+
 	// pi
 	// retourne pi, peut être arrondi
 	public static function pi(?int $round=null):float
 	{
 		$return = M_PI;
-		
+
 		if(is_int($round))
 		$return = static::round($return,$round);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// math
 	// calcule mathématique entre plusieurs valeurs
 	// symbol sont + - * / avg et average
 	public static function math(string $operation,array $values,?int $round=null)
 	{
 		$return = null;
-		
+
 		if(!empty(static::$config['symbol'][$operation]))
 		$method = static::$config['symbol'][$operation];
-		
+
 		elseif(!empty(static::$config['alias'][$operation]))
 		$method = static::$config['alias'][$operation];
-		
+
 		if(is_string($method) && method_exists(static::class,$method))
 		{
 			$values = array_values($values);
 			$return = static::$method(...$values);
-			
+
 			if(is_numeric($round))
 			$return = static::round($return,$round);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// combine
 	// combine des tableaux en faisant une opération mathématique sur leurs valeurs numériques
 	// les valeurs non numériques ne sont pas conservés
 	public static function combine(string $operation,array ...$values):array
 	{
 		$return = [];
-		
+
 		foreach ($values as $key => $value)
 		{
 			foreach ($value as $k => $v)
@@ -665,29 +665,29 @@ class Number extends Root
 				{
 					if(!array_key_exists($k,$return))
 					$return[$k] = $v;
-					
+
 					else
 					$return[$k] = static::math($operation,[$return[$k],$v]);
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// addition
 	// performe une addition entre plusieurs valeurs
 	// peut y avoir une seule valeur
 	public static function addition(...$args)
 	{
 		$return = null;
-		
+
 		if(!empty($args) && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
-			
+
 			foreach ($args as $z)
 			{
 				if(is_scalar($z))
@@ -697,23 +697,23 @@ class Number extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// subtraction
 	// performe une soustraction entre plusieurs valeurs
 	// peut y avoir une seule valeur
 	public static function subtraction(...$args)
 	{
 		$return = null;
-		
+
 		if(!empty($args) && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
-			
+
 			foreach ($args as $z)
 			{
 				if(is_scalar($z))
@@ -723,23 +723,23 @@ class Number extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// multiplication
 	// performe une multiplication entre plusieurs valeurs
 	// doit au moins y avoir deux valeurs
 	public static function multiplication(...$args)
 	{
 		$return = null;
-		
+
 		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
-			
+
 			foreach ($args as $z)
 			{
 				if(is_scalar($z))
@@ -749,23 +749,23 @@ class Number extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// pow
 	// performe une expression exponentielle
 	// doit au moins y a voir deux valeurs
 	public static function pow(...$args)
 	{
 		$return = null;
-		
+
 		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
-			
+
 			foreach ($args as $z)
 			{
 				if(is_scalar($z))
@@ -775,10 +775,10 @@ class Number extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
+
 
 	// division
 	// performe une division entre plusieurs valeurs
@@ -786,45 +786,45 @@ class Number extends Root
 	public static function division(...$args)
 	{
 		$return = null;
-		
+
 		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
-			
+
 			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
 					static::typecast($z);
-					
+
 					if($z == 0)
 					{
 						$return = null;
 						break;
 					}
-					
+
 					$return /= $z;
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// modulo
 	// performe un calcul modulo, retourne le reste d'une division
 	// doit au moins y a voir deux valeurs
 	public static function modulo(...$args)
 	{
 		$return = null;
-		
+
 		if(count($args) > 1 && is_scalar($args[0]))
 		{
 			$return = static::cast($args[0]);
 			unset($args[0]);
-			
+
 			foreach ($args as $z)
 			{
 				if(is_scalar($z))
@@ -834,11 +834,11 @@ class Number extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// average
 	// performe une moyenne entre deux valeurs
 	// doit au moins y avoir deux valeurs
@@ -847,7 +847,7 @@ class Number extends Root
 		$return = false;
 		$total = 0;
 		$count = 0;
-		
+
 		if(count($args) > 1)
 		{
 			foreach ($args as $z)
@@ -859,112 +859,112 @@ class Number extends Root
 					$count++;
 				}
 			}
-			
+
 			if($count > 0)
 			$return = $total / $count;
 		}
-		
+
 		return $return;
 	}
-	
+
 
 	// min
 	// retourne la valeur la plus petite
 	public static function min(...$values)
 	{
 		$return = null;
-		
+
 		static::typecast(...$values);
 		$values = Arr::validateSlice('numeric',$values);
 		$return = min(...$values);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// max
 	// retourne la valeur la plus grande
 	public static function max(...$values)
 	{
 		$return = null;
-		
+
 		static::typecast(...$values);
 		$values = Arr::validateSlice('numeric',$values);
 		$return = max(...$values);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// random
 	// génère un string random en utilisant mt_rand
 	public static function random(?int $length=null,int $min=0,int $max=PHP_INT_MAX,bool $csprng=false):int
 	{
 		$return = 0;
-		
+
 		if($csprng === true)
 		$return = Crypt::randomInt($length,$min,$max);
-		
+
 		else
 		{
 			$rand = mt_rand($min,$max);
-			
+
 			if(is_int($length))
 			$return = static::sub(0,$length,$rand);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// zerofill
 	// retourne une string avec le int zérofill (à gauche)
 	public static function zerofill(int $length,int $value):string
 	{
 		return Str::padLeft('0',$length,(string) $value);
 	}
-	
-	
+
+
 	// fromOctal
 	// transforme une chaîne octale en décimale
 	public static function fromOctal($value):?int
 	{
 		$return = null;
-		
+
 		if(is_numeric($value))
 		{
 			$value = (string) $value;
 			$return = octdec($value);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// toOctal
 	// transforme un chiffre en string octal
 	public static function toOctal($value,$format=null)
 	{
 		$return = null;
 		static::typecast($value);
-		
+
 		if(is_int($value))
 		{
 			$return = decoct($value);
-			
+
 			if(!empty($format))
 			{
 				if(is_int($format))
 				$return = substr($return,$format);
-				
+
 				$return = (int) $return;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// format
 	// format un numéro en string (via number_format)
 	// option decimal|separator|thousand
@@ -972,102 +972,102 @@ class Number extends Root
 	{
 		$return = null;
 		$option = static::getFormat($lang,$option);
-		
+
 		if(!empty($option))
 		{
 			static::typecast($value);
-			
+
 			if(is_numeric($value))
 			{
 				if(!is_string($value))
 				$return = number_format($value,$option['decimal'],$option['separator'],$option['thousand']);
 				else
 				$return = $value;
-				
+
 				if(is_string($return) && !empty($option['output']) && is_string($option['output']))
 				$return = str_replace('%v%',$return,$option['output']);
 			}
 		}
-		
+
 		return $return;
 	}
 
-	
+
 	// formats
 	// permet de formater un tableau de valeur
 	// supporte format, percentFormat, moneyFormat, phoneFormat et sizeFormat
 	public static function formats(string $type,array $return,?string $lang=null,?array $option=null):array
 	{
 		$method = static::formatsMethod($type);
-		
+
 		if(is_string($method))
 		{
 			foreach ($return as $key => $value)
 			{
 				if($method === 'sizeFormat')
 				$return[$key] = static::sizeFormat($value,true,$lang,$option);
-				
+
 				elseif($method === 'phoneFormat')
 				$return[$key] = static::phoneFormat($value,$lang,$option);
-				
+
 				else
 				$return[$key] = static::$method($value,$lang,$option);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// formatsMethod
 	// retourne la méthode à utiliser pour formats
 	public static function formatsMethod(string $type):?string
 	{
 		$return = null;
-		
+
 		if(in_array($type,['number','format'],true))
 		$return = 'format';
-		
+
 		elseif(in_array($type,['%','percent','percentFormat'],true))
 		$return = 'percentFormat';
-		
+
 		elseif(in_array($type,['$','money','moneyFormat'],true))
 		$return = 'moneyFormat';
-		
+
 		elseif(in_array($type,['phone','phoneFormat'],true))
 		$return = 'phoneFormat';
-		
+
 		elseif(in_array($type,['size','sizeFormat'],true))
 		$return = 'sizeFormat';
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getFormat
 	// retourne le tableau de format pour la méthode format
 	public static function getFormat(?string $lang=null,?array $option=null):array
 	{
 		return Arr::plus(Lang\En::$config['number']['format'],Lang::numberFormat(null,$lang),$option);
 	}
-	
-	
+
+
 	// percentFormat
 	// formate un numéro, ajoute un pourcentage
 	public static function percentFormat($value,?string $lang=null,?array $option=null)
 	{
 		return static::format($value,$lang,static::getPercentFormat($lang,$option));
 	}
-	
-	
+
+
 	// getPercentFormat
 	// retourne le tableau de format pour la méthode moneyFormat
 	public static function getPercentFormat(?string $lang=null,?array $option=null):array
 	{
 		return Arr::plus(Lang\En::$config['number']['percentFormat'],Lang::numberPercentFormat(null,$lang),$option);
 	}
-	
-	
+
+
 	// moneyFormat
 	// format un numéro en format monétaire (selon une langue défini dans static config)
 	// option decimal|separator|thousand
@@ -1075,36 +1075,36 @@ class Number extends Root
 	{
 		return static::format($value,$lang,static::getMoneyFormat($lang,$option));
 	}
-	
-	
+
+
 	// getMoneyFormat
 	// retourne le tableau de format pour la méthode moneyFormat
 	public static function getMoneyFormat(?string $lang=null,?array $option=null):array
 	{
 		return Arr::plus(Lang\En::$config['number']['moneyFormat'],Lang::numberMoneyFormat(null,$lang),$option);
 	}
-	
-	
+
+
 	// phoneFormat
 	// format un numéro de téléphone
 	public static function phoneFormat($value,?string $lang=null,?array $option=null):?string
 	{
 		$return = null;
 		$option = static::getPhoneFormat($lang,$option);
-		
+
 		if(is_scalar($value))
 		{
 			$value = (string) $value;
 			$value = Str::keepNumber($value);
 			$valueLength = strlen($value);
-			
+
 			if($valueLength >= 10)
 			{
 				preg_match("/(\d{3})(\d{3})(\d{4})\.?(\d+)?/",$value,$match);
 				if(!empty($match[0]) && $match[0] === $value)
 				{
 					$return = '';
-					
+
 					if($option['parenthesis'] === true)
 					$return .= '(';
 					$return .= $match[1];
@@ -1112,7 +1112,7 @@ class Number extends Root
 					$return .= ')';
 					$return .= ' ';
 					$return .= "{$match[2]}-{$match[3]}";
-					
+
 					// extension
 					if(is_string($option['extension']) && !empty($match[4]))
 					{
@@ -1123,19 +1123,19 @@ class Number extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
 
-	
+
 	// getPhoneFormat
 	// retourne le tableau de format pour la méthode phoneFormat
 	public static function getPhoneFormat(?string $lang=null,?array $option=null):array
 	{
 		return Arrs::replace(Lang\En::$config['number']['phoneFormat'],Lang::numberPhoneFormat(null,$lang),$option);
 	}
-	
-	
+
+
 	// sizeFormat
 	// transforme une entrée de taille numérique en bytes en une taille formatté
 	// si round est true, le niveau d'arrondissement est défini dans les config selon le niveau de taille
@@ -1145,25 +1145,25 @@ class Number extends Root
 		$option = static::getSizeFormat($lang,$option);
 		$texts = $option['text'];
 		$rounds = $option['round'];
-		
+
 		if(is_numeric($size) && $size >= 0 && !empty($option))
 		{
 			$log = log($size,1024);
 			$log = (int) floor($log);
 			$pow = pow(1024,$log);
-			
+
 			if(array_key_exists($log,$texts) && is_string($texts[$log]))
 			{
 				$text = $texts[$log];
 				if($log === 0)
 				$text .= Str::s($size);
-				
+
 				if($round === true && array_key_exists($log,$rounds) && is_int($rounds[$log]))
 				$round = $rounds[$log];
-				
+
 				if(is_int($round))
 				$return = static::round(($size / $pow),$round);
-				
+
 				$return = (string) $return;
 				$return .= ' '.$text;
 			}
@@ -1171,16 +1171,16 @@ class Number extends Root
 
 		return $return;
 	}
-	
-	
+
+
 	// getSizeFormat
 	// retourne le tableau de format pour la méthode sizeFormat
 	public static function getSizeFormat(?string $lang=null,?array $option=null):array
 	{
 		return Arrs::replace(Lang\En::$config['number']['sizeFormat'],Lang::numberSizeFormat(null,$lang),$option);
 	}
-	
-	
+
+
 	// fromSizeFormat
 	// retourne le nombre de byte à partir d'une string de size format
 	// supporte tous les formats décrits dans le tableau sizeFormat
@@ -1195,34 +1195,34 @@ class Number extends Root
 		$alpha = strtolower($alpha);
 		$alpha = Str::stripEnd('s',$alpha,false);
 		$value = static::castFromString($value);
-		
+
 		if(!empty($formatOriginal['text']) && strlen($alpha) && is_int($value))
 		{
 			if($alpha === 'm')
 			$key = 2;
-			
+
 			else
 			{
 				$key = Arr::search($alpha,$formatOriginal['text'],false);
-				
+
 				if($key === null && !empty($format['text']))
 				$key = Arr::search($alpha,$format['text'],false);
 			}
-			
+
 			if(is_int($key))
 			{
 				$return = $value;
 				$pow = pow(1024,$key);
-				
+
 				if($pow > 0)
 				$return *= $pow;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// fromSizeFormatMb
 	// comme sizeFormat, mais traite seulement les MB
 	// n'utilisera pas lang
@@ -1230,17 +1230,17 @@ class Number extends Root
 	{
 		$return = null;
 		$value = static::castFromString($value);
-		
+
 		if(is_int($value))
 		{
 			$pow = pow(1024,2);
 			$return = ($value * $pow);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// percentCalc
 	// transforme un tableau numérique en tableau pourcentage
 	// si la variable adjustTotal est vrai, le tableau est envoyé dans la méthode percentAdjustTotal
@@ -1248,19 +1248,19 @@ class Number extends Root
 	{
 		$return = [];
 		$count = 0;
-		
+
 		// type cast et count
 		foreach ($array as $key => $value)
 		{
 			static::typecast($value);
-			
+
 			if(is_numeric($value))
 			{
 				$count += $value;
 				$array[$key] = $value;
 			}
 		}
-		
+
 		if($count > 0)
 		{
 			foreach ($array as $key => $value)
@@ -1271,16 +1271,16 @@ class Number extends Root
 					$return[$key] = static::round($calc,$round);
 				}
 			}
-			
+
 			// adjustTotal
 			if($adjustTotal === true)
 			$return = static::percentAdjustTotal($return,null,$round,$total);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// percentAdjustTotal
 	// ajuste le total d'un tableau de pourcentage pour que l'addition de toutes les valeurs arrivent à total
 	// un ajustement pourrait etre fait sur la clé adjustKey si l'addition n'arrive pas au total
@@ -1290,43 +1290,43 @@ class Number extends Root
 		foreach ($return as $key => $value)
 		{
 			static::typecast($value);
-			
+
 			if(is_numeric($value))
 			{
 				$array[$key] = $value;
-				
+
 				if($adjustKey === null && $value > 0)
 				$adjustKey = $key;
 			}
 		}
-		
+
 		if((is_string($adjustKey) || is_numeric($adjustKey)) && array_key_exists($adjustKey,$return))
 		{
 			// calc
 			$calc = static::math('+',$return);
-			
+
 			if((float) $calc !== (float) $total)
 			{
 				if($calc > $total)
 				{
 					$number = ($return[$adjustKey] - ($calc - $total));
 					$return[$adjustKey] = static::round($number,$round);
-					
+
 					if($return[$adjustKey] < 0)
 					$return[$adjustKey] = 0;
 				}
-				
+
 				if($calc < $total)
 				{
 					$number = ($return[$adjustKey] + ($total - $calc));
 					$return[$adjustKey] = static::round($number,$round);
-					
+
 					if($return[$adjustKey] > $total)
 					$return[$adjustKey] = $total;
 				}
 			}
 		}
-		
+
 		return $return;
 	}
 }

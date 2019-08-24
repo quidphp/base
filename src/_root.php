@@ -7,8 +7,8 @@ trait _root
 {
 	// trait
 	use _config, _cacheStatic, _cacheFile;
-	
-	
+
+
 	// classFqcn
 	// retourne le fqcn de la classe
 	public static function classFqcn():string
@@ -38,10 +38,10 @@ trait _root
 	public static function className(bool $lcfirst=false):string
 	{
 		$return = Fqcn::name(static::class);
-		
+
 		if($lcfirst === true)
 		$return = lcfirst($return);
-		
+
 		return $return;
 	}
 
@@ -61,8 +61,8 @@ trait _root
 	{
 		return Classe::info(static::class,$deep);
 	}
-	
-	
+
+
 	// classIsCallable
 	// retourne vrai si la classe peut appeler la callable closure ou dans un array
 	// la validation est très stricte pour éviter des bogues de mauvais call
@@ -71,8 +71,8 @@ trait _root
 	{
 		return ($value instanceof \Closure || (Call::isSafeStaticMethod($value) && is_callable($value)))? true:false;
 	}
-	
-	
+
+
 	// classFile
 	// retourne le chemin du fichier de la classe courante
 	// pourrait retourner null
@@ -80,8 +80,8 @@ trait _root
 	{
 		return Autoload::getFilePath(static::class,false);
 	}
-	
-	
+
+
 	// classDir
 	// retourne le chemin du directoire de la classe courante
 	// pourrait retourner null
