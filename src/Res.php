@@ -1969,7 +1969,7 @@ class Res extends Root
 		
 		if(static::isLockable($value))
 		{
-			$lock = ($exclusive===true)? LOCK_EX:LOCK_SH;
+			$lock = ($exclusive === true)? LOCK_EX:LOCK_SH;
 			$return = flock($value,$lock);
 		}
 		
@@ -2957,7 +2957,7 @@ class Res extends Root
 			{
 				$return = ftruncate($value,$size);
 				
-				if(!empty($return) && $option['rewind']===true)
+				if(!empty($return) && $option['rewind'] === true)
 				static::seekRewind($value);
 				
 				if($option['lock'] === true)

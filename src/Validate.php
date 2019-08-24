@@ -523,28 +523,28 @@ class Validate extends Root
 		{
 			$symbol = static::$config['compare'][$symbol];
 			
-			if($symbol==='===')
+			if($symbol === '===')
 			$return = ($value1 === $value2)? true:false;
 
-			elseif($symbol==='==')
+			elseif($symbol === '==')
 			$return = ($value1 == $value2)? true:false;
 
-			elseif($symbol==='!=')
+			elseif($symbol === '!=')
 			$return = ($value1 != $value2)? true:false;
 
-			elseif($symbol==='!==')
+			elseif($symbol === '!==')
 			$return = ($value1 !== $value2)? true:false;
 
-			elseif($symbol==='<')
+			elseif($symbol === '<')
 			$return = ($value1 < $value2)? true:false;
 
-			elseif($symbol==='<=')
+			elseif($symbol === '<=')
 			$return = ($value1 <= $value2)? true:false;
 
-			elseif($symbol==='>')
+			elseif($symbol === '>')
 			$return = ($value1 > $value2)? true:false;
 
-			elseif($symbol==='>=')
+			elseif($symbol === '>=')
 			$return = ($value1 >= $value2)? true:false;
 		}
 		

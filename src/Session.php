@@ -1167,7 +1167,7 @@ class Session extends Root
 		
 		if(!static::isStarted())
 		{
-			if($option=== true)
+			if($option === true)
 			$option = ['read_and_close'=>true];
 			
 			if(is_array($option))

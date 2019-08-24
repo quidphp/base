@@ -199,7 +199,7 @@ class Str extends Root
 					$return = true;
 				}
 				
-				elseif(strpos($pattern,$char) === (strlen($pattern)-$charLen))
+				elseif(strpos($pattern,$char) === (strlen($pattern) - $charLen))
 				{
 					$pattern = substr($pattern,0,-$charLen);
 					if(static::isStart($pattern,$value,$sensitive))
@@ -723,7 +723,7 @@ class Str extends Root
 		
 		if(is_int($offset) && is_int($length))
 		{
-			if($mb===true)
+			if($mb === true)
 			$return = mb_substr($value,$offset,$length,static::$config['charset']);
 			else
 			$return = substr($value,$offset,$length);
@@ -764,7 +764,7 @@ class Str extends Root
 		
 		if(is_int($offset) && is_int($length))
 		{
-			if($mb===true)
+			if($mb === true)
 			$return = mb_strcut($value,$offset,$length,static::$config['charset']);
 			else
 			$return = substr($value,$offset,$length);
@@ -844,13 +844,13 @@ class Str extends Root
 
 		if(is_int($offset) && is_int($length))
 		{
-			if($sensitive===false)
+			if($sensitive === false)
 			{
 				$str = static::lower($str,$mb);
 				$main = static::lower($main,$mb);
 			}
 			
-			$return = substr_compare($main,$str,$offset,$length,($sensitive===true)? false:true);
+			$return = substr_compare($main,$str,$offset,$length,($sensitive === true)? false:true);
 		}
 		
 		return $return;
@@ -1066,7 +1066,7 @@ class Str extends Root
 					$return = static::stripEnd($pattern,$value,$sensitive);
 				}
 				
-				elseif(strpos($pattern,$char) === (strlen($pattern)-$charLen))
+				elseif(strpos($pattern,$char) === (strlen($pattern) - $charLen))
 				{
 					$pattern = substr($pattern,0,-$charLen);
 					if(static::isStart($pattern,$value,$sensitive))
@@ -1325,7 +1325,7 @@ class Str extends Root
 		$return = '';
 		$mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
 		
-		if($mb===true)
+		if($mb === true)
 		{
 			$higher = static::upper(static::subFirst($value,1,$mb),$mb);
 			$lower = static::lower(static::stripFirst($value,1,$mb),$mb);
@@ -1914,7 +1914,7 @@ class Str extends Root
 	// si clean est true, enlève les entrées du tableau cleanable
 	public static function explode(string $delimiter,string $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
 	{
-		$return = explode($delimiter,$value,($limit===null)? PHP_INT_MAX:$limit);
+		$return = explode($delimiter,$value,($limit === null)? PHP_INT_MAX:$limit);
 		
 		if(!empty($return))
 		{
@@ -2123,7 +2123,7 @@ class Str extends Root
 	// enrobe une string de quote single ou double
 	public static function quote(string $return,bool $double=false):string 
 	{
-		return static::wrapStartOrEnd($quote = ($double===true)? '"':"'",$quote,$return);
+		return static::wrapStartOrEnd($quote = ($double === true)? '"':"'",$quote,$return);
 	}
 	
 	
@@ -2285,7 +2285,7 @@ class Str extends Root
 	// explose une string camelCase
 	public static function fromCamelCase(string $str):array
 	{
-		return preg_split('#([A-Z][^A-Z]*)#',$str,0,PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+		return preg_split('#([A-Z][^A-Z]*)#',$str,0,PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 	}
 	
 	
@@ -2398,7 +2398,7 @@ class Str extends Root
 		
 		if(is_int($value) && is_string($return))
 		{
-			$isPlural = ($value>1)? true:false;
+			$isPlural = ($value > 1)? true:false;
 			$letter = (is_string($letter))? $letter:static::$config['plural']['letter'];
 			$wrap = (!empty($wrap))? $wrap:static::$config['plural']['wrap'];
 			$delimiter = Segment::getDelimiter($wrap);

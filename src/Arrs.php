@@ -793,7 +793,7 @@ class Arrs extends Root
 			foreach ($array as $key => $value) 
 			{
 				if(is_array($value))
-				$return += static::countLevel(($level-1),$array[$key]);
+				$return += static::countLevel(($level - 1),$array[$key]);
 			}
 		}
 		
@@ -1614,7 +1614,7 @@ class Arrs extends Root
 	// keysSort
 	// sort un tableau par clé, gère le multidimensionnel
 	// on peut mettre asc ou desc à sort (ksort ou krsort)
-	public static function keysSort(array $return,$sort=true,int $type=SORT_FLAG_CASE|SORT_NATURAL):array
+	public static function keysSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
 	{
 		$return = Arr::keysSort($return,$sort,$type);
 		
@@ -1703,7 +1703,7 @@ class Arrs extends Root
 			{
 				foreach ($first as $value) 
 				{
-					$value = ($hasParent===true)? Arr::append($parent,$value):[$value];
+					$value = ($hasParent === true)? Arr::append($parent,$value):[$value];
 					$return = Arr::append($return,static::valuesCrush($array,$value));
 				}
 			}

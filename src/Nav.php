@@ -170,7 +170,7 @@ class Nav extends Root
 		$nav = count($nav);
 		
 		if(is_int($nav) && $nav > 0 && $limit > 0)
-		$return = (int) ceil($nav/$limit);
+		$return = (int) ceil($nav / $limit);
 		
 		return $return;
 	}
@@ -204,7 +204,7 @@ class Nav extends Root
 		
 		if(is_int($max))
 		{
-			for ($i=1; $i<=$max; $i++) 
+			for ($i=1; $i <= $max; $i++) 
 			{
 				$return[] = $i; 
 			}
@@ -227,9 +227,9 @@ class Nav extends Root
 		{
 			$return = [];
 			
-			for ($i=1; $i<=$max; $i++) 
+			for ($i=1; $i <= $max; $i++) 
 			{
-				$return[$i] = $i-$value; 
+				$return[$i] = $i - $value; 
 			}
 		}
 		

@@ -966,7 +966,7 @@ class Arr extends Root
 				$return[$key] = $value;
 			}
 			
-			elseif($keep===true)
+			elseif($keep === true)
 			$return[$key] = $value;
 		}
 		
@@ -2074,7 +2074,7 @@ class Arr extends Root
 	// sort les clés ou valeurs d'un tableau
 	// les clés sont conservés dans tous les cas
 	// sort peut aussi être un int 1, 2, 3 ou 4
-	public static function sort(array $return,$sort=true,int $type=SORT_FLAG_CASE|SORT_NATURAL):array
+	public static function sort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
 	{
 		$ascDesc = static::getSortAscDesc($sort);
 		
@@ -2333,7 +2333,7 @@ class Arr extends Root
 	public static function explode(string $delimiter,array $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
 	{
 		$return = [];
-		$limit = ($limit===null)? PHP_INT_MAX:$limit;
+		$limit = ($limit === null)? PHP_INT_MAX:$limit;
 		
 		foreach ($value as $k => $v) 
 		{
@@ -3921,7 +3921,7 @@ class Arr extends Root
 				$lastKeyPlus = $lastKey + 1;
 				if(is_numeric($lastKey) && is_numeric($k) && $k !== $lastKeyPlus)
 				{
-					$range = static::range($lastKeyPlus,(int) ($k-1));
+					$range = static::range($lastKeyPlus,(int) ($k - 1));
 					if(!empty($range))
 					{
 						$missing = array_fill_keys(array_values($range),$value);
@@ -3964,7 +3964,7 @@ class Arr extends Root
 	// sort un tableau par clé
 	// on peut mettre asc, true ou desc, false à sort (ksort ou krsort)
 	// renvoie à la méthode sort
-	public static function keysSort(array $return,$sort=true,int $type=SORT_FLAG_CASE|SORT_NATURAL):array
+	public static function keysSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
 	{
 		$ascDesc = static::getSortAscDesc($sort);
 		
@@ -4530,7 +4530,7 @@ class Arr extends Root
 	// on peut mettre asc, true ou desc, false à sort (sort ou rsort)
 	// les valeurs non scalar sont retirés et les clés ne sont pas conservés
 	// renvoie à la méthode sort
-	public static function valuesSort(array $return,$sort=true,int $type=SORT_FLAG_CASE|SORT_NATURAL):array
+	public static function valuesSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
 	{
 		$return = static::validateSlice('scalar',$return);
 		$ascDesc = static::getSortAscDesc($sort);
@@ -4550,7 +4550,7 @@ class Arr extends Root
 	// on peut mettre asc, true ou desc, false à sort (asort ou arsort)
 	// les valeurs non scalar sont retirés et les clés sont conservés
 	// renvoie à la méthode sort
-	public static function valuesSortKeepAssoc(array $return,$sort=true,int $type=SORT_FLAG_CASE|SORT_NATURAL):array
+	public static function valuesSortKeepAssoc(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
 	{
 		$return = static::validateSlice('scalar',$return);
 		$ascDesc = static::getSortAscDesc($sort);

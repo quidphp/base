@@ -12,7 +12,7 @@ class Error extends Root
 	// setHandler
 	// lie une callable comme gestionnaire d'erreur
 	// si la valeur passé est null, le handler est remis à son état initial
-	public static function setHandler(?callable $value=null,int $type=E_ALL|E_STRICT):void
+	public static function setHandler(?callable $value=null,int $type=E_ALL | E_STRICT):void
 	{
 		set_error_handler($value,$type);
 

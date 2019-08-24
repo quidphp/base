@@ -491,7 +491,7 @@ class Finder extends Root
 		{
 			$mode = fileperms($path);
 			if(is_int($mode))
-			$return = ($format===true)? static::formatValue('permission',$mode):$mode;
+			$return = ($format === true)? static::formatValue('permission',$mode):$mode;
 		}
 		
 		return $return;
@@ -566,7 +566,7 @@ class Finder extends Root
 		{
 			$owner = fileowner($path);
 			if(is_int($owner))
-			$return = ($format===true)? static::formatValue('owner',$owner):$owner;
+			$return = ($format === true)? static::formatValue('owner',$owner):$owner;
 		}
 		
 		return $return;
@@ -602,7 +602,7 @@ class Finder extends Root
 		{
 			$group = filegroup($path);
 			if(is_int($group))
-			$return = ($format===true)? static::formatValue('group',$group):$group;
+			$return = ($format === true)? static::formatValue('group',$group):$group;
 		}
 		
 		return $return;
@@ -638,7 +638,7 @@ class Finder extends Root
 		{
 			$size = filesize($path);
 			if(is_int($size))
-			$return = ($format===true)? static::formatValue('size',$size):$size;
+			$return = ($format === true)? static::formatValue('size',$size):$size;
 		}
 		
 		return $return;
@@ -659,7 +659,7 @@ class Finder extends Root
 		{
 			$atime = fileatime($path);
 			if(is_int($atime))
-			$return = ($format===true)? static::formatValue('dateAccess',$atime):$atime;
+			$return = ($format === true)? static::formatValue('dateAccess',$atime):$atime;
 		}
 		
 		return $return;
@@ -680,7 +680,7 @@ class Finder extends Root
 		{
 			$mtime = filemtime($path);
 			if(is_int($mtime))
-			$return = ($format===true)? static::formatValue('dateModify',$mtime):$mtime;
+			$return = ($format === true)? static::formatValue('dateModify',$mtime):$mtime;
 		}
 		
 		return $return;
@@ -701,7 +701,7 @@ class Finder extends Root
 		{
 			$ctime = filectime($path);
 			if(is_int($ctime))
-			$return = ($format===true)? static::formatValue('dateInodeModify',$ctime):$ctime;
+			$return = ($format === true)? static::formatValue('dateInodeModify',$ctime):$ctime;
 		}
 		
 		return $return;
@@ -1260,7 +1260,7 @@ class Finder extends Root
 	public static function uriToPath(string $value,?string $host=null):?string 
 	{
 		$return = null;
-		$host = ($host===null)? static::getHostPath($value):static::getHostPath($host);
+		$host = ($host === null)? static::getHostPath($value):static::getHostPath($host);
 
 		if(!empty($host))
 		$return = Path::append($host,Uri::path($value));

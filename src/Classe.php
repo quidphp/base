@@ -550,7 +550,7 @@ class Classe extends Root
 	{
 		$return = null;
 		
-		if($autoload === true || static::is($class,$autoload))
+		if($autoload === true ||  static::is($class,$autoload))
 		{
 			$class = static::get($class,$autoload);
 			

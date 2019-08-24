@@ -46,7 +46,7 @@ class ImageRaster extends File
 				if(is_array($option['line']) && count($option['line']) === 3)
 				{
 					$lineColor = imagecolorallocate($image,...$option['line']); 
-					for ($i=0; $i<10; $i++) 
+					for ($i=0; $i < 10; $i++) 
 					{
 					    imageline($image,0,rand() % 50,$width,rand() % 50,$lineColor);
 					}
@@ -56,7 +56,7 @@ class ImageRaster extends File
 				if(is_array($option['pixel']) && count($option['pixel']) === 3)
 				{
 					$pixelColor = imagecolorallocate($image,...$option['pixel']);
-					for ($i=0; $i<1000; $i++) 
+					for ($i=0; $i < 1000; $i++) 
 					{
 					    imagesetpixel($image,rand() % $width,rand() % 50,$pixelColor);
 					}

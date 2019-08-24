@@ -256,7 +256,7 @@ class Number extends Root
 		$return = false;
 		static::typecast($value);
 		
-		if(is_int($value) && is_float($value/2))
+		if(is_int($value) && is_float($value / 2))
 		$return = true;
 		
 		return $return;
@@ -270,7 +270,7 @@ class Number extends Root
 		$return = false;
 		static::typecast($value);
 		
-		if(is_int($value) && is_int($value/2))
+		if(is_int($value) && is_int($value / 2))
 		$return = true;
 		
 		return $return;
@@ -531,7 +531,7 @@ class Number extends Root
 		$return = false;
 		static::typecast($value);
 		
-		$return = abs($value)*-1;
+		$return = abs($value) * -1;
 		
 		return $return;
 	}
@@ -548,7 +548,7 @@ class Number extends Root
 		$return = abs($value);
 		
 		else
-		$return = abs($value)*-1;
+		$return = abs($value) * -1;
 		
 		return $return;
 	}
@@ -587,7 +587,7 @@ class Number extends Root
 		$return = null;
 		static::typecast($from,$value,$to);
 		
-		if($inclusive===true)
+		if($inclusive === true)
 		{
 			if($value >= $from && $value <= $to)
 			$return = true;
@@ -1162,7 +1162,7 @@ class Number extends Root
 				$round = $rounds[$log];
 				
 				if(is_int($round))
-				$return = static::round(($size/$pow),$round);
+				$return = static::round(($size / $pow),$round);
 				
 				$return = (string) $return;
 				$return .= ' '.$text;
