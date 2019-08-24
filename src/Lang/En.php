@@ -10,14 +10,14 @@ class En extends Base\Config
 	public static $config = [
 		// number
 		'number'=>[
-			
+
 			// format
 			'format'=>[
 				'decimal'=>2,
 				'separator'=>'.',
 				'thousand'=>','
 			],
-			
+
 			// moneyFormat
 			'moneyFormat'=>[
 				'decimal'=>2,
@@ -25,7 +25,7 @@ class En extends Base\Config
 				'thousand'=>',',
 				'output'=>'$%v%'
 			],
-			
+
 			// percentFormat
 			'percentFormat'=>[
 				'decimal'=>0,
@@ -33,7 +33,7 @@ class En extends Base\Config
 				'thousand'=>'',
 				'output'=>'%v%%'
 			],
-				
+
 			// phoneFormat
 			'phoneFormat'=>[
 				'parenthesis'=>true,
@@ -58,10 +58,10 @@ class En extends Base\Config
 					5=>'PB']
 				]
 		],
-		
+
 		// date
 		'date'=>[
-			
+
 			// format
 			'format'=>[
 				0=>'F j, Y',
@@ -76,14 +76,14 @@ class En extends Base\Config
 				'long'=>'F j, Y H:i:s',
 				'calendar'=>'F Y'
 			],
-			
+
 			// placeholder
 			'placeholder'=>[
 				'dateToDay'=>'MM-DD-YYYY',
 				'dateToMinute'=>'MM-DD-YYYY HH:MM',
 				'dateToSecond'=>'MM-DD-YYYY HH:MM:SS'
 			],
-			
+
 			// str
 			'str'=>[
 				'year'=>'year',
@@ -94,7 +94,7 @@ class En extends Base\Config
 				'second'=>'second',
 				'and'=>'and'
 			],
-				
+
 			// month
 			'month'=>[
 				1=>'January',
@@ -110,7 +110,7 @@ class En extends Base\Config
 				11=>'November',
 				12=>'December'
 			],
-				
+
 			// dayShort
 			'dayShort'=>[
 				0=>'Su',
@@ -121,7 +121,7 @@ class En extends Base\Config
 				5=>'Fr',
 				6=>'Sa'
 			],
-			
+
 			// day
 			'day'=>[
 				0=>'Sunday',
@@ -133,10 +133,10 @@ class En extends Base\Config
 				6=>'Saturday'
 			]
 		],
-		
+
 		// header
 		'header'=>[
-			
+
 			// responseStatus
 			'responseStatus'=>[
 				100=>'Continue',
@@ -202,7 +202,7 @@ class En extends Base\Config
 				511=>'Network Authentication Required'
 			]
 		],
-		
+
 		// error
 		'error'=>[
 			'code'=>[
@@ -224,7 +224,7 @@ class En extends Base\Config
 				E_ALL=>'E_ALL'
 			]
 		],
-		
+
 		// validate
 		'validate'=>[
 			'array'=>'Must be an array',
@@ -340,22 +340,22 @@ class En extends Base\Config
 			'extension'=>'The extension of the file must be: [%]',
 			'extensions'=>'The extension of the file(s) must be: [%]'
 		],
-		
+
 		// required
 		'required'=>[
 			'common'=>'Cannot be empty'
 		],
-		
+
 		// unique
 		'unique'=>[
 			'common'=>'Must be unique[%]'
 		],
-		
+
 		// editable
 		'editable'=>[
 			'common'=>'Cannot be modified'
 		],
-		
+
 		// compare
 		'compare'=>[
 			'='=>'Must be equal to [%]',

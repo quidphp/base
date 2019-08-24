@@ -9,29 +9,29 @@ class Dir extends Finder
 	public static $config = [
 		'defaultPermission'=>755 // permission par défaut pour un directoire
 	];
-	
-	
+
+
 	// is
 	// retourne vrai si le chemin est un directoire
 	public static function is($path,bool $makePath=true,bool $posix=false):bool
 	{
 		$return = false;
-		
+
 		if($makePath === true)
 		$path = static::path($path);
-		
+
 		if(is_string($path) && is_dir($path))
 		{
 			$return = true;
-			
+
 			if($posix === true)
 			$return = posix_access($path,POSIX_F_OK);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isEmpty
 	// retourne vrai si le chemin est un directoire vide
 	public static function isEmpty($path):bool
@@ -42,33 +42,33 @@ class Dir extends Finder
 		if(static::isReadable($path,false))
 		{
 			$res = static::open($path);
-			
+
 			if(Res::isEmpty($res))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isNotEmpty
 	// retourne vrai si le chemin est un directoire non vide
 	public static function isNotEmpty($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$res = static::open($path);
-			
+
 			if(Res::isNotEmpty($res))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
+
 
 	// isDeep
 	// retourne vrai si le chemin est un directoire qui contient au moins un directoire
@@ -76,7 +76,7 @@ class Dir extends Finder
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$get = static::get($path);
@@ -92,35 +92,35 @@ class Dir extends Finder
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isResource
 	// retourne vrai si la ressource est de type directoire
 	public static function isResource($value):bool
 	{
 		return (is_resource($value) && Res::isDir($value))? true:false;
 	}
-	
-	
+
+
 	// temp
 	// retourne le chemin du dossier temporaire
 	public static function temp():string
 	{
 		return sys_get_temp_dir();
 	}
-	
-	
+
+
 	// getCurrent
 	// retourne le dossier de travail courant
 	public static function getCurrent():string
 	{
 		return getcwd();
 	}
-	
-	
+
+
 	// setCurrent
 	// change le dossier de travail courant
 	public static function setCurrent($path):bool
@@ -130,11 +130,11 @@ class Dir extends Finder
 
 		if(static::is($path,false))
 		$return = chdir($path);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// get
 	// retourne le contenu d'un directoire
 	// dig permet de faire un listing recursif
@@ -144,36 +144,36 @@ class Dir extends Finder
 		$return = null;
 		$path = static::path($path);
 		$option = Arrs::replace(['sort'=>SCANDIR_SORT_ASCENDING,'in'=>null,'out'=>null,'format'=>null,'formatExtra'=>false,'relative'=>null,'fqcn'=>null,'fqcnClass'=>null,'fqcnTrait'=>null,'fqcnInterface'=>null],$option);
-		
+
 		if(!is_string($option['relative']))
 		$option['relative'] = $path;
-		
+
 		if(static::isReadable($path,false) && is_int($option['sort']))
 		{
 			$return = [];
-			
+
 			foreach (scandir($path,$option['sort']) as $value)
 			{
 				$keep = true;
 				$filter = [];
 				$fullPath = Path::append($path,$value);
-				
+
 				if(!static::isDot($fullPath))
 				{
 					if(!empty($option['in']) || !empty($option['out']))
 					$keep = static::getKeepInOut($fullPath,$option['in'],$option['out']);
-					
+
 					if($keep === true)
 					{
 						$makeFormat = static::getMakeFormat($fullPath,$option);
-						
+
 						if($makeFormat === false)
 						continue;
-						
+
 						elseif(is_array($makeFormat) && !empty($makeFormat))
 						$return = Arr::append($return,$makeFormat);
 					}
-						
+
 					if($dig === true && static::isReadable($fullPath,false))
 					{
 						if($option['format'] === 'tree')
@@ -187,8 +187,8 @@ class Dir extends Finder
 
 		return $return;
 	}
-	
-	
+
+
 	// getKeepInOut
 	// utilisé par get pour filtrer les résultats
 	// méthode protégé
@@ -203,49 +203,49 @@ class Dir extends Finder
 		$filterFilename = (array_key_exists('filename',$in) || array_key_exists('filename',$out))? true:false;
 		$filterVisible = (array_key_exists('visible',$in) || array_key_exists('visible',$out))? true:false;
 		$filterEmpty = (array_key_exists('empty',$in) || array_key_exists('empty',$out))? true:false;
-		
+
 		$filter = [];
 		$filter['type'] = $type;
-		
+
 		if($filterExtension === true)
 		$filter['extension'] = Path::extension($path);
-		
+
 		if($filterBasename === true)
 		$filter['basename'] = Path::basename($path);
-		
+
 		if($filterFilename === true)
 		$filter['filename'] = Path::filename($path);
-		
+
 		if($filterVisible === true)
 		$filter['visible'] = Finder::isVisible($path);
-		
+
 		if($filterEmpty === true)
 		{
 			$filter['empty'] = false;
-			
+
 			if($type === 'dir')
 			$filter['empty'] = static::isEmpty($path);
 			elseif($type === 'file')
 			$filter['empty'] = File::isEmpty($path);
 		}
-		
+
 		if(!empty($in) && !Arr::compareIn($in,$filter))
 		$return = false;
-		
+
 		if(!empty($out) && Arr::compareOut($out,$filter))
 		$return = false;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getMakeFormat
 	// utilisé par get pour gérer le format de sortie
 	// méthode protégé
 	protected static function getMakeFormat(string $path,array $option)
 	{
 		$return = null;
-		
+
 		if(!empty($option['format']) && is_string($option['format']))
 		{
 			if(in_array($option['format'],['relative','fqcn'],true))
@@ -253,48 +253,48 @@ class Dir extends Finder
 				$value = Str::stripStart($option['relative'],$path);
 				$value = Path::stripStart($value);
 				$isPathInterface = Path::isInterface($path);
-				
+
 				if($option['format'] === 'fqcn')
 				{
 					if($option['fqcnClass'] === false && Classe::isNameClass($value) && !$isPathInterface)
 					$return = false;
-					
+
 					if($option['fqcnTrait'] === false && Classe::isNameTrait($value))
 					$return = false;
 
 					if($option['fqcnInterface'] === false && (Classe::isNameInterface($value) || $isPathInterface))
 					$return = false;
-					
+
 					if($return !== false)
 					{
 						if(is_string($option['fqcn']))
 						$value = Path::append($option['fqcn'],$value);
-						
+
 						$value = Fqcn::fromPath($value);
 					}
 				}
-				
+
 				if($return !== false)
 				$return = [$path=>$value];
 			}
-			
+
 			elseif($option['format'] === 'tree')
 			$return = [$path=>true];
-			
+
 			else
 			{
 				$formatPath = Finder::formatPath($option['format'],$path,$option['formatExtra']);
 				$return = [$path=>$formatPath];
 			}
 		}
-		
+
 		else
 		$return = [$path];
-	
+
 		return $return;
 	}
-	
-	
+
+
 	// getVisible
 	// retourne le contenu d'un directoire
 	// filtre les fichiers invisibles
@@ -302,8 +302,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['in'=>['visible'=>true]]));
 	}
-	
-	
+
+
 	// getInvisible
 	// retourne le contenu d'un directoire
 	// filtre les fichiers visibles
@@ -311,7 +311,7 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['in'=>['visible'=>false]]));
 	}
-	
+
 
 	// getIn
 	// retourne le contenu d'un directoire
@@ -320,8 +320,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['in'=>$in]));
 	}
-	
-	
+
+
 	// getExtension
 	// retourne le contenu d'un directoire
 	// filtre extension
@@ -329,8 +329,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['in'=>['extension'=>$extension]]));
 	}
-	
-	
+
+
 	// getPhp
 	// retourne le contenu d'un directoire
 	// filtre extension php
@@ -338,8 +338,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['in'=>['extension'=>static::phpExtension()]]));
 	}
-	
-	
+
+
 	// getOut
 	// retourne le contenu d'un directoire
 	// filtre out
@@ -347,8 +347,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['out'=>$out]));
 	}
-	
-	
+
+
 	// getFormat
 	// retourne le contenu d'un directoire
 	// format en deuxième argument
@@ -356,8 +356,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['format'=>$format]));
 	}
-	
-	
+
+
 	// getFormatExtra
 	// retourne le contenu d'un directoire
 	// format en deuxième argument et formatExtra est true
@@ -365,8 +365,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['format'=>$format,'formatExtra'=>true]));
 	}
-	
-	
+
+
 	// getSize
 	// retourne le contenu d'un directoire
 	// le format est size
@@ -374,8 +374,8 @@ class Dir extends Finder
 	{
 		return static::get($path,$dig,Arrs::replace($option,['format'=>'size','in'=>['extension'=>$extension],'out'=>['type'=>'dir']]));
 	}
-	
-	
+
+
 	// getLine
 	// retourne le contenu d'un directoire
 	// le format est line, le deuxième champ est pour l'extension
@@ -384,8 +384,8 @@ class Dir extends Finder
 	{
 		return static::getExtension($path,$extension,$dig,Arrs::replace($option,['format'=>'line','out'=>['type'=>'dir']]));
 	}
-	
-	
+
+
 	// getEmptyDir
 	// retourne tous les directoires vides dans le directoire donné
 	// dig est true, ne peut pas être changé
@@ -393,8 +393,8 @@ class Dir extends Finder
 	{
 		return static::get($path,true,Arrs::replace($option,['in'=>['type'=>'dir','empty'=>true]]));
 	}
-	
-	
+
+
 	// getRelative
 	// retourne le contenu d'un directoire
 	// le format est relative
@@ -403,8 +403,8 @@ class Dir extends Finder
 	{
 		return static::getFormat($path,'relative',true,$option);
 	}
-	
-	
+
+
 	// getFqcn
 	// retourne le contenu d'un directoire
 	// deuxième argument est extension
@@ -414,8 +414,8 @@ class Dir extends Finder
 	{
 		return static::getExtension($path,($extension === null)? static::phpExtension():$extension,$dig,Arrs::replace($option,['in'=>['visible'=>true,'type'=>'file'],'format'=>'fqcn','fqcn'=>$fqcn]));
 	}
-	
-	
+
+
 	// getFormatSymbol
 	// retourne le contenu d'un directoire
 	// inclut seulement les fichiers avec une valeur de format respectant la comparaison selon le symbol fourni
@@ -425,22 +425,22 @@ class Dir extends Finder
 		$return = null;
 		$get = static::getFormat($path,$format,$dig,$option);
 		$value = ($value === null)? Date::getTimestamp():$value;
-		
+
 		if(is_array($get))
 		{
 			$return = [];
-			
+
 			foreach ($get as $k => $v)
 			{
 				if(is_int($v) && Validate::compare($v,$symbol,$value))
 				$return[$k] = $v;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getFormatSmaller
 	// retourne le contenu d'un directoire
 	// inclut seulement les fichiers avec une valeur de format respectant la comparaison selon le symbol <
@@ -448,8 +448,8 @@ class Dir extends Finder
 	{
 		return static::getFormatSymbol($path,'<',$value,$format,$dig,$option);
 	}
-	
-	
+
+
 	// getFormatBigger
 	// retourne le contenu d'un directoire
 	// inclut seulement les fichiers avec une valeur de format respectant la comparaison selon le symbol >
@@ -457,8 +457,8 @@ class Dir extends Finder
 	{
 		return static::getFormatSymbol($path,'>',$value,$format,$dig,$option);
 	}
-	
-	
+
+
 	// getFormatSort
 	// retourne le contenu d'un directoire
 	// permet de sort par la valeur du format
@@ -466,14 +466,14 @@ class Dir extends Finder
 	{
 		$return = null;
 		$gets = static::getFormat($path,$format,$dig,$option);
-		
+
 		if(is_array($gets))
 		$return = Arr::valuesSortKeepAssoc($gets,$sort);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getFormatSortMax
 	// retourne le contenu d'un directoire
 	// permet de sort par la valeur du format et de limiter le nombre de résultats retournés
@@ -483,11 +483,11 @@ class Dir extends Finder
 		$gets = static::getFormatSort($path,$format,$sort,$dig,$option);
 		if(is_array($gets))
 		$return = Arr::unsetAfterCount($max,$gets);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getFormatSortSkip
 	// retourne le contenu d'un directoire
 	// permet de sort par la valeur du format et d'afficher les résultats seulement après un certain nombre
@@ -497,11 +497,11 @@ class Dir extends Finder
 		$gets = static::getFormatSort($path,$format,$sort,$dig,$option);
 		if(is_array($gets))
 		$return = Arr::unsetBeforeCount(($skip + 1),$gets);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getTree
 	// retourne le contenu d'un directoire sous la forme d'un arbre
 	// dig est true par défaut
@@ -509,7 +509,7 @@ class Dir extends Finder
 	{
 		return static::get($path,true,Arrs::replace($option,['format'=>'tree']));
 	}
-		
+
 
 	// getTemp
 	// retourne le contenu du dossier temporaire
@@ -517,40 +517,40 @@ class Dir extends Finder
 	{
 		return static::get(static::temp(),$dig,$option);
 	}
-	
-	
+
+
 	// gets
 	// permet de faire une requête get sur plusieurs chemins
 	// retourne un tableau multidimensionnel
 	public static function gets(array $paths,bool $dig=false,?array $option=null):array
 	{
 		$return = [];
-		
+
 		foreach ($paths as $path)
 		{
 			$return[$path] = static::get($path,$dig,$option);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getsAppend
 	// permet de faire une requête get sur plusieurs chemins
 	// retoure un tableau unidimensionnel, les nouvelles entrées sont append dans le même tableau
 	public static function getsAppend(array $paths,bool $dig=false,?array $option=null):array
 	{
 		$return = [];
-		
+
 		foreach ($paths as $path)
 		{
 			$return = Arr::append($return,static::get($path,$dig,$option));
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// fromToCatchAll
 	// prend un tableau avec des path from -> to
 	// si un from finit par le caractère catchAll (*), prend tout ce qu'il y a dans le dossier et ajoute au tableau
@@ -563,7 +563,7 @@ class Dir extends Finder
 				$value = static::shortcut($value);
 				$path = Str::stripEnd($catchAll,$key);
 				$get = static::getVisible($path);
-				
+
 				if(is_array($get))
 				{
 					foreach ($get as $source)
@@ -573,15 +573,15 @@ class Dir extends Finder
 						$return[$source] = $destination;
 					}
 				}
-				
+
 				unset($return[$key]);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getChangeBasename
 	// fait une requête get
 	// permet de passer une callable pour changer les basenames de tous les fichiers incluents
@@ -589,7 +589,7 @@ class Dir extends Finder
 	{
 		$return = [];
 		$get = static::get($path,$dig,$option);
-		
+
 		if(!empty($get))
 		{
 			foreach (array_reverse($get) as $value)
@@ -597,11 +597,11 @@ class Dir extends Finder
 				$return[$value] = Finder::changeBasename($callable,$value);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// sortPriority
 	// méthode utilisé pour metre certains fichiers d'un dossier avant l'autre
 	// possible de mettre le chemin du dossier en troisième argument
@@ -610,17 +610,17 @@ class Dir extends Finder
 	{
 		$return = [];
 		$priority = (array) $priority;
-		
+
 		foreach ($priority as $value)
 		{
 			$value = static::shortcut($value);
-			
+
 			if(is_string($path))
 			{
 				$path = static::shortcut($path);
 				$value = Path::append($path,$value);
 			}
-			
+
 			$key = array_search($value,$source,true);
 			if($key !== false)
 			{
@@ -628,13 +628,13 @@ class Dir extends Finder
 				$return[] = $value;
 			}
 		}
-		
+
 		$return = Arr::append($return,$source);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// remove
 	// permet d'enlever des fichiers d'un tableau de chemins
 	// possible de mettre le chemin du dossier en troisième argument
@@ -642,27 +642,27 @@ class Dir extends Finder
 	public static function remove(array $return,$remove,?string $path=null):array
 	{
 		$remove = (array) $remove;
-		
+
 		foreach ($remove as $value)
 		{
 			$value = static::shortcut($value);
-			
+
 			if(is_string($path))
 			{
 				$path = static::shortcut($path);
 				$value = Path::append($path,$value);
 			}
-			
+
 			$key = array_search($value,$return,true);
-			
+
 			if($key !== false)
 			unset($return[$key]);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// parent
 	// retourne tous les fichiers contenus dans le parent
 	// option self permet d'inclure l'enfant du parent
@@ -670,25 +670,25 @@ class Dir extends Finder
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			$option = Arrs::replace(['self'=>true],$option);
 			$parent = Path::parent($path);
-			
+
 			if(!empty($parent) && static::isReadable($parent,false))
 			{
 				$return = static::get($parent,$dig,$option);
-				
+
 				if($option['self'] === false)
 				$return = Arr::valueStrip($path,$return);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// concatenate
 	// permet de concatener plusieurs ressources et écrire le rendu dans le fichier
 	// un séparateur doit être fourni, une callable peut être fourni
@@ -696,8 +696,8 @@ class Dir extends Finder
 	{
 		return File::concatenate($value,$callable,$separator,...static::getExtension($path,$extension) ?? []);
 	}
-	
-	
+
+
 	// concatenateString
 	// permet de concatener plusieurs ressources et retourner le rendu combiné dans une string
 	// un séparateur doit être fourni, une callable peut être fourni
@@ -705,8 +705,8 @@ class Dir extends Finder
 	{
 		return File::concatenateString($callable,$separator,...static::getExtension($path,$extension) ?? []);
 	}
-	
-	
+
+
 	// load
 	// charge tous les fichiers dans un directoire, utilise file::load
 	// once permet de spécifier si require ou require_once est utilisé
@@ -718,17 +718,17 @@ class Dir extends Finder
 		if(!empty($load))
 		{
 			$return = [];
-			
+
 			foreach ($load as $path)
 			{
 				$return[$path] = File::load($path,null,false,$once);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// loadOnce
 	// charge tous les fichiers php dans un directoire, utilise file::load
 	// utilise require_once
@@ -736,16 +736,16 @@ class Dir extends Finder
 	{
 		return static::load($path,$extension,$dig,true,$option);
 	}
-	
-	
+
+
 	// loadPhp
 	// charge tous les fichiers php dans un directoire, utilise file::load
 	public static function loadPhp($path,bool $dig=true,bool $once=false,?array $option=null):?array
 	{
 		return static::load($path,static::phpExtension(),$dig,$once,$option);
 	}
-	
-	
+
+
 	// loadPhpOnce
 	// charge tous les fichiers php dans un directoire, utilise file::load
 	// utilise require_once
@@ -753,8 +753,8 @@ class Dir extends Finder
 	{
 		return static::load($path,static::phpExtension(),$dig,true,$option);
 	}
-	
-	
+
+
 	// count
 	// retourne le nombre d'élément dans le dossier
 	// deuxième argument est extension
@@ -765,11 +765,11 @@ class Dir extends Finder
 
 		if(static::is($path,false))
 		$return = count(static::getExtension($path,$extension,$dig,Arrs::replace($option,['format'=>null])));
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// line
 	// count le nombre total de ligne dans les fichiers du dossier
 	// deuxième argument est extension
@@ -777,11 +777,11 @@ class Dir extends Finder
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::is($path,false))
 		{
 			$return = 0;
-			
+
 			foreach (static::getExtension($path,$extension,true,Arrs::replace($option,['format'=>null])) as $in)
 			{
 				$line = File::lineCount($in);
@@ -789,11 +789,11 @@ class Dir extends Finder
 				$return += $line;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// size
 	// retourne la taille du dossier
 	// deuxième argument est format
@@ -801,26 +801,26 @@ class Dir extends Finder
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::is($path,false))
 		{
 			$return = 0;
-			
+
 			foreach (static::getExtension($path,$extension,true,Arrs::replace($option,['format'=>null])) as $in)
 			{
 				$size = Finder::size($in);
 				if(is_int($size))
 				$return += $size;
 			}
-			
+
 			if($format === true)
 			$return = Number::sizeFormat($return);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// subDirLine
 	// compte les lignes dans chaque sous-directoire du chemin donné
 	public static function subDirLine(string $path,?array $in=null,$extension=null):?array
@@ -828,25 +828,25 @@ class Dir extends Finder
 		$return = null;
 		$in = Arr::replace(['type'=>'dir'],$in);
 		$get = static::getIn($path,$in);
-		
+
 		if(is_array($get))
 		{
 			$return = [];
-			
+
 			foreach ($get as $value)
 			{
 				$basename = Path::basename($value);
 				$line = static::line($value,$extension);
-				
+
 				if(is_int($line) && !empty($line))
 				$return[$basename] = $line;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// set
 	// créer une structure de dossier, si non existante et si créable
 	// cette méthode ne crée pas de fichier, seulement des dossiers
@@ -856,7 +856,7 @@ class Dir extends Finder
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isCreatable($path))
 		{
 			if($mode === true)
@@ -868,11 +868,11 @@ class Dir extends Finder
 				$return = mkdir($path,$mode,true);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// setParent
 	// créer le dossier parent si non existant
 	// recursive par défaut
@@ -880,19 +880,19 @@ class Dir extends Finder
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			$parent = Path::parent($path);
-			
+
 			if(!empty($parent))
 			$return = static::set($parent,$recursive);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// setOrWritable
 	// crée une structure de dossier si non existante
 	// retourne vrai si le dossier existe déjà et est writable ou s'il a été crée
@@ -901,17 +901,17 @@ class Dir extends Finder
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isWritable($path,false))
 		$return = true;
-		
+
 		else
 		$return = static::set($path,$recursive);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// copy
 	// copy un directoire de façon récursive
 	// les symlink ne sont pas suivi, c'est une copie identique d'un dossier
@@ -921,40 +921,40 @@ class Dir extends Finder
 		$return = null;
 		$to = static::path($to);
 		$from = static::path($from);
-		
+
 		if(static::isReadable($from,false) && self::setOrWritable($to))
 		{
 			$return = [];
-			
+
 			foreach (static::getRelative($from) as $path =>$value)
 			{
 				$target = Path::append($to,$value);
 				if(!empty($target))
 				{
 					$copy = false;
-					
+
 					if(is_link($path))
 					$copy = Symlink::copy($target,$path);
-					
+
 					elseif(is_dir($path))
 					$copy = static::set($target);
-					
+
 					else
 					$copy = copy($path,$target);
-					
+
 					if($copy === true)
 					$return[$path] = $target;
-					
+
 					else
 					$return[$path] = false;
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// empty
 	// vide un directoire
 	// si un fichier est un symlink, efface le symlink et non pas le fichier vers lequel il pointe
@@ -964,42 +964,42 @@ class Dir extends Finder
 	{
 		$return = [];
 		$get = static::get($path,true);
-		
+
 		if(!empty($get))
 		{
 			foreach (array_reverse($get) as $value)
 			{
 				if(is_link($value))
 				$return[$value] = Symlink::unset($value);
-				
+
 				else
 				$return[$value] = Finder::unlink($value);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// emptyAndUnlink
 	// vide et efface un directoire
 	public static function emptyAndUnlink($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			static::empty($path);
-			
+
 			if(static::isWritable($path,false) && static::isEmpty($path))
 			$return = parent::unlink($path);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// reset
 	// vide et efface un directoire
 	// recrée le directoire
@@ -1007,19 +1007,19 @@ class Dir extends Finder
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			static::emptyAndUnlink($path);
-			
+
 			if(static::set($path,$recursive))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// unlinkIfEmpty
 	// efface tous les directoires vides dans le chemin
 	public static function unlinkIfEmpty($path):array
@@ -1035,11 +1035,11 @@ class Dir extends Finder
 				$return[$value] = static::unlink($value);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// unlinkWhileEmpty
 	// permet d'effacer tous les directoires vides dans une structure de chemin
 	// la boucle est arrêté lorsque max est atteint ou lorsque'un dossier n'est pas vide
@@ -1047,28 +1047,28 @@ class Dir extends Finder
 	{
 		$return = [];
 		$path = static::path($path);
-		
+
 		if(is_string($path) && $max > 0)
 		{
 			$i = 0;
-			
+
 			foreach (Path::parents($path) as $v)
 			{
 				$i++;
 				$empty = static::unlinkIfEmpty($v);
-				
+
 				if($i === $max || static::isNotEmpty($v))
 				break;
-				
+
 				else
 				$return[] = $v;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// open
 	// ouvre une resource directoire
 	// une resource directoire ne peut pas retourner son path, donc resource très peu utilisé dans la classe
@@ -1076,59 +1076,59 @@ class Dir extends Finder
 	{
 		$return = null;
 		$value = static::path($value);
-		
+
 		if(!empty($value) && static::isReadable($value,false))
 		{
 			$return = Res::open($value);
-			
+
 			if(!static::isResource($return))
 			$return = null;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getUmaskFromPermission
 	// retourne le umask à utiliser à partir de la permission
 	public static function getUmaskFromPermission(int $value,bool $format=false):int
 	{
 		$return = 777 - $value;
-		
+
 		if($format === true)
 		$return = static::permissionOctal($return);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// permissionChange
 	// change la permission du directoire
 	// utilise defaultPermission si mode est true
 	public static function permissionChange($mode,$path):bool
 	{
 		$return = false;
-		
+
 		if(static::is($path))
 		{
 			$mode = ($mode === true)? static::defaultPermission():$mode;
 			$return = parent::permissionChange($mode,$path);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// setDefaultPermission
 	// change la permission par défaut pour les directoires
 	public static function setDefaultPermission(int $value):void
 	{
 		static::$config['defaultPermission'] = $value;
-		
+
 		return;
 	}
-	
-	
+
+
 	// defaultPermission
 	// retourne la permission par défaut pour les directoires
 	public static function defaultPermission():int

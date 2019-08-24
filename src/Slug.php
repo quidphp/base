@@ -18,16 +18,16 @@ class Slug extends Set
 			'totalLength'=>null], // longueur total du slug admise
 		'separator'=>['-','-'] // séparateur pour les slug
 	];
-	
-	
+
+
 	// is
 	// retourne vrai si la valeur est un slug
 	public static function is($value):bool
 	{
 		return (is_string($value) && Validate::regex('alphanumericSlug',$value))? true:false;
 	}
-	
-	
+
+
 	// keepAlphanumeric
 	// enleve tous les caractères non alphanumérique et garde - et _
 	// keep permet de garder des caractères supplémentaires
@@ -35,8 +35,8 @@ class Slug extends Set
 	{
 		return preg_replace("/[^A-Za-z0-9_\-$keep]/", '', $value);
 	}
-	
-	
+
+
 	// parse
 	// parse le tableau arr de slug
 	public static function parse(array $array,array $option):array
@@ -44,17 +44,17 @@ class Slug extends Set
 		$return = [];
 		$separator = static::getSeparator(1);
 		$segment = Segment::getDelimiter(null,true);
-		
+
 		if(is_string($option['prepend']))
 		{
 			$prepend = static::parseValue($option['prepend'],$option['replaceAccent']);
 			$return[] = $prepend;
 		}
-		
+
 		foreach ($array as $key => $value)
 		{
 			$value = preg_split('~[^\\pL\d'.$segment[0].$segment[1].']+~u',$value,-1,PREG_SPLIT_NO_EMPTY);
-			
+
 			if(!empty($value))
 			{
 				foreach ($value as $v)
@@ -62,7 +62,7 @@ class Slug extends Set
 					if(is_string($v))
 					{
 						$v = static::parseValue($v,$option['replaceAccent']);
-						
+
 						if(!empty($v))
 						$return[] = $v;
 					}
@@ -75,14 +75,14 @@ class Slug extends Set
 			$append = static::parseValue($option['append'],$option['replaceAccent']);
 			$return[] = $append;
 		}
-		
+
 		if(is_array($option['sliceLength']) && count($option['sliceLength']) === 2)
 		{
 			$keep = $return;
-			
+
 			$option['sliceLength'] = array_values($option['sliceLength']);
 			$return = Arr::valuesSliceLength($option['sliceLength'][0],$option['sliceLength'][1],$return);
-			
+
 			if($option['keepNumeric'] === true)
 			{
 				foreach ($keep as $k => $v)
@@ -90,38 +90,38 @@ class Slug extends Set
 					if(!array_key_exists($k,$return) && is_numeric($v))
 					$return[$k] = $v;
 				}
-				
+
 				ksort($return);
 			}
-			
+
 			if($option['keepLast'] === true)
 			{
 				if(Arr::keyLast($keep) !== Arr::keyLast($return))
 				$return[] = Arr::valueLast($keep);
 			}
 		}
-		
+
 		if(is_numeric($option['totalLength']) && !empty($option['totalLength']))
 		{
 			$reverse = Arr::valuesTotalLength($option['totalLength'],array_reverse($return));
 			$return = array_reverse($reverse);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// parseValue
 	// parse une valeur string déjà explosé
 	public static function parseValue(string $return,?bool $replaceAccent=null):string
 	{
 		$segment = Segment::getDelimiter(null,true);
-		
+
 		if($replaceAccent === true)
 		$return = Str::replaceAccent($return);
-		
+
 		$return = static::keepAlphanumeric($return,$segment[0].$segment[1]);
-		
+
 		return $return;
 	}
 }

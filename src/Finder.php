@@ -7,8 +7,8 @@ class Finder extends Root
 {
 	// trait
 	use _shortcut;
-	
-	
+
+
 	// config
 	public static $config = [
 		'perms'=>[ // les numéros de permission valables selon le type d'accès
@@ -30,11 +30,11 @@ class Finder extends Root
 			'blksize'=>'blockSize',
 			'blocks'=>'blockAmount']
 	];
-	
-	
+
+
 	// host
 	protected static $host = []; // tableau associatif entre host et chemin serveur, le même tableau est utilisé par toutes les classes
-	
+
 
 	// is
 	// retourne vrai si le chemin existe
@@ -43,167 +43,167 @@ class Finder extends Root
 	public static function is($path,bool $makePath=true,bool $posix=false):bool
 	{
 		$return = false;
-		
+
 		if($makePath === true)
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			if($posix === true)
 			$return = posix_access($path,POSIX_F_OK);
-			
+
 			elseif(file_exists($path))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isReadable
 	// retourne vrai si le chemin existe et est lisible
 	// vérification possible via posix_acccess
 	public static function isReadable($path,bool $makePath=true,bool $posix=false):bool
 	{
 		$return = false;
-		
+
 		if($makePath === true)
 		$path = static::path($path);
-		
+
 		if(static::is($path,false,$posix))
 		{
 			if($posix === true)
 			$return = posix_access($path,POSIX_R_OK);
-			
+
 			elseif(is_readable($path))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isWritable
 	// retourne vrai si le chemin existe et est accessible en écriture
 	// vérification possible via posix_acccess
 	public static function isWritable($path,bool $makePath=true,bool $posix=false):bool
 	{
 		$return = false;
-		
+
 		if($makePath === true)
 		$path = static::path($path);
-		
+
 		if(static::is($path,false,$posix))
 		{
 			if($posix === true)
 			$return = posix_access($path,POSIX_W_OK);
-			
+
 			elseif(is_writable($path))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isExecutable
 	// retourne vrai le chemin est éxécutable
 	// vérification possible via posix_acccess
 	public static function isExecutable($path,bool $makePath=true,bool $posix=false):bool
 	{
 		$return = false;
-		
+
 		if($makePath === true)
 		$path = static::path($path);
-		
+
 		if(static::is($path,false,$posix))
 		{
 			if($posix === true)
 			$return = posix_access($path,POSIX_X_OK);
-			
+
 			elseif(is_executable($path))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isPathToUri
 	// retourne vrai si le chemin peut être transformé en path
 	public static function isPathToUri($value):bool
 	{
 		$return = false;
 		$value = static::path($value);
-		
+
 		if(is_string($value))
 		{
 			$uri = static::pathToUri($value);
-			
+
 			if(is_string($uri))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isUriToPath
 	// retourne vrai si l'uri existe et est accessible
 	public static function isUriToPath(string $value,?string $host=null):bool
 	{
 		$return = false;
 		$uriPath = static::uriToPath($value,$host);
-		
+
 		if(static::is($uriPath))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isUriToPathReadable
 	// retourne vrai si l'uri existe et est accessible en lecture
 	public static function isUriToPathReadable(string $value,?string $host=null):bool
 	{
 		$return = false;
 		$uriPath = static::uriToPath($value,$host);
-		
+
 		if(static::isReadable($uriPath))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isUriToPathWritable
 	// retourne vrai si l'uri existe et est accessible en écriture
 	public static function isUriToPathWritable(string $value,?string $host=null):bool
 	{
 		$return = false;
 		$uriPath = static::uriToPath($value,$host);
-		
+
 		if(static::isWritable($uriPath))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isUriToPathExecutable
 	// retourne vrai si l'uri existe et est éxécutable
 	public static function isUriToPathExecutable(string $value,?string $host=null):bool
 	{
 		$return = false;
 		$uriPath = static::uriToPath($value,$host);
-		
+
 		if(static::isExecutable($uriPath))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isCreatable
 	// vérife que le chemin est créable
 	// le chemin ne doit pas existé et le premier directoire parent trouvé doit être écrivable
@@ -211,7 +211,7 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path) && !self::is($path,false))
 		{
 			foreach (Path::parents($path) as $p)
@@ -223,11 +223,11 @@ class Finder extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isReadableOrCreatable
 	// vérifie que le chemin est lisible ou créable
 	// retourne vrai si le chemin existe et qu'il est lisible ou si le chemin n'existe pas et qu'il est créable
@@ -235,14 +235,14 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false) || self::isCreatable($path))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isWritableOrCreatable
 	// vérifie que le chemin est writable ou créable
 	// retourne vrai si le chemin existe et qu'il est écrivable ou si le chemin n'existe pas et qu'il est créable
@@ -250,14 +250,14 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isWritable($path,false) || self::isCreatable($path))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isDot
 	// retourne vrai si le basename du chemin est un dot qui représente self ou parent
 	// ne vérifie pas l'existence du chemin
@@ -265,8 +265,8 @@ class Finder extends Root
 	{
 		return (in_array(Path::basename(static::path($path)),['.','..'],true))? true:false;
 	}
-	
-	
+
+
 	// isVisible
 	// retourne vrai si le chemin est visible
 	// ne vérifie pas l'existence du chemin
@@ -274,15 +274,15 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			$basename = Path::basename($path);
-			
+
 			if(!empty($basename) && !Str::isStart('.',$basename))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
 
@@ -293,15 +293,15 @@ class Finder extends Root
 	{
 		return (static::getHostPath($value) !== null)? true:false;
 	}
-	
-	
+
+
 	// isParentExists
 	// vérifie que le parent direct de l'élement existe et est un directoire
 	public static function isParentExists($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			$parent = Path::parent($path);
@@ -309,18 +309,18 @@ class Finder extends Root
 			if(!empty($parent) && Dir::is($parent,false))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isParentReadable
 	// vérifie que le parent direct de l'élement existe et est un directoire accessible en lecture
 	public static function isParentReadable($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			$parent = Path::parent($path);
@@ -328,18 +328,18 @@ class Finder extends Root
 			if(!empty($parent) && Dir::isReadable($parent,false))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isParentWritable
 	// vérifie que le parent direct de l'élement existe et est un directoire accessible en écriture
 	public static function isParentWritable($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			$parent = Path::parent($path);
@@ -347,18 +347,18 @@ class Finder extends Root
 			if(!empty($parent) && Dir::isWritable($parent,false))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isParentExecutable
 	// vérifie que le parent direct de l'élement existe et est un directoire éxécutable
 	public static function isParentExecutable($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			$parent = Path::parent($path);
@@ -366,11 +366,11 @@ class Finder extends Root
 			if(!empty($parent) && Dir::isExecutable($parent,false))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isParent
 	// retourne vrai si la valeur parent est un sous-directoire existant dans le chemin de path
 	// path n'a pas a existé
@@ -379,13 +379,13 @@ class Finder extends Root
 		$return = false;
 		$parent = static::path($parent);
 		$path = static::path($path);
-		
+
 		if(Dir::is($parent,false) && is_string($path))
 		$return = Path::isParent($parent,$path);
 
 		return $return;
 	}
-	
+
 
 	// isPermission
 	// vérifie s'il est possible d'accéder au fichier, symlink ou directoire en lecture, écriture ou éxécution
@@ -393,25 +393,25 @@ class Finder extends Root
 	public static function isPermission(string $type,$path,$user=null,$group=null):bool
 	{
 		$return = false;
-		
+
 		if(array_key_exists($type,static::$config['perms']))
 		{
 			$permission = static::permission($path,true);
-			
+
 			if(is_array($permission))
 			$permission = current($permission);
-			
+
 			if(is_int($permission) && Number::len($permission) === 3)
 			{
 				if(static::isOwner($path,$user))
 				$permission = Number::sub(0,1,$permission);
-				
+
 				elseif(static::isGroup($path,$group))
 				$permission = Number::sub(1,1,$permission);
-				
+
 				else
 				$permission = Number::sub(2,1,$permission);
-				
+
 				if(is_int($permission) && in_array($permission,static::$config['perms'][$type],true))
 				$return = true;
 			}
@@ -419,8 +419,8 @@ class Finder extends Root
 
 		return $return;
 	}
-	
-	
+
+
 	// isOwner
 	// retourne vrai si l'utilisateur est propriétraire du fichier
 	// si user est null, utilise l'utilisateur courant
@@ -428,8 +428,8 @@ class Finder extends Root
 	{
 		return Server::isOwner(static::owner($path),$user);
 	}
-	
-	
+
+
 	// isGroup
 	// retourne vrai si le groupe est le même que le groupe du fichier
 	// si group est null, utilise le groupe courant
@@ -437,7 +437,7 @@ class Finder extends Root
 	{
 		return Server::isGroup(static::group($path),$group);
 	}
-	
+
 
 	// type
 	// retourne le type du fichier, directoire ou symlink
@@ -445,18 +445,18 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(self::isReadable($path))
 		{
 			$type = filetype($path);
 			if(is_string($type))
 			$return = $type;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// inode
 	// retourne le numéro d'inode du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -465,18 +465,18 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$ino = fileinode($path);
 			if(is_int($ino))
 			$return = $ino;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// permission
 	// retourne la permission du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -486,34 +486,34 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$mode = fileperms($path);
 			if(is_int($mode))
 			$return = ($format === true)? static::formatValue('permission',$mode):$mode;
 		}
-		
+
 		return $return;
 	}
 
-	
+
 	// permissionFormat
 	// format une valeur de permission, pour obtenir 3 chiffres comme 777 ou 755
 	public static function permissionFormat(int $value):int
 	{
 		return Number::toOctal($value,2);
 	}
-	
-	
+
+
 	// permissionOctal
 	// retourne la valeur octale d'une permission comme 777 ou 755
 	public static function permissionOctal(int $value):int
 	{
 		return Number::fromOctal($value);
 	}
-	
-	
+
+
 	// permissionUmask
 	// wrapper pour umask
 	// permet de changer les permissions données par défaut lors de la création de nouveaux fichiers/dossiers
@@ -524,14 +524,14 @@ class Finder extends Root
 			$value = static::permissionOctal($value);
 			$return = umask($value);
 		}
-		
+
 		else
 		$return = umask();
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// permissionChange
 	// change la permission du fichier ou directoire
 	// il n'est pas possible de chmod un symlink en php
@@ -539,19 +539,19 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isWritable($path,false) && is_int($mode))
 		{
 			$mode = static::permissionOctal($mode);
-			
+
 			if(is_int($mode) && chmod($path,$mode))
 			$return = true;
 		}
-		
+
 		return $return;
 	}
 
-	
+
 	// owner
 	// retourne l'identifiant du propriétaire du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -561,18 +561,18 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$owner = fileowner($path);
 			if(is_int($owner))
 			$return = ($format === true)? static::formatValue('owner',$owner):$owner;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// ownerChange
 	// change le owner du fichier ou directoire
 	// pour changer le owner d'un symlink une méthode étend celle-ci
@@ -580,14 +580,14 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_scalar($user) && static::isWritable($path,false) && chown($path,$user))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// group
 	// retourne l'identifiant du groupe du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -597,18 +597,18 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$group = filegroup($path);
 			if(is_int($group))
 			$return = ($format === true)? static::formatValue('group',$group):$group;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// groupChange
 	// change le groupe du fichier ou directoire
 	// pour changer le groupe d'un symlink une méthode étend celle-ci
@@ -616,14 +616,14 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_scalar($group) && static::isWritable($path,false) && chgrp($path,$group))
 		$return = true;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// size
 	// retourne la taille du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -633,18 +633,18 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$size = filesize($path);
 			if(is_int($size))
 			$return = ($format === true)? static::formatValue('size',$size):$size;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// dateAccess
 	// retourne la dernière date d'accès du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -654,18 +654,18 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$atime = fileatime($path);
 			if(is_int($atime))
 			$return = ($format === true)? static::formatValue('dateAccess',$atime):$atime;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// dateModify
 	// retourne la date de modification du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -675,18 +675,18 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$mtime = filemtime($path);
 			if(is_int($mtime))
 			$return = ($format === true)? static::formatValue('dateModify',$mtime):$mtime;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// dateInodeModify
 	// retourne la date de modification de l'inode du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -696,17 +696,17 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$ctime = filectime($path);
 			if(is_int($ctime))
 			$return = ($format === true)? static::formatValue('dateInodeModify',$ctime):$ctime;
 		}
-		
+
 		return $return;
 	}
-	
+
 
 	// stat
 	// retourne les informations stat du fichier ou directoire
@@ -716,48 +716,48 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false))
 		{
 			$stat = stat($path);
-			
+
 			if(is_array($stat))
 			{
 				$return = $stat;
-				
+
 				if($formatKey === true)
 				$return = static::statReformat($return,$formatValue);
 			}
 		}
-		
+
 		return $return;
 	}
-	
+
 
 	// statValue
 	// retourne une valeur du tableau de stat
 	public static function statValue($key,$path,bool $formatKey=false,bool $formatValue=false)
 	{
 		$return = null;
-		
+
 		if(is_string($key) || is_numeric($key))
 		{
 			$stat = static::stat($path,$formatKey,$formatValue);
 			if(!empty($stat) && array_key_exists($key,$stat))
 			$return = $stat[$key];
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// statReformat
 	// reformat un tableau stat, change le nom de certaines clés
 	// les champs formatables sont également formattés
 	public static function statReformat(array $stat,bool $format=false):array
 	{
 		$return = [];
-		
+
 		if(!empty($stat))
 		{
 			foreach ($stat as $key => $value)
@@ -766,18 +766,18 @@ class Finder extends Root
 				{
 					if(array_key_exists($key,static::$config['stat']))
 					$key = static::$config['stat'][$key];
-					
+
 					if($format === true)
 					$value = static::formatValue($key,$value);
-					
+
 					$return[$key] = $value;
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
+
 
 	// clearStatCache
 	// vide la cache de stat
@@ -787,7 +787,7 @@ class Finder extends Root
 		clearstatcache($clearRealPath,$filename);
 		else
 		clearstatcache($clearRealPath);
-		
+
 		return;
 	}
 
@@ -805,14 +805,14 @@ class Finder extends Root
 
 		if($is === true && is_link($path))
 		$path = Symlink::get($path);
-		
+
 		if($is === true && !empty($path))
 		{
 			$return = [];
-			
+
 			if($clearStatCache === true)
 			static::clearStatCache();
-			
+
 			$return['path'] = $path;
 			$return['type'] = filetype($path);
 			$return['readable'] = $is;
@@ -825,81 +825,81 @@ class Finder extends Root
 			$return['pathinfo'] = Path::info($path);
 			$return['stat'] = (array) static::stat($path,$format,$format);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// format
 	// fait le format pour un path
 	public static function formatPath(string $format,string $return,bool $extra=true)
 	{
 		if($format === 'permission')
 		$return = static::permission($return,$extra);
-		
+
 		elseif($format === 'owner')
 		$return = static::owner($return,$extra);
-		
+
 		elseif($format === 'group')
 		$return = static::group($return,$extra);
-		
+
 		elseif($format === 'size')
 		$return = static::size($return,$extra);
-		
+
 		elseif($format === 'dateAccess')
 		$return = static::dateAccess($return,$extra);
-		
+
 		elseif($format === 'dateModify')
 		$return = static::dateModify($return,$extra);
-		
+
 		elseif($format === 'dateInodeModify')
 		$return = static::dateInodeModify($return,$extra);
-		
+
 		elseif($format === 'stat')
 		$return = static::stat($return,$extra);
-		
+
 		elseif($format === 'info')
 		$return = static::info($return,$extra,false);
-		
+
 		elseif($format === 'line')
 		$return = File::lineCount($return);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// formatValue
 	// fait le format pour la valeur directement
 	public static function formatValue(string $format,int $return)
 	{
 		if($format === 'permission')
 		$return = [$return=>static::permissionFormat($return)];
-		
+
 		elseif($format === 'owner')
 		$return = Server::user($return);
-		
+
 		elseif($format === 'group')
 		$return = Server::group($return);
-		
+
 		elseif($return !== null)
 		{
 			if($format === 'size')
 			$return = Number::sizeFormat($return);
-			
+
 			elseif($format === 'dateAccess')
 			$return = Date::sql($return);
-			
+
 			elseif($format === 'dateModify')
 			$return = Date::sql($return);
-			
+
 			elseif($format === 'dateInodeModify')
 			$return = Date::sql($return);
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// touch
 	// touche un fichier ou directoire et change les dates d'accès et de modification
 	// si le chemin est un symlink, celui-ci est suivi
@@ -908,14 +908,14 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(static::isWritable($path,false))
 		$return = touch($path);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// rename
 	// renomme un fichier ou dossier
 	// si le chemin est un symlink, celui-ci est suivi et le lien vers le nouvel emplacement est recrée
@@ -926,7 +926,7 @@ class Finder extends Root
 		$return = false;
 		$target = static::path($target);
 		$path = static::path($path);
-		
+
 		if(is_string($target) && is_string($path))
 		{
 			if(is_link($path))
@@ -941,17 +941,17 @@ class Finder extends Root
 				if(!empty($dirname) && Dir::setOrWritable($dirname))
 				{
 					$return = rename($path,$target);
-					
+
 					if($return === true && !empty($symlink))
 					Symlink::reset($target,$symlink);
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// changeDirname
 	// renomme le dirname d'un fichier ou dossier, garde le basename
 	// si le chemin est un symlink, celui-ci est suivi et le lien symbolique vers le nouvel emplacement est recée
@@ -962,22 +962,22 @@ class Finder extends Root
 		$return = false;
 		$dirname = static::path($dirname);
 		$path = static::path($path);
-		
+
 		if(is_string($dirname) && is_string($path))
 		{
 			$basename = Path::basename($path);
-			
+
 			if(!empty($basename))
 			{
 				$target = Path::addBasename($basename,$dirname);
 				$return = static::rename($target,$path);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// changeBasename
 	// renomme le basename d'un fichier ou dossier, garde le dirname
 	// si le chemin est un symlink, celui-ci est suivi et le lien symbolique vers le nouvel emplacement est recée
@@ -988,7 +988,7 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			if(static::classIsCallable($value))
@@ -996,11 +996,11 @@ class Finder extends Root
 				$basename = Path::basename($path);
 				$value = $value($basename);
 			}
-			
+
 			if(is_string($value))
 			{
 				$dirname = Path::dirname($path);
-				
+
 				if(!empty($dirname))
 				{
 					$target = Path::addBasename($value,$dirname);
@@ -1008,11 +1008,11 @@ class Finder extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// copy
 	// copy un fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
@@ -1022,7 +1022,7 @@ class Finder extends Root
 		$return = null;
 		$to = static::path($to);
 		$path = static::path($path);
-		
+
 		if(static::isReadable($path,false) && self::isCreatable($to))
 		{
 			$dirname = Path::dirname($to);
@@ -1030,16 +1030,16 @@ class Finder extends Root
 			{
 				if(is_dir($path))
 				$return = Dir::copy($to,$path);
-				
+
 				else
 				$return = copy($path,$to);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// copyInDirname
 	// copy un fichier ou link
 	// garde le même dirname
@@ -1050,7 +1050,7 @@ class Finder extends Root
 	{
 		$return = null;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			if(static::classIsCallable($value))
@@ -1058,11 +1058,11 @@ class Finder extends Root
 				$basename = Path::basename($path);
 				$value = $value($basename);
 			}
-			
+
 			if(is_string($value))
 			{
 				$dirname = Path::dirname($path);
-				
+
 				if(!empty($dirname))
 				{
 					$target = Path::addBasename($value,$dirname);
@@ -1070,11 +1070,11 @@ class Finder extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// copyWithBasename
 	// copy un fichier, directoire ou link
 	// garde le même basename
@@ -1085,22 +1085,22 @@ class Finder extends Root
 		$return = null;
 		$dirname = static::path($dirname);
 		$path = static::path($path);
-		
+
 		if(is_string($dirname) && is_string($path))
 		{
 			$basename = Path::basename($path);
-			
+
 			if(!empty($basename))
 			{
 				$target = Path::addBasename($basename,$dirname);
 				$return = static::copy($target,$path);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// unlink
 	// efface un fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi et le symlink est aussi effacé si le pointeur a été effacé
@@ -1110,7 +1110,7 @@ class Finder extends Root
 	{
 		$return = false;
 		$path = static::path($path);
-		
+
 		if(is_string($path))
 		{
 			if(is_link($path))
@@ -1118,7 +1118,7 @@ class Finder extends Root
 				$symlink = $path;
 				$path = Symlink::get($path);
 			}
-			
+
 			if(static::isWritable($path,false))
 			{
 				if(is_dir($path))
@@ -1126,19 +1126,19 @@ class Finder extends Root
 					if(Dir::isEmpty($path) && rmdir($path))
 					$return = true;
 				}
-				
+
 				elseif(unlink($path))
 				$return = true;
-				
+
 				if($return === true && !empty($symlink))
 				Symlink::unset($symlink);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// unlinkOnShutdown
 	// permet d'effacer un fichier ou un directoire au shutdown s'il existe toujours
 	public static function unlinkOnShutdown($path):void
@@ -1146,28 +1146,28 @@ class Finder extends Root
 		Response::onShutdown(function($path) {
 			static::unlink($path);
 		},$path);
-		
+
 		return;
 	}
-	
-	
+
+
 	// unlinks
 	// fait plusieurs appels à la méthodes unlink
 	// retourne le nombre de fichiers effacés
 	public static function unlinks(...$paths):int
 	{
 		$return = 0;
-		
+
 		foreach ($paths as $path)
 		{
 			if(static::unlink($path))
 			$return++;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// path
 	// remplace des segments dans un path
 	// is isSafe est vrai, vérifie que le chemin passe le regex safePath
@@ -1180,40 +1180,40 @@ class Finder extends Root
 		if(is_string($value) && !Str::hasNullByte($value))
 		{
 			$return = static::shortcut($value);
-			
+
 			if($isSafe === true && !Path::isSafe($return,$option))
 			$return = null;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// realpath
 	// realpath en fonction du dossier courant
 	// possibilité de changer le dossier courant
 	public static function realpath(string $path='',?string $current=null):?string
 	{
 		$return = null;
-		
+
 		if($current === null || (is_string($current) && Dir::setCurrent($current)))
 		$return = realpath($path);
-		
+
 		if($return === false)
 		$return = null;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// realpathCache
 	// retourne la taille et le contenu de la cache realpath
 	public static function realpathCache():array
 	{
 		return ['size'=>realpath_cache_size(),'cache'=>realpath_cache_get()];
 	}
-	
-	
+
+
 	// getHostPaths
 	// retourne un tableau avec tous les chemins pour un host
 	// il peut y avoir plusieurs chemins dans le cas d'un symlink
@@ -1221,25 +1221,25 @@ class Finder extends Root
 	{
 		$return = null;
 		$hosts = static::host();
-		
+
 		if(array_key_exists($value,$hosts))
 		$return = $hosts[$value];
-		
+
 		else
 		{
 			$host = Uri::host($value);
-			
+
 			if(!empty($host) && array_key_exists($host,$hosts))
 			$return = $hosts[$host];
 		}
-		
+
 		if(is_string($return))
 		$return = (array) $return;
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getHostPath
 	// retourne le chemin d'un host paramétré ou null si non existant, par défaut le index est 0
 	// input peut être un host ou une uri
@@ -1247,14 +1247,14 @@ class Finder extends Root
 	{
 		$return = null;
 		$paths = static::getHostPaths($value);
-		
+
 		if(!empty($paths))
 		$return = Arr::index($index,$paths);
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// uriToPath
 	// retourne le chemin d'une uri avec host paramétré ou null si non existant
 	public static function uriToPath(string $value,?string $host=null):?string
@@ -1264,42 +1264,42 @@ class Finder extends Root
 
 		if(!empty($host))
 		$return = Path::append($host,Uri::path($value));
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// pathToUri
 	// retourne l'uri absolut ou relative à partir d'un chemin serveur
 	public static function pathToUri($value,?bool $absolute=null):?string
 	{
 		$return = null;
 		$value = static::path($value);
-		
+
 		if(is_string($value))
 		{
 			foreach (static::host() as $host => $paths)
 			{
 				if(!is_array($paths))
 				$paths = (array) $paths;
-				
+
 				foreach ($paths as $path)
 				{
 					if(strpos($value,$path) === 0)
 					{
 						$return = Str::stripStart($path,$value);
 						$return = Uri::output($return,['schemeHost'=>$host,'absolute'=>$absolute]);
-						
+
 						break 2;
 					}
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// host
 	// fait un arr::replaceUnset sur le tableau des host
 	// permet de retourner, ajouter, modifier et enlever des host en une méthode
@@ -1307,8 +1307,8 @@ class Finder extends Root
 	{
 		return (is_array($array))? (static::$host = Arr::replaceCleanNull(static::$host,$array)):static::$host;
 	}
-	
-	
+
+
 	// umaskGroupWritable
 	// change les permissions par défaut selon si le group doit avoir accès en écriture
 	// si write est true, fichier change 644 pour 664
@@ -1320,24 +1320,24 @@ class Finder extends Root
 			File::setDefaultPermission(664,true);
 			Dir::setDefaultPermission(775);
 		}
-		
+
 		else
 		{
 			File::setDefaultPermission(644,true);
 			Dir::setDefaultPermission(755);
 		}
-		
+
 		return;
 	}
-	
-	
+
+
 	// concatenateDirFileString
 	// permet de faire une concatenation de plusieurs dossiers et/ou fichiers
 	// retourne une string
 	public static function concatenateDirFileString(string $separator=PHP_EOL,$extension=null,...$values):?string
 	{
 		$return = null;
-		
+
 		if(!empty($values))
 		{
 			foreach ($values as $value)
@@ -1345,17 +1345,17 @@ class Finder extends Root
 				if(is_string($value))
 				{
 					$res = [];
-					
+
 					if(Dir::is($value))
 					$res = Dir::getExtension($value,$extension);
-					
+
 					elseif(File::is($value))
 					$res[] = $value;
-					
+
 					if(!empty($res))
 					{
 						$append = File::concatenateString($separator,...$res);
-						
+
 						if(is_string($append))
 						{
 							$return .= (is_string($return) && strlen($return))? $separator:'';
@@ -1365,11 +1365,11 @@ class Finder extends Root
 				}
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// phpExtension
 	// retourne l'extension de php
 	public static function phpExtension():string

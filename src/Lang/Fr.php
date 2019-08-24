@@ -10,14 +10,14 @@ class Fr extends Base\Config
 	public static $config = [
 		// number
 		'number'=>[
-			
+
 			// format
 			'format'=>[
 				'decimal'=>2,
 				'separator'=>'.',
 				'thousand'=>' '
 			],
-			
+
 			// moneyFormat
 			'moneyFormat'=>[
 				'decimal'=>2,
@@ -25,7 +25,7 @@ class Fr extends Base\Config
 				'thousand'=>' ',
 				'output'=>'%v% $'
 			],
-			
+
 			// percentFormat
 			'percentFormat'=>[
 				'decimal'=>0,
@@ -33,13 +33,13 @@ class Fr extends Base\Config
 				'thousand'=>'',
 				'output'=>'%v%%'
 			],
-			
+
 			// phoneFormat
 			'phoneFormat'=>[
 				'parenthesis'=>true,
 				'extension'=>'#'
 			],
-						
+
 			// sizeFormat
 			'sizeFormat'=>[
 				'round'=>[
@@ -58,10 +58,10 @@ class Fr extends Base\Config
 					5=>'Po']
 				]
 		],
-		
+
 		// date
 		'date'=>[
-			
+
 			// format
 			'format'=>[
 				0=>'j %n% Y',
@@ -76,14 +76,14 @@ class Fr extends Base\Config
 				'long'=>'j %n% Y H:i:s',
 				'calendar'=>'@n@ Y'
 			],
-			
+
 			// placeholder
 			'placeholder'=>[
 				'dateToDay'=>'DD-MM-YYYY',
 				'dateToMinute'=>'DD-MM-YYYY HH:MM',
 				'dateToSecond'=>'DD-MM-YYYY HH:MM:SS'
 			],
-			
+
 			// str
 			'str'=>[
 				'year'=>'année',
@@ -94,7 +94,7 @@ class Fr extends Base\Config
 				'second'=>'seconde',
 				'and'=>'et'
 			],
-			
+
 			// month
 			'month'=>[
 				1=>'Janvier',
@@ -110,7 +110,7 @@ class Fr extends Base\Config
 				11=>'Novembre',
 				12=>'Décembre'
 			],
-				
+
 			// dayShort
 			'dayShort'=>[
 				0=>'D',
@@ -121,7 +121,7 @@ class Fr extends Base\Config
 				5=>'V',
 				6=>'S'
 			],
-			
+
 			// day
 			'day'=>[
 				0=>'Dimanche',
@@ -133,10 +133,10 @@ class Fr extends Base\Config
 				6=>'Samedi'
 			]
 		],
-		
+
 		// header
 		'header'=>[
-			
+
 			// responseStatus
 			'responseStatus'=>[
 				100=>'Continuer',
@@ -202,7 +202,7 @@ class Fr extends Base\Config
 				511=>'Authentification réseau requise'
 			]
 		],
-		
+
 		// error
 		'error'=>[
 			'code'=>[
@@ -224,7 +224,7 @@ class Fr extends Base\Config
 				E_ALL=>'E_ALL'
 			]
 		],
-		
+
 		// validate
 		'validate'=>[
 			'array'=>'Doit être un tableau',
@@ -340,22 +340,22 @@ class Fr extends Base\Config
 			'extension'=>"L'extension du fichier doit être: [%]",
 			'extensions'=>"L'extension du ou des fichiers doit être: [%]"
 		],
-		
+
 		// required
 		'required'=>[
 			'common'=>'Ne peut pas être vide'
 		],
-		
+
 		// unique
 		'unique'=>[
 			'common'=>'Doit être unique[%]'
 		],
-		
+
 		// editable
 		'editable'=>[
 			'common'=>'Ne peut pas être modifié'
 		],
-		
+
 		// compare
 		'compare'=>[
 			'='=>'Doit être égal à [%]',
