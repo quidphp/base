@@ -21,7 +21,7 @@ class Superglobal extends Root
 	
 	// getExists
 	// vérifie l'existence d'une clé dans la superglobale get
-	public static function getExists($key):bool 
+	public static function getExists($key):bool
 	{
 		return Arrs::keyExists($key,static::get());
 	}
@@ -29,7 +29,7 @@ class Superglobal extends Root
 
 	// getsExists
 	// vérifie l'existence de plusieurs clés dans la superglobale get
-	public static function getsExists(array $keys):bool 
+	public static function getsExists(array $keys):bool
 	{
 		return Arrs::keysExists($keys,static::get());
 	}
@@ -37,7 +37,7 @@ class Superglobal extends Root
 
 	// postExists
 	// vérifie l'existence d'une clé dans la superglobale post
-	public static function postExists($key):bool 
+	public static function postExists($key):bool
 	{
 		return Arrs::keyExists($key,static::post());
 	}
@@ -45,7 +45,7 @@ class Superglobal extends Root
 
 	// postsExists
 	// vérifie l'existence de plusieurs clés dans la superglobale post
-	public static function postsExists(array $keys):bool 
+	public static function postsExists(array $keys):bool
 	{
 		return Arrs::keysExists($keys,static::post());
 	}
@@ -53,7 +53,7 @@ class Superglobal extends Root
 
 	// cookieExists
 	// vérifie l'existence d'une clé dans la superglobale cookie
-	public static function cookieExists(string $key):bool 
+	public static function cookieExists(string $key):bool
 	{
 		return Arrs::keyExists($key,static::cookie());
 	}
@@ -61,7 +61,7 @@ class Superglobal extends Root
 
 	// sessionExists
 	// vérifie l'existence d'une clé dans la superglobale session si démarré
-	public static function sessionExists($key):bool 
+	public static function sessionExists($key):bool
 	{
 		return (static::hasSession() && Arrs::keyExists($key,static::session()))? true:false;
 	}
@@ -69,7 +69,7 @@ class Superglobal extends Root
 
 	// sessionsExists
 	// vérifie l'existence de plusieurs clés dans la superglobale session si démarré
-	public static function sessionsExists(array $keys):bool 
+	public static function sessionsExists(array $keys):bool
 	{
 		return (static::hasSession() && Arrs::keysExists($keys,static::session()))? true:false;
 	}
@@ -77,7 +77,7 @@ class Superglobal extends Root
 	
 	// fileExists
 	// vérifie l'existence d'une clé dans la superglobale files
-	public static function fileExists(string $key):bool 
+	public static function fileExists(string $key):bool
 	{
 		return Arrs::keyExists($key,static::files());
 	}
@@ -85,7 +85,7 @@ class Superglobal extends Root
 
 	// envExists
 	// vérifie l'existence d'une clé dans la superglobale env
-	public static function envExists(string $key):bool 
+	public static function envExists(string $key):bool
 	{
 		return Arrs::keyExists($key,static::env());
 	}
@@ -93,7 +93,7 @@ class Superglobal extends Root
 
 	// requestExists
 	// vérifie l'existence d'une clé dans la superglobale request
-	public static function requestExists($key):bool 
+	public static function requestExists($key):bool
 	{
 		return Arrs::keyExists($key,static::request());
 	}
@@ -102,7 +102,7 @@ class Superglobal extends Root
 	// serverExists
 	// vérifier l'existence d'une clé dans la superglobale superglobale
 	// possibilité d'une recherche insensible à la case
-	public static function serverExists(string $key,bool $sensitive=true):bool 
+	public static function serverExists(string $key,bool $sensitive=true):bool
 	{
 		return Arrs::keyExists($key,static::server(),$sensitive);
 	}
@@ -110,7 +110,7 @@ class Superglobal extends Root
 	
 	// hasServerLength
 	// retourne vrai si le tableau serveur a la clé content_length de spécifié
-	public static function hasServerLength():bool 
+	public static function hasServerLength():bool
 	{
 		return static::serverExists('CONTENT_LENGTH');
 	}
@@ -119,7 +119,7 @@ class Superglobal extends Root
 	// hasServerLengthWithoutPost
 	// retourne vrai si le tableau serveur a la clé content_length de spécifié et que le tableau post est vide
 	// ceci signifie normalement un chargement de fichier qui a échoué
-	public static function hasServerLengthWithoutPost():bool 
+	public static function hasServerLengthWithoutPost():bool
 	{
 		return (static::hasServerLength() && empty(static::post()))? true:false;
 	}
@@ -205,7 +205,7 @@ class Superglobal extends Root
 	
 	// getGet
 	// retourne une variable dans la superglobale get
-	public static function getGet($key) 
+	public static function getGet($key)
 	{
 		return Arrs::get($key,static::get());
 	}
@@ -213,7 +213,7 @@ class Superglobal extends Root
 	
 	// getPost
 	// retourne une variable dans la superglobale post
-	public static function getPost($key) 
+	public static function getPost($key)
 	{
 		return Arrs::get($key,static::post());
 	}
@@ -221,7 +221,7 @@ class Superglobal extends Root
 	
 	// getCookie
 	// retourne une variable dans la superglobale cookie
-	public static function getCookie(string $key) 
+	public static function getCookie(string $key)
 	{
 		return Arrs::get($key,static::cookie());
 	}
@@ -230,7 +230,7 @@ class Superglobal extends Root
 	// getSession
 	// retourne une variable dans la superglobale session si démarré
 	// peut retourner null
-	public static function getSession($key) 
+	public static function getSession($key)
 	{
 		return (static::hasSession())? Arrs::get($key,static::session()):null;
 	}
@@ -238,7 +238,7 @@ class Superglobal extends Root
 	
 	// getFiles
 	// retourne une variable dans la superglobale files
-	public static function getFiles(string $key) 
+	public static function getFiles(string $key)
 	{
 		return Arrs::get($key,static::files());
 	}
@@ -246,7 +246,7 @@ class Superglobal extends Root
 	
 	// getEnv
 	// retourne une variable dans la superglobale env
-	public static function getEnv(string $key) 
+	public static function getEnv(string $key)
 	{
 		return Arrs::get($key,static::env());
 	}
@@ -254,7 +254,7 @@ class Superglobal extends Root
 	
 	// getRequest
 	// retourne une variable dans la superglobale request
-	public static function getRequest($key) 
+	public static function getRequest($key)
 	{
 		return Arrs::get($key,static::request());
 	}
@@ -263,7 +263,7 @@ class Superglobal extends Root
 	// getServer
 	// retourne une variable dans la superglobale server
 	// possibilité d'une recherche insensible à la case
-	public static function getServer(string $key,bool $sensitive=true) 
+	public static function getServer(string $key,bool $sensitive=true)
 	{
 		return Arrs::get($key,static::server(),$sensitive);
 	}
@@ -277,7 +277,7 @@ class Superglobal extends Root
 	{
 		$return = [];
 		
-		foreach (static::server() as $k => $v) 
+		foreach (static::server() as $k => $v)
 		{
 			if(($sensitive === true && strpos($k,$key) === 0) || ($sensitive === false && stripos($k,$key) === 0))
 			$return[$k] = $v;
@@ -292,7 +292,7 @@ class Superglobal extends Root
 	
 	// getServerHeader
 	// retourne les headers du tableau server
-	public static function getServerHeader(bool $format=false):array 
+	public static function getServerHeader(bool $format=false):array
 	{
 		return static::getServerStart('HTTP_',true,$format);
 	}
@@ -308,7 +308,7 @@ class Superglobal extends Root
 		
 		if(!empty($array))
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				$explode = explode('_',$key);
 				if(is_array($explode))
@@ -412,7 +412,7 @@ class Superglobal extends Root
 	
 	// unsetGet
 	// enlève une entrée dans le tableau superglobale get
-	public static function unsetGet($key):void 
+	public static function unsetGet($key):void
 	{
 		Arrs::unsetRef($key,$_GET);
 		
@@ -422,7 +422,7 @@ class Superglobal extends Root
 	
 	// unsetPost
 	// enlève une entrée dans le tableau superglobale post
-	public static function unsetPost($key):void 
+	public static function unsetPost($key):void
 	{
 		Arrs::unsetRef($key,$_POST);
 		
@@ -432,7 +432,7 @@ class Superglobal extends Root
 	
 	// unsetCookie
 	// enlève une entrée dans le tableau superglobale cookie
-	public static function unsetCookie(string $key):void 
+	public static function unsetCookie(string $key):void
 	{
 		Arrs::unsetRef($key,$_COOKIE);
 		
@@ -454,7 +454,7 @@ class Superglobal extends Root
 
 	// unsetFiles
 	// enlève une entrée dans le tableau superglobale files
-	public static function unsetFiles(string $key):void 
+	public static function unsetFiles(string $key):void
 	{
 		Arrs::unsetRef($key,$_FILES);
 		
@@ -464,7 +464,7 @@ class Superglobal extends Root
 
 	// unsetEnv
 	// enlève une entrée dans le tableau superglobale env
-	public static function unsetEnv(string $key):void 
+	public static function unsetEnv(string $key):void
 	{
 		Arrs::unsetRef($key,$_ENV);
 		
@@ -474,7 +474,7 @@ class Superglobal extends Root
 
 	// unsetRequest
 	// enlève une entrée dans le tableau superglobale request
-	public static function unsetRequest($key):void 
+	public static function unsetRequest($key):void
 	{
 		Arrs::unsetRef($key,$_REQUEST);
 		
@@ -485,7 +485,7 @@ class Superglobal extends Root
 	// unsetServer
 	// enlève une entrée dans le tableau superglobale server
 	// possibilité d'une opération insensible à la case
-	public static function unsetServer(string $key,bool $sensitive=true):void 
+	public static function unsetServer(string $key,bool $sensitive=true):void
 	{
 		Arrs::unsetRef($key,$_SERVER,$sensitive);
 		
@@ -519,7 +519,7 @@ class Superglobal extends Root
 	
 	// formatServerKey
 	// format une chaîne dans le format du tableau serveur
-	public static function formatServerKey(string $return):string 
+	public static function formatServerKey(string $return):string
 	{
 		return str_replace('-','_',strtoupper($return));
 	}
@@ -530,13 +530,13 @@ class Superglobal extends Root
 	// possibilité d'enlever les tags html dans le tableau de retour
 	// possibilité d'inclure les données chargés en provenance de files comme variable post
 	// les données de files sont reformat par défaut, mais post a toujours précédente sur files
-	public static function postReformat(array $return,bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false,?array $files=null):array 
+	public static function postReformat(array $return,bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false,?array $files=null):array
 	{
 		if($safeKey === true)
 		{
 			$postKeys = static::$config['postKeys'];
 			
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if(in_array($key,$postKeys,true) || !Validate::isCol($key))
 				unset($return[$key]);
@@ -560,11 +560,11 @@ class Superglobal extends Root
 	// filesReformat
 	// reformat un tableau en provenance de files, seulement s'il est multiple
 	// retourne un tableau multidimensionnel si plusieurs fichiers
-	public static function filesReformat(array $value):array 
+	public static function filesReformat(array $value):array
 	{
 		$return = [];
 		
-		foreach ($value as $key => $value) 
+		foreach ($value as $key => $value)
 		{
 			if(is_string($key) && is_array($value))
 			{

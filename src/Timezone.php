@@ -14,7 +14,7 @@ class Timezone extends Root
 	
 	// is
 	// retourne vrai si la timezone existe
-	public static function is($value):bool 
+	public static function is($value):bool
 	{
 		return (is_string($value) && in_array($value,static::all(),true))? true:false;
 	}
@@ -32,7 +32,7 @@ class Timezone extends Root
 	// change le timezone courant
 	// cette valeur prend le dessus sur le ini default_timezone
 	// possible de set dans ini aussi
-	public static function set($value,bool $ini=false):bool 
+	public static function set($value,bool $ini=false):bool
 	{
 		$return = false;
 		
@@ -69,7 +69,7 @@ class Timezone extends Root
 		static::$config['current'] = $timezone;
 		
 		return $return;
-	} 
+	}
 	
 	
 	// name
@@ -178,7 +178,7 @@ class Timezone extends Root
 	// suninfo
 	// retourne les informations relatives au soleil pour une timezone
 	// possible de fournir un tableau avec une clé latitude et une clé longitude
-	public static function suninfo($value,$timestamp=null,$format=null):?array 
+	public static function suninfo($value,$timestamp=null,$format=null):?array
 	{
 		$return = null;
 		$timestamp = Date::time($timestamp);

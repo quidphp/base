@@ -4,7 +4,7 @@ namespace Quid\Base;
 
 // set
 class Set extends Root
-{	
+{
 	// trait
 	use _option;
 	
@@ -30,7 +30,7 @@ class Set extends Root
 	
 	// isSeparatorStart
 	// retourne vrai si le set a un separator au début
-	public static function isSeparatorStart(string $set):bool 
+	public static function isSeparatorStart(string $set):bool
 	{
 		return Str::isStart(static::getSeparator(),$set,static::getSensitive());
 	}
@@ -38,7 +38,7 @@ class Set extends Root
 	
 	// isSeparatorEnd
 	// retourne vrai si le set a un separator à la fin
-	public static function isSeparatorEnd(string $set):bool 
+	public static function isSeparatorEnd(string $set):bool
 	{
 		return ($set !== ($separator = static::getSeparator()) && Str::isEnd($separator,$set,static::getSensitive()))? true:false;
 	}
@@ -54,7 +54,7 @@ class Set extends Root
 	
 	// hasSegment
 	// retourne vrai si le set contient un segment
-	public static function hasSegment(string $set):bool 
+	public static function hasSegment(string $set):bool
 	{
 		return Segment::has(null,$set);
 	}
@@ -127,7 +127,7 @@ class Set extends Root
 		{
 			$return = true;
 			
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				$value = static::arr($value);
 				
@@ -162,7 +162,7 @@ class Set extends Root
 			
 			if(count($pattern) === count($set))
 			{
-				foreach ($pattern as $key => $value) 
+				foreach ($pattern as $key => $value)
 				{
 					if(Segment::isWrapped(null,$value))
 					$pattern[$key] = $set[$key];
@@ -194,7 +194,7 @@ class Set extends Root
 	
 	// getSensitive
 	// retourne si la classe est sensible à la case
-	public static function getSensitive():bool 
+	public static function getSensitive():bool
 	{
 		return static::$config['sensitive'];
 	}
@@ -232,8 +232,8 @@ class Set extends Root
 			if(is_string($last) && static::getOption('end') === null)
 			$option['end'] = static::isSeparatorEnd($last);
 		
-			foreach ($values as $k => $value) 
-			{	
+			foreach ($values as $k => $value)
+			{
 				$value = static::arr($value,$option);
 				
 				if(is_array($value))
@@ -370,7 +370,7 @@ class Set extends Root
 	// parse
 	// parse un tableau arr
 	// pas utilisé dans set
-	public static function parse(array $return,array $option):array 
+	public static function parse(array $return,array $option):array
 	{
 		return $return;
 	}
@@ -414,7 +414,7 @@ class Set extends Root
 	
 	// prepareStr
 	// prépare une string dans la méthode arr
-	public static function prepareStr(string $value,array $option):array 
+	public static function prepareStr(string $value,array $option):array
 	{
 		$return = [];
 		$separator = static::getSeparator($option['explode']);
@@ -426,7 +426,7 @@ class Set extends Root
 	
 	// prepareArr
 	// prépare un array dans la méthode arr
-	public static function prepareArr(array $value,array $option):array 
+	public static function prepareArr(array $value,array $option):array
 	{
 		$return = [];
 		$separator = static::getSeparator($option['explode']);
@@ -466,7 +466,7 @@ class Set extends Root
 	
 	// last
 	// retourne la dernière valeur du set
-	public static function last($set,?array $option=null):?string 
+	public static function last($set,?array $option=null):?string
 	{
 		return Arr::index(-1,static::arr($set,$option));
 	}
@@ -522,7 +522,7 @@ class Set extends Root
 	
 	// valuesChange
 	// changement de valeur dans un set
-	public static function valuesChange(string $value,string $change,$set,?int $amount=null,?array $option=null):string 
+	public static function valuesChange(string $value,string $change,$set,?int $amount=null,?array $option=null):string
 	{
 		return static::str(Arr::valuesChange($value,$change,static::arr($set,$option),$amount),$option);
 	}
@@ -564,7 +564,7 @@ class Set extends Root
 	// getSegments
 	// retourne tous les segments dans set, tel que décrit dans pattern
 	// retourne null si les deux string ne sont pas compatibles
-	public static function getSegments(string $pattern,string $set,?array $option=null):?array 
+	public static function getSegments(string $pattern,string $set,?array $option=null):?array
 	{
 		$return = null;
 		$pattern = static::stripWrap($pattern,false,false);
@@ -576,7 +576,7 @@ class Set extends Root
 		{
 			$return = [];
 			
-			foreach ($pattern as $key => $value) 
+			foreach ($pattern as $key => $value)
 			{
 				if(Segment::isWrapped(null,$value))
 				{
@@ -592,7 +592,7 @@ class Set extends Root
 	
 	// stripWrap
 	// ajoute ou enlève le séparateur en début ou fin de chaîne
-	public static function stripWrap(string $set,?bool $start=null,?bool $end=null):string 
+	public static function stripWrap(string $set,?bool $start=null,?bool $end=null):string
 	{
 		return Str::stripWrap(static::getSeparator(),$set,$start,$end,static::getSensitive());
 	}
@@ -633,7 +633,7 @@ class Set extends Root
 	// onSet
 	// helper pour une méthode onSet de colonne
 	// fait un set si array
-	public static function onSet($return) 
+	public static function onSet($return)
 	{
 		if(is_array($return))
 		$return = static::str($return);
@@ -645,7 +645,7 @@ class Set extends Root
 	// onGet
 	// helper pour une méthode onGet de colonne
 	// explose le set si scalar, utilise option cast
-	public static function onGet($return) 
+	public static function onGet($return)
 	{
 		if(is_scalar($return))
 		$return = static::arr($return,['cast'=>true]);

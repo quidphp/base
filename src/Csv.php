@@ -26,7 +26,7 @@ class Csv extends File
 	
 	// same
 	// retourne vrai si toutes les colonnes du tableau csv ont le même count et les mêmes clés
-	public static function same(array $value):bool 
+	public static function same(array $value):bool
 	{
 		return Column::same($value);
 	}
@@ -35,19 +35,19 @@ class Csv extends File
 	// clean
 	// efface toutes les colonnes qui n'ont pas la même longueur et les mêmes clés que la première
 	// si removeEmpty est true, une colonne dont toutes les valeurs sont vides est éliminé
-	public static function clean(array $return,bool $removeEmpty=true):array 
+	public static function clean(array $return,bool $removeEmpty=true):array
 	{
 		$return = Column::clean($return);
 		
 		if($removeEmpty === true && !empty($return))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				$remove = true;
 				
 				if(!empty($value) && is_array($value))
 				{
-					foreach ($value as $k => $v) 
+					foreach ($value as $k => $v)
 					{
 						if(!empty($v))
 						{
@@ -69,7 +69,7 @@ class Csv extends File
 	// assoc
 	// la première colonne contient les headers
 	// le nom des headers est appliqué comme clé à chaque colonne
-	public static function assoc(array $array):array 
+	public static function assoc(array $array):array
 	{
 		$return = [];
 		
@@ -79,9 +79,9 @@ class Csv extends File
 			
 			if(!empty($header) && !empty($array))
 			{
-				foreach ($array as $key => $value) 
+				foreach ($array as $key => $value)
 				{
-					foreach (array_values($value) as $k => $v) 
+					foreach (array_values($value) as $k => $v)
 					{
 						$newKey = Arr::index($k,$header);
 						
@@ -100,7 +100,7 @@ class Csv extends File
 	// inverse de assoc
 	// prend un tableau sans headers mais avec clés associatives
 	// retourne un tableau avec headers et des colonnes indexés
-	public static function list(array $array):array 
+	public static function list(array $array):array
 	{
 		$return = [];
 		
@@ -109,12 +109,12 @@ class Csv extends File
 			$return[0] = [];
 			$first = current($array);
 			
-			foreach ($first as $key => $value) 
+			foreach ($first as $key => $value)
 			{
 				$return[0][] = $key;
 			}
 			
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				$newKey = $key + 1;
 				$return[$newKey] = array_values($value);
@@ -127,14 +127,14 @@ class Csv extends File
 	
 	// str
 	// parse une string ou un tableau de strings csv et retourne un tableau uni ou multi-dimensionnel
-	public static function str($value,?array $option=null):?array 
+	public static function str($value,?array $option=null):?array
 	{
 		$return = null;
 		$option = Arr::plus(static::getFormat(),$option);
 		
 		if(is_array($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_string($v) && !empty($v))
 				$return[] = str_getcsv($v,$option['delimiter'],$option['enclosure'],$option['escape']);
@@ -148,7 +148,7 @@ class Csv extends File
 	}
 	
 	
-	// put 
+	// put
 	// parse un tableau uni ou multi-dimensionnel csv et retourne une string
 	// utilise une ressource php temp
 	public static function put(array $array,?array $option=null):?string
@@ -242,7 +242,7 @@ class Csv extends File
 			
 			if(Arrs::is($content))
 			{
-				foreach ($content as $w) 
+				foreach ($content as $w)
 				{
 					if(is_array($w))
 					$put = fputcsv($value,$w,$option['delimiter'],$option['enclosure'],$option['escape']);

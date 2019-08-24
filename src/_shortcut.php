@@ -4,14 +4,14 @@ namespace Quid\Base;
 
 // _shortcut
 trait _shortcut
-{	
+{
 	// config
 	protected static $shortcut = []; // conserve les shortcuts de la classe
 	
 	
 	// isShortcut
 	// retourne vrai si le shortcut existe
-	public static function isShortcut(string $key):bool 
+	public static function isShortcut(string $key):bool
 	{
 		return (array_key_exists($key,static::$shortcut))? true:false;
 	}
@@ -19,7 +19,7 @@ trait _shortcut
 	
 	// getShortcut
 	// retourne la valeur du shortcut ou null si non existant
-	public static function getShortcut(string $key):?string 
+	public static function getShortcut(string $key):?string
 	{
 		return Arr::get($key,static::$shortcut);
 	}
@@ -40,7 +40,7 @@ trait _shortcut
 	// ajoute ou change plusieurs shortcuts
 	public static function setsShortcut(array $keyValue):void
 	{
-		foreach ($keyValue as $key => $value) 
+		foreach ($keyValue as $key => $value)
 		{
 			if(is_string($key) && is_string($value))
 			static::setShortcut($key,$value);
@@ -79,9 +79,9 @@ trait _shortcut
 	
 	// shortcuts
 	// permet de remplacer plusieurs valeurs contenants un shortcut
-	public static function shortcuts(array $return):array 
+	public static function shortcuts(array $return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			$return[$key] = static::shortcut($value);
 		}
@@ -92,7 +92,7 @@ trait _shortcut
 	
 	// allShortcuts
 	// retourne tous les shortcuts
-	public static function allShortcuts():array 
+	public static function allShortcuts():array
 	{
 		return static::$shortcut;
 	}

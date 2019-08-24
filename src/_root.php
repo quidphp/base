@@ -4,14 +4,14 @@ namespace Quid\Base;
 
 // _root
 trait _root
-{	
+{
 	// trait
 	use _config, _cacheStatic, _cacheFile;
 	
 	
 	// classFqcn
 	// retourne le fqcn de la classe
-	public static function classFqcn():string 
+	public static function classFqcn():string
 	{
 		return static::class;
 	}
@@ -19,7 +19,7 @@ trait _root
 
 	// classNamespace
 	// retourne le namespace de la classe
-	public static function classNamespace():string 
+	public static function classNamespace():string
 	{
 		return Fqcn::namespace(static::class);
 	}
@@ -27,7 +27,7 @@ trait _root
 
 	// classRoot
 	// retourne le root du namespace de la classe
-	public static function classRoot():string 
+	public static function classRoot():string
 	{
 		return Fqcn::root(static::class);
 	}
@@ -67,7 +67,7 @@ trait _root
 	// retourne vrai si la classe peut appeler la callable closure ou dans un array
 	// la validation est très stricte pour éviter des bogues de mauvais call
 	// retourne vrai aux méthodes protégés pour la classe courante
-	public static function classIsCallable($value):bool 
+	public static function classIsCallable($value):bool
 	{
 		return ($value instanceof \Closure || (Call::isSafeStaticMethod($value) && is_callable($value)))? true:false;
 	}
@@ -76,7 +76,7 @@ trait _root
 	// classFile
 	// retourne le chemin du fichier de la classe courante
 	// pourrait retourner null
-	public static function classFile():?string 
+	public static function classFile():?string
 	{
 		return Autoload::getFilePath(static::class,false);
 	}
@@ -85,7 +85,7 @@ trait _root
 	// classDir
 	// retourne le chemin du directoire de la classe courante
 	// pourrait retourner null
-	public static function classDir():?string 
+	public static function classDir():?string
 	{
 		return Autoload::getDirPath(static::classNamespace(),false);
 	}

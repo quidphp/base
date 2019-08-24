@@ -122,7 +122,7 @@ class Uri extends Root
 	
 	// hasExtension
 	// retourne vrai si le chemin a une extension
-	public static function hasExtension(string $uri,bool $decode=false):bool 
+	public static function hasExtension(string $uri,bool $decode=false):bool
 	{
 		return (!empty(static::extension($uri,$decode)))? true:false;
 	}
@@ -130,7 +130,7 @@ class Uri extends Root
 	
 	// hasQuery
 	// retourne vrai si le chemin a un query
-	public static function hasQuery(string $uri,bool $decode=false):bool 
+	public static function hasQuery(string $uri,bool $decode=false):bool
 	{
 		return (!empty(static::query($uri,$decode)))? true:false;
 	}
@@ -190,7 +190,7 @@ class Uri extends Root
 	
 	// isScheme
 	// retourne vrai si l'uri a un scheme du type spécifié
-	public static function isScheme($value,string $uri,bool $decode=false):bool 
+	public static function isScheme($value,string $uri,bool $decode=false):bool
 	{
 		$return = false;
 		$scheme = static::scheme($uri,$decode);
@@ -209,7 +209,7 @@ class Uri extends Root
 	// retourne vrai si l'uri a l'hôte spécifié
 	// possibilité de mettre une ou plusieurs target
 	// comparaison insensible à la case
-	public static function isHost($target,string $uri,bool $decode=false):bool 
+	public static function isHost($target,string $uri,bool $decode=false):bool
 	{
 		$return = false;
 		
@@ -227,7 +227,7 @@ class Uri extends Root
 	
 	// isSchemeHost
 	// retourne vrai si l'uri a le scheme host spécifié
-	public static function isSchemeHost($value,string $uri,bool $decode=false):bool 
+	public static function isSchemeHost($value,string $uri,bool $decode=false):bool
 	{
 		$return = false;
 		$schemeHost = static::schemeHost($uri,$decode);
@@ -243,7 +243,7 @@ class Uri extends Root
 	// retourne vrai si l'uri à une extension du type
 	// possibilité de mettre une ou plusieurs target
 	// comparaison insensible à la case
-	public static function isExtension($target,string $uri,bool $decode=false):bool 
+	public static function isExtension($target,string $uri,bool $decode=false):bool
 	{
 		$return = false;
 		
@@ -281,7 +281,7 @@ class Uri extends Root
 	
 	// isLang
 	// retourne vrai si l'uri a la langue spécifié
-	public static function isLang($value,string $uri,bool $decode=false):bool 
+	public static function isLang($value,string $uri,bool $decode=false):bool
 	{
 		return (is_string($value) && $value === static::lang($uri,$decode))? true:false;
 	}
@@ -289,7 +289,7 @@ class Uri extends Root
 	
 	// sameSchemeHost
 	// retourne vrai si les deux uris ont le même schemeHost
-	public static function sameSchemeHost($value,string $uri,bool $decode=false):bool 
+	public static function sameSchemeHost($value,string $uri,bool $decode=false):bool
 	{
 		$return = false;
 		$schemeHost = static::schemeHost($uri,$decode);
@@ -451,7 +451,7 @@ class Uri extends Root
 	// existsCallable
 	// utilisé par relative et absolute pour vérifier l'existence du fichier à partir d'une uri
 	// si la callable retourne une string, il est considéré que c'est une uri de remplacement
-	public static function existsCallable(string $uri,callable $callable):?string 
+	public static function existsCallable(string $uri,callable $callable):?string
 	{
 		$return = null;
 		$result = $callable($uri);
@@ -476,7 +476,7 @@ class Uri extends Root
 		
 		if(is_array($value))
 		{
-			foreach ($value as $k => $v) 
+			foreach ($value as $k => $v)
 			{
 				if(is_scalar($v))
 				{
@@ -512,7 +512,7 @@ class Uri extends Root
 	
 	// decode
 	// wrapper pour la fonction de décodage
-	// par défaut, utilise rawurldecode 
+	// par défaut, utilise rawurldecode
 	public static function decode(string $return,int $type=0):?string
 	{
 		if($type === 0)
@@ -535,7 +535,7 @@ class Uri extends Root
 		$return = '';
 		$parse = static::parse($uri,$decode);
 		
-		foreach ($parse as $key => $value) 
+		foreach ($parse as $key => $value)
 		{
 			if(is_string($value))
 			{
@@ -563,7 +563,7 @@ class Uri extends Root
 		$array = [];
 		$separatorEnd = Path::isSeparatorEnd($path);
 		
-		foreach (Path::arr($path) as $key => $value) 
+		foreach (Path::arr($path) as $key => $value)
 		{
 			$array[$key] = static::encode($value);
 		}
@@ -646,7 +646,7 @@ class Uri extends Root
 			if(static::isSchemeProtocolRelative($uri))
 			$return['scheme'] = Request::scheme();
 			
-			foreach ($parse as $key => $value) 
+			foreach ($parse as $key => $value)
 			{
 				$return[$key] = $value;
 			}
@@ -782,7 +782,7 @@ class Uri extends Root
 	
 	// changeProtocolRelativeScheme
 	// change le scheme d'une uri si le scheme actuelle est relative au procole
-	public static function changeProtocolRelativeScheme(string $return,bool $decode=false) 
+	public static function changeProtocolRelativeScheme(string $return,bool $decode=false)
 	{
 		if(static::isSchemeProtocolRelative($return))
 		{
@@ -1018,7 +1018,7 @@ class Uri extends Root
 
 	// addDirname
 	// ajoute un dirname au dirname d'une uri
-	public static function addDirname(string $change,string $uri,bool $decode=false):string 
+	public static function addDirname(string $change,string $uri,bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1046,7 +1046,7 @@ class Uri extends Root
 	
 	// removeDirname
 	// enlève un dirname à une uri
-	public static function removeDirname(string $uri,bool $decode=false):string 
+	public static function removeDirname(string $uri,bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1096,7 +1096,7 @@ class Uri extends Root
 	
 	// removeBasename
 	// enlève un basename à une uri
-	public static function removeBasename(string $uri,bool $decode=false):string 
+	public static function removeBasename(string $uri,bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1146,7 +1146,7 @@ class Uri extends Root
 	
 	// removeFilename
 	// enlève un filename à une uri
-	public static function removeFilename(string $uri,bool $decode=false):string 
+	public static function removeFilename(string $uri,bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1196,7 +1196,7 @@ class Uri extends Root
 	
 	// removeExtension
 	// enlève une extension à une uri
-	public static function removeExtension(string $uri,bool $decode=false):string 
+	public static function removeExtension(string $uri,bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1211,7 +1211,7 @@ class Uri extends Root
 	// mime
 	// retourne le mimetype du path à partir de son extension
 	// ne vérifie pas l'existence du fichier
-	public static function mime(string $uri,bool $decode=false):?string 
+	public static function mime(string $uri,bool $decode=false):?string
 	{
 		return Path::mime(static::path($uri,$decode) ?? '');
 	}
@@ -1251,7 +1251,7 @@ class Uri extends Root
 	// removeLang
 	// enlève un code de langue à une uri
 	// retourne le chemin dans tous les cas
-	public static function removeLang(string $uri,bool $decode=false):string 
+	public static function removeLang(string $uri,bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1266,7 +1266,7 @@ class Uri extends Root
 	// pathPrepend
 	// prepend un ou plusieurs path derrière le path de l'uri
 	// decode est false
-	public static function pathPrepend(string $uri,string ...$values):string 
+	public static function pathPrepend(string $uri,string ...$values):string
 	{
 		$return = '';
 		
@@ -1290,7 +1290,7 @@ class Uri extends Root
 		$return = static::change(['path'=>$path],$uri);
 		
 		return $return;
-	} 
+	}
 	
 	
 	// pathExplode
@@ -1393,7 +1393,7 @@ class Uri extends Root
 
 	// getQuery
 	// retourne la valeur d'une clé dans query
-	public static function getQuery(string $key,string $uri,bool $cast=true,bool $decode=false) 
+	public static function getQuery(string $key,string $uri,bool $cast=true,bool $decode=false)
 	{
 		return Arr::get($key,static::queryArray($uri,$cast,$decode));
 	}
@@ -1401,7 +1401,7 @@ class Uri extends Root
 	
 	// getsQuery
 	// retournes plusieurs valeurs dans query
-	public static function getsQuery(array $keys,string $uri,bool $cast=true,bool $decode=false):array 
+	public static function getsQuery(array $keys,string $uri,bool $cast=true,bool $decode=false):array
 	{
 		return Arr::gets($keys,static::queryArray($uri,$cast,$decode));
 	}
@@ -1452,7 +1452,7 @@ class Uri extends Root
 	// unsetsQuery
 	// enlève plusieurs clés dans query
 	// retourne l'uri
-	public static function unsetsQuery(array $keys,string $uri,bool $cast=true,bool $encode=false,bool $decode=false):string 
+	public static function unsetsQuery(array $keys,string $uri,bool $cast=true,bool $encode=false,bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1489,7 +1489,7 @@ class Uri extends Root
 	
 	// schemeHost
 	// retourne le scheme et host de l'uri
-	public static function schemeHost(string $uri,bool $decode=false):string 
+	public static function schemeHost(string $uri,bool $decode=false):string
 	{
 		return static::keep(['scheme','user','pass','host','port'],$uri,$decode);
 	}
@@ -1497,7 +1497,7 @@ class Uri extends Root
 	
 	// schemeHostPath
 	// retourne le scheme, domaine et path de l'uri
-	public static function schemeHostPath(string $uri,bool $decode=false):string 
+	public static function schemeHostPath(string $uri,bool $decode=false):string
 	{
 		return static::keep(['scheme','user','pass','host','port','path'],$uri,$decode);
 	}
@@ -1505,7 +1505,7 @@ class Uri extends Root
 	
 	// hostPath
 	// retourne le domaine et path de l'uri
-	public static function hostPath(string $uri,bool $decode=false):string 
+	public static function hostPath(string $uri,bool $decode=false):string
 	{
 		return static::keep(['host','port','path'],$uri,$decode);
 	}
@@ -1513,7 +1513,7 @@ class Uri extends Root
 	
 	// pathQuery
 	// retourne le path et la query de l'uri
-	public static function pathQuery(string $uri,bool $decode=false):string 
+	public static function pathQuery(string $uri,bool $decode=false):string
 	{
 		return static::keep(['path','query'],$uri,$decode);
 	}
@@ -1536,7 +1536,7 @@ class Uri extends Root
 	// build
 	// construit une uri à partir d'un tableau info
 	// compliqué cette méthode
-	public static function build(array $parse,bool $decode=false):string 
+	public static function build(array $parse,bool $decode=false):string
 	{
 		$return = '';
 		$previous = null;
@@ -1545,7 +1545,7 @@ class Uri extends Root
 		$pathOnlySlash = false;
 		$slash = static::$config['build']['path'];
 		
-		foreach (static::$config['build'] as $k => $v) 
+		foreach (static::$config['build'] as $k => $v)
 		{
 			if(array_key_exists($k,$parse))
 			{
@@ -1664,7 +1664,7 @@ class Uri extends Root
 		{
 			$keep = (array) $keep;
 			
-			foreach ($parse as $k => $v) 
+			foreach ($parse as $k => $v)
 			{
 				if(!in_array($k,$keep,true))
 				$parse[$k] = null;
@@ -1688,7 +1688,7 @@ class Uri extends Root
 		{
 			$remove = (array) $remove;
 			
-			foreach ($remove as $z) 
+			foreach ($remove as $z)
 			{
 				if(array_key_exists($z,$parse))
 				$parse[$z] = null;
@@ -1712,7 +1712,7 @@ class Uri extends Root
 		{
 			$new = $parse;
 			
-			foreach ($parse as $k => $z) 
+			foreach ($parse as $k => $z)
 			{
 				if($k === $remove)
 				{
@@ -1737,7 +1737,7 @@ class Uri extends Root
 		
 		if(!empty($remove) && !empty($parse))
 		{
-			foreach ($parse as $k => $z) 
+			foreach ($parse as $k => $z)
 			{
 				if($k === $remove)
 				{
@@ -1755,7 +1755,7 @@ class Uri extends Root
 	
 	// combine
 	// combine deux uri à un point de jonction
-	public static function combine(string $uri1,string $uri2,string $key='path',bool $decode=false):string 
+	public static function combine(string $uri1,string $uri2,string $key='path',bool $decode=false):string
 	{
 		$return = '';
 		
@@ -1767,7 +1767,7 @@ class Uri extends Root
 			$uri[1] = (array) static::parse($uri2,false);
 
 			$i = 0;
-			foreach (static::$config['build'] as $k => $v) 
+			foreach (static::$config['build'] as $k => $v)
 			{
 				if($k === $key)
 				$i = 1;
@@ -1786,14 +1786,14 @@ class Uri extends Root
 	// redirection
 	// permet de retourner une uri de redirection à partir d'un tableau
 	// support pour le caractère * à la fin de clé
-	public static function redirection(string $uri,array $array):?string 
+	public static function redirection(string $uri,array $array):?string
 	{
 		$return = null;
 		$char = static::$config['redirection'];
 		
 		if(!empty($uri) && !empty($array) && !empty($char))
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				if(is_string($key) && !empty($key) && is_string($value) && !empty($value))
 				{
@@ -1830,7 +1830,7 @@ class Uri extends Root
 	
 	// makeHostPort
 	// génère une string avec un host et un port
-	public static function makeHostPort(string $host,int $port):string 
+	public static function makeHostPort(string $host,int $port):string
 	{
 		return $host.':'.$port;
 	}
@@ -1866,7 +1866,7 @@ class Uri extends Root
 	// schemeStatic
 	// fait un arr::replaceUnset sur le tableau des scheme
 	// permet de retourner, ajouter, modifier et enlever des host/scheme en une méthode
-	public static function schemeStatic(?array $array=null):array 
+	public static function schemeStatic(?array $array=null):array
 	{
 		return (is_array($array))? (static::$scheme = Arr::replaceCleanNull(static::$scheme,$array)):static::$scheme;
 	}
@@ -1875,7 +1875,7 @@ class Uri extends Root
 	// setNotFound
 	// lie une callable aux options
 	// cette callable sera appelé si une uri existe pas
-	public static function setNotFound(?callable $callable):void 
+	public static function setNotFound(?callable $callable):void
 	{
 		static::setOption('notFoundCallable',$callable);
 		

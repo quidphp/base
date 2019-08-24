@@ -29,7 +29,7 @@ class Number extends Root
 	// typecasts des valeurs par référence
 	public static function typecast(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = static::cast($value);
 		}
@@ -42,7 +42,7 @@ class Number extends Root
 	// typecasts des valeurs int par référence
 	public static function typecastInt(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = (int) $value;
 		}
@@ -55,7 +55,7 @@ class Number extends Root
 	// typecasts des valeurs float par référence
 	public static function typecastFloat(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = (float) $value;
 		}
@@ -136,7 +136,7 @@ class Number extends Root
 	
 	// castFromString
 	// permet de cast une valeur string en gardant seulement ces caractères numériques
-	public static function castFromString(string $value):?int 
+	public static function castFromString(string $value):?int
 	{
 		$return = null;
 		$value = Str::keepNumeric($value);
@@ -380,7 +380,7 @@ class Number extends Root
 	// isCountable
 	// retourne vrai si la valeur est countable par la méthode count
 	// cette méthode est inutile en php 7.3
-	public static function isCountable($value):bool 
+	public static function isCountable($value):bool
 	{
 		return (is_array($value) || $value instanceof \Countable)? true:false;
 	}
@@ -613,7 +613,7 @@ class Number extends Root
 	
 	// pi
 	// retourne pi, peut être arrondi
-	public static function pi(?int $round=null):float 
+	public static function pi(?int $round=null):float
 	{
 		$return = M_PI;
 		
@@ -657,9 +657,9 @@ class Number extends Root
 	{
 		$return = [];
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
-			foreach ($value as $k => $v) 
+			foreach ($value as $k => $v)
 			{
 				if(is_numeric($v))
 				{
@@ -688,7 +688,7 @@ class Number extends Root
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
-			foreach ($args as $z) 
+			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
@@ -714,7 +714,7 @@ class Number extends Root
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
-			foreach ($args as $z) 
+			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
@@ -740,7 +740,7 @@ class Number extends Root
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
-			foreach ($args as $z) 
+			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
@@ -757,7 +757,7 @@ class Number extends Root
 	// pow
 	// performe une expression exponentielle
 	// doit au moins y a voir deux valeurs
-	public static function pow(...$args) 
+	public static function pow(...$args)
 	{
 		$return = null;
 		
@@ -766,7 +766,7 @@ class Number extends Root
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
-			foreach ($args as $z) 
+			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
@@ -792,7 +792,7 @@ class Number extends Root
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
-			foreach ($args as $z) 
+			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
@@ -816,7 +816,7 @@ class Number extends Root
 	// modulo
 	// performe un calcul modulo, retourne le reste d'une division
 	// doit au moins y a voir deux valeurs
-	public static function modulo(...$args) 
+	public static function modulo(...$args)
 	{
 		$return = null;
 		
@@ -825,7 +825,7 @@ class Number extends Root
 			$return = static::cast($args[0]);
 			unset($args[0]);
 			
-			foreach ($args as $z) 
+			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
@@ -850,7 +850,7 @@ class Number extends Root
 		
 		if(count($args) > 1)
 		{
-			foreach ($args as $z) 
+			foreach ($args as $z)
 			{
 				if(is_scalar($z))
 				{
@@ -870,7 +870,7 @@ class Number extends Root
 
 	// min
 	// retourne la valeur la plus petite
-	public static function min(...$values) 
+	public static function min(...$values)
 	{
 		$return = null;
 		
@@ -884,7 +884,7 @@ class Number extends Root
 	
 	// max
 	// retourne la valeur la plus grande
-	public static function max(...$values) 
+	public static function max(...$values)
 	{
 		$return = null;
 		
@@ -898,7 +898,7 @@ class Number extends Root
 	
 	// random
 	// génère un string random en utilisant mt_rand
-	public static function random(?int $length=null,int $min=0,int $max=PHP_INT_MAX,bool $csprng=false):int 
+	public static function random(?int $length=null,int $min=0,int $max=PHP_INT_MAX,bool $csprng=false):int
 	{
 		$return = 0;
 		
@@ -919,7 +919,7 @@ class Number extends Root
 	
 	// zerofill
 	// retourne une string avec le int zérofill (à gauche)
-	public static function zerofill(int $length,int $value):string 
+	public static function zerofill(int $length,int $value):string
 	{
 		return Str::padLeft('0',$length,(string) $value);
 	}
@@ -1002,7 +1002,7 @@ class Number extends Root
 		
 		if(is_string($method))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if($method === 'sizeFormat')
 				$return[$key] = static::sizeFormat($value,true,$lang,$option);
@@ -1021,7 +1021,7 @@ class Number extends Root
 	
 	// formatsMethod
 	// retourne la méthode à utiliser pour formats
-	public static function formatsMethod(string $type):?string 
+	public static function formatsMethod(string $type):?string
 	{
 		$return = null;
 		
@@ -1046,7 +1046,7 @@ class Number extends Root
 	
 	// getFormat
 	// retourne le tableau de format pour la méthode format
-	public static function getFormat(?string $lang=null,?array $option=null):array 
+	public static function getFormat(?string $lang=null,?array $option=null):array
 	{
 		return Arr::plus(Lang\En::$config['number']['format'],Lang::numberFormat(null,$lang),$option);
 	}
@@ -1054,7 +1054,7 @@ class Number extends Root
 	
 	// percentFormat
 	// formate un numéro, ajoute un pourcentage
-	public static function percentFormat($value,?string $lang=null,?array $option=null) 
+	public static function percentFormat($value,?string $lang=null,?array $option=null)
 	{
 		return static::format($value,$lang,static::getPercentFormat($lang,$option));
 	}
@@ -1100,7 +1100,7 @@ class Number extends Root
 			
 			if($valueLength >= 10)
 			{
-				preg_match("/(\d{3})(\d{3})(\d{4})\.?(\d+)?/",$value,$match);  
+				preg_match("/(\d{3})(\d{3})(\d{4})\.?(\d+)?/",$value,$match);
 				if(!empty($match[0]) && $match[0] === $value)
 				{
 					$return = '';
@@ -1186,7 +1186,7 @@ class Number extends Root
 	// supporte tous les formats décrits dans le tableau sizeFormat
 	// utilise le tableau de la langue courante ou le tableau original (anglais)
 	// si la string est m, alors considère que c'est mb
-	public static function fromSizeFormat(string $value,?string $lang=null,?array $option=null):?int 
+	public static function fromSizeFormat(string $value,?string $lang=null,?array $option=null):?int
 	{
 		$return = null;
 		$formatOriginal = Lang\En::$config['number']['sizeFormat'];
@@ -1226,7 +1226,7 @@ class Number extends Root
 	// fromSizeFormatMb
 	// comme sizeFormat, mais traite seulement les MB
 	// n'utilisera pas lang
-	public static function fromSizeFormatMb(string $value):?int 
+	public static function fromSizeFormatMb(string $value):?int
 	{
 		$return = null;
 		$value = static::castFromString($value);
@@ -1250,7 +1250,7 @@ class Number extends Root
 		$count = 0;
 		
 		// type cast et count
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			static::typecast($value);
 			
@@ -1263,7 +1263,7 @@ class Number extends Root
 		
 		if($count > 0)
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				if(is_numeric($value))
 				{
@@ -1287,7 +1287,7 @@ class Number extends Root
 	public static function percentAdjustTotal(array $return,$adjustKey=null,int $round=1,int $total=100):array
 	{
 		// type cast et adjustKey
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			static::typecast($value);
 			

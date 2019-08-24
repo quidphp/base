@@ -8,7 +8,7 @@ class SlugPath extends Listing
 	// config
 	public static $config = [
 		'option'=>[ // tableau d'options
-			'slug'=>null], 
+			'slug'=>null],
 		'separator'=>[ // les séparateurs de listing, le deuxième index est la version avec espace
 			['/','/'],
 			['-','-']]
@@ -25,12 +25,12 @@ class SlugPath extends Listing
 	
 	// parse
 	// parse un tableau pathSlug
-	public static function parse(array $array,array $option):array 
+	public static function parse(array $array,array $option):array
 	{
 		$return = [];
 		$slugOption = $option['slug'] ?? null;
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			if(is_numeric($key))
 			$slug = $value;
@@ -49,7 +49,7 @@ class SlugPath extends Listing
 	
 	// prepareArr
 	// prépare un array dans la méthode arr
-	public static function prepareArr(array $value,?array $option=null):array 
+	public static function prepareArr(array $value,?array $option=null):array
 	{
 		return $value;
 	}
@@ -58,7 +58,7 @@ class SlugPath extends Listing
 	// makeSlugs
 	// génère les slugs dans pour le pathSlug
 	// traitement particulier de l'option totalLength qui est divisé par le nombre d'entrée dans le tableau
-	public static function makeSlugs(array $array,?array $option=null):array 
+	public static function makeSlugs(array $array,?array $option=null):array
 	{
 		$return = [];
 		$option = Arr::plus(['totalLength'=>null],$option);
@@ -78,7 +78,7 @@ class SlugPath extends Listing
 				$option['totalLength'] = null;
 			}
 			
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				$slug = Slug::str($value,$option);
 				

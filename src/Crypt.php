@@ -124,15 +124,15 @@ class Crypt extends Root
 	
 	// passwordActivate
 	// retourne une string sha1, tel qu'utilisé pour générer la hash d'activation d'un password
-	public static function passwordActivate(string $value):string 
+	public static function passwordActivate(string $value):string
 	{
 		return static::sha($value,1);
 	}
 	
 	
-	// md5 
+	// md5
 	// retourne un hash md5
-	public static function md5(string $value,bool $binary=false):string 
+	public static function md5(string $value,bool $binary=false):string
 	{
 		return md5($value,$binary);
 	}
@@ -148,7 +148,7 @@ class Crypt extends Root
 	
 	// randomBytes
 	// à partir d'une fonction CSPRNG
-	public static function randomBytes(int $length=11):string 
+	public static function randomBytes(int $length=11):string
 	{
 		return random_bytes($length);
 	}
@@ -156,7 +156,7 @@ class Crypt extends Root
 	
 	// randomBool
 	// à partir d'une fonction CSPRNG
-	public static function randomBool(int $min=0,int $max=1):bool 
+	public static function randomBool(int $min=0,int $max=1):bool
 	{
 		$return = false;
 		
@@ -170,7 +170,7 @@ class Crypt extends Root
 	
 	// randomInt
 	// à partir d'une fonction CSPRNG
-	public static function randomInt(?int $length=null,int $min=0,int $max=PHP_INT_MAX):int 
+	public static function randomInt(?int $length=null,int $min=0,int $max=PHP_INT_MAX):int
 	{
 		$return = random_int($min,$max);
 		
@@ -199,14 +199,14 @@ class Crypt extends Root
 			{
 				$max = $count - 1;
 				
-				while ($counter < $length) 
+				while ($counter < $length)
 				{
 					$key = random_int(0,$max);
 					
 					if(array_key_exists($key,$split))
 					{
 						$return .= $split[$key];
-						$counter++; 
+						$counter++;
 					}
 					
 					else
@@ -248,8 +248,8 @@ class Crypt extends Root
 	{
 		$return = [];
 		
-		for ($i=0; $i < $length; $i++) 
-		{ 
+		for ($i=0; $i < $length; $i++)
+		{
 			$keys = array_keys($array);
 			$values = array_values($array);
 			$count = count($keys);
@@ -288,7 +288,7 @@ class Crypt extends Root
 		elseif(is_string($value))
 		$prefix = $value;
 		
-		if(is_string($prefix))	
+		if(is_string($prefix))
 		$return = uniqid($prefix,$moreEntropy);
 
 		return $return;
@@ -305,7 +305,7 @@ class Crypt extends Root
 	
 	// base64Decode
 	// décode une chaîne présentement en base64
-	public static function base64Decode(string $value,bool $strict=false):string 
+	public static function base64Decode(string $value,bool $strict=false):string
 	{
 		return base64_decode($value,$strict);
 	}
@@ -360,7 +360,7 @@ class Crypt extends Root
 	
 	// serialize
 	// serialize une variable, retourne une string
-	public static function serialize($value):string 
+	public static function serialize($value):string
 	{
 		return serialize($value);
 	}
@@ -383,7 +383,7 @@ class Crypt extends Root
 		if(is_array($allowedClasses))
 		{
 			$allowed = [];
-			foreach ($allowedClasses as $v) 
+			foreach ($allowedClasses as $v)
 			{
 				$v = Fqcn::str($v);
 				
@@ -403,7 +403,7 @@ class Crypt extends Root
 	// onSetSerialize
 	// helper pour une méthode onSet de colonne
 	// serialize si array ou objet
-	public static function onSetSerialize($return) 
+	public static function onSetSerialize($return)
 	{
 		if(is_array($return) || is_object($return))
 		$return = static::serialize($return);
@@ -415,7 +415,7 @@ class Crypt extends Root
 	// onGetSerialize
 	// helper pour une méthode onGet de colonne
 	// déserialize si string
-	public static function onGetSerialize($return) 
+	public static function onGetSerialize($return)
 	{
 		if(is_string($return))
 		$return = static::unserialize($return);

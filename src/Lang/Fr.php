@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base\Lang;
 use Quid\Base;
@@ -8,7 +8,7 @@ class Fr extends Base\Config
 {
 	// config
 	public static $config = [
-		// number 
+		// number
 		'number'=>[
 			
 			// format
@@ -56,7 +56,7 @@ class Fr extends Base\Config
 					3=>'Go',
 					4=>'To',
 					5=>'Po']
-				]	
+				]
 		],
 		
 		// date
@@ -139,7 +139,7 @@ class Fr extends Base\Config
 			
 			// responseStatus
 			'responseStatus'=>[
-				100=>'Continuer', 
+				100=>'Continuer',
 				101=>'Changer de protocole',
 				200=>'OK',
 				201=>'Créé',
@@ -303,13 +303,13 @@ class Fr extends Base\Config
 			'hex'=>'Doit être un code HEX valide (ffffff)',
 			'tag'=>'Doit être une balise HTML valide (&lt;tag&gt;&lt;/tag&gt;)',
 			'year'=>'Doit être une année valide (YYYY)',
-			'americanZipcode'=>'Doit être un zip code américain valide (11111)',    
-			'canadianPostalcode'=>'Doit être un code postal canadien valide (X1X1X1)',    
+			'americanZipcode'=>'Doit être un zip code américain valide (11111)',
+			'canadianPostalcode'=>'Doit être un code postal canadien valide (X1X1X1)',
 			'northAmericanPhone'=>'Doit être un numéro de téléphone nord-américain valide (111-111-1111)',
 			'phone'=>'Doit être un numéro de téléphone valide ',
 			'ip'=>'Doit être un IP valide (1.2.3.4)',
 			'date'=>'Doit être une date valide (YYYY-MM-DD)',
-			'datetime'=>'Doit être une date-temps valide (YYYY-MM-DD HH:MM:SS)',                
+			'datetime'=>'Doit être une date-temps valide (YYYY-MM-DD HH:MM:SS)',
 			'time'=>'Doit être un temps valide (HH:MM:SS)',
 			'path'=>'Doit être un chemin valide (A-a 0-9 _-./*)',
 			'fqcn'=>'Doit être un FQCN valide (\)',

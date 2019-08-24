@@ -24,7 +24,7 @@ class Email extends Root
 			'from'=>null,
 			'header'=>null],
 		'contact'=>['to','cc','bcc','replyTo'], // champs contact qui supportent multiples addresses, from n'accepte que un
-		'headers'=>[ 
+		'headers'=>[
 			'default'=>[], // headers par défaut à ajouter à chaque message
 			'message'=>[ // nom des headers pour le champ additional_headers
 				'mimeVersion'=>'MIME-Version',
@@ -67,7 +67,7 @@ class Email extends Root
 	
 	// isActive
 	// retourne vrai si l'envoie de courriel est activé
-	public static function isActive():bool 
+	public static function isActive():bool
 	{
 		return (static::$config['active'] === true)? true:false;
 	}
@@ -75,7 +75,7 @@ class Email extends Root
 	
 	// arr
 	// explode une adrese courriel et retourne le nom et host
-	public static function arr(string $value):?array 
+	public static function arr(string $value):?array
 	{
 		$return = null;
 		
@@ -122,7 +122,7 @@ class Email extends Root
 	// permet d'envoyer un courriel à partir d'un tableau message
 	// to peut avoir plusieurs destinataires
 	// si l'envoie de courriel est désactivé globalement, retourne true comme si le message avait été bien envoyé
-	public static function send(array $value):bool 
+	public static function send(array $value):bool
 	{
 		$return = false;
 		$message = static::prepareMessage($value);
@@ -136,7 +136,7 @@ class Email extends Root
 			$headers = Header::str($message['header']);
 			
 			if(static::isActive())
-			{	
+			{
 				if($mb === true)
 				$return = mb_send_mail($to,$subject,$body,$headers);
 				else
@@ -153,7 +153,7 @@ class Email extends Root
 	
 	// sendTest
 	// permet d'envoyer un courriel test
-	public static function sendTest(?array $value=null):bool 
+	public static function sendTest(?array $value=null):bool
 	{
 		return static::send(static::prepareTestMessage($value));
 	}
@@ -161,11 +161,11 @@ class Email extends Root
 	
 	// sendLoop
 	// permet d'envoyer plusieurs messages à partir d'un tableau multidimensionnel
-	public static function sendLoop(array $values):array 
+	public static function sendLoop(array $values):array
 	{
 		$return = [];
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::send($value);
@@ -189,7 +189,7 @@ class Email extends Root
 		$value['date'] = (is_int($value['date']))? $value['date']:Date::timestamp();
 		$value = Arr::replace($value,static::prepareContentTypeCharset($value['contentType'],$value['charset']));
 		
-		foreach (static::$config['contact'] as $v) 
+		foreach (static::$config['contact'] as $v)
 		{
 			if(!empty($value[$v]))
 			$value[$v] = static::addresses($value[$v]);
@@ -211,7 +211,7 @@ class Email extends Root
 	// prepareTestMessage
 	// prépare un tableau message test
 	// destination de config a priorité sur tout
-	public static function prepareTestMessage(?array $value=null) 
+	public static function prepareTestMessage(?array $value=null)
 	{
 		return Arr::replace(static::$config['test']['message'],$value,static::$config['test']['destination']);
 	}
@@ -248,7 +248,7 @@ class Email extends Root
 	// prepareHeader
 	// prepare le tableau d'en-tête
 	// le tableau value doit avoir été préparé au préalable à partir de la méthode prepareMessage
-	public static function prepareHeader(array $value,bool $headerMessage=true):array 
+	public static function prepareHeader(array $value,bool $headerMessage=true):array
 	{
 		$return = [];
 		
@@ -260,7 +260,7 @@ class Email extends Root
 		
 		if($headerMessage === true)
 		{
-			foreach (static::$config['headers']['message'] as $k => $v) 
+			foreach (static::$config['headers']['message'] as $k => $v)
 			{
 				if(array_key_exists($k,$value) && !empty($value[$k]))
 				{
@@ -289,14 +289,14 @@ class Email extends Root
 	// prépare une string avec une ou plusieurs adresses
 	// les addresses doivent avoir été préparés au préalable via la méthode adresses
 	// si multi est false, seule la première adresse sera retournée
-	public static function prepareAddress(array $values,bool $multi=true):string 
+	public static function prepareAddress(array $values,bool $multi=true):string
 	{
 		$return = '';
 		
 		if(Arr::isUni($values))
 		$values = [$values];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			if(is_array($value) && array_key_exists('email',$value) && is_string($value['email']) && array_key_exists('name',$value))
 			{
@@ -323,7 +323,7 @@ class Email extends Root
 	// prépare plusieurs adresses pour les champs compatibles avec mulitples destinaires
 	// compatible avec un maximum de format input
 	// retourne un tableau multidimensionnel
-	public static function addresses($values):array 
+	public static function addresses($values):array
 	{
 		$return = [];
 		
@@ -346,7 +346,7 @@ class Email extends Root
 			$values[] = $email;
 		}
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			if(is_string($key))
 			$value = [$key=>$value];
@@ -429,7 +429,7 @@ class Email extends Root
 	
 	// xmailer
 	// retourne le header xmailer
-	public static function xmailer():string 
+	public static function xmailer():string
 	{
 		return 'PHP/'.Server::phpVersion().'|QUID/'.Server::quidVersion();
 	}
@@ -438,7 +438,7 @@ class Email extends Root
 	// setTestTo
 	// permet d'attribuer un to pour les courriels test
 	// si value est true, utilise le email lié au serveur
-	public static function setTestTo($value):void 
+	public static function setTestTo($value):void
 	{
 		if($value === true)
 		$value = Server::email();
@@ -451,7 +451,7 @@ class Email extends Root
 	
 	// setActive
 	// active ou désactive l'envoie de courriel globalement
-	public static function setActive(bool $value=true):void 
+	public static function setActive(bool $value=true):void
 	{
 		static::$config['active'] = $value;
 		

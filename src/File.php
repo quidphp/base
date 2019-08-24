@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -16,14 +16,14 @@ class File extends Finder
 			'extension'=>'txt',
 			'dateFormat'=>'YmdHis',
 			'separator'=>'_',
-			'random'=>11] 
+			'random'=>11]
 	];
 	
 	
 	// is
 	// retourne vrai si le chemin est un fichier
 	// value peut être une string ou une resource
-	public static function is($path,bool $makePath=true,bool $posix=false):bool 
+	public static function is($path,bool $makePath=true,bool $posix=false):bool
 	{
 		$return = false;
 		
@@ -52,7 +52,7 @@ class File extends Finder
 	// isEmpty
 	// retourne vrai si le fichier est vide
 	// value peut être une string ou une resource
-	public static function isEmpty($value):bool 
+	public static function isEmpty($value):bool
 	{
 		return (static::is($value) && static::size($value) === 0)? true:false;
 	}
@@ -61,7 +61,7 @@ class File extends Finder
 	// isNotEmpty
 	// retourne vrai si le fichier n'est pas vide
 	// value peut être une string ou une resource
-	public static function isNotEmpty($value):bool 
+	public static function isNotEmpty($value):bool
 	{
 		return (static::is($value) && static::size($value) !== 0)? true:false;
 	}
@@ -84,11 +84,11 @@ class File extends Finder
 	
 	// isUploadArray
 	// retourne vrai si la ou les valeurs sont des tableau de chargement de fichier php
-	public static function isUploadArray(...$values):bool 
+	public static function isUploadArray(...$values):bool
 	{
 		$return = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return = (is_array($value) && Arr::keysExists(['name','type','tmp_name','error','size'],$value))? true:false;
 			
@@ -103,13 +103,13 @@ class File extends Finder
 	// isUploadEmptyNotEmpty
 	// retourne vrai les fichiers uploads sont vide ou non vides
 	// méthode protégé
-	protected static function isUploadEmptyNotEmpty(bool $empty,...$values):bool 
+	protected static function isUploadEmptyNotEmpty(bool $empty,...$values):bool
 	{
 		$return = false;
 		
 		if(static::isUploadArray(...$values))
 		{
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				if($value['error'] === 4 || $value['size'] === 0)
 				$return = ($empty === true)? true:false;
@@ -128,7 +128,7 @@ class File extends Finder
 	
 	// isUploadEmpty
 	// retourne vrai les fichiers uploads sont vide
-	public static function isUploadEmpty(...$values):bool 
+	public static function isUploadEmpty(...$values):bool
 	{
 		return static::isUploadEmptyNotEmpty(true,...$values);
 	}
@@ -136,7 +136,7 @@ class File extends Finder
 	
 	// isUploadNotEmpty
 	// retourne vrai les fichiers uploads ne sont pas vide
-	public static function isUploadNotEmpty(...$values):bool 
+	public static function isUploadNotEmpty(...$values):bool
 	{
 		return static::isUploadEmptyNotEmpty(false,...$values);
 	}
@@ -150,7 +150,7 @@ class File extends Finder
 		
 		if(static::isUploadArray(...$values))
 		{
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				if(in_array($value['error'],[1,2],true))
 				{
@@ -168,7 +168,7 @@ class File extends Finder
 	// retourne vrai si le fichier a été inclus au moins une fois
 	// utilise la méthode getLoadPath pour obtenir le chemin, compatible avec realpath
 	// value peut être une string ou une resource
-	public static function isLoaded($value):bool 
+	public static function isLoaded($value):bool
 	{
 		$return = false;
 		$value = static::getLoadPath($value);
@@ -183,7 +183,7 @@ class File extends Finder
 	// isResource
 	// retourne vrai si la ressource est de type fichier
 	// gère aussi le mime group pour les classes qui étendent
-	public static function isResource($value):bool 
+	public static function isResource($value):bool
 	{
 		$return = (is_resource($value) && Res::isFileLike($value))? true:false;
 		
@@ -200,7 +200,7 @@ class File extends Finder
 	
 	// isMimeGroup
 	// retourne vrai si le mime type est du group spécifé
-	public static function isMimeGroup($group,$value,bool $fromPath=true):bool 
+	public static function isMimeGroup($group,$value,bool $fromPath=true):bool
 	{
 		return (static::is($value))? Mime::isGroup($group,$value,true,$fromPath):false;
 	}
@@ -208,7 +208,7 @@ class File extends Finder
 	
 	// isMimeFamily
 	// retourne vrai si le mime type est de la famille spécifé
-	public static function isMimeFamily($family,$value,bool $fromPath=true):bool 
+	public static function isMimeFamily($family,$value,bool $fromPath=true):bool
 	{
 		return (static::is($value))? Mime::isFamily($family,$value,true,$fromPath):false;
 	}
@@ -216,7 +216,7 @@ class File extends Finder
 	
 	// isMaxSize
 	// retourne vrai si le fichier est plus petit que la taille maximale
-	public static function isMaxSize(int $size,$value):bool 
+	public static function isMaxSize(int $size,$value):bool
 	{
 		$return = false;
 		$v = static::size($value);
@@ -258,7 +258,7 @@ class File extends Finder
 	// path
 	// retourne le path et passe le retour dans la méthode path parent si value est string
 	// fonctionne aussi avec les resources
-	public static function path($value,bool $isSafe=false,?array $option=null):?string 
+	public static function path($value,bool $isSafe=false,?array $option=null):?string
 	{
 		$return = null;
 		
@@ -317,12 +317,12 @@ class File extends Finder
 	
 	
 	// resources
-	// retourne les resources ou les resources de plusieurs paths 
-	public static function resources(...$values):array 
+	// retourne les resources ou les resources de plusieurs paths
+	public static function resources(...$values):array
 	{
 		$return = [];
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			$return[$key] = static::resource($value);
 		}
@@ -334,7 +334,7 @@ class File extends Finder
 	// res
 	// méthode protégé utilisé pour faire les appels à la classe res
 	// sauve 400 lignes de code
-	protected static function res(string $method,bool $create=false,int $v,int $o,...$args) 
+	protected static function res(string $method,bool $create=false,int $v,int $o,...$args)
 	{
 		$return = null;
 		$value = $args[$v];
@@ -367,7 +367,7 @@ class File extends Finder
 	// fonction utiliser pour obtenir un load path
 	// accepte aussi une resource ou un tableau
 	// ajoute l'extension si inexistante
-	public static function getLoadPath($value):string 
+	public static function getLoadPath($value):string
 	{
 		$return = '';
 		$value = static::path($value);
@@ -431,7 +431,7 @@ class File extends Finder
 	// once permet d'utiliser la fonction require_once plutôt que require
 	// si le fichier n'existe pas ou n'est pas lisible, la notFoundCallable sera lancé
 	public static function load($value,?array $extract=null,bool $definedVars=false,bool $once=false)
-	{	
+	{
 		$return = null;
 		$original = $value;
 		$value = static::makeLoadPath($value);
@@ -478,7 +478,7 @@ class File extends Finder
 	// loadOnce
 	// comme la méthode load mais utilise seulement la fonction require_once
 	// à noter que si le fichier a déjà été inclut, require_once retourne true et extract et defined vars réagisse de la même manière
-	public static function loadOnce($value,?array $extract=null,bool $definedVars=false) 
+	public static function loadOnce($value,?array $extract=null,bool $definedVars=false)
 	{
 		return static::load($value,$extract,$definedVars,true);
 	}
@@ -487,11 +487,11 @@ class File extends Finder
 	// loads
 	// permet de charger plusieurs fichier un après l'autre
 	// on ne peut pas utiliser extract et defined vars
-	public static function loads(...$values):array 
+	public static function loads(...$values):array
 	{
 		$return = [];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return[] = static::load($value);
 		}
@@ -529,7 +529,7 @@ class File extends Finder
 	// retourne le mime basename
 	// l'extension est remplacé par celle du mime si existante
 	// possible de fournir un autre basename que celui du chemin
-	public static function mimeBasename($value,?string $basename=null):?string 
+	public static function mimeBasename($value,?string $basename=null):?string
 	{
 		$return = null;
 		$path = static::path($value);
@@ -561,7 +561,7 @@ class File extends Finder
 	// mimeGroup
 	// retourne le groupe du mimetype du fichier à partir de finfo
 	// le fichier doit existé, sauf si fromPath est true
-	public static function mimeGroup($value,bool $fromPath=true):?string 
+	public static function mimeGroup($value,bool $fromPath=true):?string
 	{
 		return (static::is($value))? Mime::getGroup($value,$fromPath):null;
 	}
@@ -570,7 +570,7 @@ class File extends Finder
 	// mimeFamilies
 	// retourne les familles du mimetype du fichier à partir de finfo
 	// le fichier doit existé, sauf si fromPath est true
-	public static function mimeFamilies($value,bool $fromPath=true):?array 
+	public static function mimeFamilies($value,bool $fromPath=true):?array
 	{
 		return (static::is($value))? Mime::getFamilies($value,$fromPath):null;
 	}
@@ -579,7 +579,7 @@ class File extends Finder
 	// mimeFamily
 	// retourne les familles du mimetype du fichier à partir de finfo
 	// le fichier doit existé, sauf si fromPath est true
-	public static function mimeFamily($value,bool $fromPath=true):?string 
+	public static function mimeFamily($value,bool $fromPath=true):?string
 	{
 		return (static::is($value))? Mime::getFamily($value,$fromPath):null;
 	}
@@ -588,7 +588,7 @@ class File extends Finder
 	// mimeExtension
 	// retourne l'extension que devrait utiliser le fichier en fonction de son mime
 	// le fichier doit existé, sauf si fromPath est true
-	public static function mimeExtension($value):?string 
+	public static function mimeExtension($value):?string
 	{
 		return (static::is($value))? Mime::getCorrectExtension($value):null;
 	}
@@ -738,7 +738,7 @@ class File extends Finder
 	
 	// binary
 	// comme open, mais force l'ouverture en mode binaire
-	public static function binary($value,?array $option=null) 
+	public static function binary($value,?array $option=null)
 	{
 		return static::open($value,Arr::plus($option,['binary'=>true]));
 	}
@@ -746,7 +746,7 @@ class File extends Finder
 	
 	// create
 	// comme open, mais active l'option de création de fichier
-	public static function create($value,?array $option=null) 
+	public static function create($value,?array $option=null)
 	{
 		return static::open($value,Arr::plus($option,['create'=>true]));
 	}
@@ -860,7 +860,7 @@ class File extends Finder
 	// lineChunk
 	// permet de subdiviser le tableau des lignes par longueur
 	// retourne un tableau multidimensionnel colonne
-	public static function lineChunk(int $each,$value,bool $preserve=true,?array $option=null):?array 
+	public static function lineChunk(int $each,$value,bool $preserve=true,?array $option=null):?array
 	{
 		return static::res('lineChunk',false,1,3,$each,$value,$preserve,$option);
 	}
@@ -872,7 +872,7 @@ class File extends Finder
 	// si callback retourne faux, la colonne existante est stocké et fermé
 	// si callback retourne null, la ligne est stocké si la colonne est ouverte, sinon elle est ignoré
 	// retourne un tableau multidimensionnel colonne
-	public static function lineChunkWalk(callable $callback,$value,?array $option=null):?array 
+	public static function lineChunkWalk(callable $callback,$value,?array $option=null):?array
 	{
 		return static::res('lineChunkWalk',false,1,2,$callback,$value,$option);
 	}
@@ -953,7 +953,7 @@ class File extends Finder
 	
 	// base64
 	// retourne le contenu du fichier dans l'encodage base64
-	public static function base64($value,bool $meta=true,bool $convert=true,?array $option=null):?string 
+	public static function base64($value,bool $meta=true,bool $convert=true,?array $option=null):?string
 	{
 		return static::res('base64',false,0,3,$value,$meta,$convert,$option);
 	}
@@ -1077,7 +1077,7 @@ class File extends Finder
 	// si le callback retourne faux, la ligne est retiré
 	// le fichier est automatiquement modifié
 	// retourne un tableau des lignes filtrés, possibilité d'écrire le résultat dans la ressource si overwrite est true
-	public static function lineFilter(callable $callback,$value,bool $overwrite=true,?array $option=null):?array 
+	public static function lineFilter(callable $callback,$value,bool $overwrite=true,?array $option=null):?array
 	{
 		return static::res('lineFilter',false,1,3,$callback,$value,$overwrite,$option);
 	}
@@ -1087,7 +1087,7 @@ class File extends Finder
 	// permet de passer chaque ligne du fichier ou de la ressource fichier dans un callaback
 	// la ligne est remplacé par la valeur de retour du callback
 	// retourne un tableau des nouvelles lignes, possibilité d'écrire le résultat dans la ressource si overwrite est true
-	public static function lineMap(callable $callback,$value,bool $overwrite=true,?array $option=null):?array 
+	public static function lineMap(callable $callback,$value,bool $overwrite=true,?array $option=null):?array
 	{
 		return static::res('lineMap',false,1,3,$callback,$value,$overwrite,$option);
 	}
@@ -1097,7 +1097,7 @@ class File extends Finder
 	// vide un fichier ou une resource de fichier
 	// size permet de définir quel taille le fichier doit avoir après l'opération, donc la méthode truncate à partir de la fin
 	// retourne vrai si la ressource a été vidé ou si elle est déjà vide
-	public static function empty($value,int $size=0,?array $option=null):?bool 
+	public static function empty($value,int $size=0,?array $option=null):?bool
 	{
 		return static::res('empty',false,0,2,$value,$size,$option);
 	}
@@ -1107,7 +1107,7 @@ class File extends Finder
 	// permet de créer un hard link d'un fichier à un autre endroit
 	// si le chemin est un symlink, celui-ci est suivi et le lien vers le nouvel emplacement est recrée
 	// les deux éléments partageront la même inode
-	public static function link(string $target,$path):bool 
+	public static function link(string $target,$path):bool
 	{
 		$return = false;
 		$target = parent::path($target);
@@ -1140,7 +1140,7 @@ class File extends Finder
 	// si le chemin est un symlink, celui-ci est suivi et le lien symbolique vers le nouvel emplacement est recée
 	// il faut utiliser la même méthode dans la classe Symlink pour renommer directement le symlink
 	// n'écrase pas si existant
-	public static function changeExtension(string $extension,$path):bool 
+	public static function changeExtension(string $extension,$path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -1159,7 +1159,7 @@ class File extends Finder
 	// enlève l'extension d'un fichier, garde le dirname et filename
 	// si le chemin est un symlink, celui-ci est suivi et le lien symbolique vers le nouvel emplacement est recée
 	// n'écrase pas si existant
-	public static function removeExtension($path):bool 
+	public static function removeExtension($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -1178,7 +1178,7 @@ class File extends Finder
 	// déplace un fichier venant d'être chargé
 	// pas de support pour les symlinks ni les directoires
 	// n'écrase pas si existant
-	public static function moveUploaded($target,$path):bool 
+	public static function moveUploaded($target,$path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -1198,7 +1198,7 @@ class File extends Finder
 	// makeUploadArray
 	// construit un upload array à partir d'un chemin de fichier existant
 	// retourne null si non existant
-	public static function makeUploadArray($path,int $error=0,bool $is=true):?array 
+	public static function makeUploadArray($path,int $error=0,bool $is=true):?array
 	{
 		$return = null;
 		$path = static::path($path);
@@ -1219,7 +1219,7 @@ class File extends Finder
 	
 	// uploadBasename
 	// retourne un nom de fichier sécuritaire à partir d'un tableau de file upload
-	public static function uploadBasename(array $value):?string 
+	public static function uploadBasename(array $value):?string
 	{
 		$return = null;
 		
@@ -1232,7 +1232,7 @@ class File extends Finder
 	
 	// uploadPath
 	// retourne le chemin absolut à partir d'un tableau de chargement de fichier
-	public static function uploadPath(array $value):?string 
+	public static function uploadPath(array $value):?string
 	{
 		$return = null;
 		
@@ -1245,7 +1245,7 @@ class File extends Finder
 	
 	// uploadSize
 	// retourne le size du fichier à partir d'un tableau de chargement de fichier
-	public static function uploadSize(array $value):?int 
+	public static function uploadSize(array $value):?int
 	{
 		$return = null;
 		
@@ -1270,13 +1270,13 @@ class File extends Finder
 			$tmp = $value['tmp_name'];
 			
 			if($error === 1)
-			$return = 'fileUploadSizeIni';   
+			$return = 'fileUploadSizeIni';
 			
 			elseif($error === 2)
-			$return = 'fileUploadSizeForm';   
+			$return = 'fileUploadSizeForm';
 			
 			elseif($error === 3)
-			$return = 'fileUploadPartial'; 
+			$return = 'fileUploadPartial';
 			
 			elseif($error === 6)
 			$return = 'fileUploadTmpDir';
@@ -1303,7 +1303,7 @@ class File extends Finder
 	{
 		$return = true;
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			if($value !== null)
 			{
@@ -1339,7 +1339,7 @@ class File extends Finder
 	// permissionChange
 	// change la permission du fichier
 	// utilise defaultPermission si mode est true
-	public static function permissionChange($mode,$path):bool 
+	public static function permissionChange($mode,$path):bool
 	{
 		$return = false;
 		
@@ -1355,7 +1355,7 @@ class File extends Finder
 	
 	// setDefaultPermission
 	// change la permission par défaut pour les fichiers
-	public static function setDefaultPermission(int $value,bool $umask=false):void 
+	public static function setDefaultPermission(int $value,bool $umask=false):void
 	{
 		static::$config['defaultPermission'] = $value;
 		
@@ -1371,7 +1371,7 @@ class File extends Finder
 	
 	// defaultPermission
 	// retourne la permission par défaut pour les fichiers
-	public static function defaultPermission():int 
+	public static function defaultPermission():int
 	{
 		return static::$config['defaultPermission'];
 	}
@@ -1380,7 +1380,7 @@ class File extends Finder
 	// setNotFound
 	// lie une callable aux config
 	// cette callable sera appelé si un path n'est pas chargable dans la méthode load
-	public static function setNotFound(?callable $callable):void 
+	public static function setNotFound(?callable $callable):void
 	{
 		static::$config['notFoundCallable'] = $callable;
 		

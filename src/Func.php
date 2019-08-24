@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -19,7 +19,7 @@ class Func extends Root
 	
 	// call
 	// appelle une fonction
-	public static function call(string $name,...$arg) 
+	public static function call(string $name,...$arg)
 	{
 		$return = false;
 		

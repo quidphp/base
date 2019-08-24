@@ -34,7 +34,7 @@ class Lang extends Root
 	
 	// isCurrent
 	// retourne vrai si la langue courante est la valeur
-	public static function isCurrent($value):bool 
+	public static function isCurrent($value):bool
 	{
 		return (static::prepareCode($value) === static::$current)? true:false;
 	}
@@ -42,14 +42,14 @@ class Lang extends Root
 	
 	// isOther
 	// retourne vrai si la langue est valide, et n'est pas la langue courante
-	public static function isOther($value):bool 
+	public static function isOther($value):bool
 	{
 		return (static::is($value) && !static::isCurrent($value))? true:false;
 	}
 	
 	
 	// isCallable
-	// retourne vrai si la callable est celle fourni 
+	// retourne vrai si la callable est celle fourni
 	public static function isCallable($value):bool
 	{
 		return (static::classIsCallable($value) && static::$callable === $value)? true:false;
@@ -58,7 +58,7 @@ class Lang extends Root
 	
 	// hasCallable
 	// retourne vrai s'il y a une callable lang
-	public static function hasCallable():bool 
+	public static function hasCallable():bool
 	{
 		return (static::classIsCallable(static::$callable))? true:false;
 	}
@@ -66,7 +66,7 @@ class Lang extends Root
 	
 	// current
 	// retourne la langue courante
-	public static function current():string 
+	public static function current():string
 	{
 		return static::$current;
 	}
@@ -82,7 +82,7 @@ class Lang extends Root
 	
 	// defaultConfig
 	// retourne la langue par defaut de config
-	public static function defaultConfig():string 
+	public static function defaultConfig():string
 	{
 		return static::$config['default'];
 	}
@@ -91,7 +91,7 @@ class Lang extends Root
 	// other
 	// retourne une langue autre par index ou string
 	// ne peut pas retourner la courante
-	public static function other($arg=0,?string $value=null):?string 
+	public static function other($arg=0,?string $value=null):?string
 	{
 		$return = null;
 		$others = static::others($value);
@@ -109,7 +109,7 @@ class Lang extends Root
 	
 	// others
 	// retourne un tableau avec toutes les autres langues
-	public static function others(?string $value=null):array 
+	public static function others(?string $value=null):array
 	{
 		$return = [];
 		$value = static::code($value);
@@ -130,7 +130,7 @@ class Lang extends Root
 	
 	// count
 	// count le nombre de langues déclarés
-	public static function count():int 
+	public static function count():int
 	{
 		return count(static::all());
 	}
@@ -152,7 +152,7 @@ class Lang extends Root
 	// prepareCode
 	// retourne le code de langue formatté ou null
 	// doit être une string avec deux caractères
-	public static function prepareCode(?string $value):?string 
+	public static function prepareCode(?string $value):?string
 	{
 		return (is_string($value) && strlen($value) === 2)? $value:null;
 	}
@@ -161,7 +161,7 @@ class Lang extends Root
 	// set
 	// permet d'ajouter les langues et de changer la langue courante
 	// vide le tableau des langues courantes avant de faire l'ajout et changement
-	public static function set(?string $value,$all):bool 
+	public static function set(?string $value,$all):bool
 	{
 		$return = false;
 		$current = static::prepareCode($value);
@@ -204,12 +204,12 @@ class Lang extends Root
 	
 	// add
 	// ajoute une ou plusieurs langues
-	public static function add(string ...$values):array 
+	public static function add(string ...$values):array
 	{
 		$return = [];
 		$change = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$value = static::prepareCode($value);
 			
@@ -237,12 +237,12 @@ class Lang extends Root
 	// remove
 	// enlève une ou plusieurs langues
 	// la langue doit exister et ne pas être la courante
-	public static function remove(string ...$values):array 
+	public static function remove(string ...$values):array
 	{
 		$return = [];
 		$change = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$value = static::prepareCode($value);
 			
@@ -292,7 +292,7 @@ class Lang extends Root
 	
 	// getCallable
 	// retourne la callable lang liée
-	public static function getCallable():?callable 
+	public static function getCallable():?callable
 	{
 		return static::$callable;
 	}
@@ -300,7 +300,7 @@ class Lang extends Root
 	
 	// setCallable
 	// lie une callable lang à la classe
-	public static function setCallable(callable $callable):void 
+	public static function setCallable(callable $callable):void
 	{
 		static::$callable = $callable;
 		
@@ -310,7 +310,7 @@ class Lang extends Root
 	
 	// unsetCallable
 	// délie la callable de la classe
-	public static function unsetCallable():void 
+	public static function unsetCallable():void
 	{
 		static::$callable = null;
 		
@@ -321,7 +321,7 @@ class Lang extends Root
 	// call
 	// utilise la callable lié pour faire une requête de contenu langue
 	// aucun envoie d'erreur si contenu inexistant
-	public static function call(string $value,...$args) 
+	public static function call(string $value,...$args)
 	{
 		$return = null;
 		$callable = static::getCallable();
@@ -423,7 +423,7 @@ class Lang extends Root
 	
 	// headerResponseStatus
 	// retourne le tableau headerResponseStatus, si callable lié
-	public static function headerResponseStatus(...$args) 
+	public static function headerResponseStatus(...$args)
 	{
 		return static::call('headerResponseStatus',...$args);
 	}
@@ -512,9 +512,9 @@ class Lang extends Root
 	}
 	
 	
-	// arr 
+	// arr
 	// retourne une clé de champ dans un tableau après avoir formatté la valeur via la méthode field
-	public static function arr(string $value,array $array,?string $lang=null,?string $delimiter=null) 
+	public static function arr(string $value,array $array,?string $lang=null,?string $delimiter=null)
 	{
 		$return = null;
 		$field = static::field($value,$lang,$delimiter);
@@ -529,7 +529,7 @@ class Lang extends Root
 	// arrs
 	// retourne une valeur de champ dans un tableau multidimensionnel après avoir formatté la valeur via la méthode field
 	// retourne un array multi de type crush
-	public static function arrs(string $value,array $array,?string $lang=null,?string $delimiter=null):?array 
+	public static function arrs(string $value,array $array,?string $lang=null,?string $delimiter=null):?array
 	{
 		$return = null;
 		$field = static::field($value,$lang,$delimiter);
@@ -545,7 +545,7 @@ class Lang extends Root
 	// cette méthode garde les clés finissant par _lang et retire la lang du nom de la clé
 	// la méthode enlève les clés finissant par _autrelangs
 	// accepte un tableau unidimensionnel seulement
-	public static function reformat(array $array,?string $lang=null,?string $delimiter=null) 
+	public static function reformat(array $array,?string $lang=null,?string $delimiter=null)
 	{
 		$return = [];
 		$lang = static::code($lang);
@@ -555,7 +555,7 @@ class Lang extends Root
 		
 		if(!empty($lang) && !empty($others) && strlen($delimiter) && !empty($array))
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				$keep = true;
 				
@@ -572,7 +572,7 @@ class Lang extends Root
 					
 					else
 					{
-						foreach ($others as $l) 
+						foreach ($others as $l)
 						{
 							if(Str::isEnd($delimiter.$l,$key))
 							$keep = false;
@@ -593,11 +593,11 @@ class Lang extends Root
 	// cette méthode garde les clés finissant par _lang et retire la lang du nom de la clé
 	// la méthode enlève les clés finissant par _autrelangs
 	// accepte seulement un tableau column
-	public static function reformatColumn(array $array,?string $lang=null,?string $delimiter=null) 
+	public static function reformatColumn(array $array,?string $lang=null,?string $delimiter=null)
 	{
 		$return = [];
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::reformat($value,$lang,$delimiter);

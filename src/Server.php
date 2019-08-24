@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -56,7 +56,7 @@ class Server extends Root
 	
 	// isApache
 	// retourne vrai si le serveur est sur apache
-	public static function isApache():bool 
+	public static function isApache():bool
 	{
 		return (strpos(static::software(),'Apache') !== false)? true:false;
 	}
@@ -64,7 +64,7 @@ class Server extends Root
 	
 	// isIis
 	// retourne vrai si le serveur est sur iis
-	public static function isIis():bool 
+	public static function isIis():bool
 	{
 		return (strpos(static::software(),'IIS') !== false)? true:false;
 	}
@@ -72,7 +72,7 @@ class Server extends Root
 	
 	// isHttp1
 	// retourne vrai si le protocol http utilisé est 1.0 ou 1.1
-	public static function isHttp1():bool 
+	public static function isHttp1():bool
 	{
 		return (in_array(static::httpProtocol(),['HTTP/1','HTTP/1.0','HTTP/1.1'],true))? true:false;
 	}
@@ -80,7 +80,7 @@ class Server extends Root
 	
 	// isHttp2
 	// retourne vrai si le protocol http utilisé est 2.0
-	public static function isHttp2():bool 
+	public static function isHttp2():bool
 	{
 		return (in_array(static::httpProtocol(),['HTTP/2','HTTP/2.0'],true))? true:false;
 	}
@@ -96,7 +96,7 @@ class Server extends Root
 	
 	// isOffline
 	// retourne vrai si le serveur n'a pas accès à Internet
-	public static function isOffline():bool 
+	public static function isOffline():bool
 	{
 		return (static::isOnline() === true)? false:true;
 	}
@@ -152,7 +152,7 @@ class Server extends Root
 	
 	// hasApacheFunctions
 	// retourne vrai les fonctions d'apache sont chargés
-	public static function hasApacheFunctions():bool 
+	public static function hasApacheFunctions():bool
 	{
 		return (function_exists('apache_get_modules'))? true:false;
 	}
@@ -160,7 +160,7 @@ class Server extends Root
 	
 	// isApacheModule
 	// retourne vrai si le module apache est chargé
-	public static function isApacheModule(string $value):bool 
+	public static function isApacheModule(string $value):bool
 	{
 		$return = false;
 		$modules = static::apacheModules();
@@ -174,7 +174,7 @@ class Server extends Root
 	
 	// hasApacheModRewrite
 	// retourne vrai si le module apache mod rewrite est chargé
-	public static function hasApacheModRewrite():bool 
+	public static function hasApacheModRewrite():bool
 	{
 		return static::isApacheModule('mod_rewrite');
 	}
@@ -182,7 +182,7 @@ class Server extends Root
 	
 	// isOwner
 	// retourne vrai si value est le même int que celui du user
-	public static function isOwner(int $value,$user=null):bool 
+	public static function isOwner(int $value,$user=null):bool
 	{
 		$return = false;
 		$user = ($user === null)? Server::currentUser():$user;
@@ -196,7 +196,7 @@ class Server extends Root
 	
 	// isGroup
 	// retourne vrai si value est le même int que celui du groupe
-	public static function isGroup(int $value,$group=null):bool 
+	public static function isGroup(int $value,$group=null):bool
 	{
 		$return = false;
 		$group = ($group === null)? Server::currentGroup():$group;
@@ -226,7 +226,7 @@ class Server extends Root
 	
 	// timeLimit
 	// alias pour set_time_limit
-	public static function timeLimit(int $value=0):bool 
+	public static function timeLimit(int $value=0):bool
 	{
 		return set_time_limit($value);
 	}
@@ -244,7 +244,7 @@ class Server extends Root
 	// ignoreUserAbort
 	// n'arrête pas le script si la connection est aborted
 	// retourne la valeur courante de ignore_user_abort
-	public static function ignoreUserAbort(bool $value=true):bool 
+	public static function ignoreUserAbort(bool $value=true):bool
 	{
 		$return = false;
 		$int = ignore_user_abort($value);
@@ -274,7 +274,7 @@ class Server extends Root
 	
 	// phpImportantIni
 	// retourne toutes les ini de php importantes
-	public static function phpImportantIni():array 
+	public static function phpImportantIni():array
 	{
 		return Ini::important();
 	}
@@ -330,7 +330,7 @@ class Server extends Root
 	
 	// uname
 	// retourne un tableau d'informations à propos du système
-	public static function uname():array 
+	public static function uname():array
 	{
 		return posix_uname();
 	}
@@ -338,7 +338,7 @@ class Server extends Root
 	
 	// unameKey
 	// retourne une clé du tableau uname
-	public static function unameKey(string $key):?string 
+	public static function unameKey(string $key):?string
 	{
 		$return = null;
 		$uname = static::uname();
@@ -352,7 +352,7 @@ class Server extends Root
 	// os
 	// retourne le os du serveur
 	// mix entre sysname et release
-	public static function os(bool $release=false):?string 
+	public static function os(bool $release=false):?string
 	{
 		$return = static::sysname();
 		
@@ -432,7 +432,7 @@ class Server extends Root
 	
 	// superglobal
 	// retourne la superglobal server
-	public static function superglobal():array 
+	public static function superglobal():array
 	{
 		return Superglobal::server();
 	}
@@ -449,7 +449,7 @@ class Server extends Root
 	
 	// ipPublic
 	// le script utilise gethostbyname ce qui va retourner l'adresse ip public du serveur
-	public static function ipPublic():?string 
+	public static function ipPublic():?string
 	{
 		$return = null;
 		$ip = gethostbyname(gethostname());
@@ -463,7 +463,7 @@ class Server extends Root
 	
 	// software
 	// retourne le logiciel du serveur
-	public static function software():?string 
+	public static function software():?string
 	{
 		return Superglobal::getServer('SERVER_SOFTWARE');
 	}
@@ -471,7 +471,7 @@ class Server extends Root
 	
 	// gatewayInterface
 	// retourne l'interface de la gateway du serveur
-	public static function gatewayInterface():?string 
+	public static function gatewayInterface():?string
 	{
 		return Superglobal::getServer('GATEWAY_INTERFACE');
 	}
@@ -479,7 +479,7 @@ class Server extends Root
 	
 	// httpProtocol
 	// retourne le protocol http utilisé, toujours en strtoupper
-	public static function httpProtocol():?string 
+	public static function httpProtocol():?string
 	{
 		return strtoupper(Superglobal::getServer('SERVER_PROTOCOL'));
 	}
@@ -512,7 +512,7 @@ class Server extends Root
 	
 	// processId
 	// retourne le id du process courant
-	public static function processId():int 
+	public static function processId():int
 	{
 		return posix_getpid();
 	}
@@ -612,7 +612,7 @@ class Server extends Root
 	
 	// email
 	// retoure l'adresse courriel de l'admin du serveur
-	public static function email():?string 
+	public static function email():?string
 	{
 		return Superglobal::getServer('SERVER_ADMIN');
 	}
@@ -672,7 +672,7 @@ class Server extends Root
 	
 	// diskSpace
 	// retourne l'espace disque sur le serveur
-	public static function diskSpace(string $directory='/',bool $format=true):array 
+	public static function diskSpace(string $directory='/',bool $format=true):array
 	{
 		$return = [];
 		$return['free'] = disk_free_space($directory);
@@ -696,7 +696,7 @@ class Server extends Root
 	
 	// overview
 	// génère un overview du serveur courant
-	public static function overview():array 
+	public static function overview():array
 	{
 		$return = [];
 		$return['quid'] = static::quidVersion();
@@ -720,7 +720,7 @@ class Server extends Root
 	
 	// info
 	// génère un tableau d'information complet sur le serveur courant
-	public static function info():array 
+	public static function info():array
 	{
 		$return = [];
 		$return['quid'] = static::quidVersion();
@@ -775,7 +775,7 @@ class Server extends Root
 	
 	// setQuidVersion
 	// change la version de quid
-	public static function setQuidVersion($version):void 
+	public static function setQuidVersion($version):void
 	{
 		if(is_scalar($version))
 		static::$config['version'] = $version;

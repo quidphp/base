@@ -26,7 +26,7 @@ class Listing extends Assoc
 	
 	// isSeparatorStart
 	// retourne vrai si le listing a un separator au début
-	public static function isSeparatorStart(string $listing):bool 
+	public static function isSeparatorStart(string $listing):bool
 	{
 		return Str::isStart(static::getSeparator(),$listing,static::getSensitive());
 	}
@@ -34,7 +34,7 @@ class Listing extends Assoc
 	
 	// isSeparatorEnd
 	// retourne vrai si le listing a un separator à la fin et n'est pas seulement le séparateur
-	public static function isSeparatorEnd(string $listing):bool 
+	public static function isSeparatorEnd(string $listing):bool
 	{
 		return ($listing !== ($separator = static::getSeparator()) && Str::isEnd($separator,$listing,static::getSensitive()))? true:false;
 	}
@@ -51,7 +51,7 @@ class Listing extends Assoc
 	// getSeparator
 	// retourne un des séparateurs via index
 	// possiblité de retourner la version avec espace via index2
-	public static function getSeparator(int $index=0,int $index2=0):?string 
+	public static function getSeparator(int $index=0,int $index2=0):?string
 	{
 		$return = null;
 		
@@ -87,13 +87,13 @@ class Listing extends Assoc
 		
 		if(is_array($array) && !empty($array))
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				if(is_string($key) && (is_scalar($value) || is_array($value)))
 				{
 					$value = (array) $value;
 					
-					foreach ($value as $v) 
+					foreach ($value as $v)
 					{
 						if(is_scalar($v))
 						{
@@ -112,7 +112,7 @@ class Listing extends Assoc
 	// parse
 	// parse un tableau arr
 	// pas utilisé dans listing
-	public static function parse(array $return,array $option):array 
+	public static function parse(array $return,array $option):array
 	{
 		return $return;
 	}
@@ -155,7 +155,7 @@ class Listing extends Assoc
 	
 	// prepareStr
 	// prépare une string dans la méthode arr
-	public static function prepareStr(string $value,array $option):array 
+	public static function prepareStr(string $value,array $option):array
 	{
 		$return = [];
 		$separator = static::getSeparator(0,$option['explode']);
@@ -167,7 +167,7 @@ class Listing extends Assoc
 	
 	// prepareArr
 	// prépare un array dans la méthode arr
-	public static function prepareArr(array $value,array $option):array 
+	public static function prepareArr(array $value,array $option):array
 	{
 		$return = [];
 		
@@ -186,11 +186,11 @@ class Listing extends Assoc
 	// keyValue
 	// retourne la version unidimensionnel du tableau explode
 	// traite aussi les demandes de caseImplode
-	public static function keyValue(array $array,array $option):array 
+	public static function keyValue(array $array,array $option):array
 	{
 		$return = [];
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			if(is_scalar($value))
 			$return[$key] = Str::cast($value);
@@ -233,7 +233,7 @@ class Listing extends Assoc
 	
 	// stripWrap
 	// ajoute ou enlève le séparateur en début ou fin de chaîne
-	public static function stripWrap(string $listing,?bool $start=null,?bool $end=null):string 
+	public static function stripWrap(string $listing,?bool $start=null,?bool $end=null):string
 	{
 		return Str::stripWrap(static::getSeparator(),$listing,$start,$end,static::getSensitive());
 	}

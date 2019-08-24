@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -89,7 +89,7 @@ class Ini extends Root
 	
 	// is
 	// retourne vrai si la valeur ini existe
-	public static function is($value):bool 
+	public static function is($value):bool
 	{
 		return (is_string($value) && array_key_exists($value,static::all()))? true:false;
 	}
@@ -136,7 +136,7 @@ class Ini extends Root
 	{
 		$return = [];
 		
-		foreach ($keys as $key) 
+		foreach ($keys as $key)
 		{
 			$return[$key] = static::get($key);
 		}
@@ -170,7 +170,7 @@ class Ini extends Root
 	{
 		$return = [];
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			if(is_string($key))
 			$return[$key] = static::set($key,$value);
@@ -184,7 +184,7 @@ class Ini extends Root
 	// retourne une ou plusieurs valeurs ini à leurs valeurs originales
 	public static function unset(string ...$keys):void
 	{
-		foreach ($keys as $key) 
+		foreach ($keys as $key)
 		{
 			ini_restore($key);
 		}
@@ -249,7 +249,7 @@ class Ini extends Root
 	// sizeFormat
 	// format une string de taille dans ini de style 100M et retourne un int en byte
 	// si format est true, la valeur est renvoyé dans sizeFormat
-	public static function sizeFormat(string $return,int $format=0) 
+	public static function sizeFormat(string $return,int $format=0)
 	{
 		if($format >= 1)
 		{
@@ -365,7 +365,7 @@ class Ini extends Root
 	
 	// getErrorLog
 	// retourne la valeur du log d'erreur
-	public static function getErrorLog() 
+	public static function getErrorLog()
 	{
 		return static::get('error_log');
 	}
@@ -431,7 +431,7 @@ class Ini extends Root
 	
 	// opcache
 	// retourne vrai si opcache roule
-	public static function opcache():bool 
+	public static function opcache():bool
 	{
 		return (!empty(static::get('opcache.enable')))? true:false;
 	}
@@ -455,12 +455,12 @@ class Ini extends Root
 	
 	// important
 	// retourne toutes les ini importantes
-	public static function important(?int $format=null):array 
+	public static function important(?int $format=null):array
 	{
 		$return = [];
 		$important = (array) static::$config['important'];
 		
-		foreach ($important as $key => $value) 
+		foreach ($important as $key => $value)
 		{
 			$return[$value] = static::get($value,$format);
 		}
@@ -471,12 +471,12 @@ class Ini extends Root
 	
 	// session
 	// retourne toutes les ini de session
-	public static function session(?int $format=null):array 
+	public static function session(?int $format=null):array
 	{
 		$return = [];
 		$session = (array) static::$config['session'];
 		
-		foreach ($session as $key => $value) 
+		foreach ($session as $key => $value)
 		{
 			$return[$value] = static::get($value,$format);
 		}
@@ -516,7 +516,7 @@ class Ini extends Root
 
 		if(is_array($option) && !empty($option))
 		{
-			foreach ($option as $key => $value) 
+			foreach ($option as $key => $value)
 			{
 				$return[$key] = static::set($key,$value);
 			}

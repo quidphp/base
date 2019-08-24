@@ -19,7 +19,7 @@ class Debug extends Root
 	
 	// helper
 	// charge les helpers
-	public static function helper():void 
+	public static function helper():void
 	{
 		if(!empty(static::$config['helper']))
 		{
@@ -36,7 +36,7 @@ class Debug extends Root
 	// si echo est false, la string est retourné mais pas affiché
 	// si echo est true, flush peut être true
 	public static function var($value=null,bool $wrap=true,bool $echo=true,bool $flush=false):string
-	{   
+	{
 		$return = '';
 		$method = static::varMethod();
 		
@@ -78,7 +78,7 @@ class Debug extends Root
 	{
 		$return = [];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return[] = static::var($value);
 		}
@@ -94,7 +94,7 @@ class Debug extends Root
 	{
 		$return = [];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return[] = static::varFlush($value);
 		}
@@ -110,7 +110,7 @@ class Debug extends Root
 	{
 		$return = '';
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return .= static::varGet($value);
 		}
@@ -123,7 +123,7 @@ class Debug extends Root
 	// génère le détail d'une variable selon la méthode dans config et meurt
 	// utilise la méthode par défaut
 	public static function dead($value=null):void
-	{   
+	{
 	 	static::var($value);
 		Response::kill();
 	}
@@ -133,7 +133,7 @@ class Debug extends Root
 	// génère le détail de variables selon la méthode dans config et meurt
 	// utilise la méthode par défaut
 	public static function deads(...$values):void
-	{   
+	{
 		foreach ($values as $value)
 		{
 			static::var($value);
@@ -145,7 +145,7 @@ class Debug extends Root
 	
 	// echoFlush
 	// permet d'echo la valeur ou de la echo + flush si flush est true
-	public static function echoFlush($value,bool $flush=true):void 
+	public static function echoFlush($value,bool $flush=true):void
 	{
 		if($flush === true)
 		Buffer::startEchoEndFlushAllStart($value);
@@ -160,7 +160,7 @@ class Debug extends Root
 	// varMethod
 	// retourne la méthode à utiliser pour faire un dump de données
 	// détecte si xdebug est installé sur le système
-	public static function varMethod():?string 
+	public static function varMethod():?string
 	{
 		$return = static::$config['method'];
 		
@@ -181,7 +181,7 @@ class Debug extends Root
 	// retourne les détail d'une variable avec print_r
 	// si wrap est true, la string est enrobbé de pre
 	public static function printr($value=null,bool $wrap=true):string
-	{   
+	{
 		$return = print_r($value,true);
 
 		if($wrap === true)
@@ -197,7 +197,7 @@ class Debug extends Root
 	// si wrap est true, la string est enrobbé de pre
 	// si extra est true, passe la string dans specialChars et met la longueur entre paranthèses avant (utile pour html)
 	public static function dump($value=null,bool $wrap=true,bool $extra=true):string
-	{   
+	{
 		$return = '';
 		$isOverloaded = Ini::isVarDumpOverloaded();
 		
@@ -227,7 +227,7 @@ class Debug extends Root
 	// si wrap est true, la string est passé dans stripslashes et ensuite highlight_string
 	// si extra est true, ajoute le compte si c'est un tableau ou la longueur si c'est une string
 	public static function export($value=null,bool $wrap=true,bool $extra=true):string
-	{   
+	{
 		$return = '';
 		
 		$return = var_export($value,true);
@@ -260,7 +260,7 @@ class Debug extends Root
 	// highlight une string php ou un fichier source php
 	// si wrap est true, enrobe la string des open et close tag de php
 	// si unwrap est true, essaie d'enlèver les open et close tag de php du code html
-	public static function highlight(string $string,bool $wrap=false,bool $unwrap=false,bool $file=false):string 
+	public static function highlight(string $string,bool $wrap=false,bool $unwrap=false,bool $file=false):string
 	{
 		$return = '';
 		
@@ -286,7 +286,7 @@ class Debug extends Root
 	
 	// sourceStrip
 	// retourne la source d'un fichier php sans espace blanc
-	public static function sourceStrip(string $value):?string 
+	public static function sourceStrip(string $value):?string
 	{
 		$return = null;
 		
@@ -320,7 +320,7 @@ class Debug extends Root
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		$capture = false;
 		
-		foreach ($trace as $key => $value) 
+		foreach ($trace as $key => $value)
 		{
 			if(is_array($value))
 			{
@@ -393,7 +393,7 @@ class Debug extends Root
 		if(is_string($file))
 		$trace = static::traceStart($file,$line,false,$trace);
 		
-		foreach ($trace as $key => $value) 
+		foreach ($trace as $key => $value)
 		{
 			if(is_array($value) && !empty($value['function']))
 			{
@@ -416,13 +416,13 @@ class Debug extends Root
 	// traceBeforeClass
 	// retoure la première entrée trace trouvé qui a une classe et qui n'est pas la classe présente ou celle en argument
 	// exception si c'est une des classes données et que c'est un constructeur
-	public static function traceBeforeClass($class=null,bool $construct=true,?array $trace=null):?array 
+	public static function traceBeforeClass($class=null,bool $construct=true,?array $trace=null):?array
 	{
 		$return = null;
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		$class = (empty($class))? [static::class]:Arr::append($class,static::class);
 		
-		foreach ($trace as $key => $value) 
+		foreach ($trace as $key => $value)
 		{
 			if(is_array($value) && array_key_exists('class',$value) && array_key_exists('function',$value))
 			{
@@ -445,7 +445,7 @@ class Debug extends Root
 		$return = null;
 		$trace = ($trace === null)? static::trace(false,1):$trace;
 		
-		foreach ($trace as $key => $value) 
+		foreach ($trace as $key => $value)
 		{
 			if(is_array($value) && array_key_exists('file',$value) && $value['file'] !== $file)
 			{
@@ -460,9 +460,9 @@ class Debug extends Root
 	
 	// traceRemoveArgs
 	// enlève les arguments d'un tableau multidimensionnel trace
-	public static function traceRemoveArgs(array $return):array 
+	public static function traceRemoveArgs(array $return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value) && array_key_exists('args',$value))
 			{
@@ -500,8 +500,8 @@ class Debug extends Root
 		
 		if($iteration > 0)
 		{
-			for ($i=0; $i < $iteration; $i++) 
-			{ 
+			for ($i=0; $i < $iteration; $i++)
+			{
 				$call(...$arg);
 			}
 		}
@@ -514,7 +514,7 @@ class Debug extends Root
 	
 	// data
 	// retourne le tableau data
-	public static function data():array 
+	public static function data():array
 	{
 		return static::$data;
 	}

@@ -114,7 +114,7 @@ class Sql extends Root
 				'updateSet'=>['required'=>true,'word'=>'SET','key'=>1],
 				'where'=>['required'=>true,'word'=>'WHERE','key'=>2],
 				'order'=>['word'=>'ORDER BY','key'=>3],
-				'limit'=>['word'=>'LIMIT','key'=>4]],	
+				'limit'=>['word'=>'LIMIT','key'=>4]],
 			'delete'=>[ // config pour delete
 				'table'=>['required'=>true,'word'=>'FROM','key'=>0],
 				'where'=>['required'=>true,'word'=>'WHERE','key'=>1],
@@ -145,7 +145,7 @@ class Sql extends Root
 	
 	// isQuery
 	// retourne vrai si la valeur est un type de query
-	public static function isQuery($value):bool 
+	public static function isQuery($value):bool
 	{
 		return (is_string($value) && array_key_exists($value,static::$config['query']) && is_array(static::$config['query'][$value]))? true:false;
 	}
@@ -153,7 +153,7 @@ class Sql extends Root
 	
 	// isQuote
 	// retourne vrai si la valeur est quote
-	public static function isQuote($value):bool 
+	public static function isQuote($value):bool
 	{
 		return (is_string($value) && Str::isStartEnd("'","'",$value))? true:false;
 	}
@@ -161,7 +161,7 @@ class Sql extends Root
 	
 	// hasTickOrSpace
 	// retourne vrai si la valeur a un tick ou un espace
-	public static function hasTickOrSpace($value):bool 
+	public static function hasTickOrSpace($value):bool
 	{
 		return (is_string($value) && (strpos($value,' ') !== false || strpos($value,'`') !== false))? true:false;
 	}
@@ -169,7 +169,7 @@ class Sql extends Root
 	
 	// isTick
 	// retourne vrai si la valeur est enrobbé de tick
-	public static function isTick($value):bool 
+	public static function isTick($value):bool
 	{
 		$return = false;
 		
@@ -187,9 +187,9 @@ class Sql extends Root
 	
 	
 	// isParenthesis
-	// retourne vrai si la valeur est une parenthese 
+	// retourne vrai si la valeur est une parenthese
 	// openClose permet de spécifier si on recherche open ou close parenthesis
-	public static function isParenthesis($value,?bool $openClose=null):bool 
+	public static function isParenthesis($value,?bool $openClose=null):bool
 	{
 		$return = false;
 		
@@ -208,7 +208,7 @@ class Sql extends Root
 	
 	// isKey
 	// retourne vrai si le type de clé existe
-	public static function isKey($value):bool 
+	public static function isKey($value):bool
 	{
 		return (is_string($value) && array_key_exists($value,static::$config['key']))? true:false;
 	}
@@ -216,7 +216,7 @@ class Sql extends Root
 
 	// isColType
 	// retourne vrai si le type de colonne existe
-	public static function isColType($value):bool 
+	public static function isColType($value):bool
 	{
 		return (is_string($value) && array_key_exists($value,static::$config['col']))? true:false;
 	}
@@ -248,7 +248,7 @@ class Sql extends Root
 	
 	// isOrderDirection
 	// retourne vrai si la valeur est une direction
-	public static function isOrderDirection($value):bool 
+	public static function isOrderDirection($value):bool
 	{
 		return (is_string($value) && in_array(strtoupper($value),static::$config['order']['direction'],true))? true:false;
 	}
@@ -301,15 +301,15 @@ class Sql extends Root
 	
 	// hasDot
 	// retourne vrai si la valeur a un dot
-	public static function hasDot($value):bool 
+	public static function hasDot($value):bool
 	{
-		return (is_string($value) && strlen($value) > 1 && strpos($value,'.') > 0);
+		return is_string($value) && strlen($value) > 1 && strpos($value,'.') > 0;
 	}
 	
 	
 	// hasQueryClause
 	// retourne vrai si la valeur est un type de query et que key est supporté dans la valeur
-	public static function hasQueryClause($value,$key):bool 
+	public static function hasQueryClause($value,$key):bool
 	{
 		$return = false;
 		
@@ -325,7 +325,7 @@ class Sql extends Root
 	
 	// getQueryTypes
 	// retourne tous les types de requêtes
-	public static function getQueryTypes():array 
+	public static function getQueryTypes():array
 	{
 		return array_keys(static::$config['query']);
 	}
@@ -333,7 +333,7 @@ class Sql extends Root
 	
 	// getQueryRequired
 	// retourne les champs requis du type de requête
-	public static function getQueryRequired(string $value):?array 
+	public static function getQueryRequired(string $value):?array
 	{
 		$return = null;
 		
@@ -341,7 +341,7 @@ class Sql extends Root
 		{
 			$return = [];
 			
-			foreach (static::$config['query'][$value] as $key => $value) 
+			foreach (static::$config['query'][$value] as $key => $value)
 			{
 				if(is_string($key) && is_array($value) && !empty($value['required']))
 				{
@@ -390,7 +390,7 @@ class Sql extends Root
 	
 	// getWhatFunction
 	// retourne la function what si existante
-	public static function getWhatFunction(string $value):?array 
+	public static function getWhatFunction(string $value):?array
 	{
 		$return = null;
 		
@@ -434,7 +434,7 @@ class Sql extends Root
 	
 	// getOrderDirection
 	// retourne la direction d'ordre ou la direction d'ordre par défaut
-	public static function getOrderDirection($value=null):string 
+	public static function getOrderDirection($value=null):string
 	{
 		$return = static::$config['order']['default'];
 		
@@ -449,7 +449,7 @@ class Sql extends Root
 	
 	// invertOrderDirection
 	// retourne la direction d'ordre inverse à celle donné en argument
-	public static function invertOrderDirection($value=null):string 
+	public static function invertOrderDirection($value=null):string
 	{
 		$return = static::getOrderDirection($value);
 		$directions = static::$config['order']['direction'];
@@ -516,7 +516,7 @@ class Sql extends Root
 	
 	// getReturn
 	// retourne le tableau de retour
-	public static function getReturn(?array $return=null):array 
+	public static function getReturn(?array $return=null):array
 	{
 		return (is_array($return) && array_key_exists('sql',$return) && is_string($return['sql']))? $return:['sql'=>''];
 	}
@@ -524,13 +524,13 @@ class Sql extends Root
 	
 	// returnMerge
 	// merge des tableaux return ensemble
-	public static function returnMerge(array ...$values):array 
+	public static function returnMerge(array ...$values):array
 	{
 		$return = ['sql'=>''];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
-			foreach ($value as $k => $v) 
+			foreach ($value as $k => $v)
 			{
 				if(is_string($k))
 				{
@@ -591,7 +591,7 @@ class Sql extends Root
 	
 	// untick
 	// dérobe la valeur de tick
-	public static function untick(string $return):string 
+	public static function untick(string $return):string
 	{
 		if(strlen($return) && static::isTick($return))
 		{
@@ -599,7 +599,7 @@ class Sql extends Root
 			{
 				$x = Str::explodeTrimClean('.',$return,2);
 				
-				foreach ($x as $i => $v) 
+				foreach ($x as $i => $v)
 				{
 					$x[$i] = Str::stripStartEnd('`','`',$x[$i]);
 				}
@@ -658,7 +658,7 @@ class Sql extends Root
 		
 		if(Arr::isSet($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				$return .= (strlen($return))? ',':'';
 				$return .= static::quote($v,$callable);
@@ -671,7 +671,7 @@ class Sql extends Root
 	
 	// unquote
 	// unquote une valeur
-	public static function unquote(string $return):string 
+	public static function unquote(string $return):string
 	{
 		return Str::unquote(stripslashes($return),true,false);
 	}
@@ -679,7 +679,7 @@ class Sql extends Root
 	
 	// parenthesis
 	// enrobe la valeur de parenthese si pas vide
-	public static function parenthesis(string $return):string 
+	public static function parenthesis(string $return):string
 	{
 		return (strlen($return))? "($return)":'';
 	}
@@ -687,7 +687,7 @@ class Sql extends Root
 	
 	// comma
 	// retourne une virgule si la valeur n'est pas vide
-	public static function comma(string $value,bool $space=true):string 
+	public static function comma(string $value,bool $space=true):string
 	{
 		return (strlen($value))? ($space === true)? ', ':',':'';
 	}
@@ -695,7 +695,7 @@ class Sql extends Root
 
 	// whereSeparator
 	// retourne le séparateur where entouré d'espaces si la valeur n'est pas string vide
-	public static function whereSeparator(?string $value=null,?string $separator=null,bool $space=true):string 
+	public static function whereSeparator(?string $value=null,?string $separator=null,bool $space=true):string
 	{
 		$return = '';
 		
@@ -734,7 +734,7 @@ class Sql extends Root
 	// prepare
 	// retourne un tableau avec les strings prepare et replace ou null
 	// un nombre est ajouté à la fin de la clé préparé, ce nombre est incrémenté à chaque appel réussi
-	public static function prepare():?array 
+	public static function prepare():?array
 	{
 		$return = null;
 		$prepare = Str::random(...static::$config['prepared']['random']);
@@ -754,7 +754,7 @@ class Sql extends Root
 	
 	// prepareValue
 	// prépare la valeur avant d'append
-	public static function prepareValue($return) 
+	public static function prepareValue($return)
 	{
 		if(is_bool($return) || $return === null)
 		$return = static::boolNull($return);
@@ -770,10 +770,10 @@ class Sql extends Root
 	
 	
 	// value
-	// ajoute une valeur dans sql et une slice dans prepare 
+	// ajoute une valeur dans sql et une slice dans prepare
 	// peut retourner une valeur préparé, quote ou tick
 	// possible de mettre des quoteChar
-	public static function value($value,?array $return=null,?array $option=null):array 
+	public static function value($value,?array $return=null,?array $option=null):array
 	{
 		$return = static::getReturn($return);
 		
@@ -841,7 +841,7 @@ class Sql extends Root
 		if(Arr::isSet($value))
 		{
 			$i = 0;
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_scalar($v))
 				{
@@ -862,7 +862,7 @@ class Sql extends Root
 	{
 		$return = '';
 		
-		foreach ($value as $v) 
+		foreach ($value as $v)
 		{
 			if(is_scalar($v))
 			{
@@ -891,11 +891,11 @@ class Sql extends Root
 			elseif(is_array($return) && $default !== null)
 			{
 				$do = true;
-				while ($do === true) 
+				while ($do === true)
 				{
 					$do = false;
 					
-					foreach ($return as $key => $value) 
+					foreach ($return as $key => $value)
 					{
 						if(is_numeric($key) && $value === true)
 						{
@@ -922,12 +922,12 @@ class Sql extends Root
 	// est cast à l'entrée
 	// permet d'ajouter true dans un tableau si non existant
 	// true représente la valeur par défaut
-	public static function addDefault($return):array 
+	public static function addDefault($return):array
 	{
 		$return = (array) Obj::cast($return);
 		$add = true;
 		
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_numeric($key) && $value === true)
 			{
@@ -946,11 +946,11 @@ class Sql extends Root
 	// removeDefault
 	// enlève true dans un tableau si existant
 	// true représente la valeur par défaut
-	public static function removeDefault($return):array 
+	public static function removeDefault($return):array
 	{
 		$return = (array) $return;
 		
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_numeric($key) && $value === true)
 			unset($return[$key]);
@@ -963,7 +963,7 @@ class Sql extends Root
 	// sql
 	// décortique une entrée sql
 	// utilisé pour simplement ajouté du sql à la requête
-	public static function sql($value,?array $option=null):array 
+	public static function sql($value,?array $option=null):array
 	{
 		$return = ['sql'=>''];
 		
@@ -989,7 +989,7 @@ class Sql extends Root
 		
 		elseif(is_array($value) && !empty($value))
 		{
-			foreach (static::whatPrepare($value) as $prepare) 
+			foreach (static::whatPrepare($value) as $prepare)
 			{
 				if(!empty($prepare) && is_string($prepare[0]))
 				{
@@ -1021,11 +1021,11 @@ class Sql extends Root
 	// whatPrepare
 	// prépare plusieurs entrée de what
 	// retourne un tableau multidimensionnel
-	public static function whatPrepare(array $array,?array $option=null):array 
+	public static function whatPrepare(array $array,?array $option=null):array
 	{
 		$return = [];
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			if(!empty($v))
 			{
@@ -1125,7 +1125,7 @@ class Sql extends Root
 	// retourne un tableau avec toutes les colonnes dans le where
 	// possible d'ajouter un prefix avant le nom de chaque colonne
 	// si where n'est pas array, retourne *
-	public static function whatFromWhere($where,?string $prefix=null):array 
+	public static function whatFromWhere($where,?string $prefix=null):array
 	{
 		$return = [];
 		
@@ -1135,7 +1135,7 @@ class Sql extends Root
 			
 			if(!empty($cols))
 			{
-				foreach ($cols as $col) 
+				foreach ($cols as $col)
 				{
 					if(is_string($col))
 					{
@@ -1252,7 +1252,7 @@ class Sql extends Root
 			if(!empty($option['primary']))
 			$return = Arr::plus($return,static::wherePrimary($where,$option));
 			
-			foreach ($where as $prepare) 
+			foreach ($where as $prepare)
 			{
 				if(!empty($prepare) && is_scalar($prepare[0]))
 				{
@@ -1310,7 +1310,7 @@ class Sql extends Root
 			
 			$return = (array) $return;
 
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if(is_numeric($key))
 				{
@@ -1336,7 +1336,7 @@ class Sql extends Root
 	// prépare plusieurs entrée du tableau where
 	// gère les mots séparateurs et les ouvertures fermetures de paranthèses
 	// retourne un tableau multidimensionnel
-	public static function wherePrepare(array $array,?array $option=null):array 
+	public static function wherePrepare(array $array,?array $option=null):array
 	{
 		$return = [];
 		$wasSeparator = null;
@@ -1344,9 +1344,9 @@ class Sql extends Root
 		$parenthesisOpen = 0;
 		$separator = static::getWhereSeparator();
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
-			foreach (static::wherePrepareOne($key,$value,$option) as $v) 
+			foreach (static::wherePrepareOne($key,$value,$option) as $v)
 			{
 				if(is_array($v) && !empty($v))
 				{
@@ -1391,7 +1391,7 @@ class Sql extends Root
 						$return[] = [$separator];
 						
 						else
-						$needSeparator = true;	
+						$needSeparator = true;
 					}
 					
 					$return[] = $v;
@@ -1399,7 +1399,7 @@ class Sql extends Root
 			}
 		}
 		
-		while ($parenthesisOpen > 0) 
+		while ($parenthesisOpen > 0)
 		{
 			$return[] = [')'];
 			$parenthesisOpen--;
@@ -1412,7 +1412,7 @@ class Sql extends Root
 	// wherePrepareOne
 	// prépare une entrée du tableau where
 	// retourne un tableau multidimensionnel
-	public static function wherePrepareOne($key,$value,?array $option=null):array 
+	public static function wherePrepareOne($key,$value,?array $option=null):array
 	{
 		$return = [];
 		
@@ -1459,7 +1459,7 @@ class Sql extends Root
 	{
 		$return = [];
 		
-		foreach (static::wherePrepare($array) as $key => $value) 
+		foreach (static::wherePrepare($array) as $key => $value)
 		{
 			if(is_array($value) && count($value) > 1)
 			{
@@ -1477,13 +1477,13 @@ class Sql extends Root
 	// whereAppend
 	// append plusieurs valeurs where et retourne un grand tableau multidimensionnel utilisable par la méthode where pour générer le sql
 	// les options par défaut sont utilisés
-	public static function whereAppend(...$values) 
+	public static function whereAppend(...$values)
 	{
 		$return = [];
 		$merge = [];
 		$option = static::option();
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			$value = static::whereDefault($value,$option);
 			
@@ -1513,7 +1513,7 @@ class Sql extends Root
 		
 		if(!empty($option['primary']))
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				if(is_array($value) && !empty($value[0]) && $value[0] === $option['primary'])
 				{
@@ -1623,7 +1623,7 @@ class Sql extends Root
 			$x = explode('|',$method);
 			if(count($x) === 2 && !empty($x[1]))
 			{
-				foreach (explode(',',$x[0]) as $v) 
+				foreach (explode(',',$x[0]) as $v)
 				{
 					if($v === 'b')
 					$option['binary'] = true;
@@ -1766,7 +1766,7 @@ class Sql extends Root
 		{
 			$count = 0;
 			
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_scalar($v))
 				{
@@ -1798,9 +1798,9 @@ class Sql extends Root
 		$or = 'or';
 		$value = (array) $value;
 		
-		foreach ($value as $v) 
+		foreach ($value as $v)
 		{
-			$merge = static::whereFind($key,$v,$method,$option); 
+			$merge = static::whereFind($key,$v,$method,$option);
 			$merge2 = static::whereTwo($key,null);
 			$new = ['sql'=>''];
 			
@@ -1859,7 +1859,7 @@ class Sql extends Root
 			$count = 0;
 			$base = "$tick $word ";
 			
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_scalar($v))
 				{
@@ -1904,7 +1904,7 @@ class Sql extends Root
 		
 		if(!empty($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(!is_array($v))
 				$v = [$v];
@@ -1959,7 +1959,7 @@ class Sql extends Root
 		
 		elseif(is_array($value) && !empty($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_string($v))
 				{
@@ -1987,7 +1987,7 @@ class Sql extends Root
 		
 		elseif(is_array($value) && !empty($value))
 		{
-			foreach (static::orderPrepare($value) as $prepare) 
+			foreach (static::orderPrepare($value) as $prepare)
 			{
 				if(!empty($prepare) && is_scalar($prepare[0]))
 				{
@@ -2020,11 +2020,11 @@ class Sql extends Root
 	// orderPrepare
 	// prépare plusieurs entrée de order
 	// retourne un tableau multidimensionnel
-	public static function orderPrepare(array $array,?array $option=null):array 
+	public static function orderPrepare(array $array,?array $option=null):array
 	{
 		$return = [];
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			if(!empty($v))
 			{
@@ -2150,7 +2150,7 @@ class Sql extends Root
 	// limitPrepare
 	// prépare un tableau limit
 	// si le tableau a 1 niveau et que la clé est numérique sans être 0, key est considéré comme page et current comme limit
-	public static function limitPrepare(array $value):array 
+	public static function limitPrepare(array $value):array
 	{
 		$return = [];
 		$count = count($value);
@@ -2172,7 +2172,7 @@ class Sql extends Root
 	// limitPrepareOne
 	// prépare un tableau limit si la valeur n'avait qu'une entrée
 	// si le tableau a 1 niveau et que la clé est numérique sans être 0, key est considéré comme page et current comme limit
-	public static function limitPrepareOne($key,$value):array 
+	public static function limitPrepareOne($key,$value):array
 	{
 		$return = [];
 		
@@ -2200,7 +2200,7 @@ class Sql extends Root
 	
 	// limitPrepareTwo
 	// prépare un tableau limit si la valeur avait deux entrées
-	public static function limitPrepareTwo(array $value):array 
+	public static function limitPrepareTwo(array $value):array
 	{
 		$return = [];
 		$limit = $value['limit'] ?? Arr::valueFirst($value);
@@ -2228,7 +2228,7 @@ class Sql extends Root
 	// créer une requête set pour INSERT avec noms de champs
 	// possible de créer un insertSet vide en fournissant un tableau vide
 	// ne permet pas de faire plusieurs insertions par requête, car il y a support pour callable dans set et aussi le rollback ne marchait pas correctement
-	public static function insertSet($value,?array $option=null):array 
+	public static function insertSet($value,?array $option=null):array
 	{
 		$return = ['sql'=>''];
 		
@@ -2250,7 +2250,7 @@ class Sql extends Root
 				$return['sql'] .= ' ';
 			}
 			
-			if(strlen($merge['sql'])) 
+			if(strlen($merge['sql']))
 			{
 				$return['sql'] .= 'VALUES ';
 				$merge['sql'] = static::parenthesis($merge['sql']);
@@ -2268,7 +2268,7 @@ class Sql extends Root
 	{
 		$return = ['sql'=>''];
 		
-		foreach ($value as $array) 
+		foreach ($value as $array)
 		{
 			if(!empty($array) && is_string($array[0]))
 			{
@@ -2284,11 +2284,11 @@ class Sql extends Root
 	// setPrepare
 	// prépare plusieurs entrée de insert ou update set
 	// retourne un tableau multidimensionnel
-	public static function setPrepare(array $array):array 
+	public static function setPrepare(array $array):array
 	{
 		$return = [];
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			if(is_string($k))
 			$return[] = [$k,$v];
@@ -2304,11 +2304,11 @@ class Sql extends Root
 	// setValues
 	// méthode utilisé par insertSet et updateSet pour générer les valeurs
 	// si tick est true, alors met le nom du champ avant la valeur avec un =
-	public static function setValues(array $value,bool $tick=false,?array $option=null):array 
+	public static function setValues(array $value,bool $tick=false,?array $option=null):array
 	{
 		$return = ['sql'=>''];
 		
-		foreach ($value as $prepare) 
+		foreach ($value as $prepare)
 		{
 			if(!empty($prepare) && is_string($prepare[0]))
 			{
@@ -2343,7 +2343,7 @@ class Sql extends Root
 	// updateSet
 	// créer une requête de type SET pour update
 	// ne supporte pas les valeurs par défaut
-	public static function updateSet($value,?array $option=null):array 
+	public static function updateSet($value,?array $option=null):array
 	{
 		$return = ['sql'=>''];
 		
@@ -2403,7 +2403,7 @@ class Sql extends Root
 	// setReplace
 	// construit une entrée set replace à quatres variables
 	// permet de faire un remplacement sur une colonne
-	public static function setReplace(string $key,$from,$to,string $method,?array $option=null):array 
+	public static function setReplace(string $key,$from,$to,string $method,?array $option=null):array
 	{
 		$return = ['sql'=>''];
 		
@@ -2530,7 +2530,7 @@ class Sql extends Root
 				if(!Column::is($value))
 				$value = [$value];
 				
-				foreach ($value as $v) 
+				foreach ($value as $v)
 				{
 					if(is_array($v))
 					{
@@ -2585,7 +2585,7 @@ class Sql extends Root
 		
 		elseif(is_array($value) && !empty($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_string($v) && !empty($v))
 				{
@@ -2618,7 +2618,7 @@ class Sql extends Root
 				{
 					$name = Arr::keysFirstValue(['name',1],$value);
 					$col = Arr::keysFirstValue(['col',2],$value);
-					$col = ($col === null)? $name:$col; 
+					$col = ($col === null)? $name:$col;
 				}
 				
 				else
@@ -2629,12 +2629,12 @@ class Sql extends Root
 					$v = '';
 					$col = (array) $col;
 					
-					foreach ($col as $c) 
+					foreach ($col as $c)
 					{
 						if(is_string($c))
 						{
 							$v .= static::comma($v);
-							$v .= static::tick($c); 
+							$v .= static::tick($c);
 						}
 					}
 					
@@ -2674,7 +2674,7 @@ class Sql extends Root
 				if(!Column::is($value))
 				$value = [$value];
 				
-				foreach ($value as $v) 
+				foreach ($value as $v)
 				{
 					if(is_array($v))
 					{
@@ -2720,7 +2720,7 @@ class Sql extends Root
 		
 		elseif(is_array($value) && !empty($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_string($v) && !empty($v))
 				{
@@ -2760,7 +2760,7 @@ class Sql extends Root
 	// possibilité d'avoir une option defaultCallable pour aller chercher des options pour une table via une callable
 	// est cast par défaut à la sortie
 	// méthode protégé
-	protected static function prepareDefault(string $type,array $option):?array 
+	protected static function prepareDefault(string $type,array $option):?array
 	{
 		$return = null;
 		
@@ -2805,7 +2805,7 @@ class Sql extends Root
 				if(!empty($array['prepare']))
 				$return['prepare'] = $array['prepare'];
 				
-				foreach ($parses as $key => $value) 
+				foreach ($parses as $key => $value)
 				{
 					$word = static::getQueryWord($type,$key,$option);
 					$merge = static::$key($value,$option);
@@ -2869,7 +2869,7 @@ class Sql extends Root
 		{
 			$return = [];
 			
-			foreach (static::$config['query'][$type] as $key => $value) 
+			foreach (static::$config['query'][$type] as $key => $value)
 			{
 				$parse = static::makeParse($type,$key,$array);
 				
@@ -2884,7 +2884,7 @@ class Sql extends Root
 	
 	// makeParse
 	// retourne la valeur d'une partie du tableau make selon le type et clé
-	public static function makeParse(string $type,string $key,array $array) 
+	public static function makeParse(string $type,string $key,array $array)
 	{
 		$return = null;
 		
@@ -2908,7 +2908,7 @@ class Sql extends Root
 	
 	// makeSelectFrom
 	// fait une requête select à partir d'une requête insert, update ou delete
-	public static function makeSelectFrom(string $type,array $array,?array $option=null) 
+	public static function makeSelectFrom(string $type,array $array,?array $option=null)
 	{
 		$return = null;
 
@@ -2951,7 +2951,7 @@ class Sql extends Root
 	
 	// makeSelect
 	// fait une requête de type select
-	public static function makeSelect(array $value,?array $option=null):?array 
+	public static function makeSelect(array $value,?array $option=null):?array
 	{
 		return static::make('select',$value,$option);
 	}
@@ -2959,7 +2959,7 @@ class Sql extends Root
 
 	// makeShow
 	// fait une requête de type show
-	public static function makeShow(array $value,?array $option=null):?array 
+	public static function makeShow(array $value,?array $option=null):?array
 	{
 		return static::make('show',$value,$option);
 	}
@@ -2967,7 +2967,7 @@ class Sql extends Root
 	
 	// makeInsert
 	// fait une requête de type insert
-	public static function makeInsert(array $value,?array $option=null):?array 
+	public static function makeInsert(array $value,?array $option=null):?array
 	{
 		return static::make('insert',$value,$option);
 	}
@@ -2975,7 +2975,7 @@ class Sql extends Root
 	
 	// makeUpdate
 	// fait une requête de type update
-	public static function makeUpdate(array $value,?array $option=null):?array 
+	public static function makeUpdate(array $value,?array $option=null):?array
 	{
 		return static::make('update',$value,$option);
 	}
@@ -2983,7 +2983,7 @@ class Sql extends Root
 	
 	// makeDelete
 	// fait une requête de type delete
-	public static function makeDelete(array $value,?array $option=null):?array 
+	public static function makeDelete(array $value,?array $option=null):?array
 	{
 		return static::make('delete',$value,$option);
 	}
@@ -2991,7 +2991,7 @@ class Sql extends Root
 	
 	// makeCreate
 	// fait une requête de type create
-	public static function makeCreate(array $value,?array $option=null):?array 
+	public static function makeCreate(array $value,?array $option=null):?array
 	{
 		return static::make('create',$value,$option);
 	}
@@ -2999,7 +2999,7 @@ class Sql extends Root
 	
 	// makeAlter
 	// fait une requête de type alter
-	public static function makeAlter(array $value,?array $option=null):?array 
+	public static function makeAlter(array $value,?array $option=null):?array
 	{
 		return static::make('alter',$value,$option);
 	}
@@ -3007,7 +3007,7 @@ class Sql extends Root
 	
 	// makeTruncate
 	// fait une requête de type truncate
-	public static function makeTruncate(array $value,?array $option=null):?array 
+	public static function makeTruncate(array $value,?array $option=null):?array
 	{
 		return static::make('truncate',$value,$option);
 	}
@@ -3015,7 +3015,7 @@ class Sql extends Root
 	
 	// makeDrop
 	// fait une requête de type drop
-	public static function makeDrop(array $value,?array $option=null):?array 
+	public static function makeDrop(array $value,?array $option=null):?array
 	{
 		return static::make('drop',$value,$option);
 	}
@@ -3024,7 +3024,7 @@ class Sql extends Root
 	// select
 	// fait une requête de type select
 	// les arguments sont pack
-	public static function select(...$values):?array 
+	public static function select(...$values):?array
 	{
 		return static::makeSelect($values);
 	}
@@ -3033,7 +3033,7 @@ class Sql extends Root
 	// show
 	// fait une requête de type show
 	// les arguments sont pack
-	public static function show(...$values):?array 
+	public static function show(...$values):?array
 	{
 		return static::makeShow($values);
 	}
@@ -3042,7 +3042,7 @@ class Sql extends Root
 	// insert
 	// fait une requête de type insert
 	// les arguments sont pack
-	public static function insert(...$values):?array 
+	public static function insert(...$values):?array
 	{
 		return static::makeInsert($values);
 	}
@@ -3051,7 +3051,7 @@ class Sql extends Root
 	// update
 	// fait une requête de type update
 	// les arguments sont pack
-	public static function update(...$values):?array 
+	public static function update(...$values):?array
 	{
 		return static::makeUpdate($values);
 	}
@@ -3060,7 +3060,7 @@ class Sql extends Root
 	// delete
 	// fait une requête de type delete
 	// les arguments sont pack
-	public static function delete(...$values):?array 
+	public static function delete(...$values):?array
 	{
 		return static::makeDelete($values);
 	}
@@ -3069,7 +3069,7 @@ class Sql extends Root
 	// create
 	// fait une requête de type create
 	// les arguments sont pack
-	public static function create(...$values):?array 
+	public static function create(...$values):?array
 	{
 		return static::makeCreate($values);
 	}
@@ -3078,7 +3078,7 @@ class Sql extends Root
 	// alter
 	// fait une requête de type alter
 	// les arguments sont pack
-	public static function alter(...$values):?array 
+	public static function alter(...$values):?array
 	{
 		return static::makeAlter($values);
 	}
@@ -3087,7 +3087,7 @@ class Sql extends Root
 	// truncate
 	// fait une requête de type truncate
 	// les arguments sont pack
-	public static function truncate(...$values):?array 
+	public static function truncate(...$values):?array
 	{
 		return static::makeTruncate($values);
 	}
@@ -3096,7 +3096,7 @@ class Sql extends Root
 	// drop
 	// fait une requête de type drop
 	// les arguments sont pack
-	public static function drop(...$values):?array 
+	public static function drop(...$values):?array
 	{
 		return static::makeDrop($values);
 	}
@@ -3104,7 +3104,7 @@ class Sql extends Root
 	
 	// selectCount
 	// fait une requête de type select count, pas besoin de donner what
-	public static function selectCount(...$values):?array 
+	public static function selectCount(...$values):?array
 	{
 		return static::makeSelectCount($values);
 	}
@@ -3198,7 +3198,7 @@ class Sql extends Root
 	// makeShowDatabase
 	// fait une requête de type show pour obtenir le nom d'une ou plusieurs databases
 	// value peut être une string qui représente like
-	public static function makeShowDatabase($value=null,?array $option=null):?array 
+	public static function makeShowDatabase($value=null,?array $option=null):?array
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
@@ -3217,7 +3217,7 @@ class Sql extends Root
 	// makeShowVariable
 	// fait une requête de type show pour obtenir le nom d'une ou plusieurs variables
 	// value peut être une string qui représente like
-	public static function makeShowVariable($value=null,?array $option=null):?array 
+	public static function makeShowVariable($value=null,?array $option=null):?array
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
@@ -3236,7 +3236,7 @@ class Sql extends Root
 	// makeShowTable
 	// fait une requête de type show pour obtenir le nom d'une ou plusieurs tables
 	// value peut être une string qui représente like
-	public static function makeShowTable($value=null,?array $option=null):?array 
+	public static function makeShowTable($value=null,?array $option=null):?array
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
@@ -3255,7 +3255,7 @@ class Sql extends Root
 	// makeShowTableStatus
 	// fait une requête de type show pour obtenir le statut d'une ou plusieurs tables
 	// value peut être une string qui représente like
-	public static function makeShowTableStatus($value=null,?array $option=null):?array 
+	public static function makeShowTableStatus($value=null,?array $option=null):?array
 	{
 		$return = null;
 		$value = Obj::cast($value,2);
@@ -3274,7 +3274,7 @@ class Sql extends Root
 	// makeShowTableColumn
 	// fait une requête de type show pour obtenir la description d'une ou plusieurs colonnes dans une table
 	// value est le nom de la colonne
-	public static function makeShowTableColumn($table,$value=null,?array $option=null):?array 
+	public static function makeShowTableColumn($table,$value=null,?array $option=null):?array
 	{
 		$return = null;
 		$table = Obj::cast($table,1);
@@ -3306,7 +3306,7 @@ class Sql extends Root
 
 	// makeAlterAutoIncrement
 	// fait une requête de type alter pour changer le autoincrement d'une table
-	public static function makeAlterAutoIncrement($table,int $value=0,?array $option=null):?array 
+	public static function makeAlterAutoIncrement($table,int $value=0,?array $option=null):?array
 	{
 		$return = null;
 		$table = Obj::cast($table,1);

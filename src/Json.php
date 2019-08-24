@@ -27,7 +27,7 @@ class Json extends Assoc
 	
 	// isEmpty
 	// retourne vrai si la chaîne est du json mais vide
-	public static function isEmpty($value):bool 
+	public static function isEmpty($value):bool
 	{
 		return (is_string($value) && ($json = static::decode($value)) !== null && empty($json))? true:false;
 	}
@@ -35,7 +35,7 @@ class Json extends Assoc
 	
 	// isNotEmpty
 	// retourne vrai si la chaîne est du json non vide
-	public static function isNotEmpty($value):bool 
+	public static function isNotEmpty($value):bool
 	{
 		return (is_string($value) && ($json = static::decode($value)) !== null && !empty($json))? true:false;
 	}
@@ -148,7 +148,7 @@ class Json extends Assoc
 	
 	// decodeKeys
 	// decode une chaîne json et retourne les clés demandés
-	public static function decodeKeys(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null) 
+	public static function decodeKeys(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
 	{
 		$return = null;
 		$decode = static::decode($value,$assoc,$flag,$depth);
@@ -162,7 +162,7 @@ class Json extends Assoc
 	
 	// decodeKeysExists
 	// decode une chaîne json et retourne le tableau seulement si les clés existent
-	public static function decodeKeysExists(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null) 
+	public static function decodeKeysExists(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
 	{
 		$return = null;
 		$decode = static::decode($value,$assoc,$flag,$depth);
@@ -211,7 +211,7 @@ class Json extends Assoc
 	// onSet
 	// helper pour une méthode onSet de colonne
 	// encode en json si array ou objet
-	public static function onSet($return) 
+	public static function onSet($return)
 	{
 		if(is_array($return) || is_object($return))
 		$return = static::encode($return);
@@ -223,7 +223,7 @@ class Json extends Assoc
 	// onGet
 	// helper pour une méthode onGet de colonne
 	// décode de json si scalar
-	public static function onGet($return) 
+	public static function onGet($return)
 	{
 		if(is_scalar($return))
 		$return = static::decode($return);

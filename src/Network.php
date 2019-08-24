@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -11,7 +11,7 @@ class Network extends Root
 	
 	// isOnline
 	// retourne vrai si le hostname est accessible ua port spécifié
-	public static function isOnline(string $hostname,int $port=80,int $timeout=2,&$errno=null,&$errstr=null):bool 
+	public static function isOnline(string $hostname,int $port=80,int $timeout=2,&$errno=null,&$errstr=null):bool
 	{
 		$return = false;
 		$ping = static::ping($hostname,$port,$timeout,$errno,$errstr);
@@ -54,14 +54,14 @@ class Network extends Root
 	
 	// dns
 	// retourne les enregistrements dns pour un hostname
-	public static function dns(string $hostname,int $type=DNS_ALL):array 
+	public static function dns(string $hostname,int $type=DNS_ALL):array
 	{
 		return dns_get_record($hostname,$type);
 	}
 	
 	
 	// mx
-	// retourne les enregistrements mx pour un hostname 
+	// retourne les enregistrements mx pour un hostname
 	public static function mx(string $hostname,bool $weight=true):array
 	{
 		$return = [];
@@ -94,7 +94,7 @@ class Network extends Root
 	}
 	
 	
-	// getIp 
+	// getIp
 	// retourne un ip à partir d'un hostname
 	public static function getIp(string $hostname):?string
 	{
@@ -110,7 +110,7 @@ class Network extends Root
 	
 	// getProtocolNumber
 	// retourne un numéro de protocole à partir de son nom
-	public static function getProtocolNumber(string $name):?int 
+	public static function getProtocolNumber(string $name):?int
 	{
 		$return = null;
 		

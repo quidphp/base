@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -60,7 +60,7 @@ class Res extends Root
 	// retourne vrai si la resource est vide
 	// size peut être calculer à partir de stat ou d'un header d'une requête http
 	// une ressource directoire retourne false, car ce n'est pas possible d'obtenir sa taille via size
-	public static function isEmpty($value):bool 
+	public static function isEmpty($value):bool
 	{
 		$return = false;
 		
@@ -83,7 +83,7 @@ class Res extends Root
 	// retourne vrai si la resource n'est pas vide
 	// size peut être calculer à partir de stat ou d'un header d'une requête http
 	// une ressource directoire retourne false, car ce n'est pas possible d'obtenir sa taille via size
-	public static function isNotEmpty($value):bool 
+	public static function isNotEmpty($value):bool
 	{
 		return (static::isEmpty($value))? false:true;
 	}
@@ -119,7 +119,7 @@ class Res extends Root
 	
 	// isBinary
 	// retourne vrai si le mode du flux est binaire
-	public static function isBinary($value):bool 
+	public static function isBinary($value):bool
 	{
 		$return = false;
 		$mode = static::mode($value);
@@ -142,7 +142,7 @@ class Res extends Root
 	// isRegularType
 	// retourne vrai si le type de la resource est régulier
 	// pas curl ni file_info
-	public static function isRegularType($value):bool 
+	public static function isRegularType($value):bool
 	{
 		$return = false;
 		$type = static::type($value);
@@ -230,7 +230,7 @@ class Res extends Root
 	
 	// isFilePathToUri
 	// retourne vrai si le chemin de la resource peut être transformé en uri
-	public static function isFilePathToUri($value):bool 
+	public static function isFilePathToUri($value):bool
 	{
 		return (File::isPathToUri($value))? true:false;
 	}
@@ -286,7 +286,7 @@ class Res extends Root
 
 	// isPhp
 	// retourne vrai si la resource est une des ressources PHP
-	public static function isPhp($value):bool 
+	public static function isPhp($value):bool
 	{
 		return (static::wrapperType($value) === 'PHP')? true:false;
 	}
@@ -294,7 +294,7 @@ class Res extends Root
 	
 	// isPhpWritable
 	// retourne vrai si le stream est de type php et écrivable
-	public static function isPhpWritable($value):bool 
+	public static function isPhpWritable($value):bool
 	{
 		return (static::isPhp($value) && static::streamType($value) !== 'Input')? true:false;
 	}
@@ -392,7 +392,7 @@ class Res extends Root
 	
 	// isLockable
 	// retourne vrai si la ressource peut être barré et débarré par flock
-	public static function isLockable($value):bool 
+	public static function isLockable($value):bool
 	{
 		return (static::isFile($value))? true:false;
 	}
@@ -418,7 +418,7 @@ class Res extends Root
 	
 	// canStat
 	// retourne vrai si la resource supporte les appels à stat
-	public static function canStat($value):bool 
+	public static function canStat($value):bool
 	{
 		return static::isFileLike($value);
 	}
@@ -426,7 +426,7 @@ class Res extends Root
 	
 	// canLocal
 	// retourne vrai si la resource supporte les appels à stream_is_local
-	public static function canLocal($value):bool 
+	public static function canLocal($value):bool
 	{
 		return (static::is($value) && !static::isContext($value) && static::isRegularType($value))? true:false;
 	}
@@ -468,7 +468,7 @@ class Res extends Root
 	// isScheme
 	// retourne vrai si la resource a le scheme spécifié dans son uri
 	// attention: certains types de resources, comme file peuvent être fonctionnelles sans avoir de scheme
-	public static function isScheme(string $target,$value):bool 
+	public static function isScheme(string $target,$value):bool
 	{
 		return (!empty($target) && static::scheme($value) === $target)? true:false;
 	}
@@ -494,7 +494,7 @@ class Res extends Root
 	
 	// isMimeGroup
 	// retourne vrai si le mime type est du group spécifé
-	public static function isMimeGroup($group,$value,bool $fromPath=true):bool 
+	public static function isMimeGroup($group,$value,bool $fromPath=true):bool
 	{
 		return (static::is($value))? Mime::isGroup($group,$value,true,$fromPath):false;
 	}
@@ -502,7 +502,7 @@ class Res extends Root
 	
 	// isMimeFamily
 	// retourne vrai si le mime type est de la famille spécifé
-	public static function isMimeFamily($family,$value,bool $fromPath=true):bool 
+	public static function isMimeFamily($family,$value,bool $fromPath=true):bool
 	{
 		return (static::is($value))? Mime::isFamily($family,$value,true,$fromPath):false;
 	}
@@ -511,7 +511,7 @@ class Res extends Root
 	// isFilePermission
 	// vérifie s'il est possible d'accéder à la resource fichier en lecture, écriture ou éxécution
 	// possibilité de spécifier un user ou un groupe, par défaut le user et groupe courant
-	public static function isFilePermission(string $type,$value,$user=null,$group=null):bool 
+	public static function isFilePermission(string $type,$value,$user=null,$group=null):bool
 	{
 		return File::isPermission($type,$value,$user,$group);
 	}
@@ -520,7 +520,7 @@ class Res extends Root
 	// isOwner
 	// retourne vrai si l'utilisateur est propriétraire de la resource
 	// si user est null, utilise l'utilisateur courant
-	public static function isOwner($value,$user=null):bool 
+	public static function isOwner($value,$user=null):bool
 	{
 		return Server::isOwner(static::owner($value),$user);
 	}
@@ -529,16 +529,16 @@ class Res extends Root
 	// isGroup
 	// retourne vrai si le groupe est le même que le groupe du fichier
 	// si group est null, utilise le groupe courant
-	public static function isGroup($value,$group=null):bool 
+	public static function isGroup($value,$group=null):bool
 	{
 		return Server::isGroup(static::group($value),$group);
 	}
 	
 	
-	// stat	
+	// stat
 	// retourne les informations stat de la resource
 	// possibilité de reformater via la méthode dans finder
-	public static function stat($value,bool $formatKey=false,bool $formatValue=false):?array 
+	public static function stat($value,bool $formatKey=false,bool $formatValue=false):?array
 	{
 		$return = null;
 		
@@ -578,7 +578,7 @@ class Res extends Root
 	
 	// inode
 	// retourne le numéro d'inode de la resource
-	public static function inode($value):?int 
+	public static function inode($value):?int
 	{
 		return static::statValue('inode',$value,true);
 	}
@@ -586,7 +586,7 @@ class Res extends Root
 	
 	// permission
 	// retourne la permission de la resource
-	public static function permission($value,bool $format=false) 
+	public static function permission($value,bool $format=false)
 	{
 		return static::statValue('permission',$value,true,$format);
 	}
@@ -610,7 +610,7 @@ class Res extends Root
 	
 	// permissionChange
 	// change la permission de la resource fichier
-	public static function permissionChange($mode,$path):bool 
+	public static function permissionChange($mode,$path):bool
 	{
 		return File::permissionChange($mode,$path);
 	}
@@ -618,7 +618,7 @@ class Res extends Root
 	
 	// ownerChange
 	// change le owner de la resource fichier
-	public static function ownerChange($user,$path):bool 
+	public static function ownerChange($user,$path):bool
 	{
 		return File::ownerChange($user,$path);
 	}
@@ -626,7 +626,7 @@ class Res extends Root
 	
 	// groupChange
 	// change le groupe de la resource fichier
-	public static function groupChange($group,$path):bool 
+	public static function groupChange($group,$path):bool
 	{
 		return File::groupChange($group,$path);
 	}
@@ -695,7 +695,7 @@ class Res extends Root
 	// responseMeta
 	// retourne les informations nécessaires à une réponse
 	// retourne null si une des valeurs est manquantes
-	public static function responseMeta($value,bool $contextOption=true):?array 
+	public static function responseMeta($value,bool $contextOption=true):?array
 	{
 		$return = null;
 		
@@ -734,7 +734,7 @@ class Res extends Root
 	
 	// kind
 	// retourne le kind de la resource
-	public static function kind($value):?string 
+	public static function kind($value):?string
 	{
 		$return = null;
 		$meta = static::meta($value);
@@ -834,7 +834,7 @@ class Res extends Root
 	// retourne le mode d'ouverture de la resource, si disponible
 	// c'est identique au code utilisé dans la fonction fopen
 	// si removeBinary est true, le caractère représentant une resource binaire est retiré
-	public static function mode($value,bool $removeBinary=false):?string 
+	public static function mode($value,bool $removeBinary=false):?string
 	{
 		$return = null;
 		$mode = static::metaValue('mode',$value);
@@ -853,7 +853,7 @@ class Res extends Root
 	
 	// wrapperType
 	// retourne le type de wrapper de la resource, si disponible
-	public static function wrapperType($value):?string 
+	public static function wrapperType($value):?string
 	{
 		return static::metaValue('wrapper_type',$value);
 	}
@@ -862,7 +862,7 @@ class Res extends Root
 	// wrapperData
 	// retourne les données du wrapper de la resource, si disponible
 	// on y retrouve entre autre les headers d'une requête http
-	public static function wrapperData($value):?array 
+	public static function wrapperData($value):?array
 	{
 		return static::metaValue('wrapper_data',$value);
 	}
@@ -870,7 +870,7 @@ class Res extends Root
 	
 	// streamType
 	// retourne le type de stream de la resource, si disponible
-	public static function streamType($value):?string 
+	public static function streamType($value):?string
 	{
 		return static::metaValue('stream_type',$value);
 	}
@@ -878,7 +878,7 @@ class Res extends Root
 	
 	// unreadBytes
 	// retourne le nombre de bytes non lu, si disponible
-	public static function unreadBytes($value):?int 
+	public static function unreadBytes($value):?int
 	{
 		return static::metaValue('unread_bytes',$value);
 	}
@@ -887,7 +887,7 @@ class Res extends Root
 	// uri
 	// retourne l'uri de la resource, si disponible
 	// directoire ne retourne pas d'uri
-	public static function uri($value):?string 
+	public static function uri($value):?string
 	{
 		return static::metaValue('uri',$value);
 	}
@@ -895,7 +895,7 @@ class Res extends Root
 	
 	// uriRemoveScheme
 	// retourne l'uri de la resource en prenant bien soin d'enlever le scheme si présent
-	public static function uriRemoveScheme($value):?string 
+	public static function uriRemoveScheme($value):?string
 	{
 		$return = static::uri($value);
 		
@@ -966,7 +966,7 @@ class Res extends Root
 	// retourne le scheme de la resource, si disponible
 	// attention: certains types de resources peuvent être fonctionnelles sans avoir de scheme
 	// ne fonctionne pas avec les directoires
-	public static function scheme($value):?string 
+	public static function scheme($value):?string
 	{
 		return static::parseOne(PHP_URL_SCHEME,$value);
 	}
@@ -975,7 +975,7 @@ class Res extends Root
 	// host
 	// retourne le host de la resource, si disponible
 	// ne fonctionne pas avec les directoires
-	public static function host($value):?string 
+	public static function host($value):?string
 	{
 		return static::parseOne(PHP_URL_HOST,$value);
 	}
@@ -986,7 +986,7 @@ class Res extends Root
 	// ne fonctionne pas avec les directoires
 	// fonctionne avec les ressources phpWritable
 	// l'option de contexte a priorité
-	public static function path($value,bool $contextOption=false):?string 
+	public static function path($value,bool $contextOption=false):?string
 	{
 		$return = null;
 		
@@ -1045,7 +1045,7 @@ class Res extends Root
 	// dirname
 	// retourne le dirname d'une resource à partir de son chemin
 	// ne fonctionne pas avec les directoires
-	public static function dirname($value,bool $contextOption=false):?string 
+	public static function dirname($value,bool $contextOption=false):?string
 	{
 		return static::pathinfoOne(PATHINFO_DIRNAME,$value,$contextOption);
 	}
@@ -1055,7 +1055,7 @@ class Res extends Root
 	// retourne le basename d'une resource à partir de son chemin
 	// ne fonctionne pas avec les directoires
 	// fonctionne avec les ressources phpWritable
-	public static function basename($value,bool $contextOption=false):?string 
+	public static function basename($value,bool $contextOption=false):?string
 	{
 		return static::pathinfoOne(PATHINFO_BASENAME,$value,$contextOption);
 	}
@@ -1063,7 +1063,7 @@ class Res extends Root
 	
 	// safeBasename
 	// retourne le safeBasename de la ressource
-	public static function safeBasename($value):?string 
+	public static function safeBasename($value):?string
 	{
 		return File::safeBasename($value);
 	}
@@ -1071,7 +1071,7 @@ class Res extends Root
 	
 	// mimeBasename
 	// retourne le mimeBasename de la ressource
-	public static function mimeBasename($value,?string $basename=null):?string 
+	public static function mimeBasename($value,?string $basename=null):?string
 	{
 		return File::mimeBasename($value,$basename);
 	}
@@ -1081,7 +1081,7 @@ class Res extends Root
 	// retourne le filename d'une resource à partir de son chemin
 	// ne fonctionne pas avec les directoires
 	// fonctionne avec les ressources phpWritable
-	public static function filename($value,bool $contextOption=false):?string 
+	public static function filename($value,bool $contextOption=false):?string
 	{
 		return static::pathinfoOne(PATHINFO_FILENAME,$value,$contextOption);
 	}
@@ -1091,7 +1091,7 @@ class Res extends Root
 	// retourne l'extension d'une resource à partir de son chemin
 	// ne fonctionne pas avec les directoires
 	// fonctionne avec les ressources phpWritable
-	public static function extension($value,bool $contextOption=false):?string 
+	public static function extension($value,bool $contextOption=false):?string
 	{
 		return static::pathinfoOne(PATHINFO_EXTENSION,$value,$contextOption);
 	}
@@ -1124,7 +1124,7 @@ class Res extends Root
 	// mime
 	// retourne le mime type de la resource
 	// fonctionne seulement si la resource a l'option php mime, est un fichier ou un élément http
-	public static function mime($value,bool $charset=true,bool $contextOption=false):?string 
+	public static function mime($value,bool $charset=true,bool $contextOption=false):?string
 	{
 		return (static::is($value))? Mime::getFromResource($value,$charset,$contextOption):null;
 	}
@@ -1133,7 +1133,7 @@ class Res extends Root
 	// mimeGroup
 	// retourne le groupe du mime type de la resource
 	// fonctionne seulement si la resource est un fichier, un élément http ou phpWritable
-	public static function mimeGroup($value,bool $fromPath=true):?string 
+	public static function mimeGroup($value,bool $fromPath=true):?string
 	{
 		return (static::is($value))? Mime::getGroup($value,$fromPath):null;
 	}
@@ -1142,7 +1142,7 @@ class Res extends Root
 	// mimeFamilies
 	// retourne les familles du mime type de la resource
 	// fonctionne seulement si la resource est un fichier, un élément http ou phpWritable
-	public static function mimeFamilies($value,bool $fromPath=true):?array 
+	public static function mimeFamilies($value,bool $fromPath=true):?array
 	{
 		return (static::is($value))? Mime::getFamilies($value,$fromPath):null;
 	}
@@ -1150,7 +1150,7 @@ class Res extends Root
 	
 	// mimeFamily
 	// retourne la premire famille du mime type de la resource
-	public static function mimeFamily($value,bool $fromPath=true):?string 
+	public static function mimeFamily($value,bool $fromPath=true):?string
 	{
 		return (static::is($value))? Mime::getFamily($value,$fromPath):null;
 	}
@@ -1159,7 +1159,7 @@ class Res extends Root
 	// mimeExtension
 	// retourne l'extension que devrait utilisé la resource selon son mime
 	// fonctionne seulement si la resource est un fichier, un élément http ou phpWritable
-	public static function mimeExtension($value):?string 
+	public static function mimeExtension($value):?string
 	{
 		$return = null;
 		$mime = static::mime($value);
@@ -1205,7 +1205,7 @@ class Res extends Root
 	
 	// transport
 	// retourne un tableau des sockets transports accessible
-	public static function transport():array 
+	public static function transport():array
 	{
 		return stream_get_transports();
 	}
@@ -1213,7 +1213,7 @@ class Res extends Root
 	
 	// wrapper
 	// retourne un tableau des types de stream accessible
-	public static function wrapper():array 
+	public static function wrapper():array
 	{
 		return stream_get_wrappers();
 	}
@@ -1265,8 +1265,8 @@ class Res extends Root
 	
 	// openFromKind
 	// utilisé lors de l'ouverture de la resource, une fois le kind déterminé
-	// méthode protégé 
-	protected static function openFromKind(string $value,string $kind,array $option) 
+	// méthode protégé
+	protected static function openFromKind(string $value,string $kind,array $option)
 	{
 		$return = null;
 		
@@ -1362,7 +1362,7 @@ class Res extends Root
 	// retourne le mode d'ouverture de resource
 	// possibilité de forcer un mode ou de demander un mode binaire
 	// si create est true et que le kind est fichier, le fichier aura un mode permettant la création
-	public static function openMode(string $value,string $kind,?array $option=null):?string 
+	public static function openMode(string $value,string $kind,?array $option=null):?string
 	{
 		$return = null;
 		$option = Arr::plus(['mode'=>null,'create'=>false,'binary'=>false],$option);
@@ -1432,7 +1432,7 @@ class Res extends Root
 	
 	// binary
 	// comme open, mais force l'ouverture en mode binaire
-	public static function binary($value,?array $option=null) 
+	public static function binary($value,?array $option=null)
 	{
 		return static::open($value,Arr::plus($option,['binary'=>true]));
 	}
@@ -1440,7 +1440,7 @@ class Res extends Root
 	
 	// create
 	// comme open, mais active l'option de création de fichier
-	public static function create($value,?array $option=null) 
+	public static function create($value,?array $option=null)
 	{
 		return static::open($value,Arr::plus($option,['create'=>true]));
 	}
@@ -1451,7 +1451,7 @@ class Res extends Root
 	// un tableau d'options doit être fourni à l'inverse des méthodes temp / output et memory
 	// le mime type et le basename sont inscrits dans les options de la resource
 	// possible d'inscrire d'autres informations dans la resource via l'option write
-	public static function phpWritable(string $type,?array $option=null) 
+	public static function phpWritable(string $type,?array $option=null)
 	{
 		$return = null;
 		$option = Arr::plus(['basename'=>null,'mime'=>null,'binary'=>true,'write'=>null],$option);
@@ -1483,7 +1483,7 @@ class Res extends Root
 				
 				if(!empty($option['write']) && is_array($option['write']))
 				{
-					foreach ($option['write'] as $key => $value) 
+					foreach ($option['write'] as $key => $value)
 					{
 						if(is_string($key))
 						static::setPhpContextOption($return,$key,$value);
@@ -1499,7 +1499,7 @@ class Res extends Root
 	// setPhpContextOption
 	// permet de lier une clé -> valeur à l'intérieur du contexte de la ressource
 	// n'a pas besoin d'être phpWritable
-	public static function setPhpContextOption($res,string $key,$value):bool 
+	public static function setPhpContextOption($res,string $key,$value):bool
 	{
 		return stream_context_set_option($res,'php',$key,$value);
 	}
@@ -1508,7 +1508,7 @@ class Res extends Root
 	// setContextMime
 	// permet de lier un mime au sein du contexte de la ressource
 	// n'a pas besoin d'être phpWritable
-	public static function setContextMime(string $mime,$return):bool 
+	public static function setContextMime(string $mime,$return):bool
 	{
 		return static::setPhpContextOption($return,'mime',$mime);
 	}
@@ -1526,7 +1526,7 @@ class Res extends Root
 	// output
 	// ouvre une resource de type php output
 	// par défaut le buffer actuel est clean
-	public static function output(?string $mime=null,?string $basename=null,?array $option=null) 
+	public static function output(?string $mime=null,?string $basename=null,?array $option=null)
 	{
 		$option = Arr::plus(['clean'=>true,'mime'=>$mime,'basename'=>$basename],$option);
 		$return = static::phpWritable('output',$option);
@@ -1540,7 +1540,7 @@ class Res extends Root
 	
 	// temp
 	// ouvre une resource de type php temp
-	public static function temp(?string $mime=null,$basename=null,?array $option=null) 
+	public static function temp(?string $mime=null,$basename=null,?array $option=null)
 	{
 		return static::phpWritable('temp',Arr::plus(['mime'=>$mime,'basename'=>$basename],$option));
 	}
@@ -1548,7 +1548,7 @@ class Res extends Root
 	
 	// memory
 	// ouvre une resource de type php temp
-	public static function memory(?string $mime=null,?string $basename=null,?array $option=null) 
+	public static function memory(?string $mime=null,?string $basename=null,?array $option=null)
 	{
 		return static::phpWritable('memory',Arr::plus(['mime'=>$mime,'basename'=>$basename],$option));
 	}
@@ -1596,7 +1596,7 @@ class Res extends Root
 	// curl
 	// crée et retourne une resource curl
 	// n'éxécute pas la resource
-	public static function curl(string $value,bool $exec=false,$post=null,$header=null,?array $option=null) 
+	public static function curl(string $value,bool $exec=false,$post=null,$header=null,?array $option=null)
 	{
 		$return = static::open('curl');
 		$option = Arr::plus(static::$config['curl'],$option);
@@ -1701,7 +1701,7 @@ class Res extends Root
 	// context
 	// crée un context de flux à joindre avec l'ouverture d'une resource
 	// simplifié pour les type http (joindre un array avec clé post et/ou header)
-	public static function context($value,string $kind) 
+	public static function context($value,string $kind)
 	{
 		$return = static::open('context');
 
@@ -1845,7 +1845,7 @@ class Res extends Root
 	// pour les resources seekable, une bit additionnelle est lu pour tester la fin de la resource
 	// si seek est true, alors seek vaut 0
 	// si ce n'est pas la fin de la resource, le pointeur est ramener une bit à l'arrière
-	public static function seek($seek=0,$value,?int $type=SEEK_SET,?array $option=null):bool 
+	public static function seek($seek=0,$value,?int $type=SEEK_SET,?array $option=null):bool
 	{
 		$return = false;
 		
@@ -1898,7 +1898,7 @@ class Res extends Root
 			
 			if($position > $i)
 			{
-				while ($position > 0) 
+				while ($position > 0)
 				{
 					$read = readdir($value);
 					
@@ -1963,7 +1963,7 @@ class Res extends Root
 	// acquiert un verrou sur une resource
 	// pour un verrou exclusif en écriture il faut mettre true à exclusive
 	// le verrou continue même après la destruction de la resource
-	public static function lock($value,bool $exclusive=false):bool 
+	public static function lock($value,bool $exclusive=false):bool
 	{
 		$return = false;
 		
@@ -1979,7 +1979,7 @@ class Res extends Root
 	
 	// unlock
 	// libère un verrou sur une resource
-	public static function unlock($value):bool 
+	public static function unlock($value):bool
 	{
 		$return = false;
 		
@@ -2046,7 +2046,7 @@ class Res extends Root
 			if($option['rewind'] === true)
 			static::seekRewind($value);
 			
-			while (!feof($value)) 
+			while (!feof($value))
 			{
 				if($return > 0 && is_numeric($option['sleep']) && $option['sleep'] > 0)
 				Response::sleep($option['sleep']);
@@ -2113,7 +2113,7 @@ class Res extends Root
 			$offset = (is_int($offset) && $offset >= 0)? $offset:0;
 			$length = (is_int($length) && $length >= 0)? $length:PHP_INT_MAX;
 			
-			while ($line = static::line($value,$option)) 
+			while ($line = static::line($value,$option))
 			{
 				if($i >= $offset)
 				{
@@ -2235,7 +2235,7 @@ class Res extends Root
 			$return = [];
 			$array = ($amount > 1)? true:false;
 			
-			while ($amount > 0) 
+			while ($amount > 0)
 			{
 				$read = readdir($handle);
 				
@@ -2402,7 +2402,7 @@ class Res extends Root
 	// base64
 	// lit le contenu d'une resource et retourne l'encodage base64 de la resource
 	// si convert est true, le mime type sera converti en utilisant le tableau dans static config
-	public static function base64($value,bool $meta=true,bool $convert=true,?array $option=null):?string 
+	public static function base64($value,bool $meta=true,bool $convert=true,?array $option=null):?string
 	{
 		$return = null;
 		
@@ -2476,7 +2476,7 @@ class Res extends Root
 	// lineChunk
 	// permet de subdiviser le tableau de l'ensemble des lignes de la resource par longueur
 	// retourne un tableau multidimensionnel colonne
-	public static function lineChunk(int $each,$value,bool $preserve=true,?array $option=null):?array 
+	public static function lineChunk(int $each,$value,bool $preserve=true,?array $option=null):?array
 	{
 		$return = null;
 		$lines = static::lines(true,true,$value,$option);
@@ -2494,7 +2494,7 @@ class Res extends Root
 	// si callback retourne faux, la colonne existante est stocké et fermé
 	// si callback retourne null, la ligne est stocké si la colonne est ouverte, sinon elle est ignoré
 	// retourne un tableau multidimensionnel colonne
-	public static function lineChunkWalk(callable $callback,$value,?array $option=null):?array 
+	public static function lineChunkWalk(callable $callback,$value,?array $option=null):?array
 	{
 		$return = null;
 		$lines = static::lines(true,true,$value,$option);
@@ -2510,7 +2510,7 @@ class Res extends Root
 	// cast les données fournis dans les méthodes
 	// utiliser par la méthode prepareContent, creuse dans un tableau
 	// méthode protégé
-	protected static function prepareType($return) 
+	protected static function prepareType($return)
 	{
 		if(is_object($return))
 		$return = Obj::cast($return);
@@ -2523,7 +2523,7 @@ class Res extends Root
 		
 		if(is_array($return))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				$return[$key] = static::prepareType($value);
 			}
@@ -2688,7 +2688,7 @@ class Res extends Root
 	// overwrite
 	// effacer le contenu de la ressource et ensuite écrit le nouveau contenu
 	// retourne vrai si le content a été écrit en entier, sinon retourne un int pour dire le nombre d'octets écrit
-	public static function overwrite($content,$value,?array $option=null) 
+	public static function overwrite($content,$value,?array $option=null)
 	{
 		$return = false;
 		$option = Arr::plus(['lock'=>false],$option);
@@ -2763,7 +2763,7 @@ class Res extends Root
 	// concatenate
 	// permet de concatener plusieurs ressources et écrire le rendu dans une resource
 	// un séparateur doit être fourni, une callable peut être fourni
-	public static function concatenate($value,?callable $callable=null,string $separator,...$values) 
+	public static function concatenate($value,?callable $callable=null,string $separator,...$values)
 	{
 		$return = false;
 		$content = static::concatenateString($callable,$separator,...$values);
@@ -2782,7 +2782,7 @@ class Res extends Root
 	{
 		$return = null;
 
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$read = static::read(true,true,$value);
 			
@@ -2946,7 +2946,7 @@ class Res extends Root
 	// size permet de définir quel taille la ressource doit avoir après l'opération, donc la méthode truncate à partir de la fin
 	// possibilité de barrer la ressource pendant l'opération
 	// retourne vrai si la ressource a été vidé ou si elle est déjà vide
-	public static function empty($value,int $size=0,?array $option=null):bool 
+	public static function empty($value,int $size=0,?array $option=null):bool
 	{
 		$return = false;
 		$option = Arr::plus(['rewind'=>true,'lock'=>false],$option);
@@ -2972,7 +2972,7 @@ class Res extends Root
 	// download
 	// force le téléchargement de la resource
 	// option kill, length et sleep
-	public static function download($value,?array $option=null):?bool 
+	public static function download($value,?array $option=null):?bool
 	{
 		return (static::isResponsable($value))? Response::download($value,$option):null;
 	}
@@ -2981,7 +2981,7 @@ class Res extends Root
 	// toScreen
 	// force l'affichage de la resource dans le navigateur
 	// option kill, length et sleep
-	public static function toScreen($value,?array $option=null):?bool 
+	public static function toScreen($value,?array $option=null):?bool
 	{
 		return (static::isResponsable($value))? Response::toScreen($value,$option):null;
 	}
@@ -2989,7 +2989,7 @@ class Res extends Root
 	
 	// toFile
 	// force l'écriture de la resource dans un nouveau fichier
-	public static function toFile($path,$value,?array $option=null) 
+	public static function toFile($path,$value,?array $option=null)
 	{
 		$return = null;
 		
@@ -3189,7 +3189,7 @@ class Res extends Root
 	
 	// close
 	// ferme la resource selon le kind
-	public static function close($value):bool 
+	public static function close($value):bool
 	{
 		$return = false;
 		$kind = static::kind($value);
@@ -3227,7 +3227,7 @@ class Res extends Root
 	{
 		$return = [];
 		
-		foreach ($values as $key => &$value) 
+		foreach ($values as $key => &$value)
 		{
 			$return[$key] = static::close($value);
 		}

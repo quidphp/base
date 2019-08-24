@@ -34,7 +34,7 @@ class Browser extends Root
 	
 	// is
 	// retourne vrai si le browser est reconnu par browscap
-	public static function is($value):bool 
+	public static function is($value):bool
 	{
 		return (is_string($value) && static::name($value) !== 'Default Browser')? true:false;
 	}
@@ -42,7 +42,7 @@ class Browser extends Root
 	
 	// isDesktop
 	// retourne vrai si le browser est desktop
-	public static function isDesktop($value):bool 
+	public static function isDesktop($value):bool
 	{
 		return (is_string($value) && static::device($value) === 'Desktop')? true:false;
 	}
@@ -50,7 +50,7 @@ class Browser extends Root
 	
 	// isMobile
 	// retourne vrai si le browser est mobile
-	public static function isMobile($value):bool 
+	public static function isMobile($value):bool
 	{
 		$return = false;
 		
@@ -67,7 +67,7 @@ class Browser extends Root
 	
 	// isOldIe
 	// retourne vrai si le browser est Internet Explorer < 9
-	public static function isOldIe($value):bool 
+	public static function isOldIe($value):bool
 	{
 		$return = false;
 		
@@ -84,7 +84,7 @@ class Browser extends Root
 	
 	// isMac
 	// retourne vrai si le browser est sur MacOs
-	public static function isMac($value):bool 
+	public static function isMac($value):bool
 	{
 		return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'mac') !== false)? true:false;
 	}
@@ -92,7 +92,7 @@ class Browser extends Root
 	
 	// isLinux
 	// retourne vrai si le browser est sur Linux
-	public static function isLinux($value):bool 
+	public static function isLinux($value):bool
 	{
 		return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'linux') !== false)? true:false;
 	}
@@ -100,7 +100,7 @@ class Browser extends Root
 	
 	// isWindows
 	// retourne vrai si le browser est sur Windows
-	public static function isWindows($value):bool 
+	public static function isWindows($value):bool
 	{
 		return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'win') !== false)? true:false;
 	}
@@ -114,8 +114,8 @@ class Browser extends Root
 
 		if(is_string($value) && !empty(static::$config['bots']))
 		{
-			foreach(static::$config['bots'] as $v) 
-			{ 
+			foreach(static::$config['bots'] as $v)
+			{
 				if(stripos($value,$v) !== false)
 				{
 					$return = true;

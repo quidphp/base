@@ -99,7 +99,7 @@ class Autoload
 	{
 		$return = [];
 		
-		foreach (static::all() as $key => $value) 
+		foreach (static::all() as $key => $value)
 		{
 			$return[$key] = static::unregister($value);
 		}
@@ -123,7 +123,7 @@ class Autoload
 
 	// index
 	// permet de retourner une callable autoload, via index
-	public static function index(int $index):?callable 
+	public static function index(int $index):?callable
 	{
 		return Arr::index($index,static::all());
 	}
@@ -133,7 +133,7 @@ class Autoload
 	// retourne le psr4 ainsi que le path à utiliser pour autoload la classe
 	// ceci est utilisé par getFilePath et getDirPath
 	// méthode protégé
-	protected static function getPath(string $class,bool $different=true):?string 
+	protected static function getPath(string $class,bool $different=true):?string
 	{
 		$return = null;
 		$psr4 = static::getPsr4($class,$different);
@@ -192,12 +192,12 @@ class Autoload
 	// getPsr4
 	// retourne un tableau clé valeur avec le psr4 à utiliser
 	// sinon null
-	public static function getPsr4(string $class,bool $different=false):?array 
+	public static function getPsr4(string $class,bool $different=false):?array
 	{
 		$return = null;
 		$source = static::$config['psr4'];
 		
-		foreach ($source as $key => $value) 
+		foreach ($source as $key => $value)
 		{
 			if($different === false || $class !== $key)
 			{
@@ -215,7 +215,7 @@ class Autoload
 		
 	// setPsr4
 	// change ou ajoute un point racine
-	public static function setPsr4(string $key,string $value):void 
+	public static function setPsr4(string $key,string $value):void
 	{
 		static::$config['psr4'][$key] = $value;
 		
@@ -225,9 +225,9 @@ class Autoload
 	
 	// setsPsr4
 	// change ou ajoute plusieurs racine de classe
-	public static function setsPsr4(array $keyValue):void 
+	public static function setsPsr4(array $keyValue):void
 	{
-		foreach ($keyValue as $key => $value) 
+		foreach ($keyValue as $key => $value)
 		{
 			if(is_string($key) && is_string($value))
 			static::$config['psr4'][$key] = $value;
@@ -239,7 +239,7 @@ class Autoload
 	
 	// unsetPsr4
 	// enlève un point racine
-	public static function unsetPsr4(string $key):void 
+	public static function unsetPsr4(string $key):void
 	{
 		if(array_key_exists($key,static::$config['psr4']))
 		unset(static::$config['psr4'][$key]);
@@ -251,7 +251,7 @@ class Autoload
 	// allPsr4
 	// retourne le tableau des psr4
 	// possible de seulement retourner si le namespace commence par start
-	public static function allPsr4(?string $start=null,?string $end=null,bool $endContains=true):array 
+	public static function allPsr4(?string $start=null,?string $end=null,bool $endContains=true):array
 	{
 		$return = static::$config['psr4'];
 		
@@ -259,7 +259,7 @@ class Autoload
 		{
 			if(is_string($start))
 			{
-				foreach ($return as $key => $value) 
+				foreach ($return as $key => $value)
 				{
 					if(stripos($key,$start) !== 0)
 					unset($return[$key]);
@@ -268,7 +268,7 @@ class Autoload
 			
 			if(is_string($end))
 			{
-				foreach ($return as $key => $value) 
+				foreach ($return as $key => $value)
 				{
 					$ipos = stripos(substr($key,-strlen($end)),$end);
 					
@@ -286,9 +286,9 @@ class Autoload
 	// retirer les noms de classes qui semblent être des alias
 	// les alias sont stockés en lowercase par php
 	// la logique quid vaut que la classe ait un namespace et que le nom termine par alias
-	public static function removeAlias(array $return):array 
+	public static function removeAlias(array $return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(strtolower($value) === $value && strpos($value,'\\') && substr($value,-5) === 'alias')
 			unset($return[$key]);
@@ -301,12 +301,12 @@ class Autoload
 	// overview
 	// génère un tableau multidimensionnel avec le count, size et line pour chaque namespace dans psr4
 	// possible de filtrer par début de namespace
-	public static function overview(?string $start=null,?string $end=null,bool $endContains=true,bool $sort=true):array 
+	public static function overview(?string $start=null,?string $end=null,bool $endContains=true,bool $sort=true):array
 	{
 		$return = [];
 		$extension = static::phpExtension();
 		
-		foreach (static::allPsr4($start,$end,$endContains) as $key => $value) 
+		foreach (static::allPsr4($start,$end,$endContains) as $key => $value)
 		{
 			$array = [];
 			$array['count'] = Dir::count($value,$extension,true);
@@ -324,7 +324,7 @@ class Autoload
 	
 	// phpExtension
 	// retourne l'extension de php
-	public static function phpExtension():string 
+	public static function phpExtension():string
 	{
 		return 'php';
 	}

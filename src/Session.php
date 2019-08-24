@@ -19,7 +19,7 @@ class Session extends Root
 			'cookieParams'=>[
 				'lifetime'=>(3600 * 24 * 30), // durée de vie, 0 signifie fermeture du browser
 				'expire'=>null, // timestamp d'expiration de la session, a priorité sur lifetime
-				'path'=>'/', // chemin dans le domaine 
+				'path'=>'/', // chemin dans le domaine
 				'domain'=>'', // ce paramètre est étrange, le plus strict est de laisser domain comme chaîne vide
 				'secure'=>null, // cookie doit être servis via https
 				'httponly'=>true], // cookie ne peut pas être modifié dans javaScript
@@ -71,7 +71,7 @@ class Session extends Root
 	// is
 	// retourne vrai si la valeur existe dans le tableau superglobale session
 	// la session doit être active
-	public static function is($value):bool 
+	public static function is($value):bool
 	{
 		return Superglobal::sessionExists($value);
 	}
@@ -80,7 +80,7 @@ class Session extends Root
 	// isLang
 	// retourne vrai si la langue est celle fourni
 	// la session doit être active
-	public static function isLang($value):bool 
+	public static function isLang($value):bool
 	{
 		return (is_string($value) && $value === static::lang())? true:false;
 	}
@@ -89,7 +89,7 @@ class Session extends Root
 	// isIp
 	// retourne vrai si le ip est celui fourni
 	// la session doit être active
-	public static function isIp($value):bool 
+	public static function isIp($value):bool
 	{
 		return (is_string($value) && $value === static::ip())? true:false;
 	}
@@ -98,7 +98,7 @@ class Session extends Root
 	// isCsrf
 	// retourne vrai si le csrf est celui fourni
 	// la session doit être active
-	public static function isCsrf($value):bool 
+	public static function isCsrf($value):bool
 	{
 		return (is_string($value) && $value === static::csrf())? true:false;
 	}
@@ -108,7 +108,7 @@ class Session extends Root
 	// retourne vrai si le captcha est celui fourni
 	// possible de définir si la comparaison est sensible ou non à la case
 	// la session doit être active
-	public static function isCaptcha($value,?bool $sensitive=null):bool 
+	public static function isCaptcha($value,?bool $sensitive=null):bool
 	{
 		$return = false;
 		
@@ -136,7 +136,7 @@ class Session extends Root
 	// isDesktop
 	// retourne vrai si le useragent est desktop
 	// la session doit être active
-	public static function isDesktop():bool 
+	public static function isDesktop():bool
 	{
 		return Browser::isDesktop(static::userAgent())? true:false;
 	}
@@ -145,7 +145,7 @@ class Session extends Root
 	// isMobile
 	// retourne vrai si le useragent est mobile
 	// la session doit être active
-	public static function isMobile():bool 
+	public static function isMobile():bool
 	{
 		return Browser::isMobile(static::userAgent())? true:false;
 	}
@@ -154,7 +154,7 @@ class Session extends Root
 	// isOldIe
 	// retourne vrai si le useragent est Internet Explorer < 9
 	// la session doit être active
-	public static function isOldIe():bool 
+	public static function isOldIe():bool
 	{
 		return Browser::isOldIe(static::userAgent())? true:false;
 	}
@@ -163,7 +163,7 @@ class Session extends Root
 	// isMac
 	// retourne vrai si le useragent est sur MacOs
 	// la session doit être active
-	public static function isMac():bool 
+	public static function isMac():bool
 	{
 		return Browser::isMac(static::userAgent())? true:false;
 	}
@@ -172,7 +172,7 @@ class Session extends Root
 	// isLinux
 	// retourne vrai si le useragent est sur Linux
 	// la session doit être active
-	public static function isLinux():bool 
+	public static function isLinux():bool
 	{
 		return Browser::isLinux(static::userAgent())? true:false;
 	}
@@ -181,7 +181,7 @@ class Session extends Root
 	// isWindows
 	// retourne vrai si le useragent est sur Windows
 	// la session doit être active
-	public static function isWindows():bool 
+	public static function isWindows():bool
 	{
 		return Browser::isWindows(static::userAgent())? true:false;
 	}
@@ -190,7 +190,7 @@ class Session extends Root
 	// isBot
 	// retourne vrai si le userAgent est celui d'un bot
 	// la session doit être active
-	public static function isBot():bool 
+	public static function isBot():bool
 	{
 		return (Browser::isBot(static::userAgent()))? true:false;
 	}
@@ -206,7 +206,7 @@ class Session extends Root
 	
 	// isEmpty
 	// retourne vrai si la session est démarré et vide
-	public static function isEmpty():bool 
+	public static function isEmpty():bool
 	{
 		return (static::isStarted() && empty(Superglobal::session()))? true:false;
 	}
@@ -214,7 +214,7 @@ class Session extends Root
 	
 	// isNotEmpty
 	// retourne vrai si la session est démarré et pas vide
-	public static function isNotEmpty():bool 
+	public static function isNotEmpty():bool
 	{
 		return (static::isStarted() && !empty(Superglobal::session()))? true:false;
 	}
@@ -222,7 +222,7 @@ class Session extends Root
 	
 	// hasSaveHandler
 	// retourne vrai si la classe a un save handler
-	public static function hasSaveHandler():bool 
+	public static function hasSaveHandler():bool
 	{
 		return (!empty(static::$handler))? true:false;
 	}
@@ -233,7 +233,7 @@ class Session extends Root
 	// lance le init avant le is, le init permet par exemple d'aller chercher un objet row à partir d'une int
 	// value fait référence au tableau structureCallback, si tableau est vide la session est valide par défaut
 	// la session doit être active
-	public static function isStructureValid($value=true):bool 
+	public static function isStructureValid($value=true):bool
 	{
 		$return = false;
 		
@@ -243,7 +243,7 @@ class Session extends Root
 			
 			if(!empty($callback))
 			{
-				foreach ($callback as $k => $v) 
+				foreach ($callback as $k => $v)
 				{
 					$return = false;
 					
@@ -270,7 +270,7 @@ class Session extends Root
 	
 	// status
 	// retourne le code status de la session
-	public static function status():int 
+	public static function status():int
 	{
 		return session_status();
 	}
@@ -278,7 +278,7 @@ class Session extends Root
 	
 	// ini
 	// retourne toutes les ini de session
-	public static function ini(?int $format=null):array 
+	public static function ini(?int $format=null):array
 	{
 		return Ini::session($format);
 	}
@@ -328,7 +328,7 @@ class Session extends Root
 	
 	// validateId
 	// validate un id de session
-	public static function validateId(string $id,?string $prefix=null):bool 
+	public static function validateId(string $id,?string $prefix=null):bool
 	{
 		$return = false;
 		
@@ -349,7 +349,7 @@ class Session extends Root
 	// getPrefix
 	// retourne le prefix du sid
 	// si prefix est true, utilise le type
-	public static function getPrefix():?string 
+	public static function getPrefix():?string
 	{
 		$return = static::$config['default']['prefix'] ?? null;
 		
@@ -376,7 +376,7 @@ class Session extends Root
 	// change le nom de la session
 	// la session ne doit pas être active
 	// si value est true, utilise le type
-	public static function setName($value):bool 
+	public static function setName($value):bool
 	{
 		$return = false;
 		
@@ -448,7 +448,7 @@ class Session extends Root
 	
 	// getModule
 	// retourne le module de la session
-	public static function getModule():string 
+	public static function getModule():string
 	{
 		return session_module_name();
 	}
@@ -457,7 +457,7 @@ class Session extends Root
 	// setModule
 	// change le module de la session
 	// la session ne doit pas être active
-	public static function setModule(string $value):bool 
+	public static function setModule(string $value):bool
 	{
 		$return = false;
 		
@@ -502,7 +502,7 @@ class Session extends Root
 	
 	// getSerializeHandler
 	// retourne le handler de serialization
-	public static function getSerializeHandler():string 
+	public static function getSerializeHandler():string
 	{
 		return Ini::get('session.serialize_handler');
 	}
@@ -511,7 +511,7 @@ class Session extends Root
 	// setSerializeHandler
 	// change le handler de serialization
 	// la session ne doit pas être active
-	public static function setSerializeHandler(string $value):bool 
+	public static function setSerializeHandler(string $value):bool
 	{
 		$return = false;
 		
@@ -539,7 +539,7 @@ class Session extends Root
 	// setSavePath
 	// change le savepath de la session
 	// la session ne doit pas être active
-	public static function setSavePath(string $value):bool 
+	public static function setSavePath(string $value):bool
 	{
 		$return = false;
 		
@@ -556,7 +556,7 @@ class Session extends Root
 	
 	// getLifetime
 	// retourne la durée de vie de la session
-	public static function getLifetime():?int 
+	public static function getLifetime():?int
 	{
 		$return = null;
 		$cookie = static::getCookieParams();
@@ -576,7 +576,7 @@ class Session extends Root
 	// change la durée de vie de la session
 	// buffer permet de spécifier une durée additionnelle pour garbage collect
 	// la session ne doit pas être active
-	public static function setLifetime(int $value,?int $buffer=null):bool 
+	public static function setLifetime(int $value,?int $buffer=null):bool
 	{
 		$return = false;
 		
@@ -612,7 +612,7 @@ class Session extends Root
 	// change le timestamp d'expiration de la session
 	// buffer permet de spécifier une durée additionnelle pour garbage collect
 	// la session ne doit pas être active
-	public static function setExpire(int $value,?int $buffer=null):bool 
+	public static function setExpire(int $value,?int $buffer=null):bool
 	{
 		$return = false;
 		$time = Date::time();
@@ -689,7 +689,7 @@ class Session extends Root
 	// change les paramètres du cookie de la session
 	// le tableau donné se merge au défaut dans cookie
 	// la session ne doit pas être active
-	public static function setCookieParams(?array $option=null):bool 
+	public static function setCookieParams(?array $option=null):bool
 	{
 		$return = false;
 		
@@ -828,7 +828,7 @@ class Session extends Root
 	// si value est null, retourne un tableau vide
 	// si value est true, retourne les structures dans config
 	// si value est array, merge le array avec les structures dans config
-	public static function getStructure($value=true):array 
+	public static function getStructure($value=true):array
 	{
 		$return = [];
 		
@@ -849,7 +849,7 @@ class Session extends Root
 	// type peut être init, insert ou update
 	// la session doit être active
 	// méthode protégé
-	public static function prepareStructure(string $type,$value=true):?array 
+	public static function prepareStructure(string $type,$value=true):?array
 	{
 		$return = null;
 		
@@ -860,7 +860,7 @@ class Session extends Root
 			
 			if(!empty($callback))
 			{
-				foreach ($callback as $k => $v) 
+				foreach ($callback as $k => $v)
 				{
 					if(static::classIsCallable($v))
 					{
@@ -880,7 +880,7 @@ class Session extends Root
 	// structureEnv
 	// gère le champ structure env
 	// mode insert, update ou is
-	public static function structureEnv(string $mode,$value=null) 
+	public static function structureEnv(string $mode,$value=null)
 	{
 		$return = $value;
 		$env = static::$config['env'] ?? null;
@@ -898,7 +898,7 @@ class Session extends Root
 	// structureType
 	// gère le champ structure type
 	// mode insert, update ou is
-	public static function structureType(string $mode,$value=null) 
+	public static function structureType(string $mode,$value=null)
 	{
 		$return = $value;
 		$type = static::$config['type'] ?? null;
@@ -917,7 +917,7 @@ class Session extends Root
 	// gère le champ structure version
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureVersion(string $mode,$value=null) 
+	protected static function structureVersion(string $mode,$value=null)
 	{
 		$return = $value;
 		$version = static::$config['version'] ?? null;
@@ -937,7 +937,7 @@ class Session extends Root
 	// gère le champ structure expire
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureExpire(string $mode,$value=null) 
+	protected static function structureExpire(string $mode,$value=null)
 	{
 		$return = $value;
 		
@@ -955,7 +955,7 @@ class Session extends Root
 	// gère le champ structure timestamp
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureTimestamp(string $mode,$value=null) 
+	protected static function structureTimestamp(string $mode,$value=null)
 	{
 		$return = $value;
 		
@@ -979,7 +979,7 @@ class Session extends Root
 	// gère le champ structure requestCount
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureRequestCount(string $mode,$value=null) 
+	protected static function structureRequestCount(string $mode,$value=null)
 	{
 		$return = $value;
 		
@@ -1000,7 +1000,7 @@ class Session extends Root
 	// gère le champ structure userAgent
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureUserAgent(string $mode,$value=null) 
+	protected static function structureUserAgent(string $mode,$value=null)
 	{
 		$return = $value;
 		$userAgentMatch = static::$config['default']['userAgentMatch'];
@@ -1020,7 +1020,7 @@ class Session extends Root
 	// gère le champ structure ip
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureIp(string $mode,$value=null) 
+	protected static function structureIp(string $mode,$value=null)
 	{
 		$return = $value;
 		
@@ -1038,7 +1038,7 @@ class Session extends Root
 	// gère le champ structure fingerprint
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureFingerprint(string $mode,$value=null) 
+	protected static function structureFingerprint(string $mode,$value=null)
 	{
 		$return = $value;
 		$fingerprintKeys = static::$config['default']['fingerprintKeys'];
@@ -1062,7 +1062,7 @@ class Session extends Root
 	// utilise les langs de request et lang pour retourner la lang la plus pertinente
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureLang(string $mode,$value=null) 
+	protected static function structureLang(string $mode,$value=null)
 	{
 		$return = $value;
 		$default = Lang::default();
@@ -1098,7 +1098,7 @@ class Session extends Root
 	// gère le champ structure csrf
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureCsrf(string $mode,$value=null) 
+	protected static function structureCsrf(string $mode,$value=null)
 	{
 		$return = $value;
 		
@@ -1119,7 +1119,7 @@ class Session extends Root
 	// gère le champ structure captcha
 	// mode is
 	// méthode protégé
-	protected static function structureCaptcha(string $mode,$value=null) 
+	protected static function structureCaptcha(string $mode,$value=null)
 	{
 		$return = $value;
 		
@@ -1137,7 +1137,7 @@ class Session extends Root
 	// gère le champ structure remember
 	// mode insert, update ou is
 	// méthode protégé
-	protected static function structureRemember(string $mode,$value=null) 
+	protected static function structureRemember(string $mode,$value=null)
 	{
 		$return = $value;
 		
@@ -1424,7 +1424,7 @@ class Session extends Root
 	// lance le processus de garbageCollect
 	// important: si la méthode est files et que la session est entièrement vide, la date d'accès du fichier n'est pas mis à jour par PHP à chaque commit
 	// la session doit être active
-	public static function garbageCollect():?int 
+	public static function garbageCollect():?int
 	{
 		$return = null;
 		
@@ -1454,7 +1454,7 @@ class Session extends Root
 	// get
 	// retourne une variable dans la superglobale session
 	// la session doit être active
-	public static function get($key) 
+	public static function get($key)
 	{
 		return Superglobal::getSession($key);
 	}
@@ -1495,7 +1495,7 @@ class Session extends Root
 	
 	// timestampCurrent
 	// retourne le timestamp courant dans la session
-	public static function timestampCurrent():int 
+	public static function timestampCurrent():int
 	{
 		return static::get('timestamp/current');
 	}
@@ -1503,7 +1503,7 @@ class Session extends Root
 	
 	// timestampPrevious
 	// retourne le timestamp précédent de la session
-	public static function timestampPrevious():?int 
+	public static function timestampPrevious():?int
 	{
 		return static::get('timestamp/previous');
 	}
@@ -1511,7 +1511,7 @@ class Session extends Root
 	
 	// timestampDifference
 	// retourne la différence entre le timestamp courant et précédent
-	public static function timestampDifference():?int 
+	public static function timestampDifference():?int
 	{
 		$return = null;
 		$previous = static::timestampPrevious();
@@ -1526,7 +1526,7 @@ class Session extends Root
 	// requestCount
 	// retourne le nombre de requête
 	// la session doit être active
-	public static function requestCount():?int 
+	public static function requestCount():?int
 	{
 		return static::get('requestCount');
 	}
@@ -1614,7 +1614,7 @@ class Session extends Root
 	// setLang
 	// change la langue de la session, la langue doit exister dans lang
 	// la session doit être active
-	public static function setLang(string $value):bool 
+	public static function setLang(string $value):bool
 	{
 		$return = false;
 		
@@ -1650,7 +1650,7 @@ class Session extends Root
 	
 	// getCsrfOption
 	// retourne la config pour csrf
-	public static function getCsrfOption(?array $option=null):array 
+	public static function getCsrfOption(?array $option=null):array
 	{
 		return Arr::plus(static::$config['csrf'],$option);
 	}
@@ -1658,7 +1658,7 @@ class Session extends Root
 	
 	// getCsrfName
 	// retourne le nom pour csrf
-	public static function getCsrfName(?array $option=null):string 
+	public static function getCsrfName(?array $option=null):string
 	{
 		return static::getCsrfOption($option)['name'];
 	}
@@ -1666,7 +1666,7 @@ class Session extends Root
 	
 	// makeCsrf
 	// retourne une nouvelle string csrf
-	public static function makeCsrf(?array $option=null):string 
+	public static function makeCsrf(?array $option=null):string
 	{
 		$return = '';
 		$option = static::getCsrfOption($option);
@@ -1707,7 +1707,7 @@ class Session extends Root
 	
 	// getCaptchaOption
 	// retourne la config pour captcha
-	public static function getCaptchaOption(?array $option=null):array 
+	public static function getCaptchaOption(?array $option=null):array
 	{
 		return Arr::plus(static::$config['captcha'],$option);
 	}
@@ -1715,7 +1715,7 @@ class Session extends Root
 	
 	// getCaptchaName
 	// retourne le nom pour captcha
-	public static function getCaptchaName(?array $option=null):string 
+	public static function getCaptchaName(?array $option=null):string
 	{
 		return static::getCaptchaOption($option)['name'];
 	}
@@ -1723,7 +1723,7 @@ class Session extends Root
 	
 	// makeCaptcha
 	// retourne une nouvelle string captcha
-	public static function makeCaptcha(?array $option=null):string 
+	public static function makeCaptcha(?array $option=null):string
 	{
 		$return = '';
 		$option = static::getCaptchaOption($option);
@@ -1782,7 +1782,7 @@ class Session extends Root
 	// change plusieurs valeurs pour remember
 	public static function setsRemember(array $keyValue,bool $cast=true):void
 	{
-		foreach ($keyValue as $key => $value) 
+		foreach ($keyValue as $key => $value)
 		{
 			static::setRemember($key,$value,$cast);
 		}
@@ -1793,7 +1793,7 @@ class Session extends Root
 	
 	// unsetRemember
 	// enlève une valeur du tableau remember
-	public static function unsetRemember(string $key):void 
+	public static function unsetRemember(string $key):void
 	{
 		static::unset(['remember',$key]);
 		

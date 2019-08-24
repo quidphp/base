@@ -4,7 +4,7 @@ namespace Quid\Base;
 
 // http
 class Http extends Root
-{	
+{
 	// config
 	public static $config = [
 		'str'=>[ // configuration pour la méthode str
@@ -15,7 +15,7 @@ class Http extends Root
 	
 	// isScheme
 	// retourne vrai si le scheme est compatible http
-	public static function isScheme($value):bool 
+	public static function isScheme($value):bool
 	{
 		return (is_string($value) && in_array(strtolower($value),['http','https'],true))? true:false;
 	}
@@ -23,7 +23,7 @@ class Http extends Root
 
 	// isHost
 	// retourne vrai si la valeur est un host potentiel
-	public static function isHost($value):bool 
+	public static function isHost($value):bool
 	{
 		return (is_string($value) && !empty($value))? true:false;
 	}
@@ -31,7 +31,7 @@ class Http extends Root
 	
 	// isPort
 	// retourne vrai si le port fourni est compatible http
-	public static function isPort($value):bool 
+	public static function isPort($value):bool
 	{
 		return ($value === 80 || $value === 443)? true:false;
 	}
@@ -39,7 +39,7 @@ class Http extends Root
 	
 	// isMethod
 	// retourne vrai si la méthode de requête http est valide
-	public static function isMethod($value) 
+	public static function isMethod($value)
 	{
 		$return = false;
 		
@@ -117,13 +117,13 @@ class Http extends Root
 	// str
 	// retourne un tableau info requête http en une string
 	// possible de donner des all en plus via option
-	public static function str(array $value,?array $option=null):string 
+	public static function str(array $value,?array $option=null):string
 	{
 		$return = '';
 		$option = Arr::append(static::$config['str']['all'],$option);
 		$str = [];
 		
-		foreach ($option as $key) 
+		foreach ($option as $key)
 		{
 			if(is_string($key) && array_key_exists($key,$value) && is_scalar($value[$key]))
 			{
@@ -157,7 +157,7 @@ class Http extends Root
 		
 		if(count($explode) === count($option))
 		{
-			foreach ($option as $i => $key) 
+			foreach ($option as $i => $key)
 			{
 				if(array_key_exists($i,$explode))
 				$return[$key] = $explode[$i];

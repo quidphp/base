@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -13,8 +13,8 @@ class Extension extends Root
 	
 	
 	// is
-	// retourne vrai si une extension est chargé 
-	public static function is(string $name):bool 
+	// retourne vrai si une extension est chargé
+	public static function is(string $name):bool
 	{
 		return (is_string($name) && extension_loaded($name))? true:false;
 	}
@@ -22,7 +22,7 @@ class Extension extends Root
 	
 	// hasOpCache
 	// retourne vrai si l'extension opcache est chargé
-	public static function hasOpCache(bool $ini=false):bool 
+	public static function hasOpCache(bool $ini=false):bool
 	{
 		$return = static::is('Zend OPcache');
 		
@@ -35,7 +35,7 @@ class Extension extends Root
 	
 	// hasXdebug
 	// retourne vrai si l'extension xdebug est chargé
-	public static function hasXdebug(bool $ini=false):bool 
+	public static function hasXdebug(bool $ini=false):bool
 	{
 		$return = static::is('xdebug');
 		
@@ -48,7 +48,7 @@ class Extension extends Root
 
 	// hasApcu
 	// retourne vrai si l'extension apcu est chargé
-	public static function hasApcu(bool $ini=false):bool 
+	public static function hasApcu(bool $ini=false):bool
 	{
 		$return = static::is('apcu');
 		
@@ -74,7 +74,7 @@ class Extension extends Root
 	
 	// important
 	// retourn un tableau avec les résultats des méthodes pour détecter opcache, xdebug et apcu
-	public static function important(bool $ini=false):array 
+	public static function important(bool $ini=false):array
 	{
 		$return = [];
 		$return['opcache'] = static::hasOpCache($ini);
@@ -99,7 +99,7 @@ class Extension extends Root
 	{
 		$return = [];
 		
-		foreach (static::$config['required'] as $value) 
+		foreach (static::$config['required'] as $value)
 		{
 			if(!static::is($value))
 			$return[] = $value;
