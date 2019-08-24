@@ -38,7 +38,7 @@ class Response extends Root
 	
 	// isCodePositive
 	// retourne vrai si le code de la réponse est positive (200 à 399)
-	public static function isCodePositive():bool 
+	public static function isCodePositive():bool
 	{
 		return static::isCodeBetween(200,399);
 	}
@@ -46,7 +46,7 @@ class Response extends Root
 	
 	// isCodeError
 	// retourne vrai si le code de la réponse est erreur (400 à 499)
-	public static function isCodeError():bool 
+	public static function isCodeError():bool
 	{
 		return static::isCodeIn(400);
 	}
@@ -54,7 +54,7 @@ class Response extends Root
 	
 	// isCodeServerError
 	// retourne vrai si le code de la réponse est server error (500+)
-	public static function isCodeServerError():bool 
+	public static function isCodeServerError():bool
 	{
 		return static::isCodeIn(500);
 	}
@@ -62,7 +62,7 @@ class Response extends Root
 	
 	// isHttp1
 	// retourne vrai si la le protocol est http 1 ou 1.1
-	public static function isHttp1():bool 
+	public static function isHttp1():bool
 	{
 		return Server::isHttp1();
 	}
@@ -70,7 +70,7 @@ class Response extends Root
 	
 	// isHttp2
 	// retourne vrai si la le protocol est http 2
-	public static function isHttp2():bool 
+	public static function isHttp2():bool
 	{
 		return Server::isHttp2();
 	}
@@ -138,7 +138,7 @@ class Response extends Root
 	{
 		$return = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return = (is_numeric($value) && http_response_code() === (int) $value)? true:false;
 			
@@ -153,7 +153,7 @@ class Response extends Root
 	// isCodeBetween
 	// retourne vrai si le code est entre les valeurs from et to
 	// possible de spécifier le code de comparaison en troisième argument, sinon utilise le courant
-	public static function isCodeBetween($from,$to,?int $code=null):bool 
+	public static function isCodeBetween($from,$to,?int $code=null):bool
 	{
 		$return = false;
 		$code = (is_int($code))? $code:static::code();
@@ -168,7 +168,7 @@ class Response extends Root
 	// isCodeIn
 	// retourne vrai si le code se trouve dans le groupe (la centaine) donné en argument
 	// possible de spécifier le code de comparaison en deuxième argument, sinon utilise le courant
-	public static function isCodeIn($value,?int $code=null):bool 
+	public static function isCodeIn($value,?int $code=null):bool
 	{
 		$return = false;
 		
@@ -221,7 +221,7 @@ class Response extends Root
 	
 	// timeLimit
 	// alias pour set_time_limit, renvoie à base/server
-	public static function timeLimit(int $value=0):bool 
+	public static function timeLimit(int $value=0):bool
 	{
 		return Server::timeLimit($value);
 	}
@@ -239,7 +239,7 @@ class Response extends Root
 	// ignoreUserAbort
 	// n'arrête pas le script si la connection est aborted, renvoie à base/server
 	// retourne la valeur courante de ignore_user_abort
-	public static function ignoreUserAbort(bool $value=true):bool 
+	public static function ignoreUserAbort(bool $value=true):bool
 	{
 		return Server::ignoreUserAbort($value);
 	}
@@ -263,7 +263,7 @@ class Response extends Root
 	
 	// code
 	// retourne le code actuel de la réponse
-	public static function code():int 
+	public static function code():int
 	{
 		return http_response_code();
 	}
@@ -298,7 +298,7 @@ class Response extends Root
 	// change le code actuel de la réponse
 	// http_response_code va automatiquement mettre à jour le protocole et status text
 	// retourne vrai si le code courant après la modification est celui donné en argument
-	public static function setCode(int $code):bool 
+	public static function setCode(int $code):bool
 	{
 		return static::setStatus($code);
 	}
@@ -308,7 +308,7 @@ class Response extends Root
 	// change le header status
 	// l'argument peut être un int (code) ou une string (status text)
 	// le response code doit être défini dans config de header, ce n'est pas possible de changer le status text ou créer un code non défini
-	public static function setStatus($value):bool 
+	public static function setStatus($value):bool
 	{
 		$return = false;
 		
@@ -361,7 +361,7 @@ class Response extends Root
 	// moved
 	// change le code la requête un code entre 300 et 399
 	// par défaut 301, si false utilise 302
-	public static function moved($code=null):bool 
+	public static function moved($code=null):bool
 	{
 		$return = false;
 		
@@ -381,7 +381,7 @@ class Response extends Root
 	// error
 	// change le code de la requête entre 400 et 499
 	// kill permet de tuer la réponse
-	public static function error($code=null,$kill=false) 
+	public static function error($code=null,$kill=false)
 	{
 		$return = false;
 		
@@ -580,7 +580,7 @@ class Response extends Root
 	// getsHeader
 	// retourne plusieurs headers
 	// insensible à la case
-	public static function getsHeader(array $keys):array 
+	public static function getsHeader(array $keys):array
 	{
 		return Header::gets($keys,static::headers(false));
 	}
@@ -625,7 +625,7 @@ class Response extends Root
 		{
 			$return = [];
 			
-			foreach ($values as $key => $value) 
+			foreach ($values as $key => $value)
 			{
 				$return[$key] = 0;
 				$list = Header::list([$key=>$value]);
@@ -690,7 +690,7 @@ class Response extends Root
 		{
 			$return = [];
 			
-			foreach ($keys as $key) 
+			foreach ($keys as $key)
 			{
 				$return[$key] = false;
 				
@@ -770,7 +770,7 @@ class Response extends Root
 	// setHeaderCallback
 	// permet d'enregistrer un callback lors de l'envoie du output
 	// permet de changer les headers avant l'envoie
-	public static function setHeaderCallback(callable $callable):bool 
+	public static function setHeaderCallback(callable $callable):bool
 	{
 		return header_register_callback($callable);
 	}
@@ -779,18 +779,18 @@ class Response extends Root
 	// prepareHeaderDefault
 	// méthode utilisé par setsHeaderDefault
 	// si une value d'une header par défaut est int, alors additionne le timestamp courant et formate au format GMT
-	public static function prepareHeaderDefault(array $return):array 
+	public static function prepareHeaderDefault(array $return):array
 	{
 		$time = Date::time();
 		
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_int($value))
 			$return[$key] = Date::gmt($value += $time);
 		}
 		
 		return $return;
-	}	
+	}
 	
 	
 	// setsHeaderDefault
@@ -815,7 +815,7 @@ class Response extends Root
 	// body
 	// retourne le body complet dans le buffer
 	// le buffer est conservé mais aplati à un niveau
-	public static function body():string 
+	public static function body():string
 	{
 		return Buffer::getAll(true);
 	}
@@ -823,7 +823,7 @@ class Response extends Root
 	
 	// setBody
 	// remplace le body complet de la réponse par la valeur fourni en argument
-	public static function setBody(string $value):bool 
+	public static function setBody(string $value):bool
 	{
 		return Buffer::cleanAllEcho($value);
 	}
@@ -831,7 +831,7 @@ class Response extends Root
 	
 	// prependBody
 	// ajoute du contenu au début du body de la réponse
-	public static function prependBody(string $value):bool 
+	public static function prependBody(string $value):bool
 	{
 		return Buffer::prependEcho($value);
 	}
@@ -839,7 +839,7 @@ class Response extends Root
 	
 	// appendBody
 	// ajoute du contenu au body de la réponse
-	public static function appendBody(string $value):bool 
+	public static function appendBody(string $value):bool
 	{
 		return Buffer::appendEcho($value);
 	}
@@ -847,7 +847,7 @@ class Response extends Root
 	
 	// emptyBody
 	// vide le contenu du body de la réponse
-	public static function emptyBody():bool 
+	public static function emptyBody():bool
 	{
 		return (!empty(Buffer::cleanAll()))? true:false;
 	}
@@ -877,7 +877,7 @@ class Response extends Root
 	// pause l'éxécution du script jusqu'au timestamp ou microtimestamp donné en argument
 	// important d'utiliser microtime comme valeur de base si la valeur du sleep est moins d'une seconde
 	// retourne null ou le temps que le script a sleep
-	public static function sleepUntil(float $value):?float 
+	public static function sleepUntil(float $value):?float
 	{
 		$return = null;
 		$microtime = Date::microtime();
@@ -922,7 +922,7 @@ class Response extends Root
 	
 	// onCloseDown
 	// enregistre une callable à appeler au close down, des arguments peuvent être passés au callable
-	public static function onCloseDown(callable $call,...$args):void 
+	public static function onCloseDown(callable $call,...$args):void
 	{
 		static::$config['closeDown'][] = [$call,$args];
 		
@@ -933,7 +933,7 @@ class Response extends Root
 	// emptyCloseDown
 	// vide le tableau des callbacks sur closeDown
 	// remet on closeBody sur closeDown
-	public static function emptyCloseDown():void 
+	public static function emptyCloseDown():void
 	{
 		static::$config['closeDown'] = [];
 		static::onCloseDownCloseBody();
@@ -944,7 +944,7 @@ class Response extends Root
 	
 	// closeDown
 	// lance tous les callbacks closeDown dans l'ordre d'ajout
-	public static function closeDown():void 
+	public static function closeDown():void
 	{
  		static::closeDownBody('closeDown');
 		
@@ -954,7 +954,7 @@ class Response extends Root
 	
 	// onShutDownCloseDown
 	// sur shutDown lance closeDown
-	public static function onShutDownCloseDown():void 
+	public static function onShutDownCloseDown():void
 	{
 		static::onShutDown([static::class,'closeDown']);
 		
@@ -964,7 +964,7 @@ class Response extends Root
 	
 	// onCloseBody
 	// enregistre une callable à appeler au close doc, des arguments peuvent être passés au callable
-	public static function onCloseBody(callable $call,...$args):void 
+	public static function onCloseBody(callable $call,...$args):void
 	{
 		static::$config['closeBody'][] = [$call,$args];
 		
@@ -974,7 +974,7 @@ class Response extends Root
 	
 	// emptyCloseBody
 	// vide le tableau des callbacks sur closeBody
-	public static function emptyCloseBody():void 
+	public static function emptyCloseBody():void
 	{
 		static::$config['closeBody'] = [];
 		
@@ -984,7 +984,7 @@ class Response extends Root
 	
 	// closeBody
 	// lance tous les callbacks closeBody dans l'ordre d'ajout
-	public static function closeBody():void 
+	public static function closeBody():void
 	{
  		static::closeDownBody('closeBody');
 		
@@ -994,7 +994,7 @@ class Response extends Root
 	
 	// onCloseDownCloseBody
 	// sur closeDown lance closeBody
-	public static function onCloseDownCloseBody():void 
+	public static function onCloseDownCloseBody():void
 	{
 		static::onCloseDown([static::class,'closeBody']);
 		
@@ -1004,7 +1004,7 @@ class Response extends Root
 	
 	// speedOnCloseBody
 	// affiche speed sur closeBody
-	public static function speedOnCloseBody():void 
+	public static function speedOnCloseBody():void
 	{
 		static::onCloseBody(function() {
 			if(static::isHtmlOrAuto())
@@ -1018,11 +1018,11 @@ class Response extends Root
 	// lance tous les callbacks closeDown dans l'ordre d'ajout
 	// les callbacks sont effacés au fur et à mesure
 	// méthode protégé
-	protected static function closeDownBody(string $type):void 
+	protected static function closeDownBody(string $type):void
 	{
 		if(in_array($type,['closeDown','closeBody',true]))
 		{
-			foreach (static::$config[$type] as $key => $callback) 
+			foreach (static::$config[$type] as $key => $callback)
 			{
 				if(is_array($callback) && !empty($callback))
 				{
@@ -1041,7 +1041,7 @@ class Response extends Root
 
 	// getAutoContentType
 	// détecte le content type à partir d'une string
-	public static function getAutoContentType(string $value):string 
+	public static function getAutoContentType(string $value):string
 	{
 		$return = 'html';
 		

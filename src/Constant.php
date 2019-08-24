@@ -19,7 +19,7 @@ class Constant extends Root
 	
 	// get
 	// retourne la valeur d'une constante définie
-	public static function get(string $name) 
+	public static function get(string $name)
 	{
 		$return = null;
 		

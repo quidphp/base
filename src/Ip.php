@@ -81,7 +81,7 @@ class Ip extends Root
 		{
 			$return = true;
 			
-			foreach ($value as $k => $v) 
+			foreach ($value as $k => $v)
 			{
 				if(!is_numeric($v) || ($range[$k] !== static::$config['range'] && $range[$k] !== $v))
 				{
@@ -112,7 +112,7 @@ class Ip extends Root
 				$return = true;
 				$i = 0;
 				
-				while ($i < $level) 
+				while ($i < $level)
 				{
 					if(!is_numeric($value[$i]) || $value[$i] !== $compare[$i])
 					{
@@ -143,7 +143,7 @@ class Ip extends Root
 			
 			else
 			{
-				foreach ($array as $ip) 
+				foreach ($array as $ip)
 				{
 					if($range === true && static::compareRange($value,$ip))
 					{
@@ -167,7 +167,7 @@ class Ip extends Root
 	// reformat
 	// permet de reformater un ip dont la dernière partie est de type 0/22 ou 0/24
 	// représente des groupes de 256 ips
-	public static function reformat(string $value):?array 
+	public static function reformat(string $value):?array
 	{
 		$return = null;
 		$explode = static::explode($value);
@@ -187,7 +187,7 @@ class Ip extends Root
 				$i = 0;
 				$group = static::$config['reformat'][$x[1]];
 				
-				while ($i < $group) 
+				while ($i < $group)
 				{
 					$ip = $explode;
 					$ip[] = ($start + $i);
@@ -209,11 +209,11 @@ class Ip extends Root
 	// reformats
 	// permet de reformater plusieurs ips dont la dernière partie est de type 0/22 ou 0/24
 	// un tableau multidimensionnel est retourné
-	public static function reformats(string ...$values):array 
+	public static function reformats(string ...$values):array
 	{
 		$return = [];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return[$value] = static::reformat($value);
 		}
@@ -225,11 +225,11 @@ class Ip extends Root
 	// reformatsUnique
 	// permet de reformater plusieurs ips dont la dernière partie est de type 0/22 ou 0/24
 	// un tableau unidimensionnel avec les ips unique sont retournés
-	public static function reformatsUnique(string ...$values):array 
+	public static function reformatsUnique(string ...$values):array
 	{
 		$return = [];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$reformat = static::reformat($value);
 			
@@ -243,7 +243,7 @@ class Ip extends Root
 	
 	// toLong
 	// convertit une ip en int
-	public static function toLong(string $value):?int 
+	public static function toLong(string $value):?int
 	{
 		$return = null;
 		
@@ -257,7 +257,7 @@ class Ip extends Root
 	
 	// fromLong
 	// retourne une string ip à partir d'un int long
-	public static function fromLong(int $long):?string 
+	public static function fromLong(int $long):?string
 	{
 		$return = null;
 		
@@ -285,7 +285,7 @@ class Ip extends Root
 	
 	// implode
 	// implode un tableau à 4 clés en un chaîne
-	public static function implode(array $value):?string 
+	public static function implode(array $value):?string
 	{
 		$return = null;
 		

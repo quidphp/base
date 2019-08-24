@@ -59,7 +59,7 @@ class Assoc extends Root
 	{
 		$return = false;
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			$values[$key] = static::arr($value);
 		}
@@ -100,7 +100,7 @@ class Assoc extends Root
 	{
 		$return = false;
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			$values[$key] = static::arr($value);
 		}
@@ -117,7 +117,7 @@ class Assoc extends Root
 	{
 		$return = false;
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			$values[$key] = static::arr($value);
 		}
@@ -130,7 +130,7 @@ class Assoc extends Root
 	
 	// getSensitive
 	// retourne si la classe est sensible à la case
-	public static function getSensitive():bool 
+	public static function getSensitive():bool
 	{
 		return static::$config['sensitive'];
 	}
@@ -153,8 +153,8 @@ class Assoc extends Root
 		$return = '';
 		$array = [];
 		
-		foreach ($values as $k => $value) 
-		{	
+		foreach ($values as $k => $value)
+		{
 			$value = static::arr($value);
 			
 			if(is_array($value))

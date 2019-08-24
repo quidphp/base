@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -24,7 +24,7 @@ class Exception extends Root
 	
 	// restoreHandler
 	// remet le handler à ce qu'il était avant le dernière appel à set
-	public static function restoreHandler():bool 
+	public static function restoreHandler():bool
 	{
 		return restore_exception_handler();
 	}
@@ -57,7 +57,7 @@ class Exception extends Root
 	// classFunction
 	// prepend les clés classe et function au tableau pour le message
 	// possible de spécifier une classe statique qui prend le dessus sur celle de trace
-	public static function classFunction($trace,?string $staticClass,array $return):array 
+	public static function classFunction($trace,?string $staticClass,array $return):array
 	{
 		$class = null;
 		$function = null;

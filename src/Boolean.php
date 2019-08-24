@@ -13,7 +13,7 @@ class Boolean extends Root
 	// typecasts des valeurs par référence
 	public static function typecast(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = (bool) $value;
 		}
@@ -26,7 +26,7 @@ class Boolean extends Root
 	// cast une boolean
 	// boolCast à 1 remplace les string
 	public static function cast($value,bool $extra=true)
-	{	
+	{
 		$return = null;
 		
 		if(is_scalar($value))
@@ -130,7 +130,7 @@ class Boolean extends Root
 	
 	// str
 	// retourne la version str d'un booléan
-	public static function str($value):string 
+	public static function str($value):string
 	{
 		$return = '';
 		

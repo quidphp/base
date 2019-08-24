@@ -22,7 +22,7 @@ class Segment extends Root
 	
 	// isWrapped
 	// retourne vrai si la valeur est wrap dans le segment
-	public static function isWrapped($delimiter,string $value):bool 
+	public static function isWrapped($delimiter,string $value):bool
 	{
 		$return = false;
 		$delimiter = static::getDelimiter($delimiter);
@@ -125,7 +125,7 @@ class Segment extends Root
 	
 	// count
 	// count le nombre de segments dans la chaîne
-	public static function count($delimiter,string $str):int 
+	public static function count($delimiter,string $str):int
 	{
 		return count(static::get($delimiter,$str));
 	}
@@ -143,7 +143,7 @@ class Segment extends Root
 			$return = true;
 			$keys = (array) $keys;
 			
-			foreach ($keys as $key) 
+			foreach ($keys as $key)
 			{
 				if(is_scalar($key))
 				{
@@ -174,7 +174,7 @@ class Segment extends Root
 	// retourne un tableau avec tous les segments dans la chaîne
 	// possible d'envoyer le tableau de retour dans prepare, si prepare est true
 	// si un même segment est présent à multiples reprises, il est retourné plusieurs fois dans le bon ordre
-	public static function get($delimiter,string $str,bool $prepare=false):array 
+	public static function get($delimiter,string $str,bool $prepare=false):array
 	{
 		$return = [];
 		$delimiter = static::getDelimiter($delimiter,true);
@@ -191,7 +191,7 @@ class Segment extends Root
 				
 				if($prepare === true)
 				{
-					foreach ($return as $key => $value) 
+					foreach ($return as $key => $value)
 					{
 						$return[$key] = static::prepare($value);
 					}
@@ -228,7 +228,7 @@ class Segment extends Root
 			
 			elseif(is_array($value))
 			{
-				foreach ($value as $k => $v) 
+				foreach ($value as $k => $v)
 				{
 					if(is_scalar($v))
 					{
@@ -256,7 +256,7 @@ class Segment extends Root
 	// support pour column si value est un tableau
 	public static function setArray($delimiter,$key,$value,array $return):array
 	{
-		foreach ($return as $k => $v) 
+		foreach ($return as $k => $v)
 		{
 			if(is_array($v))
 			$return[$k] = static::setArray($delimiter,$key,$value,$v);
@@ -292,7 +292,7 @@ class Segment extends Root
 			else
 			$replace = Arr::keysReplace(['/'=>'\/'],$replace);
 			
-			foreach ($replace as $key => $value) 
+			foreach ($replace as $key => $value)
 			{
 				if(is_scalar($value))
 				$replace[$key] = (string) $value;
@@ -316,7 +316,7 @@ class Segment extends Root
 	// support pour column si replace est multidimensionnel
 	public static function setsArray($delimiter,array $replace,array $return):array
 	{
-		foreach ($return as $k => $v) 
+		foreach ($return as $k => $v)
 		{
 			if(is_array($v))
 			$return[$k] = static::setsArray($delimiter,$replace,$v);
@@ -331,7 +331,7 @@ class Segment extends Root
 	
 	// unset
 	// enlève un segment de la chaîne
-	public static function unset($delimiter,$key,string $return):string 
+	public static function unset($delimiter,$key,string $return):string
 	{
 		return static::set($delimiter,$key,'',$return);
 	}
@@ -339,7 +339,7 @@ class Segment extends Root
 	
 	// unsets
 	// enlève plusieurs segments de la chaîne
-	public static function unsets($delimiter,array $replace,string $return):string 
+	public static function unsets($delimiter,array $replace,string $return):string
 	{
 		if(!empty($replace))
 		{
@@ -355,7 +355,7 @@ class Segment extends Root
 	// prepare
 	// prépare la string pour set et sets
 	// remplate %lang% par la langue courante, permet de mettre la langue à l'intérieur d'un segment
-	public static function prepare(string $return):string 
+	public static function prepare(string $return):string
 	{
 		$lang = static::$config['lang'] ?? null;
 		if(is_string($lang) && strpos($return,$lang) !== false)

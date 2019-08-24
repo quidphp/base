@@ -16,7 +16,7 @@ trait _config
 	// possible de faire un merge recursif custom, selon la callable défini dans callableConfig
 	// permet de merge une configuration des traits en dessous de la configuration courante de la classe
 	// les config traits sont effacé pour éviter que d'autres classes utilisent les mêmes config pour le merge
-	public static function __config(bool $force=false):void 
+	public static function __config(bool $force=false):void
 	{
 		$class = static::class;
 		
@@ -30,7 +30,7 @@ trait _config
 				
 				$merge = [];
 				$vars = get_class_vars($class);
-				foreach ($vars as $key => $value) 
+				foreach ($vars as $key => $value)
 				{
 					if($key !== 'config' && is_array($value) && !empty($value) && strpos($key,'config') === 0)
 					$merge[] = $value;
@@ -71,7 +71,7 @@ trait _config
 		if(empty($return))
 		{
 			$return = function(string $class,...$values) {
-				foreach ($values as &$value) 
+				foreach ($values as &$value)
 				{
 					$value = (array) $value;
 				}
@@ -86,7 +86,7 @@ trait _config
 	
 	// setConfigCallable
 	// permet de changer la closure à utiliser pour le merge de config
-	public static function setConfigCallable(?\Closure $value=null):void 
+	public static function setConfigCallable(?\Closure $value=null):void
 	{
 		static::$callableConfig = $value;
 		
@@ -106,7 +106,7 @@ trait _config
 	// retourne le tableau de config
 	// possibilité de faire un merge sur la valeur de retour
 	// par défaut, cette méthode écrit dans la variable statique (à l'inverse de option)
-	public static function config(?array $value=null,bool $write=true):?array 
+	public static function config(?array $value=null,bool $write=true):?array
 	{
 		$return = null;
 		$class = static::class;

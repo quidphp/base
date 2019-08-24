@@ -11,7 +11,7 @@ abstract class Test extends Root
 	
 	// start
 	// lance les tests sur le fichier
-	public static function start(?array $data=null) 
+	public static function start(?array $data=null)
 	{
 		$return = false;
 		$data = (array) $data;
@@ -29,7 +29,7 @@ abstract class Test extends Root
 	
 	// before
 	// méthode appelé avant trigger
-	public static function before(array $data):void 
+	public static function before(array $data):void
 	{
 		return;
 	}
@@ -37,7 +37,7 @@ abstract class Test extends Root
 	
 	// after
 	// méthode appelé après trigger
-	public static function after(array $data):void 
+	public static function after(array $data):void
 	{
 		return;
 	}
@@ -51,7 +51,7 @@ abstract class Test extends Root
 	// count
 	// count le nombre d'assertions dans le fichier de test courant
 	// peut retourner null si le fichier de la classe n'est pas trouvable
-	public static function count():?int 
+	public static function count():?int
 	{
 		$return = null;
 		$file = static::classFile();

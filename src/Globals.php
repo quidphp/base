@@ -11,7 +11,7 @@ class Globals extends Root
 	
 	// is
 	// retourne vrai si la variable est une globale
-	public static function is($key):bool 
+	public static function is($key):bool
 	{
 		return (Arr::isKey($key) && array_key_exists($key,$GLOBALS))? true:false;
 	}
@@ -19,7 +19,7 @@ class Globals extends Root
 	
 	// get
 	// retourne la valeur d'une variable globale
-	public static function get($key) 
+	public static function get($key)
 	{
 		$return = null;
 		
@@ -57,7 +57,7 @@ class Globals extends Root
 
 	// unset
 	// enlève une ou plusieurs variables globales
-	public static function unset(...$keys):void 
+	public static function unset(...$keys):void
 	{
 		Arr::unsetsRef($keys,$GLOBALS);
 		

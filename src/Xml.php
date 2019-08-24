@@ -23,7 +23,7 @@ class Xml extends Root
 	// urlset
 	// retourne un urlset, tel que paramétré dans config
 	// si inexistant retourne la string
-	public static function urlset(string $value):?string 
+	public static function urlset(string $value):?string
 	{
 		return Arr::get($value,static::$config['urlset']);
 	}

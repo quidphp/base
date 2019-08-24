@@ -45,8 +45,8 @@ class ImageRaster extends File
 				// line
 				if(is_array($option['line']) && count($option['line']) === 3)
 				{
-					$lineColor = imagecolorallocate($image,...$option['line']); 
-					for ($i=0; $i < 10; $i++) 
+					$lineColor = imagecolorallocate($image,...$option['line']);
+					for ($i=0; $i < 10; $i++)
 					{
 					    imageline($image,0,rand() % 50,$width,rand() % 50,$lineColor);
 					}
@@ -56,7 +56,7 @@ class ImageRaster extends File
 				if(is_array($option['pixel']) && count($option['pixel']) === 3)
 				{
 					$pixelColor = imagecolorallocate($image,...$option['pixel']);
-					for ($i=0; $i < 1000; $i++) 
+					for ($i=0; $i < 1000; $i++)
 					{
 					    imagesetpixel($image,rand() % $width,rand() % 50,$pixelColor);
 					}
@@ -64,7 +64,7 @@ class ImageRaster extends File
 
 				// text
 				$textColor = imagecolorallocate($image,...$option['text']);
-				foreach ($str as $k => $z) 
+				foreach ($str as $k => $z)
 				{
 					imagettftext($image,25,0,20 + ($k * 35),35,$textColor,$font,$z);
 				}
@@ -80,7 +80,7 @@ class ImageRaster extends File
 	
 	// bestFit
 	// génère le calcul de résolution pour le redimensionnement best fit
-	public static function bestFit(int $maxWidth,int $maxHeight,int $width,int $height,bool $expand=false):?array 
+	public static function bestFit(int $maxWidth,int $maxHeight,int $width,int $height,bool $expand=false):?array
 	{
 		$image = null;
 		
@@ -132,7 +132,7 @@ class ImageRaster extends File
 	
 	// bestFitExpand
 	// permet d'agrandir une image qui a été passé dans bestfit pour qu'elle prenne l'espace maximale
-	public static function bestFitExpand(int $maxWidth,int $maxHeight,int $width,int $height):?array 
+	public static function bestFitExpand(int $maxWidth,int $maxHeight,int $width,int $height):?array
 	{
 		$image = null;
 		

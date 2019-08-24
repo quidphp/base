@@ -4,10 +4,10 @@ namespace Quid\Base;
 
 // _option
 trait _option
-{	
+{
 	// isOption
 	// retourne vrai si l'option existe
-	public static function isOption($key):bool 
+	public static function isOption($key):bool
 	{
 		return Arrs::keyExists($key,static::$config['option']);
 	}
@@ -15,7 +15,7 @@ trait _option
 	
 	// getOption
 	// retourne une option du tableau d'option
-	public static function getOption($key) 
+	public static function getOption($key)
 	{
 		return Arrs::get($key,static::$config['option']);
 	}
@@ -23,7 +23,7 @@ trait _option
 	
 	// setOption
 	// ajoute ou change une option dans le tableau d'option
-	public static function setOption($key,$value):void 
+	public static function setOption($key,$value):void
 	{
 		Arrs::setRef($key,$value,static::$config['option']);
 		
@@ -33,7 +33,7 @@ trait _option
 	
 	// unsetOption
 	// enlève une option du tableau d'option
-	public static function unsetOption($key):void 
+	public static function unsetOption($key):void
 	{
 		Arrs::unsetRef($key,static::$config['option']);
 		
@@ -45,7 +45,7 @@ trait _option
 	// retourne le tableau d'options
 	// possibilité de faire un merge sur la valeur de retour, n'écrit pas dans la variable statique
 	// par défaut, cette méthode n'écrit pas dans la variable statique (à l'inverse de config)
-	public static function option(?array $value=null,bool $write=false):array 
+	public static function option(?array $value=null,bool $write=false):array
 	{
 		$return = static::$config['option'];
 

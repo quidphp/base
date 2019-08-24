@@ -131,7 +131,7 @@ class Finder extends Root
 	
 	// isPathToUri
 	// retourne vrai si le chemin peut être transformé en path
-	public static function isPathToUri($value):bool 
+	public static function isPathToUri($value):bool
 	{
 		$return = false;
 		$value = static::path($value);
@@ -214,7 +214,7 @@ class Finder extends Root
 		
 		if(is_string($path) && !self::is($path,false))
 		{
-			foreach (Path::parents($path) as $p) 
+			foreach (Path::parents($path) as $p)
 			{
 				if(Dir::isReadable($p,false))
 				{
@@ -230,7 +230,7 @@ class Finder extends Root
 	
 	// isReadableOrCreatable
 	// vérifie que le chemin est lisible ou créable
-	// retourne vrai si le chemin existe et qu'il est lisible ou si le chemin n'existe pas et qu'il est créable 
+	// retourne vrai si le chemin existe et qu'il est lisible ou si le chemin n'existe pas et qu'il est créable
 	public static function isReadableOrCreatable($path):bool
 	{
 		$return = false;
@@ -245,7 +245,7 @@ class Finder extends Root
 	
 	// isWritableOrCreatable
 	// vérifie que le chemin est writable ou créable
-	// retourne vrai si le chemin existe et qu'il est écrivable ou si le chemin n'existe pas et qu'il est créable 
+	// retourne vrai si le chemin existe et qu'il est écrivable ou si le chemin n'existe pas et qu'il est créable
 	public static function isWritableOrCreatable($path):bool
 	{
 		$return = false;
@@ -270,7 +270,7 @@ class Finder extends Root
 	// isVisible
 	// retourne vrai si le chemin est visible
 	// ne vérifie pas l'existence du chemin
-	public static function isVisible($path):bool 
+	public static function isVisible($path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -289,7 +289,7 @@ class Finder extends Root
 
 	// isHost
 	// retourne vrai si l'host existe dans les paramètres de finder
-	public static function isHost(string $value):bool 
+	public static function isHost(string $value):bool
 	{
 		return (static::getHostPath($value) !== null)? true:false;
 	}
@@ -390,7 +390,7 @@ class Finder extends Root
 	// isPermission
 	// vérifie s'il est possible d'accéder au fichier, symlink ou directoire en lecture, écriture ou éxécution
 	// possibilité de spécifier un user ou un groupe, par défaut le user et groupe courant
-	public static function isPermission(string $type,$path,$user=null,$group=null):bool 
+	public static function isPermission(string $type,$path,$user=null,$group=null):bool
 	{
 		$return = false;
 		
@@ -424,7 +424,7 @@ class Finder extends Root
 	// isOwner
 	// retourne vrai si l'utilisateur est propriétraire du fichier
 	// si user est null, utilise l'utilisateur courant
-	public static function isOwner($path,$user=null):bool 
+	public static function isOwner($path,$user=null):bool
 	{
 		return Server::isOwner(static::owner($path),$user);
 	}
@@ -433,7 +433,7 @@ class Finder extends Root
 	// isGroup
 	// retourne vrai si le groupe est le même que le groupe du fichier
 	// si group est null, utilise le groupe courant
-	public static function isGroup($path,$group=null):bool 
+	public static function isGroup($path,$group=null):bool
 	{
 		return Server::isGroup(static::group($path),$group);
 	}
@@ -461,7 +461,7 @@ class Finder extends Root
 	// retourne le numéro d'inode du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
 	// il faut utiliser la même méthode dans la classe Symlink pour interroger directement le symlink
-	public static function inode($path):?int 
+	public static function inode($path):?int
 	{
 		$return = null;
 		$path = static::path($path);
@@ -482,7 +482,7 @@ class Finder extends Root
 	// si le chemin est un symlink, celui-ci est suivi
 	// il faut utiliser la même méthode dans la classe Symlink pour interroger directement le symlink
 	// possibilité de formatter le retour
-	public static function permission($path,bool $format=false) 
+	public static function permission($path,bool $format=false)
 	{
 		$return = null;
 		$path = static::path($path);
@@ -508,7 +508,7 @@ class Finder extends Root
 	
 	// permissionOctal
 	// retourne la valeur octale d'une permission comme 777 ou 755
-	public static function permissionOctal(int $value):int 
+	public static function permissionOctal(int $value):int
 	{
 		return Number::fromOctal($value);
 	}
@@ -535,7 +535,7 @@ class Finder extends Root
 	// permissionChange
 	// change la permission du fichier ou directoire
 	// il n'est pas possible de chmod un symlink en php
-	public static function permissionChange($mode,$path):bool 
+	public static function permissionChange($mode,$path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -576,7 +576,7 @@ class Finder extends Root
 	// ownerChange
 	// change le owner du fichier ou directoire
 	// pour changer le owner d'un symlink une méthode étend celle-ci
-	public static function ownerChange($user,$path):bool 
+	public static function ownerChange($user,$path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -612,7 +612,7 @@ class Finder extends Root
 	// groupChange
 	// change le groupe du fichier ou directoire
 	// pour changer le groupe d'un symlink une méthode étend celle-ci
-	public static function groupChange($group,$path):bool 
+	public static function groupChange($group,$path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -708,11 +708,11 @@ class Finder extends Root
 	}
 	
 
-	// stat	
+	// stat
 	// retourne les informations stat du fichier ou directoire
 	// si le chemin est un symlink, celui-ci est suivi
 	// il faut utiliser la même méthode dans la classe Symlink pour interroger directement le symlink
-	public static function stat($path,bool $formatKey=false,bool $formatValue=false):?array 
+	public static function stat($path,bool $formatKey=false,bool $formatValue=false):?array
 	{
 		$return = null;
 		$path = static::path($path);
@@ -754,13 +754,13 @@ class Finder extends Root
 	// statReformat
 	// reformat un tableau stat, change le nom de certaines clés
 	// les champs formatables sont également formattés
-	public static function statReformat(array $stat,bool $format=false):array 
+	public static function statReformat(array $stat,bool $format=false):array
 	{
 		$return = [];
 		
 		if(!empty($stat))
 		{
-			foreach ($stat as $key => $value) 
+			foreach ($stat as $key => $value)
 			{
 				if(is_string($key))
 				{
@@ -832,7 +832,7 @@ class Finder extends Root
 	
 	// format
 	// fait le format pour un path
-	public static function formatPath(string $format,string $return,bool $extra=true) 
+	public static function formatPath(string $format,string $return,bool $extra=true)
 	{
 		if($format === 'permission')
 		$return = static::permission($return,$extra);
@@ -870,7 +870,7 @@ class Finder extends Root
 	
 	// formatValue
 	// fait le format pour la valeur directement
-	public static function formatValue(string $format,int $return) 
+	public static function formatValue(string $format,int $return)
 	{
 		if($format === 'permission')
 		$return = [$return=>static::permissionFormat($return)];
@@ -957,7 +957,7 @@ class Finder extends Root
 	// si le chemin est un symlink, celui-ci est suivi et le lien symbolique vers le nouvel emplacement est recée
 	// il faut utiliser la même méthode dans la classe Symlink pour renommer directement le symlink
 	// n'écrase pas si existant
-	public static function changeDirname($dirname,$path):bool 
+	public static function changeDirname($dirname,$path):bool
 	{
 		$return = false;
 		$dirname = static::path($dirname);
@@ -984,7 +984,7 @@ class Finder extends Root
 	// il faut utiliser la même méthode dans la classe Symlink pour renommer directement le symlink
 	// n'écrase pas si existant
 	// value, qui représente le basename, peut être une callable - à ce moment le basename est envoyé en argument
-	public static function changeBasename($value,$path):bool 
+	public static function changeBasename($value,$path):bool
 	{
 		$return = false;
 		$path = static::path($path);
@@ -1141,7 +1141,7 @@ class Finder extends Root
 	
 	// unlinkOnShutdown
 	// permet d'effacer un fichier ou un directoire au shutdown s'il existe toujours
-	public static function unlinkOnShutdown($path):void 
+	public static function unlinkOnShutdown($path):void
 	{
 		Response::onShutdown(function($path) {
 			static::unlink($path);
@@ -1154,7 +1154,7 @@ class Finder extends Root
 	// unlinks
 	// fait plusieurs appels à la méthodes unlink
 	// retourne le nombre de fichiers effacés
-	public static function unlinks(...$paths):int 
+	public static function unlinks(...$paths):int
 	{
 		$return = 0;
 		
@@ -1192,7 +1192,7 @@ class Finder extends Root
 	// realpath
 	// realpath en fonction du dossier courant
 	// possibilité de changer le dossier courant
-	public static function realpath(string $path='',?string $current=null):?string 
+	public static function realpath(string $path='',?string $current=null):?string
 	{
 		$return = null;
 		
@@ -1217,7 +1217,7 @@ class Finder extends Root
 	// getHostPaths
 	// retourne un tableau avec tous les chemins pour un host
 	// il peut y avoir plusieurs chemins dans le cas d'un symlink
-	public static function getHostPaths(string $value):?array 
+	public static function getHostPaths(string $value):?array
 	{
 		$return = null;
 		$hosts = static::host();
@@ -1243,7 +1243,7 @@ class Finder extends Root
 	// getHostPath
 	// retourne le chemin d'un host paramétré ou null si non existant, par défaut le index est 0
 	// input peut être un host ou une uri
-	public static function getHostPath(string $value,int $index=0):?string 
+	public static function getHostPath(string $value,int $index=0):?string
 	{
 		$return = null;
 		$paths = static::getHostPaths($value);
@@ -1257,7 +1257,7 @@ class Finder extends Root
 	
 	// uriToPath
 	// retourne le chemin d'une uri avec host paramétré ou null si non existant
-	public static function uriToPath(string $value,?string $host=null):?string 
+	public static function uriToPath(string $value,?string $host=null):?string
 	{
 		$return = null;
 		$host = ($host === null)? static::getHostPath($value):static::getHostPath($host);
@@ -1278,12 +1278,12 @@ class Finder extends Root
 		
 		if(is_string($value))
 		{
-			foreach (static::host() as $host => $paths) 
+			foreach (static::host() as $host => $paths)
 			{
 				if(!is_array($paths))
 				$paths = (array) $paths;
 				
-				foreach ($paths as $path) 
+				foreach ($paths as $path)
 				{
 					if(strpos($value,$path) === 0)
 					{
@@ -1303,7 +1303,7 @@ class Finder extends Root
 	// host
 	// fait un arr::replaceUnset sur le tableau des host
 	// permet de retourner, ajouter, modifier et enlever des host en une méthode
-	public static function host(?array $array=null):array 
+	public static function host(?array $array=null):array
 	{
 		return (is_array($array))? (static::$host = Arr::replaceCleanNull(static::$host,$array)):static::$host;
 	}
@@ -1340,7 +1340,7 @@ class Finder extends Root
 		
 		if(!empty($values))
 		{
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				if(is_string($value))
 				{
@@ -1372,7 +1372,7 @@ class Finder extends Root
 	
 	// phpExtension
 	// retourne l'extension de php
-	public static function phpExtension():string 
+	public static function phpExtension():string
 	{
 		return 'php';
 	}

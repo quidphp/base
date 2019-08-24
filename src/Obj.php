@@ -16,7 +16,7 @@ class Obj extends Root
 	// typecasts des valeurs par référence
 	public static function typecast(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = (object) $value;
 		}
@@ -35,7 +35,7 @@ class Obj extends Root
 	
 	// isIncomplete
 	// retourne vrai si l'objet est une instance de la classe incomplete
-	public static function isIncomplete($value):bool 
+	public static function isIncomplete($value):bool
 	{
 		return (is_object($value) && $value instanceof \__PHP_Incomplete_Class)? true:false;
 	}
@@ -43,7 +43,7 @@ class Obj extends Root
 	
 	// isAnonymous
 	// retourne vrai si c'est un objet anonyme
-	public static function isAnonymous($value):bool 
+	public static function isAnonymous($value):bool
 	{
 		return Classe::isAnonymous($value);
 	}
@@ -99,7 +99,7 @@ class Obj extends Root
 
 	// hasNamespace
 	// retourne vrai si l'objet a exactement le namespace
-	public static function hasNamespace($namespace,object $value):bool 
+	public static function hasNamespace($namespace,object $value):bool
 	{
 		return Fqcn::hasNamespace($namespace,$value);
 	}
@@ -107,7 +107,7 @@ class Obj extends Root
 	
 	// inNamespace
 	// retourne vrai si l'objet est dans ce namespace
-	public static function inNamespace($namespace,object $value):bool 
+	public static function inNamespace($namespace,object $value):bool
 	{
 		return Fqcn::inNamespace($namespace,$value);
 	}
@@ -115,7 +115,7 @@ class Obj extends Root
 	
 	// instance
 	// retourne vrai si le premier objet a la même instance que tous les autres
-	public static function instance(object ...$values):bool 
+	public static function instance(object ...$values):bool
 	{
 		$return = false;
 		
@@ -123,7 +123,7 @@ class Obj extends Root
 		{
 			$instance = null;
 			
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				$return = false;
 				
@@ -163,7 +163,7 @@ class Obj extends Root
 	
 	// fqcn
 	// retourne le fully qualified class name de l'objet
-	public static function fqcn(object $value):string 
+	public static function fqcn(object $value):string
 	{
 		return Fqcn::str($value);
 	}
@@ -171,7 +171,7 @@ class Obj extends Root
 	
 	// namespace
 	// retourne le namespace de l'objet ou null si non existant
-	public static function namespace(object $value):?string 
+	public static function namespace(object $value):?string
 	{
 		return Fqcn::namespace($value);
 	}
@@ -179,7 +179,7 @@ class Obj extends Root
 	
 	// name
 	// retourne le nom de l'objet sans le namespace
-	public static function name(object $value):string 
+	public static function name(object $value):string
 	{
 		return Fqcn::name($value);
 	}
@@ -195,7 +195,7 @@ class Obj extends Root
 	
 	// parent
 	// retourne le fqcn du parent de l'objet si existant, sinon null
-	public static function parent(object $value):?string 
+	public static function parent(object $value):?string
 	{
 		return Classe::parent($value);
 	}
@@ -211,7 +211,7 @@ class Obj extends Root
 	
 	// top
 	// retourne le fqcn du top parent de l'objet ou le fqcn de l'objet lui même
-	public static function top(object $value):?string 
+	public static function top(object $value):?string
 	{
 		return Classe::top($value);
 	}
@@ -269,7 +269,7 @@ class Obj extends Root
 		{
 			if(!empty($methods))
 			{
-				foreach ($methods as $value) 
+				foreach ($methods as $value)
 				{
 					if(!in_array($value,$return['method'],true))
 					$return['*method'][] = $value;
@@ -278,7 +278,7 @@ class Obj extends Root
 			
 			if(!empty($properties))
 			{
-				foreach ($properties as $key => $value) 
+				foreach ($properties as $key => $value)
 				{
 					if(!array_key_exists($key,$return['property']))
 					$return['*property'][$key] = $value;
@@ -291,7 +291,7 @@ class Obj extends Root
 	
 	
 	// get
-	// retourne la valeur d'une propriété 
+	// retourne la valeur d'une propriété
 	// la propriété doit être public, pas accès au propriété protégé ou privé
 	public static function get(string $property,object $object)
 	{
@@ -311,7 +311,7 @@ class Obj extends Root
 	{
 		$return = [];
 		
-		foreach ($properties as $property) 
+		foreach ($properties as $property)
 		{
 			if(is_string($property))
 			{
@@ -345,7 +345,7 @@ class Obj extends Root
 	// retourne l'objet
 	public static function sets(array $propertyValue,object $return):object
 	{
-		foreach ($propertyValue as $property => $value) 
+		foreach ($propertyValue as $property => $value)
 		{
 			$return->$property = $value;
 		}
@@ -371,7 +371,7 @@ class Obj extends Root
 	// retourne l'objet
 	public static function unsets(array $properties,object $return):object
 	{
-		foreach ($properties as $property) 
+		foreach ($properties as $property)
 		{
 			if(static::hasProperty($property,$return))
 			unset($return->$property);
@@ -435,7 +435,7 @@ class Obj extends Root
 	// sort
 	// permet de sort un tableau unidimensionnel contenant des objets via le résultat d'une méthode de l'objet
 	// possible de mettre des arguments pour la méthode pack après l'argument return
-	public static function sort(string $method,$sort=true,array $return,...$args):array 
+	public static function sort(string $method,$sort=true,array $return,...$args):array
 	{
 		return Arr::methodSort('obj',$method,$sort,$return,...$args);
 	}
@@ -457,7 +457,7 @@ class Obj extends Root
 	// si l'objet a la méthode cast, l'objet est remplacé par le retour de la méthode
 	// mode permet de spécifier une valeur de retour de la valeur, une erreur est lancé si non respect du type de retour
 	// une resource est transformé en sa version base64
-	public static function cast($return,int $mode=0) 
+	public static function cast($return,int $mode=0)
 	{
 		if(is_object($return))
 		{
@@ -472,7 +472,7 @@ class Obj extends Root
 		
 		elseif(is_array($return))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				$return[$key] = static::cast($value,0);
 			}
@@ -518,7 +518,7 @@ class Obj extends Root
 	// fait le remplacement de plusieurs valeurs
 	public static function casts(int $mode=0,...$return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			$return[$key] = static::cast($value,$mode);
 		}
@@ -529,7 +529,7 @@ class Obj extends Root
 	
 	// setCastError
 	// change la callable d'error pour cast
-	public static function setCastError(callable $callable):void 
+	public static function setCastError(callable $callable):void
 	{
 		static::$config['cast'] = $callable;
 		

@@ -6,7 +6,7 @@ namespace Quid\Base;
 class Mime extends Root
 {
 	// config
-	public static $config = [ 
+	public static $config = [
 		'groupToExtension'=>[ // permet de lier des extensions à des groupes
 			'audio'=>'mp3',
 			'calendar'=>'ics',
@@ -61,7 +61,7 @@ class Mime extends Root
 	
 	// isEmpty
 	// retourne vrai si le mime type en est un d'un fichier vide
-	public static function isEmpty($value):bool 
+	public static function isEmpty($value):bool
 	{
 		return (is_string($value) && strpos($value,'inode/x-empty') === 0)? true:false;
 	}
@@ -70,7 +70,7 @@ class Mime extends Root
 	// isGroup
 	// retourne vrai si le mime type est du group spécifé
 	// possible de fournir un fichier ou une resource si get est true
-	public static function isGroup($group,$value,bool $get=false,bool $fromPath=true):bool 
+	public static function isGroup($group,$value,bool $get=false,bool $fromPath=true):bool
 	{
 		$return = false;
 		
@@ -89,14 +89,14 @@ class Mime extends Root
 	
 	// isFamily
 	// retourne vrai si la famille est celle spécifié
-	public static function isFamily($family,$value,bool $get=false,bool $fromPath=true):bool 
+	public static function isFamily($family,$value,bool $get=false,bool $fromPath=true):bool
 	{
 		$return = false;
 		$group = ($get === true)? static::getGroup($value,$fromPath):static::group($value);
 		
 		if(!empty($group))
 		{
-			foreach (static::$config['family'] as $key => $array) 
+			foreach (static::$config['family'] as $key => $array)
 			{
 				if(is_array($array) && in_array($group,$array,true) && $key === $family)
 				{
@@ -112,7 +112,7 @@ class Mime extends Root
 	
 	// isExtensionInGroup
 	// retourne vrai si l'extension est dans le group spécifié
-	public static function isExtensionInGroup($value,$mimeGroup):bool 
+	public static function isExtensionInGroup($value,$mimeGroup):bool
 	{
 		$return = false;
 		
@@ -183,7 +183,7 @@ class Mime extends Root
 	// getFromResource
 	// retourne le mime type à partir d'une resource
 	// gère le context option
-	public static function getFromResource($value,bool $charset=true,bool $contextOption=true,bool $strict=true):?string 
+	public static function getFromResource($value,bool $charset=true,bool $contextOption=true,bool $strict=true):?string
 	{
 		$return = null;
 		
@@ -232,7 +232,7 @@ class Mime extends Root
 	// getGroup
 	// retourne le group du mimetype du fichier ou de la resource à partir de finfo
 	// si extension est true, le fichier n'a pas à exister et l'extension sera utilisé pour déterminer
-	public static function getGroup($value,bool $fromPath=true):?string 
+	public static function getGroup($value,bool $fromPath=true):?string
 	{
 		$return = null;
 		$mime = static::get($value);
@@ -279,7 +279,7 @@ class Mime extends Root
 	
 	// getCorrectExtension
 	// fait un mime type sur un fichier ou la resource et retourne l'extension que celui-ci devrait utilisé
-	public static function getCorrectExtension($value):?string 
+	public static function getCorrectExtension($value):?string
 	{
 		$return = null;
 		$mime = static::get($value);
@@ -301,7 +301,7 @@ class Mime extends Root
 		{
 			$extension = strtolower($extension);
 			
-			foreach (static::$config['groupToExtension'] as $k => $v) 
+			foreach (static::$config['groupToExtension'] as $k => $v)
 			{
 				if((is_array($v) && (in_array($extension,$v,true)) || $extension === $v))
 				{
@@ -321,7 +321,7 @@ class Mime extends Root
 	{
 		$return = [];
 		
-		foreach (static::$config['family'] as $key => $array) 
+		foreach (static::$config['family'] as $key => $array)
 		{
 			if(is_array($array) && in_array($value,$array,true))
 			$return[] = $key;
@@ -333,7 +333,7 @@ class Mime extends Root
 	
 	// family
 	// retourne la première famille trouvé contenant le groupe donné en argument
-	public static function family(string $value):?string 
+	public static function family(string $value):?string
 	{
 		$return = null;
 		$families = static::families($value);
@@ -348,7 +348,7 @@ class Mime extends Root
 	// strictExtension
 	// retourne le mimetype strict à partir d'une extension
 	// ceci permet de lier de façon dur une extension à un mimetype, sans utiliser finfo
-	public static function strictExtension(string $value):?string 
+	public static function strictExtension(string $value):?string
 	{
 		$return = null;
 		
@@ -363,7 +363,7 @@ class Mime extends Root
 	// retourne le mimetype du fichier à partir de son extension
 	// si path est seulement l'extension, la fonction retourne également le mime type
 	// pratique pour les fichiers qui n'existent pas
-	public static function fromPath($value):?string 
+	public static function fromPath($value):?string
 	{
 		$return = null;
 		
@@ -386,7 +386,7 @@ class Mime extends Root
 	{
 		$return = null;
 		
-		foreach (static::$config['mimeToExtension'] as $key => $value) 
+		foreach (static::$config['mimeToExtension'] as $key => $value)
 		{
 			if((is_array($value) && Arr::in($extension,$value,false)) || Str::icompare($extension,$value))
 			{
@@ -415,11 +415,11 @@ class Mime extends Root
 	
 	// toExtension
 	// retourne la meilleur extension trouvée à partir d'un mime type
-	public static function toExtension(string $mime):?string 
+	public static function toExtension(string $mime):?string
 	{
 		$return = null;
 		
-		foreach (static::$config['mimeToExtension'] as $key => $value) 
+		foreach (static::$config['mimeToExtension'] as $key => $value)
 		{
 			if(stripos($mime,$key) === 0)
 			{
@@ -465,7 +465,7 @@ class Mime extends Root
 	
 	// removeCharset
 	// enlève le charset à partir d'une string mime
-	public static function removeCharset(string $return):string 
+	public static function removeCharset(string $return):string
 	{
 		if(strpos($return,';'))
 		$return = Str::explodeIndex(0,';',$return,null,true);

@@ -14,7 +14,7 @@ class Style extends Listing
 			'uri'=>null], // option pour uri,
 		'separator'=>[ // les séparateurs de style
 			[';','; '],
-			[':',': ']], 
+			[':',': ']],
 		'default'=>'background-image', // clé par défaut si style est string
 		'shortcut'=>[ // shortcut pour clé style
 			'bgimg'=>'background-image'],
@@ -47,7 +47,7 @@ class Style extends Listing
 	{
 		$return = [];
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			if(is_string($key) && (is_string($value) || is_numeric($value)))
 			{
@@ -56,7 +56,7 @@ class Style extends Listing
 
 				if((is_int($value) || is_float($value)))
 				{
-					foreach (static::$config['unit'] as $k => $unit) 
+					foreach (static::$config['unit'] as $k => $unit)
 					{
 						if(strpos($key,$k) !== false)
 						{
@@ -89,7 +89,7 @@ class Style extends Listing
 	
 	// parseUri
 	// parse un champ uri (background-image)
-	public static function parseUri($value,array $option):?string 
+	public static function parseUri($value,array $option):?string
 	{
 		$return = null;
 		
@@ -113,7 +113,7 @@ class Style extends Listing
 	
 	// prepareStr
 	// prépare une string dans la méthode arr
-	public static function prepareStr(string $value,array $option):array 
+	public static function prepareStr(string $value,array $option):array
 	{
 		$return = [];
 		$separator = static::getSeparator(1,$option['explode']);
@@ -130,7 +130,7 @@ class Style extends Listing
 	
 	// explodeStr
 	// explode une string style
-	public static function explodeStr(string $value,array $option):array 
+	public static function explodeStr(string $value,array $option):array
 	{
 		$return = [];
 		$separator = static::getSeparator(0,$option['explode']);
@@ -158,7 +158,7 @@ class Style extends Listing
 	
 	// setUriOption
 	// change les options uri pour style
-	public static function setUriOption(array $option):void 
+	public static function setUriOption(array $option):void
 	{
 		static::$config['option']['uri'] = Uri::option($option);
 		

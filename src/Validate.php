@@ -27,13 +27,13 @@ class Validate extends Root
 			'hex'=>'/^([a-f0-9]{6}|[a-f0-9]{3})$/i',
 			'tag'=>'/^<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s+\/>)$/',
 			'year'=>'/^\d{4}$/',
-			'americanZipcode'=>'/^\d{5}(-\d{4})?$/',    
-			'canadianPostalcode'=>'/^([a-z]\d[a-z][-]?\d[a-z]\d)$/i',    
+			'americanZipcode'=>'/^\d{5}(-\d{4})?$/',
+			'canadianPostalcode'=>'/^([a-z]\d[a-z][-]?\d[a-z]\d)$/i',
 			'northAmericanPhone'=>'/^([\(]{1}[0-9]{3}[\)]{1}[\.| |\-]{0,1}|^[0-9]{3}[\.|\-| ]?)?[0-9]{3}(\.|\-| )?[0-9]{4}$/',
 			'phone'=>'/([^\d]*\d){10}/',
 			'ip'=>'/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/',
 			'date'=>'/^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$/',
-			'datetime'=>'/^(\d{2}|\d{4})(?:\-)?([0]{1}\d{1}|[1]{1}[0-2]{1})(?:\-)?([0-2]{1}\d{1}|[3]{1}[0-1]{1})(?:\s)?([0-1]{1}\d{1}|[2]{1}[0-3]{1})(?::)?([0-5]{1}\d{1})(?::)?([0-5]{1}\d{1})$/',                
+			'datetime'=>'/^(\d{2}|\d{4})(?:\-)?([0]{1}\d{1}|[1]{1}[0-2]{1})(?:\-)?([0-2]{1}\d{1}|[3]{1}[0-1]{1})(?:\s)?([0-1]{1}\d{1}|[2]{1}[0-3]{1})(?::)?([0-5]{1}\d{1})(?::)?([0-5]{1}\d{1})$/',
 			'time'=>'/^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/',
 			'path'=>'/^[A-Za-z0-9_\-\.\/\*]{0,}$/',
 			'fqcn'=>'/^[A-z\\\\]{1,}$/',
@@ -200,7 +200,7 @@ class Validate extends Root
 	// fait la validation
 	// si la validation est fausse, retourne un tableau qui sera utilisé pour retourner une explication via lang
 	// si la condition est une closure, la closure peut retourner une string ou un array comme message (plutôt que la clé)
-	public static function isCom($condition,$value,$key=null) 
+	public static function isCom($condition,$value,$key=null)
 	{
 		$return = static::is($condition,$value,false);
 
@@ -233,7 +233,7 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		foreach (static::prepareConditions($conditions) as $condition) 
+		foreach (static::prepareConditions($conditions) as $condition)
 		{
 			$return = static::is($condition,$value);
 
@@ -252,7 +252,7 @@ class Validate extends Root
 	{
 		$return = [];
 
-		foreach (static::prepareConditions($conditions) as $k => $condition) 
+		foreach (static::prepareConditions($conditions) as $k => $condition)
 		{
 			$com = static::isCom($condition,$value,$k);
 
@@ -274,7 +274,7 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		foreach (static::prepareConditions($conditions) as $condition) 
+		foreach (static::prepareConditions($conditions) as $condition)
 		{
 			$return = static::is($condition,$value);
 			
@@ -293,7 +293,7 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		foreach (static::prepareConditions($conditions) as $condition) 
+		foreach (static::prepareConditions($conditions) as $condition)
 		{
 			$bool = static::is($condition,$value);
 			
@@ -328,7 +328,7 @@ class Validate extends Root
 		elseif($condition instanceof \Closure)
 		$callable = $condition;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			if(!empty($callable))
 			$return = $callable($value);
@@ -359,7 +359,7 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return = static::isAnd($conditions,$value);
 			
@@ -378,7 +378,7 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return = static::isOr($conditions,$value);
 			
@@ -393,11 +393,11 @@ class Validate extends Root
 	// areXor
 	// plusieurs valeurs, plusieurs conditions
 	// boucle de type xor
-	public static function areXor(array $conditions,...$values):bool 
+	public static function areXor(array $conditions,...$values):bool
 	{
 		$return = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return = static::isXor($conditions,$value);
 			
@@ -429,7 +429,7 @@ class Validate extends Root
 	
 	// two
 	// permet de faire des appels de validation avec méthode de 2 arguments
-	public static function two(string $key,$value,$arg):bool 
+	public static function two(string $key,$value,$arg):bool
 	{
 		$return = false;
 		
@@ -448,7 +448,7 @@ class Validate extends Root
 	// regex
 	// wrapper pour les regex
 	// par défaut la classe va prendre les regex à partir du tableau config
-	public static function regex(string $input,$value):bool 
+	public static function regex(string $input,$value):bool
 	{
 		$return = false;
 		
@@ -490,7 +490,7 @@ class Validate extends Root
 	
 	// instance
 	// valide que la valeur est une instance de la classe
-	public static function instance($class,$value):bool 
+	public static function instance($class,$value):bool
 	{
 		$return = false;
 		
@@ -507,7 +507,7 @@ class Validate extends Root
 	
 	// isCompareSymbol
 	// retourne vrai si le symbole est un symbol de comparaison valide
-	public static function isCompareSymbol($symbol):bool 
+	public static function isCompareSymbol($symbol):bool
 	{
 		return (is_string($symbol) && array_key_exists($symbol,static::$config['compare']))? true:false;
 	}
@@ -557,7 +557,7 @@ class Validate extends Root
 	// value peut être une string ou un array
 	// si c'est un array et que la clé est string, value est utiliser pour remplacer %%% dans le pattern
 	// si rien n'a été trouvé mais que value est une string non vide, retourne value
-	public static function pattern($value):?string 
+	public static function pattern($value):?string
 	{
 		$return = null;
 		$key = static::patternKey($value);
@@ -592,12 +592,12 @@ class Validate extends Root
 	// patternKey
 	// retourne le nom du premier pattern trouvé à partir de l'argument value
 	// peut retourner string ou array
-	public static function patternKey($value) 
+	public static function patternKey($value)
 	{
 		$return = null;
 		$array = (!is_array($value))? [$value]:$value;
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			if(is_numeric($k) && is_string($v) && array_key_exists($v,static::$config['pattern']))
 			$return = $v;
@@ -616,11 +616,11 @@ class Validate extends Root
 	// prepareConditions
 	// prépare le tableau pour plusieurs conditions
 	// méthode protégé
-	protected static function prepareConditions(array $conditions):array 
+	protected static function prepareConditions(array $conditions):array
 	{
 		$return = [];
 		
-		foreach ($conditions as $key => $value) 
+		foreach ($conditions as $key => $value)
 		{
 			if(is_numeric($key))
 			$return[] = $value;
@@ -642,7 +642,7 @@ class Validate extends Root
 	{
 		$return = false;
 		
-		foreach ($values as $v) 
+		foreach ($values as $v)
 		{
 			if(!empty($type))
 			{
@@ -912,7 +912,7 @@ class Validate extends Root
 	
 	// isEqual
 	// retourne vrai si les deux valeurs sont égales ===
-	public static function isEqual($value1,$value2):bool 
+	public static function isEqual($value1,$value2):bool
 	{
 		return static::compare($value1,'===',$value2);
 	}
@@ -920,7 +920,7 @@ class Validate extends Root
 	
 	// isSoftEqual
 	// retourne vrai si les deux valeurs sont égales ==
-	public static function isSoftEqual($value1,$value2):bool 
+	public static function isSoftEqual($value1,$value2):bool
 	{
 		return static::compare($value1,'==',$value2);
 	}
@@ -928,7 +928,7 @@ class Validate extends Root
 	
 	// isInequal
 	// retourne vrai si les deux valeurs sont inégales !==
-	public static function isInequal($value1,$value2):bool 
+	public static function isInequal($value1,$value2):bool
 	{
 		return static::compare($value1,'!==',$value2);
 	}
@@ -936,7 +936,7 @@ class Validate extends Root
 	
 	// isSoftInequal
 	// retourne vrai si les deux valeurs sont inégales !=
-	public static function isSoftInequal($value1,$value2):bool 
+	public static function isSoftInequal($value1,$value2):bool
 	{
 		return static::compare($value1,'!=',$value2);
 	}
@@ -944,7 +944,7 @@ class Validate extends Root
 	
 	// isBigger
 	// retourne vrai si la première valeur est plus grande
-	public static function isBigger($value1,$value2):bool 
+	public static function isBigger($value1,$value2):bool
 	{
 		return static::compare($value1,'>',$value2);
 	}
@@ -952,7 +952,7 @@ class Validate extends Root
 	
 	// isBiggerOrEqual
 	// retourne vrai si la première valeur est plus grande ou égale
-	public static function isBiggerOrEqual($value1,$value2):bool 
+	public static function isBiggerOrEqual($value1,$value2):bool
 	{
 		return static::compare($value1,'>=',$value2);
 	}
@@ -960,7 +960,7 @@ class Validate extends Root
 	
 	// isSmaller
 	// retourne vrai si la première valeur est plus petite
-	public static function isSmaller($value1,$value2):bool 
+	public static function isSmaller($value1,$value2):bool
 	{
 		return static::compare($value1,'<',$value2);
 	}
@@ -968,7 +968,7 @@ class Validate extends Root
 	
 	// isSmallerOrEqual
 	// retourne vrai si la première valeur est plus petite ou égale
-	public static function isSmallerOrEqual($value1,$value2):bool 
+	public static function isSmallerOrEqual($value1,$value2):bool
 	{
 		return static::compare($value1,'<=',$value2);
 	}
@@ -1003,7 +1003,7 @@ class Validate extends Root
 		{
 			$r = false;
 			
-			foreach ($is as $k => $v) 
+			foreach ($is as $k => $v)
 			{
 				$r = false;
 				
@@ -1046,7 +1046,7 @@ class Validate extends Root
 
 		if(is_array($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_array($v))
 				{

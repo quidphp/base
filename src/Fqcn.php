@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -26,7 +26,7 @@ class Fqcn extends Set
 	// sameName
 	// retourne vrai si les deux valeurs ont le même nom
 	// la comparaison est insensible à la case
-	public static function sameName($same,$value):bool 
+	public static function sameName($same,$value):bool
 	{
 		$return = false;
 		$same = (string) static::name($same);
@@ -42,7 +42,7 @@ class Fqcn extends Set
 	// sameNamespace
 	// retourne vrai si les deux valeurs ont le même namespace
 	// la comparaison est insensible à la case
-	public static function sameNamespace($same,$value):bool 
+	public static function sameNamespace($same,$value):bool
 	{
 		$return = false;
 		$same = (string) static::namespace($same);
@@ -58,7 +58,7 @@ class Fqcn extends Set
 	// hasNamespace
 	// retourne vrai si la valeur a exactement le namespace spécifié
 	// la comparaison est insensible à la case
-	public static function hasNamespace($namespace,$value):bool 
+	public static function hasNamespace($namespace,$value):bool
 	{
 		$return = false;
 		$value = static::str($value);
@@ -79,7 +79,7 @@ class Fqcn extends Set
 	// inNamespace
 	// retourne vrai si la valeur fait partie du namespace spécifié
 	// la comparaison est insensible à la case
-	public static function inNamespace($namespace,$value):bool 
+	public static function inNamespace($namespace,$value):bool
 	{
 		$return = false;
 		$namespace = static::str($namespace);
@@ -95,7 +95,7 @@ class Fqcn extends Set
 	// str
 	// retourne le fully qualified classname
 	// value peut être une string, array ou objet
-	public static function str($value,?array $option=null):string 
+	public static function str($value,?array $option=null):string
 	{
 		$return = '';
 		
@@ -155,7 +155,7 @@ class Fqcn extends Set
 	
 	// name
 	// retourne le nom d'un fqcn
-	public static function name($value):?string 
+	public static function name($value):?string
 	{
 		$return = null;
 		$value = static::str($value);
@@ -218,7 +218,7 @@ class Fqcn extends Set
 	// many
 	// prépare une string classe, qui pourrait contenir plusieurs classes ou namespace séparés par +
 	// retourne un tableau
-	public static function many($value):array 
+	public static function many($value):array
 	{
 		$return = [];
 		$plusSeperator = static::$config['plusSeperator'];
@@ -231,7 +231,7 @@ class Fqcn extends Set
 			$explodes = Str::explodes(['\\',$plusSeperator],$value);
 			if(!empty($explodes))
 			{
-				foreach (Arrs::valuesCrush($explodes) as $v) 
+				foreach (Arrs::valuesCrush($explodes) as $v)
 				{
 					if(is_array($v) && !empty($v))
 					$return[] = static::str($v);
@@ -290,7 +290,7 @@ class Fqcn extends Set
 	// fromPathRoot
 	// retourne le fqcn à partir d'un path et d'une string root
 	// option root permet de mettre une valeur en prepend du fqcn de retour
-	public static function fromPathRoot(string $value,string $root,?array $option=null):?string 
+	public static function fromPathRoot(string $value,string $root,?array $option=null):?string
 	{
 		$return = null;
 		
@@ -312,8 +312,8 @@ class Fqcn extends Set
 	
 	// fromPathRoots
 	// retourne le fqcn à partir d'un path et un tableau root
-	// si les clés de roots sont string non numérique, append au path 
-	public static function fromPathRoots(string $value,array $roots,?array $option=null):?string 
+	// si les clés de roots sont string non numérique, append au path
+	public static function fromPathRoots(string $value,array $roots,?array $option=null):?string
 	{
 		$return = null;
 		
@@ -337,7 +337,7 @@ class Fqcn extends Set
 	// extension
 	// change l'extension du chemin
 	// utilise relative, ne force pas l'ajout d'un forward slash au path
-	public static function extension(string $value,$extension=null):string 
+	public static function extension(string $value,$extension=null):string
 	{
 		return PathTrack::changeExtension($extension ?? static::getOption('extension'),$value);
 	}

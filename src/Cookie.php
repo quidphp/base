@@ -9,7 +9,7 @@ class Cookie extends Root
 	public static $config = [
 		'lifetime'=>3600, // durée de vie, 0 signifie fermeture du browser, a priorité sur expire car le timestamp courant est ajouté
 		'expire'=>null, // expiration, 0 signifie fermeture du browser, le timestamp n'est pas additionné, a priorité sur lifetime
-		'path'=>'/', // chemin dans le domaine 
+		'path'=>'/', // chemin dans le domaine
 		'domain'=>'', // ce paramètre est étrange, le plus strict est de laisser domain comme chaîne vide
 		'secure'=>null, // cookie doit être servis via https
 		'httponly'=>true // cookie ne peut pas être modifié dans javaScript

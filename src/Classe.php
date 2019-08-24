@@ -11,7 +11,7 @@ class Classe extends Root
 	
 	// is
 	// retourne vrai si la valeur est un objet ou une classe existante
-	public static function is($value,bool $autoload=true):bool 
+	public static function is($value,bool $autoload=true):bool
 	{
 		$return = false;
 		
@@ -71,7 +71,7 @@ class Classe extends Root
 	
 	// isAny
 	// retourne vrai si la valeur est un objet, une classe existante, un trait existant ou une interface existante
-	public static function isAny($value,bool $autoload=true) 
+	public static function isAny($value,bool $autoload=true)
 	{
 		$return = false;
 		
@@ -94,7 +94,7 @@ class Classe extends Root
 	
 	// isIncomplete
 	// retourne vrai si la valeur est une instance de la classe incomplete
-	public static function isIncomplete($value):bool 
+	public static function isIncomplete($value):bool
 	{
 		return static::instance($value,'__PHP_Incomplete_Class');
 	}
@@ -102,7 +102,7 @@ class Classe extends Root
 	
 	// isAnonymous
 	// retourne vrai si le nom de la classe représente une classe anonyme
-	public static function isAnonymous($value):bool 
+	public static function isAnonymous($value):bool
 	{
 		$return = false;
 		$value = static::fqcn($value);
@@ -164,7 +164,7 @@ class Classe extends Root
 		
 		if(!empty($value))
 		{
-			foreach ($parents as $v) 
+			foreach ($parents as $v)
 			{
 				$v = Fqcn::str($v);
 				if(!empty($v) && is_subclass_of($value,$v,$autoload))
@@ -181,7 +181,7 @@ class Classe extends Root
 	
 	// hasMethod
 	// retourne vrai si la méthode existe dans la valeur qu'elle soit publique ou privé
-	public static function hasMethod($method,$value,bool $autoload=true):bool 
+	public static function hasMethod($method,$value,bool $autoload=true):bool
 	{
 		$return = false;
 		$value = static::get($value,$autoload);
@@ -252,7 +252,7 @@ class Classe extends Root
 	// retourne vrai si la valeur a exactement le namespace spécifié
 	// la valeur doit exister
 	// la comparaison est insensible à la case
-	public static function hasNamespace($namespace,$value,bool $autoload=true):bool 
+	public static function hasNamespace($namespace,$value,bool $autoload=true):bool
 	{
 		$return = false;
 		$value = static::get($value,$autoload);
@@ -268,7 +268,7 @@ class Classe extends Root
 	// retourne vrai si la valeur fait partie du namespace spécifié
 	// la valeur doit exister
 	// la comparaison est insensible à la case
-	public static function inNamespace($namespace,$value,bool $autoload=true):bool 
+	public static function inNamespace($namespace,$value,bool $autoload=true):bool
 	{
 		$return = false;
 		$value = static::get($value,$autoload);
@@ -283,7 +283,7 @@ class Classe extends Root
 	// instance
 	// retourne vrai si le premier objet a la même instance que tous les autres
 	// autoload est true
-	public static function instance(...$values):bool 
+	public static function instance(...$values):bool
 	{
 		$return = false;
 		
@@ -291,7 +291,7 @@ class Classe extends Root
 		{
 			$instance = null;
 			
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				$return = false;
 				$value = Fqcn::str($value);
@@ -320,7 +320,7 @@ class Classe extends Root
 	// sameInterface
 	// retourne vrai si toutes les valeurs implémentes les mêmes interfaces
 	// autoload est true par défaut
-	public static function sameInterface(...$values):bool 
+	public static function sameInterface(...$values):bool
 	{
 		$return = false;
 		
@@ -328,7 +328,7 @@ class Classe extends Root
 		{
 			$interface = null;
 			
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				$return = false;
 				$value = static::get($value,true);
@@ -366,7 +366,7 @@ class Classe extends Root
 	// retourne vrai si les valeurs ont le même namespace
 	// les valeurs doivent existés, autoload est true par défaut
 	// la comparaison est insensible à la case
-	public static function sameNamespace(...$values):bool 
+	public static function sameNamespace(...$values):bool
 	{
 		$return = false;
 		
@@ -374,7 +374,7 @@ class Classe extends Root
 		{
 			$namespace = null;
 			
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				$return = false;
 				$value = static::get($value,true);
@@ -402,7 +402,7 @@ class Classe extends Root
 
 	// alias
 	// crée un alias de classe, interface ou trait
-	public static function alias($alias,$value,bool $autoload=true):bool 
+	public static function alias($alias,$value,bool $autoload=true):bool
 	{
 		$return = false;
 		$alias = Fqcn::str($alias);
@@ -421,7 +421,7 @@ class Classe extends Root
 	{
 		$return = [];
 		
-		foreach ($aliases as $alias => $value) 
+		foreach ($aliases as $alias => $value)
 		{
 			$return[$alias] = static::alias($alias,$value,$autoload);
 		}
@@ -431,9 +431,9 @@ class Classe extends Root
 	
 
 	// get
-	// de préférence, retourne la valeur sous forme objet 
+	// de préférence, retourne la valeur sous forme objet
 	// si autoload est true et que la valeur est une classe, interface ou trait, retourne la string
-	public static function get($value,bool $autoload=false) 
+	public static function get($value,bool $autoload=false)
 	{
 		$return = null;
 		
@@ -465,7 +465,7 @@ class Classe extends Root
 	{
 		$return = null;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return = static::get($value,true);
 			
@@ -493,7 +493,7 @@ class Classe extends Root
 	
 	// namespace
 	// retourne le namespace de la valeur si la classe, interface ou trait existe
-	public static function namespace($value,bool $autoload=true):?string 
+	public static function namespace($value,bool $autoload=true):?string
 	{
 		$return = null;
 		$value = static::get($value,$autoload);
@@ -507,7 +507,7 @@ class Classe extends Root
 	
 	// name
 	// retour le nom de la valeur si la classe, interface ou trait existe
-	public static function name($value,bool $autoload=true):?string 
+	public static function name($value,bool $autoload=true):?string
 	{
 		$return = null;
 		$value = static::get($value,$autoload);
@@ -546,7 +546,7 @@ class Classe extends Root
 	// parent
 	// retourne le premier parent d'une classe
 	// retourne null si interface, trait ou classe non existante
-	public static function parent($class,bool $autoload=true):?string 
+	public static function parent($class,bool $autoload=true):?string
 	{
 		$return = null;
 		
@@ -601,7 +601,7 @@ class Classe extends Root
 	
 	// top
 	// retourne le top parent de la classe ou la classe elle-même
-	public static function top($class,bool $autoload=true):?string 
+	public static function top($class,bool $autoload=true):?string
 	{
 		$return = null;
 		$topParent = static::topParent($class,$autoload);
@@ -618,7 +618,7 @@ class Classe extends Root
 	
 	// topParent
 	// retourne le top parent de la classe
-	public static function topParent($class,bool $autoload=true):?string 
+	public static function topParent($class,bool $autoload=true):?string
 	{
 		$return = null;
 		$parents = static::parents($class,false,null,$autoload);
@@ -631,9 +631,9 @@ class Classe extends Root
 	
 	
 	// methods
-	// retourne toutes les méthodes publiques d'une classe, interface ou trait 
+	// retourne toutes les méthodes publiques d'une classe, interface ou trait
 	// retourne null si non existant
-	public static function methods($value,bool $autoload=true):?array 
+	public static function methods($value,bool $autoload=true):?array
 	{
 		$return = null;
 		$value = static::get($value,$autoload);
@@ -675,7 +675,7 @@ class Classe extends Root
 	
 	// propertyMergeCallable
 	// retourne la callable à utiliser pour le propertyMerge
-	public static function propertyMergeCallable($value):callable 
+	public static function propertyMergeCallable($value):callable
 	{
 		$return = [Arrs::class,'replace'];
 		
@@ -723,7 +723,7 @@ class Classe extends Root
 	// ne merge pas un parent dont la propriété est identique à celle de la classe
 	// possibilité d'écrire dans la propriété ou non
 	// possible de spécifier une callable pour le merge
-	public static function propertyMergeWith(string $property,$value,?array $parents=null,$callable=null,bool $write=true,bool $autoload=true) 
+	public static function propertyMergeWith(string $property,$value,?array $parents=null,$callable=null,bool $write=true,bool $autoload=true)
 	{
 		$return = null;
 		$class = static::get($value,$autoload);
@@ -737,7 +737,7 @@ class Classe extends Root
 			
 			if(!empty($parents))
 			{
-				foreach ($parents as $parent) 
+				foreach ($parents as $parent)
 				{
 					if(property_exists($parent,$property) && is_array($parent::$$property))
 					{
@@ -792,7 +792,7 @@ class Classe extends Root
 	// interfaces
 	// retourne un tableau de toutes les interfaces implémentés par la classe ou interface
 	// retourne null si trait ou non existant
-	public static function interfaces($value,bool $autoload=true):?array 
+	public static function interfaces($value,bool $autoload=true):?array
 	{
 		$return = null;
 		
@@ -816,7 +816,7 @@ class Classe extends Root
 	// retourne un tableau de tous les traits utilisés par une classe ou un trait
 	// si deep est true, alors la recherche se fait aussi dans les traits et dans les les parents
 	// retourne null si interface ou non existant
-	public static function traits($value,bool $deep=true,bool $autoload=true):?array  
+	public static function traits($value,bool $deep=true,bool $autoload=true):?array
 	{
 		$return = null;
 		
@@ -836,14 +836,14 @@ class Classe extends Root
 						$deep = [];
 						
 						// trait
-						foreach ($return as $v) 
+						foreach ($return as $v)
 						{
 							$deep = Arr::append($deep,static::traits($v,false,$autoload));
 						}
 						
 						// parent
 						$parents = (array) static::parents($value,false,null,$autoload);
-						foreach ($parents as $v) 
+						foreach ($parents as $v)
 						{
 							$deep = Arr::append($deep,static::traits($v,false,$autoload));
 						}
@@ -866,7 +866,7 @@ class Classe extends Root
 	{
 		$return = [];
 		
-		foreach ($array as $value) 
+		foreach ($array as $value)
 		{
 			$namespace = Fqcn::namespace($value);
 			
@@ -890,7 +890,7 @@ class Classe extends Root
 	// méhtode pour retourner les classes déclarés (possible d'inclure les traits et interfaces aussi)
 	// possible de filtrer par namespace
 	// dig permet de retenir aussi les namespaces non exact (mais contenant la valeur namespace)
-	public static function declared(?string $namespace=null,bool $onlyClass=true,bool $dig=false):array 
+	public static function declared(?string $namespace=null,bool $onlyClass=true,bool $dig=false):array
 	{
 		$return = [];
 		$declared = get_declared_classes();
@@ -903,7 +903,7 @@ class Classe extends Root
 		
 		else
 		{
-			foreach ($declared as $class) 
+			foreach ($declared as $class)
 			{
 				if(strpos($class,'\\') !== false)
 				{
@@ -958,9 +958,9 @@ class Classe extends Root
 		
 		if($method === true)
 		{
-			foreach (['class','interface','trait'] as $k) 
+			foreach (['class','interface','trait'] as $k)
 			{
-				foreach ($return[$k] as $key => $value) 
+				foreach ($return[$k] as $key => $value)
 				{
 					unset($return[$k][$key]);
 					$methods = static::methods($value);
@@ -993,9 +993,9 @@ class Classe extends Root
 		{
 			$return['method'] = 0;
 			
-			foreach (['class','interface','trait'] as $key) 
+			foreach (['class','interface','trait'] as $key)
 			{
-				foreach ($all[$key] as $value) 
+				foreach ($all[$key] as $value)
 				{
 					$methods = static::methods($value);
 					if(is_array($methods))
@@ -1016,13 +1016,13 @@ class Classe extends Root
 	// si un filtre est false, il ne doit pas avoir un namespace, trait ou interface
 	// pour namespace, si le filtre est string il doit être exactement le namespace, sinon utilise le filtre fqcn
 	// ne vérifie pas l'existence des éléments
-	public static function filter($filter,array $values,bool $autoload=true):array 
+	public static function filter($filter,array $values,bool $autoload=true):array
 	{
 		$return = [];
 		$filter = (is_scalar($filter))? ['namespace'=>$filter]:$filter;
 		$filter = Arr::plus(['fqcn'=>null,'namespace'=>null,'interface'=>null,'trait'=>null],$filter);
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$value = Fqcn::str($value);
 			$keep = true;
@@ -1128,7 +1128,7 @@ class Classe extends Root
 	// sort
 	// permet de sort un tableau unidimensionnel contenant des noms de classes via le résultat d'une méthode statique de la classe
 	// possible de mettre des arguments pour la méthode pack après l'argument return
-	public static function sort(string $method,$sort=true,array $return,...$args):array 
+	public static function sort(string $method,$sort=true,array $return,...$args):array
 	{
 		return Arr::methodSort('classe',$method,$sort,$return,...$args);
 	}

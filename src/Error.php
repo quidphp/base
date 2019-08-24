@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 namespace Quid\Base;
 
@@ -22,7 +22,7 @@ class Error extends Root
 	
 	// restoreHandler
 	// remet le handler à ce qu'il était avant le dernière appel à set
-	public static function restoreHandler():bool 
+	public static function restoreHandler():bool
 	{
 		return restore_error_handler();
 	}
@@ -86,7 +86,7 @@ class Error extends Root
 	
 	// logPrepareMessage
 	// prépare le message en fonction de la fonction error_log
-	public static function logPrepareMessage($value):string 
+	public static function logPrepareMessage($value):string
 	{
 		$return = '';
 		
@@ -95,7 +95,7 @@ class Error extends Root
 		
 		elseif(is_array($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_scalar($v))
 				{
@@ -129,11 +129,11 @@ class Error extends Root
 	// triggers
 	// tente de générer des erreurs à partir de différentes valeurs
 	// aucune erreur de générer si le tableau est vide ou si le message final n'est pas string
-	public static function triggers(...$values):bool 
+	public static function triggers(...$values):bool
 	{
 		$return = false;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			$return = static::trigger($value);
 
@@ -155,7 +155,7 @@ class Error extends Root
 	
 	// getCodes
 	// retourne le tableau de codes, mergé avec celui de lang au besoin
-	public static function getCodes(?string $lang=null):array 
+	public static function getCodes(?string $lang=null):array
 	{
 		return Arr::plus(Lang\En::$config['error']['code'],Lang::errorCode(null,$lang));
 	}

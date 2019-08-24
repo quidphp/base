@@ -27,7 +27,7 @@ class Buffer extends Root
 
 	// status
 	// retourne les informations sur le ou les buffer
-	public static function status(bool $all=true):array 
+	public static function status(bool $all=true):array
 	{
 		return ob_get_status($all);
 	}
@@ -106,12 +106,12 @@ class Buffer extends Root
 	// si keep est true, les données sont retournés et conservés dans un nouveau buffer
 	// garde toujours le dernier buffer ouvert que keep soit true ou false
 	// note que le ob_clean sur le dernier buffer envoie quand même le contenu dans la fonction callback même s'il le buffer ne ferme pas
-	public static function getAll(bool $keep=true):string 
+	public static function getAll(bool $keep=true):string
 	{
 		$return = '';
 		$buffer = [];
 		
-		while (($level = ob_get_level())) 
+		while (($level = ob_get_level()))
 		{
 			if($level > 1)
 			$buffer[] = ob_get_clean();
@@ -160,7 +160,7 @@ class Buffer extends Root
 	{
 		$return = [];
 		
-		while (ob_get_level()) 
+		while (ob_get_level())
 		{
 			$return[] = ob_get_clean();
 		}
@@ -203,7 +203,7 @@ class Buffer extends Root
 		if(ob_get_level())
 		ob_flush();
 		
-		if($flush === true)	
+		if($flush === true)
 		static::flush();
 
 		return;
@@ -234,7 +234,7 @@ class Buffer extends Root
 		
 		if(ob_get_level())
 		{
-			while (ob_get_level()) 
+			while (ob_get_level())
 			{
 				$return[] = ob_end_flush();
 			}
@@ -278,11 +278,11 @@ class Buffer extends Root
 	// cleanAll
 	// vide tous les buffer, le dernier buffer reste ouvert
 	// note que ob_clean sur le dernier buffer envoie quand même le contenu dans la fonction callback même s'il le buffer ne ferme pas
-	public static function cleanAll():array 
+	public static function cleanAll():array
 	{
 		$return = [];
 		
-		while (($level = ob_get_level())) 
+		while (($level = ob_get_level()))
 		{
 			$return[$level] = true;
 			
@@ -380,7 +380,7 @@ class Buffer extends Root
 	{
 		$return = [];
 		
-		while (ob_get_level()) 
+		while (ob_get_level())
 		{
 			$return[] = ob_end_clean();
 		}
@@ -415,7 +415,7 @@ class Buffer extends Root
 	// prependEcho
 	// echo du contenu au début du buffer
 	// les buffer sont applatis, ramenés à un niveau
-	public static function prependEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool 
+	public static function prependEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
 	{
 		$return = false;
 		
@@ -440,7 +440,7 @@ class Buffer extends Root
 	
 	// appendEcho
 	// echo du contenu à la fin du buffer
-	public static function appendEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool 
+	public static function appendEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
 	{
 		$return = true;
 		

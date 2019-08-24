@@ -15,7 +15,7 @@ class Arrs extends Root
 	// typecasts des valeurs par référence
 	public static function typecast(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			if(!is_array($value))
 			$value = [[$value]];
@@ -34,7 +34,7 @@ class Arrs extends Root
 	public static function cast($return,int $numberCast=1,int $boolCast=0):array
 	{
 		$return = (array) $return;
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::cast($value,$numberCast,$boolCast);
@@ -53,7 +53,7 @@ class Arrs extends Root
 	public static function castMore($return):array
 	{
 		$return = (array) $return;
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::castMore($value);
@@ -74,7 +74,7 @@ class Arrs extends Root
 		
 		if(is_array($value) && !empty($value))
 		{
-			foreach ($value as $v) 
+			foreach ($value as $v)
 			{
 				if(is_array($v))
 				{
@@ -107,7 +107,7 @@ class Arrs extends Root
 	
 	// hasKeyCaseConflict
 	// retourne vrai si le tableau multidimensionnel contient au moins une clé en conflit de case si le tableau est insensible à la case
-	public static function hasKeyCaseConflict(array $value):bool 
+	public static function hasKeyCaseConflict(array $value):bool
 	{
 		return (static::is($value) && static::count($value) !== static::count(static::keysInsensitive($value)))? true:false;
 	}
@@ -116,7 +116,7 @@ class Arrs extends Root
 	// merge
 	// wrapper pour array_merge_recursive
 	// fonctionne si une valeur n'est pas un tableau
-	public static function merge(...$values):array 
+	public static function merge(...$values):array
 	{
 		Arr::typecast(...$values);
 		return array_merge_recursive(...$values);
@@ -126,7 +126,7 @@ class Arrs extends Root
 	// replace
 	// wrapper pour array_replace_recursive
 	// fonctionne si une valeur n'est pas un tableau
-	public static function replace(...$values):array 
+	public static function replace(...$values):array
 	{
 		if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
 		$return = $values[0];
@@ -146,7 +146,7 @@ class Arrs extends Root
 	// si la clé est dans le tableau keys, alors le merge n'est pas récursif
 	// si le format =clé est dans le tableau keys, alors c'est un replace
 	// par défaut le merge est récursif
-	public static function replaceWithMode(?array $replaceKeys,...$values) 
+	public static function replaceWithMode(?array $replaceKeys,...$values)
 	{
 		if(empty($replaceKeys))
 		$return = static::replace(...$values);
@@ -156,12 +156,12 @@ class Arrs extends Root
 			$return = [];
 			$replaceKeys = (array) $replaceKeys;
 			
-			foreach ($values as $array) 
+			foreach ($values as $array)
 			{
 				if(!is_array($array))
 				$array = (array) $array;
 				
-				foreach ($array as $key => $value) 
+				foreach ($array as $key => $value)
 				{
 					$type = 'replace';
 					
@@ -196,11 +196,11 @@ class Arrs extends Root
 	// replaceSpecial
 	// fait un merge entre plusieurs tableaux devant être grimpés
 	// les valeurs qui ne sont pas des tableaux ne sont pas considérés
-	public static function replaceSpecial(array $target,array $keys,?array $replaceKeys,...$values) 
+	public static function replaceSpecial(array $target,array $keys,?array $replaceKeys,...$values)
 	{
 		$return = [];
 		
-		foreach ($values as $key => $value) 
+		foreach ($values as $key => $value)
 		{
 			if(!empty($value) && is_array($value))
 			$values[$key] = static::climbReplaceMode($target,$keys,$replaceKeys,$value);
@@ -221,7 +221,7 @@ class Arrs extends Root
 	// si reset est true, reset les clés du tableau
 	public static function clean(array $return,bool $reset=false):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::clean($value,$reset);
@@ -235,9 +235,9 @@ class Arrs extends Root
 	
 	// trim
 	// fait un trim sur les clés et/ou valeurs string du tableau multidimensionel
-	public static function trim(array $return,bool $key=false,bool $value=true):array 
+	public static function trim(array $return,bool $key=false,bool $value=true):array
 	{
-		foreach ($return as $k => $v) 
+		foreach ($return as $k => $v)
 		{
 			if(is_array($v))
 			$return[$k] = static::trim($v,$key,$value);
@@ -254,7 +254,7 @@ class Arrs extends Root
 	// trimKey permet de faire un trim sur les clés aussi
 	public static function trimClean(array $return,?bool $trimKey=false,?bool $trim=true,?bool $clean=true,?bool $reset=false):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::trimClean($value,$trimKey,$trim,$clean,$reset);
@@ -289,8 +289,8 @@ class Arrs extends Root
 			$count = count($x);
 			$current = 1;
 
-			foreach ($x as $v) 
-			{		
+			foreach ($x as $v)
+			{
 				if(Arr::isKey($v) && is_array($array))
 				{
 					$array = (array_key_exists($v,$array))? $array[$v]:null;
@@ -317,7 +317,7 @@ class Arrs extends Root
 	{
 		$return = [];
 		
-		foreach ($value as $v) 
+		foreach ($value as $v)
 		{
 			$return[static::keyPrepare($v)] = static::get($v,$array,$sensitive);
 		}
@@ -344,7 +344,7 @@ class Arrs extends Root
 		{
 			$index = array_values($index);
 			
-			foreach ($index as $key => $value) 
+			foreach ($index as $key => $value)
 			{
 				$break = true;
 				
@@ -393,7 +393,7 @@ class Arrs extends Root
 		
 		elseif(is_array($key))
 		{
-			foreach ($key as $i => $k) 
+			foreach ($key as $i => $k)
 			{
 				if(is_string($k))
 				$key[$i] = trim($k,static::$config['delimiter']);
@@ -413,7 +413,7 @@ class Arrs extends Root
 		$return = null;
 		$prepare = [];
 		
-		foreach ($keys as $key) 
+		foreach ($keys as $key)
 		{
 			$prepare[] = static::keyPrepare($key);
 		}
@@ -427,7 +427,7 @@ class Arrs extends Root
 	
 	// keyExplode
 	// retourne la clé en array
-	public static function keyExplode($key):array 
+	public static function keyExplode($key):array
 	{
 		$return = [];
 		
@@ -444,7 +444,7 @@ class Arrs extends Root
 	// index
 	// permet d'aller chercher une valeur dans un tableau multidimensionnel par index
 	// le delimiteur est / ou array
-	public static function index($index,array $array) 
+	public static function index($index,array $array)
 	{
 		$return = null;
 		
@@ -463,7 +463,7 @@ class Arrs extends Root
 	{
 		$return = [];
 		
-		foreach ($indexes as $index) 
+		foreach ($indexes as $index)
 		{
 			$return[static::keyPrepare($index)] = static::index($index,$array);
 		}
@@ -488,8 +488,8 @@ class Arrs extends Root
 
 			$x = static::keyExplode($key);
 			
-			foreach ($x as $v) 
-			{		
+			foreach ($x as $v)
+			{
 				if(Arr::isKey($v) && is_array($return))
 				{
 					if($sensitive === false)
@@ -511,7 +511,7 @@ class Arrs extends Root
 	// enlève les clés all du tableau de retour
 	// passe les résultats dans replaceWithMode ou replace selon la présence du troisième argument
 	// ceci est utilisé pour traiter les configurations dans config
-	public static function climbReplaceMode(array $target,array $all,?array $replaceKeys,array $return) 
+	public static function climbReplaceMode(array $target,array $all,?array $replaceKeys,array $return)
 	{
 		$ori = $return;
 		$gets = Arr::getsExists($target,$return);
@@ -519,7 +519,7 @@ class Arrs extends Root
 		
 		if(is_array($gets) && !empty($gets))
 		{
-			foreach ($gets as $key => $value) 
+			foreach ($gets as $key => $value)
 			{
 				if(is_array($value))
 				{
@@ -542,7 +542,7 @@ class Arrs extends Root
 	
 	
 	// set
-	// ajoute une valeur dans un tableau multi-dimensionnel 
+	// ajoute une valeur dans un tableau multi-dimensionnel
 	// support pour clé insensible à la case
 	// si key est null, append []
 	public static function set($key,$value,array $return,bool $sensitive=true):array
@@ -561,7 +561,7 @@ class Arrs extends Root
 			$target =& $return;
 			
 			// pour chaque niveau
-			foreach ($x as $v) 
+			foreach ($x as $v)
 			{
 				if(is_array($target))
 				{
@@ -616,7 +616,7 @@ class Arrs extends Root
 	// support pour clé insensible à la case
 	public static function sets(array $value,array $return,bool $sensitive=true):array
 	{
-		foreach ($value as $k => $v) 
+		foreach ($value as $k => $v)
 		{
 			$return = static::set($k,$v,$return,$sensitive);
 		}
@@ -642,7 +642,7 @@ class Arrs extends Root
 	// possibilité d'une opération insensible à la case
 	public static function setsRef(array $keyValue,array &$array,bool $sensitive=true):void
 	{
-		foreach ($keyValue as $key => $value) 
+		foreach ($keyValue as $key => $value)
 		{
 			static::setRef($key,$value,$array,$sensitive);
 		}
@@ -667,7 +667,7 @@ class Arrs extends Root
 			$target =& $return;
 			
 			// pour chaque niveau
-			foreach ($x as $v) 
+			foreach ($x as $v)
 			{
 				if(Arr::isKey($v) && is_array($target))
 				{
@@ -708,7 +708,7 @@ class Arrs extends Root
 	// support pour clé insensible à la case
 	public static function unsets(array $value,array $return,bool $sensitive=true):array
 	{
-		foreach ($value as $v) 
+		foreach ($value as $v)
 		{
 			$return = static::unset($v,$return,$sensitive);
 		}
@@ -792,7 +792,7 @@ class Arrs extends Root
 		
 		elseif($level > 0)
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				if(is_array($value))
 				$return += static::countLevel(($level - 1),$array[$key]);
@@ -805,13 +805,13 @@ class Arrs extends Root
 	
 	// depth
 	// retourne la profondeur maximale du tableau
-	public static function depth(array $array):int 
+	public static function depth(array $array):int
 	{
 		$return = 1;
 
-		foreach ($array as $value) 
+		foreach ($array as $value)
 		{
-			if(is_array($value)) 
+			if(is_array($value))
 			{
 				$depth = static::depth($value) + 1;
 
@@ -834,7 +834,7 @@ class Arrs extends Root
 		$return = [];
 		$keys = Arr::keys($array,$value,$sensitive,$searchNull);
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			if(!empty($parent))
 			$current = Arr::append($parent,$k);
@@ -859,7 +859,7 @@ class Arrs extends Root
 	
 	// crush
 	// écrase un tableau multidimensionel, concat en string les clés et met les valeurs pour chaque clé
-	// les clés retournés sont compatibles avec la méthode get 
+	// les clés retournés sont compatibles avec la méthode get
 	// support pour recherche insensible à la case
 	public static function crush(array $array,$value=null,bool $sensitive=true,string $parent=''):array
 	{
@@ -867,7 +867,7 @@ class Arrs extends Root
 		$keys = Arr::keys($array,$value,$sensitive);
 		$delimiter = static::$config['delimiter'];
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			$current = (string) $k;
 			
@@ -898,7 +898,7 @@ class Arrs extends Root
 		$return = [];
 		$keys = Arr::keys($array,$value,$sensitive);
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			if(is_array($v))
 			{
@@ -925,7 +925,7 @@ class Arrs extends Root
 		
 		if($is !== null)
 		{
-			foreach ($array as $value) 
+			foreach ($array as $value)
 			{
 				if(is_array($value))
 				$return[] = static::values($value,$is);
@@ -935,11 +935,11 @@ class Arrs extends Root
 			}
 		}
 		
-		else 
+		else
 		{
 			$return = array_values($array);
 
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if(is_array($value))
 				$return[$key] = static::values($value);
@@ -964,7 +964,7 @@ class Arrs extends Root
 		
 		if($return === null)
 		{
-			foreach ($array as $k => $v) 
+			foreach ($array as $k => $v)
 			{
 				if(is_array($v))
 				{
@@ -983,11 +983,11 @@ class Arrs extends Root
 	// searchFirst
 	// retourne le chemin de la première clé de la première valeur trouvé dans le tableau multidimensionnel
 	// support pour recherche insensible à la case
-	public static function searchFirst(array $values,array $array,bool $sensitive=true) 
+	public static function searchFirst(array $values,array $array,bool $sensitive=true)
 	{
 		$return = null;
 		
-		foreach ($values as $v) 
+		foreach ($values as $v)
 		{
 			$search = static::search($v,$array,$sensitive);
 			if($search !== null)
@@ -1010,7 +1010,7 @@ class Arrs extends Root
 		
 		if($return === false)
 		{
-			foreach ($array as $k => $v) 
+			foreach ($array as $k => $v)
 			{
 				if(is_array($v) && static::in($value,$v,$sensitive))
 				{
@@ -1035,7 +1035,7 @@ class Arrs extends Root
 		{
 			$return = true;
 			
-			foreach ($values as $k => $v) 
+			foreach ($values as $k => $v)
 			{
 				if(!static::in($v,$array,$sensitive))
 				{
@@ -1052,11 +1052,11 @@ class Arrs extends Root
 	// inFirst
 	// retourne la première valeur trouvé dans le tableau multidimensionnel ou null si rien n'est trouvé
 	// support pour recherche insensible à la case
-	public static function inFirst(array $values,array $array,bool $sensitive=true) 
+	public static function inFirst(array $values,array $array,bool $sensitive=true)
 	{
 		$return = null;
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			if(Arr::in($value,$array,$sensitive))
 			{
@@ -1066,7 +1066,7 @@ class Arrs extends Root
 			
 			else
 			{
-				foreach ($array as $k => $v) 
+				foreach ($array as $k => $v)
 				{
 					if(is_array($v) && Arr::in($value,$v,$sensitive))
 					{
@@ -1088,7 +1088,7 @@ class Arrs extends Root
 	// si callable est closure à ce moment au moins trois arguments sont envoyés à la fonction = value, key et array
 	public static function map(callable $callable,array $return,...$args):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::map($callable,$value,...$args);
@@ -1117,9 +1117,9 @@ class Arrs extends Root
 	
 	// shuffle
 	// mélange un tableau multidimensionnel, mais conserve les clés
-	public static function shuffle(array $return):array 
+	public static function shuffle(array $return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::shuffle($value);
@@ -1133,9 +1133,9 @@ class Arrs extends Root
 	
 	// reverse
 	// invertit un tableau multidimensionel
-	public static function reverse(array $return,bool $preserve=true):array 
+	public static function reverse(array $return,bool $preserve=true):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::reverse($value,$preserve);
@@ -1147,18 +1147,18 @@ class Arrs extends Root
 	}
 	
 	
-	// flip 
-	// reformat un tableau en s'assurant que la valeur devienne la clé 
+	// flip
+	// reformat un tableau en s'assurant que la valeur devienne la clé
 	// value permet de specifier la valeur des nouvelles valeurs du tableau, si null prend la clé
 	// exception permet d'exclure le contenu d'une clé du reformatage
 	public static function flip(array $array,$value=null,$exception=null):array
-	{               
+	{
 		$return = [];
 		
 		if(Arr::isKey($exception))
 		$exception = [$exception];
 		
-		foreach ($array as $k => $v) 
+		foreach ($array as $k => $v)
 		{
 			// exception
 			if(!empty($exception) && is_array($exception) && in_array($k,$exception,true))
@@ -1204,7 +1204,7 @@ class Arrs extends Root
 			if($trim === true || $clean === true)
 			$array = static::trimClean($array,$trim,$trim,$clean);
 			
-			foreach ($array as $k => $v) 
+			foreach ($array as $k => $v)
 			{
 				$r = '';
 				
@@ -1237,7 +1237,7 @@ class Arrs extends Root
 	{
 		$return = [];
 		
-		foreach ($value as $k => $v) 
+		foreach ($value as $k => $v)
 		{
 			if(is_scalar($v))
 			{
@@ -1260,7 +1260,7 @@ class Arrs extends Root
 	{
 		$return = [];
 		
-		foreach ($dimensions as $dimension) 
+		foreach ($dimensions as $dimension)
 		{
 			$arg = [0,1,1];
 			
@@ -1291,7 +1291,7 @@ class Arrs extends Root
 	{
 		$return = [];
 		
-		foreach ($dimensions as $dimension) 
+		foreach ($dimensions as $dimension)
 		{
 			if(is_array($dimension) && !empty($dimension) && Arr::validate('arrKey',$dimension))
 			{
@@ -1318,7 +1318,7 @@ class Arrs extends Root
 		$structure = static::hierarchyStructure($array,$exists);
 		$sets = [];
 		
-		foreach ($structure as $key => $value) 
+		foreach ($structure as $key => $value)
 		{
 			$key = static::keyPrepare($value);
 			$sets[$key] = null;
@@ -1335,12 +1335,12 @@ class Arrs extends Root
 	// si une clé à un parent, le nom du parent est la valeur
 	// retourne un tableau multidimensionnel avec la structure hiérarchique
 	// un parent non existant peut être ajouté dans la hiérarchie si existe est true
-	public static function hierarchyStructure(array $array,bool $exists=true):array 
+	public static function hierarchyStructure(array $array,bool $exists=true):array
 	{
 		$return = [];
 		$remove = [];
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			$keep = false;
 			
@@ -1374,17 +1374,17 @@ class Arrs extends Root
 	
 	// hierarchyAppend
 	// méthode utilisé par hierarchy pour ajouter un tableau clé -> parent à une hiérarchie existante
-	public static function hierarchyAppend(array $array,array $return):array 
+	public static function hierarchyAppend(array $array,array $return):array
 	{
 		if(!empty($return))
 		{
-			while (!empty($array)) 
+			while (!empty($array))
 			{
 				$continue = false;
 				
-				foreach ($array as $key => $value) 
+				foreach ($array as $key => $value)
 				{
-					foreach ($return as $k => $v) 
+					foreach ($return as $k => $v)
 					{
 						$last = Arr::valueLast($v);
 						
@@ -1430,8 +1430,8 @@ class Arrs extends Root
 			$count = count($x);
 			$current = 1;
 
-			foreach ($x as $v) 
-			{		
+			foreach ($x as $v)
+			{
 				if(Arr::isKey($v) && is_array($array))
 				{
 					if($current === $count && array_key_exists($v,$array))
@@ -1461,7 +1461,7 @@ class Arrs extends Root
 	{
 		$return = false;
 		
-		foreach ($keys as $key) 
+		foreach ($keys as $key)
 		{
 			$return = static::keyExists($key,$array,$sensitive);
 			
@@ -1486,7 +1486,7 @@ class Arrs extends Root
 			
 			else
 			{
-				foreach ($source as $k => $v) 
+				foreach ($source as $k => $v)
 				{
 					if(is_array($v))
 					{
@@ -1524,7 +1524,7 @@ class Arrs extends Root
 	{
 		$return = [];
 		
-		while ($path = static::keyPath($key,$source)) 
+		while ($path = static::keyPath($key,$source))
 		{
 			$return[] = $path;
 			$source = static::unset($path,$source);
@@ -1536,7 +1536,7 @@ class Arrs extends Root
 
 	// keyValue
 	// retourne la première valeur de la clé trouvé dans le tableau multidimensionnel
-	public static function keyValue($key,array $source) 
+	public static function keyValue($key,array $source)
 	{
 		$return = null;
 		$path = static::keyPath($key,$source);
@@ -1567,7 +1567,7 @@ class Arrs extends Root
 	// support pour multibyte
 	public static function keysLower(array $return,?bool $mb=null):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::keysLower($value,$mb);
@@ -1584,7 +1584,7 @@ class Arrs extends Root
 	// support pour multibyte
 	public static function keysUpper(array $return,?bool $mb=null):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::keysUpper($value,$mb);
@@ -1599,9 +1599,9 @@ class Arrs extends Root
 	// keysInsensitive
 	// retourne une version du tableau multidimensionnel avec les clés en conflit de case retirés
 	// garde la même case
-	public static function keysInsensitive(array $return) 
+	public static function keysInsensitive(array $return)
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::keysInsensitive($value);
@@ -1620,7 +1620,7 @@ class Arrs extends Root
 	{
 		$return = Arr::keysSort($return,$sort,$type);
 		
-		foreach ($return as $key => &$value) 
+		foreach ($return as $key => &$value)
 		{
 			if(is_array($value))
 			$return[$key] = Arr::keysSort($value,$sort,$type);
@@ -1646,7 +1646,7 @@ class Arrs extends Root
 	{
 		$return = [];
 		
-		foreach ($values as $value) 
+		foreach ($values as $value)
 		{
 			foreach (static::keys($array,$value,$sensitive,true) as $key)
 			{
@@ -1678,7 +1678,7 @@ class Arrs extends Root
 	// permet la recherche insensible à la case
 	public static function valuesStrip(array $values,array $return,bool $sensitive=true):array
 	{
-		foreach (static::valuesKey($values,$return,$sensitive) as $key) 
+		foreach (static::valuesKey($values,$return,$sensitive) as $key)
 		{
 			$return = static::unset($key,$return,$sensitive);
 		}
@@ -1691,7 +1691,7 @@ class Arrs extends Root
 	// permet de crush les valeurs d'un tableau multidimensionnel de manière exponentielle
 	// c'est à dire que toutes les valeurs de chaque niveau se combienent avec toutes les valeurs des niveaux supérieures
 	// utiliser par base assert pour la méthode prepareClasse
-	public static function valuesCrush(array $array,?array $parent=[]):array 
+	public static function valuesCrush(array $array,?array $parent=[]):array
 	{
 		$return = [];
 		
@@ -1703,7 +1703,7 @@ class Arrs extends Root
 			
 			if(!empty($array))
 			{
-				foreach ($first as $value) 
+				foreach ($first as $value)
 				{
 					$value = ($hasParent === true)? Arr::append($parent,$value):[$value];
 					$return = Arr::append($return,static::valuesCrush($array,$value));
@@ -1712,7 +1712,7 @@ class Arrs extends Root
 			
 			elseif(!empty($first))
 			{
-				foreach ($first as $v) 
+				foreach ($first as $v)
 				{
 					$v = ($hasParent === true)? Arr::append($parent,$v):[$v];
 					$return[] = $v;
@@ -1726,9 +1726,9 @@ class Arrs extends Root
 	
 	// valuesChange
 	// changement de valeur dans un tableau multidimensionnel
-	public static function valuesChange($value,$change,array $return,?int $amount=null,int $i=0):array 
+	public static function valuesChange($value,$change,array $return,?int $amount=null,int $i=0):array
 	{
-		foreach ($return as $k => $v) 
+		foreach ($return as $k => $v)
 		{
 			if($v === $value)
 			{
@@ -1753,7 +1753,7 @@ class Arrs extends Root
 	{
 		if(!empty($replace))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if(is_string($value))
 				{
@@ -1777,7 +1777,7 @@ class Arrs extends Root
 	// utilise multibyte
 	public static function valuesLower(array $return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::valuesLower($value);
@@ -1794,7 +1794,7 @@ class Arrs extends Root
 	// utilise multibyte
 	public static function valuesUpper(array $return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(is_array($value))
 			$return[$key] = static::valuesUpper($value);

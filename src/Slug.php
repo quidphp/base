@@ -39,7 +39,7 @@ class Slug extends Set
 	
 	// parse
 	// parse le tableau arr de slug
-	public static function parse(array $array,array $option):array 
+	public static function parse(array $array,array $option):array
 	{
 		$return = [];
 		$separator = static::getSeparator(1);
@@ -51,13 +51,13 @@ class Slug extends Set
 			$return[] = $prepend;
 		}
 		
-		foreach ($array as $key => $value) 
+		foreach ($array as $key => $value)
 		{
 			$value = preg_split('~[^\\pL\d'.$segment[0].$segment[1].']+~u',$value,-1,PREG_SPLIT_NO_EMPTY);
 			
 			if(!empty($value))
 			{
-				foreach ($value as $v) 
+				foreach ($value as $v)
 				{
 					if(is_string($v))
 					{
@@ -85,7 +85,7 @@ class Slug extends Set
 			
 			if($option['keepNumeric'] === true)
 			{
-				foreach ($keep as $k => $v) 
+				foreach ($keep as $k => $v)
 				{
 					if(!array_key_exists($k,$return) && is_numeric($v))
 					$return[$k] = $v;

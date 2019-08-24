@@ -11,9 +11,9 @@ class Call extends Root
 	
 	// typecast
 	// envoie à la méthode cast
-	public static function typecast(&...$values):void 
+	public static function typecast(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = static::cast($value);
 		}
@@ -42,7 +42,7 @@ class Call extends Root
 	
 	// isSafeStaticMethod
 	// retourne vrai seulement si la valeur est un tableau callable, très stricte
-	public static function isSafeStaticMethod($value,bool $callable=false):bool 
+	public static function isSafeStaticMethod($value,bool $callable=false):bool
 	{
 		$return = false;
 		
@@ -61,7 +61,7 @@ class Call extends Root
 	
 	// isCallable
 	// retourne vrai si la valeur est une closure ou une callable dans un array qui est considéré comme safe (isSafe)
-	public static function isCallable($value):bool 
+	public static function isCallable($value):bool
 	{
 		return ($value instanceof \Closure || static::isSafeStaticMethod($value,true))? true:false;
 	}
@@ -69,7 +69,7 @@ class Call extends Root
 	
 	// isFunction
 	// retourne vrai si la valeur est callable et function
-	public static function isFunction($value):bool 
+	public static function isFunction($value):bool
 	{
 		return (is_string($value) && function_exists($value))? true:false;
 	}
@@ -77,7 +77,7 @@ class Call extends Root
 	
 	// isClosure
 	// retourne vrai si la valeur est callable et closure
-	public static function isClosure($value):bool 
+	public static function isClosure($value):bool
 	{
 		return ($value instanceof \Closure)? true:false;
 	}
@@ -85,7 +85,7 @@ class Call extends Root
 	
 	// isDynamicMethod
 	// retourne vrai si la valeur est callable et dynamic method
-	public static function isDynamicMethod($value):bool 
+	public static function isDynamicMethod($value):bool
 	{
 		return (static::type($value) === 'dynamicMethod')? true:false;
 	}
@@ -93,7 +93,7 @@ class Call extends Root
 	
 	// isStaticMethod
 	// retourne vrai si la valeur est callable et static method
-	public static function isStaticMethod($value):bool 
+	public static function isStaticMethod($value):bool
 	{
 		return (static::type($value) === 'staticMethod')? true:false;
 	}
@@ -169,9 +169,9 @@ class Call extends Root
 	
 	// ableArrs
 	// permet de loop un tableau et d'appeler tous les tableaux étant des callables
-	public static function ableArrs(array $return):array 
+	public static function ableArrs(array $return):array
 	{
-		foreach ($return as $key => $value) 
+		foreach ($return as $key => $value)
 		{
 			if(static::isCallable($value))
 			$return[$key] = $value();
@@ -196,7 +196,7 @@ class Call extends Root
 	{
 		$return = [];
 		
-		foreach ($classes as $class) 
+		foreach ($classes as $class)
 		{
 			if(is_string($class))
 			$return[$class] = static::staticClass($class,$method,...$arg);
@@ -259,7 +259,7 @@ class Call extends Root
 		{
 			$return = true;
 			
-			foreach ($values as $value) 
+			foreach ($values as $value)
 			{
 				if(!$callable($value))
 				{
@@ -282,7 +282,7 @@ class Call extends Root
 	{
 		if(is_array($return))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if(is_array($value))
 				$return[$key] = static::map($condition,$callable,$value,...$args);
@@ -303,7 +303,7 @@ class Call extends Root
 	// permet de lancer une callable
 	// si callable est closure, alors obj est le new this
 	// sinon l'objet est mis comme dernier argument
-	public static function withObj(object $obj,callable $callable,...$args) 
+	public static function withObj(object $obj,callable $callable,...$args)
 	{
 		$return = false;
 		
@@ -323,11 +323,11 @@ class Call extends Root
 	// digStaticMethod
 	// creuse dans un tableau et call toutes les méthodes statiques safe
 	// les closures ne sont pas appelés
-	public static function digStaticMethod($return,...$args) 
+	public static function digStaticMethod($return,...$args)
 	{
 		if(is_array($return))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if(static::isSafeStaticMethod($value,true))
 				$return[$key] = $value(...$args);

@@ -11,9 +11,9 @@ class Scalar extends Root
 	
 	// typecast
 	// envoie à la méthode cast
-	public static function typecast(&...$values):void 
+	public static function typecast(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = static::cast($value);
 		}
@@ -24,9 +24,9 @@ class Scalar extends Root
 	
 	// typecastMore
 	// envoie à la méthode castMore
-	public static function typecastMore(&...$values):void 
+	public static function typecastMore(&...$values):void
 	{
-		foreach ($values as &$value) 
+		foreach ($values as &$value)
 		{
 			$value = static::castMore($value);
 		}
@@ -39,7 +39,7 @@ class Scalar extends Root
 	// cast une scalaire dans son type naturel
 	// par défaut, seul les nombres sont convertis
 	public static function cast($value,int $numberCast=1,int $boolCast=0)
-	{		
+	{
 		$return = null;
 		
 		if(is_scalar($value))
@@ -104,7 +104,7 @@ class Scalar extends Root
 	
 	// isNotBool
 	// retourne vrai si scalar mais pas bool
-	public static function isNotBool($value):bool 
+	public static function isNotBool($value):bool
 	{
 		return (is_scalar($value) && !is_bool($value))? true:false;
 	}
@@ -112,7 +112,7 @@ class Scalar extends Root
 	
 	// isNotNumeric
 	// retourne vrai si scalar mais pas numérique
-	public static function isNotNumeric($value):bool 
+	public static function isNotNumeric($value):bool
 	{
 		return (is_scalar($value) && !is_numeric($value))? true:false;
 	}
@@ -120,7 +120,7 @@ class Scalar extends Root
 	
 	// isNotInt
 	// retourne vrai si scalar mais pas int
-	public static function isNotInt($value):bool 
+	public static function isNotInt($value):bool
 	{
 		return (is_scalar($value) && !is_int($value))? true:false;
 	}
@@ -128,7 +128,7 @@ class Scalar extends Root
 	
 	// isNotFloat
 	// retourne vrai si scalar mais pas float
-	public static function isNotFloat($value):bool 
+	public static function isNotFloat($value):bool
 	{
 		return (is_scalar($value) && !is_float($value))? true:false;
 	}
@@ -136,7 +136,7 @@ class Scalar extends Root
 	
 	// isNotString
 	// retourne vrai si scalar mais pas string
-	public static function isNotString($value):bool 
+	public static function isNotString($value):bool
 	{
 		return (is_scalar($value) && !is_string($value))? true:false;
 	}
