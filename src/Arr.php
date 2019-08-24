@@ -13,7 +13,7 @@ namespace Quid\Base;
 class Arr extends Root
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 
 
 	// typecast
