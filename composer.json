@@ -3,7 +3,7 @@
     "type": "library",
     "description": "QuidPHP - A modern framework and CMS",
     "keywords": ["quidphp","quid","framework","cms"],
-    "homepage": "https://quid5.com",
+    "homepage": "https://quidphp.com",
     "license": "MIT",
     "authors": [
         {
