@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Quid 5 package | https://quid5.com
- * (c) Pierre-Philippe Emond <emondpph@gmail.com>
- * License: https://github.com/quid5/base/blob/master/LICENSE
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/base/blob/master/LICENSE
  */
 
 namespace Quid\Base\Lang;
