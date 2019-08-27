@@ -1606,7 +1606,7 @@ class Arrs extends Root
 	// keysInsensitive
 	// retourne une version du tableau multidimensionnel avec les clés en conflit de case retirés
 	// garde la même case
-	public static function keysInsensitive(array $return)
+	public static function keysInsensitive(array $return):array
 	{
 		foreach ($return as $key => $value)
 		{
