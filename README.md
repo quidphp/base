@@ -17,6 +17,7 @@ $ composer require quidphp/base
 ```
 
 ## Requirements
+**Quid\Base** requires the following:
 - PHP 7.2+
 - PHP Extensions: PDO, fileinfo, curl, openssl, posix
 - Apache server (has not been tested on NGINX or IIs)
@@ -25,6 +26,9 @@ $ composer require quidphp/base
 	- post_max_size > upload_max_filesize
 	- memory_limit > 128MB
 	- browscap
+
+## Requirements
+**Quid\Base** has no dependency.
 
 ## Testing
 **Quid\Base** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
