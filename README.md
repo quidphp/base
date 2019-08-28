@@ -11,7 +11,7 @@
 **Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS but it can be used standalone. This library requires PHP 7.2+. It is available as an open-source software under the [MIT license](LICENSE).
 
 ## Composer
-**Quid\Base** can be installed through [Composer](https://getcomposer.org). 
+**[Quid\Base](https://packagist.org/packages/quidphp/base)** can be installed through [Composer](https://getcomposer.org). 
 ``` bash
 $ composer require quidphp/base
 ```
@@ -22,7 +22,7 @@ $ composer require quidphp/base
 ## Comments
 **Quid\Base** code is commented and all methods are explained. However, the comments are currently written in French.
 
-## Convention
+## Conventions
 **Quid\Base** is built on the following conventions:
 - *Filename*: Traits filenames start with an underscore (_).
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
