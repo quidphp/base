@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // error
+// a layer over the native PHP error functions and handler
 class Error extends Root
 {
 	// config

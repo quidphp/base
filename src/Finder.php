@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // finder
+// base class that provides methods to deal with the filesystem (used by Dir, File and Symlink)
 class Finder extends Root
 {
 	// trait

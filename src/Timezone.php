@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // timezone
+// static methods to deal with timezone
 class Timezone extends Root
 {
 	// config

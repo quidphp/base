@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // res
+// static methods to create and modify resources of all types
 class Res extends Root
 {
 	// config

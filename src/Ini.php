@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // ini
+// a layer over the native PHP ini functions
 class Ini extends Root
 {
 	// config

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // lang
+// base class to manage language text and translations
 class Lang extends Root
 {
 	// config

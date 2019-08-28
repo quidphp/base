@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // imageRaster
+// static methods to easily work with pixelated images
 class ImageRaster extends File
 {
 	// config

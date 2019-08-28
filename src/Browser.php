@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // browser
+// a layer over the native PHP get_browser function
 class Browser extends Root
 {
 	// config

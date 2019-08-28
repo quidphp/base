@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // xml
+// some static methods related to XML
 class Xml extends Root
 {
 	// config

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // _root
+// trait that provides some basic fqcn methods, used by all Quid\Base classes
 trait _root
 {
 	// trait

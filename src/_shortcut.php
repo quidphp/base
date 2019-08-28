@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // _shortcut
+// static methods to declare and replace shortcuts (bracketed segments within strings)
 trait _shortcut
 {
 	// config

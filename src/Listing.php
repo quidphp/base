@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // listing
+// base class to deal with associative strings and arrays (test: 1, test2: 2)
 class Listing extends Assoc
 {
 	// config

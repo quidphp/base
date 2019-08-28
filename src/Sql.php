@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // sql
+// static methods to generate SQL strings (compatible with MySQL and MariaDB)
 class Sql extends Root
 {
 	// trait

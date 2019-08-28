@@ -11,6 +11,7 @@ namespace Quid\Base\Lang;
 use Quid\Base;
 
 // en
+// english language content used by Quid\Base classes
 class En extends Base\Config
 {
 	// config

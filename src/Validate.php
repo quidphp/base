@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // validate
+// class that provides validation logic and methods
 class Validate extends Root
 {
 	// config

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // uri
+// static methods to generate URI (absolute and relative)
 class Uri extends Root
 {
 	// trait

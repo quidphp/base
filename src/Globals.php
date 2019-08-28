@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // globals
+// static methods to manage global variables
 class Globals extends Root
 {
 	// config

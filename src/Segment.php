@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // segment
+// class that provides the logic to replace bracket segment within a string
 class Segment extends Root
 {
 	// config

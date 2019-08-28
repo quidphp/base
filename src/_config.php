@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // _config
+// trait that provides the logic to recursively merge the $config static property with the parent's property
 trait _config
 {
 	// static

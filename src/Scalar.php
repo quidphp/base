@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // scalar
+// static methods to deal with scalar types
 class Scalar extends Root
 {
 	// config

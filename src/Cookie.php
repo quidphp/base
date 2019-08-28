@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // cookie
+// static methods to add and remove cookies
 class Cookie extends Root
 {
 	// config

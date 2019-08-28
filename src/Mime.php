@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // mime
+// static methods to get or guess mime types
 class Mime extends Root
 {
 	// config

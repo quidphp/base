@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // config
+// base config class, used for extending other classes
 class Config extends Root
 {
 	// config

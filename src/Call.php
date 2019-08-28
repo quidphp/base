@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // call
+// static methods to manage callables and callbacks
 class Call extends Root
 {
 	// config

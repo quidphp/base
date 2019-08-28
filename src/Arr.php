@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // arr
+// static methods to work with unidimensionnal arrays
 class Arr extends Root
 {
 	// config

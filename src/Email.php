@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // email
+// a layer over the native PHP send_mail function, handles mail headers
 class Email extends Root
 {
 	// config

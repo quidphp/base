@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Quid\Base;
 
-// number
+// boolean
+// static methods to deal with boolean type
 class Boolean extends Root
 {
 	// config

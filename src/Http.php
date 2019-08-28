@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // http
+// static methods related to the HTTP protocol
 class Http extends Root
 {
 	// config

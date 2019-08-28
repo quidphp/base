@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // dir
+// static methods to list, open and parse directories
 class Dir extends Finder
 {
 	// config

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base {
 
 // debug
+// tools to help for debugging, also injects some helper debugging functions like d() and dd()
 class Debug extends Root
 {
 	// config

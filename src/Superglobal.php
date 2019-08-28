@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // superglobal
+// static methods to deal with superglobal variables
 class Superglobal extends Root
 {
 	// config

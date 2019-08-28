@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // file
+// static methods to create, read and write files (accepts path strings and resources)
 class File extends Finder
 {
 	// config

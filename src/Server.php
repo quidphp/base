@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // server
+// provides a set of methods to analyze the current server
 class Server extends Root
 {
 	// config

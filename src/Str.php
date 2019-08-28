@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // str
+// static methods to work with strings
 class Str extends Root
 {
 	// config

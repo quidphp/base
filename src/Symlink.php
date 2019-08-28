@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // symlink
+// static methods to manage symlinks
 class Symlink extends Finder
 {
 	// config

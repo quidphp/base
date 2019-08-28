@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // session
+// static methods to manage a session (built over the native PHP session functions)
 class Session extends Root
 {
 	// config

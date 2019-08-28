@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // assert
+// a layer over the native PHP assert functions
 class Assert extends Root
 {
 	// config
