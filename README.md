@@ -31,8 +31,8 @@ $ composer require quidphp/base
 - *Error*: The only exceptions that are thrown are related to function arguments and return types.
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
-## Overview
-Lorem ipsum lorem ipsum
+## Classes
+**Quid\Base** contains more than 70 classes. Here is an overview:
 - [Arr](src/Arr.php) | Lorem ipsum
 - [Arrs](src/Arrs.php) | Lorem ipsum
 - [Assert](src/Assert.php) | Lorem ipsum
@@ -101,7 +101,8 @@ Lorem ipsum lorem ipsum
 - [Validate](src/Validate.php) | Lorem ipsum
 - [Xml](src/Xml.php) | Lorem ipsum
 
-Lorem ipsum lorem ipsum
+## Traits
+**Quid\Base** contains some traits which are easily reusable. Here is an overview:
 - [_cacheFile](src/_cacheFile.php) | Lorem ipsum
 - [_cacheStatic](src/_cacheStatic.php) | Lorem ipsum
 - [_config](src/_config.php) | Lorem ipsum
