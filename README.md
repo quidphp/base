@@ -17,16 +17,16 @@ $ composer require quidphp/base
 ```
 
 ## Testing
-**Quid\Base** testsuite can bu runned by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
+**Quid\Base** testsuite can be runned by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
 
 ## Convention
 **Quid\Base** is built on the following conventions:
-- Filename: Traits filenames start with an underscore _.
-- Coding: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
-- Type: Files, function arguments and return types are strict typed.
-- Static: All class constructors are private, thus all methods are static and there is no object instantiation.
-- Error: The only exceptions that can be thrown are related to function arguments and return types.
-- Config: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
+- *Filename*: Traits filenames start with an underscore (_).
+- *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
+- *Type*: Files, function arguments and return types are strict typed.
+- *Static*: All class constructors are private, thus all methods are static and there is no object instantiation.
+- *Error*: The only exceptions that are thrown are related to function arguments and return types.
+- *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
 Lorem ipsum lorem ipsum
