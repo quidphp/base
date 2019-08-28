@@ -1,9 +1,11 @@
 # Quid\Base
-<img src='https://img.shields.io/github/v/release/quidphp/base' />
-<img src='https://img.shields.io/github/license/quidphp/base' />
-<img src='https://img.shields.io/packagist/php-v/quidphp/base' />
-<img src='https://styleci.io/repos/203664262/shield' />
-<img src='https://img.shields.io/github/languages/code-size/quidphp/base' />
+<p align='center'>
+  <a href='#'><img src='https://img.shields.io/github/v/release/quidphp/base' alt='Release' /></a>
+  <a href='#'><img src='https://img.shields.io/github/license/quidphp/base' alt='License' /></a>
+  <a href='#'><img src='https://img.shields.io/packagist/php-v/quidphp/base' alt='PHP Version' /></a>
+  <a href='#'><img src='https://styleci.io/repos/203664262/shield' alt='Style CI' /></a>
+  <a href='#'><img src='https://img.shields.io/github/languages/code-size/quidphp/base' alt='Code Size' /></a>
+</p>
 
 ## About
 **Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS but it can be used standalone. This library requires PHP 7.2+. It is available as an open-source software under the [MIT license](LICENSE).
