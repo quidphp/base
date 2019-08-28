@@ -8,13 +8,23 @@
 </p>
 
 ## About
-**Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS but it can be used standalone. This library requires PHP 7.2+. It is available as an open-source software under the [MIT license](LICENSE).
+**Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS but it can be used standalone. This library is available as an open-source software under the [MIT license](LICENSE).
 
 ## Composer
 **Quid\Base** can be installed through [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/base).
 ``` bash
 $ composer require quidphp/base
 ```
+
+## Requirements
+- PHP 7.2+
+- PHP Extensions: PDO, fileinfo, curl, openssl, posix
+- Apache server (has not been tested on NGINX or IIs)
+- PHP INI:
+	- post_max_size > 1MB
+	- post_max_size > upload_max_filesize
+	- memory_limit > 128MB
+	- browscap
 
 ## Testing
 **Quid\Base** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
