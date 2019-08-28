@@ -45,8 +45,14 @@ $ composer require quidphp/base
 - *Error*: The only exceptions that are thrown are related to function arguments and return types.
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
-## Class
-**Quid\Base** contains more than 70 classes. Here is an overview:
+## Overview
+**Quid\Base** contains more than 70 classes and some reusable traits. Here is an overview:
+- [_cacheFile](src/_cacheFile.php) | Trait that provides a method to get or set a cached value from a file
+- [_cacheStatic](src/_cacheStatic.php) | Trait that provides a method to get or set a cached value from a static property
+- [_config](src/_config.php) | Trait that provides the logic to recursively merge the $config static property with the parent's property
+- [_option](src/_option.php) | Static methods to deal with static options (within the $config static property)
+- [_root](src/_root.php) | Trait that provides some basic fqcn methods, used by all Quid\Base classes
+- [_shortcut](src/_shortcut.php) | Static methods to declare and replace shortcuts (bracketed segments within strings)
 - [Arr](src/Arr.php) | Static methods to work with unidimensionnal arrays
 - [Arrs](src/Arrs.php) | Static methods to work with multidimensional arrays (an array containing at least another array)
 - [Assert](src/Assert.php) | A layer over the native PHP assert functions
@@ -116,12 +122,3 @@ $ composer require quidphp/base
 - [Uri](src/Uri.php) | Static methods to generate URI (absolute and relative)
 - [Validate](src/Validate.php) | Class that provides validation logic and methods
 - [Xml](src/Xml.php) | Some static methods related to XML
-
-## Trait
-**Quid\Base** contains some traits which are easily reusable. Here is an overview:
-- [_cacheFile](src/_cacheFile.php) | Trait that provides a method to get or set a cached value from a file
-- [_cacheStatic](src/_cacheStatic.php) | Trait that provides a method to get or set a cached value from a static property
-- [_config](src/_config.php) | Trait that provides the logic to recursively merge the $config static property with the parent's property
-- [_option](src/_option.php) | Static methods to deal with static options (within the $config static property)
-- [_root](src/_root.php) | Trait that provides some basic fqcn methods, used by all Quid\Base classes
-- [_shortcut](src/_shortcut.php) | Static methods to declare and replace shortcuts (bracketed segments within strings)
