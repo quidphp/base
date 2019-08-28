@@ -1,4 +1,6 @@
 # Quid\Base
+https://img.shields.io/github/license/quidphp/base
+https://styleci.io/repos/203664262/shield?style=plastic&branch=5.26
 
 ## About
 **Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS but it can be used standalone. This library requires PHP 7.2+. It is available as an open-source software under the [MIT license](LICENSE).
@@ -14,9 +16,11 @@ $ composer require quidphp/base
 
 ## Convention
 **Quid\Base** is built on the following conventions:
-- Type: Files, arguments and return types are strict typed.
 - Filename: Traits filenames start with an underscore _.
 - Coding: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
+- Type: Files, function arguments and return types are strict typed.
+- Static: All class constructors are private, thus all methods are static and there is no object instantiation.
+- Error: The only exceptions that can be thrown are related to function arguments and return types.
 - Config: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
@@ -45,6 +49,7 @@ Lorem ipsum lorem ipsum
 - [Encoding](src/Encoding.php) | Lorem ipsum
 - [Error](src/Error.php) | Lorem ipsum
 - [Exception](src/Exception.php) | Lorem ipsum
+- [Extension](src/Extension.php) | Lorem ipsum
 - [File](src/File.php) | Lorem ipsum
 - [Finder](src/Finder.php) | Lorem ipsum
 - [Fqcn](src/Fqcn.php) | Lorem ipsum
