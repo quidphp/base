@@ -11,7 +11,7 @@
 **Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS but it can be used standalone.
 
 ## License
-This library is available as an open-source software under the [MIT license](LICENSE).
+**Quid\Base** is available as an open-source software under the [MIT license](LICENSE).
 
 ## Composer
 **Quid\Base** can be installed through [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/base).
