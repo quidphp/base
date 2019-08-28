@@ -16,7 +16,7 @@
 $ composer require quidphp/base
 ```
 
-## Requirements
+## Requirement
 **Quid\Base** requires the following:
 - PHP 7.2+
 - PHP Extensions: PDO, fileinfo, curl, openssl, posix
@@ -33,10 +33,10 @@ $ composer require quidphp/base
 ## Testing
 **Quid\Base** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
 
-## Comments
+## Comment
 **Quid\Base** code is commented and all methods are explained. However, the method and property comments are currently written in French.
 
-## Conventions
+## Convention
 **Quid\Base** is built on the following conventions:
 - *Filename*: Traits filenames start with an underscore (_).
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
@@ -45,7 +45,7 @@ $ composer require quidphp/base
 - *Error*: The only exceptions that are thrown are related to function arguments and return types.
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
-## Classes
+## Class
 **Quid\Base** contains more than 70 classes. Here is an overview:
 - [Arr](src/Arr.php) | Static methods to work with unidimensionnal arrays
 - [Arrs](src/Arrs.php) | Static methods to work with multidimensional arrays (an array containing at least another array)
@@ -117,7 +117,7 @@ $ composer require quidphp/base
 - [Validate](src/Validate.php) | Class that provides validation logic and methods
 - [Xml](src/Xml.php) | Some static methods related to XML
 
-## Traits
+## Trait
 **Quid\Base** contains some traits which are easily reusable. Here is an overview:
 - [_cacheFile](src/_cacheFile.php) | Trait that provides a method to get or set a cached value from a file
 - [_cacheStatic](src/_cacheStatic.php) | Trait that provides a method to get or set a cached value from a static property
