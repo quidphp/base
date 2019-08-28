@@ -19,7 +19,7 @@ $ composer require quidphp/base
 ## Requirement
 **Quid\Base** requires the following:
 - PHP 7.2+
-- PHP Extensions: PDO, fileinfo, curl, openssl, posix
+- PHP Extensions: fileinfo, curl, openssl, posix
 - Apache server (has not been tested on NGINX or IIs)
 - PHP INI:
 	- post_max_size >= 1MB
