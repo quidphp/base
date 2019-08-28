@@ -27,7 +27,7 @@ $ composer require quidphp/base
 	- memory_limit > 128MB
 	- browscap
 
-## Requirements
+## Dependency
 **Quid\Base** has no dependency.
 
 ## Testing
