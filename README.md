@@ -1,2 +1,10 @@
 # Quid\Base
-This is a low-level layer over the PHP programming language. It provides a ton of utilities to improve the ease of use of array, string, number, file, resource, html, request, response and much more. All methods in this namespace are static, there is no object instantiation. Also no exceptions are thrown, except if the input or return types are incorrect. The QuidPHP framework and CMS are built on this foundation. This namespace has no dependency.
+
+## What is it ?
+This is a low-level library for the PHP programming language. It is part of the QuidPHP framework and CMS but it can be used standalone. This library has no dependency. It is available as an open-source software under the [MIT license](LICENSE).
+
+## Composer
+The library can be installed through [Composer](https://getcomposer.org). 
+``` bash
+$ composer require quidphp/base
+```
