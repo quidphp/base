@@ -99,5 +99,19 @@ trait _root
 	{
 		return Autoload::getDirPath(static::classNamespace(),false);
 	}
+	
+	
+	// classLines
+	// retourne un tableau avec les lignes du fichier ou null
+	public static function classLines($offset=true,$length=true):?array
+	{
+		$return = null;
+		$file = static::classFile();
+		
+		if(!empty($file))
+		$return = File::lines($offset,$length,$file);
+		
+		return $return;
+	}
 }
 ?>
