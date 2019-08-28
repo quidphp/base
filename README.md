@@ -8,7 +8,7 @@
 </p>
 
 ## About
-**Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS but it can be used standalone.
+**Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS and can also be used standalone.
 
 ## License
 **Quid\Base** is available as an open-source software under the [MIT license](LICENSE).
@@ -41,7 +41,7 @@ $ composer require quidphp/base
 
 ## Convention
 **Quid\Base** is built on the following conventions:
-- *Filename*: Traits filenames start with an underscore (_).
+- *Traits*: Traits filenames start with an underscore (_).
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 - *Type*: Files, function arguments and return types are strict typed.
 - *Static*: All class constructors are private, thus all methods are static and there is no object instantiation.
