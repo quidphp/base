@@ -1,10 +1,10 @@
 # Quid\Base
 <p align='center'>
-  <a href='#'><img src='https://img.shields.io/github/v/release/quidphp/base' alt='Release' /></a>
-  <a href='#'><img src='https://img.shields.io/github/license/quidphp/base' alt='License' /></a>
-  <a href='#'><img src='https://img.shields.io/packagist/php-v/quidphp/base' alt='PHP Version' /></a>
-  <a href='#'><img src='https://styleci.io/repos/203664262/shield' alt='Style CI' /></a>
-  <a href='#'><img src='https://img.shields.io/github/languages/code-size/quidphp/base' alt='Code Size' /></a>
+  <a href='https://packagist.org/packages/quidphp/base'><img src='https://img.shields.io/github/v/release/quidphp/base' alt='Release' /></a>
+  <a href='https://github.com/quidphp/base/blob/master/LICENSE'><img src='https://img.shields.io/github/license/quidphp/base' alt='License' /></a>
+  <a href='https://www.php.net'><img src='https://img.shields.io/packagist/php-v/quidphp/base' alt='PHP Version' /></a>
+  <a href='https://styleci.io'><img src='https://styleci.io/repos/203664262/shield' alt='Style CI' /></a>
+  <a href='https://github.com/quidphp/base'><img src='https://img.shields.io/github/languages/code-size/quidphp/base' alt='Code Size' /></a>
 </p>
 
 ## About
