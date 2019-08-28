@@ -14,5 +14,5 @@ Lorem ipsum lorem ipsum
 
 ## Overview
 Lorem ipsum lorem ipsum
-- (src/Arr.php) | Lorem ipsum
-- (src/Arrs.php) | Lorem ipsum
+- [Arr](src/Arr.php) | Lorem ipsum
+- [Arrs](src/Arrs.php) | Lorem ipsum
