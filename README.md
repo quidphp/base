@@ -20,7 +20,7 @@ $ composer require quidphp/base
 **Quid\Base** testsuite can be runned by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
 
 ## Comments
-**Quid\Base** code is commented and all methods are explained. However note that the comments are currently in French. This may get translated in the future.
+**Quid\Base** code is commented and all methods are explained. However, the comments are currently written in French.
 
 ## Convention
 **Quid\Base** is built on the following conventions:
