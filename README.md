@@ -1,11 +1,9 @@
 # Quid\Base
-<p align='center'>
-  <a href='https://packagist.org/packages/quidphp/base'><img src='https://img.shields.io/github/v/release/quidphp/base' alt='Release' /></a>
-  <a href='https://github.com/quidphp/base/blob/master/LICENSE'><img src='https://img.shields.io/github/license/quidphp/base' alt='License' /></a>
-  <a href='https://www.php.net'><img src='https://img.shields.io/packagist/php-v/quidphp/base' alt='PHP Version' /></a>
-  <a href='https://styleci.io'><img src='https://styleci.io/repos/203664262/shield' alt='Style CI' /></a>
-  <a href='https://github.com/quidphp/base'><img src='https://img.shields.io/github/languages/code-size/quidphp/base' alt='Code Size' /></a>
-</p>
+[![Release](https://img.shields.io/github/v/release/quidphp/base)](https://packagist.org/packages/quidphp/base)
+[![License](https://img.shields.io/github/license/quidphp/base)](https://github.com/quidphp/base/blob/master/LICENSE)
+[![PHP Version](https://img.shields.io/packagist/php-v/quidphp/base)](https://www.php.net)
+[![Style CI](https://styleci.io/repos/203664262/shield)](https://styleci.io)
+[![Code Size](https://img.shields.io/github/languages/code-size/quidphp/base)](https://github.com/quidphp/base)
 
 ## About
 **Quid\Base** is a low-level library of static methods for PHP. It is part of the QuidPHP framework and CMS and can also be used standalone.
