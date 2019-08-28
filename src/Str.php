@@ -142,25 +142,25 @@ class Str extends Root
 		return $return;
 	}
 
-	
+
 	// isStarts
 	// retourne vrai si un des needles se retrouvent en début de chaîne
-	public static function isStarts(array $needles,$value,bool $sensitive=true):bool 
+	public static function isStarts(array $needles,$value,bool $sensitive=true):bool
 	{
 		$return = false;
-		
+
 		foreach ($needles as $needle)
 		{
 			$return = static::isStart($needle,$value,$sensitive);
-			
+
 			if($return === true)
 			break;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isEnd
 	// retourne vrai si la chaine contient le needle en fin de chaine
 	public static function isEnd(string $needle,$value,bool $sensitive=true):bool
@@ -182,25 +182,25 @@ class Str extends Root
 		return $return;
 	}
 
-	
+
 	// isEnds
 	// retoune vrai si un des needles se retrouvent en fin de chaîne
-	public static function isEnds(array $needles,$value,bool $sensitive=true):bool 
+	public static function isEnds(array $needles,$value,bool $sensitive=true):bool
 	{
 		$return = false;
-		
+
 		foreach ($needles as $needle)
 		{
 			$return = static::isEnd($needle,$value,$sensitive);
-			
+
 			if($return === true)
 			break;
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// isStartEnd
 	// retourne vrai si la chaine contient le needle en début et en fin de chaine
 	public static function isStartEnd(string $startNeedle,string $endNeedle,$value,bool $sensitive=true):bool
