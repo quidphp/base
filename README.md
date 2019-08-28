@@ -22,9 +22,9 @@ $ composer require quidphp/base
 - PHP Extensions: PDO, fileinfo, curl, openssl, posix
 - Apache server (has not been tested on NGINX or IIs)
 - PHP INI:
-	- post_max_size > 1MB
+	- post_max_size >= 1MB
 	- post_max_size > upload_max_filesize
-	- memory_limit > 128MB
+	- memory_limit >= 128MB
 	- browscap
 
 ## Dependency
