@@ -40,7 +40,7 @@ $ composer require quidphp/base
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
-**Quid\Base** contains more than 70 classes and traits. Here is an overview:
+**Quid\Base** contains 75 classes and traits. Here is an overview:
 - [Arr](src/Arr.php) | Class with static methods to work with unidimensional arrays
 - [Arrs](src/Arrs.php) | Class with static methods to work with multidimensional arrays (an array containing at least another array)
 - [Assert](src/Assert.php) | Class with methods a layer over the native PHP assert functions
