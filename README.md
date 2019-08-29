@@ -1,4 +1,4 @@
-# Quid\Base
+# QuidPHP/Base
 [![Release](https://img.shields.io/github/v/release/quidphp/base)](https://packagist.org/packages/quidphp/base)
 [![License](https://img.shields.io/github/license/quidphp/base)](https://github.com/quidphp/base/blob/master/LICENSE)
 [![PHP Version](https://img.shields.io/packagist/php-v/quidphp/base)](https://www.php.net)
@@ -6,33 +6,33 @@
 [![Code Size](https://img.shields.io/github/languages/code-size/quidphp/base)](https://github.com/quidphp/base)
 
 ## About
-**Quid\Base** is a PHP library that provides a large set of low-level static methods. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone.
+**QuidPHP/Base** is a PHP library that provides a large set of low-level static methods. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone.
 
 ## License
-**Quid\Base** is available as an open-source software under the [MIT license](LICENSE).
+**QuidPHP/Base** is available as an open-source software under the [MIT license](LICENSE).
 
 ## Installation
-**Quid\Base** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/base).
+**QuidPHP/Base** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/base).
 ``` bash
 $ composer require quidphp/base
 ```
 Once installed, the **Quid\Base** namespace will be available within your PHP application.
 
 ## Requirement
-**Quid\Base** requires the following:
+**QuidPHP/Base** requires the following:
 - PHP 7.2+ with fileinfo, curl, openssl and posix
 
 ## Dependency
-**Quid\Base** has no dependency.
+**QuidPHP/Base** has no dependency.
 
 ## Testing
-**Quid\Base** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
+**QuidPHP/Base** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
 
 ## Comment
-**Quid\Base** code is commented and all methods are explained. However, the method and property comments are currently written in French.
+**QuidPHP/Base** code is commented and all methods are explained. However, the method and property comments are currently written in French.
 
 ## Convention
-**Quid\Base** is built on the following conventions:
+**QuidPHP/Base** is built on the following conventions:
 - *Traits*: Traits filenames start with an underscore (_).
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 - *Type*: Files, function arguments and return types are strict typed.
@@ -41,7 +41,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
-**Quid\Base** contains 75 classes and traits. Here is an overview:
+**QuidPHP/Base** contains 75 classes and traits. Here is an overview:
 - [Arr](src/Arr.php) | Class with static methods to work with unidimensional arrays
 - [Arrs](src/Arrs.php) | Class with static methods to work with multidimensional arrays (an array containing at least another array)
 - [Assert](src/Assert.php) | Class with methods a layer over the native PHP assert functions
