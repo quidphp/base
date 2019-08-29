@@ -41,7 +41,7 @@ $ composer require quidphp/base
 
 ## Overview
 **Quid\Base** contains more than 70 classes and traits. Here is an overview:
-- [Arr](src/Arr.php) | Class with static methods to work with unidimensionnal arrays
+- [Arr](src/Arr.php) | Class with static methods to work with unidimensional arrays
 - [Arrs](src/Arrs.php) | Class with static methods to work with multidimensional arrays (an array containing at least another array)
 - [Assert](src/Assert.php) | Class with methods a layer over the native PHP assert functions
 - [Assoc](src/Assoc.php) | Class to deal with associative strings and arrays
@@ -110,7 +110,7 @@ $ composer require quidphp/base
 - [Uri](src/Uri.php) | Class with static methods to generate URI (absolute and relative)
 - [Validate](src/Validate.php) | Class that provides validation logic and methods
 - [Xml](src/Xml.php) | Class with some static methods related to XML
-- [_cacheFile](src/_cacheFile.php) | Trait that provides methodsto get or set a cached value from a file
+- [_cacheFile](src/_cacheFile.php) | Trait that provides methods to get or set a cached value from a file
 - [_cacheStatic](src/_cacheStatic.php) | Trait that provides methods to get or set a cached value from a static property
 - [_config](src/_config.php) | Trait that provides the logic to recursively merge the $config static property with the parent's property
 - [_option](src/_option.php) | Trait that grants static methods to deal with static options (within the $config static property)
