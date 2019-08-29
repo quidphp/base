@@ -16,6 +16,7 @@
 ``` bash
 $ composer require quidphp/base
 ```
+Once installed, the **Quid\Base** namespace will be available within your PHP application.
 
 ## Requirement
 **Quid\Base** requires the following:
