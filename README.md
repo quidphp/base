@@ -51,7 +51,7 @@ $ composer require quidphp/base
 - [Browser](src/Browser.php) | Class with methods a layer over the native PHP get_browser function
 - [Buffer](src/Buffer.php) | Class with methods a layer over the native PHP output buffering functions
 - [Call](src/Call.php) | Class with static methods to manage callables and callbacks
-- [Classe](src/Classe.php) | Class with static methods to deal with classes with fully qualified class name strings (does not use Reflection)
+- [Classe](src/Classe.php) | Class with static methods to deal with classes with fully qualified class name strings
 - [Column](src/Column.php) | Class with static methods to work with multidimensional column arrays (like a database query result array)
 - [Config](src/Config.php) | Class with config property, used for extending other classes
 - [Constant](src/Constant.php) | Class with static methods to work with PHP constants
@@ -86,7 +86,7 @@ $ composer require quidphp/base
 - [Nav](src/Nav.php) | Class which contains methods to build a complex pagination engine
 - [Network](src/Network.php) | Class with static network-related methods (dns, mx, ping, hostname and more)
 - [Number](src/Number.php) | Class with static methods to work with strings, ints and floats numbers
-- [Obj](src/Obj.php) | Class with static methods to deal with objects, does not accept fqcn strings (does not use Reflection)
+- [Obj](src/Obj.php) | Class with static methods to deal with objects, does not accept fqcn strings
 - [Path](src/Path.php) | Class with static methods to deal with filesystem paths
 - [PathTrack](src/PathTrack.php) | Class with static methods to deal with filesystem paths (without a starting slash)
 - [Request](src/Request.php) | Class with static methods to analyze the current request
