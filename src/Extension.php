@@ -16,7 +16,7 @@ class Extension extends Root
 	// config
 	public static $config = [
 		'required'=>[
-			'PDO','pdo_mysql','dom','fileinfo','curl','openssl','posix'] // modules requis
+			'PDO','pdo_mysql','fileinfo','curl','openssl','posix'] // modules requis
 	];
 
 
