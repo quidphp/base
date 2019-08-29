@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // exception
-// a layer over the native PHP exception functions and handler
+// class with methods a layer over the native PHP exception functions and handler
 class Exception extends Root
 {
 	// config

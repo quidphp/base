@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // encoding
-// a class which contains methods related to string encoding (manages mb overload)
+// class which contains methods related to string encoding (manages mb overload)
 class Encoding extends Root
 {
 	// config

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // arrs
-// static methods to work with multidimensional arrays (an array containing at least another array)
+// class with static methods to work with multidimensional arrays (an array containing at least another array)
 class Arrs extends Root
 {
 	// config

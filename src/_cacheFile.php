@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // _cacheFile
-// trait that provides a method to get or set a cached value from a file
+// trait that provides methodsto get or set a cached value from a file
 trait _cacheFile
 {
 	// cacheFile

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // test
-// base class used to create a testsuite for a class
+// class used to create a testsuite for a class
 abstract class Test extends Root
 {
 	// config

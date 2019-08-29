@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // root
-// base class extended by all other Quid\Base classes
+// class extended by all others
 abstract class Root
 {
 	// trait

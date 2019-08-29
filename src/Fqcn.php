@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // fqcn
-// static methods to deal with fully qualified class name strings
+// class with static methods to deal with fully qualified class name strings
 class Fqcn extends Set
 {
 	// config

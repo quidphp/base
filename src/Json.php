@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // json
-// static methods to encode and decode JSON
+// class with static methods to encode and decode JSON
 class Json extends Assoc
 {
 	// config

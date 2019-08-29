@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // attr
-// static methods to generate HTML attributes
+// class with static methods to generate HTML attributes
 class Attr extends Listing
 {
 	// config

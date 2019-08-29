@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // _cacheStatic
-// trait that provides a method to get or set a cached value from a static property
+// trait that provides methods to get or set a cached value from a static property
 trait _cacheStatic
 {
 	// cacheStatic

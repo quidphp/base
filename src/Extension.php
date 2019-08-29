@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // extension
-// a class which contains methods to deal with PHP extensions
+// class which contains methods to deal with PHP extensions
 class Extension extends Root
 {
 	// config

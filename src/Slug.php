@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // slug
-// static methods to deal with URI slugs (test-test2)
+// class with static methods to deal with URI slugs (test-test2)
 class Slug extends Set
 {
 	// config

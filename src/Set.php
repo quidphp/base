@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // set
-// static methods to deal with set strings (test, test2)
+// class with static methods to deal with set strings (test, test2)
 class Set extends Root
 {
 	// trait

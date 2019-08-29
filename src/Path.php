@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // path
-// static methods to deal with filesystem paths
+// class with static methods to deal with filesystem paths
 class Path extends Set
 {
 	// config

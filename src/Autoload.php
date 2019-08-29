@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // autoload
-// a layer over the native PHP autoload logic
+// class with methods a layer over the native PHP autoload logic
 class Autoload
 {
 	// config

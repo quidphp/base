@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // assoc
-// base class to deal with associative strings and arrays
+// class to deal with associative strings and arrays
 class Assoc extends Root
 {
 	// trait

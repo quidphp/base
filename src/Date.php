@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // date
-// static methods to generate, format and parse dates
+// class with static methods to generate, format and parse dates
 class Date extends Root
 {
 	// config

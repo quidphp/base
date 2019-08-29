@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // classe
-// static methods to deal with classes, in a fqcn form not an object (does not use Reflection)
+// class with static methods to deal with classes with fully qualified class name strings (does not use Reflection)
 class Classe extends Root
 {
 	// config

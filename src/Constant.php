@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // constant
-// static methods to work with PHP constants
+// class with static methods to work with PHP constants
 class Constant extends Root
 {
 	// config

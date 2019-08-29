@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // html
-// tools for easily generating HTML
+// class with static methods for easily generating HTML
 class Html extends Root
 {
 	// config

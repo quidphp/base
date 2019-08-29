@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // header
-// static methods to work with HTTP headers
+// class with static methods to work with HTTP headers
 class Header extends Listing
 {
 	// config

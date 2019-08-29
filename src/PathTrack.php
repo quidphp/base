@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // pathTrack
-// static methods to deal with filesystem paths (without a starting slash)
+// class with static methods to deal with filesystem paths (without a starting slash)
 class PathTrack extends Path
 {
 	// config

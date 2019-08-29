@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // ip
-// static methods to work with IP strings
+// class with static methods to work with IP strings
 class Ip extends Root
 {
 	// config

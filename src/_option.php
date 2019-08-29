@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // _option
-// static methods to deal with static options (within the $config static property)
+// trait that grants static methods to deal with static options (within the $config static property)
 trait _option
 {
 	// isOption

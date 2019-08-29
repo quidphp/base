@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // crypt
-// a class which contains methods to deal with the most common PHP cryptography functions
+// class which contains methods to deal with the most common PHP cryptography functions
 class Crypt extends Root
 {
 	// config

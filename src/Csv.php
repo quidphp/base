@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // csv
-// static methods to easily work with CSV files
+// class with static methods to easily work with CSV files
 class Csv extends File
 {
 	// config

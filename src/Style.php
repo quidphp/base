@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // style
-// static methods to generate an HTML style attribute
+// class with static methods to generate an HTML style attribute
 class Style extends Listing
 {
 	// config

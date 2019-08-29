@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // func
-// static methods to work with simple functions
+// class with static methods to work with simple functions
 class Func extends Root
 {
 	// config

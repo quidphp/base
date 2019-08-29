@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // number
-// static methods to work with strings, ints and floats numbers
+// class with static methods to work with strings, ints and floats numbers
 class Number extends Root
 {
 	// config

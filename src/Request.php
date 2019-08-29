@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // request
-// static methods to analyze the current request
+// class with static methods to analyze the current request
 class Request extends Root
 {
 	// config

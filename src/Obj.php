@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // obj
-// static methods to deal with objects, does not accept fqcn strings (does not use Reflection)
+// class with static methods to deal with objects, does not accept fqcn strings (does not use Reflection)
 class Obj extends Root
 {
 	// config

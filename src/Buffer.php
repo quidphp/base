@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // buffer
-// a layer over the native PHP output buffering functions
+// class with methods a layer over the native PHP output buffering functions
 class Buffer extends Root
 {
 	// config

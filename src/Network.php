@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // network
-// static network-related methods (dns, mx, ping, hostname and more)
+// class with static network-related methods (dns, mx, ping, hostname and more)
 class Network extends Root
 {
 	// config

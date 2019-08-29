@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // nav
-// a class which contains methods to build a complex pagination engine
+// class which contains methods to build a complex pagination engine
 class Nav extends Root
 {
 	// config

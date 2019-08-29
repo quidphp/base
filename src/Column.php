@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // column
-// static methods to work with multidimensional column arrays (like a database query result array)
+// class with static methods to work with multidimensional column arrays (like a database query result array)
 class Column extends Root
 {
 	// config
