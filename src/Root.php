@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // root
-// class extended by all others
+// abstract class extended by almost all others
 abstract class Root
 {
 	// trait
@@ -31,6 +31,6 @@ abstract class Root
 
 	// construct
 	// constructeur protégé
-	protected function __construct() { }
+	private function __construct() { }
 }
 ?>

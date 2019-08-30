@@ -93,7 +93,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Request](src/Request.php) | Class with static methods to analyze the current request
 - [Res](src/Res.php) | Class with static methods to create and modify resources of all types
 - [Response](src/Response.php) | Class with static methods to change the current response
-- [Root](src/Root.php) | Class extended by all others
+- [Root](src/Root.php) | Abstract class extended by almost all others
 - [Scalar](src/Scalar.php) | Class with static methods to deal with scalar types
 - [Segment](src/Segment.php) | Class that provides the logic to replace bracket segment within a string
 - [Server](src/Server.php) | Class that provides a set of methods to analyze the current server
@@ -106,7 +106,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Style](src/Style.php) | Class with static methods to generate an HTML style attribute
 - [Superglobal](src/Superglobal.php) | Class with static methods to deal with superglobal variables
 - [Symlink](src/Symlink.php) | Class with static methods to manage symlinks
-- [Test](src/Test.php) | Class used to create a testsuite for a class
+- [Test](src/Test.php) | Abstract class used to create a testsuite for a class
 - [Timezone](src/Timezone.php) | Class with static methods to deal with timezone
 - [Uri](src/Uri.php) | Class with static methods to generate URI (absolute and relative)
 - [Validate](src/Validate.php) | Class that provides validation logic and methods
