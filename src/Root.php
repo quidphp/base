@@ -30,7 +30,7 @@ abstract class Root
 
 
 	// construct
-	// constructeur protégé
+	// constructeur privé
 	private function __construct() { }
 }
 ?>
