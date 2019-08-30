@@ -22,14 +22,11 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 **QuidPHP/Base** requires the following:
 - PHP 7.2+ with fileinfo, curl, openssl and posix
 
-## Dependency
-**QuidPHP/Base** has no dependency.
+## Comment
+**QuidPHP/Base** code is commented and all methods are explained. However, the method and property comments are currently written in French.
 
 ## Testing
 **QuidPHP/Base** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
-
-## Comment
-**QuidPHP/Base** code is commented and all methods are explained. However, the method and property comments are currently written in French.
 
 ## Convention
 **QuidPHP/Base** is built on the following conventions:
