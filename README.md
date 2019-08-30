@@ -23,10 +23,10 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - PHP 7.2+ with fileinfo, curl, openssl and posix
 
 ## Comment
-**QuidPHP/Base** code is commented and all methods are explained. However, the method and property comments are currently written in French.
+**QuidPHP/Base** code is commented and all methods are explained. However, most of the comments are currently written in French.
 
 ## Testing
-**QuidPHP/Base** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
+**QuidPHP/Base** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project). All tests and assertions are part of the [quidphp/test](https://github.com/quidphp/test) repository.
 
 ## Convention
 **QuidPHP/Base** is built on the following conventions:
