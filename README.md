@@ -25,9 +25,6 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 ## Comment
 **QuidPHP/Base** code is commented and all methods are explained. However, most of the comments are currently written in French.
 
-## Testing
-**QuidPHP/Base** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project). All tests and assertions are part of the [quidphp/test](https://github.com/quidphp/test) repository.
-
 ## Convention
 **QuidPHP/Base** is built on the following conventions:
 - *Traits*: Traits filenames start with an underscore (_).
@@ -114,3 +111,75 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [_option](src/_option.php) | Trait that grants static methods to deal with static options (within the $config static property)
 - [_root](src/_root.php) | Trait that provides some basic fqcn methods
 - [_shortcut](src/_shortcut.php) | Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)
+
+## Testing
+**QuidPHP/Base** contains the following test classes:
+- [Arr](test/Arr.php) | Class for testing Quid\Base\Arr
+- [Arrs](test/Arrs.php) | Class for testing Quid\Base\Arrs
+- [Assert](test/Assert.php) | Class for testing Quid\Base\Assert
+- [Assoc](test/Assoc.php) | Class for testing Quid\Base\Assoc
+- [Attr](test/Attr.php) | Class for testing Quid\Base\Attr
+- [Autoload](test/Autoload.php) | Class for testing Quid\Base\Autoload
+- [Boolean](test/Boolean.php) | Class for testing Quid\Base\Boolean
+- [Browser](test/Browser.php) | Class for testing Quid\Base\Browser
+- [Buffer](test/Buffer.php) | Class for testing Quid\Base\Buffer
+- [Call](test/Call.php) | Class for testing Quid\Base\Call
+- [Classe](test/Classe.php) | Class for testing Quid\Base\Classe
+- [Column](test/Column.php) | Class for testing Quid\Base\Column
+- [Config](test/Config.php) | Class for testing Quid\Base\Config
+- [Constant](test/Constant.php) | Class for testing Quid\Base\Constant
+- [Cookie](test/Cookie.php) | Class for testing Quid\Base\Cookie
+- [Crypt](test/Crypt.php) | Class for testing Quid\Base\Crypt
+- [Csv](test/Csv.php) | Class for testing Quid\Base\Csv
+- [Date](test/Date.php) | Class for testing Quid\Base\Date
+- [Debug](test/Debug.php) | Class for testing Quid\Base\Debug
+- [Dir](test/Dir.php) | Class for testing Quid\Base\Dir
+- [Email](test/Email.php) | Class for testing Quid\Base\Email
+- [Encoding](test/Encoding.php) | Class for testing Quid\Base\Encoding
+- [Error](test/Error.php) | Class for testing Quid\Base\Error
+- [Exception](test/Exception.php) | Class for testing Quid\Base\Exception
+- [Extension](test/Extension.php) | Class for testing Quid\Base\Extension
+- [File](test/File.php) | Class for testing Quid\Base\File
+- [Finder](test/Finder.php) | Class for testing Quid\Base\Finder
+- [Fqcn](test/Fqcn.php) | Class for testing Quid\Base\Fqcn
+- [Func](test/Func.php) | Class for testing Quid\Base\Func
+- [Globals](test/Globals.php) | Class for testing Quid\Base\Globals
+- [Header](test/Header.php) | Class for testing Quid\Base\Header
+- [Html](test/Html.php) | Class for testing Quid\Base\Html
+- [Http](test/Http.php) | Class for testing Quid\Base\Http
+- [ImageRaster](test/ImageRaster.php) | Class for testing Quid\Base\ImageRaster
+- [Ini](test/Ini.php) | Class for testing Quid\Base\Ini
+- [Ip](test/Ip.php) | Class for testing Quid\Base\Ip
+- [Json](test/Json.php) | Class for testing Quid\Base\Json
+- [Lang](test/Lang.php) | Class for testing Quid\Base\Lang
+- [Listing](test/Listing.php) | Class for testing Quid\Base\Listing
+- [Mime](test/Mime.php) | Class for testing Quid\Base\Mime
+- [Nav](test/Nav.php) | Class for testing Quid\Base\Nav
+- [Network](test/Network.php) | Class for testing Quid\Base\Network
+- [Number](test/Number.php) | Class for testing Quid\Base\Number
+- [Obj](test/Obj.php) | Class for testing Quid\Base\Obj
+- [Path](test/Path.php) | Class for testing Quid\Base\Path
+- [PathTrack](test/PathTrack.php) | Class for testing Quid\Base\PathTrack
+- [Request](test/Request.php) | Class for testing Quid\Base\Request
+- [Res](test/Res.php) | Class for testing Quid\Base\Res
+- [Response](test/Response.php) | Class for testing Quid\Base\Response
+- [Root](test/Root.php) | Class for testing Quid\Base\Root
+- [Scalar](test/Scalar.php) | Class for testing Quid\Base\Scalar
+- [Segment](test/Segment.php) | Class for testing Quid\Base\Segment
+- [Server](test/Server.php) | Class for testing Quid\Base\Server
+- [Session](test/Session.php) | Class for testing Quid\Base\Session
+- [Set](test/Set.php) | Class for testing Quid\Base\Set
+- [Slug](test/Slug.php) | Class for testing Quid\Base\Slug
+- [SlugPath](test/SlugPath.php) | Class for testing Quid\Base\SlugPath
+- [Sql](test/Sql.php) | Class for testing Quid\Base\Sql
+- [Str](test/Str.php) | Class for testing Quid\Base\Str
+- [Style](test/Style.php) | Class for testing Quid\Base\Style
+- [Superglobal](test/Superglobal.php) | Class for testing Quid\Base\Superglobal
+- [Symlink](test/Symlink.php) | Class for testing Quid\Base\Symlink
+- [Test](test/Test.php) | Class for testing Quid\Base\Test
+- [Timezone](test/Timezone.php) | Class for testing Quid\Base\Timezone
+- [Uri](test/Uri.php) | Class for testing Quid\Base\Uri
+- [Validate](test/Validate.php) | Class for testing Quid\Base\Validate
+- [Xml](test/Xml.php) | Class for testing Quid\Base\Xml
+
+**QuidPHP/Base** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
