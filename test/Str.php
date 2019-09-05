@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/test/blob/master/LICENSE
+ * License: https://github.com/quidphp/base/blob/master/LICENSE
  */
 
 namespace Quid\Test\Base;
@@ -74,11 +74,11 @@ class Str extends Base\Test
 		assert(Base\Str::isStart('àT',$string));
 		$string = 'étesta';
 		assert(Base\Str::isStart('É',$string,false));
-		
+
 		// isStarts
 		$string = 'Testéblabla';
-		assert(Base\Str::isStarts(array('Wp','Testéblabla'),$string));
-		
+		assert(Base\Str::isStarts(['Wp','Testéblabla'],$string));
+
 		// isEnd
 		$string = 'Testéblabla';
 		assert(Base\Str::isEnd('blabla',$string));
@@ -90,11 +90,11 @@ class Str extends Base\Test
 		assert(Base\Str::isEnd('éàa',$string));
 		$string = 'Testéblablaéàa0';
 		assert(Base\Str::isEnd('0',$string));
-		
+
 		// isEnds
 		$string = 'Testéblabla';
-		assert(Base\Str::isEnds(array('zA','blabla'),$string));
-		
+		assert(Base\Str::isEnds(['zA','blabla'],$string));
+
 		// isStartEnd
 		$string = 'testouitest';
 		assert(Base\Str::isStartEnd('test','test',$string));
