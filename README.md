@@ -4,7 +4,7 @@
 [![PHP Version](https://img.shields.io/packagist/php-v/quidphp/base)](https://www.php.net)
 [![Style CI](https://styleci.io/repos/203664262/shield)](https://styleci.io)
 [![Code Size](https://img.shields.io/github/languages/code-size/quidphp/base)](https://github.com/quidphp/base)
-z
+
 ## About
 **QuidPHP/Base** is a PHP library that provides a large set of low-level static methods. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone.
 
