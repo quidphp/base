@@ -202,7 +202,6 @@ class Lang extends Root
 			$current = static::current();
 			Request::setLangs(static::all());
 			Finder::setShortcut('lang',$current);
-			Sql::setShortcut('lang',$current);
 			Uri::setShortcut('lang',$current);
 		}
 

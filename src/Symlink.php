@@ -398,13 +398,19 @@ class Symlink extends Finder
 			$r = ['status'=>null,'from'=>$from];
 			$get = static::get($to);
 			$from = static::shortcut($from);
-
+			
+			if(is_string($get) && !Finder::is($get))
+			{
+				static::unset($to);
+				$get = null;
+			}
+			
 			if($get !== $from)
-			$r['bool'] = static::set($from,$to,$replace);
+			$r['status'] = static::set($from,$to,$replace);
 
 			$return[$to] = $r;
 		}
-
+		
 		return $return;
 	}
 

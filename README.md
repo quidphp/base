@@ -35,7 +35,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
-**QuidPHP/Base** contains 75 classes and traits. Here is an overview:
+**QuidPHP/Base** contains 74 classes and traits. Here is an overview:
 - [Arr](src/Arr.php) | Class with static methods to work with unidimensional arrays
 - [Arrs](src/Arrs.php) | Class with static methods to work with multidimensional arrays (an array containing at least another array)
 - [Assert](src/Assert.php) | Class with methods a layer over the native PHP assert functions
@@ -95,7 +95,6 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Set](src/Set.php) | Class with static methods to deal with set strings (test, test2)
 - [Slug](src/Slug.php) | Class with static methods to deal with URI slugs (test-test2)
 - [SlugPath](src/SlugPath.php) | Class with static methods to deal with URI slugs within an URI path (test/test2-test3)
-- [Sql](src/Sql.php) | Class with static methods to generate SQL strings (compatible with MySQL and MariaDB)
 - [Str](src/Str.php) | Class with static methods to work with strings
 - [Style](src/Style.php) | Class with static methods to generate an HTML style attribute
 - [Superglobal](src/Superglobal.php) | Class with static methods to deal with superglobal variables
@@ -113,7 +112,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [_shortcut](src/_shortcut.php) | Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)
 
 ## Testing
-**QuidPHP/Base** contains 67 test classes:
+**QuidPHP/Base** contains 66 test classes:
 - [Arr](test/Arr.php) | Class for testing Quid\Base\Arr
 - [Arrs](test/Arrs.php) | Class for testing Quid\Base\Arrs
 - [Assert](test/Assert.php) | Class for testing Quid\Base\Assert
@@ -171,7 +170,6 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Set](test/Set.php) | Class for testing Quid\Base\Set
 - [Slug](test/Slug.php) | Class for testing Quid\Base\Slug
 - [SlugPath](test/SlugPath.php) | Class for testing Quid\Base\SlugPath
-- [Sql](test/Sql.php) | Class for testing Quid\Base\Sql
 - [Str](test/Str.php) | Class for testing Quid\Base\Str
 - [Style](test/Style.php) | Class for testing Quid\Base\Style
 - [Superglobal](test/Superglobal.php) | Class for testing Quid\Base\Superglobal

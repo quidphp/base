@@ -258,34 +258,23 @@ class Autoload
 
 	// allPsr4
 	// retourne le tableau des psr4
-	// possible de seulement retourner si le namespace commence par start
-	public static function allPsr4(?string $start=null,?string $end=null,bool $endContains=true):array
+	// possible de fournir un callback et de sort
+	public static function allPsr4(?callable $callable=null,bool $sort=false):array
 	{
 		$return = static::$config['psr4'];
-
-		if(is_string($start) || is_string($end))
+		
+		if(!empty($callable))
 		{
-			if(is_string($start))
+			foreach ($return as $key => $value) 
 			{
-				foreach ($return as $key => $value)
-				{
-					if(stripos($key,$start) !== 0)
-					unset($return[$key]);
-				}
-			}
-
-			if(is_string($end))
-			{
-				foreach ($return as $key => $value)
-				{
-					$ipos = stripos(substr($key,-strlen($end)),$end);
-
-					if(($endContains === true && $ipos !== 0) || ($endContains === false && $ipos === 0))
-					unset($return[$key]);
-				}
+				if($callable($key,$value) !== true)
+				unset($return[$key]);
 			}
 		}
-
+		
+		if($sort === true)
+		ksort($return);
+		
 		return $return;
 	}
 
@@ -308,13 +297,13 @@ class Autoload
 
 	// overview
 	// génère un tableau multidimensionnel avec le count, size et line pour chaque namespace dans psr4
-	// possible de filtrer par début de namespace
-	public static function overview(?string $start=null,?string $end=null,bool $endContains=true,bool $sort=true):array
+	// possible de filtrer par une callable
+	public static function overview(?callable $callable=null,bool $sort=true):array
 	{
 		$return = [];
 		$extension = static::phpExtension();
 
-		foreach (static::allPsr4($start,$end,$endContains) as $key => $value)
+		foreach (static::allPsr4($callable,$sort) as $key => $value)
 		{
 			$array = [];
 			$array['count'] = Dir::count($value,$extension,true);
@@ -322,9 +311,6 @@ class Autoload
 			$array['line'] = Dir::line($value);
 			$return[$key] = $array;
 		}
-
-		if($sort === true)
-		ksort($return);
 
 		return $return;
 	}

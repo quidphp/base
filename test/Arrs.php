@@ -92,7 +92,7 @@ class Arrs extends Base\Test
 
 		// replaceSpecial
 		$target = ['@dev','@app'];
-		$all = ['@dev','@prod','@app','@cms'];
+		$all = ['@dev','@prod','@app'];
 		$replaceKeys = [];
 		$array = ['test'=>'OK','bla'=>'yeah','meh'=>'nop','@dev'=>['test'=>'MEH','meh'=>'ok']];
 		$array2 = ['test'=>'OK2','@dev'=>['meh'=>'more'],'@prod'=>['test'=>'MEH2']];

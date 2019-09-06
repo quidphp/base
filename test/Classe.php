@@ -142,9 +142,9 @@ namespace Quid\Test\Base
 			assert(Base\Classe::hasInterface($parentInterface,$class));
 
 			// hasTrait
-			assert(Base\Classe::hasTrait("Quid\Base\_option",['Quid','Base','Sql']));
-			assert(Base\Classe::hasTrait("Quid\Base\_option","\Quid\Base\Sql"));
-			assert(Base\Classe::hasTrait("Quid\Base\_option","Quid\Base\Sql"));
+			assert(Base\Classe::hasTrait("Quid\Base\_option",['Quid','Base','Attr']));
+			assert(Base\Classe::hasTrait("Quid\Base\_option","\Quid\Base\Attr"));
+			assert(Base\Classe::hasTrait("Quid\Base\_option","Quid\Base\Attr"));
 			assert(Base\Classe::hasTrait($trait,$class));
 			assert(Base\Classe::hasTrait($parentTrai,$class));
 			assert(!Base\Classe::hasTrait($trait,$interface));
@@ -301,7 +301,7 @@ namespace Quid\Test\Base
 			unset(Base\Dir::$config['ok']);
 
 			// propertyMergeWith
-			assert(count(Base\Classe::propertyMergeWith('config',Base\Dir::class,[Base\Sql::class],null,false)) === 12);
+			assert(count(Base\Classe::propertyMergeWith('config',Base\Dir::class,[Base\Attr::class],null,false)) === 17);
 
 			// propertyMergeParent
 			assert(count(Base\Classe::propertyMergeParent('config',Base\Dir::class,null,false)) === 3);
@@ -323,9 +323,9 @@ namespace Quid\Test\Base
 
 			// traits
 			assert(Base\Classe::traits("Quid\What") === null);
-			assert(Base\Classe::traits("\Quid\Base\Sql") === ["Quid\Base\_option",'Quid\Base\_shortcut','Quid\Base\_root']);
+			assert(Base\Classe::traits("\Quid\Base\Attr") === ["Quid\Base\_option",'Quid\Base\_root']);
 			assert(Base\Classe::traits($datetime) === []);
-			assert(Base\Classe::traits("\Quid\Base\Sql",false) === ['Quid\Base\_option','Quid\Base\_shortcut']);
+			assert(Base\Classe::traits("\Quid\Base\Attr",false) === []);
 			assert(count(Base\Classe::traits($trait)) === 1);
 			assert(count(Base\Classe::traits($class,true)) === 3);
 			assert(count(Base\Classe::traits($class,false)) === 1);
@@ -358,9 +358,9 @@ namespace Quid\Test\Base
 			assert(Base\Classe::filter(['interface'=>'DateTimeInterface'],["\DateTime",Base\Finder::class]) === ['\DateTime']);
 			assert(Base\Classe::filter(['interface'=>'bla'],['DateTime',Base\Finder::class]) === []);
 			assert(Base\Classe::filter(['interface'=>false],['DateTime',Base\Finder::class,'Bla']) === [Base\Finder::class,'Bla']);
-			assert(Base\Classe::filter(['trait'=>true],["Quid\Base\Sql",'James']) === ['Quid\Base\Sql']);
-			assert(Base\Classe::filter(['trait'=>'asd'],["Quid\Base\Sql",'James']) === []);
-			assert(Base\Classe::filter(['trait'=>false],[Base\Finder::class,"Quid\Base\Sql",'James']) === ['James']);
+			assert(Base\Classe::filter(['trait'=>true],["Quid\Base\Attr",'James']) === ['Quid\Base\Attr']);
+			assert(Base\Classe::filter(['trait'=>'asd'],["Quid\Base\Attr",'James']) === []);
+			assert(Base\Classe::filter(['trait'=>false],[Base\Finder::class,"Quid\Base\Attr",'James']) === ['James']);
 			assert(Base\Classe::filter('Quid',[["Quid\Test"],'Bla','Datetime',"\Quid\James\Ok"]) === ['Quid\Test']);
 			assert(Base\Classe::filter(['fqcn'=>'Quid'],[["Quid\Test"],'Bla','Datetime',"\Quid\James\Ok"]) === ['Quid\Test','Quid\James\Ok']);
 			assert(Base\Classe::filter(['namespace'=>"Quid\James"],["Quid\Test",'Bla','Datetime',"Quid\James\Ok"]) === ['Quid\James\Ok']);

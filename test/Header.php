@@ -319,9 +319,9 @@ class Header extends Base\Test
 		assert(Base\Header::arr(Base\Call::digStaticMethod($headers))['james'] === Base\Request::isSsl());
 
 		// fingerprint
-		assert(strlen(Base\Header::fingerprint(apache_request_headers(),['User-Agent'])) === 40);
-		assert(strlen(Base\Header::fingerprint(apache_request_headers(),['user-Agent'])) === 40);
-		assert(Base\Header::fingerprint(apache_request_headers(),['User-Agentz']) === null);
+		assert(strlen(Base\Header::fingerprint(Base\Request::headers(),['User-Agent'])) === 40);
+		assert(strlen(Base\Header::fingerprint(Base\Request::headers(),['user-Agent'])) === 40);
+		assert(Base\Header::fingerprint(Base\Request::headers(),['User-Agentz']) === null);
 
 		// clean
 		Base\Response::unsetHeader('Content-Type');

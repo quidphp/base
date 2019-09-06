@@ -1477,7 +1477,7 @@ class Session extends Root
 
 
 	// type
-	// retourne la clé de l'application roulant présentement, par exemple app ou cms
+	// retourne la clé de l'application roulant présentement
 	public static function type():string
 	{
 		return static::get('type');
