@@ -262,19 +262,19 @@ class Autoload
 	public static function allPsr4(?callable $callable=null,bool $sort=false):array
 	{
 		$return = static::$config['psr4'];
-		
+
 		if(!empty($callable))
 		{
-			foreach ($return as $key => $value) 
+			foreach ($return as $key => $value)
 			{
 				if($callable($key,$value) !== true)
 				unset($return[$key]);
 			}
 		}
-		
+
 		if($sort === true)
 		ksort($return);
-		
+
 		return $return;
 	}
 
