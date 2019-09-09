@@ -386,31 +386,51 @@ class Symlink extends Finder
 
 	// sets
 	// permet de créer plusieurs symlinks, un tableau from->to doit être fourni
-	// retourne un tableau multidimensionnel avec status, from et get
+	// retourne un tableau multidimensionnel avec status et from
 	// un status a null signifie que le symlink existe déjà (vers le bon chemin)
-	// support pour catchAll
-	public static function sets(array $array,bool $replace=false):array
+	// support pour catchAll, et dig si from et to sont des directoires
+	public static function sets(array $array,bool $replace=false,bool $dig=false):array
 	{
 		$return = [];
 
 		foreach ($array as $from => $to)
 		{
 			$r = ['status'=>null,'from'=>$from];
-			$get = static::get($to);
 			$from = static::shortcut($from);
-
-			if(is_string($get) && !Finder::is($get))
+			$to = static::shortcut($to);
+			$get = static::get($to);
+			$go = true;
+			
+			// symlink impossible, mais dig et deux directoires
+			if($dig === true && $get === null && !static::is($to) && Dir::is($to) && Dir::is($from))
+			{
+				$go = false;
+				$from = Path::append($from,"*");
+				$catchAll = Dir::fromToCatchAll(array($from=>$to));
+				
+				if(!empty($catchAll))
+				{
+					$sets = static::sets($catchAll,$replace);
+					$return = Arr::append($return,$sets);
+				}
+			}
+			
+			// mauvais symlink
+			elseif(is_string($get) && !Finder::is($get))
 			{
 				static::unset($to);
 				$get = null;
 			}
+			
+			if($go === true)
+			{
+				if($get !== $from)
+				$r['status'] = static::set($from,$to,$replace);
 
-			if($get !== $from)
-			$r['status'] = static::set($from,$to,$replace);
-
-			$return[$to] = $r;
+				$return[$to] = $r;
+			}
 		}
-
+		
 		return $return;
 	}
 
