@@ -400,28 +400,28 @@ class Symlink extends Finder
 			$to = static::shortcut($to);
 			$get = static::get($to);
 			$go = true;
-			
+
 			// symlink impossible, mais dig et deux directoires
 			if($dig === true && $get === null && !static::is($to) && Dir::is($to) && Dir::is($from))
 			{
 				$go = false;
-				$from = Path::append($from,"*");
-				$catchAll = Dir::fromToCatchAll(array($from=>$to));
-				
+				$from = Path::append($from,'*');
+				$catchAll = Dir::fromToCatchAll([$from=>$to]);
+
 				if(!empty($catchAll))
 				{
 					$sets = static::sets($catchAll,$replace);
 					$return = Arr::append($return,$sets);
 				}
 			}
-			
+
 			// mauvais symlink
 			elseif(is_string($get) && !Finder::is($get))
 			{
 				static::unset($to);
 				$get = null;
 			}
-			
+
 			if($go === true)
 			{
 				if($get !== $from)
@@ -430,7 +430,7 @@ class Symlink extends Finder
 				$return[$to] = $r;
 			}
 		}
-		
+
 		return $return;
 	}
 

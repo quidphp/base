@@ -104,28 +104,28 @@ class Dir extends Finder
 		return $return;
 	}
 
-	
+
 	// isOlderThanFrom
 	// retourne vrai si le fichier path est plus vieux qu'un des fichiers dans from
 	// possible de spécifier in pour les dossiers dans from
-	public static function isOlderThanFrom($path,$from,?array $in=null):bool 
+	public static function isOlderThanFrom($path,$from,?array $in=null):bool
 	{
 		$return = true;
 		$path = File::path($path);
-		
+
 		if(is_string($path))
 		{
 			$dateModify = File::dateModify($path);
-			
+
 			if(!empty($dateModify))
 			{
 				$return = false;
 				$from = static::getFileFromFileAndDir($from,$in);
-				
-				foreach ($from as $v) 
+
+				foreach ($from as $v)
 				{
 					$vMod = File::dateModify($v);
-					
+
 					if(empty($vMod) || $vMod > $dateModify)
 					{
 						$return = true;
@@ -137,8 +137,8 @@ class Dir extends Finder
 
 		return $return;
 	}
-	
-	
+
+
 	// isResource
 	// retourne vrai si la ressource est de type directoire
 	public static function isResource($value):bool
@@ -592,64 +592,64 @@ class Dir extends Finder
 		return $return;
 	}
 
-	
+
 	// getFileFromFileAndDir
 	// retourne un tableau de fichiers à partir d'une valeur qui peut contenir soit des fichiers ou des directoires
 	// possible de spécifier in
-	public static function getFileFromFileAndDir($value,?array $in=null):array 
+	public static function getFileFromFileAndDir($value,?array $in=null):array
 	{
-		$return = array();
+		$return = [];
 		$in = (array) $in;
-		
+
 		if(!is_array($value))
 		$value = (array) $value;
-		
-		foreach ($value as $v) 
+
+		foreach ($value as $v)
 		{
 			if(File::is($v))
 			$return[] = $v;
-			
-			elseif(Dir::is($v))
+
+			elseif(self::is($v))
 			{
-				$get = Dir::getIn($v,$in);
+				$get = self::getIn($v,$in);
 				$return = Arr::append($return,$get);
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// getDirFromFileAndDir
 	// retourne un tableau contenant tous les directoires à partir d'une valeur qui peut contenir soit des fichiers ou des directoires
 	public static function getDirFromFileAndDir($value):array
 	{
-		$return = array();
-		
+		$return = [];
+
 		if(!is_array($value))
 		$value = (array) $value;
-		
-		foreach ($value as $v) 
+
+		foreach ($value as $v)
 		{
 			if(is_string($v))
 			{
 				$dirname = null;
-				
+
 				if(File::is($v))
 				$dirname = dirname($v);
-				
-				elseif(Dir::is($v))
+
+				elseif(self::is($v))
 				$dirname = $v;
-				
+
 				if(is_string($dirname) && !in_array($dirname,$return,true))
 				$return[] = $dirname;
 			}
 		}
-		
+
 		return $return;
 	}
-	
-	
+
+
 	// fromToCatchAll
 	// prend un tableau avec des path from -> to
 	// si un from finit par le caractère catchAll (*), prend tout ce qu'il y a dans le dossier et ajoute au tableau

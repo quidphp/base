@@ -39,9 +39,9 @@ class Dir extends Base\Test
 
 		// isDeep
 		assert(Base\Dir::isDeep('[storage]'));
-		
+
 		// isOlderThanFrom
-		
+
 		// isResource
 		assert(Base\Dir::isResource($res));
 
@@ -136,18 +136,18 @@ class Dir extends Base\Test
 
 		// getsAppend
 		assert(count(Base\Dir::getsAppend(['[assertCommon]','[storage]'])) > 2);
-		
+
 		// getFileFromFileAndDir
 		assert(count(Base\Dir::getFileFromFileAndDir('[assertCommon]')) > 10);
-		assert(count(Base\Dir::getFileFromFileAndDir(array('[assertCommon]/class.php'))) === 1);
-		assert(count(Base\Dir::getFileFromFileAndDir(array('[assertCommon]/class.phpz'))) === 0);
-		
+		assert(count(Base\Dir::getFileFromFileAndDir(['[assertCommon]/class.php'])) === 1);
+		assert(count(Base\Dir::getFileFromFileAndDir(['[assertCommon]/class.phpz'])) === 0);
+
 		// getDirFromFileAndDir
-		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]/class.php') === array('[assertCommon]'));
-		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]','[assertCommon]/class.php') === array('[assertCommon]'));
-		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]','[assertCommon]/class.phpz') === array('[assertCommon]'));
-		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]/class.phpz',) === array());
-		
+		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]/class.php') === ['[assertCommon]']);
+		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]','[assertCommon]/class.php') === ['[assertCommon]']);
+		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]','[assertCommon]/class.phpz') === ['[assertCommon]']);
+		assert(Base\Dir::getDirFromFileAndDir('[assertCommon]/class.phpz',) === []);
+
 		// fromToCatchAll
 		assert(count(Base\Dir::fromToCatchAll([dirname($common).'/*'=>'[public]'])) === 2);
 
