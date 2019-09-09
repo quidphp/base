@@ -14,40 +14,40 @@ use Quid\Base;
 // class for testing Quid\Base\Network
 class Network extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// isOnline
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // isOnline
 
-		// hasDns
+        // hasDns
 
-		// ping
+        // ping
 
-		// dns
+        // dns
 
-		// mx
+        // mx
 
-		// getHostname
+        // getHostname
 
-		// getIp
+        // getIp
 
-		// getProtocolNumber
-		assert(Base\Network::getProtocolNumber('tcp') === 6);
-		assert(Base\Network::getProtocolNumber('tcpz') === null);
+        // getProtocolNumber
+        assert(Base\Network::getProtocolNumber('tcp') === 6);
+        assert(Base\Network::getProtocolNumber('tcpz') === null);
 
-		// getProtocolName
-		assert(Base\Network::getProtocolName(6) === 'tcp');
-		assert(Base\Network::getProtocolName(6000) === null);
+        // getProtocolName
+        assert(Base\Network::getProtocolName(6) === 'tcp');
+        assert(Base\Network::getProtocolName(6000) === null);
 
-		// getServiceName
-		assert(Base\Network::getServiceName(80,'tcp') === 'http');
-		assert(Base\Network::getServiceName(81123,'tcp') === null);
+        // getServiceName
+        assert(Base\Network::getServiceName(80,'tcp') === 'http');
+        assert(Base\Network::getServiceName(81123,'tcp') === null);
 
-		// getServicePort
-		assert(Base\Network::getServicePort('http','tcp') === 80);
-		assert(Base\Network::getServicePort('httpz','tcpw') === null);
+        // getServicePort
+        assert(Base\Network::getServicePort('http','tcp') === 80);
+        assert(Base\Network::getServicePort('httpz','tcpw') === null);
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

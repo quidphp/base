@@ -14,20 +14,20 @@ use Quid\Base;
 // class for testing Quid\Base\Assert
 class Assert extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// call
-		assert(Base\Assert::call(function() { return true; },'what'));
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // call
+        assert(Base\Assert::call(function() { return true; },'what'));
 
-		// get
-		assert(Base\Assert::get(ASSERT_ACTIVE) === 1);
+        // get
+        assert(Base\Assert::get(ASSERT_ACTIVE) === 1);
 
-		// set
+        // set
 
-		// setHandler
+        // setHandler
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

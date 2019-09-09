@@ -14,18 +14,18 @@ use Quid\Base;
 // class for testing Quid\Base\Test
 class Test extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// start
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // start
 
-		// before
+        // before
 
-		// after
+        // after
 
-		// trigger
+        // trigger
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

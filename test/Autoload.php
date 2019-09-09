@@ -14,57 +14,57 @@ use Quid\Base;
 // class for testing Quid\Base\Autoload
 class Autoload extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// call
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // call
 
-		// getExtensions
-		assert(Base\Autoload::getExtensions() === '.inc,.php');
+        // getExtensions
+        assert(Base\Autoload::getExtensions() === '.inc,.php');
 
-		// setExtensions
+        // setExtensions
 
-		// register
+        // register
 
-		// unregister
+        // unregister
 
-		// unregisterAll
+        // unregisterAll
 
-		// all
-		assert(count(Base\Autoload::all()) >= 3);
+        // all
+        assert(count(Base\Autoload::all()) >= 3);
 
-		// index
-		assert(is_callable(Base\Autoload::index(0)));
+        // index
+        assert(is_callable(Base\Autoload::index(0)));
 
-		// getPath
+        // getPath
 
-		// getFilePath
+        // getFilePath
 
-		// getDirPath
+        // getDirPath
 
-		// getPsr4
-		assert(Base\Autoload::getPsr4('Appz') === null);
+        // getPsr4
+        assert(Base\Autoload::getPsr4('Appz') === null);
 
-		// setPsr4
-		Base\Autoload::setPsr4('Appz','test');
+        // setPsr4
+        Base\Autoload::setPsr4('Appz','test');
 
-		// setsPsr4
+        // setsPsr4
 
-		// unsetPsr4
-		assert(Base\Autoload::getPsr4('Appz') === ['Appz'=>'test']);
-		Base\Autoload::unsetPsr4('Appz');
+        // unsetPsr4
+        assert(Base\Autoload::getPsr4('Appz') === ['Appz'=>'test']);
+        Base\Autoload::unsetPsr4('Appz');
 
-		// allPsr4
-		assert(!empty(Base\Autoload::allPsr4()));
+        // allPsr4
+        assert(!empty(Base\Autoload::allPsr4()));
 
-		// removeAlias
-		assert(count(Base\Autoload::removeAlias([static::class,'jamesAlias','row\rowalias'])) === 2);
+        // removeAlias
+        assert(count(Base\Autoload::removeAlias([static::class,'jamesAlias','row\rowalias'])) === 2);
 
-		// overview
+        // overview
 
-		// phpExtension
+        // phpExtension
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

@@ -14,10 +14,10 @@ use Quid\Base;
 // class for testing Quid\Base\Config
 class Config extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		return true;
-	}
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        return true;
+    }
 }
 ?>
