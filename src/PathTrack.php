@@ -13,12 +13,12 @@ namespace Quid\Base;
 // class with static methods to deal with filesystem paths (without a starting slash)
 class PathTrack extends Path
 {
-	// config
-	public static $config = [
-		'option'=>[ // tableau d'options
-			'start'=>null, // aucun changement au séparateur au début lors du implode
-			'end'=>null] // aucun changement au séparateur à la fin lors du implode
-	];
+    // config
+    public static $config = [
+        'option'=>[ // tableau d'options
+            'start'=>null, // aucun changement au séparateur au début lors du implode
+            'end'=>null] // aucun changement au séparateur à la fin lors du implode
+    ];
 }
 
 // config

@@ -13,24 +13,24 @@ namespace Quid\Base;
 // abstract class extended by almost all others
 abstract class Root
 {
-	// trait
-	use _root;
+    // trait
+    use _root;
 
 
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// static
-	// remet une copie des propriétés des traits incluent car c'est plus facile à gérer
-	protected static $initConfig = []; // voir _config
-	protected static $callableConfig = null; // voir _config
-	protected static $cacheStatic = []; // voir _cacheStatic
-	protected static $cacheFile = null; // voir _cacheFile
+    // static
+    // remet une copie des propriétés des traits incluent car c'est plus facile à gérer
+    protected static $initConfig = []; // voir _config
+    protected static $callableConfig = null; // voir _config
+    protected static $cacheStatic = []; // voir _cacheStatic
+    protected static $cacheFile = null; // voir _cacheFile
 
 
-	// construct
-	// constructeur privé
-	private function __construct() { }
+    // construct
+    // constructeur privé
+    private function __construct() { }
 }
 ?>

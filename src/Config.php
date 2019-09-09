@@ -13,7 +13,7 @@ namespace Quid\Base;
 // class with config property, used for extending other classes
 class Config extends Root
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 }
 ?>
