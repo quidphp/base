@@ -786,8 +786,8 @@ class Finder extends Root
             $return['path'] = $path;
             $return['type'] = filetype($path);
             $return['readable'] = $is;
-            $return['writable'] = is_writable($path);
-            $return['executable'] = is_executable($path);
+            $return['writable'] = static::isWritable($path,false);
+            $return['executable'] = static::isExecutable($path,false);
             $return['dir'] = is_dir($path);
             $return['file'] = is_file($path);
             $return['link'] = is_link($path);

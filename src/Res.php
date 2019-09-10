@@ -1393,8 +1393,8 @@ class Res extends Root
         {
             if(is_file($value))
             {
-                $readable = is_readable($value);
-                $writable = is_writable($value);
+                $readable = File::isReadable($value);
+                $writable = File::isWritable($value);
 
                 if($readable === true && $writable === true)
                 $return = static::$config['mode']['readWrite'];
