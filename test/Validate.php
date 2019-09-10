@@ -353,7 +353,7 @@ class Validate extends Base\Test
         assert(Base\Validate::isTime('12:10:15'));
         assert(!Base\Validate::isTime('12:10'));
         assert(!Base\Validate::isTime('12-10-15'));
-        
+
         // isUriPath
         assert(Base\Validate::isUriPath('test/test2/test3'));
         assert(Base\Validate::isUriPath('/test/test2/test3-tes4_test5/james.jpg'));

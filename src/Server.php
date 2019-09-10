@@ -340,13 +340,13 @@ class Server extends Root
     // retourne un tableau d'informations à propos du système
     public static function uname():array
     {
-        $return = array();
+        $return = [];
         $return['sysname'] = php_uname('s');
         $return['nodename'] = php_uname('n');
         $return['release'] = php_uname('r');
         $return['version'] = php_uname('v');
         $return['machine'] = php_uname('m');
-        
+
         return $return;
     }
 

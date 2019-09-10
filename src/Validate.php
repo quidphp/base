@@ -892,8 +892,8 @@ class Validate extends Root
     {
         return static::regex('uriPath',$value);
     }
-    
-    
+
+
     // isFqcn
     // retourne vrai si la valeur passe le regex fqcn
     public static function isFqcn($value):bool

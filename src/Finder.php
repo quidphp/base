@@ -191,7 +191,7 @@ class Finder extends Root
     {
         $return = false;
         $path = static::path($path);
-        
+
         if(is_string($path) && !self::is($path,false))
         {
             foreach (Path::parents($path) as $p)
@@ -230,7 +230,7 @@ class Finder extends Root
     {
         $return = false;
         $path = static::path($path);
-        
+
         if(static::isWritable($path,false) || self::isCreatable($path))
         $return = true;
 

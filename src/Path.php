@@ -45,15 +45,15 @@ class Path extends Set
         return (is_string($value))? true:false;
     }
 
-    
+
     // isWindowsDrive
     // retourne vrai si l'entrée semble être un drive windows, comme c:
-    public static function isWindowsDrive($value):bool 
+    public static function isWindowsDrive($value):bool
     {
         return (is_string($value) && strlen($value) === 2 && substr($value,1,1) === ':')? true:false;
     }
-    
-    
+
+
     // hasExtension
     // retourne vrai si le chemin a une extension
     public static function hasExtension(string $path):bool
@@ -76,11 +76,11 @@ class Path extends Set
     {
         $return = true;
         $option = Arr::plus(static::$config['safe'],$option);
-        
+
         // ascii
         if(!empty($return) && $path !== Str::ascii($path))
         $return = false;
-        
+
         // regex
         if(!empty($return) && !empty($option['regex']) && !Validate::regex($option['regex'],$path))
         $return = false;
@@ -97,7 +97,7 @@ class Path extends Set
             if(!empty($extension) && !in_array($extension,(array) $option['extension'],true))
             $return = false;
         }
-        
+
         // unsafePattern
         if(!empty($return) && !empty($option['pattern']))
         {
@@ -205,66 +205,66 @@ class Path extends Set
         return (is_string($value) && Str::isEnd('/contract',dirname(static::normalize($value)),false))? true:false;
     }
 
-    
+
     // normalize
     // permet de normalize un path, change tous les séparateurs pour /
     // gère aussi les chemins windows (comme c:)
-    public static function normalize(string $return,bool $stripWrap=false):string 
+    public static function normalize(string $return,bool $stripWrap=false):string
     {
         $separator = static::getSeparator();
-        
+
         if(!empty($separator))
         {
             $windowsDrive = false;
-            
+
             if(strpos($return,'\\') !== false)
             $return = str_replace('\\',$separator,$return);
-            
+
             if(strlen($return) >= 2 && static::isWindowsDrive(substr($return,0,2)))
             {
                 $windowsDrive = true;
                 $return = ucfirst($return);
             }
-            
+
             $return = preg_replace('#'.$separator.'+#',$separator,$return);
-            
+
             if($stripWrap === true && $windowsDrive === false)
             $return = static::stripWrap($return,static::getOption('start'),static::getOption('end'));
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // prepareStr
     // prépare une string dans la méthode arr, envoie à normalize
     public static function prepareStr(string $value,array $option):array
     {
         return parent::prepareStr(static::normalize($value),$option);
     }
-    
-    
+
+
     // implode
     // implose un tableau dans une string set
     public static function implode(array $value,?array $option=null):string
     {
         $return = '';
         $option = (array) $option;
-        
+
         if(!empty($value))
         {
             $first = current($value);
             if(static::isWindowsDrive($first))
             $option['start'] = null;
         }
-        
+
         $return = parent::implode($value,$option);
         $return = static::normalize($return);
-        
+
         return $return;
     }
-    
-    
+
+
     // info
     // retourne le tableau pathinfo
     // dirname est passé dans separator si pas false, '', ou '.'
@@ -272,27 +272,27 @@ class Path extends Set
     {
         $path = static::normalize($path);
         $return = pathinfo($path);
-        
-        foreach ($return as $key => $value) 
+
+        foreach ($return as $key => $value)
         {
             if($value === false || $value === '')
             unset($return[$key]);
         }
-        
+
         if(array_key_exists('dirname',$return))
         {
             $dirname = $return['dirname'];
-            
+
             if($dirname === '.' || ($dirname === $path && $dirname === '/'))
             unset($return['dirname']);
 
             elseif(is_string($dirname))
             $return['dirname'] = static::normalize($dirname,true);
         }
-        
+
         if(empty($return))
         $return = null;
-        
+
         return $return;
     }
 
@@ -311,11 +311,11 @@ class Path extends Set
         {
             if($return === '.' || ($return === $path && $return === '/'))
             $return = null;
-            
+
             else
             $return = static::normalize($return,true);
         }
-        
+
         return $return;
     }
 
@@ -485,19 +485,19 @@ class Path extends Set
     {
         $return = [];
         $x = static::arr($path);
-        
+
         if(!empty($x))
         {
             while (!empty($x))
             {
                 array_pop($x);
                 $return[] = static::str($x);
-                
+
                 if(count($x) === 1 && static::isWindowsDrive(current($x)))
                 break;
             }
         }
-        
+
         return $return;
     }
 

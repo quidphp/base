@@ -120,7 +120,7 @@ class Server extends Base\Test
 
         // uname
         assert(count(Base\Server::uname()) > 4);
-        
+
         // unameKey
         assert(Base\Server::unameKey('test') === null);
         assert(is_string(Base\Server::unameKey('release')));
@@ -174,14 +174,14 @@ class Server extends Base\Test
 
         // script
         assert(count(Base\Server::script()) === 6);
-        
+
         // processId
         assert(is_int(Base\Server::processId()));
 
         // user
         assert(is_int(Base\Server::user()));
         assert(is_string(Base\Server::user(true)));
-        
+
         // group
         assert(is_int(Base\Server::group()));
 
