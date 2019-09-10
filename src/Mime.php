@@ -244,7 +244,7 @@ class Mime extends Root
     {
         $return = null;
         $mime = static::get($value);
-
+        
         if($fromPath === true && (empty($mime) || static::isEmpty($mime)))
         $mime = static::fromPath($value);
 

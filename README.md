@@ -6,7 +6,7 @@
 [![Code Size](https://img.shields.io/github/languages/code-size/quidphp/base)](https://github.com/quidphp/base)
 
 ## About
-**QuidPHP/Base** is a PHP library that provides a large set of low-level static methods. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone.
+**QuidPHP/Base** is a PHP library that provides a set of low-level static methods. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone.
 
 ## License
 **QuidPHP/Base** is available as an open-source software under the [MIT license](LICENSE).
