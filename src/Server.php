@@ -39,10 +39,10 @@ class Server extends Root
     public static function isWindows(bool $fast=true):bool
     {
         $return = false;
-        
+
         if($fast === true)
         $return = (DIRECTORY_SEPARATOR === '\\')? true:false;
-        
+
         else
         {
             $os = static::os();
