@@ -193,7 +193,7 @@ class Server extends Root
     public static function isOwner(int $value,$user=null):bool
     {
         $return = false;
-        $user = ($user === null)? self::currentUser():$user;
+        $user = ($user === null)? self::user():$user;
 
         if($value === $user)
         $return = true;
@@ -207,7 +207,7 @@ class Server extends Root
     public static function isGroup(int $value,$group=null):bool
     {
         $return = false;
-        $group = ($group === null)? self::currentGroup():$group;
+        $group = ($group === null)? self::group():$group;
 
         if($value === $group)
         $return = true;
@@ -340,7 +340,14 @@ class Server extends Root
     // retourne un tableau d'informations à propos du système
     public static function uname():array
     {
-        return posix_uname();
+        $return = array();
+        $return['sysname'] = php_uname('s');
+        $return['nodename'] = php_uname('n');
+        $return['release'] = php_uname('r');
+        $return['version'] = php_uname('v');
+        $return['machine'] = php_uname('m');
+        
+        return $return;
     }
 
 
@@ -507,11 +514,11 @@ class Server extends Root
     {
         $return = [];
 
-        $return['processId'] = getmypid();
-        $return['groupId'] = getmygid();
-        $return['userId'] = getmyuid();
+        $return['processId'] = static::processId();
+        $return['groupId'] = static::group();
+        $return['userId'] = static::user();
         $return['inode'] = getmyinode();
-        $return['username'] = get_current_user();
+        $return['username'] = static::user(true);
         $return['lastModification'] = getlastmod();
 
         return $return;
@@ -522,99 +529,24 @@ class Server extends Root
     // retourne le id du process courant
     public static function processId():int
     {
-        return posix_getpid();
-    }
-
-
-    // process
-    // retourne un tableau d'information sur le process
-    public static function process():array
-    {
-        $return = [];
-
-        $return['id'] = posix_getpid();
-        $return['parentId'] = posix_getppid();
-        $return['sessionId'] = posix_getsid(0);
-        $return['effectiveUserId'] = posix_geteuid();
-        $return['realUserId'] = posix_getuid();
-        $return['effectiveGroupId'] = posix_getegid();
-        $return['realGroupId'] = posix_getgid();
-        $return['groupIdentifier'] = posix_getpgrp();
-        $return['groupSet'] = posix_getgroups();
-        $return['ownerLoginName'] = posix_getlogin();
-        $return['pathControllingTerminal'] = posix_ctermid();
-
-        return $return;
-    }
-
-
-    // currentUser
-    // retourne l'utilisateur courant
-    public static function currentUser():int
-    {
-        return posix_getuid();
+        return getmypid();
     }
 
 
     // user
-    // retourne des informations sur un user, par défaut le user du process courant si value est null
-    // possibilité de mettre un numéro ou nom d'utilisateur
-    // possibilité de retourner seulement le nom si name est true
-    public static function user($value=null,bool $name=false)
+    // retourne l'utilisateur courant
+    // peut être string ou int
+    public static function user(bool $name=false)
     {
-        $return = null;
-
-        if($value === null)
-        $value = static::currentUser();
-
-        if(is_int($value))
-        $return = posix_getpwuid($value);
-
-        elseif(is_string($value))
-        $return = posix_getpwnam($value);
-
-        if(empty($return))
-        $return = null;
-
-        if(is_array($return) && $name === true)
-        $return = $return['name'] ?? null;
-
-        return $return;
-    }
-
-
-    // currentGroup
-    // retourne le groupe courant
-    public static function currentGroup():int
-    {
-        return posix_getgid();
+        return ($name === true)? get_current_user():getmyuid();
     }
 
 
     // group
-    // retourne des informations sur un group, par défaut le group du process courant si value est null
-    // possibilité de mettre un numéro ou nom de groupe
-    // possibilité de retourner seulement le nom si name est true
-    public static function group($value=null,bool $name=false)
+    // retourne le groupe courant
+    public static function group():int
     {
-        $return = null;
-
-        if($value === null)
-        $value = static::currentGroup();
-
-        if(is_int($value))
-        $return = posix_getgrgid($value);
-
-        elseif(is_string($value))
-        $return = posix_getgrnam($value);
-
-        if(empty($return))
-        $return = null;
-
-        if(is_array($return) && $name === true)
-        $return = $return['name'] ?? null;
-
-        return $return;
+        return getmygid();
     }
 
 
@@ -626,27 +558,11 @@ class Server extends Root
     }
 
 
-    // resourceLimit
-    // retourne un tableau décrivant les limites resources du système
-    public static function resourceLimit():array
-    {
-        return posix_getrlimit();
-    }
-
-
     // resourceUsage
     // retourne le niveau d'utilisation des resources
     public static function resourceUsage(int $who=0):array
     {
         return getrusage($who);
-    }
-
-
-    // processUsage
-    // retourne des informations sur les process et leurs utilisation du cpu
-    public static function processUsage():array
-    {
-        return posix_times();
     }
 
 
@@ -717,8 +633,9 @@ class Server extends Root
         $return['sapi'] = static::sapi();
         $return['ip'] = static::ip();
         $return['hostname'] = static::hostname();
-        $return['user'] = static::user(null,true);
-        $return['group'] = static::group(null,true);
+        $return['user'] = static::user();
+        $return['username'] = static::user(true);
+        $return['group'] = static::group();
         $return['caseSensitive'] = static::isCaseSensitive();
         $return = Arr::append($return,Extension::important(true));
 
@@ -747,12 +664,10 @@ class Server extends Root
         $return['online'] = static::isOnline();
         $return['hostname'] = static::hostname();
         $return['script'] = static::script();
-        $return['process'] = static::process();
-        $return['user'] = static::user(null);
-        $return['group'] = static::group(null);
-        $return['resourceLimit'] = static::resourceLimit();
+        $return['user'] = static::user();
+        $return['username'] = static::user(true);
+        $return['group'] = static::group();
         $return['resourceUsage'] = static::resourceUsage();
-        $return['processUsage'] = static::processUsage();
         $return['loadAverage'] = static::loadAverage();
         $return['memory'] = static::memory();
         $return['diskSpace'] = static::diskSpace();

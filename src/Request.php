@@ -16,7 +16,8 @@ class Request extends Root
     // config
     public static $config = [
         'idLength'=>10, // longueur du id de la requête
-        'safe'=>null, // paramètre par défaut pour la méhode isPathSafe
+        'safe'=>array( // paramètre par défaut pour la méhode isPathSafe
+            'regex'=>'uriPath'), 
         'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
             'length'=>2, // longueur de lang
             'all'=>['en']], // possibilité de lang

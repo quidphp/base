@@ -120,7 +120,7 @@ class Server extends Base\Test
 
         // uname
         assert(count(Base\Server::uname()) > 4);
-
+        
         // unameKey
         assert(Base\Server::unameKey('test') === null);
         assert(is_string(Base\Server::unameKey('release')));
@@ -174,43 +174,22 @@ class Server extends Base\Test
 
         // script
         assert(count(Base\Server::script()) === 6);
-
+        
         // processId
         assert(is_int(Base\Server::processId()));
 
-        // process
-        assert(count(Base\Server::process()) === 11);
-
-        // currentUser
-        assert(is_int(Base\Server::currentUser()));
-
         // user
-        assert(count(Base\Server::user()) === 7);
-        assert(Base\Server::user(100000) === null);
-        assert(Base\Server::user(0)['name'] === 'root');
-        assert(Base\Server::user('root')['name'] === 'root');
-        assert(Base\Server::user('root',true) === 'root');
-
-        // currentGroup
-        assert(is_int(Base\Server::currentGroup()));
-
+        assert(is_int(Base\Server::user()));
+        assert(is_string(Base\Server::user(true)));
+        
         // group
-        assert(is_string(Base\Server::group(null,true)));
-        assert(count(Base\Server::group()) === 4);
-        assert(count(Base\Server::group(20)) === 4);
-        assert(Base\Server::group(100000) === null);
+        assert(is_int(Base\Server::group()));
 
         // email
         assert(is_string(Base\Server::email()));
 
-        // resourceLimit
-        assert(count(Base\Server::resourceLimit()) > 4);
-
         // resourceUsage
         assert(count(Base\Server::resourceUsage()) > 10);
-
-        // processUsage
-        assert(count(Base\Server::processUsage()) > 4);
 
         // loadAverage
         assert(count(Base\Server::loadAverage()) === 3);
@@ -224,10 +203,10 @@ class Server extends Base\Test
         // phpInfo
 
         // overview
-        assert(count(Base\Server::overview()) === 16);
+        assert(count(Base\Server::overview()) === 17);
 
         // info
-        assert(count(Base\Server::info()) === 29);
+        assert(count(Base\Server::info()) === 27);
 
         // requirement
         assert(empty(Base\Server::requirement()));

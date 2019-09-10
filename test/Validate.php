@@ -353,17 +353,17 @@ class Validate extends Base\Test
         assert(Base\Validate::isTime('12:10:15'));
         assert(!Base\Validate::isTime('12:10'));
         assert(!Base\Validate::isTime('12-10-15'));
-
-        // isPath
-        assert(Base\Validate::isPath('test/test2/test3'));
-        assert(Base\Validate::isPath('/test/test2/test3-tes4_test5/james.jpg'));
-        assert(!Base\Validate::isPath('/test/test2/test3-tes4_test5/james,jpg'));
-        assert(!Base\Validate::isPath('/test/test2/t?est3-tes4_test5/james.jpg'));
-        assert(Base\Validate::isPath(''));
-        assert(Base\Validate::isPath('/'));
-        assert(!Base\Validate::isPath(null));
-        assert(!Base\Validate::isPath(true));
-        assert(Base\Validate::isPath(1));
+        
+        // isUriPath
+        assert(Base\Validate::isUriPath('test/test2/test3'));
+        assert(Base\Validate::isUriPath('/test/test2/test3-tes4_test5/james.jpg'));
+        assert(!Base\Validate::isUriPath('/test/test2/test3-tes4_test5/james,jpg'));
+        assert(!Base\Validate::isUriPath('/test/test2/t?est3-tes4_test5/james.jpg'));
+        assert(Base\Validate::isUriPath(''));
+        assert(Base\Validate::isUriPath('/'));
+        assert(!Base\Validate::isUriPath(null));
+        assert(!Base\Validate::isUriPath(true));
+        assert(Base\Validate::isUriPath(1));
 
         // isFqcn
         assert(Base\Validate::isFqcn('test'));

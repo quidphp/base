@@ -21,7 +21,7 @@ class Dir extends Finder
 
     // is
     // retourne vrai si le chemin est un directoire
-    public static function is($path,bool $makePath=true,bool $posix=false):bool
+    public static function is($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -29,12 +29,7 @@ class Dir extends Finder
         $path = static::path($path);
 
         if(is_string($path) && is_dir($path))
-        {
-            $return = true;
-
-            if($posix === true)
-            $return = posix_access($path,POSIX_F_OK);
-        }
+        $return = true;
 
         return $return;
     }

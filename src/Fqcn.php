@@ -27,7 +27,7 @@ class Fqcn extends Set
     // retourne vrai si la valeur est un fqcn
     public static function is($value):bool
     {
-        return (is_string($value) && Validate::regex('fqcn',$value))? true:false;
+        return (Validate::regex('fqcn',$value))? true:false;
     }
 
 

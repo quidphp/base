@@ -602,17 +602,17 @@ class Res extends Root
 
     // owner
     // retourne l'identifiant du propriétaire de la resource
-    public static function owner($value,bool $format=false)
+    public static function owner($value)
     {
-        return static::statValue('owner',$value,true,$format);
+        return static::statValue('owner',$value,true);
     }
 
 
     // group
     // retourne l'identifiant du groupe de la resource
-    public static function group($value,bool $format=false)
+    public static function group($value)
     {
-        return static::statValue('group',$value,true,$format);
+        return static::statValue('group',$value,true);
     }
 
 

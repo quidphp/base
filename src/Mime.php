@@ -475,7 +475,7 @@ class Mime extends Root
     // enlève le charset à partir d'une string mime
     public static function removeCharset(string $return):string
     {
-        if(strpos($return,';'))
+        if(strpos($return,';') > 0)
         $return = Str::explodeIndex(0,';',$return,null,true);
 
         return $return;

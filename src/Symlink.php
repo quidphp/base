@@ -19,8 +19,7 @@ class Symlink extends Finder
 
     // is
     // retourne vrai si le chemin est un lien symbolique
-    // la vérification posix se fait sur le fichier ou directoire, non sur le symlink
-    public static function is($path,bool $makePath=true,bool $posix=false):bool
+    public static function is($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -28,12 +27,7 @@ class Symlink extends Finder
         $path = static::path($path);
 
         if(is_string($path) && is_link($path))
-        {
-            $return = true;
-
-            if($posix === true)
-            $return = posix_access($path,POSIX_F_OK);
-        }
+        $return = true;
 
         return $return;
     }
@@ -41,8 +35,7 @@ class Symlink extends Finder
 
     // isReadable
     // retourne vrai si le chemin est un lien symbolique existant et lisible
-    // la vérification posix se fait sur le fichier ou directoire, non sur le symlink
-    public static function isReadable($path,bool $makePath=true,bool $posix=false):bool
+    public static function isReadable($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -50,12 +43,7 @@ class Symlink extends Finder
         $path = static::path($path);
 
         if(static::is($path,false) && static::isPermission('readable',$path))
-        {
-            $return = true;
-
-            if($posix === true)
-            $return = posix_access(static::path($path),POSIX_R_OK);
-        }
+        $return = true;
 
         return $return;
     }
@@ -63,8 +51,7 @@ class Symlink extends Finder
 
     // isWritable
     // retourne vrai si le chemin est un lien symbolique existant et accessible en écriture
-    // la vérification posix se fait sur le fichier ou directoire, non sur le symlink
-    public static function isWritable($path,bool $makePath=true,bool $posix=false):bool
+    public static function isWritable($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -72,12 +59,7 @@ class Symlink extends Finder
         $path = static::path($path);
 
         if(static::is($path,false) && static::isPermission('writable',$path))
-        {
-            $return = true;
-
-            if($posix === true)
-            $return = posix_access(static::path($path),POSIX_W_OK);
-        }
+        $return = true;
 
         return $return;
     }
@@ -85,8 +67,7 @@ class Symlink extends Finder
 
     // isExecutable
     // retourne vrai le chemin est un lien symbolique existant et éxécutable
-    // la vérification posix se fait sur le fichier ou directoire, non sur le symlink
-    public static function isExecutable($path,bool $makePath=true,bool $posix=false):bool
+    public static function isExecutable($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -94,12 +75,7 @@ class Symlink extends Finder
         $path = static::path($path);
 
         if(static::is($path,false) && static::isPermission('executable',$path))
-        {
-            $return = true;
-
-            if($posix === true)
-            $return = posix_access(static::path($path),POSIX_X_OK);
-        }
+        $return = true;
 
         return $return;
     }

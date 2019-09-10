@@ -31,7 +31,7 @@ class Ip extends Root
     // retourne vrai si la valeur est un ip
     public static function is($value):bool
     {
-        return (is_string($value) && Validate::regex('ip',$value))? true:false;
+        return (Validate::regex('ip',$value))? true:false;
     }
 
 

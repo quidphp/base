@@ -31,7 +31,7 @@ class File extends Finder
     // is
     // retourne vrai si le chemin est un fichier
     // value peut être une string ou une resource
-    public static function is($path,bool $makePath=true,bool $posix=false):bool
+    public static function is($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -42,15 +42,9 @@ class File extends Finder
         {
             $return = true;
 
-            if($posix === true)
-            $return = posix_access($path,POSIX_F_OK);
-
-            if($return === true)
-            {
-                $mimeGroup = static::$config['mimeGroup'];
-                if(is_string($mimeGroup))
-                $return = Mime::isGroup($mimeGroup,$path,true);
-            }
+            $mimeGroup = static::$config['mimeGroup'];
+            if(is_string($mimeGroup))
+            $return = Mime::isGroup($mimeGroup,$path,true);
         }
 
         return $return;

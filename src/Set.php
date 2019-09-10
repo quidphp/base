@@ -359,7 +359,7 @@ class Set extends Root
     {
         $return = '';
         $option = static::option($option);
-
+        
         if(is_string($value))
         {
             if(array_key_exists('start',$option) && $option['start'] === null)
@@ -368,8 +368,9 @@ class Set extends Root
             if(array_key_exists('end',$option) && $option['end'] === null)
             $option['end'] = static::isSeparatorEnd($value);
         }
-
-        $return = static::implode(static::arr($value,$option),$option);
+        
+        $value = static::arr($value,$option);
+        $return = static::implode($value,$option);
 
         return $return;
     }

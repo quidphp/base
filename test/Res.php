@@ -403,11 +403,9 @@ class Res extends Base\Test
 
         // owner
         assert(is_int(Base\Res::owner($current)));
-        assert(is_array(Base\Res::owner($current,true)));
 
         // group
         assert(is_int(Base\Res::group($current)));
-        assert(is_array(Base\Res::group($current,true)));
 
         // permissionChange
         assert(Base\Res::permissionChange(777,$moveAround));

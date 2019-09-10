@@ -16,12 +16,14 @@ class Path extends Set
     // config
     public static $config = [
         'option'=>[ // tableau d'options
-            'start'=>true], // ajoute le séparateur au début lors du implode
+            'start'=>true,
+            'clean'=>true],
         'separator'=>['/'], // sépareur de chemin, n'utilise pas directorySeparator
         'safe'=>[
             'length'=>250, // longueur maximale permise pour un path
+            'regex'=>null, // regex à spécifier
             'extension'=>null, // extension permises, tout est permis si null
-            'pattern'=>['./','/.','..','//','?',' ']], // pattern de chemin non sécuritaire
+            'pattern'=>['./','/.','..','//','?',' ','.\\','\\.','\\\\']], // pattern de chemin non sécuritaire
         'safeBasenameReplace'=>[' '=>'_','-'=>'_','.'=>'_',','=>'_'], // caractère à remplacer sur un safebasename
         'extensionReplace'=>['jpeg'=>'jpg'], // gère le remplacement d'extension, utiliser par safeBasename
         'build'=>[ // pour reconstuire à partir d'un array
@@ -37,12 +39,21 @@ class Path extends Set
 
     // is
     // retourne vrai si la valeur est un path
+    // trop de possibilité, alors seulement is_string
     public static function is($value):bool
     {
-        return (is_string($value) && Validate::regex('path',$value))? true:false;
+        return (is_string($value))? true:false;
     }
 
-
+    
+    // isWindowsDrive
+    // retourne vrai si l'entrée semble être un drive windows, comme c:
+    public static function isWindowsDrive($value):bool 
+    {
+        return (is_string($value) && strlen($value) === 2 && substr($value,1,1) === ':')? true:false;
+    }
+    
+    
     // hasExtension
     // retourne vrai si le chemin a une extension
     public static function hasExtension(string $path):bool
@@ -63,41 +74,41 @@ class Path extends Set
     // retourne vrai si le chemin est sécuritaire
     public static function isSafe(string $path,?array $option=null):bool
     {
-        $return = false;
+        $return = true;
         $option = Arr::plus(static::$config['safe'],$option);
+        
+        // ascii
+        if(!empty($return) && $path !== Str::ascii($path))
+        $return = false;
+        
+        // regex
+        if(!empty($return) && !empty($option['regex']) && !Validate::regex($option['regex'],$path))
+        $return = false;
 
-        if(static::is($path))
+        // length
+        if(!empty($option['length']) && is_int($option['length']) && !Str::isMaxLength($option['length'],$path))
+        $return = false;
+
+        // extension
+        if(!empty($return) && !empty($option['extension']))
         {
-            $return = true;
+            $extension = static::extension($path);
 
-            // length
-            if(!empty($option['length']) && is_int($option['length']))
+            if(!empty($extension) && !in_array($extension,(array) $option['extension'],true))
+            $return = false;
+        }
+        
+        // unsafePattern
+        if(!empty($return) && !empty($option['pattern']))
+        {
+            $patterns = (array) $option['pattern'];
+
+            foreach ($patterns as $v)
             {
-                if(!Str::isMaxLength($option['length'],$path))
-                $return = false;
-            }
-
-            // extension
-            if(!empty($return) && !empty($option['extension']))
-            {
-                $extension = static::extension($path);
-
-                if(!empty($extension) && !in_array($extension,(array) $option['extension'],true))
-                $return = false;
-            }
-
-            // unsafePattern
-            if(!empty($return) && !empty($option['pattern']))
-            {
-                $patterns = (array) $option['pattern'];
-
-                foreach ($patterns as $v)
+                if(strpos($path,$v) !== false)
                 {
-                    if(strpos($path,$v) !== false)
-                    {
-                        $return = false;
-                        break;
-                    }
+                    $return = false;
+                    break;
                 }
             }
         }
@@ -113,7 +124,7 @@ class Path extends Set
         $return = false;
         $option = Arr::plus(static::$config['lang'],$option);
 
-        if(!empty($value))
+        if(!empty($value) && Str::keepAlpha($value) === $value)
         {
             $return = true;
 
@@ -191,26 +202,97 @@ class Path extends Set
     // retourne vrai si le chemin semble pointer vers des interfaces
     public static function isInterface($value):bool
     {
-        return (is_string($value) && Str::isEnd('/contract',dirname($value),false))? true:false;
+        return (is_string($value) && Str::isEnd('/contract',dirname(static::normalize($value)),false))? true:false;
     }
 
-
+    
+    // normalize
+    // permet de normalize un path, change tous les séparateurs pour /
+    // gère aussi les chemins windows (comme c:)
+    public static function normalize(string $return,bool $stripWrap=false):string 
+    {
+        $separator = static::getSeparator();
+        
+        if(!empty($separator))
+        {
+            $windowsDrive = false;
+            
+            if(strpos($return,'\\') !== false)
+            $return = str_replace('\\',$separator,$return);
+            
+            if(strlen($return) >= 2 && static::isWindowsDrive(substr($return,0,2)))
+            {
+                $windowsDrive = true;
+                $return = ucfirst($return);
+            }
+            
+            $return = preg_replace('#'.$separator.'+#',$separator,$return);
+            
+            if($stripWrap === true && $windowsDrive === false)
+            $return = static::stripWrap($return,static::getOption('start'),static::getOption('end'));
+        }
+        
+        return $return;
+    }
+    
+    
+    // prepareStr
+    // prépare une string dans la méthode arr, envoie à normalize
+    public static function prepareStr(string $value,array $option):array
+    {
+        return parent::prepareStr(static::normalize($value),$option);
+    }
+    
+    
+    // implode
+    // implose un tableau dans une string set
+    public static function implode(array $value,?array $option=null):string
+    {
+        $return = '';
+        $option = (array) $option;
+        
+        if(!empty($value))
+        {
+            $first = current($value);
+            if(static::isWindowsDrive($first))
+            $option['start'] = null;
+        }
+        
+        $return = parent::implode($value,$option);
+        $return = static::normalize($return);
+        
+        return $return;
+    }
+    
+    
     // info
     // retourne le tableau pathinfo
     // dirname est passé dans separator si pas false, '', ou '.'
     public static function info(string $path):?array
     {
+        $path = static::normalize($path);
         $return = pathinfo($path);
-
+        
+        foreach ($return as $key => $value) 
+        {
+            if($value === false || $value === '')
+            unset($return[$key]);
+        }
+        
         if(array_key_exists('dirname',$return))
         {
-            if(in_array($return['dirname'],[false,'','.'],true))
+            $dirname = $return['dirname'];
+            
+            if($dirname === '.' || ($dirname === $path && $dirname === '/'))
             unset($return['dirname']);
 
-            elseif(is_string($return['dirname']))
-            $return['dirname'] = static::separator($return['dirname']);
+            elseif(is_string($dirname))
+            $return['dirname'] = static::normalize($dirname,true);
         }
-
+        
+        if(empty($return))
+        $return = null;
+        
         return $return;
     }
 
@@ -219,14 +301,21 @@ class Path extends Set
     // retourne une entrée de pathinfo
     public static function infoOne(int $key,string $path):?string
     {
+        $path = static::normalize($path);
         $return = pathinfo($path,$key);
 
-        if($return === false || $return === '' || ($key === PATHINFO_DIRNAME && $return === '.'))
+        if($return === false || $return === '')
         $return = null;
 
         elseif($key === PATHINFO_DIRNAME && is_string($return))
-        $return = static::separator($return);
-
+        {
+            if($return === '.' || ($return === $path && $return === '/'))
+            $return = null;
+            
+            else
+            $return = static::normalize($return,true);
+        }
+        
         return $return;
     }
 
@@ -266,7 +355,7 @@ class Path extends Set
             }
         }
 
-        $return = static::separator($return);
+        $return = static::normalize($return,true);
 
         return $return;
     }
@@ -378,13 +467,13 @@ class Path extends Set
     // enlève un dirname à un path
     public static function removeDirname(string $path):string
     {
-        return static::separator(static::basename($path) ?? '');
+        return static::normalize(static::basename($path) ?? '',true);
     }
 
 
     // parent
     // retourne le chemin absolut du parent
-    public static function parent(string $path):string
+    public static function parent(string $path):?string
     {
         return static::dirname($path);
     }
@@ -395,18 +484,20 @@ class Path extends Set
     public static function parents(string $path):array
     {
         $return = [];
-        $path = static::stripStart($path);
         $x = static::arr($path);
-
+        
         if(!empty($x))
         {
             while (!empty($x))
             {
                 array_pop($x);
                 $return[] = static::str($x);
+                
+                if(count($x) === 1 && static::isWindowsDrive(current($x)))
+                break;
             }
         }
-
+        
         return $return;
     }
 
@@ -524,7 +615,7 @@ class Path extends Set
     // enlève un basename à un path
     public static function removeBasename(string $path):?string
     {
-        return static::separator(static::dirname($path) ?? '');
+        return static::normalize(static::dirname($path) ?? '',true);
     }
 
 
@@ -784,23 +875,6 @@ class Path extends Set
     {
         $return = static::removeLang($return,$option);
         $return = static::stripStart($return);
-
-        return $return;
-    }
-
-
-    // separator
-    // régularise la situation des separator dans un path
-    // les options de la classe sont utilisés
-    public static function separator(string $path):string
-    {
-        $separator = static::getSeparator();
-
-        if(!empty($separator))
-        {
-            $return = preg_replace('#'.$separator.'+#',$separator,$path);
-            $return = static::stripWrap($return,static::getOption('start'),static::getOption('end'));
-        }
 
         return $return;
     }

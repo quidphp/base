@@ -111,9 +111,9 @@ class PathTrack extends Base\Test
         assert(Base\PathTrack::removeLang('test/testa') === 'test/testa');
         assert(Base\PathTrack::removeLang('en/test/testa') === 'test/testa');
         assert(Base\PathTrack::removeLang('frr/test/testa') === 'frr/test/testa');
-        assert('/oups.com/ok' === Base\PathTrack::separator('//oups.com//ok'));
-        assert('bla/bla/bla/' === Base\PathTrack::separator('bla//bla/bla/'));
-        assert('/bla/bla/bla' === Base\PathTrack::separator('/bla//bla/bla'));
+        assert('/oups.com/ok' === Base\PathTrack::normalize('//oups.com//ok'));
+        assert('bla/bla/bla/' === Base\PathTrack::normalize('bla//bla/bla/'));
+        assert('/bla/bla/bla' === Base\PathTrack::normalize('/bla//bla/bla'));
         assert('test/test2/test3' === Base\PathTrack::str(['test','test2','test3']));
         assert('/test/test2/test3/' === Base\PathTrack::str('/test/test2/test3/'));
         assert('test/test2/test3/' === Base\PathTrack::str('test/test2/test3/',Base\PathTrack::option(['end'=>true])));

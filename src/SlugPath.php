@@ -27,7 +27,7 @@ class SlugPath extends Listing
     // retourne vrai si la valeur est un slugPath
     public static function is($value):bool
     {
-        return (is_string($value) && Validate::regex('alphanumericSlugPath',$value))? true:false;
+        return (Validate::regex('alphanumericSlugPath',$value))? true:false;
     }
 
 

@@ -32,7 +32,7 @@ class Slug extends Set
     // retourne vrai si la valeur est un slug
     public static function is($value):bool
     {
-        return (is_string($value) && Validate::regex('alphanumericSlug',$value))? true:false;
+        return (Validate::regex('alphanumericSlug',$value))? true:false;
     }
 
 

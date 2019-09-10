@@ -31,7 +31,6 @@ class Symlink extends Base\Test
 
         // is
         assert(Base\Symlink::is($sym));
-        assert(Base\Symlink::is($sym,true));
         assert(!Base\Symlink::is($_file_));
         assert(!Base\Symlink::is($_file_.'.jpg'));
 
@@ -57,7 +56,7 @@ class Symlink extends Base\Test
         // ownerChange
 
         // group
-        assert(is_array(Base\Symlink::group($sym,true)));
+        assert(is_int(Base\Symlink::group($sym)));
 
         // groupChange
         assert(!Base\Symlink::groupChange(123,$_file_));

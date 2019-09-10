@@ -39,11 +39,9 @@ class Finder extends Base\Test
         assert(Base\Finder::is($common));
         assert(Base\Finder::is($common,true));
         assert(!Base\Finder::is('doesnotexist'));
-        assert(!Base\Finder::is('doesnotexist',true));
 
         // isReadable
         assert(Base\Finder::isReadable($common));
-        assert(Base\Finder::isReadable($common,true));
         assert(!Base\Finder::isReadable($common.'/assertz'));
 
         // isWritable
@@ -53,7 +51,6 @@ class Finder extends Base\Test
         // isExecutable
         assert(!Base\Finder::isExecutable('doesnotexist'));
         assert(Base\Finder::isExecutable($common));
-        assert(Base\Finder::isExecutable($common,true));
 
         // isPathToUri
         assert(Base\Finder::isPathToUri($publicPath.$mediaCsv));
@@ -172,14 +169,12 @@ class Finder extends Base\Test
         // owner
         assert(is_int(Base\Finder::owner($_file_)));
         assert(Base\Finder::owner($common.'/myclass.phpz') === null);
-        assert(count(Base\Finder::owner($_file_,true)) === 7);
 
         // ownerChange
 
         // group
         assert(is_int(Base\Finder::group($_file_)));
         assert(Base\Finder::group($common.'/myclass.phpz') === null);
-        assert(count(Base\Finder::group($_file_,true)) === 4);
 
         // groupChange
 
@@ -213,7 +208,7 @@ class Finder extends Base\Test
         assert(is_string(Base\Finder::stat($_dir_,true,true)['dateAccess']));
         assert(is_int(Base\Finder::stat($_dir_,true)['dateAccess']));
         assert(Base\Finder::stat($_file_.'z') === null);
-        assert(is_array(Base\Finder::stat($_file_,true,true)['owner']));
+        assert(is_int(Base\Finder::stat($_file_,true,true)['owner']));
 
         // statValue
         assert(is_int(Base\Finder::statValue('mode',$_file_)));
