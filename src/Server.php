@@ -36,13 +36,20 @@ class Server extends Root
 
     // isWindows
     // retourne vrai si le système est Windows
-    public static function isWindows():bool
+    public static function isWindows(bool $fast=true):bool
     {
         $return = false;
-        $os = static::os();
+        
+        if($fast === true)
+        $return = (DIRECTORY_SEPARATOR === '\\')? true:false;
+        
+        else
+        {
+            $os = static::os();
 
-        if(stripos($os,'win') === 0)
-        $return = true;
+            if(stripos($os,'win') === 0)
+            $return = true;
+        }
 
         return $return;
     }
