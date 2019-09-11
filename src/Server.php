@@ -465,7 +465,7 @@ class Server extends Root
     // pourrait être l'adresse IP local
     public static function ip():?string
     {
-        return Superglobal::getServer('SERVER_ADDR');
+        return Ip::normalize(Superglobal::getServer('SERVER_ADDR'));
     }
 
 

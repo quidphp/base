@@ -401,7 +401,7 @@ class Request extends Base\Test
         $_SERVER['REMOTE_ADDR'] = 'abc';
         assert(Base\Request::ip(false) === 'abc');
         assert(Base\Request::ip(true) === '0.0.0.0');
-        assert(Base\Request::ip() === 'abc');
+        assert(Base\Request::ip() === '0.0.0.0');
 
         // setIp
         Base\Request::setIp('4.168.1.1');

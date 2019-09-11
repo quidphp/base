@@ -1597,7 +1597,7 @@ class Session extends Root
     // la session doit être active
     public static function ip():?string
     {
-        return static::get('ip');
+        return Ip::normalize(static::get('ip'));
     }
 
 

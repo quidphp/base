@@ -210,7 +210,7 @@ class Path extends Set
     // retourne vrai si le chemin semble pointer vers des interfaces
     public static function isInterface($value):bool
     {
-        return (is_string($value) && Str::isEnd('/contract',dirname(static::normalize($value)),false))? true:false;
+        return (is_string($value) && Str::isEnd('/contract',static::dirname($value),false))? true:false;
     }
 
 
@@ -284,22 +284,14 @@ class Path extends Set
     {
         $path = static::normalize($path);
         $return = pathinfo($path);
-
+        
+        if(array_key_exists('dirname',$return))
+        $return['dirname'] = static::infoDirname($return['dirname'],$path);
+        
         foreach ($return as $key => $value)
         {
-            if($value === false || $value === '')
+            if(in_array($value,array('',false,null),true))
             unset($return[$key]);
-        }
-
-        if(array_key_exists('dirname',$return))
-        {
-            $dirname = $return['dirname'];
-
-            if($dirname === '.' || ($dirname === $path && $dirname === '/'))
-            unset($return['dirname']);
-
-            elseif(is_string($dirname))
-            $return['dirname'] = static::normalize($dirname,true);
         }
 
         if(empty($return))
@@ -320,18 +312,27 @@ class Path extends Set
         $return = null;
 
         elseif($key === PATHINFO_DIRNAME && is_string($return))
-        {
-            if($return === '.' || ($return === $path && $return === '/'))
-            $return = null;
-
-            else
-            $return = static::normalize($return,true);
-        }
+        $return = static::infoDirname($return,$path);
 
         return $return;
     }
 
+    
+    // infoDirname
+    // méthode utilisé par info et infoOne pour gérer la valeur dirname retournée
+    // méthode protégé
+    protected static function infoDirname(string $return,string $path):?string 
+    {
+        if($return === '.' || ($return === $path && in_array($return,array('/','\\'),true)))
+        $return = null;
 
+        else
+        $return = static::normalize($return,true);
+        
+        return $return;
+    }
+    
+    
     // build
     // construit un path à partir d'un tableau info
     // note: build et les méthodes de path ajoute un slash en début de la chaîne de retour

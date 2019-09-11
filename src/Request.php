@@ -1014,7 +1014,7 @@ class Request extends Root
     // ip
     // retourne le ip courant
     // si valid est true et que le ip de retourne n'est pas valide, retourne 0.0.0.0 plutôt que null
-    public static function ip(bool $valid=false):?string
+    public static function ip(bool $valid=true):?string
     {
         $return = null;
 
@@ -1024,8 +1024,8 @@ class Request extends Root
         elseif(($remoteAddr = Superglobal::getServer('REMOTE_ADDR')) !== null)
         $return = $remoteAddr;
 
-        if($valid === true && is_string($return) && !Ip::is($return))
-        $return = '0.0.0.0';
+        if($valid === true)
+        $return = Ip::normalize($return);
 
         return $return;
     }

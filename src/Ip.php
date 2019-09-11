@@ -42,7 +42,27 @@ class Ip extends Root
         return (static::is($value) && ($value === '127.0.0.1' || strpos($value,'192.168.') === 0))? true:false;
     }
 
-
+    
+    // normalize
+    // normalize le ip, par exemple si c'est ::1
+    // si invalide retourne 0.0.0.0
+    public static function normalize($value):string 
+    {
+        $return = '0.0.0.0';
+        
+        if(is_string($value))
+        {
+            if($value === '::1')
+            $return = '127.0.0.1';
+            
+            elseif(static::is($value))
+            $return = $value;
+        }
+        
+        return $return;
+    }
+    
+    
     // allowed
     // retourne vrai si le ip passe le test du whitelist et blacklist
     // si option est un tableau indexé, c'est un whitelist

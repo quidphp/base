@@ -90,8 +90,7 @@ class Ini extends Root
             'session.upload_progress.name',
             'session.upload_progress.freq',
             'session.upload_progress.min_freq',
-            'session.lazy_write'],
-        'includePath'=>':' // séparateur pour includePath
+            'session.lazy_write']
     ];
 
 
@@ -387,7 +386,15 @@ class Ini extends Root
         return static::set('error_log',Finder::normalize($value));
     }
 
-
+    
+    // getIncludePathSeparator
+    // retourne le séparateur pour include path selon le os du serveur
+    public static function getIncludePathSeparator():string 
+    {
+        return (Server::isWindows())? ';':':';
+    }
+    
+    
     // getIncludePath
     // retourne la ou les valeurs actuels de include path
     // retourne un tableau
@@ -397,7 +404,7 @@ class Ini extends Root
 
         $paths = static::get('include_path');
         if(is_string($paths) && !empty($paths))
-        $return = explode(static::$config['includePath'],$paths);
+        $return = explode(static::getIncludePathSeparator(),$paths);
 
         return $return;
     }
@@ -411,7 +418,7 @@ class Ini extends Root
         $return = false;
 
         if(is_array($path) && !empty($path))
-        $path = implode(static::$config['includePath'],$path);
+        $path = implode(static::getIncludePathSeparator(),$path);
 
         if(is_string($path))
         $return = static::set('include_path',$path);

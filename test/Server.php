@@ -24,7 +24,7 @@ class Server extends Base\Test
         assert(is_bool(Base\Server::isMac()));
 
         // isWindows
-        assert(Base\Server::isWindows() === false);
+        assert(is_bool(Base\Server::isWindows()));
 
         // isLinux
         assert(is_bool(Base\Server::isLinux()));
@@ -126,8 +126,8 @@ class Server extends Base\Test
         assert(is_string(Base\Server::unameKey('release')));
 
         // os
-        assert(PHP_OS === Base\Server::os());
-        assert(PHP_OS !== Base\Server::os(true));
+        assert(!empty(Base\Server::os()));
+        assert(Base\Server::os() !== Base\Server::os(true));
 
         // osType
         assert(is_string(Base\Server::osType()));

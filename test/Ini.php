@@ -71,7 +71,7 @@ class Ini extends Base\Test
 		display_errors = On')) === 2);
 
         // files
-        assert(count(Base\Ini::files()) === 2);
+        assert(count(Base\Ini::files()) >= 1);
 
         // sizeFormat
         assert(Base\Ini::sizeFormat('100M') === 100);
@@ -105,14 +105,16 @@ class Ini extends Base\Test
         assert(Base\Ini::setCharset(Base\Encoding::getCharset()));
 
         // getTimezone
-        assert(Base\Ini::getTimezone() === date_default_timezone_get());
+        $timezone = date_default_timezone_get();
+        assert(Base\Ini::getTimezone() === $timezone);
 
         // setTimezone
         assert(Base\Ini::setTimezone('America/Los_Angeles'));
         assert(Base\Ini::getTimezone() === 'America/Los_Angeles');
-        Base\Ini::unset('date.timezone');
+        assert(Base\Ini::setTimezone($timezone));
         assert(Base\Ini::getTimezone() === 'America/New_York');
-
+        assert(Base\Timezone::get() === 'America/New_York');
+        
         // getTimeLimit
         assert(is_int(Base\Ini::getTimeLimit()));
 
@@ -134,7 +136,10 @@ class Ini extends Base\Test
 
         // setErrorLog
         assert(Base\Ini::setErrorLog(Base\Ini::getErrorLog()));
-
+        
+        // getIncludePathSeparator
+        assert(strlen(Base\Ini::getIncludePathSeparator()) === 1);
+        
         // getIncludePath
         assert(count(Base\Ini::getIncludePath()) === 1);
 
