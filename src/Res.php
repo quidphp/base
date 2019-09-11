@@ -930,11 +930,7 @@ class Res extends Root
         }
 
         elseif(static::isPhpWritable($value))
-        {
-            $option = static::option($value);
-            if(!empty($option['php']['header']) && is_array($option['php']['header']))
-            $return = $option['php']['header'];
-        }
+        $return = static::getPhpContextOption('header',$value);
 
         return $return;
     }
@@ -999,11 +995,7 @@ class Res extends Root
         $return = null;
 
         if($contextOption === true || static::isPhpWritable($value))
-        {
-            $option = static::option($value);
-            if(!empty($option['php']['basename']) && is_string($option['php']['basename']))
-            $return = $option['php']['basename'];
-        }
+        $return = static::getContextBasename($value);
 
         if(empty($return))
         {
@@ -1517,7 +1509,7 @@ class Res extends Root
                     foreach ($option['write'] as $key => $value)
                     {
                         if(is_string($key))
-                        static::setPhpContextOption($return,$key,$value);
+                        static::setPhpContextOption($key,$value,$return);
                     }
                 }
             }
@@ -1530,7 +1522,7 @@ class Res extends Root
     // setPhpContextOption
     // permet de lier une clé -> valeur à l'intérieur du contexte de la ressource
     // n'a pas besoin d'être phpWritable
-    public static function setPhpContextOption($res,string $key,$value):bool
+    public static function setPhpContextOption(string $key,$value,$res):bool
     {
         return stream_context_set_option($res,'php',$key,$value);
     }
@@ -1539,21 +1531,58 @@ class Res extends Root
     // setContextMime
     // permet de lier un mime au sein du contexte de la ressource
     // n'a pas besoin d'être phpWritable
-    public static function setContextMime(string $mime,$return):bool
+    public static function setContextMime(string $mime,$res):bool
     {
-        return static::setPhpContextOption($return,'mime',$mime);
+        return static::setPhpContextOption('mime',$mime,$res);
     }
 
 
     // setContextBasename
     // permet de lier un basename au sein du contexte de la ressource
     // n'a pas besoin d'être phpWritable
-    public static function setContextBasename(string $basename,$return):bool
+    public static function setContextBasename(string $basename,$res):bool
     {
-        return static::setPhpContextOption($return,'basename',$basename);
+        return static::setPhpContextOption('basename',$basename,$res);
+    }
+
+    
+    // getPhpContextOption
+    // retourne une option de contexte ou null
+    // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
+    public static function getPhpContextOption($key,$value)
+    {
+        $return = null;
+        $option = static::option($value);
+        
+        if(is_array($option) && !empty($option['php']) && is_array($option['php']))
+        {
+            if($key === null)
+            $return = $option['php'];
+            
+            else
+            $return = Arrs::get($key,$option['php']);
+        }
+            
+        return $return;
     }
 
 
+    // getContextMime
+    // retourne le mime storé dans le contexte de la resource
+    public static function getContextMime($value):?string
+    {
+        return static::getPhpContextOption('mime',$value);
+    }
+
+
+    // getContextBasename
+    // retourne le basename storé dans le contexte de la resource
+    public static function getContextBasename($value):?string
+    {
+        return static::getPhpContextOption('basename',$value);
+    }
+    
+    
     // output
     // ouvre une resource de type php output
     // par défaut le buffer actuel est clean
@@ -1846,11 +1875,7 @@ class Res extends Root
         $return = curl_getinfo($value);
 
         else
-        {
-            $option = static::option($value);
-            if(!empty($option['php']['meta']['info']))
-            $return = $option['php']['meta']['info'];
-        }
+        $return = static::getPhpContextOption(array('meta','info'),$value);
 
         return $return;
     }
@@ -2114,10 +2139,13 @@ class Res extends Root
     public static function line($value,?array $option=null)
     {
         $return = null;
-        $option = Arr::plus(['csv'=>false,'amount'=>PHP_INT_MAX,'separator'=>PHP_EOL],$option);
+        $option = Arr::plus(['csv'=>false,'amount'=>PHP_INT_MAX,'separator'=>null],$option);
 
         if(is_resource($value))
         {
+            if(empty($option['separator']))
+            $option['separator'] = static::getLineSeparator($value);
+            
             if(!empty($option['csv']) && $option['csv'] === true)
             $line = Csv::resLine($value,$option);
 
@@ -2287,7 +2315,50 @@ class Res extends Root
         return $return;
     }
 
-
+    
+    // getLineSeparator
+    // va tenter de détecter si seekable tellable et enregistre dans les options de la ressource
+    // retourne le caractère séparateur de ligne
+    public static function getLineSeparator($value,int $length=1000):string
+    {
+        $return = static::getPhpContextOption('eol',$value);
+        
+        if($return === null)
+        {
+            $eol = static::findLineSeparator($value,$length);
+            $eol = (is_string($eol))? $eol:false;
+            static::setPhpContextOption('eol',$eol,$value);
+        }
+        
+        if(!is_string($return))
+        $return = PHP_EOL;
+        
+        return $return;
+    }
+    
+    
+    // findLineSeparator
+    // tente de trouver le séparateur de ligne dans la resource
+    // va seek et retourner à la position originale
+    public static function findLineSeparator($value,int $length=1000):?string
+    {
+        $return = null;
+        
+        if(static::isSeekableTellable($value))
+        {
+            $pos = static::position($value);
+            $content = stream_get_contents($value,$length);
+            
+            if(is_string($content) && !empty($content))
+            $return = Str::getEol($content);
+            
+            static::seek($pos,$value);
+        }
+        
+        return $return;
+    }
+    
+    
     // getLines
     // retourne un tableau contenant toutes les lignes de la resource
     // argument inversé par rapport à lines
@@ -2400,12 +2471,15 @@ class Res extends Root
     public static function subCount(string $sub,$value,?array $option=null):?int
     {
         $return = null;
-        $option = Arr::plus(['rewind'=>true,'mb'=>null,'separator'=>PHP_EOL],$option,['csv'=>false]);
+        $option = Arr::plus(['rewind'=>true,'mb'=>null,'separator'=>null],$option,['csv'=>false]);
 
         if(static::isSeekable($value) && static::isReadable($value) && !empty($sub))
         {
             $return = 0;
-
+            
+            if(empty($option['separator']))
+            $option['separator'] = static::getLineSeparator($value);
+            
             if($option['rewind'] === true)
             static::seekRewind($value);
 

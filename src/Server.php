@@ -573,17 +573,6 @@ class Server extends Root
     }
 
 
-    // loadAverage
-    // retourne la charge du serveur
-    public static function loadAverage():array
-    {
-        $return = sys_getloadavg();
-        $return = Arr::keysChange([0=>'1_min',1=>'5_min',2=>'15_min'],$return);
-
-        return $return;
-    }
-
-
     // memory
     // retourne l'usage de mémoire par PHP
     public static function memory(bool $format=true):array
@@ -675,7 +664,6 @@ class Server extends Root
         $return['username'] = static::user(true);
         $return['group'] = static::group();
         $return['resourceUsage'] = static::resourceUsage();
-        $return['loadAverage'] = static::loadAverage();
         $return['memory'] = static::memory();
         $return['diskSpace'] = static::diskSpace();
         $return['phpImportantIni'] = static::phpImportantIni();

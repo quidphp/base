@@ -21,7 +21,7 @@ class Path extends Base\Test
         $common = Base\Finder::normalize('[assertCommon]');
         $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
-
+        
         // is
         assert(Base\Path::is('/test/bla/ok.jpg'));
         assert(!Base\Path::is(false));
@@ -154,7 +154,9 @@ class Path extends Base\Test
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'c:\\Windows\\meh/top/ok.jp') === 'C:/Windows/meh/top');
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'/') === null);
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'\\') === null);
-
+        assert(Base\Path::infoOne(PATHINFO_DIRNAME,'D:') === null);
+        assert(Base\Path::infoOne(PATHINFO_DIRNAME,'d:') === null);
+        
         // infoDirname
 
         // build
@@ -225,7 +227,6 @@ class Path extends Base\Test
 
         // parents
         assert(['/bla/bla','/bla','/'] === Base\Path::parents('bla/bla/bla'));
-        assert(Base\Arr::valueLast(Base\Path::parents($_file_)) === '/');
         assert(Base\Path::parents('bla') === ['/']);
         assert(count(Base\Path::parents('/ok/well\\meh/ok/no.zip')) === 5);
         assert(count(Base\Path::parents('d:\\ok/well\\meh/ok/no.zip')) === 5);

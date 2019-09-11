@@ -55,7 +55,6 @@ class PathTrack extends Base\Test
         assert('bla' === Base\PathTrack::removeDirname('bla/bla/bla'));
         assert('/bla/bla' === Base\PathTrack::parent('/bla/bla/bla'));
         assert(['bla/bla','bla',''] === Base\PathTrack::parents('bla/bla/bla'));
-        assert(Base\Arr::valueLast(Base\PathTrack::parents($_file_)) === '');
         assert(Base\PathTrack::parents('bla') === ['']);
         assert('/bla/bla/bla/bzzz.zip' === Base\PathTrack::addBasename('bzzz.zip','/bla/bla/bla'));
         assert('bla/bla/bla/bzzz.zip' === Base\PathTrack::addBasename('/blabla/bla/bzzz.zip','bla/bla/bla'));

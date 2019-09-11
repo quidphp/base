@@ -321,13 +321,22 @@ class Path extends Set
     // infoDirname
     // méthode utilisé par info et infoOne pour gérer la valeur dirname retournée
     // méthode protégé
-    protected static function infoDirname(string $return,string $path):?string
+    protected static function infoDirname(string $value,string $path):?string
     {
-        if($return === '.' || ($return === $path && in_array($return,['/','\\'],true)))
         $return = null;
+        
+        if($value !== '.' && $value !== $path)
+        {
+            $normalize = static::normalize($value,true);
 
-        else
-        $return = static::normalize($return,true);
+            if($normalize !== $path)
+            {
+                $return = $normalize;
+
+                if(static::hasWindowsDrive($return))
+                $return = static::stripEnd($return);
+            }
+        }
 
         return $return;
     }

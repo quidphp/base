@@ -212,7 +212,7 @@ class Request extends Root
 
     // hasIp
     // retourne vrai si la requête courante contient un ip
-    public static function hasIp(bool $validIp=false):bool
+    public static function hasIp(bool $validIp=true):bool
     {
         return (!empty(static::ip($validIp)))? true:false;
     }
@@ -292,7 +292,7 @@ class Request extends Root
 
     // isIpLocal
     // retourne vrai si le ip est local
-    public static function isIpLocal(bool $validIp=false):bool
+    public static function isIpLocal(bool $validIp=true):bool
     {
         return Ip::isLocal(static::ip($validIp));
     }
@@ -332,7 +332,7 @@ class Request extends Root
 
     // isIp
     // retourne vrai si le ip est celui fourni
-    public static function isIp($value,bool $validIp=false):bool
+    public static function isIp($value,bool $validIp=true):bool
     {
         return (is_string($value) && $value === static::ip($validIp))? true:false;
     }
@@ -392,7 +392,7 @@ class Request extends Root
     // info
     // retourne l'ensemble des informations en lien avec la requête courante
     // possible d'exporter le id
-    public static function info(bool $id=false,bool $validIp=false):array
+    public static function info(bool $id=false,bool $validIp=true):array
     {
         $return = static::parse();
 
@@ -424,7 +424,7 @@ class Request extends Root
     // exporte les informations liés à la requête courante
     // utile pour créer un objet core request
     // possible d'exporter le id
-    public static function export(bool $id=false,bool $validIp=false):array
+    public static function export(bool $id=false,bool $validIp=true):array
     {
         $return = static::parse();
         $return['method'] = static::method();

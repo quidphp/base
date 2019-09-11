@@ -19,6 +19,7 @@ class Str extends Root
         'plural'=>['letter'=>'s','wrap'=>'%'], // pour la fonction plural
         'excerpt'=>['suffix'=>'...'], // suffix pour la méthode excerpt
         'trim'=>" \t\n\r\0\x0B", // liste des caractères trimmés par défaut par les fonctions trim
+        'eol'=>array("\r\n","\n"), // défini les caractères end of line
         'search'=>' ', // séparateur pour prepareSearch
         'pointer'=>'/', // séparateur pour pointer
         'loremIpsum'=>[ // contenu source pour la méthode loremIpsum
@@ -1618,9 +1619,9 @@ class Str extends Root
     }
 
 
-    // lineBreaks
+    // normalizeLine
     // permet de régurilariser la situation des line breaks dans une chaîne
-    public static function lineBreaks(string $str,string $separator=PHP_EOL):string
+    public static function normalizeLine(string $str,string $separator=PHP_EOL):string
     {
         return preg_replace('~\R~u',$separator,$str);
     }
@@ -1632,7 +1633,7 @@ class Str extends Root
     // trim permet d'enlever les espaces au début et à la fin de chaque ligne
     public static function lines(string $str,bool $trim=false):array
     {
-        $return = explode(PHP_EOL,static::lineBreaks($str,PHP_EOL));
+        $return = explode(PHP_EOL,static::normalizeLine($str));
 
         if($trim === true)
         $return = array_map('trim',$return);
@@ -2914,18 +2915,35 @@ class Str extends Root
         return $return;
     }
 
-
+    
+    // getEol
+    // retourne le premier eol trouvé dans la chaîne
+    public static function getEol(string $content):?string 
+    {
+        $return = null;
+        
+        foreach (static::$config['eol'] as $v) 
+        {
+            if(strpos($content,$v) !== false)
+            {
+                $return = $v;
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // eol
     // génère un ou plusieurs end of line
-    // support pour ajouter le \r au besoin
-    public static function eol(int $amount,bool $r=false):string
+    public static function eol(int $amount,string $separator=PHP_EOL):string
     {
         $return = '';
-        $eol = ($r === true)? "\r\n":"\n";
 
         while ($amount > 0)
         {
-            $return .= $eol;
+            $return .= $separator;
             $amount--;
         }
 

@@ -50,7 +50,6 @@ class Superglobal extends Base\Test
         assert(!Base\Superglobal::fileExists('tes2t'));
 
         // envExists
-        assert(Base\Superglobal::envExists('PATH'));
 
         // requestExists
         assert(Base\Superglobal::requestExists('test3'));
@@ -106,7 +105,6 @@ class Superglobal extends Base\Test
         assert(Base\Superglobal::getFiles('tes2t') === null);
 
         // getEnv
-        assert(Base\Superglobal::getEnv('PATH') !== null);
 
         // getRequest
         assert(Base\Superglobal::getRequest('test3') === 2);

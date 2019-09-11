@@ -144,7 +144,8 @@ class Request extends Base\Test
         assert(Base\Request::isSchemeHost(Base\Request::schemeHost()));
 
         // isIp
-        assert(Base\Request::isIp($_SERVER['REMOTE_ADDR']));
+        $ip = Base\Ip::normalize($_SERVER['REMOTE_ADDR']);
+        assert(Base\Request::isIp($ip));
 
         // isLangHeader
         assert(Base\Request::isLangHeader(Base\Request::langHeader()));

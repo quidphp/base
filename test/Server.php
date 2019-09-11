@@ -189,10 +189,7 @@ class Server extends Base\Test
         assert(is_string(Base\Server::email()));
 
         // resourceUsage
-        assert(count(Base\Server::resourceUsage()) > 10);
-
-        // loadAverage
-        assert(count(Base\Server::loadAverage()) === 3);
+        assert(count(Base\Server::resourceUsage()) > 5);
 
         // memory
         assert(count(Base\Server::memory()) === 4);
@@ -206,7 +203,7 @@ class Server extends Base\Test
         assert(count(Base\Server::overview()) === 17);
 
         // info
-        assert(count(Base\Server::info()) === 27);
+        assert(count(Base\Server::info()) === 26);
 
         // requirement
         assert(empty(Base\Server::requirement()));

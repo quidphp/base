@@ -197,18 +197,14 @@ class Mime extends Root
 
         if($contextOption === true || Res::isPhpWritable($value))
         {
-            $option = Res::option($value);
-            if(!empty($option['php']['mime']) && is_string($option['php']['mime']))
+            $return = Res::getContextMime($value);
+
+            if(is_string($return))
             {
-                $return = $option['php']['mime'];
+                $return = static::fromExtension($return) ?? $return;
 
-                if(is_string($return))
-                {
-                    $return = static::fromExtension($return) ?? $return;
-
-                    if($charset === false)
-                    $return = static::removeCharset($return);
-                }
+                if($charset === false)
+                $return = static::removeCharset($return);
             }
         }
 
