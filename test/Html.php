@@ -1021,29 +1021,23 @@ class Html extends Base\Test
         assert(Base\Html::getExcerptSuffix() === "<span class='excerptSuffix'>...</span>");
 
         // output
-        assert(Base\Html::output("la ' \" 
-		vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié &lt;script&gt;&lt;/script&gt;');
+        assert(Base\Html::output("la ' \"\n vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié &lt;script&gt;&lt;/script&gt;');
         assert(Base\Html::output('tést     test') === 'tést     test');
 
         // outputEntities
-        assert(Base\Html::outputEntities("la ' \" 
-		vié <script></script>👦🏼👦👦🏼") === 'la &#039; &quot; vi&eacute; &lt;script&gt;&lt;/script&gt;');
+        assert(Base\Html::outputEntities("la ' \"\n vié <script></script>👦🏼👦👦🏼") === 'la &#039; &quot; vi&eacute; &lt;script&gt;&lt;/script&gt;');
 
         // outputStripTags
-        assert(Base\Html::outputStripTags("la ' \" 
-		vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié');
+        assert(Base\Html::outputStripTags("la ' \"\n vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié');
 
         // unicode
-        assert(Base\Html::unicode("la ' \" 
-		vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié &lt;script&gt;&lt;/script&gt;👦🏼👦👦🏼');
+        assert(Base\Html::unicode("la ' \"\n vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié &lt;script&gt;&lt;/script&gt;👦🏼👦👦🏼');
 
         // unicodeEntities
-        assert(Base\Html::unicodeEntities("la ' \" 
-		vié <script></script>👦🏼👦👦🏼") === 'la &#039; &quot; vi&eacute; &lt;script&gt;&lt;/script&gt;👦🏼👦👦🏼');
+        assert(Base\Html::unicodeEntities("la ' \"\n vié <script></script>👦🏼👦👦🏼") === 'la &#039; &quot; vi&eacute; &lt;script&gt;&lt;/script&gt;👦🏼👦👦🏼');
 
         // unicodeStripTags
-        assert(Base\Html::unicodeStripTags("la ' \" 
-		vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié 👦🏼👦👦🏼');
+        assert(Base\Html::unicodeStripTags("la ' \"\n vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié 👦🏼👦👦🏼');
 
         // getUriOption
         $x = $x = Base\Html::getUriOption('a');

@@ -194,7 +194,7 @@ class Res extends Root
 
         if(static::isStream($value))
         {
-            $path = static::uriRemoveScheme($value);
+            $path = static::pathFile($value);
 
             if(is_string($path) && File::is($path))
             $return = true;
@@ -1008,7 +1008,7 @@ class Res extends Root
         if(empty($return))
         {
             if(static::isFile($value))
-            $return = static::uriRemoveScheme($value);
+            $return = static::pathFile($value);
 
             else
             $return = static::parseOne(PHP_URL_PATH,$value);
@@ -1017,7 +1017,30 @@ class Res extends Root
         return $return;
     }
 
-
+    
+    // pathFile
+    // méthode utilisé pour générer le chemin d'une ressource fichier
+    // méthode protégé
+    protected static function pathFile($value):?string 
+    {
+        $return = null;
+        $uri = static::uri($value);
+        
+        if(is_string($uri))
+        {
+            if(Path::hasWindowsDrive($uri))
+            $return = $uri;
+            
+            else
+            $return = Uri::removeScheme($uri);
+            
+            $return = Path::normalize($return);
+        }
+        
+        return $return;
+    }
+    
+    
     // pathinfo
     // retourne le tableau pathinfo
     // ne fonctionne pas avec les directoires

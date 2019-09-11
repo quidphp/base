@@ -443,7 +443,7 @@ class Header extends Listing
     // retourne un tableau unidimensionnel avec clés numérique
     public static function explodeStr(string $value,?array $option=null):array
     {
-        return Str::lines($value,true);
+        return Str::lines($value);
     }
 
 

@@ -268,7 +268,7 @@ class File extends Finder
         $value = Obj::cast($value);
 
         if(static::isResource($value))
-        $return = Res::uriRemoveScheme($value);
+        $return = Res::path($value);
 
         else
         {

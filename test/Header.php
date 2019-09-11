@@ -156,10 +156,10 @@ class Header extends Base\Test
         assert(Base\Header::prepareArr([' test '=>' test ']) === [' test '=>' test ']);
 
         // prepareStr
-        assert(Base\Header::prepareStr("Test:  ok \r\nHTTP/1.1 OK 200 \r\n Test2 : what2") === ['Test:  ok','HTTP/1.1 OK 200','Test2 : what2']);
-
+        assert(Base\Header::prepareStr("Test:  ok \r\nHTTP/1.1 OK 200 \r\n Test2 : what2") === ['Test:  ok ','HTTP/1.1 OK 200 ',' Test2 : what2']);
+        
         // explodeStr
-        assert(Base\Header::explodeStr("Test:  ok \r\nHTTP/1.1 OK 200 \r\n Test2 : what2") === ['Test:  ok','HTTP/1.1 OK 200','Test2 : what2']);
+        assert(Base\Header::explodeStr("Test:  ok \r\nHTTP/1.1 OK 200 \r\n Test2 : what2") === ['Test:  ok ','HTTP/1.1 OK 200 ',' Test2 : what2']);
 
         // setMerge
         assert(Base\Header::setMerge('cookie','123',['cookie'=>'456']) === ['cookie'=>['456','123']]);

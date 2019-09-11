@@ -542,7 +542,9 @@ class Res extends Base\Test
         assert(Base\Res::path($output) === null);
         assert(Base\Res::path($temp) === null);
         assert(strpos(Base\Res::path($hash),'#') !== false);
-
+        
+        // pathFile
+        
         // pathinfo
         assert(count(Base\Res::pathinfo($fp)) === 3);
         assert(count(Base\Res::pathinfo($current)) === 4);

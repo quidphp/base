@@ -43,7 +43,7 @@ class Html extends Root
         'multi'=>'[]', // caractère pour nom multi
         'clickOpen'=>['popup'=>'popup','trigger'=>'trigger','title'=>'title','icon'=>'ico'], // classes pour clickOpen
         'fakeSelect'=>['selected'=>'selected'], // classes pour fakeSelect
-        'separator'=>PHP_EOL, // caractère séparateur new line
+        'separator'=>"\n", // caractère séparateur new line
         'genuine'=>'-genuine-', // nom pour l'input genuine
         'randomNameWrap'=>'-', // caractère utilisé pour wrapper un name qui est true
         'bool'=>[ // relation bool

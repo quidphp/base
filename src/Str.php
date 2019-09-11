@@ -1622,7 +1622,7 @@ class Str extends Root
     // permet de régurilariser la situation des line breaks dans une chaîne
     public static function lineBreaks(string $str,string $separator=PHP_EOL):string
     {
-        return str_replace(["\r\n","\n\r","\r","\n"],$separator,$str);
+        return preg_replace('~\R~u',$separator,$str);
     }
 
 

@@ -28,7 +28,7 @@ class Extension extends Base\Test
         assert(is_bool(Base\Extension::hasXdebug()));
 
         // hasApcu
-        assert(Base\Extension::hasApcu());
+        assert(is_bool(Base\Extension::hasApcu()));
 
         // functions
         assert(count(Base\Extension::functions('fileinfo')) === 6);
