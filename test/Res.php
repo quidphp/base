@@ -346,7 +346,7 @@ class Res extends Base\Test
         // hasScheme
         assert(Base\Res::hasScheme($http));
         assert(Base\Res::hasScheme($output));
-        assert(Base\Res::hasScheme($currentNoIP));
+        assert(!Base\Res::hasScheme($currentNoIP));
         assert(!Base\Res::hasScheme($fp));
         assert(!Base\Res::hasScheme($dir));
 
@@ -506,7 +506,6 @@ class Res extends Base\Test
         assert(!empty(Base\Res::uri($curl)));
 
         // uriRemoveScheme
-        assert(Base\Res::uriRemoveScheme($currentNoIP) !== Base\Res::uri($currentNoIP));
         assert(strpos(Base\Res::uriRemoveScheme($hash),'#') !== false);
 
         // headers
@@ -525,7 +524,7 @@ class Res extends Base\Test
 
         // scheme
         assert(Base\Res::scheme($fp) === null);
-        assert(Base\Res::scheme($currentNoIP) === 'file');
+        assert(Base\Res::scheme($currentNoIP) === null);
         assert(Base\Res::scheme($http) === Base\Request::scheme());
         assert(Base\Res::scheme($output) === 'php');
         assert(Base\Res::scheme($dir) === null);

@@ -112,7 +112,7 @@ class Path extends Base\Test
         assert(Base\Path::isInterface('C:\\Windows\\Contract\\test.jpg'));
 
         // normalize
-        //assert(Base\Path::normalize('') === '');
+        assert(Base\Path::normalize('') === '');
         assert(Base\Path::normalize('\\') === '/');
         assert(Base\Path::normalize('/') === '/');
         assert(Base\Path::normalize('/test/bla/ok.jpg') === '/test/bla/ok.jpg');
@@ -125,7 +125,8 @@ class Path extends Base\Test
         assert('/bla/bla/bla' === Base\Path::normalize('bla//bla/bla/',true));
         assert('/bla/bla/bla' === Base\Path::normalize('/bla//bla/bla'));
         assert(Base\Path::normalize('C:\\Windows\\well') === 'C:/Windows/well');
-
+        assert(Base\Path::normalize("file://$_file_") === $_file_);
+        
         // prepareStr
         assert(Base\Path::prepareStr("c:\\Windows\well",Base\Path::option()) === ['C:','Windows','well']);
 

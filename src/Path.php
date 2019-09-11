@@ -208,6 +208,7 @@ class Path extends Set
 
     // normalize
     // permet de normalize un path, change tous les séparateurs pour /
+    // retire le protocol file://
     // gère aussi les chemins windows (comme c:)
     public static function normalize(string $return,bool $stripWrap=false):string
     {
@@ -225,7 +226,10 @@ class Path extends Set
                 $windowsDrive = true;
                 $return = ucfirst($return);
             }
-
+            
+            if(stripos($return,'file://') === 0)
+            $return = substr($return,7);
+            
             $return = preg_replace('#'.$separator.'+#',$separator,$return);
 
             if($stripWrap === true && $windowsDrive === false)

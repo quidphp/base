@@ -654,7 +654,7 @@ class Dir extends Finder
         {
             if(is_string($key) && is_string($value) && Str::isEnd($catchAll,$key))
             {
-                $value = static::shortcut($value);
+                $value = static::normalize($value);
                 $path = Str::stripEnd($catchAll,$key);
                 $get = static::getVisible($path);
 
@@ -707,11 +707,11 @@ class Dir extends Finder
 
         foreach ($priority as $value)
         {
-            $value = static::shortcut($value);
+            $value = static::normalize($value);
 
             if(is_string($path))
             {
-                $path = static::shortcut($path);
+                $path = static::normalize($path);
                 $value = Path::append($path,$value);
             }
 
@@ -739,11 +739,11 @@ class Dir extends Finder
 
         foreach ($remove as $value)
         {
-            $value = static::shortcut($value);
+            $value = static::normalize($value);
 
             if(is_string($path))
             {
-                $path = static::shortcut($path);
+                $path = static::normalize($path);
                 $value = Path::append($path,$value);
             }
 

@@ -313,7 +313,9 @@ class Finder extends Base\Test
         assert(Base\Finder::path('[assertCommon]/test.php') === $common.'/test.php');
         assert(Base\Finder::path('[corez]/test.php') === '[corez]/test.php');
         assert(Base\Finder::path('[assertCommon]',true) === $common);
-
+        
+        // normalize
+        
         // realpath
         assert(Base\Finder::realpath('media',$publicPath) === $storagePublicPath.'/media');
         assert(Base\Finder::realpath('mediaz') === null);

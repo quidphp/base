@@ -291,7 +291,7 @@ class Symlink extends Finder
             $link = readlink($path);
 
             if(is_string($link) && !empty($link))
-            $return = $link;
+            $return = static::normalize($link,false);
         }
 
         return $return;
@@ -372,8 +372,8 @@ class Symlink extends Finder
         foreach ($array as $from => $to)
         {
             $r = ['status'=>null,'from'=>$from];
-            $from = static::shortcut($from);
-            $to = static::shortcut($to);
+            $from = static::normalize($from);
+            $to = static::normalize($to);
             $get = static::get($to);
             $go = true;
 
