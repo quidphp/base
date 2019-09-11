@@ -79,7 +79,7 @@ class Fqcn extends Base\Test
         assert(Base\Fqcn::namespace(['Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
         assert(Base\Fqcn::namespace(['','Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
         assert(Base\Fqcn::namespace(['Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
-        assert(Base\Fqcn::namespace("class@anonymous") === null);
+        assert(Base\Fqcn::namespace('class@anonymous') === null);
         assert(Base\Fqcn::namespace(null) === null);
 
         // stripRoot
