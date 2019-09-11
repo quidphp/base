@@ -1036,13 +1036,13 @@ class Str extends Base\Test
         assert("la <b>petite</b>\n école" === Base\Str::output(" la <b>petite</b>\n école "));
         assert('la <b>petite</b> école' === Base\Str::output(' la <b>petite</b> école '));
         assert('z' === Base\Str::output('👦🏼👦🏼👦🏼👦🏼 z '));
-        
+
         // getEol
         assert(Base\Str::getEol("la <b>petite</b>\n école") === "\n");
         assert(Base\Str::getEol("la <b>petite</b>\r école") === null);
         assert(Base\Str::getEol("la <b>petite</b>\r\n école") === "\r\n");
         assert(Base\Str::getEol("la \n<b>petite</b>\r\n école") === "\r\n");
-        
+
         // eol
         assert(Base\Str::eol(3,"\n") === "\n\n\n");
         assert(Base\Str::eol(2,"\r\n") === "\r\n\r\n");

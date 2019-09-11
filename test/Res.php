@@ -670,16 +670,16 @@ class Res extends Base\Test
         // setContextMime
 
         // setContextBasename
-        
+
         // getPhpContextOption
         assert(count(Base\Res::getPhpContextOption(null,$current)) === 2);
-        
+
         // getContextMime
         assert(is_string(Base\Res::getContextMime($current)));
-        
+
         // getContextBasename
         assert(is_string(Base\Res::getContextBasename($current)));
-        
+
         // setContextBasename
         $tempCon = Base\Res::phpWritable('temp');
         assert(!empty(Base\Res::basename($tempCon)));
@@ -854,15 +854,15 @@ class Res extends Base\Test
         assert(Base\Res::read(null,2,$current,['callback'=>[Base\Str::class,'upper']]) === 'QU');
 
         // readDir
-        
+
         // getLineSeparator
         assert(Base\Res::getLineSeparator($current) === PHP_EOL);
-        
+
         // findLineSeparator
         $pos = Base\Res::position($current);
         assert(is_string(Base\Res::findLineSeparator($current)));
         assert(Base\Res::position($current) === $pos);
-        
+
         // getLines
         assert(count(Base\Res::getLines($current)) > 40);
 

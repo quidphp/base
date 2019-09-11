@@ -1545,7 +1545,7 @@ class Res extends Root
         return static::setPhpContextOption('basename',$basename,$res);
     }
 
-    
+
     // getPhpContextOption
     // retourne une option de contexte ou null
     // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
@@ -1553,16 +1553,16 @@ class Res extends Root
     {
         $return = null;
         $option = static::option($value);
-        
+
         if(is_array($option) && !empty($option['php']) && is_array($option['php']))
         {
             if($key === null)
             $return = $option['php'];
-            
+
             else
             $return = Arrs::get($key,$option['php']);
         }
-            
+
         return $return;
     }
 
@@ -1581,8 +1581,8 @@ class Res extends Root
     {
         return static::getPhpContextOption('basename',$value);
     }
-    
-    
+
+
     // output
     // ouvre une resource de type php output
     // par défaut le buffer actuel est clean
@@ -1875,7 +1875,7 @@ class Res extends Root
         $return = curl_getinfo($value);
 
         else
-        $return = static::getPhpContextOption(array('meta','info'),$value);
+        $return = static::getPhpContextOption(['meta','info'],$value);
 
         return $return;
     }
@@ -2145,7 +2145,7 @@ class Res extends Root
         {
             if(empty($option['separator']))
             $option['separator'] = static::getLineSeparator($value);
-            
+
             if(!empty($option['csv']) && $option['csv'] === true)
             $line = Csv::resLine($value,$option);
 
@@ -2315,50 +2315,50 @@ class Res extends Root
         return $return;
     }
 
-    
+
     // getLineSeparator
     // va tenter de détecter si seekable tellable et enregistre dans les options de la ressource
     // retourne le caractère séparateur de ligne
     public static function getLineSeparator($value,int $length=1000):string
     {
         $return = static::getPhpContextOption('eol',$value);
-        
+
         if($return === null)
         {
             $eol = static::findLineSeparator($value,$length);
             $eol = (is_string($eol))? $eol:false;
             static::setPhpContextOption('eol',$eol,$value);
         }
-        
+
         if(!is_string($return))
         $return = PHP_EOL;
-        
+
         return $return;
     }
-    
-    
+
+
     // findLineSeparator
     // tente de trouver le séparateur de ligne dans la resource
     // va seek et retourner à la position originale
     public static function findLineSeparator($value,int $length=1000):?string
     {
         $return = null;
-        
+
         if(static::isSeekableTellable($value))
         {
             $pos = static::position($value);
             $content = stream_get_contents($value,$length);
-            
+
             if(is_string($content) && !empty($content))
             $return = Str::getEol($content);
-            
+
             static::seek($pos,$value);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // getLines
     // retourne un tableau contenant toutes les lignes de la resource
     // argument inversé par rapport à lines
@@ -2476,10 +2476,10 @@ class Res extends Root
         if(static::isSeekable($value) && static::isReadable($value) && !empty($sub))
         {
             $return = 0;
-            
+
             if(empty($option['separator']))
             $option['separator'] = static::getLineSeparator($value);
-            
+
             if($option['rewind'] === true)
             static::seekRewind($value);
 

@@ -324,7 +324,7 @@ class Path extends Set
     protected static function infoDirname(string $value,string $path):?string
     {
         $return = null;
-        
+
         if($value !== '.' && $value !== $path)
         {
             $normalize = static::normalize($value,true);
