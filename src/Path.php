@@ -284,13 +284,13 @@ class Path extends Set
     {
         $path = static::normalize($path);
         $return = pathinfo($path);
-        
+
         if(array_key_exists('dirname',$return))
         $return['dirname'] = static::infoDirname($return['dirname'],$path);
-        
+
         foreach ($return as $key => $value)
         {
-            if(in_array($value,array('',false,null),true))
+            if(in_array($value,['',false,null],true))
             unset($return[$key]);
         }
 
@@ -317,22 +317,22 @@ class Path extends Set
         return $return;
     }
 
-    
+
     // infoDirname
     // méthode utilisé par info et infoOne pour gérer la valeur dirname retournée
     // méthode protégé
-    protected static function infoDirname(string $return,string $path):?string 
+    protected static function infoDirname(string $return,string $path):?string
     {
-        if($return === '.' || ($return === $path && in_array($return,array('/','\\'),true)))
+        if($return === '.' || ($return === $path && in_array($return,['/','\\'],true)))
         $return = null;
 
         else
         $return = static::normalize($return,true);
-        
+
         return $return;
     }
-    
-    
+
+
     // build
     // construit un path à partir d'un tableau info
     // note: build et les méthodes de path ajoute un slash en début de la chaîne de retour

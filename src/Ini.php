@@ -386,15 +386,15 @@ class Ini extends Root
         return static::set('error_log',Finder::normalize($value));
     }
 
-    
+
     // getIncludePathSeparator
     // retourne le séparateur pour include path selon le os du serveur
-    public static function getIncludePathSeparator():string 
+    public static function getIncludePathSeparator():string
     {
         return (Server::isWindows())? ';':':';
     }
-    
-    
+
+
     // getIncludePath
     // retourne la ou les valeurs actuels de include path
     // retourne un tableau

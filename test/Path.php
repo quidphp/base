@@ -152,9 +152,9 @@ class Path extends Base\Test
         assert(Base\Path::infoOne(PATHINFO_EXTENSION,'/test/bla/ok.jpg') === 'jpg');
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'c:\\Windows\\meh/top/ok.jp') === 'C:/Windows/meh/top');
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'/') === null);
-        
+
         // infoDirname
-        
+
         // build
         assert($_file_ === Base\Path::build(pathinfo($_file_)));
         assert($_dir_ === Base\Path::build(pathinfo($_dir_)));

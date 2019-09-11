@@ -28,12 +28,12 @@ class Ip extends Base\Test
         assert(Base\Ip::isLocal('192.168.1.1'));
         assert(!Base\Ip::isLocal('2.2.2.2.3'));
         assert(!Base\Ip::isLocal('2.2.2.2.3.4'));
-        
+
         // normalize
         assert(Base\Ip::normalize('127.0.0.1') === '127.0.0.1');
         assert(Base\Ip::normalize('127.0.0') === '0.0.0.0');
         assert(Base\Ip::normalize('::1') === '127.0.0.1');
-        
+
         // allowed
         assert(Base\Ip::allowed('127.0.0.1',['whiteList'=>['127.0.*.*']]));
         assert(!Base\Ip::allowed('127.0.0.1',['whiteList'=>['127.0.1.1']]));

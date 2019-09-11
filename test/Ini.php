@@ -114,7 +114,7 @@ class Ini extends Base\Test
         assert(Base\Ini::setTimezone($timezone));
         assert(Base\Ini::getTimezone() === 'America/New_York');
         assert(Base\Timezone::get() === 'America/New_York');
-        
+
         // getTimeLimit
         assert(is_int(Base\Ini::getTimeLimit()));
 
@@ -136,10 +136,10 @@ class Ini extends Base\Test
 
         // setErrorLog
         assert(Base\Ini::setErrorLog(Base\Ini::getErrorLog()));
-        
+
         // getIncludePathSeparator
         assert(strlen(Base\Ini::getIncludePathSeparator()) === 1);
-        
+
         // getIncludePath
         assert(count(Base\Ini::getIncludePath()) === 1);
 
