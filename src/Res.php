@@ -2140,7 +2140,7 @@ class Res extends Root
     {
         $return = null;
         $option = Arr::plus(['csv'=>false,'amount'=>PHP_INT_MAX,'separator'=>null],$option);
-        
+
         if(is_resource($value))
         {
             if(empty($option['separator']))
@@ -2377,7 +2377,7 @@ class Res extends Root
     {
         $return = null;
         $option = Arr::plus(['skipEmpty'=>false,'trim'=>false],$option);
-        
+
         if(static::isSeekable($value) && static::isReadable($value))
         {
             $return = [];
@@ -2439,7 +2439,7 @@ class Res extends Root
     {
         $return = null;
         $option = Arr::plus(['rewind'=>true],$option);
-        
+
         if(static::isSeekable($value) && static::isReadable($value))
         {
             $return = 0;
@@ -2472,14 +2472,14 @@ class Res extends Root
     {
         $return = null;
         $option = Arr::plus(['rewind'=>true,'mb'=>null,'separator'=>null],$option,['csv'=>false]);
-        
+
         if(static::isSeekable($value) && static::isReadable($value) && !empty($sub))
         {
             $return = 0;
 
             if(empty($option['separator']))
             $option['separator'] = static::getLineSeparator($value);
-            
+
             if($option['rewind'] === true)
             static::seekRewind($value);
 
