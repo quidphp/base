@@ -147,12 +147,14 @@ class Path extends Base\Test
         assert(Base\Path::info('b/a')['dirname'] === '/b');
         assert(Base\Path::info('c:\\Windows\\meh/top\\well.jpg')['dirname'] === 'C:/Windows/meh/top');
         assert(Base\Path::info('/') === null);
-
+        assert(Base\Path::info('\\') === null);
+        
         // infoOne
         assert(Base\Path::infoOne(PATHINFO_EXTENSION,'/test/bla/ok.jpg') === 'jpg');
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'c:\\Windows\\meh/top/ok.jp') === 'C:/Windows/meh/top');
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'/') === null);
-
+        assert(Base\Path::infoOne(PATHINFO_DIRNAME,'\\') === null);
+        
         // infoDirname
 
         // build
@@ -197,7 +199,8 @@ class Path extends Base\Test
         assert('/bla/bla' === Base\Path::dirname('bla/bla/bla.jpg'));
         assert(Base\Path::dirname('c:\\test/test2/test3.zip') === 'C:/test/test2');
         assert(Base\Path::dirname('/') === null);
-
+        assert(Base\Path::dirname('\\') === null);
+        
         // changeDirname
         assert('/james/ok/bla.zip' === Base\Path::changeDirname('james/ok','bla/bla/bla.zip'));
         assert('/james/ok/bla.zip' === Base\Path::changeDirname('james/ok/','/bla.zip'));
