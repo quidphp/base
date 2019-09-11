@@ -226,10 +226,10 @@ class Path extends Set
                 $windowsDrive = true;
                 $return = ucfirst($return);
             }
-            
+
             if(stripos($return,'file://') === 0)
             $return = substr($return,7);
-            
+
             $return = preg_replace('#'.$separator.'+#',$separator,$return);
 
             if($stripWrap === true && $windowsDrive === false)

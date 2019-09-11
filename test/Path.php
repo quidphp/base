@@ -126,7 +126,7 @@ class Path extends Base\Test
         assert('/bla/bla/bla' === Base\Path::normalize('/bla//bla/bla'));
         assert(Base\Path::normalize('C:\\Windows\\well') === 'C:/Windows/well');
         assert(Base\Path::normalize("file://$_file_") === $_file_);
-        
+
         // prepareStr
         assert(Base\Path::prepareStr("c:\\Windows\well",Base\Path::option()) === ['C:','Windows','well']);
 

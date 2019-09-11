@@ -1152,20 +1152,20 @@ class Finder extends Root
         return $return;
     }
 
-    
+
     // normalize
     // gère les shortcut et normalize le chemin au besoin (pour les paths windows)
-    public static function normalize(string $return,bool $shortcut=true):string 
+    public static function normalize(string $return,bool $shortcut=true):string
     {
         if($shortcut === true)
         $return = static::shortcut($return);
-        
+
         $return = Path::normalize($return);
-        
+
         return $return;
     }
-    
-    
+
+
     // realpath
     // realpath en fonction du dossier courant
     // possibilité de changer le dossier courant
@@ -1175,10 +1175,10 @@ class Finder extends Root
 
         if($current === null || (is_string($current) && Dir::setCurrent($current)))
         $return = realpath($path);
-        
+
         if(is_string($return))
         $return = static::normalize($return,false);
-        
+
         if($return === false)
         $return = null;
 
