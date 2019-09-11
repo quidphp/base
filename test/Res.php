@@ -18,9 +18,9 @@ class Res extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $storagePath = Base\Finder::shortcut('[storage]');
-        $publicPath = Base\Finder::shortcut('[public]');
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $storagePath = Base\Finder::normalize('[storage]');
+        $publicPath = Base\Finder::normalize('[public]');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
         $public = $publicPath.'/media/base_res';
         $mediaJpg = '[assertMedia]/jpg.jpg';

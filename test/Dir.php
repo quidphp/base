@@ -19,10 +19,10 @@ class Dir extends Base\Test
     {
         // prepare
         Base\Finder::clearStatCache();
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
-        $storagePath = Base\Finder::shortcut('[storage]');
-        $common = Base\Finder::shortcut('[assertCommon]');
+        $storagePath = Base\Finder::normalize('[storage]');
+        $common = Base\Finder::normalize('[assertCommon]');
         $storage = '[assertCurrent]';
         assert(Base\Dir::reset($storage));
         $res = Base\Res::open(Base\Dir::path($storage));
@@ -234,7 +234,7 @@ class Dir extends Base\Test
         assert(Base\Dir::set('[assertCurrent]/whatzz/ok'));
         Base\Finder::clearStatCache(true);
         assert(Base\Dir::is('[assertCurrent]/whatzz/ok'));
-        tempnam(Base\Dir::shortcut($storage).'/whatzz/ok','bla');
+        tempnam(Base\Dir::normalize($storage).'/whatzz/ok','bla');
         assert(count(Base\Dir::unlinkIfEmpty($storage)) === 1);
         assert(!Base\Dir::isEmpty($storage));
         assert(Base\Dir::emptyAndUnlink('[assertCurrent]/whatzz'));

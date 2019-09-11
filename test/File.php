@@ -19,13 +19,13 @@ class File extends Base\Test
     {
         // prepare
         $mediaJpg = '[assertMedia]/jpg.jpg';
-        $storagePath = Base\Finder::shortcut('[storage]');
+        $storagePath = Base\Finder::normalize('[storage]');
         $storage = '[assertCurrent]';
         $common = '[assertCommon]';
         $currentFile = Base\Finder::path('[assertCommon]/class.php');
         assert(Base\Dir::reset($storage));
         $tmp = tmpfile();
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
         $temp = Base\File::prefix('[assertCurrent]');
         $open = Base\Res::open($currentFile);

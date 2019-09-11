@@ -18,7 +18,7 @@ class Ini extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $publicPath = Base\Finder::shortcut('[public]');
+        $publicPath = Base\Finder::normalize('[public]');
         $includePath = Base\Ini::getIncludePath();
 
         // is

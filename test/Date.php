@@ -326,9 +326,6 @@ class Date extends Base\Test
         assert(Base\Date::parseMake(['sql','Europe/Prague'],'2017-12-01 09:40:42') === 1512117642);
         assert(Base\Date::format(['sql','Europe/Prague'],1512117642) === '2017-12-01 09:40:42');
 
-        // parseLocale
-        assert(count(Base\Date::parseLocale('%Y','2017')) === 8);
-
         // parseStr
         assert(Base\Date::parseStr('2017-12-10 12:20 -1day')['day'] === 9);
         assert(count(Base\Date::parseStr('2017-12-10 12:20 -1week')) === 6);

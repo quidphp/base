@@ -32,54 +32,52 @@ class ImageRaster extends File
         $image = null;
         $length = strlen($value);
 
-        if($length > 0 && is_string($font) && is_array($option['text']) && count($option['text']) === 3)
+        if($length > 0 && is_string($font) && is_array($option['text']) && count($option['text']) === 3 && File::is($font))
         {
-            $font = File::shortcut($font);
+            $font = File::normalize($font);
 
-            if(File::is($font))
+            $return = Res::temp('png');
+            $width = $length * 40;
+            $str = Str::split(1,$value);
+            $image = imagecreatetruecolor($width,50);
+
+            // background
+            if(is_array($option['background']) && count($option['background']) === 3)
             {
-                $return = Res::temp('png');
-                $width = $length * 40;
-                $str = Str::split(1,$value);
-                $image = imagecreatetruecolor($width,50);
-
-                // background
-                if(is_array($option['background']) && count($option['background']) === 3)
-                {
-                    $backgroundColor = imagecolorallocate($image,...$option['background']);
-                    imagefilledrectangle($image,0,0,$width,50,$backgroundColor);
-                }
-
-                // line
-                if(is_array($option['line']) && count($option['line']) === 3)
-                {
-                    $lineColor = imagecolorallocate($image,...$option['line']);
-                    for ($i=0; $i < 10; $i++)
-                    {
-                        imageline($image,0,mt_rand() % 50,$width,mt_rand() % 50,$lineColor);
-                    }
-                }
-
-                // pixel
-                if(is_array($option['pixel']) && count($option['pixel']) === 3)
-                {
-                    $pixelColor = imagecolorallocate($image,...$option['pixel']);
-                    for ($i=0; $i < 1000; $i++)
-                    {
-                        imagesetpixel($image,mt_rand() % $width,mt_rand() % 50,$pixelColor);
-                    }
-                }
-
-                // text
-                $textColor = imagecolorallocate($image,...$option['text']);
-                foreach ($str as $k => $z)
-                {
-                    imagettftext($image,25,0,20 + ($k * 35),35,$textColor,$font,$z);
-                }
-
-                // render
-                imagepng($image,$return);
+                $backgroundColor = imagecolorallocate($image,...$option['background']);
+                imagefilledrectangle($image,0,0,$width,50,$backgroundColor);
             }
+
+            // line
+            if(is_array($option['line']) && count($option['line']) === 3)
+            {
+                $lineColor = imagecolorallocate($image,...$option['line']);
+                for ($i=0; $i < 10; $i++)
+                {
+                    imageline($image,0,mt_rand() % 50,$width,mt_rand() % 50,$lineColor);
+                }
+            }
+
+            // pixel
+            if(is_array($option['pixel']) && count($option['pixel']) === 3)
+            {
+                $pixelColor = imagecolorallocate($image,...$option['pixel']);
+                for ($i=0; $i < 1000; $i++)
+                {
+                    imagesetpixel($image,mt_rand() % $width,mt_rand() % 50,$pixelColor);
+                }
+            }
+
+            // text
+            $textColor = imagecolorallocate($image,...$option['text']);
+            foreach ($str as $k => $z)
+            {
+                imagettftext($image,25,0,20 + ($k * 35),35,$textColor,$font,$z);
+            }
+
+            // render
+            imagepng($image,$return);
+            imagedestroy($image);
         }
 
         return $return;

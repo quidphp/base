@@ -19,11 +19,11 @@ class Validate extends Base\Test
     {
         // prepare
         global $a;
-        $publicPath = Base\Finder::shortcut('[public]');
+        $publicPath = Base\Finder::normalize('[public]');
         $fp = tmpfile();
         $ua = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0';
         $nonUtf8 = "\xF0";
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $current = Base\Res::open($_file_);
         $headers = ['HTTP/1.0 200 OK','Content-Type: text/json; charset=UTF-8','test: ok'];
         Base\Response::setContentType('html');

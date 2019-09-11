@@ -35,7 +35,7 @@ namespace Quid\Test\Base
             $interface = Obj\Inter::class;
             $parentInterface = Obj\ParentInter::class;
             $anonymous = new class() { };
-            $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+            $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
 
             // typecast
             $array = ['test'=>2];

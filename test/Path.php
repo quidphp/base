@@ -18,8 +18,8 @@ class Path extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $common = Base\Finder::shortcut('[assertCommon]');
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $common = Base\Finder::normalize('[assertCommon]');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
 
         // is

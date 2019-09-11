@@ -538,7 +538,7 @@ class Session extends Root
         $return = session_save_path();
 
         if($shortcut === true)
-        $return = Finder::shortcut($return);
+        $return = Finder::normalize($return);
 
         return $return;
     }

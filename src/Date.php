@@ -1054,27 +1054,6 @@ class Date extends Root
     }
 
 
-    // parseLocale
-    // retourne un tableau détaillé à partir d'une date formatté par strftime ou gmstrftime
-    // le format utilise la syntaxe locale, pas de support pour timezone
-    // plutôt instable
-    public static function parseLocale(string $format,$value):?array
-    {
-        $return = null;
-        $value = Str::cast($value);
-
-        if(strlen($format))
-        {
-            $parse = strptime($value,static::getLocaleFormat($format));
-
-            if(!empty($parse))
-            $return = static::parsePrepare($parse);
-        }
-
-        return $return;
-    }
-
-
     // parseStr
     // parse une string compatible avec strtotime et retourne un tableau ou null
     // retourne null s'il y a une erreur dans le parse

@@ -1250,8 +1250,8 @@ class Res extends Root
         elseif(is_array($value) && File::isUploadNotEmpty($value))
         $value = File::uploadPath($value);
 
-        elseif(is_string($value))
-        $value = Finder::shortcut($value);
+        elseif(is_string($value) && empty(Uri::scheme($value)))
+        $value = Finder::normalize($value);
 
         if(is_string($value))
         {

@@ -194,7 +194,7 @@ class Fqcn extends Set
         $return = null;
         $value = static::str($value);
 
-        if(is_string($value) && strpos($value,'\\') !== false)
+        if(is_string($value) && strpos($value,'\\') !== false && strpos($value,'@') === false)
         {
             $array = explode('\\',$value);
             array_pop($array);

@@ -19,8 +19,8 @@ class Fqcn extends Base\Test
     {
         // prepare
         $datetime = new \Datetime('now');
-        $storage = Base\Finder::shortcut('[storage]');
-        $current = Base\Finder::shortcut('[assertCurrent]');
+        $storage = Base\Finder::normalize('[storage]');
+        $current = Base\Finder::normalize('[assertCurrent]');
 
         // is
         assert(Base\Fqcn::is("\Quid\Base\Test\TestBla"));
@@ -79,6 +79,7 @@ class Fqcn extends Base\Test
         assert(Base\Fqcn::namespace(['Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
         assert(Base\Fqcn::namespace(['','Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
         assert(Base\Fqcn::namespace(['Quid','Base','Test','TestBla']) === 'Quid\Base\Test');
+        assert(Base\Fqcn::namespace("class@anonymous") === null);
         assert(Base\Fqcn::namespace(null) === null);
 
         // stripRoot

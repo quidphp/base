@@ -18,7 +18,7 @@ class Mime extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $file = Base\Finder::shortcut('[assertCommon]/class.php');
+        $file = Base\Finder::normalize('[assertCommon]/class.php');
         $mediaJpg = '[assertMedia]/jpg.jpg';
         $mediaRes = Base\Res::open($mediaJpg);
 

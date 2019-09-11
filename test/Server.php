@@ -18,7 +18,7 @@ class Server extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
 
         // isMac
         assert(is_bool(Base\Server::isMac()));

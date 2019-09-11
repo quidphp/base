@@ -18,16 +18,16 @@ class Symlink extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $storagePath = Base\Finder::shortcut('[storage]');
+        $storagePath = Base\Finder::normalize('[storage]');
         $storage = '[assertCurrent]';
         $common = '[assertCommon]';
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
         assert(Base\Dir::reset($storage));
         $sym = $storage.'/sym';
         $sym2 = $storage.'/sym2';
         $sym3 = $storage.'/sym3';
-        symlink($_file_,Base\Symlink::shortcut($sym));
+        symlink($_file_,Base\Symlink::normalize($sym));
 
         // is
         assert(Base\Symlink::is($sym));

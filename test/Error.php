@@ -18,7 +18,7 @@ class Error extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $storage = Base\Finder::shortcut('[assertCurrent]');
+        $storage = Base\Finder::normalize('[assertCurrent]');
         assert(Base\Dir::reset($storage));
 
         // setHandler

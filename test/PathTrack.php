@@ -18,7 +18,7 @@ class PathTrack extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
 
         // path

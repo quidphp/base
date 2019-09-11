@@ -384,7 +384,7 @@ class Ini extends Root
     // la valeur est passé dans finder shortcut
     public static function setErrorLog(string $value):bool
     {
-        return static::set('error_log',Finder::shortcut($value));
+        return static::set('error_log',Finder::normalize($value));
     }
 
 

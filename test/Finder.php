@@ -18,20 +18,20 @@ class Finder extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $storagePath = Base\Finder::shortcut('[storage]');
-        $storagePublicPath = Base\Finder::shortcut('[storagePublic]');
-        $publicPath = Base\Finder::shortcut('[public]');
-        $common = Base\Finder::shortcut('[assertCommon]');
+        $storagePath = Base\Finder::normalize('[storage]');
+        $storagePublicPath = Base\Finder::normalize('[storagePublic]');
+        $publicPath = Base\Finder::normalize('[public]');
+        $common = Base\Finder::normalize('[assertCommon]');
         $finderPath = Base\Finder::classDir();
         $mediaCsv = '[assertMedia]/csv.csv';
         $storage = '[assertCurrent]';
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
         Base\Finder::clearStatCache(true);
         assert(Base\Dir::reset($storage));
         $tp = tmpfile();
         $stream = stream_get_meta_data($tp);
-        $sym = Base\Finder::shortcut($storage.'/symtype');
+        $sym = Base\Finder::normalize($storage.'/symtype');
         $type = ucfirst($data['boot']->type());
         symlink($_file_,$sym);
 

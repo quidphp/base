@@ -25,7 +25,7 @@ class Csv extends Base\Test
         $fileRes = Base\File::open($currentFile);
         $temp = Base\File::prefix('[assertCurrent]');
         $res = Base\File::resource($temp);
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
         assert(Base\Dir::reset($storage));
         assert(Base\File::set('[assertCurrent]/test.php','WHAT'));
