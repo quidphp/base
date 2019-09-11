@@ -53,15 +53,15 @@ class Path extends Set
         return (is_string($value) && strlen($value) === 2 && substr($value,1,1) === ':')? true:false;
     }
 
-    
+
     // hasWindowsDrive
     // retourne vrai si le chemin contient un windows drive
-    public static function hasWindowsDrive($value):bool 
+    public static function hasWindowsDrive($value):bool
     {
         return (is_string($value) && strlen($value) >= 2 && static::isWindowsDrive(substr($value,0,2)))? true:false;
     }
-    
-    
+
+
     // hasExtension
     // retourne vrai si le chemin a une extension
     public static function hasExtension(string $path):bool

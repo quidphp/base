@@ -36,13 +36,13 @@ class Path extends Base\Test
         assert(Base\Path::isWindowsDrive('c:'));
         assert(!Base\Path::isWindowsDrive('c'));
         assert(!Base\Path::isWindowsDrive('/c:'));
-        
+
         // hasWindowsDrive
         assert(Base\Path::hasWindowsDrive('c:'));
         assert(Base\Path::hasWindowsDrive('c:\\ok/trest'));
         assert(!Base\Path::hasWindowsDrive('/c:\\ok/trest'));
         assert(!Base\Path::hasWindowsDrive('c\\ok/trest'));
-        
+
         // hasExtension
         assert(false === Base\Path::hasExtension('/test'));
         assert(true === Base\Path::hasExtension('/test.php'));

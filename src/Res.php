@@ -1017,30 +1017,30 @@ class Res extends Root
         return $return;
     }
 
-    
+
     // pathFile
     // méthode utilisé pour générer le chemin d'une ressource fichier
     // méthode protégé
-    protected static function pathFile($value):?string 
+    protected static function pathFile($value):?string
     {
         $return = null;
         $uri = static::uri($value);
-        
+
         if(is_string($uri))
         {
             if(Path::hasWindowsDrive($uri))
             $return = $uri;
-            
+
             else
             $return = Uri::removeScheme($uri);
-            
+
             $return = Path::normalize($return);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // pathinfo
     // retourne le tableau pathinfo
     // ne fonctionne pas avec les directoires

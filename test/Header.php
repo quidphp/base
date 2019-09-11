@@ -157,7 +157,7 @@ class Header extends Base\Test
 
         // prepareStr
         assert(Base\Header::prepareStr("Test:  ok \r\nHTTP/1.1 OK 200 \r\n Test2 : what2") === ['Test:  ok ','HTTP/1.1 OK 200 ',' Test2 : what2']);
-        
+
         // explodeStr
         assert(Base\Header::explodeStr("Test:  ok \r\nHTTP/1.1 OK 200 \r\n Test2 : what2") === ['Test:  ok ','HTTP/1.1 OK 200 ',' Test2 : what2']);
 
