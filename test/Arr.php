@@ -1210,7 +1210,7 @@ class Arr extends Base\Test
         assert(['test3'=>'test3'] === Base\Arr::keysStrip(['test','test2'],$slice));
         assert(['tÉST2'=>3] === Base\Arr::keysStrip(['TÉST'],['tést'=>1,'TÉst'=>2,'tÉST2'=>3],false));
         assert([] === Base\Arr::keysStrip(['TÉST','tést2'],['tést'=>1,'TÉst'=>2,'tÉST2'=>3],false));
-        
+
         // keyNav
         assert(Base\Arr::keyNav('test',1,['test'=>2,'test2'=>true,'tres'=>'ok']) === 'test2');
         assert(Base\Arr::keyNav('test',3,['test'=>2,'test2'=>true,'tres'=>'ok']) === null);
@@ -1240,7 +1240,7 @@ class Arr extends Base\Test
         assert(Base\Arr::keysChangeCase(CASE_UPPER,$array) === ['TEST'=>2,'JAMES'=>'OK',2]);
         assert(Base\Arr::keysChangeCase(CASE_LOWER,$array) === ['test'=>2,'james'=>'OK',2]);
         assert(Base\Arr::keysChangeCase('ucfirst',$array) === ['Test'=>2,'James'=>'OK',2]);
-        
+
         // keysLower
         $array = [1=>'no',1.2=>'ok','1.2'=>'ok','test'=>'no','TEST'=>'no','tEST'=>'ok','TÉST'=>'mb'];
         assert(Base\Arr::keysLower($array,false) === [1=>'ok','1.2'=>'ok','test'=>'ok','tÉst'=>'mb']);
