@@ -715,7 +715,7 @@ class Uri extends Root
     // retourne un tableau vide similaire au retour de parse_url
     public static function getEmptyParse():array
     {
-        return Arr::valuesAll(null,array_keys(static::$config['parseConstant']));
+        return Arr::valuesAll(null,static::$config['parseConstant']);
     }
 
 

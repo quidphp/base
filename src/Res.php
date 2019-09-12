@@ -971,7 +971,7 @@ class Res extends Root
 
     // parse
     // retourne le tableau avec les résultats de parse_url si la resource a une uri
-    // gestion particulière pour les chemins avec windows drive
+    // gestion particulière pour les chemins files
     // ne fonctionne pas avec les directoires
     public static function parse($value):?array
     {
@@ -980,7 +980,7 @@ class Res extends Root
 
         if(is_string($uri))
         {
-            if(Path::hasWindowsDrive($uri))
+            if(static::isFile($value))
             {
                 $return = Uri::getEmptyParse();
                 $return['path'] = $uri;
@@ -996,7 +996,7 @@ class Res extends Root
 
     // parseOne
     // retourne une partie des résultats de parse_url si la resource a une uri
-    // gestion particulière pour les chemins avec windows drive
+    // gestion particulière pour les chemins files
     // ne fonctionne pas avec les directoires
     public static function parseOne($key,$value):?string
     {
@@ -1005,7 +1005,7 @@ class Res extends Root
 
         if(is_string($uri))
         {
-            if(Path::hasWindowsDrive($uri))
+            if(static::isFile($value))
             {
                 $key = Uri::getParseConstant($key);
 
@@ -1648,12 +1648,13 @@ class Res extends Root
 
     // tmpFile
     // retourne une ressource fichier dans le dossier temporaire
-    // par défaut change l'extension
+    // par défaut change l'extension si ce n'est pas la même
+    // windows donne une extension .tmp au fichier temporaire
     public static function tmpFile(?string $extension='tmp')
     {
         $return = tmpfile();
 
-        if(is_string($extension))
+        if(!empty($return) && is_string($extension) && static::extension($return) !== $extension)
         $return = static::changeExtension($extension,$return);
 
         return $return;

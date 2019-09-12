@@ -475,9 +475,15 @@ class Symlink extends Finder
     {
         $return = false;
         $path = static::path($path);
-
-        if(static::isWritable($path,false) && unlink($path))
-        $return = true;
+        
+        if(static::isWritable($path,false))
+        {
+            if(Server::isWindows() && Dir::is($path))
+            $return = rmdir($path);
+            
+            else
+            $return = unlink($path);
+        }
 
         return $return;
     }

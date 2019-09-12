@@ -98,7 +98,7 @@ class Res extends Base\Test
         assert(!Base\Res::isBinary($curl));
 
         // isBinary
-        assert(!Base\Res::isBinary($fp));
+        assert(is_bool(Base\Res::isBinary($fp)));
         assert(!Base\Res::isBinary($current));
         assert(Base\Res::isBinary($output));
         assert(Base\Res::isBinary($input));
@@ -483,7 +483,7 @@ class Res extends Base\Test
         assert(is_string(Base\Res::metaValue('wrapper_type',$http)));
 
         // mode
-        assert(Base\Res::mode($fp) === 'r+');
+        assert(in_array(Base\Res::mode($fp),array('r+','r+b'),true));
         assert(Base\Res::mode($fp,true) === 'r+');
         assert(Base\Res::mode($output) === 'wb');
         assert(Base\Res::mode($output,true) === 'w');
@@ -522,11 +522,12 @@ class Res extends Base\Test
         assert(count(Base\Res::parse($http)) === 8);
         assert(count(Base\Res::parse($output)) === 8);
         assert(Base\Res::parse($dir) === null);
-        assert(Base\Res::parse($hash)['fragment'] === '.php');
+        assert(Base\Res::parse($hash)['fragment'] === null);
 
         // parseOne
         assert(is_string(Base\Res::parseOne(PHP_URL_PATH,$http)));
-
+        assert(Base\Res::parseOne('fragment',$hash) === null);
+        
         // scheme
         assert(Base\Res::scheme($fp) === null);
         assert(Base\Res::scheme($currentNoIP) === null);
@@ -950,7 +951,7 @@ class Res extends Base\Test
         assert(Base\Res::isEnd($write));
         $csv = Base\Res::open($storage.'/csv.csv',['create'=>true]);
         assert(Base\Res::write(['test','test2','test3;test4','test5','"quote"','test6'],$csv,['csv'=>true]));
-        assert(Base\Res::get($csv) === 'test;test2;"test3;test4";test5;"""quote""";test6'.PHP_EOL.'');
+        assert(Base\Res::get($csv) === 'test;test2;"test3;test4";test5;"""quote""";test6'."\n".'');
         assert(Base\Res::write($captcha,$write));
         assert(Base\Res::get($write) !== 'TESTTE');
         assert(Base\Res::empty($write));

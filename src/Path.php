@@ -366,7 +366,7 @@ class Path extends Set
     // retourne un tableau vide similaire au retour de pathinfo
     public static function getEmptyInfo():array
     {
-        return Arr::valuesAll(null,array_keys(static::$config['infoConstant']));
+        return Arr::valuesAll(null,static::$config['infoConstant']);
     }
 
 
