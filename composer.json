@@ -13,11 +13,11 @@
     ],
     "require": {
         "php": ">=7.3.0",
+        "ext-curl": "*",
+        "ext-fileinfo": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ext-openssl": "*",
-        "ext-fileinfo": "*",
-        "ext-curl": "*"
+        "ext-openssl": "*"
     },
     "autoload": {
         "psr-4": {
