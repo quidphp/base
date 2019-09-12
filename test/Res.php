@@ -675,9 +675,9 @@ class Res extends Base\Test
         // setContextMime
 
         // setContextBasename
-        
+
         // setContextEol
-        
+
         // getPhpContextOption
         assert(count(Base\Res::getPhpContextOption(null,$current)) === 2);
 
@@ -686,12 +686,12 @@ class Res extends Base\Test
 
         // getContextBasename
         assert(is_string(Base\Res::getContextBasename($current)));
-        
+
         // getContextEol
         assert(Base\Res::getContextEol($current) === null);
         assert(is_string(Base\Res::findEol($current)));
         assert(is_string(Base\Res::getContextEol($current)));
-        
+
         // setContextBasename
         $tempCon = Base\Res::phpWritable('temp');
         assert(!empty(Base\Res::basename($tempCon)));

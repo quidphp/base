@@ -1577,7 +1577,7 @@ class Res extends Root
         return static::setPhpContextOption('basename',$basename,$res);
     }
 
-    
+
     // setContextEol
     // permet de changer la valeur eol au sein du contexte de la ressource
     // separator peut être null ou false
@@ -1585,8 +1585,8 @@ class Res extends Root
     {
         return static::setPhpContextOption('eol',$separator,$res);
     }
-    
-    
+
+
     // getPhpContextOption
     // retourne une option de contexte ou null
     // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
@@ -1623,15 +1623,15 @@ class Res extends Root
         return static::getPhpContextOption('basename',$value);
     }
 
-    
+
     // getContextEol
     // retourne la valeur eol storé dans le contexte de la resource
     public static function getContextEol($value):?string
     {
         return static::getPhpContextOption('eol',$value);
     }
-    
-    
+
+
     // output
     // ouvre une resource de type php output
     // par défaut le buffer actuel est clean
