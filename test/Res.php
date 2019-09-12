@@ -483,7 +483,7 @@ class Res extends Base\Test
         assert(is_string(Base\Res::metaValue('wrapper_type',$http)));
 
         // mode
-        assert(in_array(Base\Res::mode($fp),array('r+','r+b'),true));
+        assert(in_array(Base\Res::mode($fp),['r+','r+b'],true));
         assert(Base\Res::mode($fp,true) === 'r+');
         assert(Base\Res::mode($output) === 'wb');
         assert(Base\Res::mode($output,true) === 'w');
@@ -527,7 +527,7 @@ class Res extends Base\Test
         // parseOne
         assert(is_string(Base\Res::parseOne(PHP_URL_PATH,$http)));
         assert(Base\Res::parseOne('fragment',$hash) === null);
-        
+
         // scheme
         assert(Base\Res::scheme($fp) === null);
         assert(Base\Res::scheme($currentNoIP) === null);
