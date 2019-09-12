@@ -1165,15 +1165,15 @@ class Finder extends Root
         return $return;
     }
 
-    
+
     // setShortcutMethod
     // remplacement de setShortcutMethod dans le trait shortcut
-    public static function setShortcutMethod():callable 
+    public static function setShortcutMethod():callable
     {
-        return array(static::class,'normalize');
+        return [static::class,'normalize'];
     }
-    
-    
+
+
     // realpath
     // realpath en fonction du dossier courant
     // possibilité de changer le dossier courant

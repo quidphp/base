@@ -1112,7 +1112,7 @@ class Dir extends Finder
                     $return = true;
                 }
             }
-            
+
             elseif(static::set($path,$recursive))
             $return = true;
         }

@@ -241,7 +241,7 @@ class Finder extends Base\Test
         // rename
         $file = tmpfile();
         assert(Base\Finder::rename('[assertCurrent]/tmp',Base\Res::uri($file)));
-        
+
         if(!Base\Server::isWindows())
         {
             // changeDirname
@@ -315,10 +315,10 @@ class Finder extends Base\Test
         assert(Base\Finder::path('[assertCommon]',true) === $common);
 
         // normalize
-        
+
         // setShortcutMethod
         assert(!empty(Base\Finder::setShortcutMethod()));
-        
+
         // realpath
         assert(Base\Finder::realpath('media',$publicPath) === $storagePublicPath.'/media');
         assert(Base\Finder::realpath('mediaz') === null);

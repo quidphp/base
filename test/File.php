@@ -258,10 +258,10 @@ class File extends Base\Test
 
         // getLineSeparator
         assert(is_string(Base\File::getLineSeparator($currentFile)));
-        
+
         // getLineSeparatorLength
-        assert(in_array(Base\File::getLineSeparatorLength($currentFile),array(1,2),true));
-        
+        assert(in_array(Base\File::getLineSeparatorLength($currentFile),[1,2],true));
+
         // read
         assert(Base\File::read(100,500,$currentFile) === Base\File::read(100,500,$open));
         assert(Base\File::read(0,true,$currentFile) === Base\File::read(0,true,$open));

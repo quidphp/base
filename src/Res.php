@@ -189,17 +189,17 @@ class Res extends Root
 
     // isStreamMetaFile
     // retourne vrai si le tableau de meta représente une ressource fichier
-    public static function isStreamMetaFile($value):bool 
+    public static function isStreamMetaFile($value):bool
     {
         $return = false;
-        
+
         if(is_array($value) && !empty($value['stream_type']) && $value['stream_type'] === 'STDIO')
         $return = true;
-        
+
         return $return;
     }
-    
-    
+
+
     // isFile
     // retourne vrai si la resource est de kind fichier
     // ne vérifie pas l'existence
@@ -210,7 +210,7 @@ class Res extends Root
         if(static::isStream($value))
         {
             $meta = stream_get_meta_data($value);
-            
+
             if(static::isStreamMetaFile($meta))
             $return = true;
         }
@@ -224,7 +224,7 @@ class Res extends Root
     public static function isFileExists($value):bool
     {
         $return = static::isFile($value);
-        
+
         if($return === true)
         {
             $path = static::pathFile($value);
@@ -232,7 +232,7 @@ class Res extends Root
             if(is_string($path) && File::is($path))
             $return = true;
         }
-        
+
         return $return;
     }
 
@@ -821,7 +821,7 @@ class Res extends Root
         return $return;
     }
 
-    
+
     // meta
     // retourne les meta données de la resource, si disponible
     // fonctionne pour curl
@@ -832,7 +832,7 @@ class Res extends Root
         if(static::canMeta($value))
         {
             $return = stream_get_meta_data($value);
-            
+
             if(static::isStreamMetaFile($return))
             $return['uri'] = Path::normalize($return['uri']);
         }
@@ -2364,15 +2364,15 @@ class Res extends Root
         return $return;
     }
 
-    
+
     // getLineSeparatorLength
     // retourne la longueur du séparateur de ligne (1 ou 2)
-    public static function getLineSeparatorLength($value):int 
+    public static function getLineSeparatorLength($value):int
     {
         return strlen(static::getLineSeparator($value));
     }
-    
-    
+
+
     // findLineSeparator
     // tente de trouver le séparateur de ligne dans la resource
     // va seek et retourner à la position originale

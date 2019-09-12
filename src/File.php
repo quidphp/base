@@ -175,7 +175,7 @@ class File extends Finder
         $return = false;
         $value = static::getLoadPath($value);
         $normalize = (Server::isWindows())? true:false;
-        
+
         if(!empty($value) && in_array($value,static::loaded($normalize),true))
         $return = true;
 
@@ -343,7 +343,7 @@ class File extends Finder
         $value = $args[$v];
         $close = (is_resource($value))? false:true;
         $args[$v] = static::resource($value,['create'=>$create]);
-        
+
         if(is_int($o))
         $args[$o] = static::option($args[$o]);
 
@@ -510,10 +510,10 @@ class File extends Finder
     public static function loaded(bool $normalize=false):array
     {
         $return = get_included_files();
-        
+
         if($normalize === true)
-        $return = array_map(array(Path::class,'normalize'),$return);
-        
+        $return = array_map([Path::class,'normalize'],$return);
+
         return $return;
     }
 
@@ -761,7 +761,7 @@ class File extends Finder
         return static::open($value,Arr::plus($option,['create'=>true]));
     }
 
-        
+
     // line
     // retourne la ligne courante de la resource fichier ou la première ligne si c'est un chemin qui est fourni
     public static function line($value,?array $option=null)
@@ -811,14 +811,14 @@ class File extends Finder
         return static::res('getLineSeparator',false,0,null,$value);
     }
 
-    
+
     // getLineSeparatorLength
     // retourne la longueur du séparateur de ligne (1 ou 2)
-    public static function getLineSeparatorLength($value):int 
+    public static function getLineSeparatorLength($value):int
     {
         return static::res('getLineSeparatorLength',false,0,null,$value);
     }
-    
+
 
     // read
     // lit le contenu d'un chemin de fichier ou d'une resource fichier

@@ -58,15 +58,15 @@ trait _shortcut
         return;
     }
 
-    
+
     // setShortcutMethod
     // méthode utilisé lors de l'ajout du shortcut
-    public static function setShortcutMethod():callable 
+    public static function setShortcutMethod():callable
     {
-        return array(static::class,'shortcut');
+        return [static::class,'shortcut'];
     }
-    
-    
+
+
     // unsetShortcut
     // enlève un shortcut
     public static function unsetShortcut(string $key):void
