@@ -256,7 +256,7 @@ class Uri extends Base\Test
         assert(['g'=>2,'v'=>'a'] === Base\Uri::parseQuery('g=2&v=a'));
         assert(['g'=>2,'v'=>'true'] === Base\Uri::parseQuery('g=2&v=true'));
         assert(Base\Uri::parseQuery('g=2&v=test%20%2B%20james') === ['g'=>2,'v'=>'test + james']);
-        
+
         // buildQuery
         assert(Base\Uri::buildQuery(['g'=>2,'bla'=>'stringé','space'=>'wh + as']) === 'g=2&bla=stringé&space=wh + as');
         assert(Base\Uri::buildQuery(['g'=>2,'bla'=>'stringé','space'=>'wh + as'],true) === 'g=2&bla=string%C3%A9&space=wh%20%2B%20as');
@@ -266,8 +266,8 @@ class Uri extends Base\Test
         // parse
         assert(Base\Uri::parse('http%3A%2F%2Fwww.google.com%2F%20test.php%3Fg%3D3%26test%C3%A9%3D4',true)['path'] === '/ test.php');
         assert(count(Base\Uri::parse('http%3A%2F%2Fwww.google.com%2F%20test.php%3Fg%3D3%26test%C3%A9%3D4',true)) === 8);
-        assert(Base\Uri::parse("C:/ok/well/what")['path'] === "/ok/well/what");
-        assert(Base\Uri::parse("C:\\ok\\well\\what")['path'] === "\\ok\\well\\what");
+        assert(Base\Uri::parse('C:/ok/well/what')['path'] === '/ok/well/what');
+        assert(Base\Uri::parse('C:\\ok\\well\\what')['path'] === '\\ok\\well\\what');
 
         // parseOne
         assert(Base\Uri::parseOne(PHP_URL_PATH,'http%3A%2F%2Fwww.google.com%2F%20test.php%3Fg%3D3%26test%C3%A9%3D4',true) === '/ test.php');
@@ -275,11 +275,11 @@ class Uri extends Base\Test
 
         // getParseConstant
         assert(Base\Uri::getParseConstant('path') === PHP_URL_PATH);
-        
+
         // getEmptyParse
         assert(current(Base\Uri::getEmptyParse()) === null);
         assert(count(Base\Uri::getEmptyParse()) === 8);
-        
+
         // info
         assert(Base\Uri::info('http%3A%2F%2Fwww.google.com%2F%20test.php%3Fg%3D3%26test%C3%A9%3D4',true)['parse']['path'] === '/ test.php');
         assert(Base\Uri::info('http%3A%2F%2Fwww.google.com%2F%20test.php%3Fg%3D3%26test%C3%A9%3D4',true)['parse']['query'] === 'g=3&testé=4');

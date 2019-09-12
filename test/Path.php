@@ -158,14 +158,14 @@ class Path extends Base\Test
         assert(Base\Path::infoOne(PATHINFO_DIRNAME,'d:') === null);
 
         // infoDirname
-        
+
         // getInfoConstant
         assert(Base\Path::getInfoConstant('dirname') === PATHINFO_DIRNAME);
-        
+
         // getEmptyInfo
         assert(count(Base\Path::getEmptyInfo()) === 4);
         assert(current(Base\Path::getEmptyInfo()) === null);
-        
+
         // build
         assert($_file_ === Base\Path::build(pathinfo($_file_)));
         assert($_dir_ === Base\Path::build(pathinfo($_dir_)));

@@ -1360,10 +1360,10 @@ class Arr extends Base\Test
         $slice = ['É','testé','TEST','tEst'];
         assert(Base\Arr::valueKey('test',$slice,false) === [2,3]);
         assert(Base\Arr::valueKey('testÉ',$slice,false) === [1]);
-        
+
         // valuesAll
-        assert(Base\Arr::valuesAll(null,array('test'=>2,3)) === array('test'=>null,null));
-        
+        assert(Base\Arr::valuesAll(null,['test'=>2,3]) === ['test'=>null,null]);
+
         // valuesKey
         $array = [true,2=>false,true,1=>false,true];
         assert(Base\Arr::valuesKey([false],$array) === [2,1]);

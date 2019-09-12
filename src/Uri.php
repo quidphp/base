@@ -34,7 +34,7 @@ class Uri extends Root
             'separator'=>['&','&amp;'], // séparateur pour http_build_query
             'encoding'=>PHP_QUERY_RFC3986, // encodage pour http_build_query
             'default'=>'t'], // clé de query a utilisé si append est true
-        'parseConstant'=>array( // tableau liant des strings aux constantes
+        'parseConstant'=>[ // tableau liant des strings aux constantes
             'scheme'=>PHP_URL_SCHEME,
             'user'=>PHP_URL_USER,
             'pass'=>PHP_URL_PASS,
@@ -42,7 +42,7 @@ class Uri extends Root
             'port'=>PHP_URL_PORT,
             'path'=>PHP_URL_PATH,
             'query'=>PHP_URL_QUERY,
-            'fragment'=>PHP_URL_FRAGMENT),
+            'fragment'=>PHP_URL_FRAGMENT],
         'scheme'=>['http','https','ftp'], // scheme accepté par la méthode isSchemeValid
         'build'=>[ // pour reconstruire à partir d'un array
             'scheme'=>'://',
@@ -681,10 +681,10 @@ class Uri extends Root
     public static function parseOne($key,string $uri,bool $decode=false)
     {
         $return = null;
-        
+
         if(is_string($key))
         $key = static::getParseConstant($key);
-        
+
         if(is_int($key))
         {
             $uri = static::shortcut($uri);
@@ -701,7 +701,7 @@ class Uri extends Root
         return $return;
     }
 
-    
+
     // getParseConstant
     // retourne la constante à partir d'une string
     // utilisé pour parse_url
@@ -709,16 +709,16 @@ class Uri extends Root
     {
         return static::$config['parseConstant'][$key] ?? null;
     }
-    
-    
+
+
     // getEmptyParse
     // retourne un tableau vide similaire au retour de parse_url
-    public static function getEmptyParse():array 
+    public static function getEmptyParse():array
     {
         return Arr::valuesAll(null,array_keys(static::$config['parseConstant']));
     }
-    
-    
+
+
     // info
     // retourne un tableau d'information sur l'uri
     public static function info(string $uri,bool $decode=false):array

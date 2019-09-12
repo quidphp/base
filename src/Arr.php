@@ -4087,20 +4087,20 @@ class Arr extends Root
         return static::keys($array,$value,$sensitive,true);
     }
 
-    
+
     // valuesAll
     // permet de changer la valeur de toutes les clés du tableau
-    public static function valuesAll($value,array $return) 
+    public static function valuesAll($value,array $return)
     {
-        foreach ($return as $k => $v) 
+        foreach ($return as $k => $v)
         {
             $return[$k] = $value;
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // valuesKey
     // retourne toutes les clés contenant les valeurs données
     // permet la recherche insensible à la case

@@ -985,7 +985,7 @@ class Res extends Root
                 $return = Uri::getEmptyParse();
                 $return['path'] = $uri;
             }
-            
+
             else
             $return = Uri::parse($uri,false);
         }
@@ -1008,15 +1008,15 @@ class Res extends Root
             if(Path::hasWindowsDrive($uri))
             {
                 $key = Uri::getParseConstant($key);
-                
+
                 if($key === PHP_URL_PATH)
                 $return = $uri;
             }
-            
+
             else
             $return = Uri::parseOne($key,$uri,false);
         }
-        
+
         return $return;
     }
 
@@ -1316,8 +1316,8 @@ class Res extends Root
 
         return $return;
     }
-    
-    
+
+
     // openFromKind
     // utilisé lors de l'ouverture de la resource, une fois le kind déterminé
     // méthode protégé
@@ -1645,21 +1645,21 @@ class Res extends Root
         return static::phpWritable('memory',Arr::plus(['mime'=>$mime,'basename'=>$basename],$option));
     }
 
-    
+
     // tmpFile
     // retourne une ressource fichier dans le dossier temporaire
     // par défaut change l'extension
-    public static function tmpFile(?string $extension='tmp') 
+    public static function tmpFile(?string $extension='tmp')
     {
         $return = tmpfile();
-        
+
         if(is_string($extension))
         $return = static::changeExtension($extension,$return);
-        
+
         return $return;
     }
-    
-    
+
+
     // http
     // fait une requête http, value doit être une uri absolute
     // retourne un tableau avec code, contenttype, basename, meta, header et resource si c'est bien une requête http
@@ -3394,8 +3394,8 @@ class Res extends Root
 
         return $return;
     }
-    
-    
+
+
     // uriSchemeNotWindowsDrive
     // retourne le scheme de l'uri s'il n'y a pas de windows drive
     // méthode protégé

@@ -49,7 +49,7 @@ class Finder extends Base\Test
         assert(!Base\Finder::isWritable('doesnotexist'));
 
         // isExecutable
-        
+
         // isPathToUri
         assert(Base\Finder::isPathToUri($publicPath.$mediaCsv));
 
