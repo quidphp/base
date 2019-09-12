@@ -211,7 +211,7 @@ class Dir extends Finder
         $scan = static::scan($path,$option['sort']);
 
         if(!is_string($option['relative']))
-        $option['relative'] = $path;
+        $option['relative'] = static::path($path);
 
         if(is_array($scan))
         {
@@ -228,7 +228,6 @@ class Dir extends Finder
                 if($keep === true)
                 {
                     $makeFormat = static::getMakeFormat($fullPath,$option);
-
                     if($makeFormat === false)
                     continue;
 
