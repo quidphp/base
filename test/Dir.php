@@ -56,7 +56,10 @@ class Dir extends Base\Test
         assert(strtolower(Base\Dir::getCurrent()) === strtolower($_dir_));
         assert(Base\Dir::setCurrent('[storage]'));
         assert(Base\Dir::getCurrent() === $storagePath);
-
+        
+        // scan
+        assert(count(Base\Dir::scan($common)) === 14);
+        
         // get
         assert(count(Base\Dir::get($common)) <= 14);
         assert(!Base\Arrs::is(Base\Dir::get($common)));
@@ -146,7 +149,7 @@ class Dir extends Base\Test
         assert(Base\Dir::getDirFromFileAndDir('[assertCommon]/class.php') === ['[assertCommon]']);
         assert(Base\Dir::getDirFromFileAndDir('[assertCommon]','[assertCommon]/class.php') === ['[assertCommon]']);
         assert(Base\Dir::getDirFromFileAndDir('[assertCommon]','[assertCommon]/class.phpz') === ['[assertCommon]']);
-        assert(Base\Dir::getDirFromFileAndDir('[assertCommon]/class.phpz',) === []);
+        assert(Base\Dir::getDirFromFileAndDir('[assertCommon]/class.phpz') === []);
 
         // fromToCatchAll
         assert(count(Base\Dir::fromToCatchAll([dirname($common).'/*'=>'[public]'])) === 2);

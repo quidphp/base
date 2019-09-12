@@ -171,7 +171,35 @@ class Dir extends Finder
         return $return;
     }
 
+    
+    // scan
+    // wrapper pour scan dir
+    // enlève les fichiers invisibles, et gère un problème sous système windows
+    // retourne un tableau avec des chemins absoluts
+    public static function scan($path,?int $sort=null):?array
+    {
+        $return = null;
+        $path = static::path($path);
+        
+        if(static::isReadable($path,false))
+        {
+            $return = [];
+            $isWindows = Server::isWindows();
+            $sort = (is_int($sort))? $sort:SCANDIR_SORT_ASCENDING;
+            
+            foreach (scandir($path,$sort) as $value)
+            {
+                $fullPath = Path::append($path,$value);
 
+                if(!static::isDot($fullPath) && ($isWindows === false || Finder::is($fullPath,false)))
+                $return[] = $fullPath;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // get
     // retourne le contenu d'un directoire
     // dig permet de faire un listing recursif
@@ -179,45 +207,41 @@ class Dir extends Finder
     public static function get($path,bool $dig=false,?array $option=null):?array
     {
         $return = null;
-        $path = static::path($path);
-        $option = Arrs::replace(['sort'=>SCANDIR_SORT_ASCENDING,'in'=>null,'out'=>null,'format'=>null,'formatExtra'=>false,'relative'=>null,'fqcn'=>null,'fqcnClass'=>null,'fqcnTrait'=>null,'fqcnInterface'=>null],$option);
-
+        $option = Arrs::replace(['sort'=>null,'in'=>null,'out'=>null,'format'=>null,'formatExtra'=>false,'relative'=>null,'fqcn'=>null,'fqcnClass'=>null,'fqcnTrait'=>null,'fqcnInterface'=>null],$option);
+        $scan = static::scan($path,$option['sort']);
+        
         if(!is_string($option['relative']))
         $option['relative'] = $path;
-
-        if(static::isReadable($path,false) && is_int($option['sort']))
+        
+        if(is_array($scan))
         {
             $return = [];
-
-            foreach (scandir($path,$option['sort']) as $value)
+            
+            foreach ($scan as $fullPath) 
             {
                 $keep = true;
                 $filter = [];
-                $fullPath = Path::append($path,$value);
 
-                if(!static::isDot($fullPath) && (!Server::isWindows() || Finder::is($fullPath,false)))
+                if(!empty($option['in']) || !empty($option['out']))
+                $keep = static::getKeepInOut($fullPath,$option['in'],$option['out']);
+
+                if($keep === true)
                 {
-                    if(!empty($option['in']) || !empty($option['out']))
-                    $keep = static::getKeepInOut($fullPath,$option['in'],$option['out']);
+                    $makeFormat = static::getMakeFormat($fullPath,$option);
 
-                    if($keep === true)
-                    {
-                        $makeFormat = static::getMakeFormat($fullPath,$option);
+                    if($makeFormat === false)
+                    continue;
 
-                        if($makeFormat === false)
-                        continue;
+                    elseif(is_array($makeFormat) && !empty($makeFormat))
+                    $return = Arr::append($return,$makeFormat);
+                }
 
-                        elseif(is_array($makeFormat) && !empty($makeFormat))
-                        $return = Arr::append($return,$makeFormat);
-                    }
-
-                    if($dig === true && static::isReadable($fullPath,false))
-                    {
-                        if($option['format'] === 'tree')
-                        $return[$fullPath] = static::get($fullPath,$dig,$option);
-                        else
-                        $return = Arr::append($return,static::get($fullPath,$dig,$option));
-                    }
+                if($dig === true && static::isReadable($fullPath,false))
+                {
+                    if($option['format'] === 'tree')
+                    $return[$fullPath] = static::get($fullPath,$dig,$option);
+                    else
+                    $return = Arr::append($return,static::get($fullPath,$dig,$option));
                 }
             }
         }

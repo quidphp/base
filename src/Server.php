@@ -70,15 +70,23 @@ class Server extends Root
 
 
     // isApache
-    // retourne vrai si le serveur est sur apache
+    // retourne vrai si le serveur est apache
     public static function isApache():bool
     {
-        return (strpos(static::software(),'Apache') !== false)? true:false;
+        return (stripos(static::software(),'apache') !== false)? true:false;
     }
 
-
+    
+    // isNginx
+    // retourne vrai si le serveur est nginx
+    public static function isNginx():bool
+    {
+        return (stripos(static::software(),'nginx') !== false)? true:false;
+    }
+    
+    
     // isIis
-    // retourne vrai si le serveur est sur iis
+    // retourne vrai si le serveur est iis
     public static function isIis():bool
     {
         return (strpos(static::software(),'IIS') !== false)? true:false;
@@ -403,7 +411,26 @@ class Server extends Root
         return $return;
     }
 
+    
+    // serverType
+    // retourne le type de serveur
+    public static function serverType():?string
+    {
+        $return = null;
 
+        if(static::isApache())
+        $return = 'apache';
+
+        elseif(static::isNginx())
+        $return = 'nginx';
+
+        elseif(static::isIis())
+        $return = 'iis';
+
+        return $return;
+    }
+    
+    
     // sysname
     // retourne le sysname, soit le os
     public static function sysname():?string
@@ -558,7 +585,7 @@ class Server extends Root
 
 
     // email
-    // retoure l'adresse courriel de l'admin du serveur
+    // retourne l'adresse courriel de l'admin du serveur
     public static function email():?string
     {
         return Superglobal::getServer('SERVER_ADMIN');
@@ -626,6 +653,7 @@ class Server extends Root
         $return['zend'] = static::zendVersion();
         $return['os'] = static::os(true);
         $return['osType'] = static::osType();
+        $return['serverType'] = static::serverType();
         $return['sapi'] = static::sapi();
         $return['ip'] = static::ip();
         $return['hostname'] = static::hostname();
@@ -651,6 +679,7 @@ class Server extends Root
         $return['zend'] = static::zendVersion();
         $return['os'] = static::os(true);
         $return['osType'] = static::osType();
+        $return['serverType'] = static::serverType();
         $return['caseSensitive'] = static::isCaseSensitive();
         $return['uname'] = static::uname();
         $return['sapi'] = static::sapi();
@@ -683,9 +712,6 @@ class Server extends Root
 
         if(static::isPhpVersionOlder('7.2'))
         $return[] = 'phpVersion';
-
-        if(!static::isApache())
-        $return[] = 'apache';
 
         return $return;
     }

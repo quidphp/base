@@ -30,8 +30,11 @@ class Server extends Base\Test
         assert(is_bool(Base\Server::isLinux()));
 
         // isApache
-        assert(Base\Server::isApache());
-
+        assert(is_bool(Base\Server::isApache()));
+        
+        // isNginx
+        assert(is_bool(Base\Server::isNginx()));
+        
         // isIis
         assert(!Base\Server::isIis());
 
@@ -131,7 +134,10 @@ class Server extends Base\Test
 
         // osType
         assert(is_string(Base\Server::osType()));
-
+        
+        // serverType
+        assert(is_string(Base\Server::serverType()));
+        
         // sysname
         assert(is_string(Base\Server::sysname()));
 
@@ -186,7 +192,7 @@ class Server extends Base\Test
         assert(is_int(Base\Server::group()));
 
         // email
-        assert(is_string(Base\Server::email()));
+        assert(is_string(Base\Server::email()) || Base\Server::email() === null);
 
         // resourceUsage
         assert(count(Base\Server::resourceUsage()) > 5);
@@ -200,10 +206,10 @@ class Server extends Base\Test
         // phpInfo
 
         // overview
-        assert(count(Base\Server::overview()) === 17);
+        assert(count(Base\Server::overview()) === 18);
 
         // info
-        assert(count(Base\Server::info()) === 26);
+        assert(count(Base\Server::info()) === 27);
 
         // requirement
         assert(empty(Base\Server::requirement()));

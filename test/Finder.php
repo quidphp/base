@@ -371,6 +371,7 @@ class Finder extends Base\Test
         assert(empty(Base\Finder::$config['test']));
 
         // cleanup
+        Base\Dir::emptyAndUnlink(Base\Dir::temp().'/test-quid');
         Base\Dir::empty('[assertCurrent]');
 
         return true;

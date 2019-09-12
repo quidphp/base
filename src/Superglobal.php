@@ -120,7 +120,7 @@ class Superglobal extends Root
     // retourne vrai si le tableau serveur a la clé content_length de spécifié
     public static function hasServerLength():bool
     {
-        return static::serverExists('CONTENT_LENGTH');
+        return (is_numeric(static::getServer('CONTENT_LENGTH')))? true:false;
     }
 
 
