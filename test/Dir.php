@@ -56,10 +56,10 @@ class Dir extends Base\Test
         assert(strtolower(Base\Dir::getCurrent()) === strtolower($_dir_));
         assert(Base\Dir::setCurrent('[storage]'));
         assert(Base\Dir::getCurrent() === $storagePath);
-        
+
         // scan
         assert(count(Base\Dir::scan($common)) === 14);
-        
+
         // get
         assert(count(Base\Dir::get($common)) <= 14);
         assert(!Base\Arrs::is(Base\Dir::get($common)));

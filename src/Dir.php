@@ -171,7 +171,7 @@ class Dir extends Finder
         return $return;
     }
 
-    
+
     // scan
     // wrapper pour scan dir
     // enlève les fichiers invisibles, et gère un problème sous système windows
@@ -180,13 +180,13 @@ class Dir extends Finder
     {
         $return = null;
         $path = static::path($path);
-        
+
         if(static::isReadable($path,false))
         {
             $return = [];
             $isWindows = Server::isWindows();
             $sort = (is_int($sort))? $sort:SCANDIR_SORT_ASCENDING;
-            
+
             foreach (scandir($path,$sort) as $value)
             {
                 $fullPath = Path::append($path,$value);
@@ -195,11 +195,11 @@ class Dir extends Finder
                 $return[] = $fullPath;
             }
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // get
     // retourne le contenu d'un directoire
     // dig permet de faire un listing recursif
@@ -209,15 +209,15 @@ class Dir extends Finder
         $return = null;
         $option = Arrs::replace(['sort'=>null,'in'=>null,'out'=>null,'format'=>null,'formatExtra'=>false,'relative'=>null,'fqcn'=>null,'fqcnClass'=>null,'fqcnTrait'=>null,'fqcnInterface'=>null],$option);
         $scan = static::scan($path,$option['sort']);
-        
+
         if(!is_string($option['relative']))
         $option['relative'] = $path;
-        
+
         if(is_array($scan))
         {
             $return = [];
-            
-            foreach ($scan as $fullPath) 
+
+            foreach ($scan as $fullPath)
             {
                 $keep = true;
                 $filter = [];

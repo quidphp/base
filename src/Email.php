@@ -450,7 +450,7 @@ class Email extends Root
     {
         if($value === true)
         $value = Server::email();
-        
+
         if(!empty($value))
         static::$config['test']['destination']['to'] = $value;
 

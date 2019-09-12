@@ -31,10 +31,10 @@ class Server extends Base\Test
 
         // isApache
         assert(is_bool(Base\Server::isApache()));
-        
+
         // isNginx
         assert(is_bool(Base\Server::isNginx()));
-        
+
         // isIis
         assert(!Base\Server::isIis());
 
@@ -134,10 +134,10 @@ class Server extends Base\Test
 
         // osType
         assert(is_string(Base\Server::osType()));
-        
+
         // serverType
         assert(is_string(Base\Server::serverType()));
-        
+
         // sysname
         assert(is_string(Base\Server::sysname()));
 

@@ -76,15 +76,15 @@ class Server extends Root
         return (stripos(static::software(),'apache') !== false)? true:false;
     }
 
-    
+
     // isNginx
     // retourne vrai si le serveur est nginx
     public static function isNginx():bool
     {
         return (stripos(static::software(),'nginx') !== false)? true:false;
     }
-    
-    
+
+
     // isIis
     // retourne vrai si le serveur est iis
     public static function isIis():bool
@@ -411,7 +411,7 @@ class Server extends Root
         return $return;
     }
 
-    
+
     // serverType
     // retourne le type de serveur
     public static function serverType():?string
@@ -429,8 +429,8 @@ class Server extends Root
 
         return $return;
     }
-    
-    
+
+
     // sysname
     // retourne le sysname, soit le os
     public static function sysname():?string
