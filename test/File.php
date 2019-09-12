@@ -259,8 +259,8 @@ class File extends Base\Test
         // findEol
         assert(is_string(Base\File::findEol($currentFile)));
 
-        // findEolLength
-        assert(in_array(Base\File::findEolLength($currentFile),[1,2],true));
+        // getEolLength
+        assert(in_array(Base\File::getEolLength($currentFile),[1,2],true));
 
         // read
         assert(Base\File::read(100,500,$currentFile) === Base\File::read(100,500,$open));
@@ -415,7 +415,7 @@ class File extends Base\Test
         assert(strpos(Base\File::get($write),'BLABLABAL') !== false);
 
         // lineInsert
-        $ll = Base\File::findEolLength($write);
+        $ll = Base\File::getEolLength($write);
         assert(Base\File::lineInsert(1,'INSERT',$write,true));
         assert(strpos(Base\File::get($write),'INSERT') === (3 + $ll));
 

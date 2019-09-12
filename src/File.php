@@ -812,11 +812,11 @@ class File extends Finder
     }
 
 
-    // findEolLength
+    // getEolLength
     // retourne la longueur du séparateur de ligne (1 ou 2)
-    public static function findEolLength($value):int
+    public static function getEolLength($value):int
     {
-        return static::res('findEolLength',false,0,null,$value);
+        return static::res('getEolLength',false,0,null,$value);
     }
 
 

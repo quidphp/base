@@ -873,8 +873,8 @@ class Res extends Base\Test
         // findEol
         assert(Base\Res::findEol($current) === "\n");
 
-        // findEolLength
-        assert(in_array(Base\Res::findEolLength($current),[1,2],true));
+        // getEolLength
+        assert(in_array(Base\Res::getEolLength($current),[1,2],true));
 
         // parseEol
         $pos = Base\Res::position($current);

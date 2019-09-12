@@ -2401,9 +2401,9 @@ class Res extends Root
     }
 
 
-    // findEolLength
+    // getEolLength
     // retourne la longueur du séparateur de ligne (1 ou 2)
-    public static function findEolLength($value):int
+    public static function getEolLength($value):int
     {
         return strlen(static::findEol($value));
     }
