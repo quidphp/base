@@ -418,7 +418,23 @@ class Finder extends Root
         return Server::isGroup(static::group($path),$group);
     }
 
-
+    
+    // hasInvalidScheme
+    // retourne vrai si le chemin semble avoir un scheme invalid, par exemple http ou ftp
+    public static function hasInvalidScheme($value):bool 
+    {
+        $return = false;
+        
+        if(is_string($value))
+        {
+            if(stripos($value,'http:') === 0 || stripos($value,'https:') === 0 || stripos($value,'ftp:') === 0)
+            $return = true;
+        }
+        
+        return $return;
+    }
+    
+    
     // type
     // retourne le type du fichier, directoire ou symlink
     public static function type($path):?string
@@ -1145,7 +1161,10 @@ class Finder extends Root
         {
             $return = static::normalize($value);
 
-            if($isSafe === true && !Path::isSafe($return,$option))
+            if(static::hasInvalidScheme($return))
+            $return = null;
+            
+            elseif($isSafe === true && !Path::isSafe($return,$option))
             $return = null;
         }
 

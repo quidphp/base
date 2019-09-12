@@ -128,7 +128,12 @@ class Finder extends Base\Test
 
         // isGroup
         assert(Base\Finder::isGroup($_file_,Base\Finder::group($_file_)));
-
+        
+        // hasInvalidScheme
+        assert(Base\Finder::hasInvalidScheme("http://google.com"));
+        assert(!Base\Finder::hasInvalidScheme("file://google.com"));
+        assert(!Base\Finder::hasInvalidScheme($_file_));
+        
         // type
         assert(null === Base\Finder::type('bla/bla/bla'));
         assert('dir' === Base\Finder::type($common));
