@@ -127,7 +127,7 @@ class Request extends Root
     // retourne vrai si les données indiquent que la requête courante provient du cli
     public static function isCli():bool
     {
-        return (!Superglobal::serverExists('REQUEST_METHOD') || Superglobal::envExists('SHELL'))? true:false;
+        return (!Superglobal::serverExists('REQUEST_METHOD'))? true:false;
     }
 
 
