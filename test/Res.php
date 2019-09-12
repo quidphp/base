@@ -620,7 +620,7 @@ class Res extends Base\Test
         assert(is_array(Base\Res::param($fp)));
 
         // option
-        assert(is_array(Base\Res::option($fp)));
+        assert(is_array(Base\Res::contextOption($fp)));
 
         // all
         assert($z = count(Base\Res::all()));
@@ -675,7 +675,9 @@ class Res extends Base\Test
         // setContextMime
 
         // setContextBasename
-
+        
+        // setContextEol
+        
         // getPhpContextOption
         assert(count(Base\Res::getPhpContextOption(null,$current)) === 2);
 
@@ -684,7 +686,12 @@ class Res extends Base\Test
 
         // getContextBasename
         assert(is_string(Base\Res::getContextBasename($current)));
-
+        
+        // getContextEol
+        assert(Base\Res::getContextEol($current) === null);
+        assert(is_string(Base\Res::findEol($current)));
+        assert(is_string(Base\Res::getContextEol($current)));
+        
         // setContextBasename
         $tempCon = Base\Res::phpWritable('temp');
         assert(!empty(Base\Res::basename($tempCon)));
@@ -726,9 +733,9 @@ class Res extends Base\Test
         // context
         $context = Base\Res::context(['post'=>['test'=>2,'whaté'=>'JEMBAQEUÉÉ'],'header'=>['Header'=>'ok','James'=>'LOL']],'http');
         assert(Base\Res::isContext($context));
-        assert(is_string(Base\Res::option($context)['http']['header']));
-        assert(is_string(Base\Res::option($context)['http']['content']));
-        assert(Base\Res::option($context)['http']['method'] === 'POST');
+        assert(is_string(Base\Res::contextOption($context)['http']['header']));
+        assert(is_string(Base\Res::contextOption($context)['http']['content']));
+        assert(Base\Res::contextOption($context)['http']['method'] === 'POST');
 
         // curlExec
         $exec = Base\Res::curlExec($curl,false);
@@ -863,15 +870,15 @@ class Res extends Base\Test
 
         // readDir
 
-        // getLineSeparator
-        assert(Base\Res::getLineSeparator($current) === "\n");
+        // findEol
+        assert(Base\Res::findEol($current) === "\n");
 
-        // getLineSeparatorLength
-        assert(in_array(Base\Res::getLineSeparatorLength($current),[1,2],true));
+        // findEolLength
+        assert(in_array(Base\Res::findEolLength($current),[1,2],true));
 
-        // findLineSeparator
+        // parseEol
         $pos = Base\Res::position($current);
-        assert(is_string(Base\Res::findLineSeparator($current)));
+        assert(is_string(Base\Res::parseEol($current)));
         assert(Base\Res::position($current) === $pos);
 
         // getLines

@@ -718,7 +718,7 @@ class Res extends Root
             $return['pathinfo'] = static::pathinfo($value);
             $return['stat'] = static::stat($value,$format,$format);
             $return['meta'] = static::meta($value);
-            $return['option'] = static::option($value);
+            $return['option'] = static::contextOption($value);
         }
 
         return $return;
@@ -1234,9 +1234,9 @@ class Res extends Root
     }
 
 
-    // option
+    // contextOption
     // retourne les options de la resource, si disponible
-    public static function option($value):?array
+    public static function contextOption($value):?array
     {
         return (static::canContext($value))? stream_context_get_options($value):null;
     }
@@ -1577,14 +1577,23 @@ class Res extends Root
         return static::setPhpContextOption('basename',$basename,$res);
     }
 
-
+    
+    // setContextEol
+    // permet de changer la valeur eol au sein du contexte de la ressource
+    // separator peut être null ou false
+    public static function setContextEol($separator,$res):bool
+    {
+        return static::setPhpContextOption('eol',$separator,$res);
+    }
+    
+    
     // getPhpContextOption
     // retourne une option de contexte ou null
     // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
-    public static function getPhpContextOption($key,$value)
+    public static function getPhpContextOption($key=null,$value)
     {
         $return = null;
-        $option = static::option($value);
+        $option = static::contextOption($value);
 
         if(is_array($option) && !empty($option['php']) && is_array($option['php']))
         {
@@ -1614,7 +1623,15 @@ class Res extends Root
         return static::getPhpContextOption('basename',$value);
     }
 
-
+    
+    // getContextEol
+    // retourne la valeur eol storé dans le contexte de la resource
+    public static function getContextEol($value):?string
+    {
+        return static::getPhpContextOption('eol',$value);
+    }
+    
+    
     // output
     // ouvre une resource de type php output
     // par défaut le buffer actuel est clean
@@ -2191,7 +2208,7 @@ class Res extends Root
         if(is_resource($value))
         {
             if(empty($option['separator']))
-            $option['separator'] = static::getLineSeparator($value);
+            $option['separator'] = static::findEol($value);
 
             if(!empty($option['csv']) && $option['csv'] === true)
             $line = Csv::resLine($value,$option);
@@ -2363,18 +2380,18 @@ class Res extends Root
     }
 
 
-    // getLineSeparator
+    // findEol
     // va tenter de détecter le séparateur de ligne si seekable tellable
     // enregistre dans les options de la ressource
-    public static function getLineSeparator($value):string
+    public static function findEol($value):string
     {
         $return = static::getPhpContextOption('eol',$value);
 
         if($return === null)
         {
-            $eol = static::findLineSeparator($value);
+            $eol = static::parseEol($value);
             $return = (is_string($eol))? $eol:false;
-            static::setPhpContextOption('eol',$return,$value);
+            static::setContextEol($return,$value);
         }
 
         if(!is_string($return))
@@ -2384,18 +2401,18 @@ class Res extends Root
     }
 
 
-    // getLineSeparatorLength
+    // findEolLength
     // retourne la longueur du séparateur de ligne (1 ou 2)
-    public static function getLineSeparatorLength($value):int
+    public static function findEolLength($value):int
     {
-        return strlen(static::getLineSeparator($value));
+        return strlen(static::findEol($value));
     }
 
 
-    // findLineSeparator
+    // parseEol
     // tente de trouver le séparateur de ligne dans la resource
     // va seek et retourner à la position originale
-    public static function findLineSeparator($value):?string
+    public static function parseEol($value):?string
     {
         $return = null;
 
@@ -2403,6 +2420,7 @@ class Res extends Root
         {
             $length = static::$config['lineSeparatorLength'];
             $pos = static::position($value);
+            static::seekRewind($value);
             $content = stream_get_contents($value,$length);
 
             if(is_string($content) && !empty($content))
@@ -2534,7 +2552,7 @@ class Res extends Root
             $return = 0;
 
             if(empty($option['separator']))
-            $option['separator'] = static::getLineSeparator($value);
+            $option['separator'] = static::findEol($value);
 
             if($option['rewind'] === true)
             static::seekRewind($value);

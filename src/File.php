@@ -803,20 +803,20 @@ class File extends Finder
     }
 
 
-    // getLineSeparator
+    // findEol
     // va tenter de détecter le séparateur de ligne si seekable tellable
     // enregistre dans les options de la ressource
-    public static function getLineSeparator($value):string
+    public static function findEol($value):string
     {
-        return static::res('getLineSeparator',false,0,null,$value);
+        return static::res('findEol',false,0,null,$value);
     }
 
 
-    // getLineSeparatorLength
+    // findEolLength
     // retourne la longueur du séparateur de ligne (1 ou 2)
-    public static function getLineSeparatorLength($value):int
+    public static function findEolLength($value):int
     {
-        return static::res('getLineSeparatorLength',false,0,null,$value);
+        return static::res('findEolLength',false,0,null,$value);
     }
 
 

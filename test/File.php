@@ -234,7 +234,7 @@ class File extends Base\Test
         $new = Base\File::create('[assertCurrent]/new.php');
         assert(Base\Res::meta($new)['mode'] === 'c+');
         assert(Base\Res::param($new) === ['options'=>[]]);
-        assert(Base\Res::option($new) === []);
+        assert(Base\Res::contextOption($new) === []);
         assert(Base\File::info(Base\File::open('[assertCurrent]/sym'))['path'] === $currentFile);
         assert(Base\File::open('[assertCurrent]/bla.txt') === null);
         assert(is_resource(Base\File::open($array)));
@@ -256,11 +256,11 @@ class File extends Base\Test
         assert(strlen(Base\File::get($common.'/load.php',10,20)) === 20);
         assert(!empty(Base\File::get($array)));
 
-        // getLineSeparator
-        assert(is_string(Base\File::getLineSeparator($currentFile)));
+        // findEol
+        assert(is_string(Base\File::findEol($currentFile)));
 
-        // getLineSeparatorLength
-        assert(in_array(Base\File::getLineSeparatorLength($currentFile),[1,2],true));
+        // findEolLength
+        assert(in_array(Base\File::findEolLength($currentFile),[1,2],true));
 
         // read
         assert(Base\File::read(100,500,$currentFile) === Base\File::read(100,500,$open));
@@ -415,7 +415,7 @@ class File extends Base\Test
         assert(strpos(Base\File::get($write),'BLABLABAL') !== false);
 
         // lineInsert
-        $ll = Base\File::getLineSeparatorLength($write);
+        $ll = Base\File::findEolLength($write);
         assert(Base\File::lineInsert(1,'INSERT',$write,true));
         assert(strpos(Base\File::get($write),'INSERT') === (3 + $ll));
 
