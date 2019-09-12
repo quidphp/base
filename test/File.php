@@ -267,7 +267,7 @@ class File extends Base\Test
         assert(Base\File::read(0,true,$currentFile) === Base\File::read(0,true,$open));
         assert(Base\File::read(100,true,$currentFile) === Base\File::read(100,true,$open));
         assert(Base\File::read(0,true,'http://google.com') === null);
-        assert(!empty(Base\File::read(true,true,"file://".$currentFile)));
+        assert(!empty(Base\File::read(true,true,'file://'.$currentFile)));
         assert(Base\File::read(0,true,$dir) === null);
         assert(Base\File::read(0,true,$_dir_) === null);
         assert(!empty(Base\File::read(0,true,$common.'/load.php')));

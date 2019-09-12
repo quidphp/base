@@ -350,7 +350,7 @@ class File extends Finder
         if(!empty($args[$v]))
         {
             $return = Res::$method(...$args);
-            
+
             if($close === true)
             Res::close($args[$v]);
         }
@@ -733,7 +733,7 @@ class File extends Finder
         $return = null;
         $value = static::path($value);
         $option = static::option($option);
-        
+
         if(!empty($value) && static::isReadableOrCreatable($value))
         {
             $return = Res::open($value,$option);
