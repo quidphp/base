@@ -195,7 +195,7 @@ class Dir extends Finder
                 $filter = [];
                 $fullPath = Path::append($path,$value);
 
-                if(!static::isDot($fullPath))
+                if(!static::isDot($fullPath) && (!Server::isWindows() || Finder::is($fullPath,false)))
                 {
                     if(!empty($option['in']) || !empty($option['out']))
                     $keep = static::getKeepInOut($fullPath,$option['in'],$option['out']);
