@@ -1097,10 +1097,10 @@ class Finder extends Root
                 if(Dir::isEmpty($path) && rmdir($path))
                 $return = true;
             }
-            
+
             elseif(is_link($path))
             $return = Symlink::unset($symlink);
-            
+
             elseif(unlink($path))
             $return = true;
         }
