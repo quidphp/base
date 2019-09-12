@@ -245,72 +245,70 @@ class Finder extends Base\Test
         $file = Base\Res::tmpFile();
         assert(Base\Finder::rename('[assertCurrent]/tmp',Base\Res::uri($file)));
 
-        if(!Base\Server::isWindows())
-        {
-            // changeDirname
-            $path = $stream['uri'];
-            $dirname = dirname($path);
-            $newDirname = Base\Path::str(Base\Dir::temp().'/test-quid');
-            $basename = basename($path);
-            $newBasename = Base\Str::random(10);
-            $newPath = Base\Path::addBasename($newBasename,$newDirname);
-            assert(Base\Finder::changeDirname($newDirname,$path));
-            $file = Base\Res::tmpFile();
-            assert(Base\Finder::changeDirname('[assertCurrent]',Base\Res::uri($file)));
-            $fileBase = Base\Res::basename($file);
-            assert(Base\Dir::set($storage.'/move'));
-            $filename = Base\File::prefix('[assertCurrent]/move','wha');
-            assert(file_put_contents($filename,'hoho'));
-            assert(Base\Finder::changeDirname($storage.'/newMove',$filename));
-            $filename2 = Base\File::prefix($storage.'/move','wha');
-            assert(file_put_contents($filename2,'haha'));
-            $sym = $storage.'/move/sym';
-            assert(Base\Symlink::set($filename2,'[assertCurrent]/move/sym'));
-            assert(Base\Finder::changeDirname('[assertCurrent]/newMove',$sym));
-            assert(Base\Finder::changeDirname($storage.'/dirMove',$storage.'/move'));
+        // changeDirname
+        $path = $stream['uri'];
+        $dirname = dirname($path);
+        $newDirname = Base\Path::str(Base\Dir::temp().'/test-quid');
+        $basename = basename($path);
+        $newBasename = Base\Str::random(10);
+        $newPath = Base\Path::addBasename($newBasename,$newDirname);
+        $storage = Base\Finder::shortcut($storage);
+        assert(Base\Finder::changeDirname($newDirname,$path));
+        $file = Base\Res::tmpFile();
+        assert(Base\Finder::changeDirname('[assertCurrent]',Base\Res::uri($file)));
+        $fileBase = Base\Res::basename($file);
+        assert(Base\Dir::set($storage.'/move'));
+        $filename = Base\File::prefix('[assertCurrent]/move','wha');
+        assert(file_put_contents($filename,'hoho'));
+        assert(Base\Finder::changeDirname($storage.'/newMove',$filename));
+        $filename2 = Base\File::prefix($storage.'/move','wha');
+        assert(file_put_contents($filename2,'haha'));
+        $sym = $storage.'/move/sym';
+        assert(Base\Symlink::set($filename2,'[assertCurrent]/move/sym'));
+        assert(Base\Finder::changeDirname('[assertCurrent]/newMove',$sym));
+        assert(Base\Finder::changeDirname($storage.'/dirMove',$storage.'/move'));
 
-            // changeBasename
-            assert(Base\Finder::changeBasename($newBasename,Base\Path::addBasename($basename,$newDirname)));
-            assert(Base\Finder::isWritable($newPath));
-            assert(Base\Finder::changeBasename('WHAT',Base\Path::addBasename($fileBase,$storage)));
-            assert(Base\Finder::unlink(Base\Path::addBasename('WHAT',$storage)));
-            assert(Base\Finder::changeBasename($storage.'/dirRename',$storage.'/dirMove'));
-            assert(Base\Finder::changeBasename(function($value) {
-                return 'dirRename2';
-            },$storage.'/dirRename'));
-            assert(Base\Finder::changeBasename('sym2',$storage.'/dirRename2/move/sym'));
+        // changeBasename
+        assert(Base\Finder::changeBasename($newBasename,Base\Path::addBasename($basename,$newDirname)));
+        assert(Base\Finder::isWritable($newPath));
+        assert(Base\Finder::changeBasename('WHAT',Base\Path::addBasename($fileBase,$storage)));
+        assert(Base\Finder::unlink(Base\Path::addBasename('WHAT',$storage)));
+        assert(Base\Finder::changeBasename($storage.'/dirRename',$storage.'/dirMove'));
+        assert(Base\Finder::changeBasename(function($value) {
+            return 'dirRename2';
+        },$storage.'/dirRename'));
+        assert(Base\Finder::changeBasename('sym2',$storage.'/dirRename2/move/sym'));
 
-            // copy
-            assert(Base\Dir::set($storage.'/asd'));
-            $filename = tempnam(Base\Finder::path($storage).'/asd','wha');
-            assert(Base\Finder::copy('[assertCurrent]/asd/copy',$filename));
-            $sym = $storage.'/asd/sym';
-            assert(Base\Symlink::set($_file_,$sym));
-            assert(Base\Finder::copy($storage.'/asd/symCopy',$sym));
-            assert(count(Base\Finder::copy($storage.'/test',$_dir_)) < 100);
+        // copy
+        assert(Base\Dir::set($storage.'/asd'));
+        $filename = tempnam(Base\Finder::path($storage).'/asd','wha');
+        assert(Base\Finder::copy('[assertCurrent]/asd/copy',$filename));
+        $sym = $storage.'/asd/sym';
+        assert(Base\Symlink::set($_file_,$sym));
+        assert(Base\Finder::copy($storage.'/asd/symCopy',$sym));
+        assert(count(Base\Finder::copy($storage.'/test',$_dir_)) < 100);
 
-            // copyInDirname
-            assert(Base\Finder::copyInDirname('copyKeepDirname',$filename));
-            assert(Base\Finder::copyInDirname('symKeepDirname',$sym));
-            assert(count(Base\Finder::copyInDirname(function() {
-                return 'test2';
-            },$storage.'/test')) > 5);
+        // copyInDirname
+        assert(Base\Finder::copyInDirname('copyKeepDirname',$filename));
+        assert(Base\Finder::copyInDirname('symKeepDirname',$sym));
+        assert(count(Base\Finder::copyInDirname(function() {
+            return 'test2';
+        },$storage.'/test')) > 5);
 
-            // copyWithBasename
-            assert(Base\Finder::copyWithBasename('[assertCurrent]/copyKeepBasename',$filename));
-            assert(Base\Finder::copyWithBasename($storage.'/copyKeepBasename',$sym));
+        // copyWithBasename
+        assert(Base\Finder::copyWithBasename('[assertCurrent]/copyKeepBasename',$filename));
+        assert(Base\Finder::copyWithBasename($storage.'/copyKeepBasename',$sym));
 
-            // unlink
-            assert(!Base\Finder::unlink(Base\Path::addBasename('WHAT',$storage)));
-            assert(!Base\Finder::unlink($storage.'/test'));
-            assert(Base\Dir::empty($storage.'/test'));
+        // unlink
+        assert(!Base\Finder::unlink(Base\Path::addBasename('WHAT',$storage)));
+        assert(!Base\Finder::unlink($storage.'/test'));
+        assert(Base\Dir::empty($storage.'/test'));
 
-            // unlinkOnShutdown
+        // unlinkOnShutdown
 
-            // unlinks
-            assert(Base\Finder::unlink('[assertCurrent]/test'));
-            assert(Base\Finder::unlinks('[assertCurrent]/tmp','[assertCurrent]/newMove') === 1);
-        }
+        // unlinks
+        assert(Base\Finder::unlink('[assertCurrent]/test'));
+        assert(Base\Finder::unlinks('[assertCurrent]/tmp','[assertCurrent]/newMove') === 1);
 
         // path
         assert(Base\Finder::path('[assertCommon]/test.php') === $common.'/test.php');
