@@ -31,7 +31,7 @@ class Res extends Base\Test
         $storage = '[assertCurrent]';
         assert(Base\Dir::reset($storage));
         $array = Base\Res::open(Base\File::makeUploadArray($_file_));
-        $fp = tmpfile();
+        $fp = Base\Res::tmpFile();
         $current = Base\File::open('file://'.$_file_);
         $currentNoIP = Base\File::open('file://'.$_file_,['useIncludePath'=>false]);
         $output = Base\Res::open('php://output');
@@ -98,7 +98,7 @@ class Res extends Base\Test
         assert(!Base\Res::isBinary($curl));
 
         // isBinary
-        assert(Base\Res::isBinary($fp));
+        assert(!Base\Res::isBinary($fp));
         assert(!Base\Res::isBinary($current));
         assert(Base\Res::isBinary($output));
         assert(Base\Res::isBinary($input));
@@ -180,7 +180,6 @@ class Res extends Base\Test
         assert(is_bool(Base\Res::isFileParentWritable($current)));
 
         // isFileParentExecutable
-        assert(Base\Res::isFileParentExecutable($current));
 
         // isFileLike
         assert(Base\Res::isFileLike($fp));
@@ -360,7 +359,7 @@ class Res extends Base\Test
         assert(Base\Res::hasExtension($http));
         assert(!Base\Res::hasExtension($output));
         assert(Base\Res::hasExtension($current));
-        assert(!Base\Res::hasExtension($fp));
+        assert(Base\Res::hasExtension($fp));
         assert(!Base\Res::hasExtension($dir));
 
         // isScheme
@@ -484,7 +483,7 @@ class Res extends Base\Test
         assert(is_string(Base\Res::metaValue('wrapper_type',$http)));
 
         // mode
-        assert(Base\Res::mode($fp) === 'r+b');
+        assert(Base\Res::mode($fp) === 'r+');
         assert(Base\Res::mode($fp,true) === 'r+');
         assert(Base\Res::mode($output) === 'wb');
         assert(Base\Res::mode($output,true) === 'w');
@@ -524,7 +523,7 @@ class Res extends Base\Test
         assert(count(Base\Res::parse($output)) === 8);
         assert(Base\Res::parse($dir) === null);
         assert(Base\Res::parse($hash)['fragment'] === '.php');
-
+        
         // parseOne
         assert(is_string(Base\Res::parseOne(PHP_URL_PATH,$http)));
 
@@ -549,18 +548,17 @@ class Res extends Base\Test
         assert(Base\Res::path($temp) === null);
         assert(strpos(Base\Res::path($hash),'#') !== false);
 
-        // pathFile
-
         // pathinfo
-        assert(count(Base\Res::pathinfo($fp)) === 3);
+        assert(count(Base\Res::pathinfo($fp)) === 4);
         assert(count(Base\Res::pathinfo($current)) === 4);
         assert(count(Base\Res::pathinfo($http)) === 4);
         assert(Base\Res::pathinfo($output) === null);
-        assert(Base\Res::pathinfo($hash)['basename'] === 'hash');
+        assert(Base\Res::pathinfo($hash)['basename'] === 'hash#.php');
 
         // pathinfoOne
         assert(Base\Res::pathinfoOne(PATHINFO_FILENAME,$http) === 'jpg');
-
+        assert(Base\Res::pathinfoOne('filename',$http) === 'jpg');
+        
         // dirname
         assert(is_string(Base\Res::dirname($fp)));
         assert(is_string(Base\Res::dirname($current)));
@@ -587,7 +585,7 @@ class Res extends Base\Test
         assert(Base\Res::filename($output) === null);
 
         // extension
-        assert(Base\Res::extension($fp) === null);
+        assert(Base\Res::extension($fp) === 'tmp');
         assert(Base\Res::extension($current) === 'php');
         assert(Base\Res::extension($http) === 'jpg');
         assert(Base\Res::extension($output) === null);
@@ -716,7 +714,10 @@ class Res extends Base\Test
         // memory
         $memory = Base\Res::memory('jpg','test.jpg',['write'=>['test'=>'ok','test2'=>[true]]]);
         assert(Base\Res::isPhpMemory($memory));
-
+        
+        // tmpFile
+        assert(Base\Res::extension(Base\Res::tmpFile()) === 'tmp');
+        
         // http
 
         // curl
@@ -862,7 +863,7 @@ class Res extends Base\Test
         // readDir
 
         // getLineSeparator
-        assert(Base\Res::getLineSeparator($current) === PHP_EOL);
+        assert(Base\Res::getLineSeparator($current) === "\n");
 
         // getLineSeparatorLength
         assert(in_array(Base\Res::getLineSeparatorLength($current),[1,2],true));
@@ -920,7 +921,7 @@ class Res extends Base\Test
         assert(Base\Res::prepareContent(2) === '2');
         assert(Base\Res::prepareContent(true) === '1');
         assert(Base\Res::prepareContent(null) === '');
-        assert(Base\Res::prepareContent(['test','test2']) === "test\ntest2");
+        assert(Base\Res::prepareContent(['test','test2']) === "test".PHP_EOL."test2");
         assert(Base\Res::prepareContent(['test','test2',['test3','ok'=>'test4']]) === Base\Json::encode(['test','test2',['test3','ok'=>'test4']]));
         $x = new \DateTime('now');
         assert(Base\Res::prepareContent($x) === serialize($x));
@@ -949,7 +950,7 @@ class Res extends Base\Test
         assert(Base\Res::isEnd($write));
         $csv = Base\Res::open($storage.'/csv.csv',['create'=>true]);
         assert(Base\Res::write(['test','test2','test3;test4','test5','"quote"','test6'],$csv,['csv'=>true]));
-        assert(Base\Res::get($csv) === "test;test2;\"test3;test4\";test5;\"\"\"quote\"\"\";test6\n");
+        assert(Base\Res::get($csv) === "test;test2;\"test3;test4\";test5;\"\"\"quote\"\"\";test6".PHP_EOL."");
         assert(Base\Res::write($captcha,$write));
         assert(Base\Res::get($write) !== 'TESTTE');
         assert(Base\Res::empty($write));
@@ -963,8 +964,8 @@ class Res extends Base\Test
         // writeStream
         assert(Base\Res::get($write) === 'TESTTE');
         assert(Base\Res::writeStream('blabla',$write,['newline'=>true,'separator'=>PHP_EOL]));
-        assert(Base\Res::get($write) === "TESTTE\nblabla");
-        assert(Base\Res::writeStream("za\nas\n\n\ndsa",$write));
+        assert(Base\Res::get($write) === "TESTTE".PHP_EOL."blabla");
+        assert(Base\Res::writeStream("za".PHP_EOL."as".PHP_EOL."".PHP_EOL."".PHP_EOL."dsa",$write));
         assert(count(Base\Res::lines(true,true,$write,[])) === 6);
         assert(count(Base\Res::lines(true,true,$write,['skipEmpty'=>true])) === 4);
 
@@ -988,7 +989,8 @@ class Res extends Base\Test
         assert(Base\Res::empty($write));
         assert(Base\Res::prepend(['TEST','TEST2',new \Datetime('now'),2,1.2,true,false,null,'ok'],$write) === true);
         assert(Base\Res::prepend(['zTEST','zTEST2'],$write,['newline'=>true]) === true);
-        assert(strlen(Base\Res::get($write)) === 166);
+        assert(count(Base\Res::getLines($write)) === 11);
+        assert(in_array(strlen(Base\Res::get($write)),array(166,176)));
         assert(Base\Res::seekEnd(0,$csv));
         assert(count(Base\Res::getLines($csv,true,true,['csv'=>true])) === 3);
         assert(Base\Res::prepend([['test','test2èz'],['ztest','y@tesét2z']],$csv,['csv'=>true]));
@@ -1001,7 +1003,7 @@ class Res extends Base\Test
         assert(Base\Res::isEnd($write));
         assert(Base\Res::get($write) === 'TEST3TEST4');
         assert(Base\Res::append('TEST4',$write,['newline'=>true,'lock'=>true,'flush'=>true]) === true);
-        assert(Base\Res::get($write) === "TEST3TEST4\nTEST4");
+        assert(Base\Res::get($write) === "TEST3TEST4".PHP_EOL."TEST4");
         assert(Base\Res::isEnd($write));
         assert(Base\Res::seekEnd(0,$csv));
         assert(Base\Res::append([['test','test2èz'],['ztest','y@tesét2z']],$csv,['csv'=>true]));
@@ -1154,7 +1156,9 @@ class Res extends Base\Test
 
         // closes
         Base\Res::closes($current,$output,$input,$temp,$memory,$http,$dir);
-
+        
+        // uriSchemeNotWindowsDrive
+        
         // cleanup
         Base\Dir::empty('[assertCurrent]');
 

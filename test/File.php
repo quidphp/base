@@ -24,7 +24,7 @@ class File extends Base\Test
         $common = '[assertCommon]';
         $currentFile = Base\Finder::path('[assertCommon]/class.php');
         assert(Base\Dir::reset($storage));
-        $tmp = tmpfile();
+        $tmp = Base\Res::tmpFile();
         $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
         $temp = Base\File::prefix('[assertCurrent]');
@@ -279,7 +279,7 @@ class File extends Base\Test
         assert(count(Base\File::getLines($res)) > 100);
         assert(count(Base\File::getLines($currentFile)) > 100);
         assert(count(Base\File::getLines($currentFile,true,true,['skipEmpty'=>true])) < count(Base\File::getLines($currentFile)));
-        assert(Base\File::set('[assertCurrent]/slices.php',Base\File::getLines($currentFile)));
+        assert(Base\File::set('[assertCurrent]/slices.php',Base\File::getLines($currentFile),false,array('separator'=>"\n")));
         assert(Base\File::get($currentFile) === Base\File::get('[assertCurrent]/slices.php'));
         assert(!empty(Base\File::getLines($array)));
 
@@ -414,8 +414,9 @@ class File extends Base\Test
         assert(strpos(Base\File::get($write),'BLABLABAL') !== false);
 
         // lineInsert
+        $ll = Base\File::getLineSeparatorLength($write);
         assert(Base\File::lineInsert(1,'INSERT',$write,true));
-        assert(strpos(Base\File::get($write),'INSERT') === 4);
+        assert(strpos(Base\File::get($write),'INSERT') === (3+$ll));
 
         // lineFilter
         assert(count(Base\File::lineFilter(function($v) {

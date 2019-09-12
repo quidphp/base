@@ -31,6 +31,11 @@ class Path extends Set
             'basename'=>null,
             'filename'=>null,
             'extension'=>'.'],
+        'infoConstant'=>array( // tableau liant des strings aux constantes
+            'dirname'=>PATHINFO_DIRNAME,
+            'basename'=>PATHINFO_BASENAME,
+            'filename'=>PATHINFO_FILENAME,
+            'extension'=>PATHINFO_EXTENSION),
         'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
             'length'=>2, // longueur de lang
             'all'=>null] // possibilité de lang
@@ -303,16 +308,22 @@ class Path extends Set
 
     // infoOne
     // retourne une entrée de pathinfo
-    public static function infoOne(int $key,string $path):?string
+    public static function infoOne($key,string $path):?string
     {
-        $path = static::normalize($path);
-        $return = pathinfo($path,$key);
+        if(is_string($key))
+        $key = static::getInfoConstant($key);
+        
+        if(is_int($key))
+        {
+            $path = static::normalize($path);
+            $return = pathinfo($path,$key);
 
-        if($return === false || $return === '')
-        $return = null;
+            if($return === false || $return === '')
+            $return = null;
 
-        elseif($key === PATHINFO_DIRNAME && is_string($return))
-        $return = static::infoDirname($return,$path);
+            elseif($key === PATHINFO_DIRNAME && is_string($return))
+            $return = static::infoDirname($return,$path);
+        }
 
         return $return;
     }
@@ -341,7 +352,24 @@ class Path extends Set
         return $return;
     }
 
-
+    
+    // getInfoConstant
+    // retourne la constante à partir d'une string
+    // utilisé pour pathinfo
+    public static function getInfoConstant(string $key):?int
+    {
+        return static::$config['infoConstant'][$key] ?? null;
+    }
+    
+    
+    // getEmptyInfo
+    // retourne un tableau vide similaire au retour de pathinfo
+    public static function getEmptyInfo():array 
+    {
+        return Arr::valuesAll(null,array_keys(static::$config['infoConstant']));
+    }
+    
+    
     // build
     // construit un path à partir d'un tableau info
     // note: build et les méthodes de path ajoute un slash en début de la chaîne de retour
@@ -452,7 +480,7 @@ class Path extends Set
     // ne tient pas compte des dirname .
     public static function dirname(string $path):?string
     {
-        return static::infoOne(PATHINFO_DIRNAME,$path);
+        return static::infoOne('dirname',$path);
     }
 
 
@@ -528,7 +556,7 @@ class Path extends Set
     // retourne le basename du path
     public static function basename(string $path):?string
     {
-        return static::infoOne(PATHINFO_BASENAME,$path);
+        return static::infoOne('basename',$path);
     }
 
 
@@ -645,7 +673,7 @@ class Path extends Set
     // retourne le filename du path
     public static function filename(string $path):?string
     {
-        return static::infoOne(PATHINFO_FILENAME,$path);
+        return static::infoOne('filename',$path);
     }
 
 
@@ -690,7 +718,7 @@ class Path extends Set
     // retourne l'extension du path
     public static function extension(string $path,bool $lowerCase=false):?string
     {
-        $return = static::infoOne(PATHINFO_EXTENSION,$path);
+        $return = static::infoOne('extension',$path);
 
         if(is_string($return) && $lowerCase === true)
         $return = strtolower($return);

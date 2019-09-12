@@ -40,7 +40,7 @@ class Error extends Base\Test
 
         // logFile
         assert(Base\Error::logFile('what',$storage.'/error.txt') === true);
-        $tmp = tmpfile();
+        $tmp = Base\Res::tmpFile();
         assert(Base\Error::logFile('what',$tmp));
 
         // logPrepareMessage

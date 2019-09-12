@@ -227,7 +227,7 @@ class Res extends Root
 
         if($return === true)
         {
-            $path = static::pathFile($value);
+            $path = static::uriRemoveScheme($value);
 
             if(is_string($path) && File::is($path))
             $return = true;
@@ -938,7 +938,10 @@ class Res extends Root
         $return = static::uri($value);
 
         if(is_string($return))
-        $return = Uri::removeScheme($return);
+        {
+            if(!Path::hasWindowsDrive($return))
+            $return = Uri::removeScheme($return);
+        }
 
         return $return;
     }
@@ -968,6 +971,7 @@ class Res extends Root
 
     // parse
     // retourne le tableau avec les résultats de parse_url si la resource a une uri
+    // gestion particulière pour les chemins avec windows drive
     // ne fonctionne pas avec les directoires
     public static function parse($value):?array
     {
@@ -975,7 +979,16 @@ class Res extends Root
         $uri = static::uri($value);
 
         if(is_string($uri))
-        $return = Uri::parse($uri,false);
+        {
+            if(Path::hasWindowsDrive($uri))
+            {
+                $return = Uri::getEmptyParse();
+                $return['path'] = $uri;
+            }
+            
+            else
+            $return = Uri::parse($uri,false);
+        }
 
         return $return;
     }
@@ -983,15 +996,27 @@ class Res extends Root
 
     // parseOne
     // retourne une partie des résultats de parse_url si la resource a une uri
+    // gestion particulière pour les chemins avec windows drive
     // ne fonctionne pas avec les directoires
-    public static function parseOne(int $key,$value):?string
+    public static function parseOne($key,$value):?string
     {
         $return = null;
         $uri = static::uri($value);
 
         if(is_string($uri))
-        $return = Uri::parseOne($key,$uri,false);
-
+        {
+            if(Path::hasWindowsDrive($uri))
+            {
+                $key = Uri::getParseConstant($key);
+                
+                if($key === PHP_URL_PATH)
+                $return = $uri;
+            }
+            
+            else
+            $return = Uri::parseOne($key,$uri,false);
+        }
+        
         return $return;
     }
 
@@ -1002,7 +1027,7 @@ class Res extends Root
     // ne fonctionne pas avec les directoires
     public static function scheme($value):?string
     {
-        return static::parseOne(PHP_URL_SCHEME,$value);
+        return static::parseOne('scheme',$value);
     }
 
 
@@ -1011,7 +1036,7 @@ class Res extends Root
     // ne fonctionne pas avec les directoires
     public static function host($value):?string
     {
-        return static::parseOne(PHP_URL_HOST,$value);
+        return static::parseOne('host',$value);
     }
 
 
@@ -1030,31 +1055,10 @@ class Res extends Root
         if(empty($return))
         {
             if(static::isFile($value))
-            $return = static::pathFile($value);
+            $return = static::uriRemoveScheme($value);
 
             else
-            $return = static::parseOne(PHP_URL_PATH,$value);
-        }
-
-        return $return;
-    }
-
-
-    // pathFile
-    // méthode utilisé pour générer le chemin d'une ressource fichier
-    // méthode protégé
-    protected static function pathFile($value):?string
-    {
-        $return = null;
-        $uri = static::uri($value);
-
-        if(is_string($uri))
-        {
-            if(Path::hasWindowsDrive($uri))
-            $return = $uri;
-
-            else
-            $return = Uri::removeScheme($uri);
+            $return = static::parseOne('path',$value);
         }
 
         return $return;
@@ -1071,7 +1075,7 @@ class Res extends Root
         $path = static::path($value);
 
         if(is_string($path))
-        $return = Uri::pathinfo($path,false);
+        $return = Path::info($path);
 
         return $return;
     }
@@ -1081,13 +1085,13 @@ class Res extends Root
     // retourne une entrée du tableau pathinfo
     // ne fonctionne pas avec les directoires
     // fonctionne avec les ressources phpWritable
-    public static function pathinfoOne(int $key,$value,bool $contextOption=false):?string
+    public static function pathinfoOne($key,$value,bool $contextOption=false):?string
     {
         $return = null;
         $path = static::path($value,$contextOption);
 
         if(is_string($path))
-        $return = Uri::pathinfoOne($key,$path,false);
+        $return = Path::infoOne($key,$path);
 
         return $return;
     }
@@ -1098,7 +1102,7 @@ class Res extends Root
     // ne fonctionne pas avec les directoires
     public static function dirname($value,bool $contextOption=false):?string
     {
-        return static::pathinfoOne(PATHINFO_DIRNAME,$value,$contextOption);
+        return static::pathinfoOne('dirname',$value,$contextOption);
     }
 
 
@@ -1108,7 +1112,7 @@ class Res extends Root
     // fonctionne avec les ressources phpWritable
     public static function basename($value,bool $contextOption=false):?string
     {
-        return static::pathinfoOne(PATHINFO_BASENAME,$value,$contextOption);
+        return static::pathinfoOne('basename',$value,$contextOption);
     }
 
 
@@ -1134,7 +1138,7 @@ class Res extends Root
     // fonctionne avec les ressources phpWritable
     public static function filename($value,bool $contextOption=false):?string
     {
-        return static::pathinfoOne(PATHINFO_FILENAME,$value,$contextOption);
+        return static::pathinfoOne('filename',$value,$contextOption);
     }
 
 
@@ -1144,7 +1148,7 @@ class Res extends Root
     // fonctionne avec les ressources phpWritable
     public static function extension($value,bool $contextOption=false):?string
     {
-        return static::pathinfoOne(PATHINFO_EXTENSION,$value,$contextOption);
+        return static::pathinfoOne('extension',$value,$contextOption);
     }
 
 
@@ -1293,7 +1297,7 @@ class Res extends Root
         elseif(is_array($value) && File::isUploadNotEmpty($value))
         $value = File::uploadPath($value);
 
-        elseif(is_string($value) && empty(Uri::scheme($value)))
+        elseif(is_string($value) && empty(static::uriSchemeNotWindowsDrive($value)))
         $value = Finder::normalize($value);
 
         if(is_string($value))
@@ -1312,8 +1316,8 @@ class Res extends Root
 
         return $return;
     }
-
-
+    
+    
     // openFromKind
     // utilisé lors de l'ouverture de la resource, une fois le kind déterminé
     // méthode protégé
@@ -1396,7 +1400,7 @@ class Res extends Root
 
         else
         {
-            $scheme = Uri::scheme($value);
+            $scheme = static::uriSchemeNotWindowsDrive($value);
 
             if(is_string($scheme) && in_array($scheme,['http','https'],true))
             $return = 'http';
@@ -1641,7 +1645,21 @@ class Res extends Root
         return static::phpWritable('memory',Arr::plus(['mime'=>$mime,'basename'=>$basename],$option));
     }
 
-
+    
+    // tmpFile
+    // retourne une ressource fichier dans le dossier temporaire
+    // par défaut change l'extension
+    public static function tmpFile(?string $extension='tmp') 
+    {
+        $return = tmpfile();
+        
+        if(is_string($extension))
+        $return = static::changeExtension($extension,$return);
+        
+        return $return;
+    }
+    
+    
     // http
     // fait une requête http, value doit être une uri absolute
     // retourne un tableau avec code, contenttype, basename, meta, header et resource si c'est bien une requête http
@@ -3375,6 +3393,15 @@ class Res extends Root
         }
 
         return $return;
+    }
+    
+    
+    // uriSchemeNotWindowsDrive
+    // retourne le scheme de l'uri s'il n'y a pas de windows drive
+    // méthode protégé
+    protected static function uriSchemeNotWindowsDrive(string $value):?string
+    {
+        return (!Path::hasWindowsDrive($value))? Uri::scheme($value):null;
     }
 }
 ?>

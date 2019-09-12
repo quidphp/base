@@ -263,8 +263,6 @@ class Dir extends Base\Test
         // finder
         assert(Base\Dir::isReadable($_dir_));
         assert(!Base\Dir::isReadable($_file_));
-        assert(Base\Dir::isExecutable($_dir_));
-        assert(!Base\Dir::isExecutable($_file_));
 
         // cleanup
         Base\Dir::empty('[assertCurrent]');

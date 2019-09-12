@@ -146,7 +146,7 @@ class Dir extends Finder
     // retourne le chemin du dossier temporaire
     public static function temp():string
     {
-        return sys_get_temp_dir();
+        return Path::normalize(sys_get_temp_dir());
     }
 
 
@@ -154,7 +154,7 @@ class Dir extends Finder
     // retourne le dossier de travail courant
     public static function getCurrent():string
     {
-        return getcwd();
+        return Path::normalize(getcwd());
     }
 
 

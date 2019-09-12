@@ -20,7 +20,7 @@ class Validate extends Base\Test
         // prepare
         global $a;
         $publicPath = Base\Finder::normalize('[public]');
-        $fp = tmpfile();
+        $fp = Base\Res::tmpFile();
         $ua = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0';
         $nonUtf8 = "\xF0";
         $_file_ = Base\Finder::normalize('[assertCommon]/class.php');

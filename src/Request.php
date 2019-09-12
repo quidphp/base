@@ -664,7 +664,7 @@ class Request extends Root
     // retourne le dirname du path courant
     public static function dirname():?string
     {
-        return Path::infoOne(PATHINFO_DIRNAME,static::path());
+        return Path::infoOne('dirname',static::path());
     }
 
 
@@ -672,7 +672,7 @@ class Request extends Root
     // retourne le basename du path courant
     public static function basename():?string
     {
-        return Path::infoOne(PATHINFO_BASENAME,static::path());
+        return Path::infoOne('basename',static::path());
     }
 
 
@@ -680,7 +680,7 @@ class Request extends Root
     // retourne le filename du path courant
     public static function filename():?string
     {
-        return Path::infoOne(PATHINFO_FILENAME,static::path());
+        return Path::infoOne('filename',static::path());
     }
 
 
@@ -688,7 +688,7 @@ class Request extends Root
     // retourne l'extension du path courant
     public static function extension():?string
     {
-        return Path::infoOne(PATHINFO_EXTENSION,static::path());
+        return Path::infoOne('extension',static::path());
     }
 
 

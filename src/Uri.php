@@ -34,6 +34,15 @@ class Uri extends Root
             'separator'=>['&','&amp;'], // séparateur pour http_build_query
             'encoding'=>PHP_QUERY_RFC3986, // encodage pour http_build_query
             'default'=>'t'], // clé de query a utilisé si append est true
+        'parseConstant'=>array( // tableau liant des strings aux constantes
+            'scheme'=>PHP_URL_SCHEME,
+            'user'=>PHP_URL_USER,
+            'pass'=>PHP_URL_PASS,
+            'host'=>PHP_URL_HOST,
+            'port'=>PHP_URL_PORT,
+            'path'=>PHP_URL_PATH,
+            'query'=>PHP_URL_QUERY,
+            'fragment'=>PHP_URL_FRAGMENT),
         'scheme'=>['http','https','ftp'], // scheme accepté par la méthode isSchemeValid
         'build'=>[ // pour reconstruire à partir d'un array
             'scheme'=>'://',
@@ -669,23 +678,47 @@ class Uri extends Root
     // decode et parse_url
     // les shortcut sont remplacés
     // retourne une partie de l'uri
-    public static function parseOne(int $key,string $uri,bool $decode=false)
+    public static function parseOne($key,string $uri,bool $decode=false)
     {
         $return = null;
-        $uri = static::shortcut($uri);
+        
+        if(is_string($key))
+        $key = static::getParseConstant($key);
+        
+        if(is_int($key))
+        {
+            $uri = static::shortcut($uri);
 
-        if($decode === true)
-        $uri = static::decode($uri);
+            if($decode === true)
+            $uri = static::decode($uri);
 
-        $return = parse_url($uri,$key);
+            $return = parse_url($uri,$key);
 
-        if($return === false || $return === '')
-        $return = null;
+            if($return === false || $return === '')
+            $return = null;
+        }
 
         return $return;
     }
 
-
+    
+    // getParseConstant
+    // retourne la constante à partir d'une string
+    // utilisé pour parse_url
+    public static function getParseConstant(string $key):?int
+    {
+        return static::$config['parseConstant'][$key] ?? null;
+    }
+    
+    
+    // getEmptyParse
+    // retourne un tableau vide similaire au retour de parse_url
+    public static function getEmptyParse():array 
+    {
+        return Arr::valuesAll(null,array_keys(static::$config['parseConstant']));
+    }
+    
+    
     // info
     // retourne un tableau d'information sur l'uri
     public static function info(string $uri,bool $decode=false):array
@@ -761,7 +794,7 @@ class Uri extends Root
             }
 
             else
-            $return = static::parseOne(PHP_URL_SCHEME,$value,$decode);
+            $return = static::parseOne('scheme',$value,$decode);
 
             if(empty($return))
             $return = null;
@@ -815,7 +848,7 @@ class Uri extends Root
     // retourne le username de l'uri
     public static function user(string $uri,bool $decode=false):?string
     {
-        return static::parseOne(PHP_URL_USER,$uri,$decode);
+        return static::parseOne('user',$uri,$decode);
     }
 
 
@@ -839,7 +872,7 @@ class Uri extends Root
     // retourne le password de l'uri
     public static function pass(string $uri,bool $decode=false):?string
     {
-        return static::parseOne(PHP_URL_PASS,$uri,$decode);
+        return static::parseOne('pass',$uri,$decode);
     }
 
 
@@ -863,7 +896,7 @@ class Uri extends Root
     // retourne le host de l'uri
     public static function host(string $uri,bool $decode=false):?string
     {
-        return static::parseOne(PHP_URL_HOST,$uri,$decode);
+        return static::parseOne('host',$uri,$decode);
     }
 
 
@@ -887,7 +920,7 @@ class Uri extends Root
     // retourne le port de l'uri
     public static function port(string $uri,bool $decode=false):?int
     {
-        return static::parseOne(PHP_URL_PORT,$uri,$decode);
+        return static::parseOne('port',$uri,$decode);
     }
 
 
@@ -911,7 +944,7 @@ class Uri extends Root
     // retourne le path de l'uri
     public static function path(string $uri,bool $decode=false):?string
     {
-        return static::parseOne(PHP_URL_PATH,$uri,$decode);
+        return static::parseOne('path',$uri,$decode);
     }
 
 
@@ -963,7 +996,7 @@ class Uri extends Root
 
     // pathInfoOne
     // retourne une entrée du tableau de pathinfo
-    public static function pathinfoOne(int $key,string $uri,bool $decode=false):?string
+    public static function pathinfoOne($key,string $uri,bool $decode=false):?string
     {
         $return = null;
         $path = static::path($uri,$decode);
@@ -1021,7 +1054,7 @@ class Uri extends Root
     // retourne le dirname du path
     public static function dirname(string $uri,bool $decode=false):?string
     {
-        return static::pathinfoOne(PATHINFO_DIRNAME,$uri,$decode);
+        return static::pathinfoOne('dirname',$uri,$decode);
     }
 
 
@@ -1071,7 +1104,7 @@ class Uri extends Root
     // retourne le basename du path
     public static function basename(string $uri,bool $decode=false):?string
     {
-        return static::pathinfoOne(PATHINFO_BASENAME,$uri,$decode);
+        return static::pathinfoOne('basename',$uri,$decode);
     }
 
 
@@ -1121,7 +1154,7 @@ class Uri extends Root
     // retourne le filename du path
     public static function filename(string $uri,bool $decode=false):?string
     {
-        return static::pathinfoOne(PATHINFO_FILENAME,$uri,$decode);
+        return static::pathinfoOne('filename',$uri,$decode);
     }
 
 
@@ -1171,7 +1204,7 @@ class Uri extends Root
     // retourne l'extension du path
     public static function extension(string $uri,bool $decode=false):?string
     {
-        return static::pathinfoOne(PATHINFO_EXTENSION,$uri,$decode);
+        return static::pathinfoOne('extension',$uri,$decode);
     }
 
 
@@ -1366,7 +1399,7 @@ class Uri extends Root
     // retourne le query de l'uri
     public static function query(string $uri,bool $decode=false):?string
     {
-        return static::parseOne(PHP_URL_QUERY,$uri,$decode);
+        return static::parseOne('query',$uri,$decode);
     }
 
 
@@ -1476,7 +1509,7 @@ class Uri extends Root
     // retourne le fragment de l'uri
     public static function fragment(string $uri,bool $decode=false):?string
     {
-        return static::parseOne(PHP_URL_FRAGMENT,$uri,$decode);
+        return static::parseOne('fragment',$uri,$decode);
     }
 
 

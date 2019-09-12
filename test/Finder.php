@@ -29,7 +29,7 @@ class Finder extends Base\Test
         $_dir_ = dirname($_file_);
         Base\Finder::clearStatCache(true);
         assert(Base\Dir::reset($storage));
-        $tp = tmpfile();
+        $tp = Base\Res::tmpFile();
         $stream = stream_get_meta_data($tp);
         $sym = Base\Finder::normalize($storage.'/symtype');
         $type = ucfirst($data['boot']->type());
@@ -49,8 +49,7 @@ class Finder extends Base\Test
         assert(!Base\Finder::isWritable('doesnotexist'));
 
         // isExecutable
-        assert(!Base\Finder::isExecutable('doesnotexist'));
-
+        
         // isPathToUri
         assert(Base\Finder::isPathToUri($publicPath.$mediaCsv));
 
@@ -72,7 +71,6 @@ class Finder extends Base\Test
         assert(Base\Finder::isUriToPathWritable($mediaCsv,Base\Request::host()));
 
         // isUriToPathExecutable
-        assert(!Base\Finder::isUriToPathExecutable(Base\Uri::absolute('test/lala.jpg')));
 
         // isCreatable
         assert(!Base\Finder::isCreatable($storage));
@@ -145,8 +143,8 @@ class Finder extends Base\Test
         assert(is_int(Base\Finder::permission($_file_,false)));
         assert(is_array(Base\Finder::permission($_file_,true)));
         assert(Base\Finder::permission($_dir_) !== 755);
-        assert(in_array(current(Base\Finder::permission($_dir_,true)),[755,775],true));
-        assert(in_array(current(Base\Finder::permission($_file_,true)),[644,664,775,755],true));
+        assert(in_array(current(Base\Finder::permission($_dir_,true)),[755,775,777],true));
+        assert(in_array(current(Base\Finder::permission($_file_,true)),[644,664,666,775,755],true));
         assert(Base\Finder::permission($common.'/myclass.phpz') === null);
 
         // permissionFormat
@@ -239,7 +237,7 @@ class Finder extends Base\Test
         assert(Base\Finder::touch($stream['uri']));
 
         // rename
-        $file = tmpfile();
+        $file = Base\Res::tmpFile();
         assert(Base\Finder::rename('[assertCurrent]/tmp',Base\Res::uri($file)));
 
         if(!Base\Server::isWindows())
@@ -252,7 +250,7 @@ class Finder extends Base\Test
             $newBasename = Base\Str::random(10);
             $newPath = Base\Path::addBasename($newBasename,$newDirname);
             assert(Base\Finder::changeDirname($newDirname,$path));
-            $file = tmpfile();
+            $file = Base\Res::tmpFile();
             assert(Base\Finder::changeDirname('[assertCurrent]',Base\Res::uri($file)));
             $fileBase = Base\Res::basename($file);
             assert(Base\Dir::set($storage.'/move'));
