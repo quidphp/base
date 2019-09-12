@@ -1095,8 +1095,8 @@ class Dir extends Finder
 
 
     // reset
-    // vide et efface un directoire
-    // recrée le directoire
+    // vide un directoire si existante
+    // sinon crée le directoire
     public static function reset($path,bool $recursive=true):bool
     {
         $return = false;
@@ -1104,9 +1104,16 @@ class Dir extends Finder
 
         if(is_string($path))
         {
-            static::emptyAndUnlink($path);
-
-            if(static::set($path,$recursive))
+            if(static::is($path))
+            {
+                if(static::isWritable($path))
+                {
+                    static::empty($path);
+                    $return = true;
+                }
+            }
+            
+            elseif(static::set($path,$recursive))
             $return = true;
         }
 

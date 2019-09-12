@@ -174,8 +174,9 @@ class File extends Finder
     {
         $return = false;
         $value = static::getLoadPath($value);
-
-        if(!empty($value) && in_array($value,static::loaded(),true))
+        $normalize = (Server::isWindows())? true:false;
+        
+        if(!empty($value) && in_array($value,static::loaded($normalize),true))
         $return = true;
 
         return $return;
@@ -336,14 +337,15 @@ class File extends Finder
     // res
     // méthode protégé utilisé pour faire les appels à la classe res
     // sauve 400 lignes de code
-    protected static function res(string $method,bool $create=false,int $v,int $o,...$args)
+    protected static function res(string $method,bool $create=false,int $v,?int $o=null,...$args)
     {
         $return = null;
         $value = $args[$v];
-        $option = $args[$o];
         $close = (is_resource($value))? false:true;
         $args[$v] = static::resource($value,['create'=>$create]);
-        $args[$o] = static::option($option);
+        
+        if(is_int($o))
+        $args[$o] = static::option($args[$o]);
 
         if(!empty($args[$v]))
         {
@@ -504,9 +506,15 @@ class File extends Finder
 
     // loaded
     // retournes les fichiers inclus
-    public static function loaded():array
+    // possible de normalizer tous les chemins pour Windows
+    public static function loaded(bool $normalize=false):array
     {
-        return get_included_files();
+        $return = get_included_files();
+        
+        if($normalize === true)
+        $return = array_map(array(Path::class,'normalize'),$return);
+        
+        return $return;
     }
 
 
@@ -753,7 +761,7 @@ class File extends Finder
         return static::open($value,Arr::plus($option,['create'=>true]));
     }
 
-
+        
     // line
     // retourne la ligne courante de la resource fichier ou la première ligne si c'est un chemin qui est fourni
     public static function line($value,?array $option=null)
@@ -794,6 +802,23 @@ class File extends Finder
         return $return;
     }
 
+
+    // getLineSeparator
+    // va tenter de détecter le séparateur de ligne si seekable tellable
+    // enregistre dans les options de la ressource
+    public static function getLineSeparator($value):string
+    {
+        return static::res('getLineSeparator',false,0,null,$value);
+    }
+
+    
+    // getLineSeparatorLength
+    // retourne la longueur du séparateur de ligne (1 ou 2)
+    public static function getLineSeparatorLength($value):int 
+    {
+        return static::res('getLineSeparatorLength',false,0,null,$value);
+    }
+    
 
     // read
     // lit le contenu d'un chemin de fichier ou d'une resource fichier

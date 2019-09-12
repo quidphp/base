@@ -136,7 +136,13 @@ class Res extends Base\Test
         assert(!Base\Res::isContext($fp));
         assert(Base\Res::isContext($context));
         assert(!Base\Res::isContext($curl));
-
+        
+        // isStreamMetaFile
+        $meta = Base\Res::meta($current);
+        assert(Base\Res::isStreamMetaFile($meta));
+        $meta2 = Base\Res::meta($curl);
+        assert(!Base\Res::isStreamMetaFile($meta2));
+        
         // isFile
         assert(Base\Res::isFile($fp));
         assert(Base\Res::isFile($current));
@@ -857,7 +863,10 @@ class Res extends Base\Test
 
         // getLineSeparator
         assert(Base\Res::getLineSeparator($current) === PHP_EOL);
-
+        
+        // getLineSeparatorLength
+        assert(in_array(Base\Res::getLineSeparatorLength($current),array(1,2),true));
+        
         // findLineSeparator
         $pos = Base\Res::position($current);
         assert(is_string(Base\Res::findLineSeparator($current)));

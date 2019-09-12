@@ -256,6 +256,12 @@ class File extends Base\Test
         assert(strlen(Base\File::get($common.'/load.php',10,20)) === 20);
         assert(!empty(Base\File::get($array)));
 
+        // getLineSeparator
+        assert(is_string(Base\File::getLineSeparator($currentFile)));
+        
+        // getLineSeparatorLength
+        assert(in_array(Base\File::getLineSeparatorLength($currentFile),array(1,2),true));
+        
         // read
         assert(Base\File::read(100,500,$currentFile) === Base\File::read(100,500,$open));
         assert(Base\File::read(0,true,$currentFile) === Base\File::read(0,true,$open));

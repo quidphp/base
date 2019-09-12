@@ -19,6 +19,7 @@ class Res extends Root
         'readable'=>['r','r+','w+','a+','x+','c+'], // mode de stream readable
         'writable'=>['r+','w','w+','a','a+','x','x+','c','c+'], // mode de resource writable
         'creatable'=>['c+','w','w+'],
+        'lineSeparatorLength'=>300, // longueur utilisé pour tenter de trouver le séparateur de ligne
         'base64'=>[ // si convert est true dans la méthode base64, converti un mime en un autre
             'image/svg'=>'image/svg+xml'],
         'phpStream'=>[ // paramètre par défaut pour stream php
@@ -186,17 +187,31 @@ class Res extends Root
     }
 
 
+    // isStreamMetaFile
+    // retourne vrai si le tableau de meta représente une ressource fichier
+    public static function isStreamMetaFile($value):bool 
+    {
+        $return = false;
+        
+        if(is_array($value) && !empty($value['stream_type']) && $value['stream_type'] === 'STDIO')
+        $return = true;
+        
+        return $return;
+    }
+    
+    
     // isFile
-    // retourne vrai si la resource est de kind fichier et existe
+    // retourne vrai si la resource est de kind fichier
+    // ne vérifie pas l'existence
     public static function isFile($value):bool
     {
         $return = false;
 
         if(static::isStream($value))
         {
-            $path = static::pathFile($value);
-
-            if(is_string($path) && File::is($path))
+            $meta = stream_get_meta_data($value);
+            
+            if(static::isStreamMetaFile($meta))
             $return = true;
         }
 
@@ -205,10 +220,20 @@ class Res extends Root
 
 
     // isFileExists
-    // alias de isFile
+    // retourne vrai si la resource est de kind fichier et existe
     public static function isFileExists($value):bool
     {
-        return static::isFile($value);
+        $return = static::isFile($value);
+        
+        if($return === true)
+        {
+            $path = static::pathFile($value);
+
+            if(is_string($path) && File::is($path))
+            $return = true;
+        }
+        
+        return $return;
     }
 
 
@@ -216,7 +241,7 @@ class Res extends Root
     // retourne vrai si la resource est fileLike, c'est à dire file, phpMemory ou phpTemp
     public static function isFileLike($value):bool
     {
-        return (static::isFile($value) || static::isPhpMemory($value) || static::isPhpTemp($value))? true:false;
+        return (static::isFileExists($value) || static::isPhpMemory($value) || static::isPhpTemp($value))? true:false;
     }
 
 
@@ -345,7 +370,7 @@ class Res extends Root
     // les flux fichiers et http lisibles retournent vrai
     public static function isResponsable($value):bool
     {
-        return (static::isPhpWritable($value) || (static::isReadable($value) && (static::isFile($value) || static::isHttp($value))))? true:false;
+        return (static::isPhpWritable($value) || (static::isReadable($value) && (static::isFileExists($value) || static::isHttp($value))))? true:false;
     }
 
 
@@ -402,7 +427,7 @@ class Res extends Root
     // retourne vrai si la ressource peut être barré et débarré par flock
     public static function isLockable($value):bool
     {
-        return (static::isFile($value))? true:false;
+        return (static::isFileExists($value))? true:false;
     }
 
 
@@ -757,7 +782,7 @@ class Res extends Root
             $return = 'dir';
 
             // file
-            elseif($streamType === 'STDIO')
+            elseif(static::isStreamMetaFile($meta))
             $return = 'file';
 
             // http
@@ -796,7 +821,7 @@ class Res extends Root
         return $return;
     }
 
-
+    
     // meta
     // retourne les meta données de la resource, si disponible
     // fonctionne pour curl
@@ -805,7 +830,12 @@ class Res extends Root
         $return = null;
 
         if(static::canMeta($value))
-        $return = stream_get_meta_data($value);
+        {
+            $return = stream_get_meta_data($value);
+            
+            if(static::isStreamMetaFile($return))
+            $return['uri'] = Path::normalize($return['uri']);
+        }
 
         elseif(static::isCurl($value))
         {
@@ -1025,8 +1055,6 @@ class Res extends Root
 
             else
             $return = Uri::removeScheme($uri);
-
-            $return = Path::normalize($return);
         }
 
         return $return;
@@ -2317,15 +2345,15 @@ class Res extends Root
 
 
     // getLineSeparator
-    // va tenter de détecter si seekable tellable et enregistre dans les options de la ressource
-    // retourne le caractère séparateur de ligne
-    public static function getLineSeparator($value,int $length=1000):string
+    // va tenter de détecter le séparateur de ligne si seekable tellable
+    // enregistre dans les options de la ressource
+    public static function getLineSeparator($value):string
     {
         $return = static::getPhpContextOption('eol',$value);
 
         if($return === null)
         {
-            $eol = static::findLineSeparator($value,$length);
+            $eol = static::findLineSeparator($value);
             $return = (is_string($eol))? $eol:false;
             static::setPhpContextOption('eol',$return,$value);
         }
@@ -2336,16 +2364,25 @@ class Res extends Root
         return $return;
     }
 
-
+    
+    // getLineSeparatorLength
+    // retourne la longueur du séparateur de ligne (1 ou 2)
+    public static function getLineSeparatorLength($value):int 
+    {
+        return strlen(static::getLineSeparator($value));
+    }
+    
+    
     // findLineSeparator
     // tente de trouver le séparateur de ligne dans la resource
     // va seek et retourner à la position originale
-    public static function findLineSeparator($value,int $length=1000):?string
+    public static function findLineSeparator($value):?string
     {
         $return = null;
 
         if(static::isSeekableTellable($value))
         {
+            $length = static::$config['lineSeparatorLength'];
             $pos = static::position($value);
             $content = stream_get_contents($value,$length);
 

@@ -38,7 +38,8 @@ trait _shortcut
     // le shortcut est passé dans la méthode shortcut avant d'être conservé dans config
     public static function setShortcut(string $key,string $value):void
     {
-        Arr::setRef($key,static::shortcut($value),static::$shortcut);
+        $method = static::setShortcutMethod();
+        Arr::setRef($key,$method($value),static::$shortcut);
 
         return;
     }
@@ -57,7 +58,15 @@ trait _shortcut
         return;
     }
 
-
+    
+    // setShortcutMethod
+    // méthode utilisé lors de l'ajout du shortcut
+    public static function setShortcutMethod():callable 
+    {
+        return array(static::class,'shortcut');
+    }
+    
+    
     // unsetShortcut
     // enlève un shortcut
     public static function unsetShortcut(string $key):void
