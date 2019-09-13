@@ -346,7 +346,7 @@ class Symlink extends Finder
                 else
                 static::unlink($path);
             }
-            
+
             if(Finder::isReadable($target,false) && !Finder::is($path,false))
             {
                 $dirname = Path::dirname($path);
