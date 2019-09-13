@@ -550,27 +550,27 @@ class File extends Finder
             $basename = (is_string($basename))? $basename:Path::basename($path);
             $extension = Path::extension($basename) ?? Path::extension($path);
             $mime = static::mime($path,false);
-            
+
             if(is_string($mime))
             {
                 $mimeGroup = Mime::group($mime);
                 $mimeExtension = Mime::toExtension($mime);
-                
+
                 if(is_string($mimeExtension))
                 {
                     if(is_string($extension))
                     {
                         $group = Mime::groupFromExtension($extension);
-                        
+
                         if(is_string($group) && Mime::isExtensionInGroup($mimeExtension,$group))
                         $extension = $mimeExtension;
                     }
-                    
+
                     else
                     $extension = $mimeExtension;
                 }
             }
-            
+
             $return = Path::changeBasenameExtension($extension,$basename);
         }
 

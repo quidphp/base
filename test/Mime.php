@@ -67,7 +67,7 @@ class Mime extends Base\Test
         assert(Base\Mime::isExtensionInGroup('GIF','imageRaster'));
         assert(Base\Mime::isExtensionInGroup('jpg','imageRaster'));
         assert(!Base\Mime::isExtensionInGroup('jpg','txt'));
-        
+
         // get
         assert(strpos(Base\Mime::get($file),'text/x-php') === 0);
         assert(strpos(Base\Mime::get($mediaJpg),'image/jpeg') === 0);

@@ -134,7 +134,7 @@ class Mime extends Root
         return $return;
     }
 
-    
+
     // get
     // retourne le mimetype du fichier ou de la resource à partir de finfo
     public static function get($value,bool $charset=true):?string
@@ -272,7 +272,7 @@ class Mime extends Root
     {
         $return = null;
         $mime = static::get($value);
-        
+
         if(is_string($mime))
         $return = static::toExtension($mime);
 
