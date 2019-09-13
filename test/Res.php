@@ -577,7 +577,7 @@ class Res extends Base\Test
 
         // mimeBasename
         assert(Base\Res::mimeBasename($current) === 'class.php');
-        assert(Base\Res::mimeBasename($current,'bla.jpg') === 'bla.php');
+        assert(Base\Res::mimeBasename($current,'bla.jpg') === 'bla.jpg');
 
         // filename
         assert(is_string(Base\Res::filename($fp)));
@@ -612,9 +612,6 @@ class Res extends Base\Test
 
         // mimeFamily
         assert(Base\Res::mimeFamily($http) === 'image');
-
-        // mimeExtension
-        assert(Base\Res::mimeExtension($http) === 'jpg');
 
         // param
         assert(is_array(Base\Res::param($fp)));

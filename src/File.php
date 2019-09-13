@@ -538,7 +538,7 @@ class File extends Finder
 
     // mimeBasename
     // retourne le mime basename
-    // l'extension est remplacé par celle du mime si existante
+    // l'extension peut être remplacé par celle du mime si le groupe est compatible
     // possible de fournir un autre basename que celui du chemin
     public static function mimeBasename($value,?string $basename=null):?string
     {
@@ -548,11 +548,29 @@ class File extends Finder
         if(is_string($path))
         {
             $basename = (is_string($basename))? $basename:Path::basename($path);
-            $extension = static::mimeExtension($path);
-
-            if(empty($extension))
-            $extension = (is_string($basename))? Path::extension($basename):Path::extension($path);
-
+            $extension = Path::extension($basename) ?? Path::extension($path);
+            $mime = static::mime($path,false);
+            
+            if(is_string($mime))
+            {
+                $mimeGroup = Mime::group($mime);
+                $mimeExtension = Mime::toExtension($mime);
+                
+                if(is_string($mimeExtension))
+                {
+                    if(is_string($extension))
+                    {
+                        $group = Mime::groupFromExtension($extension);
+                        
+                        if(is_string($group) && Mime::isExtensionInGroup($mimeExtension,$group))
+                        $extension = $mimeExtension;
+                    }
+                    
+                    else
+                    $extension = $mimeExtension;
+                }
+            }
+            
             $return = Path::changeBasenameExtension($extension,$basename);
         }
 
@@ -563,9 +581,9 @@ class File extends Finder
     // mime
     // retourne le mimetype du fichier à partir de finfo
     // le fichier doit existé
-    public static function mime($value,bool $charset=true,bool $strict=true):?string
+    public static function mime($value,bool $charset=true):?string
     {
-        return (static::is($value))? Mime::get($value,$charset,$strict):null;
+        return (static::is($value))? Mime::get($value,$charset):null;
     }
 
 
@@ -593,15 +611,6 @@ class File extends Finder
     public static function mimeFamily($value,bool $fromPath=true):?string
     {
         return (static::is($value))? Mime::getFamily($value,$fromPath):null;
-    }
-
-
-    // mimeExtension
-    // retourne l'extension que devrait utiliser le fichier en fonction de son mime
-    // le fichier doit existé, sauf si fromPath est true
-    public static function mimeExtension($value):?string
-    {
-        return (static::is($value))? Mime::getCorrectExtension($value):null;
     }
 
 

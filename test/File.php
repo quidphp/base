@@ -171,7 +171,7 @@ class File extends Base\Test
 
         // mimeBasename
         assert(Base\File::mimeBasename($currentFile) === basename($currentFile));
-        assert(Base\File::mimeBasename($currentFile,'test.jpg') === 'test.php');
+        assert(Base\File::mimeBasename($currentFile,'test.jpg') === 'test.jpg');
 
         // mime
         assert(Base\File::mime($temp) === 'inode/x-empty; charset=binary');
@@ -190,9 +190,6 @@ class File extends Base\Test
         // mimeFamily
         assert(Base\File::mimeFamily($currentFile) === 'text');
         assert(Base\File::mimeFamily($array) === 'text');
-
-        // mimeExtension
-        assert(Base\File::mimeExtension($currentFile) === 'php');
 
         // stat
         assert(count(Base\File::stat($open,true)) === 13);

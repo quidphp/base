@@ -1212,21 +1212,6 @@ class Res extends Root
     }
 
 
-    // mimeExtension
-    // retourne l'extension que devrait utilisé la resource selon son mime
-    // fonctionne seulement si la resource est un fichier, un élément http ou phpWritable
-    public static function mimeExtension($value):?string
-    {
-        $return = null;
-        $mime = static::mime($value);
-
-        if(!empty($mime))
-        $return = Mime::toExtension($mime);
-
-        return $return;
-    }
-
-
     // param
     // retourne les paramètres de la resource, si disponible
     public static function param($value):?array

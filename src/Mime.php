@@ -58,8 +58,6 @@ class Mime extends Root
             'video/quicktime'=>'mov',
             'text/xml'=>'xml',
             'application/zip'=>'zip'],
-        'strictExtension'=>[ // liste de mimetype strict, l'extension dicte le mime type, pas finfo
-            'notebook'=>'application/x-smarttech-notebook'],
         'family'=>[ // permet de lier des groupes à des familles
             'image'=>['imageRaster','imageVector'],
             'binary'=>['audio','font','imageRaster','imageVector','pdf','video','zip'],
@@ -136,51 +134,38 @@ class Mime extends Root
         return $return;
     }
 
-
+    
     // get
     // retourne le mimetype du fichier ou de la resource à partir de finfo
-    // si strict est true, tu peux forcer le mimetype à partir de l'extension sans passer par finfo
-    public static function get($value,bool $charset=true,bool $strict=true):?string
+    public static function get($value,bool $charset=true):?string
     {
         $return = null;
 
         if(is_resource($value))
-        $return = static::getFromResource($value,$charset,true,$strict);
+        $return = static::getFromResource($value,$charset,true);
 
         elseif(File::is($value))
         {
             $value = File::path($value);
+            $finfo = Res::open('finfo');
 
-            if($strict === true)
+            if(!empty($finfo))
             {
-                $extension = Path::extension($value);
+                $mime = finfo_file($finfo,$value);
 
-                if(is_string($extension))
-                $return = static::strictExtension($extension);
-            }
-
-            if(empty($return))
-            {
-                $finfo = Res::open('finfo');
-
-                if(!empty($finfo))
+                if(is_string($mime) && !empty($mime))
                 {
-                    $mime = finfo_file($finfo,$value);
+                    if(static::toExtension($mime) === 'txt')
+                    $return = static::fromPath($value);
 
-                    if(is_string($mime) && !empty($mime))
-                    {
-                        if(static::toExtension($mime) === 'txt')
-                        $return = static::fromPath($value);
+                    else
+                    $return = $mime;
 
-                        else
-                        $return = $mime;
-
-                        if(is_string($return) && $charset === false)
-                        $return = static::removeCharset($return);
-                    }
-
-                    Res::close($finfo);
+                    if(is_string($return) && $charset === false)
+                    $return = static::removeCharset($return);
                 }
+
+                Res::close($finfo);
             }
         }
 
@@ -191,7 +176,7 @@ class Mime extends Root
     // getFromResource
     // retourne le mime type à partir d'une resource
     // gère le context option
-    public static function getFromResource($value,bool $charset=true,bool $contextOption=true,bool $strict=true):?string
+    public static function getFromResource($value,bool $charset=true,bool $contextOption=true):?string
     {
         $return = null;
 
@@ -214,7 +199,7 @@ class Mime extends Root
             {
                 $path = Res::path($value);
                 if(is_string($path))
-                $return = static::get($path,$charset,$strict);
+                $return = static::get($path,$charset);
             }
 
             elseif(Res::isHttp($value))
@@ -287,6 +272,7 @@ class Mime extends Root
     {
         $return = null;
         $mime = static::get($value);
+        
         if(is_string($mime))
         $return = static::toExtension($mime);
 
@@ -344,20 +330,6 @@ class Mime extends Root
 
         if(!empty($families))
         $return = current($families);
-
-        return $return;
-    }
-
-
-    // strictExtension
-    // retourne le mimetype strict à partir d'une extension
-    // ceci permet de lier de façon dur une extension à un mimetype, sans utiliser finfo
-    public static function strictExtension(string $value):?string
-    {
-        $return = null;
-
-        if(array_key_exists($value,static::$config['strictExtension']))
-        $return = static::$config['strictExtension'][$value];
 
         return $return;
     }

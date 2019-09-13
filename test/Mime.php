@@ -67,7 +67,7 @@ class Mime extends Base\Test
         assert(Base\Mime::isExtensionInGroup('GIF','imageRaster'));
         assert(Base\Mime::isExtensionInGroup('jpg','imageRaster'));
         assert(!Base\Mime::isExtensionInGroup('jpg','txt'));
-
+        
         // get
         assert(strpos(Base\Mime::get($file),'text/x-php') === 0);
         assert(strpos(Base\Mime::get($mediaJpg),'image/jpeg') === 0);
@@ -107,10 +107,6 @@ class Mime extends Base\Test
         // family
         assert(Base\Mime::family('imageRaster') === 'image');
         assert(Base\Mime::family('imageRasterz') === null);
-
-        // strictExtension
-        assert(Base\Mime::strictExtension('notebook') === 'application/x-smarttech-notebook');
-        assert(Base\Mime::strictExtension('jpg') === null);
 
         // fromPath
         assert(Base\Mime::fromPath($file) === 'text/x-php');
