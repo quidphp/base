@@ -23,7 +23,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 
 ## Requirement
 **QuidPHP/Base** requires the following:
-- PHP 7.3+ with extensions:
+- PHP 7.3+ with these extensions:
     - curl
     - date
     - fileinfo
@@ -31,9 +31,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
     - iconv
     - json
     - mbstring
-    - pcre'
-    - PDO
-    - pdo_mysql
+    - pcre
     - openssl
     - session
     - SimpleXML
