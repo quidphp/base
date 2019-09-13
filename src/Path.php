@@ -263,6 +263,7 @@ class Path extends Set
 
     // implode
     // implose un tableau dans une string set
+    // gestion particulière si le path commence par un windows drive
     public static function implode(array $value,?array $option=null):string
     {
         $return = '';
@@ -331,6 +332,7 @@ class Path extends Set
 
     // infoDirname
     // méthode utilisé par info et infoOne pour gérer la valeur dirname retournée
+    // gestion particulière pour windows drive
     // méthode protégé
     protected static function infoDirname(string $value,string $path):?string
     {
@@ -531,6 +533,7 @@ class Path extends Set
 
     // parents
     // retourne les chemins absolus de tous les parents
+    // gestion particulière pour un chemin qui est un windows drive
     public static function parents(string $path):array
     {
         $return = [];

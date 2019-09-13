@@ -438,7 +438,7 @@ class Session extends Base\Test
         assert(!Base\Session::is('sadas'));
 
         // cleanup
-        assert(Base\Session::commit());
+        assert(Base\Session::destroy());
         Base\Session::setSavePath($savePath);
         $boot->session()->setLang('en');
 

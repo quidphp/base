@@ -220,12 +220,14 @@ class File extends Base\Test
         assert(is_string($prefix));
         assert(Base\Path::extension($prefix) === 'txt');
         assert(is_string(Base\File::prefix('[assertCurrent]')));
-        assert(Base\Path::str(dirname(Base\File::prefix())) === Base\Path::str(Base\Dir::temp()));
-
+        $prefix = Base\File::prefix();
+        assert(Base\Path::str(dirname($prefix)) === Base\Path::str(Base\Dir::temp()));
+        
         // prefixResource
         assert(count(Base\Res::info(Base\File::prefixResource('[assertCurrent]','QUID','jpg',['dateformat'=>'Ymd+His','separator'=>'-','random'=>10]))) === 18);
         assert(Base\Res::isFile(Base\File::prefixResource('[assertCurrent]')));
-        assert(Base\Res::isFile(Base\File::prefixResource()));
+        $prefixRes = Base\File::prefixResource();
+        assert(Base\Res::isFile($prefixRes));
 
         // open
         $exists = Base\File::open($currentFile);
@@ -533,6 +535,7 @@ class File extends Base\Test
         assert(Base\Res::close($res));
         assert(Base\Res::close($open));
         assert(!Base\Res::close($exists));
+        Base\File::unlinks($tmp,$temp,$prefix,$prefixRes);
         Base\Dir::empty('[assertCurrent]');
 
         return true;

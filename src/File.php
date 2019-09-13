@@ -170,6 +170,7 @@ class File extends Finder
     // retourne vrai si le fichier a été inclus au moins une fois
     // utilise la méthode getLoadPath pour obtenir le chemin, compatible avec realpath
     // value peut être une string ou une resource
+    // normalize les chemins si c'est Windows
     public static function isLoaded($value):bool
     {
         $return = false;

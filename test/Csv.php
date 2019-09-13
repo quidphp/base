@@ -103,7 +103,9 @@ class Csv extends Base\Test
         assert(Base\Csv::info($currentFile) === null);
         assert(Base\Csv::mime($mediaCsv) === 'text/csv');
         assert(count(Base\Csv::info($mediaCsv)) === 13);
-        assert(Base\Path::extension(Base\Csv::prefix()) === 'csv');
+        $prefix = Base\Csv::prefix();
+        assert(Base\Path::extension($prefix) === 'csv');
+        assert(Base\Finder::unlink($prefix));
         assert(Base\Csv::getLoadPath('view/test.php') === '');
         assert(Base\Csv::getLoadPath('view/test.csv') === 'view/test.csv');
         assert(!empty(Base\Csv::path('[assertCurrent]/test.csv')));

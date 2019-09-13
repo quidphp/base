@@ -933,6 +933,7 @@ class Res extends Root
 
     // uriRemoveScheme
     // retourne l'uri de la resource en prenant bien soin d'enlever le scheme si présent
+    // ne retire pas le windows drive
     public static function uriRemoveScheme($value):?string
     {
         $return = static::uri($value);

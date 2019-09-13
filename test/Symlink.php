@@ -44,8 +44,6 @@ class Symlink extends Base\Test
         // isExecutable
 
         // inode
-        if(!Base\Server::isWindows())
-        assert(Base\Symlink::inode($sym) !== Base\Finder::inode($sym));
 
         // permission
         assert(Base\Symlink::permission($sym) !== Base\Finder::permission($sym));
@@ -99,7 +97,8 @@ class Symlink extends Base\Test
         assert(count(Base\Symlink::getInfo($sym)) === 11);
 
         // set
-        assert(Base\Symlink::set(Base\File::prefix(),$sym2));
+        $prefix = Base\File::prefix();
+        assert(Base\Symlink::set($prefix,$sym2));
         assert(!Base\Symlink::set($_file_,$sym2));
 
         // sets
@@ -138,7 +137,8 @@ class Symlink extends Base\Test
 
         // cleanup
         Base\Dir::empty('[assertCurrent]');
-
+        Base\Finder::unlink($prefix);
+        
         return true;
     }
 }

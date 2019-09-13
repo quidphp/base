@@ -624,6 +624,7 @@ class Res extends Base\Test
 
         // all
         assert($z = count(Base\Res::all()));
+        assert(Base\File::unlink($fp));
         unset($fp);
         assert(count(Base\Res::all()) < $z);
 
@@ -724,8 +725,10 @@ class Res extends Base\Test
         assert(Base\Res::isPhpMemory($memory));
 
         // tmpFile
-        assert(Base\Res::extension(Base\Res::tmpFile()) === 'tmp');
-
+        $tmp2 = Base\Res::tmpFile();
+        assert(Base\Res::extension($tmp2) === 'tmp');
+        assert(Base\File::unlink($tmp2));
+        
         // http
 
         // curl

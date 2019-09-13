@@ -174,7 +174,8 @@ class Dir extends Finder
 
     // scan
     // wrapper pour scan dir
-    // enlève les fichiers invisibles, et gère un problème sous système windows
+    // enlève les fichiers invisibles
+    // gère un problème sous windows ou un fichier effacé apparaît encore dans scandir
     // retourne un tableau avec des chemins absoluts
     public static function scan($path,?int $sort=null):?array
     {

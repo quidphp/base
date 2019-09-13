@@ -471,6 +471,7 @@ class Symlink extends Finder
 
     // unset
     // efface un symlink, n'efface pas le fichier vers lequel il pointe
+    // gestion d'un problème sous windows ou il faut utiliser rmdir si le symlink pointe vers un directoire
     public static function unset($path):bool
     {
         $return = false;

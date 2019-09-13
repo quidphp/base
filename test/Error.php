@@ -42,7 +42,8 @@ class Error extends Base\Test
         assert(Base\Error::logFile('what',$storage.'/error.txt') === true);
         $tmp = Base\Res::tmpFile();
         assert(Base\Error::logFile('what',$tmp));
-
+        assert(Base\File::unlink($tmp));
+        
         // logPrepareMessage
         assert(Base\Error::logPrepareMessage(['lol','ok']) === 'lol ok');
         assert(Base\Error::logPrepareMessage('lol') === 'lol');
