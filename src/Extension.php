@@ -15,8 +15,9 @@ class Extension extends Root
 {
     // config
     public static $config = [
-        'required'=>[
-            'PDO','pdo_mysql','fileinfo','curl','openssl'] // modules requis
+        'required'=>[ // extensions requises
+            'curl','date','fileinfo','gd','iconv','json','mbstring','pcre',
+            'PDO','pdo_mysql','openssl','session','SimpleXML','Zend OPcache','zip'] 
     ];
 
 
@@ -106,7 +107,7 @@ class Extension extends Root
     public static function requirement():array
     {
         $return = [];
-
+        
         foreach (static::$config['required'] as $value)
         {
             if(!static::is($value))

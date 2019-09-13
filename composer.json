@@ -12,12 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=7.3.0",
-        "ext-curl": "*",
-        "ext-fileinfo": "*",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "ext-openssl": "*"
+        "php": ">=7.3.0"
     },
     "autoload": {
         "psr-4": {
