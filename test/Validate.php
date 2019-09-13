@@ -436,10 +436,10 @@ class Validate extends Base\Test
         assert(Base\Validate::dig(['minLength'=>2],['test',['ok','well']]));
         assert(!Base\Validate::dig(['minLength'=>2],['test',['ok','n']]));
         assert(!Base\Validate::dig(['minLength'=>2],['test',['n','nk']]));
-        
+
         // cleanup
         assert(Base\File::unlink($fp));
-        
+
         return true;
     }
 }

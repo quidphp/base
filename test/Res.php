@@ -728,7 +728,7 @@ class Res extends Base\Test
         $tmp2 = Base\Res::tmpFile();
         assert(Base\Res::extension($tmp2) === 'tmp');
         assert(Base\File::unlink($tmp2));
-        
+
         // http
 
         // curl

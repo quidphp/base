@@ -222,7 +222,7 @@ class File extends Base\Test
         assert(is_string(Base\File::prefix('[assertCurrent]')));
         $prefix = Base\File::prefix();
         assert(Base\Path::str(dirname($prefix)) === Base\Path::str(Base\Dir::temp()));
-        
+
         // prefixResource
         assert(count(Base\Res::info(Base\File::prefixResource('[assertCurrent]','QUID','jpg',['dateformat'=>'Ymd+His','separator'=>'-','random'=>10]))) === 18);
         assert(Base\Res::isFile(Base\File::prefixResource('[assertCurrent]')));

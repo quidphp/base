@@ -166,7 +166,7 @@ class Finder extends Base\Test
         assert(Base\Finder::permissionChange(654,$stream['uri']));
         $prefix = Base\File::prefix();
         assert(!Base\Finder::permissionChange(true,$prefix));
-        
+
         // owner
         assert(is_int(Base\Finder::owner($_file_)));
         assert(Base\Finder::owner($common.'/myclass.phpz') === null);
@@ -241,11 +241,11 @@ class Finder extends Base\Test
 
         // touch
         assert(Base\Finder::touch($stream['uri']));
-        
+
         // rename
         $file = Base\Res::tmpFile();
         assert(Base\Finder::rename('[assertCurrent]/tmp',Base\Res::uri($file)));
-        
+
         // changeDirname
         $path = $stream['uri'];
         $dirname = dirname($path);
@@ -370,12 +370,12 @@ class Finder extends Base\Test
         assert(Base\Finder::getConfigCallable() instanceof \Closure);
         assert(Base\Finder::config(['test'=>2],false)['test'] === 2);
         assert(empty(Base\Finder::$config['test']));
-        
+
         // cleanup
         Base\Finder::unlink($prefix);
         Base\Dir::emptyAndUnlink(Base\Dir::temp().'/test-quid');
         Base\Dir::empty('[assertCurrent]');
-        
+
         return true;
     }
 }

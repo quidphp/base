@@ -138,7 +138,7 @@ class Symlink extends Base\Test
         // cleanup
         Base\Dir::empty('[assertCurrent]');
         Base\Finder::unlink($prefix);
-        
+
         return true;
     }
 }
