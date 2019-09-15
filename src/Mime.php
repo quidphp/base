@@ -375,7 +375,7 @@ class Mime extends Root
         return $return;
     }
 
-    
+
     // groupFromBasename
     // retourne le group mime type à partir d'un basename
     public static function groupFromBasename(string $basename):?string
@@ -388,8 +388,8 @@ class Mime extends Root
 
         return $return;
     }
-    
-    
+
+
     // groupFromExtension
     // retourne le group mime type à partir d'une extension
     public static function groupFromExtension(string $extension):?string
@@ -413,14 +413,14 @@ class Mime extends Root
         foreach (static::$config['mimeToExtension'] as $key => $value)
         {
             if(!is_array($value))
-            $value = array($value);
-            
+            $value = [$value];
+
             if(stripos($mime,$key) === 0)
             {
                 $return = current($value);
                 break;
             }
-            
+
             elseif(Arr::in($mime,$value,false) && $extension === true)
             {
                 $return = strtolower($mime);
@@ -469,53 +469,53 @@ class Mime extends Root
 
         return $return;
     }
-    
-    
+
+
     // register
     // permet d'ajouter une nouvelle entrée mime dans la configuration de la classe
     // fournir le mime, une ou plusieurs extensions, le nom du group
     // possible de fournir le nom de la famille, sinon ce sera binary par défaut
-    public static function register(string $mime,$extension,string $group,$families=null):bool 
+    public static function register(string $mime,$extension,string $group,$families=null):bool
     {
         $return = false;
-        
+
         if(!empty($extension))
         {
             $mime = static::removeCharset($mime);
-            
+
             if(empty($families))
             $families = static::families($group);
-            
+
             if(empty($families))
             $families = static::$config['defaultFamily'];
-            
+
             if(!is_array($families))
-            $families = array($families);
-            
+            $families = [$families];
+
             if(!is_array($extension))
-            $extension = array($extension);
-            
+            $extension = [$extension];
+
             if(!array_key_exists($mime,static::$config['mimeToExtension']))
             static::$config['mimeToExtension'][$mime] = $extension;
             else
             static::$config['mimeToExtension'][$mime] = Arr::appendUnique(static::$config['mimeToExtension'][$mime],$extension);
-            
+
             if(!array_key_exists($group,static::$config['groupToExtension']))
-            static::$config['groupToExtension'][$group] = array();
+            static::$config['groupToExtension'][$group] = [];
             static::$config['groupToExtension'][$group] = Arr::appendUnique(static::$config['groupToExtension'][$group],$extension);
-            
-            foreach ($families as $family) 
+
+            foreach ($families as $family)
             {
                 if(!array_key_exists($family,static::$config['family']))
-                static::$config['family'][$family] = array();
-                
-                if(!in_array($group,static::$config['family'][$family]))
+                static::$config['family'][$family] = [];
+
+                if(!in_array($group,static::$config['family'][$family], true))
                 static::$config['family'][$family][] = $group;
             }
-            
+
             $return = true;
         }
-        
+
         return $return;
     }
 }

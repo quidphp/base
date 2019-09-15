@@ -43,7 +43,7 @@ trait _config
                     if($key !== 'config' && strpos($key,'config') === 0 && is_array($value) && !empty($value))
                     {
                         $merge[] = $value;
-                        static::$$key = array();
+                        static::$$key = [];
                     }
                 }
 

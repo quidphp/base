@@ -123,11 +123,11 @@ class Mime extends Base\Test
         assert(Base\Mime::fromExtension('jpg') === 'image/jpeg');
         assert(Base\Mime::fromExtension('jpeg') === 'image/jpeg');
         assert(Base\Mime::fromExtension('notebook') === null);
-        
+
         // groupFromBasename
         assert(Base\Mime::groupFromBasename('test.TXT') === 'txt');
         assert(Base\Mime::groupFromBasename('/bla/ok/test.jpg') === 'imageRaster');
-        
+
         // groupFromExtension
         assert(Base\Mime::groupFromExtension('TXT') === 'txt');
         assert(Base\Mime::groupFromExtension('txt') === 'txt');
@@ -156,20 +156,20 @@ class Mime extends Base\Test
         // removeCharset
         assert(Base\Mime::removeCharset('text/x-php; charset=us-ascii') === 'text/x-php');
         assert(Base\Mime::removeCharset('text/x-php') === 'text/x-php');
-        
+
         // register
-        assert(Base\Mime::register('text/weird',array('weird','weirdx'),'weirdG'));
-        assert(Base\Mime::families('weirdG') === array('binary'));
+        assert(Base\Mime::register('text/weird',['weird','weirdx'],'weirdG'));
+        assert(Base\Mime::families('weirdG') === ['binary']);
         assert(Base\Mime::isGroup('weirdG','weirdx'));
         assert(Base\Mime::isGroup('weirdG','text/weird'));
         assert(Base\Mime::group('text/weird') === 'weirdG');
         assert(Base\Mime::group('weird') === 'weirdG');
         assert(Base\Mime::group('weirdG') === null);
-        assert(Base\Mime::register('text/weirdo','weirdo','weirdG',array('text')));
+        assert(Base\Mime::register('text/weirdo','weirdo','weirdG',['text']));
         assert(count(Base\Mime::$config['mimeToExtension']['text/weird']) === 2);
         assert(Base\Mime::register('text/weird','weirdMore','weirdG'));
         assert(count(Base\Mime::$config['mimeToExtension']['text/weird']) === 3);
-        
+
         return true;
     }
 }
