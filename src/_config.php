@@ -40,8 +40,11 @@ trait _config
                 $vars = get_class_vars($class);
                 foreach ($vars as $key => $value)
                 {
-                    if($key !== 'config' && is_array($value) && !empty($value) && strpos($key,'config') === 0)
-                    $merge[] = $value;
+                    if($key !== 'config' && strpos($key,'config') === 0 && is_array($value) && !empty($value))
+                    {
+                        $merge[] = $value;
+                        static::$$key = array();
+                    }
                 }
 
                 if(!empty($merge))
