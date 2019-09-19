@@ -11,9 +11,7 @@
 ## License
 **QuidPHP/Base** is available as an open-source software under the [MIT license](LICENSE).
 
-## Documentation
-**QuidPHP/Base** documentation is being written. Once ready, it will be available at https://quidphp.github.io/project.
-
+x
 ## Installation
 **QuidPHP/Base** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/base).
 ``` bash
