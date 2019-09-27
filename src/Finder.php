@@ -1314,7 +1314,7 @@ class Finder extends Root
     {
         $file = ($write === true)? 664:644;
         $dir = ($write === true)? 775:755;
-        
+
         File::setDefaultPermission($file,true);
         Dir::setDefaultPermission($dir);
 
