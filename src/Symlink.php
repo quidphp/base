@@ -331,28 +331,28 @@ class Symlink extends Finder
     // set
     // créer un nouveau lien symbolique si la target est lisible et que la destination est créable
     // ne remplace pas si existant par défaut (mais on peut mettre true)
-    public static function set($target,$path,bool $replace=false):bool
+    public static function set($to,$from,bool $replace=false):bool
     {
         $return = false;
-        $target = static::path($target);
-        $path = static::path($path);
+        $to = static::path($to);
+        $from = static::path($from);
 
-        if(is_string($target) && is_string($path))
+        if(is_string($to) && is_string($from))
         {
-            if($replace === true && Finder::is($path,false))
+            if($replace === true && Finder::is($to,false))
             {
-                if(is_link($path))
-                static::unset($path);
+                if(is_link($to))
+                static::unset($to);
                 else
-                static::unlink($path);
+                static::unlink($to);
             }
 
-            if(Finder::isReadable($target,false) && !Finder::is($path,false))
+            if(Finder::isReadable($from,false) && !Finder::is($to,false))
             {
-                $dirname = Path::dirname($path);
+                $dirname = Path::dirname($to);
 
                 if(!empty($dirname) && Dir::setOrWritable($dirname))
-                $return = symlink($target,$path);
+                $return = symlink($from,$to);
             }
         }
 
@@ -401,7 +401,7 @@ class Symlink extends Finder
             if($go === true)
             {
                 if($get !== $from)
-                $r['status'] = static::set($from,$to,$replace);
+                $r['status'] = static::set($to,$from,$replace);
 
                 $return[$to] = $r;
             }
@@ -422,7 +422,7 @@ class Symlink extends Finder
         {
             $target = static::get($path);
             if(!empty($target) && static::unset($path))
-            $return = static::set($target,$path);
+            $return = static::set($path,$target);
         }
 
         return $return;
@@ -462,7 +462,7 @@ class Symlink extends Finder
         {
             $target = static::get($path);
             if(!empty($target))
-            $return = static::set($target,$to);
+            $return = static::set($to,$target);
         }
 
         return $return;
@@ -502,7 +502,7 @@ class Symlink extends Finder
         {
             static::unset($path);
 
-            if(static::set($target,$path))
+            if(static::set($path,$target))
             $return = true;
         }
 

@@ -375,9 +375,13 @@ class Validate extends Base\Test
         assert(Base\Validate::isTable('asd_as'));
         assert(!Base\Validate::isTable('123asd_as'));
         assert(Base\Validate::isTable('a123asd_as'));
-
+        assert(!Base\Validate::isTable('Asdasas'));
+        assert(Base\Validate::isTable('asdaAas'));
+        
         // isCol
         assert(Base\Validate::isCol('asdas'));
+        assert(Base\Validate::isCol('asDas'));
+        assert(!Base\Validate::isCol('Asdas'));
         assert(!Base\Validate::isCol('asdas-as'));
         assert(!Base\Validate::isCol('123asdasas'));
 

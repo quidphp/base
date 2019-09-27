@@ -42,7 +42,7 @@ class Res extends Base\Test
         $http = Base\Res::open(Base\Uri::absolute($mediaJpgUri));
         $dir = Base\Res::open($_dir_);
         $sym = $storage.'/sym';
-        assert(Base\Symlink::set($_file_,$sym));
+        assert(Base\Symlink::set($sym,$_file_));
         $true = Base\Res::open(true);
         $symRes = Base\Res::open($sym);
         $write = Base\Res::open($storage.'/write.txt',['create'=>true]);

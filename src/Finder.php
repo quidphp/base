@@ -1312,17 +1312,11 @@ class Finder extends Root
     // si write est true, directoire change 755 pour 775
     public static function umaskGroupWritable(bool $write=false):void
     {
-        if($write === true)
-        {
-            File::setDefaultPermission(664,true);
-            Dir::setDefaultPermission(775);
-        }
-
-        else
-        {
-            File::setDefaultPermission(644,true);
-            Dir::setDefaultPermission(755);
-        }
+        $file = ($write === true)? 664:644;
+        $dir = ($write === true)? 775:755;
+        
+        File::setDefaultPermission($file,true);
+        Dir::setDefaultPermission($dir);
 
         return;
     }

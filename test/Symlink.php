@@ -98,8 +98,8 @@ class Symlink extends Base\Test
 
         // set
         $prefix = Base\File::prefix();
-        assert(Base\Symlink::set($prefix,$sym2));
-        assert(!Base\Symlink::set($_file_,$sym2));
+        assert(Base\Symlink::set($sym2,$prefix));
+        assert(!Base\Symlink::set($sym2,$_file_));
 
         // sets
 
@@ -110,11 +110,11 @@ class Symlink extends Base\Test
         assert(Base\Finder::touch($sym2));
 
         // rename
-        assert(Base\Symlink::set($_file_,$sym3));
+        assert(Base\Symlink::set($sym3,$_file_));
         assert(Base\Symlink::rename($storage.'/rename/deep/symRename',$sym3));
-        assert(Base\Symlink::set($_file_,$sym3));
+        assert(Base\Symlink::set($sym3,$_file_));
         assert(Base\Symlink::changeBasename('renameBasename',$sym3));
-        assert(Base\Symlink::set($_file_,$sym3));
+        assert(Base\Symlink::set($sym3,$_file_));
         assert(Base\Symlink::changeDirname($storage.'/rename/deep',$sym3));
 
         // copy

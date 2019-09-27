@@ -265,7 +265,7 @@ class Finder extends Base\Test
         $filename2 = Base\File::prefix($storage.'/move','wha');
         assert(file_put_contents($filename2,'haha'));
         $sym = $storage.'/move/sym';
-        assert(Base\Symlink::set($filename2,'[assertCurrent]/move/sym'));
+        assert(Base\Symlink::set('[assertCurrent]/move/sym',$filename2));
         assert(Base\Finder::changeDirname('[assertCurrent]/newMove',$sym));
         assert(Base\Finder::changeDirname($storage.'/dirMove',$storage.'/move'));
 
@@ -285,7 +285,7 @@ class Finder extends Base\Test
         $filename = tempnam(Base\Finder::path($storage).'/asd','wha');
         assert(Base\Finder::copy('[assertCurrent]/asd/copy',$filename));
         $sym = $storage.'/asd/sym';
-        assert(Base\Symlink::set($_file_,$sym));
+        assert(Base\Symlink::set($sym,$_file_));
         assert(Base\Finder::copy($storage.'/asd/symCopy',$sym));
         assert(count(Base\Finder::copy($storage.'/test',$_dir_)) < 100);
 
