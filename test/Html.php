@@ -1009,7 +1009,7 @@ class Html extends Base\Test
         assert(Base\Html::excerpt(30,"la👦🏼👦👦    vie ést <b>belle</b> l'article\"deux lorem ipsum, ") === "la vie ést belle lorem ipsu<span class='excerptSuffix'>...</span>");
         assert(Base\Html::excerpt(20,"Centre d'hébergement Cécile-Godin ok la vioe ") === "Centre d&apos;hébergem<span class='excerptSuffix'>...</span>");
         assert(Base\Html::excerpt(10,'emo.ndpph@gmail.com') === "emo.ndp<span class='excerptSuffix'>...</span>");
-        assert(strlen(Base\Html::excerpt(75,'Accueillir un stagiaire – des avantages à découvrir | Intranet du CISSSMO')) === 77);
+        assert(strlen(Base\Html::excerpt(75,'Accueillir un stagiaire – des avantages à découvrir | Intranet du wwwwwww')) === 77);
 
         // excerptEntities
         assert(Base\Html::excerptEntities(30,"la👦🏼👦👦 vie ést <b>belle</b> l'article\"deux lorem ipsuma ") === "la vie &eacute;st belle lorem ipsu<span class='excerptSuffix'>...</span>");

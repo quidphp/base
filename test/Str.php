@@ -1027,7 +1027,7 @@ class Str extends Base\Test
         assert(Base\Str::excerpt(20,"Centre d'hébergement Cédicl-Goidnasd ok dsad sa",['mb'=>true]) === "Centre d'hébergem...");
         assert(Base\Str::excerpt(6,'ééééé') === 'é...');
         assert(Base\Str::excerpt(5,'ééééé') === 'é...');
-        assert(strlen(Base\Str::excerpt(75,'Accueillir un stagiaire – des avantages à découvrir | Intranet du CISSSMO')) === 72);
+        assert(strlen(Base\Str::excerpt(75,'Accueillir un stagiaire – des avantages à découvrir | Intranet du wwwwwww')) === 72);
 
         // lengthTrimSuffix
         assert(Base\Str::lengthTrimSuffix(3,'la petite école')['strSuffix'] === 'la');
