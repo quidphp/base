@@ -182,7 +182,7 @@ class Session extends Base\Test
         // getCookieParams
         assert(count(Base\Session::getCookieParams()) === 6);
         assert(Base\Session::getCookieParams()['samesite'] === 'Lax');
-        
+
         // setCookieParams
         assert(Base\Session::setCookieParams(['domain'=>Base\Request::host()]));
         assert(Base\Session::setCookieParams(['domain'=>'']));

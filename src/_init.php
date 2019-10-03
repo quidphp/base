@@ -30,7 +30,7 @@ trait _init
 
         if($force === true || empty(static::$initStaticProp[$class]))
         {
-            foreach (static::getInitProp() as $prop) 
+            foreach (static::getInitProp() as $prop)
             {
                 if(property_exists($class,$prop) && is_array(static::$$prop))
                 {
@@ -74,15 +74,15 @@ trait _init
         return;
     }
 
-    
+
     // getInitProp
     // retourne un tableau de propritéés statiques à merger
     protected static function getInitProp():array
     {
-        return array('config');
+        return ['config'];
     }
-    
-    
+
+
     // getInitCallable
     // retourne la closure à utiliser pour le merge des propriétés static
     public static function getInitCallable():\Closure

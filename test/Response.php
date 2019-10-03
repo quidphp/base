@@ -27,10 +27,10 @@ class Response extends Base\Test
 
         // isCodePositive
         assert(Base\Response::isCodePositive());
-        
+
         // isCodeLoggable
         assert(!Base\Response::isCodeLoggable());
-        
+
         // isCodeError
         assert(!Base\Response::isCodeError());
         assert(Base\Response::setCode(404));

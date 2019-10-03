@@ -58,8 +58,8 @@ class Response extends Root
     {
         return (!static::isCodePositive() || static::isCode(301))? true:false;
     }
-    
-    
+
+
     // isCodeError
     // retourne vrai si le code de la réponse est erreur (400 à 499)
     public static function isCodeError():bool
@@ -380,7 +380,7 @@ class Response extends Root
     public static function moved($code=null):bool
     {
         $return = false;
-        
+
         if($code === true || $code === null)
         $code = 302;
 

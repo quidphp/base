@@ -660,7 +660,7 @@ class Session extends Root
         {
             if(array_key_exists('expires',$value) && is_int($value['expires']) && $value['expires'] > $time)
             $value['lifetime'] = $value['expires'] - $time;
-            
+
             if(Arr::keysFirst(['probability','divisor','lifetime'],$value))
             {
                 if(array_key_exists('probability',$value) && is_int($value['probability']))
@@ -705,7 +705,7 @@ class Session extends Root
         if(!static::isStarted())
         {
             $option = Cookie::option('cookieParams',$option);
-            
+
             if(!empty($option))
             $return = session_set_cookie_params($option);
         }

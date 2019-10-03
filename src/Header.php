@@ -49,15 +49,15 @@ class Header extends Listing
     {
         return (static::isCodeBetween(200,399,$header))? true:false;
     }
-    
-    
+
+
     // isCodeLoggable
     // retourne vrai si le code de la réponse est positive mais pas 301
     public static function isCodeLoggable($header):bool
     {
         return (!static::isCodePositive($header) || static::isCode(301,$header))? true:false;
     }
-    
+
 
     // isCodeError
     // retourne vrai si le code dans le tableau header est 400 ou 404

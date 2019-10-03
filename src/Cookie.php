@@ -48,7 +48,7 @@ class Cookie extends Root
     {
         $return = false;
         $option = static::option('set',$option);
-        
+
         if(!empty($option) && !Response::areHeadersSent())
         $return = setcookie($name,$value,$option);
 
@@ -77,14 +77,14 @@ class Cookie extends Root
     {
         $return = [];
         $option = Arr::plus(static::$config,$option);
-        
+
         if(in_array($mode,['set','unset','cookieParams'],true))
         {
             $time = Date::time();
             $return = $option;
 
             // expire et lifetime set
-            if(in_array($mode,array('set','cookieParams'),true))
+            if(in_array($mode,['set','cookieParams'],true))
             {
                 if(is_int($return['expires']))
                 {
@@ -102,7 +102,7 @@ class Cookie extends Root
 
                 if(!is_int($return['lifetime']))
                 $return['lifetime'] = 0;
-                
+
                 if($mode === 'set')
                 unset($return['lifetime']);
                 else
@@ -134,9 +134,9 @@ class Cookie extends Root
             // httponly
             if(!is_bool($return['httponly']))
             $return['httponly'] = true;
-            
+
             // samesite
-            if(!in_array($return['samesite'],array('Lax','Strict'),true))
+            if(!in_array($return['samesite'],['Lax','Strict'],true))
             $return['samesite'] = '';
         }
 

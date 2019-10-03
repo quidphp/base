@@ -52,7 +52,7 @@ class Csv extends Base\Test
         assert(Base\Csv::list($assoc) === $get);
 
         // str
-        assert(Base\Csv::str("test;test2é;\"test3\ntest4\";\"testqu;ote\"") === [['test','test2é',"test3"],["test4\"",'testqu;ote']]);
+        assert(Base\Csv::str("test;test2é;\"test3\ntest4\";\"testqu;ote\"") === [['test','test2é','test3'],['test4"','testqu;ote']]);
         assert(Base\Csv::str('') === null);
         assert(count(Base\Csv::str(["test;test2é;\"test3\ntest4\";\"testqu;ote\"",'',"test;test2é;\"test3\ntest4\";\"testqu;ote\""])) === 2);
 

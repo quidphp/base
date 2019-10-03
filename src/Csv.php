@@ -140,10 +140,10 @@ class Csv extends File
     {
         $return = null;
         $option = Arr::plus(static::getFormat(),$option);
-        
+
         if(is_string($value) && !empty($value))
         $value = Str::lines($value);
-        
+
         if(is_array($value))
         {
             foreach ($value as $v)

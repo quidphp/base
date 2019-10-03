@@ -43,12 +43,12 @@ class Header extends Base\Test
         assert(Base\Header::isCodePositive($status));
         assert(Base\Header::isCodePositive($http2));
         assert(Base\Header::isCodePositive($three01));
-        
+
         // isCodeLoggable
         assert(!Base\Header::isCodeLoggable($status));
         assert(!Base\Header::isCodeLoggable($http2));
         assert(Base\Header::isCodeLoggable($three01));
-        
+
         // isCodeError
         assert(!Base\Header::isCodeError($status));
         assert(Base\Header::isCodeError($status2));
