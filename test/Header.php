@@ -25,6 +25,7 @@ class Header extends Base\Test
         $status = ['HTTP/1.0 200 OK','test: ok'];
         $status2 = ['HTTP/1.0 404 Not Found','HTTP/1.0 200 OK','test: ok'];
         $http2 = ['HTTP/2.0 200 OK','test: ok'];
+        $three01 = ['HTTP/1.0 301 Moved Permanently','test: ok'];
         $meta = ['mime'=>'text/json','basename'=>'json.json','size'=>4000];
         $protocol = Base\Server::httpProtocol();
 
@@ -41,7 +42,13 @@ class Header extends Base\Test
         // isCodePositive
         assert(Base\Header::isCodePositive($status));
         assert(Base\Header::isCodePositive($http2));
-
+        assert(Base\Header::isCodePositive($three01));
+        
+        // isCodeLoggable
+        assert(!Base\Header::isCodeLoggable($status));
+        assert(!Base\Header::isCodeLoggable($http2));
+        assert(Base\Header::isCodeLoggable($three01));
+        
         // isCodeError
         assert(!Base\Header::isCodeError($status));
         assert(Base\Header::isCodeError($status2));

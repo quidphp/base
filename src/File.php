@@ -1425,6 +1425,6 @@ class File extends Finder
     }
 }
 
-// config
-File::__config();
+// init
+File::__init();
 ?>

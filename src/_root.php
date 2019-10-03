@@ -14,6 +14,7 @@ namespace Quid\Base;
 trait _root
 {
     // trait
+    use _init;
     use _config;
     use _cacheStatic;
     use _cacheFile;

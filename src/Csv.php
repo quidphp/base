@@ -135,11 +135,15 @@ class Csv extends File
 
     // str
     // parse une string ou un tableau de strings csv et retourne un tableau uni ou multi-dimensionnel
+    // si c'est une string passe dans str lines
     public static function str($value,?array $option=null):?array
     {
         $return = null;
         $option = Arr::plus(static::getFormat(),$option);
-
+        
+        if(is_string($value) && !empty($value))
+        $value = Str::lines($value);
+        
         if(is_array($value))
         {
             foreach ($value as $v)
@@ -148,9 +152,6 @@ class Csv extends File
                 $return[] = str_getcsv($v,$option['delimiter'],$option['enclosure'],$option['escape']);
             }
         }
-
-        elseif(is_string($value) && !empty($value))
-        $return = str_getcsv($value,$option['delimiter'],$option['enclosure'],$option['escape']);
 
         return $return;
     }
@@ -268,6 +269,6 @@ class Csv extends File
     }
 }
 
-// config
-Csv::__config();
+// init
+Csv::__init();
 ?>

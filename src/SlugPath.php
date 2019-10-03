@@ -99,6 +99,6 @@ class SlugPath extends Listing
     }
 }
 
-// config
-SlugPath::__config();
+// init
+SlugPath::__init();
 ?>

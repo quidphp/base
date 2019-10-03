@@ -58,39 +58,7 @@ class Ini extends Root
             'apc.enabled',
             'apc.shm_size',
             'apc.ttl',
-            'apc.enable_cli'],
-        'session'=>[ // ini lié à session
-            'session.save_path',
-            'session.name',
-            'session.save_handler',
-            'session.auto_start',
-            'session.gc_probability',
-            'session.gc_divisor',
-            'session.gc_maxlifetime',
-            'session.serialize_handler',
-            'session.cookie_lifetime',
-            'session.cookie_path',
-            'session.cookie_domain',
-            'session.cookie_secure',
-            'session.cookie_httponly',
-            'session.use_strict_mode',
-            'session.use_cookies',
-            'session.use_only_cookies',
-            'session.referer_check',
-            'session.cache_limiter',
-            'session.cache_expire',
-            'session.use_trans_sid',
-            'session.trans_sid_tags',
-            'session.trans_sid_hosts',
-            'session.sid_length',
-            'session.sid_bits_per_character',
-            'session.upload_progress.enabled',
-            'session.upload_progress.cleanup',
-            'session.upload_progress.prefix',
-            'session.upload_progress.name',
-            'session.upload_progress.freq',
-            'session.upload_progress.min_freq',
-            'session.lazy_write']
+            'apc.enable_cli']
     ];
 
 
@@ -486,17 +454,9 @@ class Ini extends Root
 
     // session
     // retourne toutes les ini de session
-    public static function session(?int $format=null):array
+    public static function session():array
     {
-        $return = [];
-        $session = (array) static::$config['session'];
-
-        foreach ($session as $key => $value)
-        {
-            $return[$value] = static::get($value,$format);
-        }
-
-        return $return;
+        return static::all('session');
     }
 
 

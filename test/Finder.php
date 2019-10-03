@@ -367,7 +367,7 @@ class Finder extends Base\Test
         assert(Base\Finder::getShortcut('public') === $publicPath);
 
         // config
-        assert(Base\Finder::getConfigCallable() instanceof \Closure);
+        assert(Base\Finder::getInitCallable() instanceof \Closure);
         assert(Base\Finder::config(['test'=>2],false)['test'] === 2);
         assert(empty(Base\Finder::$config['test']));
 

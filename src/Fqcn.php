@@ -351,6 +351,6 @@ class Fqcn extends Set
     }
 }
 
-// config
-Fqcn::__config();
+// init
+Fqcn::__init();
 ?>

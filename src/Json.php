@@ -240,6 +240,6 @@ class Json extends Assoc
     }
 }
 
-// config
-Json::__config();
+// init
+Json::__init();
 ?>

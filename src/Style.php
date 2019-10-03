@@ -174,6 +174,6 @@ class Style extends Listing
     }
 }
 
-// config
-Style::__config();
+// init
+Style::__init();
 ?>

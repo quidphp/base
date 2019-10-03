@@ -164,6 +164,6 @@ class ImageRaster extends File
     }
 }
 
-// config
-ImageRaster::__config();
+// init
+ImageRaster::__init();
 ?>

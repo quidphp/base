@@ -279,6 +279,6 @@ class Listing extends Assoc
     }
 }
 
-// config
-Listing::__config();
+// init
+Listing::__init();
 ?>

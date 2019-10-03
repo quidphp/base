@@ -21,6 +21,6 @@ class PathTrack extends Path
     ];
 }
 
-// config
-PathTrack::__config();
+// init
+PathTrack::__init();
 ?>

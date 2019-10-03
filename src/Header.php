@@ -44,12 +44,20 @@ class Header extends Listing
 
 
     // isCodePositive
-    // retourne vrai si le code dans le tableau header est 200, 301 ou 302
+    // retourne vrai si le code de la réponse est positive (200 à 399)
     public static function isCodePositive($header):bool
     {
         return (static::isCodeBetween(200,399,$header))? true:false;
     }
-
+    
+    
+    // isCodeLoggable
+    // retourne vrai si le code de la réponse est positive mais pas 301
+    public static function isCodeLoggable($header):bool
+    {
+        return (!static::isCodePositive($header) || static::isCode(301,$header))? true:false;
+    }
+    
 
     // isCodeError
     // retourne vrai si le code dans le tableau header est 400 ou 404
@@ -855,6 +863,6 @@ class Header extends Listing
     }
 }
 
-// config
-Header::__config();
+// init
+Header::__init();
 ?>

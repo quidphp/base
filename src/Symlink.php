@@ -510,6 +510,6 @@ class Symlink extends Finder
     }
 }
 
-// config
-Symlink::__config();
+// init
+Symlink::__init();
 ?>

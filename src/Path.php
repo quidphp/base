@@ -965,6 +965,6 @@ class Path extends Set
     }
 }
 
-// config
-Path::__config();
+// init
+Path::__init();
 ?>

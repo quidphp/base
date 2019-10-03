@@ -162,7 +162,7 @@ class Ini extends Base\Test
         assert(count(Base\Ini::important()) === 34);
 
         // session
-        assert(count(Base\Ini::session()) === 31);
+        assert(count(Base\Ini::session()) === 30);
 
         // requirement
         assert(empty(Base\Ini::requirement()));

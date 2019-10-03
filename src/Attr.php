@@ -1225,6 +1225,6 @@ class Attr extends Listing
     }
 }
 
-// config
-Attr::__config();
+// init
+Attr::__init();
 ?>

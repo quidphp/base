@@ -134,6 +134,6 @@ class Slug extends Set
     }
 }
 
-// config
-Slug::__config();
+// init
+Slug::__init();
 ?>

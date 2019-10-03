@@ -52,6 +52,14 @@ class Response extends Root
     }
 
 
+    // isCodeLoggable
+    // retourne vrai si le code de la réponse est positive (200 à 399) mais pas 301
+    public static function isCodeLoggable():bool
+    {
+        return (!static::isCodePositive() || static::isCode(301))? true:false;
+    }
+    
+    
     // isCodeError
     // retourne vrai si le code de la réponse est erreur (400 à 499)
     public static function isCodeError():bool
@@ -372,12 +380,12 @@ class Response extends Root
     public static function moved($code=null):bool
     {
         $return = false;
-
+        
         if($code === true || $code === null)
-        $code = 301;
+        $code = 302;
 
         elseif($code === false)
-        $code = 302;
+        $code = 301;
 
         if(static::isCodeIn(300,$code))
         $return = static::setCode($code);
@@ -465,8 +473,9 @@ class Response extends Root
     // redirectReferer
     // redirige la réponse vers le referrer s'il est interene
     // par défaut, vérifier si le referer est safe
+    // le code utilisé sera par défaut 301
     // si pas de referer, ou refered unsafe et que fallback est true, renvoie vers le schemeHost
-    public static function redirectReferer(bool $fallback=true,bool $safe=true,$code=null,$kill=true,bool $encode=true):bool
+    public static function redirectReferer(bool $fallback=true,bool $safe=true,$code=true,$kill=true,bool $encode=true):bool
     {
         $return = false;
         $referer = Request::referer(true);

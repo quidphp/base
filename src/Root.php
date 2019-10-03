@@ -23,8 +23,8 @@ abstract class Root
 
     // static
     // remet une copie des propriétés des traits incluent car c'est plus facile à gérer
-    protected static $initConfig = []; // voir _config
-    protected static $callableConfig = null; // voir _config
+    protected static $initStaticProp = []; // voir _init
+    protected static $initCallable = null; // voir _init
     protected static $cacheStatic = []; // voir _cacheStatic
     protected static $cacheFile = null; // voir _cacheFile
 

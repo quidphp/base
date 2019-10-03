@@ -1262,6 +1262,6 @@ class Dir extends Finder
     }
 }
 
-// config
-Dir::__config();
+// init
+Dir::__init();
 ?>

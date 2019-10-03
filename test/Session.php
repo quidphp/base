@@ -87,7 +87,7 @@ class Session extends Base\Test
         assert(Base\Session::status() === PHP_SESSION_NONE);
 
         // ini
-        assert(count(Base\Session::ini()) === 31);
+        assert(count(Base\Session::ini()) === 30);
 
         // getSid
 
@@ -174,14 +174,15 @@ class Session extends Base\Test
         // setGarbageCollect
         assert(Base\Session::setGarbageCollect(['probability'=>555,'divisor'=>666,'lifetime'=>777]));
         assert(Base\Session::setGarbageCollect(['probability'=>1,'divisor'=>1000,'lifetime'=>7200]));
-        assert(Base\Session::setGarbageCollect(['probability'=>1,'divisor'=>1000,'expire'=>$time + 20,'buffer'=>10]));
+        assert(Base\Session::setGarbageCollect(['probability'=>1,'divisor'=>1000,'expires'=>$time + 20,'buffer'=>10]));
         assert(Base\Session::getGarbageCollect()['lifetime'] === 30);
         assert(Base\Session::setGarbageCollect(['probability'=>1,'divisor'=>1000,'lifetime'=>1000,'buffer'=>10]));
         assert(Base\Session::getGarbageCollect()['lifetime'] === 1010);
 
         // getCookieParams
-        assert(in_array(count(Base\Session::getCookieParams()),[5,6],true));
-
+        assert(count(Base\Session::getCookieParams()) === 6);
+        assert(Base\Session::getCookieParams()['samesite'] === 'Lax');
+        
         // setCookieParams
         assert(Base\Session::setCookieParams(['domain'=>Base\Request::host()]));
         assert(Base\Session::setCookieParams(['domain'=>'']));

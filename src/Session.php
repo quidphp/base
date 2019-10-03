@@ -26,16 +26,17 @@ class Session extends Root
             'savePath'=>null, // la valeur savePath
             'cookieParams'=>[
                 'lifetime'=>(3600 * 24 * 30), // durée de vie, 0 signifie fermeture du browser
-                'expire'=>null, // timestamp d'expiration de la session, a priorité sur lifetime
+                'expires'=>null, // timestamp d'expiration de la session, a priorité sur lifetime
                 'path'=>'/', // chemin dans le domaine
                 'domain'=>'', // ce paramètre est étrange, le plus strict est de laisser domain comme chaîne vide
                 'secure'=>null, // cookie doit être servis via https
-                'httponly'=>true], // cookie ne peut pas être modifié dans javaScript
+                'httponly'=>true, // cookie ne peut pas être modifié dans javaScript
+                'samesite'=>'Lax'], // une requête post externe termine la session
             'garbageCollect'=>[
                 'probability'=>1, // probabilité de garbage collect, mettre 0 pour off
                 'divisor'=>1000, // probabilité de garbage collect - diviseur
                 'lifetime'=>(3600 * 24 * 30), // durée de vie d'une session, peut effacer après ce délai
-                'expire'=>null, // timestamp d'expiration de la session, a priorité sur lifetime
+                'expires'=>null, // timestamp d'expiration de la session, a priorité sur lifetime
                 'buffer'=>3600], // temps additionnelle, à additionner sur lifetime et expire
             'ini'=>[ // autres ini à mettre comme défaut
                 'session.use_strict_mode'=>1,
@@ -657,9 +658,9 @@ class Session extends Root
 
         if(!static::isStarted())
         {
-            if(array_key_exists('expire',$value) && is_int($value['expire']) && $value['expire'] > $time)
-            $value['lifetime'] = $value['expire'] - $time;
-
+            if(array_key_exists('expires',$value) && is_int($value['expires']) && $value['expires'] > $time)
+            $value['lifetime'] = $value['expires'] - $time;
+            
             if(Arr::keysFirst(['probability','divisor','lifetime'],$value))
             {
                 if(array_key_exists('probability',$value) && is_int($value['probability']))
@@ -703,10 +704,10 @@ class Session extends Root
 
         if(!static::isStarted())
         {
-            $option = Cookie::option('set',$option);
-
+            $option = Cookie::option('cookieParams',$option);
+            
             if(!empty($option))
-            $return = session_set_cookie_params($option['lifetime'],$option['path'],$option['domain'],$option['secure'],$option['httponly']);
+            $return = session_set_cookie_params($option);
         }
 
         return $return;

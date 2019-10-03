@@ -27,7 +27,10 @@ class Response extends Base\Test
 
         // isCodePositive
         assert(Base\Response::isCodePositive());
-
+        
+        // isCodeLoggable
+        assert(!Base\Response::isCodeLoggable());
+        
         // isCodeError
         assert(!Base\Response::isCodeError());
         assert(Base\Response::setCode(404));
@@ -154,9 +157,9 @@ class Response extends Base\Test
 
         // moved
         assert(Base\Response::moved());
-        assert(Base\Response::code() === 301);
-        assert(Base\Response::moved(false));
         assert(Base\Response::code() === 302);
+        assert(Base\Response::moved(false));
+        assert(Base\Response::code() === 301);
 
         // error
         assert(Base\Response::error(400));
