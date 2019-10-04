@@ -1628,16 +1628,32 @@ class Arrs extends Root
     {
         $return = Arr::keysSort($return,$sort,$type);
 
-        foreach ($return as $key => &$value)
+        foreach ($return as $key => $value)
         {
             if(is_array($value))
-            $return[$key] = Arr::keysSort($value,$sort,$type);
+            $return[$key] = static::keysSort($value,$sort,$type);
         }
 
         return $return;
     }
 
 
+    // keysReplace
+    // str replace sur les clés du tableau multidimensionnel
+    public static function keysReplace(array $replace,array $return,bool $sensitive=true):array
+    {
+        $return = Arr::keysReplace($replace,$return,$sensitive);
+
+        foreach ($return as $key => $value)
+        {
+            if(is_array($value))
+            $return[$key] = static::keysReplace($replace,$value,$sensitive);
+        }
+
+        return $return;
+    }
+    
+    
     // valueKey
     // retourne toutes les clés contenant contenant la valeur donnée
     // support pour recherche insensible à la case

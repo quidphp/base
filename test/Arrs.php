@@ -533,7 +533,11 @@ class Arrs extends Base\Test
         $sort = ['z'=>'test','b'=>'test','c'=>['z'=>'a','b'=>'b']];
         $sort = Base\Arrs::keysSort($sort,'krsort');
         assert(['z'=>'test','c'=>['z'=>'a','b'=>'b'],'b'=>'test'] === $sort);
-
+        
+        // keysReplace
+        $replace = array('test'=>'ok');
+        assert(Base\Arrs::keysReplace($replace,array(array('oktestok'=>2,'bleh'=>false))) === array(array('bleh'=>false,'okokok'=>2)));
+        
         // valueKey
         $array = ['test'=>['test2'=>['test3'=>['ok'=>2,true,false,'bla'=>['ok'=>'mÉh',true]]]],'test2'=>'z'];
         assert(count(Base\Arrs::valueKey(true,$array)) === 2);

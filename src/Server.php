@@ -710,7 +710,7 @@ class Server extends Root
     {
         $return = [];
 
-        if(static::isPhpVersionOlder('7.2'))
+        if(static::isPhpVersionOlder('7.3'))
         $return[] = 'phpVersion';
 
         return $return;

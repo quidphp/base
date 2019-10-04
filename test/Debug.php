@@ -17,6 +17,8 @@ class Debug extends Base\Test
     // trigger
     public static function trigger(array $data):bool
     {
+        // prepare
+        
         // helper
 
         // var
@@ -75,28 +77,22 @@ class Debug extends Base\Test
         assert(strlen(Base\Debug::highlight('    <?php  $x = array(1,2,"test");   ?>   ',false,true)) === 438);
 
         // sourceStrip
-        assert(strlen(Base\Debug::sourceStrip(__FILE__)) > 200);
         assert(Base\Debug::sourceStrip('james') === null);
 
         // trace
 
         // traceStart
-        assert(Base\Debug::traceStart(__FILE__,__LINE__)[0]['file'] === __FILE__);
         assert(Base\Debug::traceStart('james.php') === []);
 
         // traceIndex
-        assert(Base\Debug::traceIndex(0,__FILE__)['file'] === __FILE__);
 
         // traceSlice
-        assert(count(Base\Debug::traceSlice(0,2,__FILE__,__LINE__)) === 2);
 
         // traceBeforeClass
 
         // traceLastCall
-        assert(Base\Debug::traceLastCall(__FILE__,__LINE__) === Base\Debug::class.'::traceLastCall');
 
         // traceBeforeFile
-        assert(Base\Debug::traceBeforeFile(__FILE__)['file'] !== __FILE__);
 
         // traceRemoveArgs
 
