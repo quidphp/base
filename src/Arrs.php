@@ -1652,8 +1652,8 @@ class Arrs extends Root
 
         return $return;
     }
-    
-    
+
+
     // valueKey
     // retourne toutes les clés contenant contenant la valeur donnée
     // support pour recherche insensible à la case

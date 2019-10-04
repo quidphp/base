@@ -18,7 +18,7 @@ class Debug extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        
+
         // helper
 
         // var
