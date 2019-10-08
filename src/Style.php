@@ -103,8 +103,6 @@ class Style extends Listing
 
         if(is_string($value))
         {
-            $value = Uri::shortcut($value);
-
             if(is_string($option['extension']))
             {
                 $extension = Path::extension($value);

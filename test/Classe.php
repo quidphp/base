@@ -301,7 +301,7 @@ namespace Quid\Test\Base
             unset(Base\Dir::$config['ok']);
 
             // propertyMergeWith
-            assert(count(Base\Classe::propertyMergeWith('config',Base\Dir::class,[Base\Attr::class],null,false)) === 17);
+            assert(count(Base\Classe::propertyMergeWith('config',Base\Dir::class,[Base\Attr::class],null,false)) === 16);
 
             // propertyMergeParent
             assert(count(Base\Classe::propertyMergeParent('config',Base\Dir::class,null,false)) === 3);

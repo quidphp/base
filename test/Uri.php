@@ -123,6 +123,10 @@ class Uri extends Base\Test
         assert(!Base\Uri::isExternal('http://google.com/test',['abc.dev','google.com']));
         assert(Base\Uri::isExternal('http://google.com/test',['abc.dev','googlez.com']));
 
+        // isFragment
+        assert(!Base\Uri::isFragment('https://google.com/en/test#james'));
+        assert(Base\Uri::isFragment('#test'));
+        
         // isScheme
         assert(Base\Uri::isScheme('https','https://www.google.com'));
         assert(Base\Uri::isScheme(true,'https://www.google.com'));
@@ -153,12 +157,15 @@ class Uri extends Base\Test
 
         // isLang
         assert(Base\Uri::isLang('en','https://google.com/en/test'));
-
+        
         // sameSchemeHost
         assert(Base\Uri::sameSchemeHost('http://google.com/test','http://google.com/ok'));
         assert(!Base\Uri::sameSchemeHost('http://google.com/test','https://google.com/ok'));
         assert(!Base\Uri::sameSchemeHost('http://google.com/test','http://googlez.com/ok'));
-
+        
+        // areAllAbsolute
+        assert(Base\Uri::areAllAbsolute('http://google.com/test') === false);
+        
         // type
         assert('absolute' === Base\Uri::type('http:'));
         assert('absolute' === Base\Uri::type('http://www.google.com/test'));
@@ -179,7 +186,14 @@ class Uri extends Base\Test
         assert(Base\Uri::output('[public]') === '/');
         assert(Base\Uri::output('[public]/james') === '/james');
         assert(Base\Uri::output('[media]') === '/media');
-
+        assert(Base\Uri::output("#test") === '#test');
+        assert(Base\Uri::output("#test",array('absolute'=>true)) === Base\Request::schemeHost().'/#test');
+        assert(Base\Uri::output("test") === '/test');
+        Base\Uri::setAllAbsolute(true);
+        assert(Base\Uri::output("test") === Base\Request::schemeHost().'/test');
+        assert(Base\Uri::output("#test") === '#test');
+        Base\Uri::setAllAbsolute(false);
+        
         // outputExists
         assert(Base\Uri::outputExists('/index.php') === '/index.php');
 
@@ -200,8 +214,10 @@ class Uri extends Base\Test
         assert(Base\Uri::relative('http://google.com/') === '/');
         assert(Base\Uri::relative('http://google.com') === '/');
         assert(Base\Uri::relative('[media]/james.jpg') === '/media/james.jpg');
-
+        assert(Base\Uri::relative("#test") === '#test');
+        
         // absolute
+        assert(Base\Uri::absolute("#test") === Base\Request::schemeHost().'/#test');
         assert(Base\Request::schemeHost().'/what/ok/go' === Base\Uri::absolute('/what/ok/go'));
         assert(Base\Uri::absolute('//google.com/test.jpg') === Base\Request::scheme().'://google.com/test.jpg');
         assert('http://google.com/what/ok/go?test=ca' === Base\Uri::absolute('what//ok/go?test=ca','http://google.com'));
@@ -701,7 +717,9 @@ class Uri extends Base\Test
         assert(Base\Uri::absolute('https://notScheme.com/ok') === 'https://notScheme.com/ok');
 
         // setNotFound
-
+        
+        // setAllAbsolute
+        
         // shortcut
         assert(Base\Uri::isShortcut('tdn'));
         assert(Base\Uri::isShortcut('lang'));
@@ -718,7 +736,7 @@ class Uri extends Base\Test
         // cleanup
         Base\Uri::unsetShortcut('tdn');
         Base\Uri::unsetShortcut('extra');
-
+        
         return true;
     }
 }

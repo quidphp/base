@@ -173,12 +173,12 @@ class Request extends Base\Test
         assert(strlen(Base\Request::id()) === 10);
 
         // info
-        assert(count(Base\Request::info()) === 24);
-        assert(count(Base\Request::info(true)) === 25);
+        assert(count(Base\Request::info()) === 25);
+        assert(count(Base\Request::info(true)) === 26);
 
         // export
-        assert(count(Base\Request::export()) === 15);
-        assert(count(Base\Request::export(true)) === 16);
+        assert(count(Base\Request::export()) === 16);
+        assert(count(Base\Request::export(true)) === 17);
 
         // lang
         assert(strlen(Base\Request::lang()) === 2);

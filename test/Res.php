@@ -976,7 +976,13 @@ class Res extends Base\Test
         assert(Base\Res::writeStream('za'.PHP_EOL.'as'.PHP_EOL.''.PHP_EOL.''.PHP_EOL.'dsa',$write));
         assert(count(Base\Res::lines(true,true,$write,[])) === 6);
         assert(count(Base\Res::lines(true,true,$write,['skipEmpty'=>true])) === 4);
-
+        
+        // writeBom
+        $tempBom = Base\Res::open('php://temp');
+        assert(Base\Res::writeBom($tempBom) === true);
+        assert(Base\Res::writeBom($tempBom) === true);
+        assert(Base\Res::size($tempBom) === 3);
+        
         // overwrite
         assert(Base\Res::overwrite('TEST',$write) === true);
         assert(Base\Res::isEnd($write));

@@ -43,7 +43,6 @@ class Attr extends Listing
         'randomId'=>[10], // argument par défaut pour randomId
         'class'=>'.', // ce caractère sert à identifier une classe
         'oddEven'=>['odd','even'], // les classes pour oddEven
-        'selectedUri'=>[], // tableau qui contient les uri sélectionnés
         'mirror'=>['multiple','selected','checked','required','disabled'], // attributs mirror
         'pattern'=>['pattern','data-pattern'], // noms d'attributs qui contiennent pattern et doivent être passés dans validate/pattern
         'method'=>'post', // si method est true
@@ -62,7 +61,11 @@ class Attr extends Listing
             'background-position']
     ];
 
-
+    
+    // selectedUri
+    protected static $selectedUri = array(); // tableau qui contient les uri sélectionnés
+    
+    
     // isDataKey
     // retourne vrai si l'attribut est data
     public static function isDataKey($value):bool
@@ -83,7 +86,7 @@ class Attr extends Listing
     // retourne vrai si l'uri fourni est sélectionné
     public static function isSelectedUri($value):bool
     {
-        return (is_string($value) && array_key_exists($value,static::$config['selectedUri']))? true:false;
+        return (is_string($value) && array_key_exists($value,static::$selectedUri))? true:false;
     }
 
 
@@ -1160,7 +1163,7 @@ class Attr extends Listing
     // retourne le tableau des uri sélectionnés
     public static function selectedUri():array
     {
-        return static::$config['selectedUri'];
+        return static::$selectedUri;
     }
 
 
@@ -1168,7 +1171,7 @@ class Attr extends Listing
     // retourne le tableau des uri sélectionnés, sans les classes
     public static function selectedUriArray():array
     {
-        return array_keys(static::$config['selectedUri']);
+        return array_keys(static::$selectedUri);
     }
 
 
@@ -1176,7 +1179,7 @@ class Attr extends Listing
     // retourne la classe à utiliser pour une uri sélectionnée
     public static function getSelectedUri(string $key)
     {
-        return (array_key_exists($key,static::$config['selectedUri']))? static::$config['selectedUri'][$key]:null;
+        return (array_key_exists($key,static::$selectedUri))? static::$selectedUri[$key]:null;
     }
 
 
@@ -1185,7 +1188,7 @@ class Attr extends Listing
     // il faut soumettre un tableau uri->class, si class est true, la classe par défaut sera utilisé
     public static function addSelectedUri(array $values):void
     {
-        static::$config['selectedUri'] = Arr::replace(static::$config['selectedUri'],$values);
+        static::$selectedUri = Arr::replace(static::$selectedUri,$values);
 
         return;
     }
@@ -1199,8 +1202,8 @@ class Attr extends Listing
 
         foreach ($uris as $uri)
         {
-            if(array_key_exists($uri,static::$config['selectedUri']))
-            unset(static::$config['selectedUri'][$uri]);
+            if(array_key_exists($uri,static::$selectedUri))
+            unset(static::$selectedUri[$uri]);
         }
 
         return;

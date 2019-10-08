@@ -77,11 +77,14 @@ class Csv extends File
     // assoc
     // la première colonne contient les headers
     // le nom des headers est appliqué comme clé à chaque colonne
-    public static function assoc(array $array):array
+    public static function assoc(array $array,bool $clean=false,bool $removeEmpty=true):array
     {
         $return = [];
-
-        if(static::same($array))
+        
+        if($clean === true)
+        $array = static::clean($array,$removeEmpty);
+        
+        if(!empty($array) && static::same($array))
         {
             $header = array_shift($array);
 
@@ -133,37 +136,41 @@ class Csv extends File
     }
 
 
-    // str
+    // strToArr
     // parse une string ou un tableau de strings csv et retourne un tableau uni ou multi-dimensionnel
-    // si c'est une string passe dans str lines
-    public static function str($value,?array $option=null):?array
+    // utilise une resource temporaire pour gérer les enclosures
+    public static function strToArr($value,?array $option=null):?array
     {
         $return = null;
-        $option = Arr::plus(static::getFormat(),$option);
-
-        if(is_string($value) && !empty($value))
-        $value = Str::lines($value);
-
+        $option = Arr::plus(static::getFormat(),array('removeBom'=>false),$option);
+        
         if(is_array($value))
         {
-            foreach ($value as $v)
-            {
-                if(is_string($v) && !empty($v))
-                $return[] = str_getcsv($v,$option['delimiter'],$option['enclosure'],$option['escape']);
-            }
+            $value = Arr::clean($value);
+            $value = implode(PHP_EOL,$value);
+        }
+        
+        if(is_string($value) && !empty($value))
+        {
+            if($option['removeBom'] === true)
+            $value = Str::removeBom($value);
+            
+            $temp = Res::temp('csv');
+            Res::write($value,$temp);
+            $return = Res::lines(true,true,$temp,Arr::plus($option,array('csv'=>true)));
         }
 
         return $return;
     }
 
 
-    // put
+    // arrToStr
     // parse un tableau uni ou multi-dimensionnel csv et retourne une string
     // utilise une ressource php temp
-    public static function put(array $array,?array $option=null):?string
+    public static function arrToStr(array $array,?array $option=null):?string
     {
         $return = null;
-
+        
         if(!empty($array))
         {
             $temp = Res::temp('csv');
@@ -224,7 +231,7 @@ class Csv extends File
     {
         $return = null;
         $option = Arr::plus(static::getFormat(),$option);
-
+        
         if(static::isResource($value))
         {
             $return = fgetcsv($value,0,$option['delimiter'],$option['enclosure'],$option['escape']);
@@ -240,26 +247,50 @@ class Csv extends File
     // resWrite
     // écrit dans une ressource fichier csv, content doit être array uni ou multidimensionnel
     // retourne vrai si du contenu a été écrit
+    // possible d'ajouter le bom si c'est un fichier utf8 (détecte automatique par excel)
+    // le séparateur newline à l'intérieur des cells est remplacé par un tab, car rien ne semble compatible avec excel
     public static function resWrite(array $content,$value,?array $option=null):bool
     {
         $return = false;
-        $option = Arr::plus(static::getFormat(),$option);
-
+        $option = Arr::plus(static::getFormat(),array('latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\t",'bom'=>false),$option);
+        
         if(static::isResource($value) && Res::isWritable($value))
         {
             $put = null;
-
-            if(Arrs::is($content))
+            
+            if(!Arrs::is($content))
+            $content = array($content);
+            
+            if($option['bom'] === true && $option['latin1'] !== true && Res::isStart($value))
+            Res::writeBom($value);
+            
+            foreach ($content as $write)
             {
-                foreach ($content as $w)
+                if(is_array($write))
                 {
-                    if(is_array($w))
-                    $put = fputcsv($value,$w,$option['delimiter'],$option['enclosure'],$option['escape']);
+                    foreach ($write as $k => $v) 
+                    {
+                        if(is_string($v))
+                        {
+                            $v = Str::normalizeLine($v,$option['cellSeparator']);
+                            
+                            if($option['latin1'] === true)
+                            $v = Encoding::fromUtf8($v);
+                            
+                            $write[$k] = $v;
+                        }
+                    }
+                    
+                    $put = fputcsv($value,$write,$option['delimiter'],$option['enclosure'],$option['escape']);
+                    
+                    // ceci ici permettrait d'utiliser un séparateur de ligne autre que \n
+                    if(is_int($put) && strlen($option['separator']) === 2)
+                    {
+                        Res::seekCurrent(-1,$value);
+                        Res::writeStream($option['separator'],$value);
+                    }
                 }
             }
-
-            else
-            $put = fputcsv($value,$content,$option['delimiter'],$option['enclosure'],$option['escape']);
 
             if(is_int($put))
             $return = true;

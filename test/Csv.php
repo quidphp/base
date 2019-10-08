@@ -51,14 +51,14 @@ class Csv extends Base\Test
         // list
         assert(Base\Csv::list($assoc) === $get);
 
-        // str
-        assert(Base\Csv::str("test;test2é;\"test3\ntest4\";\"testqu;ote\"") === [['test','test2é','test3'],['test4"','testqu;ote']]);
-        assert(Base\Csv::str('') === null);
-        assert(count(Base\Csv::str(["test;test2é;\"test3\ntest4\";\"testqu;ote\"",'',"test;test2é;\"test3\ntest4\";\"testqu;ote\""])) === 2);
+        // strToArr
+        assert(Base\Csv::strToArr("test;test2é;\"test3\ntest4\";\"testqu;ote\"") === [['test','test2é',"test3\ntest4",'testqu;ote']]);
+        assert(Base\Csv::strToArr('') === null);
+        assert(count(Base\Csv::strToArr(["test;test2é;\"test3\ntest4\";\"testqu;ote\"",'',"test;test2é;\"test3\ntest4\";\"testqu;ote\""])) === 2);
 
-        // put
-        assert(strlen(Base\Csv::put($splice[0])) === 83);
-        assert(strlen(Base\Csv::put($splice)) > 100);
+        // arrToStr
+        assert(strlen(Base\Csv::arrToStr($splice[0])) === 83);
+        assert(strlen(Base\Csv::arrToStr($splice)) > 100);
 
         // prepareContent
         assert(Base\Csv::prepareContent('ok') === [['ok']]);

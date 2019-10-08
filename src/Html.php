@@ -62,12 +62,12 @@ class Html extends Root
                     'meta'=>[
                         'charset'=>true]],
                 'body'=>true],
-            'order'=>['doctype','html','head','body','wrapper']], // ordre pour docOpen
+            'order'=>['doctype','html','head','body']], // ordre pour docOpen
         'docClose'=>[ // défaut pour docClose
             'default'=>[
                 'body'=>true,
                 'html'=>true],
-            'order'=>['wrapper','script','js','body','html']], // order pour docClose
+            'order'=>['script','js','body','html']], // order pour docClose
         'tag'=>[ // config pour les tags
             'title'=>[ // config pour title
                 'valueCallable'=>[self::class,'titleValue'],
@@ -127,7 +127,6 @@ class Html extends Root
             'iframe'=>[
                 'valueAttr'=>'srcdoc'],
             'link'=>[ // config pour link
-                'valueCallable'=>[self::class,'linkValue'],
                 'selfClosing'=>true,
                 'valueAttr'=>'href',
                 'scalarAttr'=>['rel','true'=>'stylesheet'],
@@ -1817,20 +1816,6 @@ class Html extends Root
     }
 
 
-    // linkValue
-    // méthode protégé
-    // fonction de callback pour la valeur de la tag link
-    protected static function linkValue($return,array $attr,array $option)
-    {
-        $rel = (array_key_exists('rel',$attr))? $attr['rel']:null;
-
-        if(!empty($option['absolute']))
-        $return = Uri::absolute($return);
-
-        return $return;
-    }
-
-
     // scriptValue
     // méthode protégé
     // fonction de callback pour la valeur de la tag script
@@ -3110,7 +3095,8 @@ class Html extends Root
     // un séparateur entre chaque ligne est ajouté si séparateur est null ou string
     // par défaut merge les défauts
     // l'ordre des éléments est prédéterminé dans config
-    public static function docOpen(?array $value=null,bool $default=true,?string $separator=null):string
+    // possible d'ajouter un séparateur à la fin
+    public static function docOpen(?array $value=null,bool $default=true,?string $separator=null,bool $separatorAfter=false):string
     {
         $return = '';
         $separator = ($separator === null)? static::$config['separator']:$separator;
@@ -3143,10 +3129,6 @@ class Html extends Root
                     elseif($k === 'body')
                     $r = static::bodyOpen(null,$arg);
 
-                    // wrapper
-                    elseif($k === 'wrapper')
-                    $r = static::divOpen(null,$arg);
-
                     if(strlen($r))
                     {
                         $return .= (strlen($return) && is_string($separator))? $separator:'';
@@ -3155,7 +3137,10 @@ class Html extends Root
                 }
             }
         }
-
+        
+        if($separatorAfter === true && strlen($return) && is_string($separator))
+        $return .= $separator;
+        
         return $return;
     }
 
@@ -3246,7 +3231,8 @@ class Html extends Root
     // par défaut merge les défauts
     // support pour le callback de response closeBody
     // l'ordre des éléments est prédéterminé dans config
-    public static function docClose(?array $value=null,bool $default=true,bool $closeBody=true,?string $separator=null):string
+    // possible d'ajouter un séparateur au début
+    public static function docClose(?array $value=null,bool $default=true,bool $closeBody=true,?string $separator=null,bool $separatorBefore=false):string
     {
         $return = '';
         $separator = ($separator === null)? static::$config['separator']:$separator;
@@ -3263,12 +3249,8 @@ class Html extends Root
                     $r = '';
                     $arg = $value[$k];
 
-                    // wrapper
-                    if($k === 'wrapper')
-                    $r = static::divClose((array) $arg);
-
                     // script et js
-                    elseif(in_array($k,['script','js'],true) && is_array($arg) && !empty($arg))
+                    if(in_array($k,['script','js'],true) && is_array($arg) && !empty($arg))
                     $r = static::many($k,$separator,...array_values($arg));
 
                     // body
@@ -3293,6 +3275,9 @@ class Html extends Root
             }
         }
 
+        if($separatorBefore === true && strlen($return) && is_string($separator))
+        $return = $separator.$return;
+        
         return $return;
     }
 

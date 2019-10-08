@@ -560,8 +560,6 @@ class Html extends Base\Test
 
         // imgValue
 
-        // linkValue
-
         // scriptValue
 
         // formValue
@@ -958,18 +956,15 @@ class Html extends Base\Test
             'html'=>['lang'=>'fr','data-route'=>'home'],
             'head'=>$head,
             'body'=>['homePage'],
-            'wrapper'=>['#wrapper'],
-        ])) === 1149);
+        ])) === 1130);
         assert(strlen(Base\Html::docOpen([
             'doctype'=>true,
-            'body'=>true,
-            'wrapper'=>true,
-        ],false)) === 28);
+            'body'=>true
+        ],false)) === 22);
         assert(strlen(Base\Html::docOpen([
             'doctype'=>true,
-            'body'=>['test'],
-            'wrapper'=>true,
-        ])) === 102);
+            'body'=>['test']
+        ])) === 96);
 
         // headFromArray
         assert(strlen(Base\Html::headFromArray($head)) === 1040);
@@ -988,7 +983,6 @@ class Html extends Base\Test
         assert(strlen(Base\Html::docClose(null,true,false)) === 15);
         assert(Base\Html::docClose(null,false,false) === '');
         assert(strlen(Base\Html::docClose([
-            'wrapper'=>true,
             'script'=>[
                 'james: test;',
                 function() { return 'YEAH'; },
@@ -998,7 +992,7 @@ class Html extends Base\Test
                 'lang_[lang]'],
             'body'=>true,
             'html'=>true
-        ],false,false)) === 177);
+        ],false,false)) === 170);
 
         // docTitleBody
         assert(Base\Html::docTitleBody('test','ok') === '<html><head><title>test</title></head><body>ok</body></html>');

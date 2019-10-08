@@ -24,7 +24,7 @@ class Exception extends Base\Test
         // message
         assert(Base\Exception::message(2) === '2');
         assert(Base\Exception::message('test') === 'test');
-        assert(Base\Exception::message(['test',2,3,'ok',['LOL','ok',['JAEMS','non']]]) === 'test -> 2 -> 3 -> ok -> LOL, ok, JAEMS: non');
+        assert(Base\Exception::message(['test',2,3,'ok',["LOL","OK"],["LOL",'bleh'=>"OK"],['LOL','ok',['meh'=>'JAEMS']]]) === 'test -> 2 -> 3 -> ok -> LOL, OK -> {"0":"LOL","bleh":"OK"} -> ["LOL","ok",{"meh":"JAEMS"}]');
 
         // classFunction
         assert(Base\Exception::classFunction(['class'=>'test','function'=>'lol'],null,['OK']) === ['test','lol','OK']);

@@ -124,10 +124,10 @@ class Request extends Root
 
 
     // isCli
-    // retourne vrai si les données indiquent que la requête courante provient du cli
+    // retourne vrai si la requête courante provient du cli, renvoie vers server
     public static function isCli():bool
     {
-        return (!Superglobal::serverExists('REQUEST_METHOD'))? true:false;
+        return (Server::isCli())? true:false;
     }
 
 
@@ -400,8 +400,8 @@ class Request extends Root
         $return['absolute'] = static::absolute();
         $return['schemeHost'] = static::schemeHost();
         $return['method'] = static::method();
-        $return['ajax'] = static::isAjax();
         $return['ssl'] = static::isSsl();
+        $return['ajax'] = static::isAjax();
         $return['timestamp'] = static::timestamp();
         $return['ip'] = static::ip($validIp);
         $return['get'] = static::get();
@@ -412,7 +412,8 @@ class Request extends Root
         $return['headers'] = static::headers();
         $return['lang'] = static::lang();
         $return['safe'] = static::isPathSafe();
-
+        $return['cli'] = static::isCli();
+        
         if($id === true)
         $return['id'] = static::id();
 
@@ -434,7 +435,8 @@ class Request extends Root
         $return['files'] = static::files();
         $return['headers'] = static::headers();
         $return['lang'] = static::lang();
-
+        $return['cli'] = static::isCli();
+        
         if($id === true)
         $return['id'] = static::id();
 

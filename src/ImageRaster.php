@@ -25,7 +25,7 @@ class ImageRaster extends File
     // captcha
     // construit une image captcha et retourne une resource temporaire php
     // si font est null, prend la police par défaut
-    public static function captcha(string $value,?string $font=null,?array $option=null)
+    public static function captcha(string $value,?string $font=null,$res=null,?array $option=null)
     {
         $return = null;
         $option = Arr::plus(['background'=>[0,0,0],'line'=>[155,155,155],'pixel'=>[155,155,155],'text'=>[255,255,255]],$option);
@@ -36,7 +36,7 @@ class ImageRaster extends File
         {
             $font = File::normalize($font);
 
-            $return = Res::temp('png');
+            $return = (static::isResource($res))? $res:Res::temp('png');
             $width = $length * 40;
             $str = Str::split(1,$value);
             $image = imagecreatetruecolor($width,50);

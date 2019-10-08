@@ -1641,7 +1641,7 @@ class Str extends Root
         return $return;
     }
 
-
+    
     // lineCount
     // retourne le nombre de ligne dans la chaîne
     public static function lineCount(string $str):int
@@ -2621,7 +2621,15 @@ class Str extends Root
         return preg_replace("/$remove+/",(is_string($replace))? $replace:$remove,$return);
     }
 
-
+    
+    // removeBom
+    // permet de retirer toutes les occurences du bom utf8 dans une string
+    public static function removeBom(string $return):string 
+    {
+        return str_replace("\xEF\xBB\xBF",'',$return);
+    }
+    
+    
     // remove
     // enlève un ou plusieurs caractères d'une chaîne en utilisant str_replace
     public static function remove($remove,string $return):string
@@ -2948,6 +2956,14 @@ class Str extends Root
         }
 
         return $return;
+    }
+    
+    
+    // bom
+    // retourne le bom pour utf8
+    public static function bom():string 
+    {
+        return chr(0xEF).chr(0xBB).chr(0xBF);
     }
 }
 ?>

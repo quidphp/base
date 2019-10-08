@@ -328,6 +328,10 @@ class Attr extends Base\Test
         Base\Attr::setUriOption(Base\Attr::getUriOption());
 
         // other
+        assert(Base\Attr::str(['src'=>'[media]/ok.jpg','style'=>array('bgimg'=>'[media]/test.jpg')]) === "src='/media/ok.jpg' style='background-image: url(/media/test.jpg);'");
+        assert(Base\Attr::str(['action'=>'[media]/ok.jpg']) === "action='/media/ok.jpg'");
+        assert(Base\Attr::str(['href'=>'[media]/ok.jpg']) === "href='/media/ok.jpg'");
+        assert(Base\Attr::str(['test'=>'[media]/ok.jpg']) === "test='[media]/ok.jpg'");
         assert(Base\Attr::arr(['value'=>'']) === ['value'=>'']);
         assert(Base\Attr::str(['-james-ok','well-é','ok_well']) === "class='-james-ok ok_well'");
         assert(strlen(Base\Attr::str(['asd',$captcha,'id'=>$captcha,'src'=>$captcha,'data'=>['test'=>$captcha]])) > 5000);

@@ -41,11 +41,12 @@ class Exception extends Root
     // message
     // prépare le message
     // la valeur est passé dans obj cast préalablement
+    // une entrée du message tableau associatif ou à multiple niveaux est passé dans json encode
     public static function message($value):string
     {
         $return = '';
         $value = Obj::cast($value);
-
+        
         if(is_scalar($value))
         $value = (string) $value;
 
@@ -53,7 +54,15 @@ class Exception extends Root
         $value = (array) $value;
 
         if(is_array($value))
-        $value = Arrs::implode(static::$config['separator'],$value,true,true);
+        {
+            foreach ($value as $k => $v) 
+            {
+                if(is_array($v) && (Arr::isAssoc($v) || Arrs::is($v)))
+                $value[$k] = Json::encode($v);
+            }
+            
+            $value = Arrs::implode(static::$config['separator'],$value,true,true);
+        }
 
         if(is_string($value))
         $return = $value;
