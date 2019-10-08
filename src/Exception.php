@@ -46,7 +46,7 @@ class Exception extends Root
     {
         $return = '';
         $value = Obj::cast($value);
-        
+
         if(is_scalar($value))
         $value = (string) $value;
 
@@ -55,12 +55,12 @@ class Exception extends Root
 
         if(is_array($value))
         {
-            foreach ($value as $k => $v) 
+            foreach ($value as $k => $v)
             {
                 if(is_array($v) && (Arr::isAssoc($v) || Arrs::is($v)))
                 $value[$k] = Json::encode($v);
             }
-            
+
             $value = Arrs::implode(static::$config['separator'],$value,true,true);
         }
 

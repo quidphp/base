@@ -46,8 +46,8 @@ class Style extends Base\Test
         Base\Style::setUriOption(Base\Style::getUriOption());
 
         // other
-        assert(Base\Style::str(['bgimg'=>'[media]/test.jpg']) === "background-image: url(/media/test.jpg);");
-        assert(Base\Style::str(['background-image'=>'[media]/test.jpg']) === "background-image: url(/media/test.jpg);");
+        assert(Base\Style::str(['bgimg'=>'[media]/test.jpg']) === 'background-image: url(/media/test.jpg);');
+        assert(Base\Style::str(['background-image'=>'[media]/test.jpg']) === 'background-image: url(/media/test.jpg);');
         assert(Base\Style::arr(['color: #000','padding: 10px']) === ['color'=>'#000','padding'=>'10px']);
         assert(Base\Style::str(['color'=>null,'bla'=>false,'ok'=>true]) === '');
         assert(Base\Style::append('test.jpg',['padding'=>10],['color'=>'#fff','padding'=>12]) === ['background-image'=>'url(/test.jpg)','padding'=>'12px','color'=>'#fff']);

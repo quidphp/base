@@ -944,12 +944,12 @@ class Str extends Base\Test
         assert(Base\Str::removeConsecutive('_','la__ok') === 'la_ok');
         assert(Base\Str::removeConsecutive(' ','la      ok') === 'la ok');
         assert(Base\Str::removeConsecutive(' ','la      ok','-') === 'la-ok');
-        
+
         // removeBom
-        assert(Base\Str::removeBom("abc") === 'abc');
-        assert(Base\Str::removeBom(Base\Str::bom()."abc".Base\Str::bom()) === 'abc');
+        assert(Base\Str::removeBom('abc') === 'abc');
+        assert(Base\Str::removeBom(Base\Str::bom().'abc'.Base\Str::bom()) === 'abc');
         assert(Base\Str::removeBom(Base\Str::bom()) === '');
-        
+
         // remove
         $string = 'La petites avenir';
         assert('La ptits avnir' === Base\Str::remove('e',$string));
@@ -1051,10 +1051,10 @@ class Str extends Base\Test
         // eol
         assert(Base\Str::eol(3,"\n") === "\n\n\n");
         assert(Base\Str::eol(2,"\r\n") === "\r\n\r\n");
-        
+
         // bom
         assert(strlen(Base\Str::bom()) === 3);
-        
+
         return true;
     }
 }

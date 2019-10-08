@@ -80,10 +80,10 @@ class Csv extends File
     public static function assoc(array $array,bool $clean=false,bool $removeEmpty=true):array
     {
         $return = [];
-        
+
         if($clean === true)
         $array = static::clean($array,$removeEmpty);
-        
+
         if(!empty($array) && static::same($array))
         {
             $header = array_shift($array);
@@ -142,22 +142,22 @@ class Csv extends File
     public static function strToArr($value,?array $option=null):?array
     {
         $return = null;
-        $option = Arr::plus(static::getFormat(),array('removeBom'=>false),$option);
-        
+        $option = Arr::plus(static::getFormat(),['removeBom'=>false],$option);
+
         if(is_array($value))
         {
             $value = Arr::clean($value);
             $value = implode(PHP_EOL,$value);
         }
-        
+
         if(is_string($value) && !empty($value))
         {
             if($option['removeBom'] === true)
             $value = Str::removeBom($value);
-            
+
             $temp = Res::temp('csv');
             Res::write($value,$temp);
-            $return = Res::lines(true,true,$temp,Arr::plus($option,array('csv'=>true)));
+            $return = Res::lines(true,true,$temp,Arr::plus($option,['csv'=>true]));
         }
 
         return $return;
@@ -170,7 +170,7 @@ class Csv extends File
     public static function arrToStr(array $array,?array $option=null):?string
     {
         $return = null;
-        
+
         if(!empty($array))
         {
             $temp = Res::temp('csv');
@@ -231,7 +231,7 @@ class Csv extends File
     {
         $return = null;
         $option = Arr::plus(static::getFormat(),$option);
-        
+
         if(static::isResource($value))
         {
             $return = fgetcsv($value,0,$option['delimiter'],$option['enclosure'],$option['escape']);
@@ -252,37 +252,37 @@ class Csv extends File
     public static function resWrite(array $content,$value,?array $option=null):bool
     {
         $return = false;
-        $option = Arr::plus(static::getFormat(),array('latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\t",'bom'=>false),$option);
-        
+        $option = Arr::plus(static::getFormat(),['latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\t",'bom'=>false],$option);
+
         if(static::isResource($value) && Res::isWritable($value))
         {
             $put = null;
-            
+
             if(!Arrs::is($content))
-            $content = array($content);
-            
+            $content = [$content];
+
             if($option['bom'] === true && $option['latin1'] !== true && Res::isStart($value))
             Res::writeBom($value);
-            
+
             foreach ($content as $write)
             {
                 if(is_array($write))
                 {
-                    foreach ($write as $k => $v) 
+                    foreach ($write as $k => $v)
                     {
                         if(is_string($v))
                         {
                             $v = Str::normalizeLine($v,$option['cellSeparator']);
-                            
+
                             if($option['latin1'] === true)
                             $v = Encoding::fromUtf8($v);
-                            
+
                             $write[$k] = $v;
                         }
                     }
-                    
+
                     $put = fputcsv($value,$write,$option['delimiter'],$option['enclosure'],$option['escape']);
-                    
+
                     // ceci ici permettrait d'utiliser un séparateur de ligne autre que \n
                     if(is_int($put) && strlen($option['separator']) === 2)
                     {

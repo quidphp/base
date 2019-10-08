@@ -56,11 +56,11 @@ class Uri extends Root
         'redirection'=>'*' // caractère pour les redirections via tableau
     ];
 
-    
+
     // absolute
     protected static $absolute = false; // détermine si toutes les requêtes dans output doivent être absolute
-    
-    
+
+
     // scheme
     protected static $scheme = []; // tableau associatif entre host et scheme
 
@@ -211,12 +211,12 @@ class Uri extends Root
 
     // isFragment
     // retourne vrai si l'url commence par le caractère de fragment
-    public static function isFragment($value):bool 
+    public static function isFragment($value):bool
     {
         return (is_string($value) && strpos($value,static::$config['build']['fragment']) === 0)? true:false;
     }
-    
-    
+
+
     // isScheme
     // retourne vrai si l'uri a un scheme du type spécifié
     public static function isScheme($value,string $uri,bool $decode=false):bool
@@ -329,15 +329,15 @@ class Uri extends Root
         return $return;
     }
 
-    
+
     // areAllAbsolute
     // retourne vrai si toutes les urls générés par output doivent être en absolute
-    public static function areAllAbsolute():bool 
+    public static function areAllAbsolute():bool
     {
         return static::$absolute;
     }
-    
-    
+
+
     // type
     // retourne rapidement le type de l'uri
     public static function type(string $uri,bool $decode=false):?string
@@ -373,10 +373,10 @@ class Uri extends Root
         $option = static::option($option);
         $absolute = $option['absolute'] ?? null;
         $schemeHost = $option['schemeHost'] ?? static::schemeHost($return);
-        
+
         if(static::areAllAbsolute() && !static::isFragment($return))
         $return = static::absolute($return,$schemeHost,$option);
-        
+
         else
         {
             if(is_string($schemeHost) && !empty($schemeHost) && $absolute === null)
@@ -1949,14 +1949,14 @@ class Uri extends Root
 
         return;
     }
-    
-    
+
+
     // setAllAbsolute
     // permet de marquer que toutes les uris générés par output doivent être en absolutes
-    public static function setAllAbsolute(bool $value):void 
+    public static function setAllAbsolute(bool $value):void
     {
         static::$absolute = $value;
-        
+
         return;
     }
 }

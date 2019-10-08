@@ -413,7 +413,7 @@ class Request extends Root
         $return['lang'] = static::lang();
         $return['safe'] = static::isPathSafe();
         $return['cli'] = static::isCli();
-        
+
         if($id === true)
         $return['id'] = static::id();
 
@@ -436,7 +436,7 @@ class Request extends Root
         $return['headers'] = static::headers();
         $return['lang'] = static::lang();
         $return['cli'] = static::isCli();
-        
+
         if($id === true)
         $return['id'] = static::id();
 

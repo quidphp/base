@@ -61,11 +61,11 @@ class Attr extends Listing
             'background-position']
     ];
 
-    
+
     // selectedUri
-    protected static $selectedUri = array(); // tableau qui contient les uri sélectionnés
-    
-    
+    protected static $selectedUri = []; // tableau qui contient les uri sélectionnés
+
+
     // isDataKey
     // retourne vrai si l'attribut est data
     public static function isDataKey($value):bool

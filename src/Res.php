@@ -2309,10 +2309,10 @@ class Res extends Root
             $length = (is_int($length))? $length:-1;
 
             $return = stream_get_contents($value,$length,$seekTo);
-            
+
             if($option['removeBom'] === true)
             $return = Str::removeBom($return);
-            
+
             if(static::classIsCallable($option['callback']))
             $return = $option['callback']($return);
         }
@@ -2829,7 +2829,7 @@ class Res extends Root
     {
         $return = false;
         $option = Arr::plus(['latin1'=>false,'newline'=>false,'separator'=>PHP_EOL],$option);
-        
+
         if(static::isWritable($value))
         {
             if(!empty($option['newline']) && !empty($option['separator']))
@@ -2837,7 +2837,7 @@ class Res extends Root
 
             if(!empty($option['latin1']))
             $content = Encoding::fromUtf8($content);
-            
+
             if(!empty($option['amount']) && is_int($option['amount']))
             $return = fwrite($value,$content,$option['amount']);
             else
@@ -2856,24 +2856,24 @@ class Res extends Root
         return $return;
     }
 
-    
+
     // writeBom
     // écrit le bom au début du fichier
-    public static function writeBom($value) 
+    public static function writeBom($value)
     {
         $return = false;
-        
+
         if(static::isWritable($value) && static::isSeekableTellable($value))
         {
             static::seekRewind($value);
             $bom = Str::bom();
             $return = static::writeStream($bom,$value);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // overwrite
     // effacer le contenu de la ressource et ensuite écrit le nouveau contenu
     // retourne vrai si le content a été écrit en entier, sinon retourne un int pour dire le nombre d'octets écrit

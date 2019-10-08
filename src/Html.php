@@ -3137,10 +3137,10 @@ class Html extends Root
                 }
             }
         }
-        
+
         if($separatorAfter === true && strlen($return) && is_string($separator))
         $return .= $separator;
-        
+
         return $return;
     }
 
@@ -3277,7 +3277,7 @@ class Html extends Root
 
         if($separatorBefore === true && strlen($return) && is_string($separator))
         $return = $separator.$return;
-        
+
         return $return;
     }
 

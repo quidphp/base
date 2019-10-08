@@ -328,7 +328,7 @@ class Attr extends Base\Test
         Base\Attr::setUriOption(Base\Attr::getUriOption());
 
         // other
-        assert(Base\Attr::str(['src'=>'[media]/ok.jpg','style'=>array('bgimg'=>'[media]/test.jpg')]) === "src='/media/ok.jpg' style='background-image: url(/media/test.jpg);'");
+        assert(Base\Attr::str(['src'=>'[media]/ok.jpg','style'=>['bgimg'=>'[media]/test.jpg']]) === "src='/media/ok.jpg' style='background-image: url(/media/test.jpg);'");
         assert(Base\Attr::str(['action'=>'[media]/ok.jpg']) === "action='/media/ok.jpg'");
         assert(Base\Attr::str(['href'=>'[media]/ok.jpg']) === "href='/media/ok.jpg'");
         assert(Base\Attr::str(['test'=>'[media]/ok.jpg']) === "test='[media]/ok.jpg'");
