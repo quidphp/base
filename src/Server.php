@@ -531,10 +531,10 @@ class Server extends Root
     public static function httpProtocol():?string
     {
         $return = Superglobal::getServer('SERVER_PROTOCOL');
-        
+
         if(is_string($return))
         $return = strtoupper($return);
-        
+
         return $return;
     }
 

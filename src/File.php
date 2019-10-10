@@ -1253,23 +1253,23 @@ class File extends Finder
         return $return;
     }
 
-    
+
     // makeUploadArrayEmpty
     // retourne un tableau d'upload de fichier mais vide
     // le code erreur par défaut est 4
-    public static function makeUploadArrayEmpty(int $error=4):array 
+    public static function makeUploadArrayEmpty(int $error=4):array
     {
-        $return = array();
+        $return = [];
         $return['name'] = '';
         $return['type'] = '';
         $return['tmp_name'] = '';
         $return['error'] = $error;
         $return['size'] = 0;
-        
+
         return $return;
     }
-    
-    
+
+
     // uploadBasename
     // retourne un nom de fichier sécuritaire à partir d'un tableau de file upload
     public static function uploadBasename(array $value):?string

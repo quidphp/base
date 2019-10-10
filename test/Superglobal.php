@@ -216,7 +216,7 @@ class Superglobal extends Base\Test
         assert(Base\Superglobal::filesReformat($singleR) === $singleR);
         assert(Base\Superglobal::filesReformat($multiR) === $multiR);
         assert(Base\Superglobal::filesReformat($multisR) === $multisR);
-        
+
         // cleanup
         $_GET = [];
         $_POST = [];
