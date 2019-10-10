@@ -462,7 +462,10 @@ class File extends Base\Test
         // makeUploadArray
         assert(count(Base\File::makeUploadArray($currentFile)) === 5);
         assert(Base\File::makeUploadArray($currentFile.'asd') === null);
-
+        
+        // makeUploadArrayEmpty
+        assert(count(Base\File::makeUploadArrayEmpty()) === 5);
+        
         // uploadBasename
         assert(Base\File::uploadBasename(['name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile,'error'=>0,'size'=>231]) === 'james.php');
         assert(Base\File::uploadBasename(['name'=>'james.php','type'=>'image/jpeg','tmp_name'=>$currentFile.'a','error'=>0,'size'=>231]) === 'james.php');

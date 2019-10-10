@@ -207,10 +207,16 @@ class Superglobal extends Base\Test
         $single = ['ok'=>['name'=>'test.jpg','error'=>2],'ok2'=>['name'=>'test2.jpg','error'=>3]];
         $multi = ['ok'=>['name'=>['test.jpg','ok.lala'],'error'=>[2,3]]];
         $multis = ['ok'=>['name'=>['test.jpg','ok.lala'],'error'=>[2,3]],'ok3'=>['name'=>'test.jpg','error'=>2],'ok2'=>['name'=>['test2.jpg','ok2.lala'],'error'=>[22,32]]];
-        assert(Base\Superglobal::filesReformat($single)['ok2'] === ['name'=>'test2.jpg','error'=>3]);
-        assert(Base\Superglobal::filesReformat($multi)['ok'][0] === ['name'=>'test.jpg','error'=>2]);
-        assert(count(Base\Superglobal::filesReformat($multis)) === 3);
-
+        $singleR = Base\Superglobal::filesReformat($single);
+        $multiR = Base\Superglobal::filesReformat($multi);
+        $multisR = Base\Superglobal::filesReformat($multis);
+        assert($singleR['ok2'] === ['name'=>'test2.jpg','error'=>3]);
+        assert($multiR['ok'][0] === ['name'=>'test.jpg','error'=>2]);
+        assert(count($multisR) === 3);
+        assert(Base\Superglobal::filesReformat($singleR) === $singleR);
+        assert(Base\Superglobal::filesReformat($multiR) === $multiR);
+        assert(Base\Superglobal::filesReformat($multisR) === $multisR);
+        
         // cleanup
         $_GET = [];
         $_POST = [];

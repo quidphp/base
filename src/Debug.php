@@ -188,7 +188,7 @@ class Debug extends Root
     // printr
     // retourne les détail d'une variable avec print_r
     // si wrap est true, la string est enrobbé de pre
-    public static function printr($value=null,bool $wrap=true):string
+    public static function printr($value=null,bool $wrap=false):string
     {
         $return = print_r($value,true);
 

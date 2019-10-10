@@ -530,7 +530,12 @@ class Server extends Root
     // retourne le protocol http utilisé, toujours en strtoupper
     public static function httpProtocol():?string
     {
-        return strtoupper(Superglobal::getServer('SERVER_PROTOCOL'));
+        $return = Superglobal::getServer('SERVER_PROTOCOL');
+        
+        if(is_string($return))
+        $return = strtoupper($return);
+        
+        return $return;
     }
 
 

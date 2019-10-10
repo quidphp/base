@@ -1244,16 +1244,32 @@ class File extends Finder
         {
             $return = [];
             $return['name'] = Path::basename($path);
+            $return['type'] = static::mime($path);
             $return['tmp_name'] = $path;
             $return['error'] = $error;
-            $return['type'] = static::mime($path);
             $return['size'] = static::size($path) ?? 0;
         }
 
         return $return;
     }
 
-
+    
+    // makeUploadArrayEmpty
+    // retourne un tableau d'upload de fichier mais vide
+    // le code erreur par défaut est 4
+    public static function makeUploadArrayEmpty(int $error=4):array 
+    {
+        $return = array();
+        $return['name'] = '';
+        $return['type'] = '';
+        $return['tmp_name'] = '';
+        $return['error'] = $error;
+        $return['size'] = 0;
+        
+        return $return;
+    }
+    
+    
     // uploadBasename
     // retourne un nom de fichier sécuritaire à partir d'un tableau de file upload
     public static function uploadBasename(array $value):?string

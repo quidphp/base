@@ -568,6 +568,7 @@ class Superglobal extends Root
     // filesReformat
     // reformat un tableau en provenance de files, seulement s'il est multiple
     // retourne un tableau multidimensionnel si plusieurs fichiers
+    // il est possible de passer un tableau déjà formatté dans cette fonction, celui-ci ne sera pas changé
     public static function filesReformat(array $value):array
     {
         $return = [];
@@ -576,7 +577,7 @@ class Superglobal extends Root
         {
             if(is_string($key) && is_array($value))
             {
-                if(Arrs::is($value))
+                if(Arrs::is($value) && Arr::isAssoc($value))
                 $return[$key] = Column::keySwap($value);
 
                 else
