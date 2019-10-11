@@ -29,20 +29,20 @@ class Http extends Base\Test
         assert(Base\Http::isPort(80));
         assert(Base\Http::isPort(443));
         assert(!Base\Http::isPort(81));
-        
+
         // isPortSsl
         assert(!Base\Http::isPortSsl(80));
         assert(Base\Http::isPortSsl(443));
-        
+
         // isMethod
         assert(Base\Http::isMethod('POST'));
         assert(Base\Http::isMethod('get'));
         assert(!Base\Http::isMethod('getz'));
-        
+
         // protocl
         assert(Base\Http::protocol(true) === 'HTTP/2.0');
         assert(Base\Http::protocol(false) === 'HTTP/1.1');
-        
+
         // scheme
         assert(Base\Http::scheme(true) === 'https');
         assert(Base\Http::scheme('https') === 'https');

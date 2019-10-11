@@ -20,10 +20,10 @@ class Server extends Base\Test
         // prepare
         $isCli = Base\Server::isCli();
         $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
-        
+
         // isOs
         assert(is_bool(Base\Server::isOs('darwin')));
-        
+
         // isMac
         assert(is_bool(Base\Server::isMac()));
 
@@ -32,10 +32,10 @@ class Server extends Base\Test
 
         // isLinux
         assert(is_bool(Base\Server::isLinux()));
-        
+
         // isSoftware
         assert(is_bool(Base\Server::isSoftware('apache')));
-        
+
         // isApache
         assert(is_bool(Base\Server::isApache()));
 
@@ -119,10 +119,10 @@ class Server extends Base\Test
 
         // quidVersion
         assert(Base\Server::quidVersion() === QUID_VERSION);
-        
+
         // quidName
         assert(Base\Server::quidName() === 'QUID/'.Base\Server::quidVersion().'|PHP/'.Base\Server::phpVersion());
-        
+
         // apacheVersion
         if(Base\Server::hasApacheFunctions())
         assert(is_string(Base\Server::apacheVersion()));
@@ -184,13 +184,13 @@ class Server extends Base\Test
         assert(is_string(Base\Server::software()));
         else
         assert(Base\Server::software() === null);
-        
+
         // gatewayInterface
         if($isCli === false)
         assert(is_string(Base\Server::gatewayInterface()));
         else
         assert(Base\Server::gatewayInterface() === null);
-        
+
         // httpProtocol
         assert(in_array(Base\Server::httpProtocol(),[null,'HTTP/1.1','HTTP/2.0'],true));
 

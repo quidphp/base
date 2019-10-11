@@ -574,7 +574,7 @@ class Date extends Root
 
                         if(array_key_exists('map',$array) && static::classIsCallable($array['map']))
                         {
-                            $args = (array_key_exists('args',$array))? (array) $array['args']:array();
+                            $args = (array_key_exists('args',$array))? (array) $array['args']:[];
                             $return['replace'][$char] = Arr::map($array['map'],$return['replace'][$char],...$args);
                         }
                     }

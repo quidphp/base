@@ -599,15 +599,15 @@ class Html extends Root
         return $return;
     }
 
-    
+
     // brs
     // génère un ou plusieurs balises br
     public static function brs(int $amount):string
     {
         return static::nl2br(Str::eol($amount));
     }
-    
-    
+
+
     // stripTags
     // supprime les balises html d'une string
     public static function stripTags(string $value,$keep=null):string

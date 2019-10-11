@@ -385,8 +385,8 @@ class Buffer extends Root
 
         return static::start($callback,$chunk,$flag);
     }
-    
-    
+
+
     // flushEcho
     // ouvre un buffer, echo des donnés et flush ferme tous les buffer
     // ouvre un autre buffer à la fin du processus

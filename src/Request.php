@@ -501,7 +501,7 @@ class Request extends Root
         Superglobal::setServer('SERVER_PORT',Http::port($value));
         Superglobal::setServer('HTTPS',($value === true)? 'on':'off');
         Superglobal::setServer('SERVER_PROTOCOL',$protocol);
-        
+
         return;
     }
 
@@ -891,24 +891,24 @@ class Request extends Root
         return $return;
     }
 
-    
+
     // setSchemeHost
     // change le scheme et le host de la requête à partir d'une string schemeHost
-    public static function setSchemeHost(string $value):void 
+    public static function setSchemeHost(string $value):void
     {
         $scheme = Uri::scheme($value);
         $host = Uri::host($value);
-        
+
         if(is_string($scheme) && is_string($host))
         {
             static::setScheme($scheme);
             static::setHost($host);
         }
-        
+
         return;
     }
-    
-    
+
+
     // get
     // retourne le tableau get courant
     public static function get():array
@@ -1224,12 +1224,12 @@ class Request extends Root
     {
         return Uri::absolute(static::uri(true),$option);
     }
-    
-    
+
+
     // change
     // cette méthode permet de remplacer le tableau serveur
     // est utilisé par le cli
-    public static function change(array $values,bool $default=false):void 
+    public static function change(array $values,bool $default=false):void
     {
         if($default === true)
         {
@@ -1237,7 +1237,7 @@ class Request extends Root
             $values = Arr::replace(static::default($isCli),$values);
         }
 
-        foreach ($values as $key => $value) 
+        foreach ($values as $key => $value)
         {
             if(is_string($key))
             {
@@ -1247,26 +1247,26 @@ class Request extends Root
                 static::$method($value);
             }
         }
-        
+
         return;
     }
-    
-    
+
+
     // default
     // retourne les défauts
     // différent pour le cli
-    public static function default(bool $cli):array 
+    public static function default(bool $cli):array
     {
-        $return = array('scheme'=>'http');
-        
+        $return = ['scheme'=>'http'];
+
         if($cli === true)
         {
-            $return['query'] = array();
+            $return['query'] = [];
             $return['ip'] = Server::ipPublic();
             $return['userAgent'] = Server::quidName();
             $return['langHeader'] = Lang::default();
         }
-        
+
         return $return;
     }
 }

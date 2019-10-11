@@ -98,14 +98,14 @@ class Response extends Base\Test
         assert(Base\Response::setContentType('application/pdf'));
         assert(is_bool(Base\Response::isContentType('pdf')));
         assert(Base\Response::setContentType('html'));
-        
+
         if($isCli === false)
         {
             assert(Base\Response::isContentType('html'));
             assert(Base\Response::isContentType('text/html'));
             assert(Base\Response::isContentType('text/html; charset=UTF-8'));
         }
-        
+
         // headerExists
         assert(is_bool(Base\Response::headerExists('PRAGMA')));
         if($isCli === false)
@@ -166,14 +166,14 @@ class Response extends Base\Test
         assert(Base\Response::code() === 302);
         assert(Base\Response::moved(false));
         assert(Base\Response::code() === 301);
-        
+
         // movedCode
         assert(Base\Response::movedCode(false) === 301);
         assert(Base\Response::movedCode(true) === 302);
         assert(Base\Response::movedCode(304) === 304);
         assert(Base\Response::movedCode(404) === null);
         assert(Base\Response::movedCode(null) === 302);
-        
+
         // error
         assert(Base\Response::error(400));
         assert(Base\Response::status() === $protocol.' 400 Bad Request');
@@ -209,7 +209,7 @@ class Response extends Base\Test
             assert(is_string(Base\Response::getHeader('PRAGMA')));
             assert(is_string(Base\Response::getHeader('pragma')));
         }
-        
+
         // getsHeader
         assert(count(Base\Response::getsHeader(['praGma'])) === 1);
 
@@ -240,7 +240,7 @@ class Response extends Base\Test
         }
         else
         assert(Base\Response::getHeader('test') === null);
-        
+
         // setsHeader
         assert(Base\Response::setsHeader(['test2'=>'ok']) === ['test2'=>1]);
         assert(Base\Response::setsHeader(['test2'=>['ok3','ok2']]) === ['test2'=>2]);
@@ -260,7 +260,7 @@ class Response extends Base\Test
         // unsetHeader
         assert(is_bool(Base\Response::unsetHeader('test2')));
         assert(!Base\Response::headerExists('test2'));
-        if($isCli===false)
+        if($isCli === false)
         assert(Base\Response::unsetHeader('content-type'));
 
         // unsetsHeader

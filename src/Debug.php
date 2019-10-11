@@ -185,22 +185,22 @@ class Debug extends Root
         return $return;
     }
 
-    
+
     // wrap
     // gère l'enrobage de la valeur
     // différent si c'est du cli
-    public static function wrap(?string $return):string 
+    public static function wrap(?string $return):string
     {
         if(Server::isCli())
         $return = Cli::preset(static::$config['cliPreset'],$return);
-        
+
         else
         $return = "<pre>$return</pre>";
-        
+
         return $return;
     }
-    
-    
+
+
     // printr
     // retourne les détail d'une variable avec print_r
     // si wrap est true, la string est enrobbé de pre
@@ -225,7 +225,7 @@ class Debug extends Root
         $return = '';
         $isOverloaded = Ini::isVarDumpOverloaded();
         $isCli = Server::isCli();
-        
+
         if($isOverloaded === false && is_string($value) && $extra === true)
         {
             $strlen = strlen($value);
@@ -235,7 +235,7 @@ class Debug extends Root
             {
                 if($isCli === false)
                 $value = $specialChars;
-                
+
                 $value .= "---$strlen";
             }
         }
@@ -244,7 +244,7 @@ class Debug extends Root
         var_dump($value);
         $return = Buffer::getClean();
         $return = trim($return);
-        
+
         if($isOverloaded === false && $wrap === true)
         $return = static::wrap($return);
 
@@ -261,7 +261,7 @@ class Debug extends Root
     {
         $return = var_export($value,true);
         $isCli = Server::isCli();
-        
+
         if($wrap === true && $isCli === false)
         $return = static::highlight($return,$wrap,true);
 
@@ -278,17 +278,17 @@ class Debug extends Root
             if(is_int($count))
             {
                 $count = "---$count";
-                
+
                 if($wrap === true && $isCli === false)
                 $return .= "<pre>$count</pre>";
                 else
                 $return .= $count;
             }
         }
-        
+
         if($wrap === true && $isCli === true)
         $return = static::wrap($return);
-        
+
         return $return;
     }
 

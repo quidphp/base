@@ -283,10 +283,10 @@ class Response extends Root
     public static function code():?int
     {
         $return = http_response_code();
-        
+
         if(!is_int($return))
         $return = null;
-        
+
         return $return;
     }
 
@@ -394,26 +394,26 @@ class Response extends Root
         return $return;
     }
 
-    
+
     // movedCode
     // retourne le code à utiliser pour la redirection
-    public static function movedCode($value):?int 
+    public static function movedCode($value):?int
     {
         $return = null;
-        
+
         if($value === true || $value === null)
         $value = 302;
 
         elseif($value === false)
         $value = 301;
-        
+
         if(static::isCodeIn(300,$value))
         $return = $value;
-        
+
         return $return;
     }
-    
-    
+
+
     // error
     // change le code de la requête entre 400 et 499
     // kill permet de tuer la réponse
@@ -428,7 +428,7 @@ class Response extends Root
         $return = static::setCode($code);
 
         if($kill === true)
-        static::kill(array('error',$code));
+        static::kill(['error',$code]);
 
         return $return;
     }
@@ -457,7 +457,7 @@ class Response extends Root
         $return = static::setCode($code);
 
         if($kill === true)
-        static::kill(array('serverError',$code));
+        static::kill(['serverError',$code]);
 
         return $return;
     }
@@ -483,7 +483,7 @@ class Response extends Root
             static::setHeader('Location',$value);
 
             if($kill === true)
-            static::kill(array('redirect',$value,static::movedCode($code)));
+            static::kill(['redirect',$value,static::movedCode($code)]);
         }
 
         return $return;
@@ -933,10 +933,10 @@ class Response extends Root
     public static function kill($value=null):void
     {
         $kill = null;
-        
+
         if(is_int($value) && $value >= 0 && $value < 255)
         $kill = $value;
-        
+
         elseif(!empty($value) && Server::isCli())
         {
             $value = Debug::varGet($value);
@@ -945,7 +945,7 @@ class Response extends Root
 
         elseif(is_string($value))
         $kill = $value;
-        
+
         exit($kill);
 
         return;

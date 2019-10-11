@@ -19,7 +19,7 @@ class Str extends Base\Test
     {
         // prepare
         $isCli = Base\Server::isCli();
-        
+
         // typecast
         $b = 2;
         $y = 1.2;

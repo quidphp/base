@@ -20,9 +20,9 @@ class Debug extends Base\Test
         // prepare
         $isVarDumpOverload = Base\Ini::isVarDumpOverloaded();
         $isCli = Base\Server::isCli();
-        
+
         // helper
-        
+
         // var
 
         // varFlush
@@ -43,30 +43,30 @@ class Debug extends Base\Test
 
         // varMethod
         assert(is_string(Base\Debug::varMethod()));
-        
+
         // wrap
-        
+
         // printr
         assert(print_r('test',true) === Base\Debug::printr('test',false));
 
         // dump
         if(!$isVarDumpOverload)
         {
-            assert(Base\Debug::dump('<test>ok</test>',false,false) === "string(15) \"<test>ok</test>\"");
-            
+            assert(Base\Debug::dump('<test>ok</test>',false,false) === 'string(15) "<test>ok</test>"');
+
             if(!$isCli)
             {
-                assert(Base\Debug::dump('james') === "<pre>string(5) \"james\"</pre>");
-                assert(Base\Debug::dump('james',false) === "string(5) \"james\"");
-                assert(Base\Debug::dump('<test>ok</test>') === "<pre>string(32) \"&lt;test&gt;ok&lt;/test&gt;---15\"</pre>");
-                assert(Base\Debug::dump('<test>ok</test>',false) === "string(32) \"&lt;test&gt;ok&lt;/test&gt;---15\"");
+                assert(Base\Debug::dump('james') === '<pre>string(5) "james"</pre>');
+                assert(Base\Debug::dump('james',false) === 'string(5) "james"');
+                assert(Base\Debug::dump('<test>ok</test>') === '<pre>string(32) "&lt;test&gt;ok&lt;/test&gt;---15"</pre>');
+                assert(Base\Debug::dump('<test>ok</test>',false) === 'string(32) "&lt;test&gt;ok&lt;/test&gt;---15"');
             }
         }
-        
+
         // export
         assert(strlen(Base\Debug::export([1,2,3],false)) === 43);
         assert(Base\Debug::export('test',false,false) === "'test'");
-        
+
         if(!$isCli)
         {
             assert(strlen(Base\Debug::export([2,3,4,5])) === 892);
@@ -74,7 +74,7 @@ class Debug extends Base\Test
             assert(strlen(Base\Debug::export([1,2,3],true)) === 710);
             assert(strlen(Base\Debug::export(1.24)) === 98);
         }
-        
+
         // highlight
         assert(strlen(Base\Debug::highlight('$x = array(1,2,"test");',true,true)) === 379);
         assert(strlen(Base\Debug::highlight('$x = array(1,2,"test");',false,true)) === 84);

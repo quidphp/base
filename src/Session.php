@@ -732,10 +732,10 @@ class Session extends Root
 
             if($option['name'] !== null)
             $return['name'] = static::setName($option['name']);
-            
+
             if($option['sid'] !== null)
             $return['sid'] = static::setSid($option['sid']);
-            
+
             if($option['lifetime'] !== null && is_int($option['lifetime']))
             {
                 $lifetime = $option['lifetime'];

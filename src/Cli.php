@@ -54,23 +54,23 @@ class Cli extends Root
         'htmlOverload'=>false // permet d'overload les appels aux méthodes clis avec du html
     ];
 
-    
+
     // is
     // retourne vrai si php est présentement dans cli
-    public static function is():bool 
+    public static function is():bool
     {
         return Server::isCli();
     }
-    
-    
+
+
     // isHtmlOverload
-    // retourne vrai si les méthodes cli doivent générer du html 
+    // retourne vrai si les méthodes cli doivent générer du html
     public static function isHtmlOverload():bool
     {
         return (static::$config['htmlOverload'] === true)? true:false;
     }
-    
-    
+
+
     // callStatic
     // méthode qui attrape tous les appels à des méthodes non reconnus
     // renvoie vers preset
@@ -78,8 +78,8 @@ class Cli extends Root
     {
         return static::preset($key,...$arg);
     }
-    
-    
+
+
     // flush
     // écrit et flush une valeur au cli
     public static function flush($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):void
@@ -152,17 +152,17 @@ class Cli extends Root
     public static function make($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
     {
         $return = '';
-        
+
         if(static::isHtmlOverload())
         $return .= static::makeHtml($value,$foreground,$style,$background,$eol);
-        
+
         else
         $return .= static::makeCli($value,$foreground,$style,$background,$eol);
 
         return $return;
     }
 
-    
+
     // makeCli
     // génère une version avec couleur d'une valeur à envoyer au cli
     // possible de générer des newlines après
@@ -182,7 +182,7 @@ class Cli extends Root
             if(is_string($foreground) || is_int($style) || is_int($background))
             {
                 $changed = true;
-                
+
                 if(is_string($foreground))
                 $return .= $escape.'['.$foreground.'m';
 
@@ -192,7 +192,7 @@ class Cli extends Root
                 if(is_int($background))
                 $return .= $escape.'['.$background.'m';
             }
-            
+
             $return .= $value;
 
             if($changed === true)
@@ -203,8 +203,8 @@ class Cli extends Root
 
         return $return;
     }
-    
-    
+
+
     // makeHtml
     // génère une version html couleur d'une valeur
     // possible de générer des br après
@@ -216,16 +216,16 @@ class Cli extends Root
         $style = (is_string($style))? static::getStyle($style,1):null;
         $background = (is_string($background))? static::getBackgroundColor($background,1):null;
         $styles = Arr::replace($foreground,$style,$background);
-        
+
         if(is_string($value) && strlen($value))
-        $return .= Html::div($value,array('style'=>$styles));
+        $return .= Html::div($value,['style'=>$styles]);
 
         $return .= Html::brs($eol);
-        
+
         return $return;
     }
-    
-    
+
+
     // preset
     // génère une string via un preset
     public static function preset(string $key,$value,int $eol=1):string
@@ -239,15 +239,15 @@ class Cli extends Root
         return $return;
     }
 
-    
+
     // eol
     // retourne le caractère de fin de ligne
     public static function eol():string
     {
         return static::$config['eol'];
     }
-    
-    
+
+
     // prepareValue
     // prépare la valeur à envoyer au cli
     // si c'est un tableau, utilise print_r
@@ -315,14 +315,14 @@ class Cli extends Root
     {
         return static::$config['style'][$value][$index] ?? null;
     }
-    
-    
+
+
     // setHtmlOverload
     // active ou désactive le overload du html
     public static function setHtmlOverload(bool $value):void
     {
         static::$config['htmlOverload'] = $value;
-        
+
         return;
     }
 }

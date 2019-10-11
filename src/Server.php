@@ -26,14 +26,14 @@ class Server extends Root
     {
         $return = false;
         $os = static::os();
-        
+
         if(is_string($os) && is_string($value) && stripos($os,$value) !== false)
         $return = true;
-        
+
         return $return;
     }
-    
-    
+
+
     // isMac
     // retourne vrai si le système est macOs
     public static function isMac():bool
@@ -65,21 +65,21 @@ class Server extends Root
         return (static::isOs('linux'))? true:false;
     }
 
-    
+
     // isSoftware
     // retourne vrai si le software est la valeur donné en argument
     public static function isSoftware($value):bool
     {
         $return = false;
         $software = static::software();
-        
+
         if(is_string($software) && is_string($value) && stripos($software,$value) !== false)
         $return = true;
-        
+
         return $return;
     }
-    
-    
+
+
     // isApache
     // retourne vrai si le serveur est apache
     public static function isApache():bool
@@ -330,15 +330,15 @@ class Server extends Root
         return static::$config['version'];
     }
 
-    
+
     // quidName
     // retourne le nom de quid, utilisez pour useragent email et cli
     public static function quidName():string
     {
-        return 'QUID/'.Server::quidVersion().'|PHP/'.Server::phpVersion();
+        return 'QUID/'.self::quidVersion().'|PHP/'.self::phpVersion();
     }
-    
-    
+
+
     // apacheVersion
     // retourne la version apache
     // peut retourner null si les fonctions apaches ne sont pas disponibles
@@ -513,10 +513,10 @@ class Server extends Root
     public static function ip(bool $normalize=true):?string
     {
         $return = Superglobal::getServer('SERVER_ADDR');
-        
+
         if($normalize === true)
         $return = Ip::normalize(Superglobal::getServer('SERVER_ADDR'));
-        
+
         return $return;
     }
 

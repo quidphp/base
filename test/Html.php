@@ -174,11 +174,11 @@ class Html extends Base\Test
         assert(Base\Html::nl2br("test\n\nbla") === 'test<br /><br />bla');
         assert(Base\Html::nl2br("test\n\nbla",true) === 'test<br /><br />bla');
         assert(Base\Html::nl2br("test\n\nbla",true,false) === 'test<br><br>bla');
-        
+
         // brs
-        assert(Base\Html::brs(3) === "<br /><br /><br />");
-        assert(Base\Html::brs(0) === "");
-        
+        assert(Base\Html::brs(3) === '<br /><br /><br />');
+        assert(Base\Html::brs(0) === '');
+
         // stripTags
         assert(Base\Html::stripTags('<h1><b><u>test</u></b><span>ok</span></h1>') === 'testok');
         assert(Base\Html::stripTags('<h1><b><u>test</u></b><span>ok</span></h1>','h1') === '<h1>testok</h1>');
