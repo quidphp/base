@@ -114,7 +114,7 @@ class Superglobal extends Base\Test
         assert(!empty(Base\Superglobal::getServer('http_host',false)));
 
         // getServerStart
-        assert(count(Base\Superglobal::getServerStart('HTTP')) > 4);
+        assert(count(Base\Superglobal::getServerStart('HTTP')) >= 4);
         assert(Base\Superglobal::getServerStart('HTTP') === Base\Superglobal::getServerStart('http',false));
         assert(!empty(Base\Superglobal::getServerStart('HTTP',false,true)['Host']));
 

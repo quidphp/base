@@ -279,9 +279,15 @@ class Response extends Root
 
     // code
     // retourne le code actuel de la réponse
-    public static function code():int
+    // va retourner null dans un environnement cli
+    public static function code():?int
     {
-        return http_response_code();
+        $return = http_response_code();
+        
+        if(!is_int($return))
+        $return = null;
+        
+        return $return;
     }
 
 
@@ -380,24 +386,38 @@ class Response extends Root
     public static function moved($code=null):bool
     {
         $return = false;
+        $code = static::movedCode($code);
 
-        if($code === true || $code === null)
-        $code = 302;
-
-        elseif($code === false)
-        $code = 301;
-
-        if(static::isCodeIn(300,$code))
+        if(is_int($code))
         $return = static::setCode($code);
 
         return $return;
     }
 
+    
+    // movedCode
+    // retourne le code à utiliser pour la redirection
+    public static function movedCode($value):?int 
+    {
+        $return = null;
+        
+        if($value === true || $value === null)
+        $value = 302;
 
+        elseif($value === false)
+        $value = 301;
+        
+        if(static::isCodeIn(300,$value))
+        $return = $value;
+        
+        return $return;
+    }
+    
+    
     // error
     // change le code de la requête entre 400 et 499
     // kill permet de tuer la réponse
-    public static function error($code=null,$kill=false)
+    public static function error($code=null,bool $kill=false)
     {
         $return = false;
 
@@ -407,8 +427,8 @@ class Response extends Root
         if(static::isCodeIn(400,$code))
         $return = static::setCode($code);
 
-        if($kill !== false)
-        static::kill($kill);
+        if($kill === true)
+        static::kill(array('error',$code));
 
         return $return;
     }
@@ -417,7 +437,7 @@ class Response extends Root
     // notFound
     // change le code de la requête pour 404
     // kill permet de tuer la réponse
-    public static function notFound($kill=false):bool
+    public static function notFound(bool $kill=false):bool
     {
         return static::error(404,$kill);
     }
@@ -426,7 +446,7 @@ class Response extends Root
     // serverError
     // change le code de la requête pour un code 500+
     // kill permet de tuer la réponse
-    public static function serverError($code=null,$kill=false):bool
+    public static function serverError($code=null,bool $kill=false):bool
     {
         $return = false;
 
@@ -436,8 +456,8 @@ class Response extends Root
         if(static::isCodeIn(500,$code))
         $return = static::setCode($code);
 
-        if($kill !== false)
-        static::kill($kill);
+        if($kill === true)
+        static::kill(array('serverError',$code));
 
         return $return;
     }
@@ -446,7 +466,7 @@ class Response extends Root
     // redirect
     // redirige la réponse vers une autre adresse
     // kill permet de tuer la réponse
-    public static function redirect($value,$code=null,$kill=true,bool $encode=true):bool
+    public static function redirect($value,$code=null,bool $kill=true,bool $encode=true):bool
     {
         $return = false;
 
@@ -462,8 +482,8 @@ class Response extends Root
 
             static::setHeader('Location',$value);
 
-            if($kill !== false)
-            static::kill($kill);
+            if($kill === true)
+            static::kill(array('redirect',$value,static::movedCode($code)));
         }
 
         return $return;
@@ -475,7 +495,7 @@ class Response extends Root
     // par défaut, vérifier si le referer est safe
     // le code utilisé sera par défaut 301
     // si pas de referer, ou refered unsafe et que fallback est true, renvoie vers le schemeHost
-    public static function redirectReferer(bool $fallback=true,bool $safe=true,$code=true,$kill=true,bool $encode=true):bool
+    public static function redirectReferer(bool $fallback=true,bool $safe=true,$code=true,bool $kill=true,bool $encode=true):bool
     {
         $return = false;
         $referer = Request::referer(true);
@@ -560,8 +580,8 @@ class Response extends Root
                         if($meta['kind'] !== 'phpOutput')
                         Res::passthruChunk($option['length'],$value,$option);
 
-                        if($option['kill'] !== false)
-                        static::kill($option['kill']);
+                        if($option['kill'] === true)
+                        static::kill();
                     }
                 }
             }
@@ -913,13 +933,19 @@ class Response extends Root
     public static function kill($value=null):void
     {
         $kill = null;
-
+        
         if(is_int($value) && $value >= 0 && $value < 255)
         $kill = $value;
+        
+        elseif(!empty($value) && Server::isCli())
+        {
+            $value = Debug::varGet($value);
+            Buffer::flushEcho($value);
+        }
 
-        elseif(!is_bool($value))
+        elseif(is_string($value))
         $kill = $value;
-
+        
         exit($kill);
 
         return;

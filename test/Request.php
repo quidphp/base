@@ -65,7 +65,7 @@ class Request extends Base\Test
         Base\Request::setPath($path);
 
         // isCli
-        assert(!Base\Request::isCli());
+        assert(is_bool(Base\Request::isCli()));
 
         // isFailedFileUpload
         assert(!Base\Request::isFailedFileUpload());
@@ -244,8 +244,8 @@ class Request extends Base\Test
         assert(is_int(Base\Request::port()));
 
         // setPort
-        Base\Request::setPort(2);
-        assert(Base\Request::port() === 2);
+        Base\Request::setPort(80);
+        assert(Base\Request::port() === 80);
         Base\Request::setPort($port);
 
         // path
@@ -339,20 +339,21 @@ class Request extends Base\Test
 
         // timestamp
         assert(is_int(Base\Request::timestamp()));
-
-        // timestampFloat
-        assert(is_float(Base\Request::timestampFloat()));
-
+        assert(is_float(Base\Request::timestamp(true)));
+        
         // setTimestamp
         Base\Request::setTimestamp(1);
         assert(Base\Request::timestamp() === 1);
 
-        // setTimestampFloat
-        Base\Request::setTimestampFloat(Base\Date::microtime());
-
         // schemeHost
         assert(Base\Request::scheme().'://'.Base\Request::host() === Base\Request::schemeHost());
-
+        
+        // setSchemeHost
+        $schemeHost = Base\Request::schemeHost();
+        Base\Request::setSchemeHost('https://google.com');
+        assert(Base\Request::host() === 'google.com');
+        Base\Request::setSchemeHost($schemeHost);
+        
         // get
         assert($_GET === Base\Request::get());
 
@@ -508,7 +509,13 @@ class Request extends Base\Test
         Base\Request::setFragment(null);
         Base\Request::setLangHeader($lang);
         assert(Base\Request::absolute() === Base\Request::schemeHost());
-
+        
+        // change
+        
+        // default
+        assert(count(Base\Request::default(false)) === 1);
+        assert(count(Base\Request::default(true)) === 5);
+        
         // cleanup
         Base\Request::setMethod('get');
 

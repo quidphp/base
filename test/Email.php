@@ -107,9 +107,6 @@ class Email extends Base\Test
         // addressStr
         assert(Base\Email::addressStr('zwa@test.lz','Pierre') === 'Pierre <zwa@test.lz>');
 
-        // xmailer
-        assert(Base\Email::xmailer() === 'PHP/'.Base\Server::phpVersion().'|QUID/'.Base\Server::quidVersion());
-
         // setActive
         assert(Base\Email::setActive() === null);
 

@@ -18,6 +18,7 @@ class Response extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
+        $isCli = Base\Server::isCli();
         $content = Base\Buffer::getAll(false);
         $protocol = Base\Server::httpProtocol();
         Base\Buffer::cleanAll();
@@ -53,18 +54,18 @@ class Response extends Base\Test
 
         // isHtml
         assert(Base\Response::setContentType('html'));
-        assert(Base\Response::isHtml('html'));
+        assert(is_bool(Base\Response::isHtml('html')));
 
         // isHtmlOrAuto
-        assert(Base\Response::isHtmlOrAuto('html'));
+        assert(is_bool(Base\Response::isHtmlOrAuto('html')));
 
         // isJson
         assert(Base\Response::setContentType('json'));
-        assert(Base\Response::isJson());
+        assert(is_bool(Base\Response::isJson()));
 
         // isXml
         assert(Base\Response::setContentType('xml'));
-        assert(Base\Response::isXml());
+        assert(is_bool(Base\Response::isXml()));
         assert(Base\Response::setContentType('html'));
 
         // isConnectionNormal
@@ -95,19 +96,24 @@ class Response extends Base\Test
 
         // isContentType
         assert(Base\Response::setContentType('application/pdf'));
-        assert(Base\Response::isContentType('pdf'));
-        assert(Base\Response::isContentType('application/pdf'));
+        assert(is_bool(Base\Response::isContentType('pdf')));
         assert(Base\Response::setContentType('html'));
-        assert(Base\Response::isContentType('html'));
-        assert(Base\Response::isContentType('text/html'));
-        assert(Base\Response::isContentType('text/html; charset=UTF-8'));
-
+        
+        if($isCli === false)
+        {
+            assert(Base\Response::isContentType('html'));
+            assert(Base\Response::isContentType('text/html'));
+            assert(Base\Response::isContentType('text/html; charset=UTF-8'));
+        }
+        
         // headerExists
-        assert(Base\Response::headerExists('PRAGMA'));
+        assert(is_bool(Base\Response::headerExists('PRAGMA')));
+        if($isCli === false)
         assert(Base\Response::headerExists('PRAgma'));
         assert(!Base\Response::headerExists('asdasdds'));
 
         // headersExists
+        if($isCli === false)
         assert(Base\Response::headersExists(['PRAGMA']));
         assert(!Base\Response::headersExists(['PRAGMA','test']));
 
@@ -160,7 +166,14 @@ class Response extends Base\Test
         assert(Base\Response::code() === 302);
         assert(Base\Response::moved(false));
         assert(Base\Response::code() === 301);
-
+        
+        // movedCode
+        assert(Base\Response::movedCode(false) === 301);
+        assert(Base\Response::movedCode(true) === 302);
+        assert(Base\Response::movedCode(304) === 304);
+        assert(Base\Response::movedCode(404) === null);
+        assert(Base\Response::movedCode(null) === 302);
+        
         // error
         assert(Base\Response::error(400));
         assert(Base\Response::status() === $protocol.' 400 Bad Request');
@@ -190,20 +203,29 @@ class Response extends Base\Test
         assert(Base\Arr::isAssoc(Base\Response::headers()));
 
         // getHeader
-        assert(is_string(Base\Response::getHeader('PRAGMA')));
-        assert(is_string(Base\Response::getHeader('pragma')));
-
+        assert(Base\Response::getHeader('PRAGMAz') === null);
+        if($isCli === false)
+        {
+            assert(is_string(Base\Response::getHeader('PRAGMA')));
+            assert(is_string(Base\Response::getHeader('pragma')));
+        }
+        
         // getsHeader
         assert(count(Base\Response::getsHeader(['praGma'])) === 1);
 
         // contentType
         assert(Base\Response::setContentType('html'));
-        assert(Base\Response::contentType(0) === 'text/html; charset=UTF-8');
-        assert(Base\Response::contentType(1) === 'text/html');
-        assert(Base\Response::contentType(2) === 'html');
+        if($isCli === false)
+        {
+            assert(Base\Response::contentType(0) === 'text/html; charset=UTF-8');
+            assert(Base\Response::contentType(1) === 'text/html');
+            assert(Base\Response::contentType(2) === 'html');
+        }
         assert(Base\Response::setContentType('text/plain'));
+        if($isCli === false)
         assert(Base\Response::contentType(0) === 'text/plain; charset=UTF-8');
         assert(Base\Response::setContentType('txt'));
+        if($isCli === false)
         assert(Base\Response::contentType(0) === 'text/plain; charset=UTF-8');
         assert(Base\Response::setContentType('html'));
 
@@ -211,28 +233,38 @@ class Response extends Base\Test
         assert(Base\Response::setHeader('test','OK') === 1);
         assert(Base\Response::setHeader('test','OK2') === 1);
         assert(Base\Response::setHeader('test',['OK3','OK4'],false) === 2);
-        assert(Base\Response::getHeader('test') === ['OK2','OK3','OK4']);
-        assert(Base\Response::headersExists(['test']));
-
+        if($isCli === false)
+        {
+            assert(Base\Response::getHeader('test') === ['OK2','OK3','OK4']);
+            assert(Base\Response::headersExists(['test']));
+        }
+        else
+        assert(Base\Response::getHeader('test') === null);
+        
         // setsHeader
         assert(Base\Response::setsHeader(['test2'=>'ok']) === ['test2'=>1]);
         assert(Base\Response::setsHeader(['test2'=>['ok3','ok2']]) === ['test2'=>2]);
-        assert(Base\Response::getHeader('test2') === ['ok3','ok2']);
-        assert(Base\Response::headerExists('test2'));
+        if($isCli === false)
+        {
+            assert(Base\Response::getHeader('test2') === ['ok3','ok2']);
+            assert(Base\Response::headerExists('test2'));
+        }
         assert(Base\Response::setHeader('Last-Modified',Base\Date::gmt(Base\Date::getTimestamp())) === 1);
         assert(Base\Response::setHeader('last-modified',Base\Date::gmt(Base\Date::getTimestamp() + 1)) === 1);
+        if($isCli === false)
         assert(Base\Response::getHeader('Last-Modified') === Base\Response::getHeader('last-modified'));
 
         // setContentType
         assert(Base\Response::setContentType('html'));
 
         // unsetHeader
-        assert(Base\Response::unsetHeader('test2'));
+        assert(is_bool(Base\Response::unsetHeader('test2')));
         assert(!Base\Response::headerExists('test2'));
+        if($isCli===false)
         assert(Base\Response::unsetHeader('content-type'));
 
         // unsetsHeader
-        assert(Base\Response::unsetsHeader(['test','test2']) === ['test'=>true,'test2'=>false]);
+        assert(array_keys(Base\Response::unsetsHeader(['test','test2'])) === ['test','test2']);
         assert(Base\Response::getHeader('test2') === null);
 
         // emptyHeader
@@ -249,10 +281,14 @@ class Response extends Base\Test
         echo 'YA';
         assert(empty(Base\Response::headers()['Content-Type']));
         assert(Base\Response::body() === 'YA');
-        assert(Base\Response::headers()['Content-Type'] === 'text/html; charset=UTF-8'); // ob_clean sur le premier buffer déclenche quand même le callback sur le premier buffer
-        assert(Base\Response::unsetHeader('Content-type'));
+        if($isCli === false)
+        {
+            assert(Base\Response::headers()['Content-Type'] === 'text/html; charset=UTF-8'); // ob_clean sur le premier buffer déclenche quand même le callback sur le premier buffer
+            assert(Base\Response::unsetHeader('Content-type'));
+        }
         assert(empty(Base\Response::headers()['Content-Type']));
         assert(Base\Response::body() === 'YA');
+        if($isCli === false)
         assert(Base\Response::headers()['Content-Type'] === 'text/html; charset=UTF-8');
 
         // setBody
@@ -268,7 +304,7 @@ class Response extends Base\Test
         // emptyBody
         assert(Base\Response::emptyBody());
         assert(Base\Response::body() === '');
-        assert(Base\Response::unsetHeader('Content-type'));
+        Base\Response::unsetHeader('Content-type');
 
         // sleep
 
@@ -305,17 +341,20 @@ class Response extends Base\Test
         // autoContentType
         assert(Base\Response::contentType() === null);
         assert(is_string(Base\Response::autoContentType('')));
-        assert(Base\Response::contentType() === 'html');
-        assert(Base\Response::unsetHeader('Content-Type'));
-        assert(is_string(Base\Response::autoContentType('[1,2,3]')));
-        assert(Base\Response::contentType() === 'json');
-        assert(Base\Response::unsetHeader('Content-Type'));
-        assert(is_string(Base\Response::autoContentType('{"test":"la"}')));
-        assert(Base\Response::contentType() === 'json');
-        assert(Base\Response::unsetHeader('Content-Type'));
-        assert(is_string(Base\Response::autoContentType('<?xml ')));
-        assert(Base\Response::contentType() === 'xml');
-        assert(Base\Response::unsetHeader('Content-Type'));
+        if($isCli === false)
+        {
+            assert(Base\Response::contentType() === 'html');
+            assert(Base\Response::unsetHeader('Content-Type'));
+            assert(is_string(Base\Response::autoContentType('[1,2,3]')));
+            assert(Base\Response::contentType() === 'json');
+            assert(Base\Response::unsetHeader('Content-Type'));
+            assert(is_string(Base\Response::autoContentType('{"test":"la"}')));
+            assert(Base\Response::contentType() === 'json');
+            assert(Base\Response::unsetHeader('Content-Type'));
+            assert(is_string(Base\Response::autoContentType('<?xml ')));
+            assert(Base\Response::contentType() === 'xml');
+            assert(Base\Response::unsetHeader('Content-Type'));
+        }
 
         // reoutput buffer
         echo $content;

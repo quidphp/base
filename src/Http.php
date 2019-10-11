@@ -45,6 +45,14 @@ class Http extends Root
     }
 
 
+    // isPortSsl
+    // retourne vrai si le port fourni est https
+    public static function isPortSsl($value):bool
+    {
+        return ($value === 443)? true:false;
+    }
+    
+    
     // isMethod
     // retourne vrai si la méthode de requête http est valide
     public static function isMethod($value)
@@ -62,7 +70,18 @@ class Http extends Root
         return $return;
     }
 
+    
+    // protocol
+    // retourne le protocole selon si c'est http2 ou non
+    public static function protocol(bool $http2=false):?string
+    {
+        $return = "HTTP/";
+        $return .= ($http2 === true)? '2.0':'1.1';
 
+        return $return;
+    }
+    
+    
     // scheme
     // retourne le scheme à partir d'un booléan ssl ou un numéro de port
     public static function scheme($value):?string

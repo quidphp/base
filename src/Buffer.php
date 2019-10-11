@@ -194,16 +194,6 @@ class Buffer extends Root
     }
 
 
-    // flush
-    // utilise la fonction flush
-    public static function flush():void
-    {
-        flush();
-
-        return;
-    }
-
-
     // keepFlush
     // flush et vide un buffer s'il y en a un d'ouvert, le buffer reste ouvert
     public static function keepFlush(bool $flush=true):void
@@ -212,7 +202,7 @@ class Buffer extends Root
         ob_flush();
 
         if($flush === true)
-        static::flush();
+        flush();
 
         return;
     }
@@ -228,7 +218,7 @@ class Buffer extends Root
         $return = ob_end_flush();
 
         if($flush === true)
-        static::flush();
+        flush();
 
         return $return;
     }
@@ -249,20 +239,9 @@ class Buffer extends Root
         }
 
         if($flush === true)
-        static::flush();
+        flush();
 
         return $return;
-    }
-
-
-    // endFlushAllStart
-    // flush les buffers et ferme les buffers
-    // démarre un buffer, permet d'y joindre une fonction de rappel
-    public static function endFlushAllStart(bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
-    {
-        static::endFlushAll($flush);
-
-        return static::start($callback,$chunk,$flag);
     }
 
 
@@ -397,24 +376,24 @@ class Buffer extends Root
     }
 
 
-    // startEchoEndFlush
-    // ouvre un buffer, echo des donnés et flush ferme le buffer
-    public static function startEchoEndFlush($value,bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    // flush
+    // flush les buffers et ferme les buffers
+    // démarre un buffer, permet d'y joindre une fonction de rappel
+    public static function flush(bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
-        $return = static::startEcho($value,$callback,$chunk,$flag);
-        static::endFlush($flush);
+        static::endFlushAll($flush);
 
-        return $return;
+        return static::start($callback,$chunk,$flag);
     }
-
-
-    // startEchoEndFlushAllStart
+    
+    
+    // flushEcho
     // ouvre un buffer, echo des donnés et flush ferme tous les buffer
     // ouvre un autre buffer à la fin du processus
-    public static function startEchoEndFlushAllStart($value,bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    public static function flushEcho($value,bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = static::startEcho($value,$callback,$chunk,$flag);
-        static::endFlushAllStart($flush,$callback,$chunk,$flag);
+        static::flush($flush,$callback,$chunk,$flag);
 
         return $return;
     }

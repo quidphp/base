@@ -83,16 +83,12 @@ class Buffer extends Base\Test
         assert(Base\Buffer::start());
 
         // getCleanAllEcho
-
-        // flush
-
+        
         // keepFlush
 
         // endFlush
 
         // endFlushAll
-
-        // endFlushAllStart
 
         // clean
         echo 'BLA';
@@ -133,10 +129,10 @@ class Buffer extends Base\Test
         assert(Base\Buffer::size() === null);
         Base\Buffer::start([Base\Response::class,'autoContentType']);
         assert(Base\Buffer::count() === 1);
-
-        // startEchoEndFlush
-
-        // startEchoEndFlushAllStart
+        
+        // flush
+        
+        // flushEcho
 
         // prependEcho
         echo 'YA';

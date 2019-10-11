@@ -28,7 +28,21 @@ trait _option
         return Arrs::get($key,static::$config['option']);
     }
 
+    
+    // getOptionCall
+    // retourne une option
+    // si la valeur est callable, utilise base\call withObj (donc this est lié à la closure)
+    public function getOptionCall($key,...$args)
+    {
+        $return = $this->getOption($key);
 
+        if(static::classIsCallable($return))
+        $return = Base\Call::withObj($this,$return,...$args);
+
+        return $return;
+    }
+    
+    
     // setOption
     // ajoute ou change une option dans le tableau d'option
     public static function setOption($key,$value):void

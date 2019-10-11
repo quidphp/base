@@ -17,8 +17,8 @@ class Date extends Root
     public static $config = [
         'format'=>[
             'replace'=>[ // contenu de remplacement pour date, via une callable et éventuellement un map
-                '%'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'lower']],
-                '@'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'upperFirst']]],
+                '%'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'lower'],'args'=>[true]],
+                '@'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'upperFirst'],'args'=>[true]]],
             'date'=>[ // format compatible avec date, gmdate et idate (certains)
                 'year'=>'Y',
                 'month'=>'m',
@@ -573,7 +573,10 @@ class Date extends Root
                         $return['replace'][$char] = $array['call']($lang);
 
                         if(array_key_exists('map',$array) && static::classIsCallable($array['map']))
-                        $return['replace'][$char] = array_map($array['map'],$return['replace'][$char]);
+                        {
+                            $args = (array_key_exists('args',$array))? (array) $array['args']:array();
+                            $return['replace'][$char] = Arr::map($array['map'],$return['replace'][$char],...$args);
+                        }
                     }
                 }
             }

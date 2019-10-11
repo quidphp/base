@@ -20,36 +20,39 @@ class Server extends Root
     ];
 
 
+    // isOs
+    // retourne vrai si le os est la valeur donné en argument
+    public static function isOs($value):bool
+    {
+        $return = false;
+        $os = static::os();
+        
+        if(is_string($os) && is_string($value) && stripos($os,$value) !== false)
+        $return = true;
+        
+        return $return;
+    }
+    
+    
     // isMac
     // retourne vrai si le système est macOs
     public static function isMac():bool
     {
-        $return = false;
-        $os = static::os();
-
-        if(stripos($os,'darwin') === 0)
-        $return = true;
-
-        return $return;
+        return (static::isOs('darwin'))? true:false;
     }
 
 
     // isWindows
     // retourne vrai si le système est Windows
-    public static function isWindows(bool $fast=true):bool
+    public static function isWindows(bool $ds=true):bool
     {
         $return = false;
 
-        if($fast === true)
+        if($ds === true)
         $return = (DIRECTORY_SEPARATOR === '\\')? true:false;
 
         else
-        {
-            $os = static::os();
-
-            if(stripos($os,'win') === 0)
-            $return = true;
-        }
+        $return = static::isOs('win');
 
         return $return;
     }
@@ -59,21 +62,29 @@ class Server extends Root
     // retourne vrai si le système est Linux
     public static function isLinux():bool
     {
-        $return = false;
-        $os = static::os();
-
-        if(stripos($os,'linux') === 0)
-        $return = true;
-
-        return $return;
+        return (static::isOs('linux'))? true:false;
     }
 
-
+    
+    // isSoftware
+    // retourne vrai si le software est la valeur donné en argument
+    public static function isSoftware($value):bool
+    {
+        $return = false;
+        $software = static::software();
+        
+        if(is_string($software) && is_string($value) && stripos($software,$value) !== false)
+        $return = true;
+        
+        return $return;
+    }
+    
+    
     // isApache
     // retourne vrai si le serveur est apache
     public static function isApache():bool
     {
-        return (stripos(static::software(),'apache') !== false)? true:false;
+        return (static::isSoftware('apache'))? true:false;
     }
 
 
@@ -81,7 +92,7 @@ class Server extends Root
     // retourne vrai si le serveur est nginx
     public static function isNginx():bool
     {
-        return (stripos(static::software(),'nginx') !== false)? true:false;
+        return (static::isSoftware('nginx'))? true:false;
     }
 
 
@@ -89,7 +100,7 @@ class Server extends Root
     // retourne vrai si le serveur est iis
     public static function isIis():bool
     {
-        return (strpos(static::software(),'IIS') !== false)? true:false;
+        return (static::isSoftware('iis'))? true:false;
     }
 
 
@@ -319,7 +330,15 @@ class Server extends Root
         return static::$config['version'];
     }
 
-
+    
+    // quidName
+    // retourne le nom de quid, utilisez pour useragent email et cli
+    public static function quidName():string
+    {
+        return 'QUID/'.Server::quidVersion().'|PHP/'.Server::phpVersion();
+    }
+    
+    
     // apacheVersion
     // retourne la version apache
     // peut retourner null si les fonctions apaches ne sont pas disponibles
@@ -490,9 +509,15 @@ class Server extends Root
     // ip
     // retourne le IP du serveur
     // pourrait être l'adresse IP local
-    public static function ip():?string
+    // si pas de ip et normalize est true, retourne 0.0.0.0
+    public static function ip(bool $normalize=true):?string
     {
-        return Ip::normalize(Superglobal::getServer('SERVER_ADDR'));
+        $return = Superglobal::getServer('SERVER_ADDR');
+        
+        if($normalize === true)
+        $return = Ip::normalize(Superglobal::getServer('SERVER_ADDR'));
+        
+        return $return;
     }
 
 
@@ -660,7 +685,7 @@ class Server extends Root
         $return['osType'] = static::osType();
         $return['serverType'] = static::serverType();
         $return['sapi'] = static::sapi();
-        $return['ip'] = static::ip();
+        $return['ip'] = static::ip(false) ?? static::ipPublic();
         $return['hostname'] = static::hostname();
         $return['user'] = static::user();
         $return['username'] = static::user(true);

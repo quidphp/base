@@ -18,76 +18,97 @@ class Cli extends Root
         'escape'=>"\033", // caractère d'échappement
         'eol'=>PHP_EOL, // caractère de fin de ligne
         'foreground'=>[ // code pour couleur avant-plan
-            'black'=>'0;30',
-            'darkGray'=>'1;30',
-            'red'=>'0;31',
-            'lightRed'=>'1;31',
-            'green'=>'0;32',
-            'lightGreen'=>'1;32',
-            'brown'=>'0;33',
-            'yellow'=>'1;33',
-            'blue'=>'0;34',
-            'lightBlue'=>'1;34',
-            'purple'=>'0;35',
-            'lightPurple'=>'1;35',
-            'cyan'=>'0;36',
-            'lightCyan'=>'1;36',
-            'lightGray'=>'0;37',
-            'white'=>'1;37'],
+            'black'=>['0;30',['color'=>'black']],
+            'darkGray'=>['1;30',['color'=>'darkgray']],
+            'red'=>['0;31',['color'=>'red']],
+            'lightRed'=>['1;31',['color'=>'palevioletred']],
+            'green'=>['0;32',['color'=>'green']],
+            'lightGreen'=>['1;32',['color'=>'lightgreen']],
+            'brown'=>['0;33',['color'=>'brown']],
+            'yellow'=>['1;33',['color'=>'yellow']],
+            'blue'=>['0;34',['color'=>'blue']],
+            'lightBlue'=>['1;34',['color'=>'lightblue']],
+            'purple'=>['0;35',['color'=>'purple']],
+            'lightPurple'=>['1;35',['color'=>'mediumpurple']],
+            'cyan'=>['0;36',['color'=>'cyan']],
+            'lightCyan'=>['1;36',['color'=>'lightcyan']],
+            'lightGray'=>['0;37',['color'=>'lightgray']],
+            'white'=>['1;37',['color'=>'white']]],
         'background'=>[ // code pour couleur arrière-plan
-            'black'=>40,
-            'red'=>41,
-            'green'=>42,
-            'yellow'=>43,
-            'blue'=>44,
-            'magenta'=>45,
-            'cyan'=>46,
-            'gray'=>47],
+            'black'=>[40,['background-color'=>'black']],
+            'red'=>[41,['background-color'=>'red']],
+            'green'=>[42,['background-color'=>'green']],
+            'yellow'=>[43,['background-color'=>'yellow']],
+            'blue'=>[44,['background-color'=>'blue']],
+            'magenta'=>[45,['background-color'=>'magenta']],
+            'cyan'=>[46,['background-color'=>'cyan']],
+            'gray'=>[47,['background-color'=>'gray']]],
         'style'=>[ // code pour des styles
-            'normal'=>0,
-            'bold'=>1,
-            'dim'=>2,
-            'italic'=>3,
-            'underline'=>4,
-            'blink'=>5,
-            'reverse'=>7,
-            'invisible'=>8],
+            'bold'=>[1,['font-weight'=>'bold']],
+            'italic'=>[3,['font-style'=>'italic']],
+            'underline'=>[4,['text-decoration'=>'underline']]],
         'preset'=>[ // règle de styles pour certaines presets
-            'pos'=>['green','underline',null],
-            'neg'=>['red','underline',null],
-            'neutral'=>['black',null,'gray']]
+            'pos'=>['green','bold','black'],
+            'neg'=>['white','bold','red'],
+            'neutral'=>['black',null,'gray']],
+        'htmlOverload'=>false // permet d'overload les appels aux méthodes clis avec du html
     ];
 
-
-    // write
-    // écrit une valeur au cli
-    public static function write($value,?string $foreground=null,?string $background=null,int $eol=1):void
+    
+    // is
+    // retourne vrai si php est présentement dans cli
+    public static function is():bool 
     {
-        echo static::style($value,$foreground,$background,$eol);
+        return Server::isCli();
+    }
+    
+    
+    // isHtmlOverload
+    // retourne vrai si les méthodes cli doivent générer du html 
+    public static function isHtmlOverload():bool
+    {
+        return (static::$config['htmlOverload'] === true)? true:false;
+    }
+    
+    
+    // callStatic
+    // méthode qui attrape tous les appels à des méthodes non reconnus
+    // renvoie vers preset
+    public static function __callStatic(string $key,array $arg):?string
+    {
+        return static::preset($key,...$arg);
+    }
+    
+    
+    // flush
+    // écrit et flush une valeur au cli
+    public static function flush($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):void
+    {
+        Buffer::flushEcho(static::make($value,$foreground,$style,$background,$eol));
 
         return;
     }
 
 
-    // preset
-    // écrite une valeur au cli en utilisant le style d'un preset
-    public static function preset(string $key,$value,int $eol=1):void
+    // flushPreset
+    // écrit et flush une valeur au cli en utilisant le style d'un preset
+    public static function flushPreset(string $key,$value,int $eol=1):void
     {
-        echo static::makePreset($key,$value,$eol);
+        Buffer::flushEcho(static::preset($key,$value,$eol));
 
         return;
     }
 
 
-    // eol
-    // envoie une ou plusieurs fins de lignes
-    public static function eol(int $value=1):void
+    // flushEol
+    // écrit et flush une ou plusieurs fins de lignes
+    public static function flushEol(int $value=1):void
     {
-        $eol = static::getEol();
+        $eol = static::eol();
 
         while ($value > 0)
         {
-            echo $eol;
+            Buffer::flushEcho($eol);
             $value--;
         }
 
@@ -95,89 +116,119 @@ class Cli extends Root
     }
 
 
-    // pos
-    // écrit une string positive
-    public static function pos($value,int $eol=1):void
+    // flushPos
+    // écrit et flush une string positive
+    public static function flushPos($value,int $eol=1):void
     {
-        static::preset('pos',$value,$eol);
+        static::flushPreset('pos',$value,$eol);
 
         return;
     }
 
 
-    // neg
-    // écrit une string négative
-    public static function neg($value,int $eol=1):void
+    // flushNeg
+    // écrit et flush une string négative
+    public static function flushNeg($value,int $eol=1):void
     {
-        static::preset('neg',$value,$eol);
+        static::flushPreset('neg',$value,$eol);
 
         return;
     }
 
 
-    // neutral
-    // écrit une string neutre
-    public static function neutral($value,int $eol=1):void
+    // flushNeutral
+    // écrit et flush une string neutre
+    public static function flushNeutral($value,int $eol=1):void
     {
-        static::preset('neutral',$value,$eol);
+        static::flushPreset('neutral',$value,$eol);
 
         return;
     }
 
 
     // make
+    // cette méthode envoie à makeCli pour générer la string
+    // possible d'envoyer à makeHtml si la configuration htmlOverload est true
+    public static function make($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
+    {
+        $return = '';
+        
+        if(static::isHtmlOverload())
+        $return .= static::makeHtml($value,$foreground,$style,$background,$eol);
+        
+        else
+        $return .= static::makeCli($value,$foreground,$style,$background,$eol);
+
+        return $return;
+    }
+
+    
+    // makeCli
     // génère une version avec couleur d'une valeur à envoyer au cli
-    // possible de générer des newlines aprèes
-    public static function make($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=0):string
+    // possible de générer des newlines après
+    public static function makeCli($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
     {
         $return = '';
         $value = static::prepareValue($value);
-        $foreground = (is_string($foreground))? static::getForegroundColor($foreground):null;
-        $style = (is_string($style))? static::getStyle($style):null;
-        $background = (is_string($background))? static::getBackgroundColor($background):null;
+        $foreground = (is_string($foreground))? static::getForegroundColor($foreground,0):null;
+        $style = (is_string($style))? static::getStyle($style,0):null;
+        $background = (is_string($background))? static::getBackgroundColor($background,0):null;
         $changed = false;
         $escape = static::getEscape();
-        $eolChar = static::getEol();
+        $eolChar = static::eol();
 
         if(is_string($value) && strlen($value))
         {
-            if(is_string($foreground))
+            if(is_string($foreground) || is_int($style) || is_int($background))
             {
+                $changed = true;
+                
+                if(is_string($foreground))
                 $return .= $escape.'['.$foreground.'m';
-                $changed = true;
-            }
 
-            if(is_int($style))
-            {
+                if(is_int($style))
                 $return .= $escape.'['.$style.'m';
-                $changed = true;
-            }
 
-            if(is_int($background))
-            {
+                if(is_int($background))
                 $return .= $escape.'['.$background.'m';
-                $changed = true;
             }
-
+            
             $return .= $value;
 
             if($changed === true)
             $return .= $escape.'[0m';
         }
 
-        while ($eol > 0)
-        {
-            $return .= $eolChar;
-            $eol--;
-        }
+        $return .= Str::eol($eol,$eolChar);
 
         return $return;
     }
+    
+    
+    // makeHtml
+    // génère une version html couleur d'une valeur
+    // possible de générer des br après
+    public static function makeHtml($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
+    {
+        $return = '';
+        $value = static::prepareValue($value);
+        $foreground = (is_string($foreground))? static::getForegroundColor($foreground,1):null;
+        $style = (is_string($style))? static::getStyle($style,1):null;
+        $background = (is_string($background))? static::getBackgroundColor($background,1):null;
+        $styles = Arr::replace($foreground,$style,$background);
+        
+        if(is_string($value) && strlen($value))
+        $return .= Html::div($value,array('style'=>$styles));
 
-
-    // makePreset
+        $return .= Html::brs($eol);
+        
+        return $return;
+    }
+    
+    
+    // preset
     // génère une string via un preset
-    public static function makePreset(string $key,$value,int $eol=0):string
+    public static function preset(string $key,$value,int $eol=1):string
     {
         $return = '';
         $arg = static::getPreset($key);
@@ -188,7 +239,15 @@ class Cli extends Root
         return $return;
     }
 
-
+    
+    // eol
+    // retourne le caractère de fin de ligne
+    public static function eol():string
+    {
+        return static::$config['eol'];
+    }
+    
+    
     // prepareValue
     // prépare la valeur à envoyer au cli
     // si c'est un tableau, utilise print_r
@@ -226,14 +285,6 @@ class Cli extends Root
     }
 
 
-    // getEol
-    // retourne le caractère de fin de ligne
-    public static function getEol():string
-    {
-        return static::$config['eol'];
-    }
-
-
     // getEscape
     // retourne le caractère d'échappement
     public static function getEscape():string
@@ -244,25 +295,35 @@ class Cli extends Root
 
     // getForegroundColor
     // retourne le code de la couleur de texte à utiliser
-    public static function getForegroundColor(string $value):?string
+    public static function getForegroundColor(string $value,int $index=0)
     {
-        return static::$config['foreground'][$value] ?? null;
+        return static::$config['foreground'][$value][$index] ?? null;
     }
 
 
     // getBackgroundColor
     // retourne le code de la couleur d'arrière-plan à utiliser
-    public static function getBackgroundColor(string $value):?int
+    public static function getBackgroundColor(string $value,int $index=0)
     {
-        return static::$config['background'][$value] ?? null;
+        return static::$config['background'][$value][$index] ?? null;
     }
 
 
     // getStyle
     // retourne le code du style à utiliser
-    public static function getStyle(string $value):?int
+    public static function getStyle(string $value,int $index=0)
     {
-        return static::$config['style'][$value] ?? null;
+        return static::$config['style'][$value][$index] ?? null;
+    }
+    
+    
+    // setHtmlOverload
+    // active ou désactive le overload du html
+    public static function setHtmlOverload(bool $value):void
+    {
+        static::$config['htmlOverload'] = $value;
+        
+        return;
     }
 }
 ?>

@@ -17,7 +17,8 @@ class Debug extends Root
     public static $config = [
         'method'=>true, // méthode par défaut pour générer l'affichage des détails d'une variable, si true c'est automatique
         'helper'=>null, // closure pour helper
-        'inc'=>0 // permet de test le nombre d'appel
+        'inc'=>0, // permet de test le nombre d'appel,
+        'cliPreset'=>'neutral' // preset à utiliser pour le cli
     ];
 
 
@@ -156,7 +157,7 @@ class Debug extends Root
     public static function echoFlush($value,bool $flush=true):void
     {
         if($flush === true)
-        Buffer::startEchoEndFlushAllStart($value);
+        Buffer::flushEcho($value);
 
         else
         echo $value;
@@ -184,7 +185,22 @@ class Debug extends Root
         return $return;
     }
 
-
+    
+    // wrap
+    // gère l'enrobage de la valeur
+    // différent si c'est du cli
+    public static function wrap(?string $return):string 
+    {
+        if(Server::isCli())
+        $return = Cli::preset(static::$config['cliPreset'],$return);
+        
+        else
+        $return = "<pre>$return</pre>";
+        
+        return $return;
+    }
+    
+    
     // printr
     // retourne les détail d'une variable avec print_r
     // si wrap est true, la string est enrobbé de pre
@@ -193,7 +209,7 @@ class Debug extends Root
         $return = print_r($value,true);
 
         if($wrap === true)
-        $return = "<pre>$return</pre>";
+        $return = static::wrap($return);
 
         return $return;
     }
@@ -208,22 +224,29 @@ class Debug extends Root
     {
         $return = '';
         $isOverloaded = Ini::isVarDumpOverloaded();
-
+        $isCli = Server::isCli();
+        
         if($isOverloaded === false && is_string($value) && $extra === true)
         {
             $strlen = strlen($value);
             $specialChars = Html::specialChars($value);
 
             if(strlen($specialChars) !== $strlen)
-            $value = $specialChars."---$strlen";
+            {
+                if($isCli === false)
+                $value = $specialChars;
+                
+                $value .= "---$strlen";
+            }
         }
 
         Buffer::start();
         var_dump($value);
         $return = Buffer::getClean();
-
+        $return = trim($return);
+        
         if($isOverloaded === false && $wrap === true)
-        $return = "<pre>$return</pre>";
+        $return = static::wrap($return);
 
         return $return;
     }
@@ -236,11 +259,10 @@ class Debug extends Root
     // si extra est true, ajoute le compte si c'est un tableau ou la longueur si c'est une string
     public static function export($value=null,bool $wrap=true,bool $extra=true):string
     {
-        $return = '';
-
         $return = var_export($value,true);
-
-        if($wrap === true)
+        $isCli = Server::isCli();
+        
+        if($wrap === true && $isCli === false)
         $return = static::highlight($return,$wrap,true);
 
         if($extra === true)
@@ -256,10 +278,17 @@ class Debug extends Root
             if(is_int($count))
             {
                 $count = "---$count";
-                $return .= ($wrap === true)? "<pre>$count</pre>":$count;
+                
+                if($wrap === true && $isCli === false)
+                $return .= "<pre>$count</pre>";
+                else
+                $return .= $count;
             }
         }
-
+        
+        if($wrap === true && $isCli === true)
+        $return = static::wrap($return);
+        
         return $return;
     }
 

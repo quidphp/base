@@ -17,6 +17,7 @@ class Session extends Root
     public static $config = [
         'default'=>[
             'name'=>true, // le nom de la session, si true utilise type
+            'sid'=>null, // permet de set un sid avant le lancement de la session
             'prefix'=>true, // prefix du sid, si true utilise type
             'lifetime'=>null, // spécifie la lifetime de la session
             'cacheExpire'=>3600, // l'expiration du cache http
@@ -731,7 +732,10 @@ class Session extends Root
 
             if($option['name'] !== null)
             $return['name'] = static::setName($option['name']);
-
+            
+            if($option['sid'] !== null)
+            $return['sid'] = static::setSid($option['sid']);
+            
             if($option['lifetime'] !== null && is_int($option['lifetime']))
             {
                 $lifetime = $option['lifetime'];

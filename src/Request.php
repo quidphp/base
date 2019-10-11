@@ -20,10 +20,7 @@ class Request extends Root
             'regex'=>'uriPath'],
         'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
             'length'=>2, // longueur de lang
-            'all'=>['en']], // possibilité de lang
-        'default'=>[
-            'scheme'=>'http', // scheme par défaut si le tableau serveur est vide
-            'port'=>80] // port par défaut si le tableau serveur est vide
+            'all'=>['en']] // possibilité de lang
     ];
 
 
@@ -499,10 +496,12 @@ class Request extends Root
     // change la valeur ssl de la requête courante
     public static function setSsl(bool $value=true):void
     {
+        $protocol = Http::protocol(Server::isHttp2());
         Superglobal::setServer('REQUEST_SCHEME',Http::scheme($value));
         Superglobal::setServer('SERVER_PORT',Http::port($value));
         Superglobal::setServer('HTTPS',($value === true)? 'on':'off');
-
+        Superglobal::setServer('SERVER_PROTOCOL',$protocol);
+        
         return;
     }
 
@@ -522,9 +521,9 @@ class Request extends Root
 
     // scheme
     // retourne le scheme de la requete
-    public static function scheme():string
+    public static function scheme():?string
     {
-        return (is_string($scheme = Superglobal::getServer('REQUEST_SCHEME')))? $scheme:static::$config['default']['scheme'];
+        return (is_string($scheme = Superglobal::getServer('REQUEST_SCHEME')))? $scheme:null;
     }
 
 
@@ -616,7 +615,7 @@ class Request extends Root
     // retourne le port de la requête courante
     public static function port():?int
     {
-        return (is_numeric($port = Superglobal::getServer('SERVER_PORT')))? (int) $port:static::$config['default']['port'];
+        return (is_numeric($port = Superglobal::getServer('SERVER_PORT')))? (int) $port:null;
     }
 
 
@@ -624,7 +623,7 @@ class Request extends Root
     // change la valeur de port dans la requête courante
     public static function setPort(int $value):void
     {
-        Superglobal::setServer('SERVER_PORT',$value);
+        static::setSsl(Http::isPortSsl($value)? true:false);
 
         return;
     }
@@ -787,7 +786,7 @@ class Request extends Root
         if(is_array($value))
         {
             $array = $value;
-            $string = Uri::buildQuery($value,$encode);
+            $string = Uri::buildQuery($value,$encode) ?? '';
         }
 
         if(is_string($string))
@@ -856,35 +855,23 @@ class Request extends Root
 
     // timestamp
     // retourne le timestamp de la requête
-    public static function timestamp():?int
+    // peut retourner le timestamp float
+    public static function timestamp(bool $float=false)
     {
-        return Superglobal::getServer('REQUEST_TIME');
-    }
-
-
-    // timestampFloat
-    // retourne le timestamp float de la requête courante
-    public static function timestampFloat():?float
-    {
-        return Superglobal::getServer('REQUEST_TIME_FLOAT');
+        return ($float === true)? Superglobal::getServer('REQUEST_TIME_FLOAT'):Superglobal::getServer('REQUEST_TIME');
     }
 
 
     // setTimestamp
     // change le timestamp de la requête courante
-    public static function setTimestamp(int $value):void
+    // gère aussi le timestamp float
+    public static function setTimestamp($value):void
     {
-        Superglobal::setServer('REQUEST_TIME',$value);
-
-        return;
-    }
-
-
-    // setTimestampFloat
-    // change le timestamp float de la requête courante
-    public static function setTimestampFloat(float $value):void
-    {
-        Superglobal::setServer('REQUEST_TIME_FLOAT',$value);
+        if(is_numeric($value))
+        {
+            Superglobal::setServer('REQUEST_TIME',(int) $value);
+            Superglobal::setServer('REQUEST_TIME_FLOAT',(float) $value);
+        }
 
         return;
     }
@@ -904,7 +891,24 @@ class Request extends Root
         return $return;
     }
 
-
+    
+    // setSchemeHost
+    // change le scheme et le host de la requête à partir d'une string schemeHost
+    public static function setSchemeHost(string $value):void 
+    {
+        $scheme = Uri::scheme($value);
+        $host = Uri::host($value);
+        
+        if(is_string($scheme) && is_string($host))
+        {
+            static::setScheme($scheme);
+            static::setHost($host);
+        }
+        
+        return;
+    }
+    
+    
     // get
     // retourne le tableau get courant
     public static function get():array
@@ -1219,6 +1223,51 @@ class Request extends Root
     public static function absolute(?array $option=null):?string
     {
         return Uri::absolute(static::uri(true),$option);
+    }
+    
+    
+    // change
+    // cette méthode permet de remplacer le tableau serveur
+    // est utilisé par le cli
+    public static function change(array $values,bool $default=false):void 
+    {
+        if($default === true)
+        {
+            $isCli = Server::isCli();
+            $values = Arr::replace(static::default($isCli),$values);
+        }
+
+        foreach ($values as $key => $value) 
+        {
+            if(is_string($key))
+            {
+                $method = 'set'.ucfirst($key);
+
+                if(method_exists(static::class,$method))
+                static::$method($value);
+            }
+        }
+        
+        return;
+    }
+    
+    
+    // default
+    // retourne les défauts
+    // différent pour le cli
+    public static function default(bool $cli):array 
+    {
+        $return = array('scheme'=>'http');
+        
+        if($cli === true)
+        {
+            $return['query'] = array();
+            $return['ip'] = Server::ipPublic();
+            $return['userAgent'] = Server::quidName();
+            $return['langHeader'] = Lang::default();
+        }
+        
+        return $return;
     }
 }
 ?>

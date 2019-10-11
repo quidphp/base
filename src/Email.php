@@ -18,7 +18,7 @@ class Email extends Root
         'active'=>true, // permet d'activer ou non l'envoie d'email
         'message'=>[ // contenu par défaut pour un tableau message
             'priority'=>null,
-            'xmailer'=>[self::class,'xmailer'],
+            'xmailer'=>[Server::class,'quidName'],
             'mimeVersion'=>'1.0',
             'charset'=>'UTF-8',
             'contentType'=>'txt',
@@ -432,14 +432,6 @@ class Email extends Root
         $return = trim($name).' <'.$return.'>';
 
         return $return;
-    }
-
-
-    // xmailer
-    // retourne le header xmailer
-    public static function xmailer():string
-    {
-        return 'PHP/'.Server::phpVersion().'|QUID/'.Server::quidVersion();
     }
 
 

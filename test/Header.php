@@ -18,9 +18,23 @@ class Header extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
+        $isCli = Base\Server::isCli();
         Base\Response::setContentType('html');
         $request = Base\Request::headers();
         $response = Base\Response::headers();
+        
+        if($isCli === true)
+        {
+            $request['Accept'] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+            $response = array (
+                'Expires' => 'Fri, 11 Oct 2019 10:23:06 GMT',
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+                'Pragma' => 'no-cache',
+                'Connection' => 'keep-alive',
+                'Last-Modified' => 'Fri, 11 Oct 2019 10:23:06 GMT',
+                'Content-Type' => 'text/html; charset=UTF-8');
+        }
+        
         $contentType = Base\Header::setContentType('json',$response);
         $status = ['HTTP/1.0 200 OK','test: ok'];
         $status2 = ['HTTP/1.0 404 Not Found','HTTP/1.0 200 OK','test: ok'];
@@ -28,7 +42,7 @@ class Header extends Base\Test
         $three01 = ['HTTP/1.0 301 Moved Permanently','test: ok'];
         $meta = ['mime'=>'text/json','basename'=>'json.json','size'=>4000];
         $protocol = Base\Server::httpProtocol();
-
+        
         // isStatus
         assert(Base\Header::isStatus('HTTP/1.0 200 OK'));
         assert(Base\Header::isStatus('http/1.0 200 OK'));
@@ -146,12 +160,13 @@ class Header extends Base\Test
         assert(Base\Header::list(['status'=>'HTTP/1.1 200 OK']) === ['HTTP/1.1 200 OK']);
         assert(Base\Header::list(['status'=>['HTTP/1.1 404 Not Found','HTTP/1.1 200 OK']]) === ['HTTP/1.1 200 OK']);
         assert(count(Base\Header::list($request)) === count($request));
-        assert(Base\Header::list($response) === headers_list());
         assert(Base\Header::list(Base\Header::arr($status)) === Base\Header::list($status));
         assert(Base\Header::list("Test: ok \r\nHTTP/1.1 OK 200 \r\n Test2:what2") === ['HTTP/1.1 OK 200','Test: ok','Test2: what2']);
         assert(Base\Header::list(['set-cookie '=>['test','test2']]) === ['Set-Cookie: test','Set-Cookie: test2']);
         assert(Base\Header::list(['james'=>function() { return 'OK'; }]) === [0=>'James: OK']);
-
+        if($isCli === false)
+        assert(Base\Header::list($response) === headers_list());
+        
         // keyValue
         assert(Base\Header::keyValue(['james'=>function() { return 'OK'; }],Base\Header::option()) === []);
 

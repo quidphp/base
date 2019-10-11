@@ -19,57 +19,82 @@ class Cli extends Base\Test
     {
         // prepare
         $escape = Base\Cli::getEscape();
+        $eol = Base\Cli::eol();
+        $eoll = strlen($eol);
+        
+        // is
+        assert(is_bool(Base\Cli::is()));
+        
+        // isHtmlOverload
+        assert(is_bool(Base\Cli::isHtmlOverload()));
+        
+        // callStatic
+        assert(Base\Cli::pos('test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);
+        assert(Base\Cli::neg('test',2) === $escape.'[1;37m[1m[41mtest[0m'.$eol.$eol);
+        assert(Base\Cli::neutral('test',0) === $escape.'[0;30m[47mtest[0m');
 
-        // write
+        // flush
 
-        // preset
+        // flushPreset
 
-        // eol
+        // flushEol
 
-        // pos
+        // flushPos
 
-        // neg
+        // flushNeg
 
-        // neutral
+        // flushNeutral
 
         // make
-        assert(Base\Cli::make('test') === 'test');
-        assert(Base\Cli::make('test','black',null,'yellow') === $escape.'[0;30m[43mtest[0m');
-        assert(strlen(Base\Cli::make([1,2,3],'red',null,'gray')) === 65);
-
-        // makePreset
-        assert(Base\Cli::makePreset('pos','test') === $escape.'[0;32m[4mtest[0m');
-        assert(Base\Cli::makePreset('neg','test') === $escape.'[0;31m[4mtest[0m');
-        assert(Base\Cli::makePreset('neutral','test') === $escape.'[0;30m[47mtest[0m');
-
+        assert(Base\Cli::make('test') === 'test'.$eol);
+        assert(Base\Cli::make('test','black',null,'yellow') === $escape.'[0;30m[43mtest[0m'.$eol);
+        assert(strlen(Base\Cli::make([1,2,3],'red',null,'gray')) === (65 + $eoll));
+        
+        // makeCli
+        assert(strlen(Base\Cli::makeCli([1,2,3],'red','underline','gray')) === (69 + $eoll));
+        
+        // makeHtml
+        assert(Base\Cli::makeHtml('meé','cyan','bold','white') === "<div style='color: cyan; font-weight: bold;'>meé</div><br />");
+        assert(strlen(Base\Cli::makeHtml([1,2,3],'red','underline','gray')) === 138);
+        
+        // preset
+        assert(Base\Cli::preset('pos','test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);
+        assert(Base\Cli::preset('neg','test') === $escape.'[1;37m[1m[41mtest[0m'.$eol);
+        assert(Base\Cli::preset('neutral','test') === $escape.'[0;30m[47mtest[0m'.$eol);
+        
+        // eol
+        assert(Base\Cli::eol() === PHP_EOL);
+        
         // prepareValue
         assert(strlen(Base\Cli::prepareValue(['test'=>2,3,4])) === 52);
 
         // getPreset
-        assert(Base\Cli::getPreset('pos') === ['green','underline',null]);
+        assert(Base\Cli::getPreset('pos') === ['green','bold','black']);
         assert(Base\Cli::getPreset('asdas') === []);
 
         // setPreset
         Base\Cli::setPreset('james',['black','bold','yellow']);
-        assert(Base\Cli::makePreset('james','test') === $escape.'[0;30m[1m[43mtest[0m');
-
-        // getEol
-        assert(Base\Cli::getEol() === PHP_EOL);
+        assert(Base\Cli::preset('james','test') === $escape.'[0;30m[1m[43mtest[0m'.$eol);
 
         // getEscape
         assert(Base\Cli::getEscape() === "\033");
 
         // getForegroundColor
         assert(Base\Cli::getForegroundColor('red') === '0;31');
-
+        assert(Base\Cli::getForegroundColor('red',1) === array('color'=>'red'));
+        
         // getBackgroundColor
-        assert(Base\Cli::getBackgroundColor('black') === 40);
+        assert(Base\Cli::getBackgroundColor('black',0) === 40);
         assert(Base\Cli::getBackgroundColor('blackz') === null);
-
+        assert(Base\Cli::getBackgroundColor('black',1) === array('background-color'=>'black'));
+        
         // getStyle
         assert(Base\Cli::getStyle('bold') === 1);
         assert(Base\Cli::getStyle('blackz') === null);
-
+        assert(Base\Cli::getStyle('bold',1) === array('font-weight'=>'bold'));
+        
+        // setHtmlOverload
+        
         return true;
     }
 }
