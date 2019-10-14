@@ -43,6 +43,7 @@ class Validate extends Root
             'date'=>'/^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$/',
             'datetime'=>'/^(\d{2}|\d{4})(?:\-)?([0]{1}\d{1}|[1]{1}[0-2]{1})(?:\-)?([0-2]{1}\d{1}|[3]{1}[0-1]{1})(?:\s)?([0-1]{1}\d{1}|[2]{1}[0-3]{1})(?::)?([0-5]{1}\d{1})(?::)?([0-5]{1}\d{1})$/',
             'time'=>'/^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/',
+            'uri'=>'/[\/]{1,}/',
             'uriPath'=>'/^[A-Za-z0-9_\-\.\/\*]{0,}$/',
             'fqcn'=>'/^[A-z\\\\]{1,}$/',
             'table'=>'/^[a-z]{1}[A-Za-z0-9_]{1,}$/',
@@ -885,9 +886,17 @@ class Validate extends Root
         return static::regex('time',$value);
     }
 
-
+    
+    // isUri
+    // retourne vrai si la valeur passe le regex uri
+    public static function isUri($value):bool
+    {
+        return static::regex('uri',$value);
+    }
+    
+    
     // isUriPath
-    // retourne vrai si la valeur passe le regex uri uri path
+    // retourne vrai si la valeur passe le regex uri path
     public static function isUriPath($value):bool
     {
         return static::regex('uriPath',$value);

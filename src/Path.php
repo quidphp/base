@@ -38,7 +38,8 @@ class Path extends Set
             'extension'=>PATHINFO_EXTENSION],
         'lang'=>[ // option par défaut pour détection de la langue d'un path, index de langue dans le path est 0
             'length'=>2, // longueur de lang
-            'all'=>null] // possibilité de lang
+            'all'=>null], // possibilité de lang
+        'argument'=>'-' // caractère utilisé pour un chemin argument, utilisé dans isArgument
     ];
 
 
@@ -129,7 +130,25 @@ class Path extends Set
         return $return;
     }
 
-
+    
+    // isArgument
+    // retourne vrai si le chemin est un argument, donc commence par -
+    public static function isArgument($value):bool
+    {
+        $return = false;
+        
+        if(is_string($value))
+        {
+            $value = static::stripStart($value);
+            
+            if(strpos($value,static::$config['argument']) === 0)
+            $return = true;
+        }
+        
+        return $return;
+    }
+    
+    
     // isLangCode
     // retourne vrai si la valeur est un code de langue
     public static function isLangCode(string $value,?array $option=null):bool
@@ -941,7 +960,7 @@ class Path extends Set
         $return = null;
         $path = static::stripStart($path);
 
-        if(!static::hasExtension($path))
+        if(!static::hasExtension($path) && !static::isArgument($path))
         {
             // protection double slash ou slash à la fin
             if(static::hasSeparatorDouble($path) || static::isSeparatorEnd($path))

@@ -77,6 +77,12 @@ class Path extends Base\Test
         assert(Base\Path::isSafe('C:/Windows/ok'));
         assert(Base\Path::isSafe('C:'));
 
+        // isArgument
+        assert(!Base\Path::isArgument('C:/Windows/ok'));
+        assert(Base\Path::isArgument('-version'));
+        assert(Base\Path::isArgument('/-v'));
+        assert(!Base\Path::isArgument('/v'));
+        
         // isLangCode
         assert(Base\Path::isLangCode('fr'));
         assert(Base\Path::isLangCode('en'));
@@ -407,7 +413,9 @@ class Path extends Base\Test
         assert(Base\Path::redirect('/sitemap.xml') === null);
         assert(Base\Path::redirect('asddaads//bla/ok') === '/en/asddaads/bla/ok');
         assert(Base\Path::redirect('asddaads/bla/ok/') === '/en/asddaads/bla/ok');
-
+        assert(Base\Path::redirect('-v') === null);
+        assert(Base\Path::redirect('/-version') === null);
+        
         // other
         assert(Base\Path::arr('c:/Ok/What') === ['C:','Ok','What']);
         assert(Base\Path::arr("C:\Ok\What") === ['C:','Ok','What']);

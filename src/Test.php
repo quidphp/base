@@ -29,7 +29,7 @@ abstract class Test extends Root
         static::after($data);
 
         if($bool === true)
-        $return = static::count() ?? $bool;
+        $return = static::classSubCount('assert(') ?? $bool;
 
         return $return;
     }
@@ -54,20 +54,5 @@ abstract class Test extends Root
     // trigger
     // méthode abstrait à implenter sur les classes qui étendent
     abstract public static function trigger(array $data):bool;
-
-
-    // count
-    // count le nombre d'assertions dans le fichier de test courant
-    // peut retourner null si le fichier de la classe n'est pas trouvable
-    public static function count():?int
-    {
-        $return = null;
-        $file = static::classFile();
-
-        if(!empty($file))
-        $return = File::subCount('assert(',$file);
-
-        return $return;
-    }
 }
 ?>

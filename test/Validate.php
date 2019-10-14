@@ -354,6 +354,20 @@ class Validate extends Base\Test
         assert(!Base\Validate::isTime('12:10'));
         assert(!Base\Validate::isTime('12-10-15'));
 
+        // isUri
+        assert(Base\Validate::isUri('http://google.com'));
+        assert(Base\Validate::isUri('http://google.com/test'));
+        assert(Base\Validate::isUri('test/test2/test3'));
+        assert(Base\Validate::isUri('/test/test2/test3-tes4_test5/james.jpg'));
+        assert(Base\Validate::isUri('/test/test2/test3-tes4_test5/james,jpg'));
+        assert(Base\Validate::isUri('/test/test2/t?est3-tes4_test5/james.jpg'));
+        assert(!Base\Validate::isUri(''));
+        assert(!Base\Validate::isUri('test'));
+        assert(Base\Validate::isUri('/'));
+        assert(!Base\Validate::isUri(null));
+        assert(!Base\Validate::isUri(true));
+        assert(!Base\Validate::isUri(1));
+        
         // isUriPath
         assert(Base\Validate::isUriPath('test/test2/test3'));
         assert(Base\Validate::isUriPath('/test/test2/test3-tes4_test5/james.jpg'));

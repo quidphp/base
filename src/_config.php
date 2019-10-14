@@ -17,7 +17,7 @@ trait _config
     // retourne le tableau de config
     // possibilité de faire un merge sur la valeur de retour
     // par défaut, cette méthode écrit dans la variable statique (à l'inverse de option)
-    public static function config(?array $value=null,bool $write=true):?array
+    final public static function config(?array $value=null,bool $write=true):?array
     {
         $return = null;
         $class = static::class;

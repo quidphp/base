@@ -63,7 +63,10 @@ class Request extends Base\Test
         Base\Request::setPath('/test/../../ok.pass');
         assert(!Base\Request::isPathSafe());
         Base\Request::setPath($path);
-
+        
+        // isPathArgument
+        assert(Base\Request::isPathArgument() === false);
+        
         // isCli
         assert(is_bool(Base\Request::isCli()));
 

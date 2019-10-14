@@ -21,7 +21,7 @@ class Str extends Root
         'trim'=>" \t\n\r\0\x0B", // liste des caractères trimmés par défaut par les fonctions trim
         'eol'=>["\r\n","\n"], // défini les caractères end of line
         'search'=>' ', // séparateur pour prepareSearch
-        'pointer'=>'/', // séparateur pour pointer
+        'pointer'=>'-', // séparateur pour pointer
         'loremIpsum'=>[ // contenu source pour la méthode loremIpsum
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
             'Aenean ullamcorper nunc non gravida ornare. Interdum et malesuada fames ac ante ipsum primis in faucibus.',

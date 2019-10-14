@@ -1013,12 +1013,13 @@ class Str extends Base\Test
         assert('Test lala' === Base\Str::def(' tést_lala!❄❄❄-| +<@ '));
 
         // pointer
-        assert(Base\Str::pointer('user/2') === ['user',2]);
-        assert(Base\Str::pointer('user/a') === null);
+        assert(Base\Str::pointer('user-2') === ['user',2]);
+        assert(Base\Str::pointer('user/2','/') === ['user',2]);
+        assert(Base\Str::pointer('user-a') === null);
 
         // toPointer
-        assert(Base\Str::toPointer('user',2) === 'user/2');
-        assert(Base\Str::toPointer('user',2,'-') === 'user-2');
+        assert(Base\Str::toPointer('user',2) === 'user-2');
+        assert(Base\Str::toPointer('user',2,'/') === 'user/2');
 
         // map
         $array = [' test ',2=>' test2',3,[]];
