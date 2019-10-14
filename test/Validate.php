@@ -367,7 +367,7 @@ class Validate extends Base\Test
         assert(!Base\Validate::isUri(null));
         assert(!Base\Validate::isUri(true));
         assert(!Base\Validate::isUri(1));
-        
+
         // isUriPath
         assert(Base\Validate::isUriPath('test/test2/test3'));
         assert(Base\Validate::isUriPath('/test/test2/test3-tes4_test5/james.jpg'));

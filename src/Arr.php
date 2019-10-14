@@ -16,7 +16,7 @@ class Arr extends Root
     // config
     public static $config = [];
 
-    
+
     // typecast
     // typecasts des valeurs par référence
     public static function typecast(&...$values):void

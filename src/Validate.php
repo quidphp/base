@@ -886,15 +886,15 @@ class Validate extends Root
         return static::regex('time',$value);
     }
 
-    
+
     // isUri
     // retourne vrai si la valeur passe le regex uri
     public static function isUri($value):bool
     {
         return static::regex('uri',$value);
     }
-    
-    
+
+
     // isUriPath
     // retourne vrai si la valeur passe le regex uri path
     public static function isUriPath($value):bool

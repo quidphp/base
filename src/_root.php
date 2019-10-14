@@ -114,8 +114,8 @@ trait _root
 
         return $return;
     }
-    
-    
+
+
     // classSubCount
     // count le nombre d'occurence d'un terme dans le code de la classe
     // peut retourner null si le fichier de la classe n'est pas trouvable
@@ -129,8 +129,8 @@ trait _root
 
         return $return;
     }
-    
-    
+
+
     // classTest
     // méthode à étendre qui contient les tests de la classe
     public static function classTest(array $data):bool

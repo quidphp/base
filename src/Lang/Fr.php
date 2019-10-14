@@ -320,7 +320,7 @@ class Fr extends Base\Config
             'datetime'=>'Doit être une date-temps valide (YYYY-MM-DD HH:MM:SS)',
             'time'=>'Doit être un temps valide (HH:MM:SS)',
             'uriPath'=>"Doit être un chemin d'URI valide",
-            'uri'=>"Doit être une uri relative ou absolue",
+            'uri'=>'Doit être une uri relative ou absolue',
             'fqcn'=>'Doit être un FQCN valide (\)',
             'table'=>'Doit être un nom de table valide (A-z 0-9 _)',
             'col'=>'Doit être un nom de colonne valide (A-z 0-9 _)',

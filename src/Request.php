@@ -119,15 +119,15 @@ class Request extends Root
         return (Path::isSafe(static::path(),static::$config['safe']))? true:false;
     }
 
-    
+
     // isPathArgument
     // retourne vrai si le chemin est un argument (commence par - )
     public static function isPathArgument():bool
     {
         return Path::isArgument(static::path());
     }
-    
-    
+
+
     // isCli
     // retourne vrai si la requête courante provient du cli, renvoie vers server
     public static function isCli():bool

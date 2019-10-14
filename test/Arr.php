@@ -19,7 +19,7 @@ class Arr extends Base\Test
     {
         // prepare
         $isCli = Base\Server::isCli();
-        
+
         // typecast
         $x = 1;
         $y = '2';
