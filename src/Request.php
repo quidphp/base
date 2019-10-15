@@ -127,7 +127,15 @@ class Request extends Root
         return Path::isArgument(static::path());
     }
 
-
+    
+    // isPathArgumentNotCli
+    // retourne vrai si le chemin est un argument (commence par - ) mais que la requête n'est pas cli
+    public static function isPathArgumentNotCli():bool
+    {
+        return (static::isPathArgument() && !static::isCli())? true:false;
+    }
+    
+    
     // isCli
     // retourne vrai si la requête courante provient du cli, renvoie vers server
     public static function isCli():bool
@@ -816,7 +824,19 @@ class Request extends Root
         return;
     }
 
-
+    
+    // setArgv
+    // permet de lier des query à la requête à partir d'un tableau d'options de cli
+    public static function setArgv(array $values):void 
+    {
+        $query = Cli::parseLongOptions(...$values);
+        if(!empty($query))
+        static::setQuery($query);
+        
+        return;
+    }
+    
+    
     // fragment
     // retourne le fragment de la requête courante
     // request_fragment est une invention de quid, ce n'est pas utilisé dans le tableau serveur par php
@@ -1245,7 +1265,7 @@ class Request extends Root
             $values = Arr::replace(static::default($isCli),$values);
         }
 
-        foreach ($values as $key => $value)
+        foreach (static::prepareChangeArray($values) as $key => $value)
         {
             if(is_string($key))
             {
@@ -1259,7 +1279,19 @@ class Request extends Root
         return;
     }
 
-
+    
+    // prepareChangeArray
+    // fait une transformation au tableau de changement
+    // la clé 0 devient uri
+    public static function prepareChangeArray(array $return):array 
+    {
+        $change = array(0=>'uri');
+        $return = Arr::keysChange($change,$return);
+        
+        return $return;
+    }
+    
+    
     // default
     // retourne les défauts
     // différent pour le cli

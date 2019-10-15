@@ -2360,9 +2360,9 @@ class Arr extends Root
     }
 
 
-    // explodekeyValue
+    // explodeKeyValue
     // explose les valeurs d'un tableau par deux et retourne sous une forme clé -> valeur
-    public static function explodekeyValue(string $delimiter,array $value,bool $trim=false,bool $clean=false)
+    public static function explodeKeyValue(string $delimiter,array $value,bool $trim=false,bool $clean=false)
     {
         $return = [];
 
@@ -2371,9 +2371,8 @@ class Arr extends Root
             if(is_scalar($v))
             {
                 $v = (string) $v;
-                $x = Str::explode($delimiter,$v,2,$trim,$clean);
-                if(count($x) === 2 && static::isKey($x[0]))
-                $return[$x[0]] = $x[1];
+                $x = Str::explodeKeyValue($delimiter,$v,$trim,$clean);
+                $return = static::replace($return,$x);
             }
         }
 

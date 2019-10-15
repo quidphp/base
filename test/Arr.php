@@ -832,8 +832,8 @@ class Arr extends Base\Test
         assert(['test'] === Base\Arr::explode('|',[2=>'test',['test2|test3']]));
         assert(['test','test2','test3','test4'] === Base\Arr::explode('|',['test | test2','test3 | | test4'],null,true,true));
 
-        // explodekeyValue
-        assert(Base\Arr::explodekeyValue(':',['test: what','james2: ok','test : new'],true,true) === ['test'=>'new','james2'=>'ok']);
+        // explodeKeyValue
+        assert(Base\Arr::explodeKeyValue(':',['test: what','james2: ok','test : new'],true,true) === ['test'=>'new','james2'=>'ok']);
 
         // fill
         assert(count(Base\Arr::fill(0,5)) === 6);

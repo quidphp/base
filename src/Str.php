@@ -2034,14 +2034,14 @@ class Str extends Root
     }
 
 
-    // explodekeyValue
+    // explodeKeyValue
     // explose les valeurs d'une string et retourne un tableau sous une forme clé -> valeur
-    public static function explodekeyValue(string $delimiter,string $value,bool $trim=false,bool $clean=false):array
+    public static function explodeKeyValue(string $delimiter,string $value,bool $trim=false,bool $clean=false):array
     {
         $return = [];
-
         $x = static::explode($delimiter,$value,2,$trim,$clean);
-        if(count($x) === 2 && Arr::isKey($x[0]))
+        
+        if(Arr::isKey($x[0]) && count($x) === 2)
         $return[$x[0]] = $x[1];
 
         return $return;

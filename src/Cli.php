@@ -70,7 +70,37 @@ class Cli extends Root
         return (static::$config['htmlOverload'] === true)? true:false;
     }
 
-
+    
+    // parseLongOptions
+    // prend un tableau des argv et retourne un tableau avec toutes les options longues
+    // l'ordre des options n'a pas d'importance, mais il faut que l'entrée commence par --
+    public static function parseLongOptions(string ...$values):array 
+    {
+        $return = array();
+        
+        foreach ($values as $key => $value) 
+        {
+            if(Str::isStart('--',$value))
+            {
+                $value = substr($value,2);
+                
+                if(strlen($value) && !Str::isStart('=',$value))
+                {
+                    if(strpos($value,'=') === false)
+                    $value .= "=";
+                    
+                    $x = Str::explodeKeyValue('=',$value,true);
+                    $x = Arr::cast($x);
+                    
+                    $return = Arr::replace($return,$x);
+                }
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // callStatic
     // méthode qui attrape tous les appels à des méthodes non reconnus
     // renvoie vers preset

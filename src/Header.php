@@ -273,7 +273,7 @@ class Header extends Listing
 
                 else
                 {
-                    $keyValue = Str::explodekeyValue($separator,$value,$option['trim'],$option['clean']);
+                    $keyValue = Str::explodeKeyValue($separator,$value,$option['trim'],$option['clean']);
                     if(!empty($keyValue))
                     {
                         $key = key($keyValue);

@@ -182,7 +182,7 @@ class Listing extends Assoc
         if(Arr::isIndexed($value))
         {
             $separator = static::getSeparator(1,$option['explode']);
-            $return = Arr::explodekeyValue($separator,$value);
+            $return = Arr::explodeKeyValue($separator,$value);
         }
         else
         $return = $value;

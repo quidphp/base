@@ -147,7 +147,7 @@ class Style extends Listing
             $value = Str::explode($separator,$value,$option['limit']);
 
             if(!empty($value))
-            $return = Arr::explodekeyValue($separator2,$value);
+            $return = Arr::explodeKeyValue($separator2,$value);
         }
 
         return $return;

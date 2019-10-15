@@ -761,11 +761,11 @@ class Str extends Base\Test
         assert(['test','test2','test3'] === Base\Str::explodeIndexesExists([0],'|','test|test2|test3'));
         assert(null === Base\Str::explodeIndexesExists([0,-4],'|','test|test2|test3'));
 
-        // explodekeyValue
-        assert(Base\Str::explodekeyValue(':','test: bla',true,true) === ['test'=>'bla']);
-        assert(Base\Str::explodekeyValue(':','test: bla: ok ',true,true) === ['test'=>'bla: ok']);
-        assert(Base\Str::explodekeyValue(':','test',true,true) === []);
-
+        // explodeKeyValue
+        assert(Base\Str::explodeKeyValue(':','test: bla',true,true) === ['test'=>'bla']);
+        assert(Base\Str::explodeKeyValue(':','test: bla: ok ',true,true) === ['test'=>'bla: ok']);
+        assert(Base\Str::explodeKeyValue(':','test',true,true) === []);
+        
         // explodes
         $string = 'test:test,test2:test2,test3:test3';
         assert([['test','test'],['test2','test2'],['test3','test3']] === Base\Str::explodes([',',':'],$string));

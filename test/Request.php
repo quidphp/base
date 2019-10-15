@@ -66,7 +66,10 @@ class Request extends Base\Test
 
         // isPathArgument
         assert(Base\Request::isPathArgument() === false);
-
+        
+        // isPathArgumentNotCli
+        assert(is_bool(Base\Request::isPathArgumentNotCli()));
+        
         // isCli
         assert(is_bool(Base\Request::isCli()));
 
@@ -321,7 +324,13 @@ class Request extends Base\Test
         Base\Request::removeQuery();
         assert(Base\Request::query() === '');
         assert($_GET === []);
-
+        
+        // setArgv
+        Base\Request::setArgv(array('james','--james=2','--ok=2','--lol','-what'));
+        assert(Base\Request::query() === 'james=2&ok=2&lol=');
+        assert($_GET['lol'] === '');
+        Base\Request::removeQuery();
+        
         // fragment
         assert(!Base\Request::fragment());
 
@@ -514,7 +523,10 @@ class Request extends Base\Test
         assert(Base\Request::absolute() === Base\Request::schemeHost());
 
         // change
-
+        
+        // prepareChangeArray
+        assert(Base\Request::prepareChangeArray(array(0=>'test','method'=>'post')) === array('method'=>'post','uri'=>'test'));
+        
         // default
         assert(count(Base\Request::default(false)) === 1);
         assert(count(Base\Request::default(true)) === 5);
