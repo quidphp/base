@@ -24,16 +24,16 @@ class Cli extends Base\Test
 
         // is
         assert(is_bool(Base\Cli::is()));
-        
+
         // isHtmlOverload
         assert(is_bool(Base\Cli::isHtmlOverload()));
-        
+
         // parseLongOptions
-        assert(Base\Cli::parseLongOptions("--james2=2","--lol","--james2=3",'lo') === array('james2'=>3,'lol'=>''));
-        assert(Base\Cli::parseLongOptions("--","--z","--=","--é;é=4") === array('z'=>'','é;é'=>4));
-        assert(Base\Cli::parseLongOptions("--==3") === array());
-        assert(Base\Cli::parseLongOptions("--=3") === array());
-        
+        assert(Base\Cli::parseLongOptions('--james2=2','--lol','--james2=3','lo') === ['james2'=>3,'lol'=>'']);
+        assert(Base\Cli::parseLongOptions('--','--z','--=','--é;é=4') === ['z'=>'','é;é'=>4]);
+        assert(Base\Cli::parseLongOptions('--==3') === []);
+        assert(Base\Cli::parseLongOptions('--=3') === []);
+
         // callStatic
         assert(Base\Cli::pos('test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);
         assert(Base\Cli::neg('test',2) === $escape.'[1;37m[1m[41mtest[0m'.$eol.$eol);

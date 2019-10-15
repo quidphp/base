@@ -2040,7 +2040,7 @@ class Str extends Root
     {
         $return = [];
         $x = static::explode($delimiter,$value,2,$trim,$clean);
-        
+
         if(Arr::isKey($x[0]) && count($x) === 2)
         $return[$x[0]] = $x[1];
 
