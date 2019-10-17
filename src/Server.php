@@ -313,15 +313,15 @@ class Server extends Root
         return Ini::important();
     }
 
-    
+
     // phpImportantExtension
     // retourne toutes les extensions de php importantes
     public static function phpImportantExtension(bool $ini=false):array
     {
         return Extension::important($ini);
     }
-    
-    
+
+
     // zendVersion
     // retourne la version de Zend
     public static function zendVersion():string
@@ -412,12 +412,12 @@ class Server extends Root
     public static function os(bool $release=false,bool $type=false):?string
     {
         $return = static::sysname();
-        
+
         if(is_string($return))
         {
             if($release === true)
             $return .= ' '.static::release();
-            
+
             if($type === true)
             {
                 $type = static::osType();
@@ -425,7 +425,7 @@ class Server extends Root
                 $return .= " ($type)";
             }
         }
-        
+
         return $return;
     }
 
@@ -523,7 +523,7 @@ class Server extends Root
         return Superglobal::server();
     }
 
-    
+
     // ip
     // le script utilise gethostbyname ce qui va retourner l'adresse ip public du serveur
     // possible d'inscrire l'autre ip entre paranthèse
@@ -535,7 +535,7 @@ class Server extends Root
         if(Ip::is($ip))
         {
             $return = $ip;
-            
+
             if($addr === true)
             {
                 $addr = static::addr(true);
@@ -546,8 +546,8 @@ class Server extends Root
 
         return $return;
     }
-    
-    
+
+
     // addr
     // retourne le IP du serveur à partir de la superglobale server
     // pourrait être l'adresse IP local
@@ -633,18 +633,18 @@ class Server extends Root
     {
         $return = null;
         $id = getmyuid();
-        
+
         if($name === true)
         {
             $return = get_current_user();
-            
+
             if($withId === true)
             $return .= " ($id)";
         }
-        
+
         else
         $return = $id;
-        
+
         return $return;
     }
 

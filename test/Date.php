@@ -585,39 +585,39 @@ class Date extends Base\Test
 
         // diffStr
         assert(Base\Date::diffStr(4,Base\Date::mk(2018,1,2),Base\Date::mk(2021,3,4)) === '3 years 2 months and 2 days');
-        
+
         // ago
         assert(Base\Date::ago(Base\Date::mk(2020,1,1)) === null);
         assert(count(Base\Date::ago(Base\Date::mk(2014,1,1))) === 6);
         assert(!empty(Base\Date::ago(Base\Date::mk(2012,8,2),null,4)));
-        
+
         // agoStr
         assert(Base\Date::agoStr(5,time()) === '');
         assert(strlen(Base\Date::agoStr(2,Base\Date::mk(2010,1,9))) > 15);
         assert(Base\Date::agoStr(5,Base\Date::mk(2040,1,9)) === '');
-        
+
         // diffNow
         assert(count(Base\Date::diffNow(Base\Date::make([2016,1,1]))) === 6);
         assert(Base\Date::diffNow('2017-12-01 09:40:00',['sql',true]) !== Base\Date::diffNow('2017-12-01 09:40:00',['sql','Asia/Bangkok']));
         assert(count(Base\Date::diffNow(Base\Date::mk(2020,1,1))) === 6);
         assert(!empty(Base\Date::diffNow(Base\Date::mk(2018,4,2),null,3)));
-        
+
         // diffNowStr
         assert(strlen(Base\Date::diffNowStr(4,Base\Date::mk(2018,1,7))) > 10);
-        
+
         // amount
         assert(Base\Date::amount(4)['second'] === 4);
         assert(Base\Date::amount(61)['minute'] === 1);
         assert(count(Base\Date::amount(4321132123)) === 6);
-        assert(Base\Date::amount(4321132123,2) === array('year'=>136,'month'=>11));
-        
+        assert(Base\Date::amount(4321132123,2) === ['year'=>136,'month'=>11]);
+
         // amountStr
         assert(Base\Date::amountStr(2,4) === '4 seconds');
         assert(Base\Date::amountStr(2,61) === '1 minute and 1 second');
         assert(Base\Date::amountStr(1,61) === '1 minute');
         assert(Base\Date::amountStr(2,4321132123) === '136 years and 11 months');
         assert(Base\Date::amountStr(6,4321132123) === '136 years 11 months 4 days 2 hours 28 minutes and 43 seconds');
-        
+
         // calendar
         $calendar = Base\Date::calendar([2018,6],true,false);
         assert(Base\Arrs::is($calendar));

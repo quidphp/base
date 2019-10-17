@@ -113,10 +113,10 @@ class Server extends Base\Test
 
         // phpImportantIni
         assert(count(Base\Server::phpImportantIni()) === 30);
-        
+
         // phpImportantExtension
         assert(count(Base\Server::phpImportantExtension()) === 3);
-        
+
         // zendVersion
         assert(Base\Server::zendVersion() > 3);
 
@@ -145,7 +145,7 @@ class Server extends Base\Test
         assert(!empty(Base\Server::os()));
         assert(Base\Server::os() !== Base\Server::os(true));
         assert(Base\Server::os(true) !== Base\Server::os(true,true));
-        
+
         // osType
         assert(is_string(Base\Server::osType()));
 
@@ -175,7 +175,7 @@ class Server extends Base\Test
 
         // superglobal
         assert(count(Base\Server::superglobal()) > 10);
-        
+
         // ip
         $public = Base\Server::ip();
         assert($public === null || Base\Validate::isIp($public));
@@ -211,7 +211,7 @@ class Server extends Base\Test
         assert(is_int(Base\Server::user()));
         assert(is_string(Base\Server::user(true)));
         assert(Base\Server::user(true,true) !== Base\Server::user(true));
-        
+
         // group
         assert(is_int(Base\Server::group()));
 

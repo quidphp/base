@@ -1939,15 +1939,15 @@ class Date extends Root
         if($value <= static::time(null))
         {
             $return = static::diff($value,null,$format);
-            
+
             if(!empty($return) && is_int($amount))
             $return = static::keep($amount,$return);
         }
 
         return $return;
     }
-    
-    
+
+
     // agoStr
     // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
     // garde seulement un nombre de valeur du tableau de différence
@@ -1962,8 +1962,8 @@ class Date extends Root
 
         return $return;
     }
-    
-    
+
+
     // diffNow
     // comme diff mais par défaut value2 est null, donc timestamp courant
     // peut spécifier un format et timezone pour la valeur
@@ -1971,10 +1971,10 @@ class Date extends Root
     public static function diffNow($value=null,$format=null,?int $amount=null):?array
     {
         $return = static::diff($value,null,$format);
-        
+
         if(!empty($return) && is_int($amount))
         $return = static::keep($amount,$return);
-        
+
         return $return;
     }
 
@@ -2003,8 +2003,8 @@ class Date extends Root
     {
         return static::diffNow(($value + static::timestamp()),null,$amount);
     }
-    
-    
+
+
     // amountStr
     // comme amountKeep mais retourne plutôt une string formatté
     public static function amountStr(int $amount=2,int $value):string
@@ -2017,8 +2017,8 @@ class Date extends Root
 
         return $return;
     }
-    
-    
+
+
     // calendar
     // construit un tableau multidimensionnel calendrier avec le numéro de la semaine, les numéos de jour dans la semaine et les timestamp
     // possible de mettre dimanche comme premier jour de la semaine si sundayFirst est true
