@@ -112,8 +112,11 @@ class Server extends Base\Test
         assert(PHP_VERSION !== Base\Server::phpVersion('DOM'));
 
         // phpImportantIni
-        assert(count(Base\Server::phpImportantIni()) === 34);
-
+        assert(count(Base\Server::phpImportantIni()) === 30);
+        
+        // phpImportantExtension
+        assert(count(Base\Server::phpImportantExtension()) === 3);
+        
         // zendVersion
         assert(Base\Server::zendVersion() > 3);
 
@@ -141,7 +144,8 @@ class Server extends Base\Test
         // os
         assert(!empty(Base\Server::os()));
         assert(Base\Server::os() !== Base\Server::os(true));
-
+        assert(Base\Server::os(true) !== Base\Server::os(true,true));
+        
         // osType
         assert(is_string(Base\Server::osType()));
 
@@ -171,13 +175,13 @@ class Server extends Base\Test
 
         // superglobal
         assert(count(Base\Server::superglobal()) > 10);
-
+        
         // ip
-        assert(Base\Validate::isIp(Base\Server::ip()));
-
-        // ipPublic
-        $public = Base\Server::ipPublic();
+        $public = Base\Server::ip();
         assert($public === null || Base\Validate::isIp($public));
+
+        // addr
+        assert(Base\Validate::isIp(Base\Server::addr()));
 
         // software
         if($isCli === false)
@@ -206,7 +210,8 @@ class Server extends Base\Test
         // user
         assert(is_int(Base\Server::user()));
         assert(is_string(Base\Server::user(true)));
-
+        assert(Base\Server::user(true,true) !== Base\Server::user(true));
+        
         // group
         assert(is_int(Base\Server::group()));
 
@@ -225,10 +230,10 @@ class Server extends Base\Test
         // phpInfo
 
         // overview
-        assert(count(Base\Server::overview()) === 18);
+        assert(count(Base\Server::overview()) === 16);
 
         // info
-        assert(count(Base\Server::info()) === 27);
+        assert(count(Base\Server::info()) === 25);
 
         // requirement
         assert(empty(Base\Server::requirement()));

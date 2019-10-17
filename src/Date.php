@@ -1898,30 +1898,6 @@ class Date extends Root
     }
 
 
-    // diffNow
-    // comme diff mais par défaut value2 est null, donc timestamp courant
-    // peut spécifier un format et timezone pour la valeur
-    public static function diffNow($value=null,$format=null):?array
-    {
-        return static::diff($value,null,$format);
-    }
-
-
-    // ago
-    // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
-    // peut spécifier un format et timezone pour la valeur
-    public static function ago($value=null,$format=null):?array
-    {
-        $return = null;
-        $value = static::time($value,$format);
-
-        if($value <= static::time(null))
-        $return = static::diff($value,null,$format);
-
-        return $return;
-    }
-
-
     // diffKeep
     // garde seulement un nombre de valeur du tableau de différence
     public static function diffKeep(int $amount=2,$value=null,$value2=0,$format=null,$format2=null):?array
@@ -1951,17 +1927,54 @@ class Date extends Root
     }
 
 
-    // diffNowKeep
-    // comme diff mais par défaut value2 est null, donc timestamp courant
-    // garde seulement un nombre de valeur du tableau de différence
-    public static function diffNowKeep(int $amount=2,$value=null,$format=null):?array
+    // ago
+    // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
+    // peut spécifier un format et timezone pour la valeur
+    // possible de garder seulement un nombre de valeur du tableau de différence
+    public static function ago($value=null,$format=null,?int $amount=null):?array
     {
         $return = null;
-        $diff = static::diffNow($value,$format);
+        $value = static::time($value,$format);
+
+        if($value <= static::time(null))
+        {
+            $return = static::diff($value,null,$format);
+            
+            if(!empty($return) && is_int($amount))
+            $return = static::keep($amount,$return);
+        }
+
+        return $return;
+    }
+    
+    
+    // agoStr
+    // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
+    // garde seulement un nombre de valeur du tableau de différence
+    // retourne une version string de la différence
+    public static function agoStr(int $amount=2,$value=null,$format=null):string
+    {
+        $return = '';
+        $diff = static::ago($value,$format);
 
         if(!empty($diff))
-        $return = static::keep($amount,$diff);
+        $return = static::str($amount,$diff);
 
+        return $return;
+    }
+    
+    
+    // diffNow
+    // comme diff mais par défaut value2 est null, donc timestamp courant
+    // peut spécifier un format et timezone pour la valeur
+    // possible de garder seulement un nombre de valeur du tableau de différence
+    public static function diffNow($value=null,$format=null,?int $amount=null):?array
+    {
+        $return = static::diff($value,null,$format);
+        
+        if(!empty($return) && is_int($amount))
+        $return = static::keep($amount,$return);
+        
         return $return;
     }
 
@@ -1982,37 +1995,30 @@ class Date extends Root
     }
 
 
-    // agoKeep
-    // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
-    // garde seulement un nombre de valeur du tableau de différence
-    public static function agoKeep(int $amount=2,$value=null,$format=null):?array
+    // amount
+    // cette méthode permet de donner un temps non lié à un timestamp
+    // retourne un tableau diff avec nombre de seconde, minute, etc
+    // possible de garder seulement un nombre de valeur du tableau de différence
+    public static function amount(int $value,?int $amount=null):?array
     {
-        $return = null;
-        $diff = static::ago($value,$format);
-
-        if(!empty($diff))
-        $return = static::keep($amount,$diff);
-
-        return $return;
+        return static::diffNow(($value + static::timestamp()),null,$amount);
     }
-
-
-    // agoStr
-    // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
-    // garde seulement un nombre de valeur du tableau de différence
-    // retourne une version string de la différence
-    public static function agoStr(int $amount=2,$value=null,$format=null):string
+    
+    
+    // amountStr
+    // comme amountKeep mais retourne plutôt une string formatté
+    public static function amountStr(int $amount=2,int $value):string
     {
         $return = '';
-        $diff = static::ago($value,$format);
+        $diff = static::amount($value);
 
         if(!empty($diff))
         $return = static::str($amount,$diff);
 
         return $return;
     }
-
-
+    
+    
     // calendar
     // construit un tableau multidimensionnel calendrier avec le numéro de la semaine, les numéos de jour dans la semaine et les timestamp
     // possible de mettre dimanche comme premier jour de la semaine si sundayFirst est true

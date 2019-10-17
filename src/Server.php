@@ -313,7 +313,15 @@ class Server extends Root
         return Ini::important();
     }
 
-
+    
+    // phpImportantExtension
+    // retourne toutes les extensions de php importantes
+    public static function phpImportantExtension(bool $ini=false):array
+    {
+        return Extension::important($ini);
+    }
+    
+    
     // zendVersion
     // retourne la version de Zend
     public static function zendVersion():string
@@ -401,13 +409,23 @@ class Server extends Root
     // os
     // retourne le os du serveur
     // mix entre sysname et release
-    public static function os(bool $release=false):?string
+    public static function os(bool $release=false,bool $type=false):?string
     {
         $return = static::sysname();
-
-        if($release === true)
-        $return .= ' '.static::release();
-
+        
+        if(is_string($return))
+        {
+            if($release === true)
+            $return .= ' '.static::release();
+            
+            if($type === true)
+            {
+                $type = static::osType();
+                if(is_string($type))
+                $return .= " ($type)";
+            }
+        }
+        
         return $return;
     }
 
@@ -505,31 +523,41 @@ class Server extends Root
         return Superglobal::server();
     }
 
-
+    
     // ip
-    // retourne le IP du serveur
-    // pourrait être l'adresse IP local
-    // si pas de ip et normalize est true, retourne 0.0.0.0
-    public static function ip(bool $normalize=true):?string
-    {
-        $return = Superglobal::getServer('SERVER_ADDR');
-
-        if($normalize === true)
-        $return = Ip::normalize(Superglobal::getServer('SERVER_ADDR'));
-
-        return $return;
-    }
-
-
-    // ipPublic
     // le script utilise gethostbyname ce qui va retourner l'adresse ip public du serveur
-    public static function ipPublic():?string
+    // possible d'inscrire l'autre ip entre paranthèse
+    public static function ip(bool $addr=false):?string
     {
         $return = null;
         $ip = gethostbyname(gethostname());
 
         if(Ip::is($ip))
-        $return = $ip;
+        {
+            $return = $ip;
+            
+            if($addr === true)
+            {
+                $addr = static::addr(true);
+                if($addr !== $return)
+                $return .= " ($addr)";
+            }
+        }
+
+        return $return;
+    }
+    
+    
+    // addr
+    // retourne le IP du serveur à partir de la superglobale server
+    // pourrait être l'adresse IP local
+    // si pas de ip et normalize est true, retourne 0.0.0.0
+    public static function addr(bool $normalize=true):?string
+    {
+        $return = Superglobal::getServer('SERVER_ADDR');
+
+        if($normalize === true)
+        $return = Ip::normalize(Superglobal::getServer('SERVER_ADDR'));
 
         return $return;
     }
@@ -600,9 +628,24 @@ class Server extends Root
     // user
     // retourne l'utilisateur courant
     // peut être string ou int
-    public static function user(bool $name=false)
+    // possible de retourner le username avec son id entre paranthèse
+    public static function user(bool $name=false,bool $withId=false)
     {
-        return ($name === true)? get_current_user():getmyuid();
+        $return = null;
+        $id = getmyuid();
+        
+        if($name === true)
+        {
+            $return = get_current_user();
+            
+            if($withId === true)
+            $return .= " ($id)";
+        }
+        
+        else
+        $return = $id;
+        
+        return $return;
     }
 
 
@@ -681,14 +724,12 @@ class Server extends Root
         $return['software'] = static::software();
         $return['php'] = static::phpVersion();
         $return['zend'] = static::zendVersion();
-        $return['os'] = static::os(true);
-        $return['osType'] = static::osType();
+        $return['os'] = static::os(true,true);
         $return['serverType'] = static::serverType();
         $return['sapi'] = static::sapi();
-        $return['ip'] = static::ip(false) ?? static::ipPublic();
+        $return['ip'] = static::ip(true);
         $return['hostname'] = static::hostname();
-        $return['user'] = static::user();
-        $return['username'] = static::user(true);
+        $return['username'] = static::user(true,true);
         $return['group'] = static::group();
         $return['caseSensitive'] = static::isCaseSensitive();
         $return = Arr::append($return,Extension::important(true));
@@ -707,20 +748,18 @@ class Server extends Root
         $return['software'] = static::software();
         $return['php'] = static::phpVersion();
         $return['zend'] = static::zendVersion();
-        $return['os'] = static::os(true);
-        $return['osType'] = static::osType();
+        $return['os'] = static::os(true,true);
         $return['serverType'] = static::serverType();
         $return['caseSensitive'] = static::isCaseSensitive();
         $return['uname'] = static::uname();
         $return['sapi'] = static::sapi();
         $return['cli'] = static::isCli();
-        $return['ip'] = static::ip();
-        $return['ipPublic'] = static::ipPublic();
+        $return['ip'] = static::ip(true);
         $return['online'] = static::isOnline();
         $return['hostname'] = static::hostname();
         $return['script'] = static::script();
         $return['user'] = static::user();
-        $return['username'] = static::user(true);
+        $return['username'] = static::user(true,true);
         $return['group'] = static::group();
         $return['resourceUsage'] = static::resourceUsage();
         $return['memory'] = static::memory();

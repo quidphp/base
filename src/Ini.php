@@ -54,11 +54,7 @@ class Ini extends Root
             'xdebug.coverage_enable',
             'xdebug.profiler_enable',
             'xdebug.overload_var_dump',
-            'xdebug.var_display_max_depth',
-            'apc.enabled',
-            'apc.shm_size',
-            'apc.ttl',
-            'apc.enable_cli']
+            'apc.enabled']
     ];
 
 

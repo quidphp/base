@@ -1302,7 +1302,7 @@ class Request extends Root
         if($cli === true)
         {
             $return['query'] = [];
-            $return['ip'] = Server::ipPublic();
+            $return['ip'] = Server::ip();
             $return['userAgent'] = Server::quidName();
             $return['langHeader'] = Lang::default();
         }

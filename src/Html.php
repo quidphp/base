@@ -320,7 +320,6 @@ class Html extends Root
     }
 
 
-
     // isHiddenTag
     // retourne vrai si la méthode en est une de input hidden
     public static function isHiddenTag($value,bool $inputMethod=true):bool

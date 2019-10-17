@@ -3187,8 +3187,7 @@ class Arr extends Root
     // retourne la première key
     public static function keyFirst(array $array)
     {
-        reset($array);
-        return key($array);
+        return array_key_first($array);
     }
 
 
@@ -3196,8 +3195,7 @@ class Arr extends Root
     // retourne la dernière key
     public static function keyLast(array $array)
     {
-        end($array);
-        return key($array);
+        return array_key_last($array);
     }
 
 
@@ -3899,7 +3897,7 @@ class Arr extends Root
     {
         foreach ($replace as $what => $to)
         {
-            if(static::isKey($what) && static::isKey($to) && array_key_exists($what,$return))
+            if(array_key_exists($what,$return) && static::isKey($to))
             {
                 $value = $return[$what];
                 unset($return[$what]);
