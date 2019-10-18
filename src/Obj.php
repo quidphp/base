@@ -192,15 +192,15 @@ class Obj extends Root
         return Fqcn::name($value);
     }
 
-    
+
     // id
     // retourne l'id unique de l'objet
     public static function id(object $value):int
     {
         return spl_object_id($value);
     }
-    
-    
+
+
     // hash
     // retourne le hash de l'objet
     public static function hash(object $value):string

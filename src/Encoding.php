@@ -93,15 +93,15 @@ class Encoding extends Root
         return $return;
     }
 
-    
+
     // scrub
     // permet de remplacer les caractères illégaux en ?
-    public static function scrub(string $return,?string $charset=null):string 
+    public static function scrub(string $return,?string $charset=null):string
     {
         return mb_scrub($return,static::getCharset($charset));
     }
-    
-    
+
+
     // getInternal
     // retourne l'encoding interne de l'extension mbstring
     public static function getInternal():string
@@ -109,7 +109,7 @@ class Encoding extends Root
         return static::$config['charset'] = mb_internal_encoding();
     }
 
-    
+
     // setInternal
     // change l'encoding interne de l'extension mbstring
     public static function setInternal(string $charset):bool

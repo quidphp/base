@@ -49,12 +49,12 @@ class Encoding extends Base\Test
         // set
         assert(Base\Encoding::set('lalaé','ISO-8859-1','UTF-8') !== 'lalaé');
         assert(Base\Encoding::set('lalaé','ISO-8859-1') !== 'lalaé');
-        
+
         // scrub
         assert(Base\Encoding::scrub('lalaé') === 'lalaé');
         assert(Base\Encoding::scrub('Uncidoe ❄❄❄') === 'Uncidoe ❄❄❄');
-        assert(Base\Encoding::scrub(substr("lalaé",0,5)) === 'lala?');
-        
+        assert(Base\Encoding::scrub(substr('lalaé',0,5)) === 'lala?');
+
         // getInternal
         assert(Base\Encoding::getInternal() === Base\Encoding::getCharset());
 
@@ -67,7 +67,7 @@ class Encoding extends Base\Test
         // getCharset
         assert(Base\Encoding::getCharset() === 'UTF-8');
         assert(Base\Encoding::getCharset('latin1') === 'latin1');
-        
+
         // setCharset
         Base\Encoding::setCharset('UTF-8');
 

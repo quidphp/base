@@ -138,7 +138,7 @@ trait _root
         $namespace = static::classNamespace();
         $name = static::className();
         $class = Fqcn::append($namespace,'Test',$name);
-        
+
         return $class::trigger();
     }
 }
