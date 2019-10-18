@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Test\Base
 {
     use Quid\Base;
-
+    
     // obj
     // class for testing Quid\Base\Obj
     class Obj extends Base\Test
@@ -119,11 +119,15 @@ namespace Quid\Test\Base
             // name
             assert(Base\Obj::name($class) === 'MyClass');
             assert(Base\Obj::name($obj) === 'stdClass');
-
+            
+            // id
+            assert(is_int(Base\Obj::id($obj)));
+            assert(is_int(Base\Obj::id($class)));
+            
             // hash
             assert(strlen(Base\Obj::hash($obj)) === 32);
             assert(strlen(Base\Obj::hash($class)) === 32);
-
+            
             // parent
             assert(Base\Obj::parent($class) === self::class.'\ParentClass');
             assert(Base\Obj::parent($obj) === null);

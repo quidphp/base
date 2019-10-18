@@ -390,7 +390,7 @@ class Number extends Root
     // cette méthode est inutile en php 7.3
     public static function isCountable($value):bool
     {
-        return (is_array($value) || $value instanceof \Countable)? true:false;
+        return is_countable($value);
     }
 
 

@@ -11,7 +11,7 @@ namespace Quid\Base;
 
 // str
 // class with static methods to work with strings
-class Str extends Root
+final class Str extends Root
 {
     // config
     public static $config = [
@@ -2538,7 +2538,7 @@ class Str extends Root
     {
         $return .= '....';
 
-        $return = iconv('UTF-8', 'UTF-8//IGNORE', $return);
+        $return = iconv('UTF-8','UTF-8//IGNORE',$return);
         $return = substr($return,0,-4);
         $return = preg_replace('/[\x{0092}]/u','',$return);
 

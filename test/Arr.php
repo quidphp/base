@@ -12,7 +12,7 @@ use Quid\Base;
 
 // arr
 // class for testing Quid\Base\Arr
-class Arr extends Base\Test
+final class Arr extends Base\Test
 {
     // trigger
     public static function trigger(array $data):bool

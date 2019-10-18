@@ -25,15 +25,7 @@ class Encoding extends Root
     // retourne vrai si la chaîne est valide pour un encodage spécifique
     public static function is($value,?string $charset=null):bool
     {
-        $return = false;
-
-        if(is_string($value))
-        {
-            $charset = (is_string($charset))? $charset:static::$config['charset'];
-            $return = mb_check_encoding($value,$charset);
-        }
-
-        return $return;
+        return (is_string($value))? mb_check_encoding($value,static::getCharset($charset)):false;
     }
 
 
@@ -92,8 +84,8 @@ class Encoding extends Root
     // change l'encodage de la chaîne
     public static function set(string $return,?string $charset=null,?string $from=null)
     {
-        $charset = (is_string($charset))? $charset:static::$config['charset'];
-        $from = (is_string($from))? $from:static::$config['charset'];
+        $charset = static::getCharset($charset);
+        $from = static::getCharset($from);
 
         if($charset !== $from)
         $return = mb_convert_encoding($return,$charset,$from);
@@ -101,7 +93,15 @@ class Encoding extends Root
         return $return;
     }
 
-
+    
+    // scrub
+    // permet de remplacer les caractères illégaux en ?
+    public static function scrub(string $return,?string $charset=null):string 
+    {
+        return mb_scrub($return,static::getCharset($charset));
+    }
+    
+    
     // getInternal
     // retourne l'encoding interne de l'extension mbstring
     public static function getInternal():string
@@ -109,7 +109,7 @@ class Encoding extends Root
         return static::$config['charset'] = mb_internal_encoding();
     }
 
-
+    
     // setInternal
     // change l'encoding interne de l'extension mbstring
     public static function setInternal(string $charset):bool
@@ -123,10 +123,10 @@ class Encoding extends Root
 
 
     // getCharset
-    // retourne le charset actuel
-    public static function getCharset():string
+    // retourne le charset actuel ou celui donné en argument si c'est une string
+    public static function getCharset(?string $charset=null):string
     {
-        return static::$config['charset'];
+        return (is_string($charset))? $charset:static::$config['charset'];
     }
 
 

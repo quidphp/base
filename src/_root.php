@@ -135,7 +135,11 @@ trait _root
     // méthode à étendre qui contient les tests de la classe
     public static function classTest(array $data):bool
     {
-        return false;
+        $namespace = static::classNamespace();
+        $name = static::className();
+        $class = Fqcn::append($namespace,'Test',$name);
+        
+        return $class::trigger();
     }
 }
 ?>
