@@ -785,8 +785,12 @@ class Html extends Base\Test
         assert(Base\Html::makeLabel('james',"<textarea id='ID'></textarea>",'ID',1) === "<label for='ID'>james</label><textarea id='ID'></textarea>");
         assert(Base\Html::makeLabel('james',"<textarea id='ID'></textarea>",'ID',2) === "<textarea id='ID'></textarea><label for='ID'>james</label>");
         assert(Base\Html::makeLabel('james',"<textarea id='ID'></textarea>",null,0) === "<label>james<textarea id='ID'></textarea></label>");
-        assert(Base\Html::makeLabel(null,"<textarea id='ID'></textarea>",null,0) === "<label><textarea id='ID'></textarea></label>");
-
+        assert(Base\Html::makeLabel(null,"<textarea id='ID'></textarea>",null,0) === "");
+        assert(Base\Html::makeLabel(array('james','monspan'),"<textarea id='ID'></textarea>",'ID') === "<label for='ID'>james</label><span>monspan</span><textarea id='ID'></textarea>");
+        assert(Base\Html::makeLabel(array('james','monspan'),"<textarea id='ID'></textarea>",'ID',1) === "<label for='ID'>james</label><span>monspan</span><textarea id='ID'></textarea>");
+        assert(Base\Html::makeLabel(array('james','monspan'),"<textarea id='ID'></textarea>",'ID',2) === "<textarea id='ID'></textarea><label for='ID'>james</label><span>monspan</span>");
+        assert(Base\Html::makeLabel(array('james','monspan'),"<textarea id='ID'></textarea>",'ID',0) === "<label for='ID'>james<textarea id='ID'></textarea></label><span>monspan</span>");
+        
         // formWrap
         assert(strlen(Base\Html::formWrap(['test'],['select','bla'])) === 39);
         assert(strlen(Base\Html::formWrap(['test'],['textarea','bla'])) === 76);

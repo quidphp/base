@@ -1412,7 +1412,7 @@ class Date extends Root
     {
         $return = null;
         $ceil = static::$config['floor'];
-        $value = static::time($value,$format,true);
+        $value = static::time($value,$format);
 
         if(is_int($value))
         {
@@ -1445,7 +1445,7 @@ class Date extends Root
     {
         $return = null;
         $ceil = static::$config['ceil'];
-        $value = static::time($value,$format,true);
+        $value = static::time($value,$format);
 
         if(is_int($value))
         {
@@ -2170,8 +2170,8 @@ class Date extends Root
         $return = [];
         $diff = static::daysDiff($min,$max);
         $interval = (is_int($interval))? $interval:1;
-        $min = ($floor === true)? static::floorDay($min):static::time($min,null,true);
-        $max = ($floor === true)? static::floorDay($max):static::time($max,null,true);
+        $min = ($floor === true)? static::floorDay($min):static::time($min,null);
+        $max = ($floor === true)? static::floorDay($max):static::time($max,null);
 
         if(is_int($diff) && is_int($min))
         {
@@ -2278,8 +2278,8 @@ class Date extends Root
         $return = [];
         $diff = static::monthsDiff($min,$max);
         $interval = (is_int($interval))? $interval:1;
-        $min = ($floor === true)? static::floorMonth($min):static::time($min,null,true);
-        $max = ($floor === true)? static::floorMonth($max):static::time($max,null,true);
+        $min = ($floor === true)? static::floorMonth($min):static::time($min,null);
+        $max = ($floor === true)? static::floorMonth($max):static::time($max,null);
 
         if(is_int($diff) && is_int($min))
         {
@@ -2313,6 +2313,7 @@ class Date extends Root
     // possibilité de changer interval
     // si un format est spécifié, le timestamp devient la clé et le format la valeur
     // format seulement utilisé pour le output
+    // peut convertir les années
     public static function monthsInYear($value=null,?int $interval=null,$format=null):array
     {
         $return = [];
@@ -2362,8 +2363,8 @@ class Date extends Root
         $return = [];
         $interval = (is_int($interval))? $interval:1;
         $diff = static::yearsDiff($min,$max);
-        $min = ($floor === true)? static::floorYear($min):static::time($min,null,true);
-        $max = ($floor === true)? static::floorYear($max):static::time($max,null,true);
+        $min = ($floor === true)? static::floorYear($min):static::time($min,null);
+        $max = ($floor === true)? static::floorYear($max):static::time($max,null);
 
         if(is_int($diff) && is_int($min))
         {
@@ -2400,8 +2401,8 @@ class Date extends Root
     {
         $return = [];
         $year = static::year();
-        $before = $year + $before;
-        $after = $year + $after;
+        $before = static::make([$year + $before]);
+        $after = static::make([$year + $after]);
 
         $return = static::years($before,$after,$interval,$format);
 

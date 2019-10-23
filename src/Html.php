@@ -2053,7 +2053,7 @@ class Html extends Root
 
         if(is_array($option))
         {
-            if(array_key_exists('label',$option) && is_scalar($option['label']))
+            if(array_key_exists('label',$option) && !in_array($option['label'],array('',null),true))
             $return = static::makeLabel($option['label'],$return,$attr['id'] ?? null,$option['position'] ?? null);
 
             if(!empty($option['html']))
@@ -2459,26 +2459,38 @@ class Html extends Root
     // construit un label
     // si attr est scalar c'est for
     // position 1 = before, position 2 = after, sinon c'est wrap
+    // si array est de longeur 2, la deuxième valeur est un span à ajouter après le label
+    // le span est un élément après le label, mais hors du label
     public static function makeLabel($label,string $value,$attr=null,$position=1,?array $option=null):string
     {
         $return = '';
+        $span = null;
+        
+        if(is_array($label) && count($label) === 2)
+        {
+            $span = Arr::valueLast($label);
+            $span = static::spanCond($span);
+            $label = current($label);
+        }
+        
+        $label = Obj::cast($label);
         $label = Str::cast($label);
-
-        if(is_string($label))
+        
+        if(is_string($label) && strlen($label))
         {
             if(in_array($position,[1,'before'],true))
-            $return = static::label($label,$attr,$option).$value;
+            $return = static::label($label,$attr,$option).$span.$value;
 
             elseif(in_array($position,[2,'after'],true))
-            $return = $value.static::label($label,$attr,$option);
+            $return = $value.static::label($label,$attr,$option).$span;
 
             else
             {
                 $label = $label.$value;
-                $return = static::label($label,$attr,$option);
+                $return = static::label($label,$attr,$option).$span;
             }
         }
-
+        
         return $return;
     }
 

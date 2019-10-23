@@ -20,7 +20,7 @@ class Path extends Set
             'clean'=>true],
         'separator'=>['/'], // sépareur de chemin, n'utilise pas directorySeparator
         'safe'=>[
-            'length'=>250, // longueur maximale permise pour un path
+            'length'=>500, // longueur maximale permise pour un path
             'regex'=>null, // regex à spécifier
             'extension'=>null, // extension permises, tout est permis si null
             'pattern'=>['./','/.','..','//','?',' ','.\\','\\.','\\\\']], // pattern de chemin non sécuritaire
