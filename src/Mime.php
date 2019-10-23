@@ -153,7 +153,7 @@ class Mime extends Root
             if(!empty($finfo))
             {
                 $mime = finfo_file($finfo,$value);
-                
+
                 if(is_string($mime) && !empty($mime))
                 {
                     if(static::toExtension($mime,true) === 'txt')

@@ -2053,7 +2053,7 @@ class Html extends Root
 
         if(is_array($option))
         {
-            if(array_key_exists('label',$option) && !in_array($option['label'],array('',null),true))
+            if(array_key_exists('label',$option) && !in_array($option['label'],['',null],true))
             $return = static::makeLabel($option['label'],$return,$attr['id'] ?? null,$option['position'] ?? null);
 
             if(!empty($option['html']))
@@ -2465,17 +2465,17 @@ class Html extends Root
     {
         $return = '';
         $span = null;
-        
+
         if(is_array($label) && count($label) === 2)
         {
             $span = Arr::valueLast($label);
             $span = static::spanCond($span);
             $label = current($label);
         }
-        
+
         $label = Obj::cast($label);
         $label = Str::cast($label);
-        
+
         if(is_string($label) && strlen($label))
         {
             if(in_array($position,[1,'before'],true))
@@ -2490,7 +2490,7 @@ class Html extends Root
                 $return = static::label($label,$attr,$option).$span;
             }
         }
-        
+
         return $return;
     }
 
