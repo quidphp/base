@@ -100,7 +100,7 @@ class Attr extends Base\Test
         assert(Base\Attr::parse(['href'=>'https://google.com/en/test.jpg'],Base\Attr::option()) === ['href'=>'https://google.com/en/test.jpg','target'=>'_blank','hreflang'=>'en']);
         assert(Base\Attr::parse(['class'=>'test test2','oddEven'=>1],Base\Attr::option()) === ['class'=>['test','test2','odd']]);
         assert(Base\Attr::parse(['class'=>['test','test2'],'oddEven'=>2],Base\Attr::option()) === ['class'=>['test','test2','even']]);
-        assert(Base\Attr::parse(['james'=>false,'value'=>false,'data-ok'=>false],Base\Attr::option()) === ['value'=>false,'data-ok'=>false]);
+        assert(Base\Attr::parse(['james'=>false,'value'=>false,'data-ok'=>false],Base\Attr::option()) === ['james'=>false,'value'=>false,'data-ok'=>false]);
         assert(Base\Attr::parse(['src'=>'http://google.com/james'],Base\Attr::option()) === ['src'=>'http://google.com/james']);
         assert(Base\Attr::parse(['src'=>'//google.com/james'],Base\Attr::option()) === ['src'=>Base\Request::scheme().'://google.com/james']);
         assert(Base\Attr::parse(['href'=>'https://google.com/en/test.jpg'],Base\Attr::option(['href'=>['active'=>false]])) === ['href'=>'https://google.com/en/test.jpg']);
@@ -178,7 +178,7 @@ class Attr extends Base\Test
         // list
         assert(count(Base\Attr::list($html)) === 4);
         assert(Base\Attr::list($html)[0] === "data-href='test'");
-        assert(count(Base\Attr::list($all)) === 7);
+        assert(count(Base\Attr::list($all)) === 8);
         assert(Base\Attr::list($all,['caseImplode'=>'ucfirst'])[0] === "Selected='selected'");
 
         // prepareStr
@@ -211,7 +211,7 @@ class Attr extends Base\Test
 
         // uni
         assert(Base\Arr::validate('string',Base\Attr::keyValue(Base\Attr::arr($all),Base\Attr::option())));
-        assert(count(Base\Attr::keyValue(Base\Attr::arr($all),Base\Attr::option())) === 7);
+        assert(count(Base\Attr::keyValue(Base\Attr::arr($all),Base\Attr::option())) === 8);
         assert(!empty(Base\Attr::keyValue($all,Base\Attr::option(['caseImplode'=>function($key) { return ucwords($key,'-'); }]))['Data-Test2']));
 
         // getId
@@ -302,7 +302,7 @@ class Attr extends Base\Test
         assert(Base\Attr::implode(Base\Attr::unsetsData(['href'],$attr)) === "class='what ok lala' id='JAMES' href='/test2' style='color: #000; padding: 20px;'");
 
         // emptyData
-        assert(count(Base\Attr::emptyData($all)) === 5);
+        assert(count(Base\Attr::emptyData($all)) === 6);
 
         // selectedUri
         assert(Base\Attr::selectedUri() === ['/test/laa.php'=>true]);
@@ -328,6 +328,7 @@ class Attr extends Base\Test
         Base\Attr::setUriOption(Base\Attr::getUriOption());
 
         // other
+        assert(Base\Attr::str(array('james'=>2,'class'=>false,'id'=>false)) === "james='2'");
         assert(Base\Attr::str(['src'=>'[media]/ok.jpg','style'=>['bgimg'=>'[media]/test.jpg']]) === "src='/media/ok.jpg' style='background-image: url(/media/test.jpg);'");
         assert(Base\Attr::str(['action'=>'[media]/ok.jpg']) === "action='/media/ok.jpg'");
         assert(Base\Attr::str(['href'=>'[media]/ok.jpg']) === "href='/media/ok.jpg'");
@@ -359,7 +360,7 @@ class Attr extends Base\Test
         assert(Base\Attr::arr(['data-test'=>2,'DATA-TEST'=>3],['case'=>null]) === ['data-test'=>2,'DATA-TEST'=>3]);
         assert(Base\Attr::arr(['data'=>['test'=>2],'DATA'=>['TEST'=>3]]) === ['data-test'=>2,'DATA'=>['TEST'=>3]]);
         assert(Base\Attr::arr(['data'=>['test'=>2],'DATA'=>['TEST'=>3]],['case'=>null]) === ['data-test'=>2,'DATA'=>['TEST'=>3]]);
-        assert(Base\Arrs::count(Base\Attr::arr($all)) === 15);
+        assert(Base\Arrs::count(Base\Attr::arr($all)) === 16);
         assert(Base\Attr::arr(['id'=>['test','test2']]) === []);
         assert(Base\Attr::arr(['id'=>'test test2']) === []);
         assert(Base\Attr::arr(['class'=>'TEST','#JAMES','OK','STYLE'=>['PADDING'=>10],'DATA'=>['james'=>true]]) === ['class'=>['TEST','OK'],'STYLE'=>['PADDING'=>10],'DATA'=>['james'=>true],'id'=>'JAMES']);
@@ -383,11 +384,11 @@ class Attr extends Base\Test
         assert(Base\Attr::str($html) === "data-href='test' class='what ok lala' href='/test2' style='color: #000; padding: 20px;'");
         assert(Base\Attr::str(['href'=>'/test/laa.php']) === "href='/test/laa.php' class='selected'");
         assert(Base\Attr::str(['href'=>'/test/ok','src'=>'what/lala'],['uri'=>['append'=>['v'=>200]]]) === "href='/test/ok?v=200' src='/what/lala.jpg?v=200'");
-        assert(Base\Attr::str(['james'=>2,'jami'=>true,'noway'=>false,'li'=>'','data-jami'=>true,'style'=>['ok'=>'','color'=>'#000','padding'=>false]]) === "james='2' li='' data-jami='1' style='color: #000;'");
+        assert(Base\Attr::str(['james'=>2,'jami'=>true,'noway'=>false,'li'=>'','data-jami'=>true,'style'=>['ok'=>'','color'=>'#000','padding'=>false]]) === "james='2' jami='1' noway='0' li='' data-jami='1' style='color: #000;'");
         assert(Base\Attr::str(['src'=>$image],['uri'=>['exists'=>true]]) === "src='".$image."'");
         assert(Base\Attr::str(['src'=>Base\Request::schemeHost().$image],['uri'=>['exists'=>true]]) === "src='".$image."'");
         assert(Base\Attr::str(['href'=>'https://goog.com']) === "href='https://goog.com' target='_blank'");
-        assert(Base\Attr::str(['james'=>false,'value'=>false,'data-ok'=>false]) === "value='0' data-ok='0'");
+        assert(Base\Attr::str(['james'=>false,'value'=>false,'data-ok'=>false]) === "james='0' value='0' data-ok='0'");
         assert(Base\Attr::str(['james'=>'','value'=>'','data-ok'=>'']) === "james='' value='' data-ok=''");
         assert(Base\Attr::str(['href'=>'http://google.com','target'=>false]) === "href='http://google.com'");
         assert(Base\Attr::str(['href'=>'http://google.com','target'=>true]) === "href='http://google.com' target='_blank'");
@@ -396,7 +397,9 @@ class Attr extends Base\Test
         assert(Base\Attr::str(['james','href'=>'test@gmail.com']) === "href='mailto:test@gmail.com' class='james'");
         assert(strlen(Base\Attr::str([true,'james','href'=>'test@gmail.com'])) === 42);
         assert(strlen(Base\Attr::str(['id'=>true,'james','href'=>'test@gmail.com'])) === 58);
-
+        assert(Base\Attr::str(array('multiple'=>true)) === "multiple='multiple'");
+        assert(Base\Attr::str(array('multiple'=>false)) === '');
+        
         // cleanup
         Base\Attr::removeSelectedUri('/test/laa.php');
         Base\Attr::setOption('uri/append',$uriAppend);

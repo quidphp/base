@@ -358,14 +358,14 @@ class Attr extends Listing
                     elseif($key === 'data' && is_array($value))
                     $value = static::parseData($value,$option['case']);
 
-                    elseif($key === 'target' && $value === true)
-                    $value = static::$config['target'] ?? null;
-
-                    elseif($key === 'method' && $value === true)
-                    $value = static::$config['method'] ?? null;
-
-                    elseif(in_array($key,static::$config['mirror'],true) && $value === true)
-                    $value = $key;
+                    elseif($key === 'method' && is_bool($value))
+                    $value = ($value === true)? (static::$config['method'] ?? null):null;
+                    
+                    elseif($key === 'target' && is_bool($value))
+                    $value = ($value === true)? (static::$config['target'] ?? null):null;
+                    
+                    elseif(in_array($key,static::$config['mirror'],true) && is_bool($value))
+                    $value = ($value === true)? $key:null;
 
                     if(is_string($key) && !empty($key) && $value !== null)
                     $return = static::parseMerge([$key=>$value],$return);
@@ -643,16 +643,7 @@ class Attr extends Listing
                 $return[$key] = Validate::pattern($value);
 
                 else
-                {
-                    if(is_bool($value))
-                    {
-                        if(static::isDataKey($key) || $key === 'value')
-                        $return[$key] = $value;
-                    }
-
-                    else
-                    $return[$key] = $value;
-                }
+                $return[$key] = $value;
             }
         }
 

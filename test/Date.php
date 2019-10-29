@@ -614,8 +614,6 @@ class Date extends Base\Test
         assert(Base\Date::amountStr(2,4) === '4 seconds');
         assert(Base\Date::amountStr(2,61) === '1 minute and 1 second');
         assert(Base\Date::amountStr(1,61) === '1 minute');
-        assert(Base\Date::amountStr(2,4321132123) === '136 years and 11 months');
-        assert(Base\Date::amountStr(6,4321132123) === '136 years 11 months 4 days 2 hours 28 minutes and 43 seconds');
 
         // calendar
         $calendar = Base\Date::calendar([2018,6],true,false);

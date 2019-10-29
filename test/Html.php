@@ -387,17 +387,19 @@ class Html extends Base\Test
         assert(strlen(Base\Html::div([Str::class,'lower'],['data-test'=>[Str::class,'lower']])) === 102);
         assert(Base\Html::div($closure,['data'=>$closureArr]) === "<div data-test='ok' data-james='2'>a</div>");
         assert(Base\Html::div($closure,$closureArr) === "<div test='ok' james='2'>a</div>");
-
+        assert(Base\Html::divAnchorOpen('test') === "<div><a href='/test'>");
+        
         // get
         assert(Base\Html::get('a') === 'a');
         assert(Base\Html::get('A') === 'a');
-        assert(Base\Html::get('ANCHOR') === 'a');
+        assert(Base\Html::get('anchor') === 'a');
+        assert(Base\Html::get('ANCHOR') === 'anchor');
         assert(Base\Html::get(null) === null);
-        assert(Base\Html::get(['b','ANCHOR']) === 'a');
+        assert(Base\Html::get(['b','anchor']) === 'a');
 
         // changeLast
         assert(Base\Html::changeLast('a','b') === ['a']);
-        assert(Base\Html::changeLast('ANCHOR',null) === ['a']);
+        assert(Base\Html::changeLast('anchor',null) === ['a']);
         assert(Base\Html::changeLast('a',['div','span']) === ['div','a']);
 
         // arg

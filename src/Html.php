@@ -1032,13 +1032,11 @@ class Html extends Root
 
             if(is_string($tag) && strpos($tag,'<') === false && strpos($tag,'>') === false)
             {
-                $tag = strtolower($tag);
-
                 if(static::isAlias($tag))
                 $return = static::$config['alias'][$tag];
 
                 else
-                $return = $tag;
+                $return = strtolower($tag);
             }
         }
 

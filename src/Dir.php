@@ -102,8 +102,9 @@ class Dir extends Finder
 
     // isOlderThanFrom
     // retourne vrai si le fichier path est plus vieux qu'un des fichiers dans from
+    // support pour dig, false par défaut
     // possible de spécifier in pour les dossiers dans from
-    public static function isOlderThanFrom($path,$from,?array $in=null):bool
+    public static function isOlderThanFrom($path,$from,bool $dig=false,array $in=null):bool
     {
         $return = true;
         $path = File::path($path);
@@ -115,7 +116,7 @@ class Dir extends Finder
             if(!empty($dateModify))
             {
                 $return = false;
-                $from = static::getFileFromFileAndDir($from,$in);
+                $from = static::getFileFromFileAndDir($from,$in,$dig);
 
                 foreach ($from as $v)
                 {
@@ -615,7 +616,7 @@ class Dir extends Finder
     // getFileFromFileAndDir
     // retourne un tableau de fichiers à partir d'une valeur qui peut contenir soit des fichiers ou des directoires
     // possible de spécifier in
-    public static function getFileFromFileAndDir($value,?array $in=null):array
+    public static function getFileFromFileAndDir($value,?array $in=null,bool $dig=false):array
     {
         $return = [];
         $in = (array) $in;
@@ -630,7 +631,7 @@ class Dir extends Finder
 
             elseif(self::is($v))
             {
-                $get = self::getIn($v,$in);
+                $get = self::getIn($v,$in,$dig);
                 $return = Arr::append($return,$get);
             }
         }
