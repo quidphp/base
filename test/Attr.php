@@ -328,7 +328,7 @@ class Attr extends Base\Test
         Base\Attr::setUriOption(Base\Attr::getUriOption());
 
         // other
-        assert(Base\Attr::str(array('james'=>2,'class'=>false,'id'=>false)) === "james='2'");
+        assert(Base\Attr::str(['james'=>2,'class'=>false,'id'=>false]) === "james='2'");
         assert(Base\Attr::str(['src'=>'[media]/ok.jpg','style'=>['bgimg'=>'[media]/test.jpg']]) === "src='/media/ok.jpg' style='background-image: url(/media/test.jpg);'");
         assert(Base\Attr::str(['action'=>'[media]/ok.jpg']) === "action='/media/ok.jpg'");
         assert(Base\Attr::str(['href'=>'[media]/ok.jpg']) === "href='/media/ok.jpg'");
@@ -397,9 +397,9 @@ class Attr extends Base\Test
         assert(Base\Attr::str(['james','href'=>'test@gmail.com']) === "href='mailto:test@gmail.com' class='james'");
         assert(strlen(Base\Attr::str([true,'james','href'=>'test@gmail.com'])) === 42);
         assert(strlen(Base\Attr::str(['id'=>true,'james','href'=>'test@gmail.com'])) === 58);
-        assert(Base\Attr::str(array('multiple'=>true)) === "multiple='multiple'");
-        assert(Base\Attr::str(array('multiple'=>false)) === '');
-        
+        assert(Base\Attr::str(['multiple'=>true]) === "multiple='multiple'");
+        assert(Base\Attr::str(['multiple'=>false]) === '');
+
         // cleanup
         Base\Attr::removeSelectedUri('/test/laa.php');
         Base\Attr::setOption('uri/append',$uriAppend);

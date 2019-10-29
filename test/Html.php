@@ -388,7 +388,7 @@ class Html extends Base\Test
         assert(Base\Html::div($closure,['data'=>$closureArr]) === "<div data-test='ok' data-james='2'>a</div>");
         assert(Base\Html::div($closure,$closureArr) === "<div test='ok' james='2'>a</div>");
         assert(Base\Html::divAnchorOpen('test') === "<div><a href='/test'>");
-        
+
         // get
         assert(Base\Html::get('a') === 'a');
         assert(Base\Html::get('A') === 'a');

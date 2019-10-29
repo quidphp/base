@@ -360,10 +360,10 @@ class Attr extends Listing
 
                     elseif($key === 'method' && is_bool($value))
                     $value = ($value === true)? (static::$config['method'] ?? null):null;
-                    
+
                     elseif($key === 'target' && is_bool($value))
                     $value = ($value === true)? (static::$config['target'] ?? null):null;
-                    
+
                     elseif(in_array($key,static::$config['mirror'],true) && is_bool($value))
                     $value = ($value === true)? $key:null;
 
