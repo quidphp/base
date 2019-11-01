@@ -20,7 +20,6 @@ class Root extends Base\Test
         // root
         assert(Base\Root::classFqcn() === Base\Root::class);
         assert(Base\Root::classNamespace() === 'Quid\Base');
-        assert(Base\Root::classRoot() === 'Quid');
         assert(Base\Root::className() === 'Root');
         assert(Base\Root::classParents() === []);
         assert(count(Base\Root::classHelp()) === 9);

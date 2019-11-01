@@ -384,7 +384,7 @@ class Html extends Base\Test
             return ['test'=>'ok','james'=>2];
         };
         assert(Base\Html::div($closure,['data-test'=>$closureAttr]) === "<div data-test='b'>a</div>");
-        assert(strlen(Base\Html::div([Str::class,'lower'],['data-test'=>[Str::class,'lower']])) === 102);
+        assert(strlen(Base\Html::div([Base\Str::class,'lower'],['data-test'=>[Base\Str::class,'lower']])) === 91);
         assert(Base\Html::div($closure,['data'=>$closureArr]) === "<div data-test='ok' data-james='2'>a</div>");
         assert(Base\Html::div($closure,$closureArr) === "<div test='ok' james='2'>a</div>");
         assert(Base\Html::divAnchorOpen('test') === "<div><a href='/test'>");

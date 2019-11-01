@@ -420,12 +420,12 @@ class Session extends Base\Test
         Base\Session::unsetRemember('username');
         assert(Base\Session::remember() === []);
 
-        // emptyRemember
-        Base\Session::emptyRemember();
+        // rememberEmpty
+        Base\Session::rememberEmpty();
         assert(Base\Session::remember() === null);
         Base\Session::setRemember('username','test');
         assert(Base\Session::remember('username') === 'test');
-        Base\Session::emptyRemember();
+        Base\Session::rememberEmpty();
 
         // set
         Base\Session::set('sadas','bvla');

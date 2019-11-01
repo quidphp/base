@@ -207,11 +207,11 @@ class Fqcn extends Set
     }
 
 
-    // stripRoot
+    // spliceRoot
     // retourne le fqcn sans le root
-    public static function stripRoot($value):string
+    public static function spliceRoot($value,$replace=null):string
     {
-        return static::spliceFirst(static::str($value));
+        return static::spliceFirst(static::str($value),$replace);
     }
 
 

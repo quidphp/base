@@ -36,14 +36,6 @@ trait _root
     }
 
 
-    // classRoot
-    // retourne le root du namespace de la classe
-    final public static function classRoot():string
-    {
-        return Fqcn::root(static::class);
-    }
-
-
     // className
     // retourne le nom de classe, sans le namespace
     final public static function className(bool $lcfirst=false):string
@@ -123,7 +115,7 @@ trait _root
     {
         $return = null;
         $file = static::classFile();
-
+        
         if(!empty($file))
         $return = File::subCount($value,$file);
 
@@ -132,14 +124,36 @@ trait _root
 
 
     // classTest
-    // méthode à étendre qui contient les tests de la classe
-    public static function classTest(array $data):bool
+    // retourne la classe à utiliser pour tester la classe courante
+    // cette méthode peut être étendu
+    public static function classTest():?string
     {
-        $namespace = static::classNamespace();
-        $name = static::className();
-        $class = Fqcn::append($namespace,'Test',$name);
-
-        return $class::trigger();
+        $return = false;
+        $root = Fqcn::root(static::class);
+        
+        if(!empty($root))
+        $return = Fqcn::spliceRoot(static::class,array($root,'Test'));
+        
+        return $return;
+    }
+    
+    
+    // classTestTrigger
+    // méthode pour lancer les tests sur la classe
+    final public static function classTestTrigger(array $data)
+    {
+        $return = false;
+        $class = static::classTest();
+        
+        if(!empty($class) && class_exists($class,true))
+        {
+            $return = $class::trigger($data);
+            
+            if($return === true)
+            $return = $class::classSubCount('assert(');
+        }
+        
+        return $return;
     }
 }
 ?>

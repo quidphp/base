@@ -691,7 +691,7 @@ class Number extends Root
     {
         $return = null;
 
-        if(!empty($args) && is_scalar($args[0]))
+        if(!empty($args))
         {
             $return = static::cast($args[0]);
             unset($args[0]);
@@ -717,7 +717,7 @@ class Number extends Root
     {
         $return = null;
 
-        if(!empty($args) && is_scalar($args[0]))
+        if(!empty($args))
         {
             $return = static::cast($args[0]);
             unset($args[0]);
@@ -743,7 +743,7 @@ class Number extends Root
     {
         $return = null;
 
-        if(count($args) > 1 && is_scalar($args[0]))
+        if(count($args) > 1)
         {
             $return = static::cast($args[0]);
             unset($args[0]);
@@ -769,7 +769,7 @@ class Number extends Root
     {
         $return = null;
 
-        if(count($args) > 1 && is_scalar($args[0]))
+        if(count($args) > 1)
         {
             $return = static::cast($args[0]);
             unset($args[0]);
@@ -795,7 +795,7 @@ class Number extends Root
     {
         $return = null;
 
-        if(count($args) > 1 && is_scalar($args[0]))
+        if(count($args) > 1)
         {
             $return = static::cast($args[0]);
             unset($args[0]);
@@ -828,7 +828,7 @@ class Number extends Root
     {
         $return = null;
 
-        if(count($args) > 1 && is_scalar($args[0]))
+        if(count($args) > 1)
         {
             $return = static::cast($args[0]);
             unset($args[0]);

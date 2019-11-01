@@ -305,7 +305,7 @@ class Number extends Base\Test
         // combine
         assert(Base\Number::combine('+',[1,2],[3,4],[1,2,3]) === [5,8,3]);
         assert(Base\Number::combine('*',[1,2],[3,4],[1,2,3],['test',[]]) === [3,16,3]);
-        assert(Base\Number::combine('/',[1,0],[0,0],[0,2,3]) === [null,null,3]);
+        assert(Base\Number::combine('/',[1,0],[0,0],[0,2,3]) === [null,0,3]);
         assert(Base\Number::combine('>',[1,0],[3,0],[0,2,3]) === [3,2,3]);
 
         // addition

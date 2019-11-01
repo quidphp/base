@@ -82,10 +82,10 @@ class Fqcn extends Base\Test
         assert(Base\Fqcn::namespace('class@anonymous') === null);
         assert(Base\Fqcn::namespace(null) === null);
 
-        // stripRoot
-        assert(Base\Fqcn::stripRoot("\Quid\Base\Test\TestBla") === 'Base\Test\TestBla');
-        assert(Base\Fqcn::stripRoot(['Quid','Base','Test','TestBla']) === 'Base\Test\TestBla');
-        assert(Base\Fqcn::stripRoot(null) === '');
+        // spliceRoot
+        assert(Base\Fqcn::spliceRoot("\Quid\Base\Test\TestBla") === 'Base\Test\TestBla');
+        assert(Base\Fqcn::spliceRoot(['Quid','Base','Test','TestBla']) === 'Base\Test\TestBla');
+        assert(Base\Fqcn::spliceRoot(null) === '');
 
         // sliceMiddle
         assert(Base\Fqcn::sliceMiddle("\Quid\Base\Test\TestBla") === 'Base\Test');

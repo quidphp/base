@@ -1814,9 +1814,9 @@ class Session extends Root
     }
 
 
-    // emptyRemember
+    // rememberEmpty
     // vide le tableau remember
-    public static function emptyRemember():void
+    public static function rememberEmpty():void
     {
         static::set('remember',null);
 
