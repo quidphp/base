@@ -20,8 +20,8 @@ abstract class Test extends Root
     // trigger
     // méthode abstrait à implenter sur les classes qui étendent
     abstract public static function trigger(array $data):bool;
-    
-    
+
+
     // classTest
     // retourne la classe courante
     public static function classTest():?string

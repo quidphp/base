@@ -115,7 +115,7 @@ trait _root
     {
         $return = null;
         $file = static::classFile();
-        
+
         if(!empty($file))
         $return = File::subCount($value,$file);
 
@@ -130,29 +130,29 @@ trait _root
     {
         $return = false;
         $root = Fqcn::root(static::class);
-        
+
         if(!empty($root))
-        $return = Fqcn::spliceRoot(static::class,array($root,'Test'));
-        
+        $return = Fqcn::spliceRoot(static::class,[$root,'Test']);
+
         return $return;
     }
-    
-    
+
+
     // classTestTrigger
     // méthode pour lancer les tests sur la classe
     final public static function classTestTrigger(array $data)
     {
         $return = false;
         $class = static::classTest();
-        
+
         if(!empty($class) && class_exists($class,true))
         {
             $return = $class::trigger($data);
-            
+
             if($return === true)
             $return = $class::classSubCount('assert(');
         }
-        
+
         return $return;
     }
 }
