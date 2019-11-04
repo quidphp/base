@@ -353,9 +353,9 @@ class Finder extends Base\Test
         // host
         assert(Base\Finder::host() === [Base\Request::host()=>[$publicPath,$storagePublicPath]]);
         assert(Base\Finder::host() === Base\File::host());
-        
+
         // emptyHost
-        
+
         // umaskGroupWritable
 
         // concatenateDirFileString

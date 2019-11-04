@@ -193,7 +193,7 @@ class Request extends Root
         $post = static::post();
         $genuine = Html::getGenuineName();
         $genuine2 = Html::getGenuineName(2);
-        
+
         if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post[$genuine]))
         {
             if($two === false || (array_key_exists($genuine2,$post) && !empty($post[$genuine2])))
@@ -203,7 +203,7 @@ class Request extends Root
         return $return;
     }
 
-    
+
     // hasUser
     // retourne vrai si la requête courante contient un user
     public static function hasUser():bool

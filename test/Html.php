@@ -903,7 +903,7 @@ class Html extends Base\Test
         // getGenuineName
         assert(Base\Html::getGenuineName() === '-genuine-');
         assert(Base\Html::getGenuineName(2) === '-genuine-2-');
-        
+
         // wrap
         assert(Base\Html::wrap('divele','tést') === "<div class='element'>tést</div>");
 

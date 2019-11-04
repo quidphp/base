@@ -1845,14 +1845,14 @@ class Html extends Root
     {
         $return = '';
         $method = $attr['method'];
-        
+
         // genuine
         if(!empty($option['genuine']))
         {
             if($option['genuine'] === true || (is_array($option['genuine']) && !empty($option['genuine'][$method])))
             $return .= static::genuine();
         }
-        
+
         // csrf
         if(!empty($option['csrf']))
         {
@@ -2987,7 +2987,7 @@ class Html extends Root
             $value = ($value === null)? Session::csrf():$value;
             $attr = Arr::plus($attr,['name'=>$csrf['name']]);
             $attr['data-csrf'] = true;
-            
+
             if(!empty($value))
             $return = static::input($type,$value,$attr,$option);
         }
@@ -3019,12 +3019,11 @@ class Html extends Root
     public static function getGenuineName(?int $value=null):string
     {
         $return = static::$config['genuine'];
-        
+
         if(is_int($value))
-        $return .= $value."-";
-        
+        $return .= $value.'-';
+
         return $return;
-        
     }
 
 

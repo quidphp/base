@@ -94,7 +94,7 @@ class Request extends Base\Test
 
         // hasValidGenuine
         assert(!Base\Request::hasValidGenuine());
-        
+
         // hasUser
         assert(!Base\Request::hasUser());
 

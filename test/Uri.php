@@ -715,9 +715,9 @@ class Uri extends Base\Test
         assert(Base\Uri::absolute('/ok','notScheme.com') === 'http://notScheme.com/ok');
         assert(Base\Uri::absolute('http://scheme.com/ok') === 'http://scheme.com/ok');
         assert(Base\Uri::absolute('https://notScheme.com/ok') === 'https://notScheme.com/ok');
-        
+
         // emptySchemeStatic
-        
+
         // setNotFound
 
         // setAllAbsolute

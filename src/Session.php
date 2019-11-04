@@ -362,7 +362,7 @@ class Session extends Root
     public static function getPrefix():?string
     {
         $return = static::$config['default']['prefix'] ?? null;
-        
+
         if($return === true)
         {
             $return = static::$config['default']['type'] ?? null;
@@ -773,7 +773,7 @@ class Session extends Root
                 $option['garbageCollect']['lifetime'] = $lifetime;
                 $return['garbageCollect'] = static::setGarbageCollect($option['garbageCollect']);
             }
-            
+
             if(is_array($option['ini']) && !empty($option['ini']))
             $return['ini'] = Ini::sets($option['ini']);
         }
@@ -870,7 +870,7 @@ class Session extends Root
     {
         $return = $value;
         $env = static::$config['default']['env'] ?? null;
-        
+
         if($mode === 'insert')
         $return = $env;
 

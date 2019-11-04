@@ -1305,17 +1305,17 @@ class Finder extends Root
         return (is_array($array))? (static::$host = Arr::replaceCleanNull(static::$host,$array)):static::$host;
     }
 
-    
+
     // emptyHost
     // vide le tableau de host
-    public static function emptyHost():void 
+    public static function emptyHost():void
     {
-        static::$host = array();
-        
+        static::$host = [];
+
         return;
     }
-    
-    
+
+
     // umaskGroupWritable
     // change les permissions par défaut selon si le group doit avoir accès en écriture
     // si write est true, fichier change 644 pour 664

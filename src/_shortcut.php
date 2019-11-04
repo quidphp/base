@@ -113,14 +113,14 @@ trait _shortcut
     {
         return static::$shortcut;
     }
-    
-    
+
+
     // emptyShortcut
     // vide les shortcuts
     public static function emptyShortcut():void
     {
-        static::$shortcut = array();
-        
+        static::$shortcut = [];
+
         return;
     }
 }

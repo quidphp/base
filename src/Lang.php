@@ -173,10 +173,10 @@ class Lang extends Root
     {
         $return = false;
         $current = static::prepareCode($value);
-        
+
         if($all === true)
         $all = static::defaultConfig();
-        
+
         if(is_string($all))
         $all = [$all];
 
