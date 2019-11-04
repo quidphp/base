@@ -1939,7 +1939,17 @@ class Uri extends Root
         return (is_array($array))? (static::$scheme = Arr::replaceCleanNull(static::$scheme,$array)):static::$scheme;
     }
 
-
+    
+    // emptySchemeStatic
+    // vide le tableau de schem static
+    public static function emptySchemeStatic():void
+    {
+        static::$scheme = array();
+        
+        return;
+    }
+    
+    
     // setNotFound
     // lie une callable aux options
     // cette callable sera appelé si une uri existe pas

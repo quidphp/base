@@ -184,21 +184,26 @@ class Request extends Root
     }
 
 
-    // hasEmptyGenuine
+    // hasValidGenuine
     // retourne vrai si post contient la clé genuine et le contenu est vide
-    public static function hasEmptyGenuine():bool
+    // genuine 2 est un champ ajouté sur le front-end
+    public static function hasValidGenuine(bool $two=true):bool
     {
         $return = false;
         $post = static::post();
         $genuine = Html::getGenuineName();
-
-        if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post['genuine']))
-        $return = true;
+        $genuine2 = Html::getGenuineName(2);
+        
+        if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post[$genuine]))
+        {
+            if($two === false || (array_key_exists($genuine2,$post) && !empty($post[$genuine2])))
+            $return = true;
+        }
 
         return $return;
     }
 
-
+    
     // hasUser
     // retourne vrai si la requête courante contient un user
     public static function hasUser():bool

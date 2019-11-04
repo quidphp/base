@@ -895,14 +895,15 @@ class Html extends Base\Test
         assert(strlen(Base\Html::captchaFormWrap('Clique ici','table',['abc','[assertCommon]/ttf.ttf'])) > 3000);
 
         // csrf
-        assert(Base\Html::csrf('bcde') === "<input name='-csrf-' type='hidden' value='bcde'/>");
+        assert(Base\Html::csrf('bcde') === "<input name='-csrf-' data-csrf='1' type='hidden' value='bcde'/>");
 
         // genuine
-        assert(Base\Html::genuine() === "<input name='-genuine-' type='text' maxlength='255'/>");
+        assert(Base\Html::genuine() === "<input name='-genuine-' data-genuine='1' type='text' maxlength='255'/>");
 
         // getGenuineName
         assert(Base\Html::getGenuineName() === '-genuine-');
-
+        assert(Base\Html::getGenuineName(2) === '-genuine-2-');
+        
         // wrap
         assert(Base\Html::wrap('divele','tést') === "<div class='element'>tést</div>");
 

@@ -189,12 +189,6 @@ class Session extends Base\Test
 
         // setDefault
 
-        // setStaticEnv
-
-        // setStaticType
-
-        // setStaticVersion
-
         // info
         assert(count(Base\Session::info()) === 16);
 

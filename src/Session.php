@@ -46,12 +46,12 @@ class Session extends Root
                 'session.sid_length'=>40,
                 'session.sid_bits_per_character'=>5,
                 'session.lazy_write'=>1],
+            'env'=>null, // environnement, pour structureEnv
+            'type'=>null, // type, pour structureType
+            'version'=>null, // version, pour structureVersion
             'versionMatch'=>true, // si la version doit match lors de structureHistory
             'userAgentMatch'=>true, // si le userAgent doit match lors de structureUserAgent
             'fingerprintKeys'=>null], // les clés à utiliser pour générer le fingerprint, si vide pas de validation de fingerprint
-        'env'=>null, // environnement, pour structureEnv
-        'type'=>null, // type, pour structureType
-        'version'=>null, // version, pour structureVersion
         'cacheLimiter'=>['public','private_no_expire','private','nocache',''], // valeur possible pour cacheLimiter
         'module'=>['files','user','memcached','redis','rediscluster'], // valeur possible pour module
         'serializeHandler'=>['php_serialize','php','php_binary','wddx','igbinary'], // valeur possible pour serializer handler
@@ -362,10 +362,10 @@ class Session extends Root
     public static function getPrefix():?string
     {
         $return = static::$config['default']['prefix'] ?? null;
-
+        
         if($return === true)
         {
-            $return = static::$config['type'] ?? null;
+            $return = static::$config['default']['type'] ?? null;
             if(is_string($return))
             $return .= '-';
         }
@@ -391,7 +391,7 @@ class Session extends Root
         $return = false;
 
         if($value === true)
-        $value = static::$config['type'] ?? null;
+        $value = static::$config['default']['type'] ?? null;
 
         if(is_string($value) && !is_numeric($value) && !static::isStarted())
         {
@@ -727,7 +727,10 @@ class Session extends Root
         if(!static::isStarted())
         {
             $return = [];
-            $option = static::$config['default'] = Arrs::replace(static::$config['default'],$option);
+            $keys = array_keys(static::$config['default']);
+            $option = (array) $option;
+            static::$config['default'] = Arrs::replace(static::$config['default'],Arr::getsExists($keys,$option));
+            $option = static::$config['default'];
             $lifetime = null;
 
             if($option['name'] !== null)
@@ -770,42 +773,12 @@ class Session extends Root
                 $option['garbageCollect']['lifetime'] = $lifetime;
                 $return['garbageCollect'] = static::setGarbageCollect($option['garbageCollect']);
             }
-
+            
             if(is_array($option['ini']) && !empty($option['ini']))
             $return['ini'] = Ini::sets($option['ini']);
         }
 
         return $return;
-    }
-
-
-    // setStaticEnv
-    // attribute env au tableau de config static
-    public static function setStaticEnv(string $value):void
-    {
-        static::$config['env'] = $value;
-
-        return;
-    }
-
-
-    // setStaticType
-    // attribute type au tableau de config static
-    public static function setStaticType(string $value):void
-    {
-        static::$config['type'] = $value;
-
-        return;
-    }
-
-
-    // setStaticVersion
-    // attribut version au tableau de config static
-    public static function setStaticVersion(string $value):void
-    {
-        static::$config['version'] = $value;
-
-        return;
     }
 
 
@@ -896,8 +869,8 @@ class Session extends Root
     public static function structureEnv(string $mode,$value=null)
     {
         $return = $value;
-        $env = static::$config['env'] ?? null;
-
+        $env = static::$config['default']['env'] ?? null;
+        
         if($mode === 'insert')
         $return = $env;
 
@@ -914,7 +887,7 @@ class Session extends Root
     public static function structureType(string $mode,$value=null)
     {
         $return = $value;
-        $type = static::$config['type'] ?? null;
+        $type = static::$config['default']['type'] ?? null;
 
         if($mode === 'insert')
         $return = $type;
@@ -933,8 +906,8 @@ class Session extends Root
     protected static function structureVersion(string $mode,$value=null)
     {
         $return = $value;
-        $version = static::$config['version'] ?? null;
-        $versionMatch = static::$config['default']['versionMatch'];
+        $version = static::$config['default']['version'] ?? null;
+        $versionMatch = static::$config['default']['versionMatch'] ?? null;
 
         if($mode === 'insert' || $mode === 'update')
         $return = $version;

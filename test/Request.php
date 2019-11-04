@@ -92,9 +92,9 @@ class Request extends Base\Test
         unset($_GET['ok']);
         assert(!Base\Request::hasData());
 
-        // hasEmptyGenuine
-        assert(!Base\Request::hasEmptyGenuine());
-
+        // hasValidGenuine
+        assert(!Base\Request::hasValidGenuine());
+        
         // hasUser
         assert(!Base\Request::hasUser());
 

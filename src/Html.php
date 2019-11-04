@@ -1845,7 +1845,14 @@ class Html extends Root
     {
         $return = '';
         $method = $attr['method'];
-
+        
+        // genuine
+        if(!empty($option['genuine']))
+        {
+            if($option['genuine'] === true || (is_array($option['genuine']) && !empty($option['genuine'][$method])))
+            $return .= static::genuine();
+        }
+        
         // csrf
         if(!empty($option['csrf']))
         {
@@ -1854,13 +1861,6 @@ class Html extends Root
                 $csrf = Session::csrf();
                 $return .= static::csrf($csrf);
             }
-        }
-
-        // genuine
-        if(!empty($option['genuine']))
-        {
-            if($option['genuine'] === true || (is_array($option['genuine']) && !empty($option['genuine'][$method])))
-            $return .= static::genuine();
         }
 
         return $return;
@@ -2986,7 +2986,8 @@ class Html extends Root
         {
             $value = ($value === null)? Session::csrf():$value;
             $attr = Arr::plus($attr,['name'=>$csrf['name']]);
-
+            $attr['data-csrf'] = true;
+            
             if(!empty($value))
             $return = static::input($type,$value,$attr,$option);
         }
@@ -3005,6 +3006,7 @@ class Html extends Root
         if(!empty($genuine))
         {
             $attr['name'] = $genuine;
+            $attr['data-genuine'] = true;
             $return = static::input($type,null,$attr,$option);
         }
 
@@ -3014,9 +3016,15 @@ class Html extends Root
 
     // getGenuineName
     // retourne le nom pour l'input genuine
-    public static function getGenuineName():string
+    public static function getGenuineName(?int $value=null):string
     {
-        return static::$config['genuine'];
+        $return = static::$config['genuine'];
+        
+        if(is_int($value))
+        $return .= $value."-";
+        
+        return $return;
+        
     }
 
 
