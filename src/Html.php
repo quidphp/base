@@ -2654,7 +2654,7 @@ class Html extends Root
     // hidden
     // génère un ou une série de input hiddens
     // n'affiche rien si attr est null
-    public static function hidden($value,$attr=null,bool $multi=false):string
+    public static function hidden($value,$attr=null,?array $option=null):string
     {
         $return = '';
 
@@ -2665,9 +2665,9 @@ class Html extends Root
         {
             foreach ($value as $v)
             {
-                $return .= static::inputHidden($v,$attr);
+                $return .= static::inputHidden($v,$attr,$option);
 
-                if($multi === false)
+                if(empty($option['multi']))
                 break;
             }
         }
@@ -2758,7 +2758,7 @@ class Html extends Root
 
         $option = static::getOption('input','checkbox',$option);
         $attr = static::getAttr('input','checkbox',$attr);
-
+        
         if(!empty($option['autoHidden']))
         $return .= static::autoHidden($attr,$option);
 
@@ -2893,7 +2893,9 @@ class Html extends Root
         $selected = (array_key_exists('selected',$option))? $option['selected']:null;
         $selected = (!is_array($selected))? [$selected]:$selected;
         $multi = (array_key_exists('multi',$option) && $option['multi'] === true)? true:false;
-        $after = static::hidden($selected,$attr,$multi);
+        $attr = static::getAttrScalar('input',$attr);
+        $attr['data-fakeselect'] = true;
+        $after = static::hidden($selected,$attr,array('multi'=>$multi));
         $title = $option['title'] ?? null;
         $divAttr = ($multi === true)? ['fakemultiselect','data-multiple'=>true]:'fakeselect';
         $divAttr = Attr::append($option['attr'] ?? null,$divAttr);

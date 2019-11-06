@@ -39,7 +39,7 @@ trait _init
 
                     $merge = [];
                     $vars = get_class_vars($class);
-                    foreach ($vars as $key => $value)
+                    foreach (array_reverse($vars) as $key => $value)
                     {
                         if($key !== $prop && strpos($key,$prop) === 0 && is_array($value) && !empty($value))
                         {

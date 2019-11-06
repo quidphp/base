@@ -51,6 +51,7 @@ class Cli extends Root
             'pos'=>['green','bold','black'],
             'neg'=>['white','bold','red'],
             'neutral'=>['black',null,'gray']],
+        'htmlPadding'=>'5px', // valeur utilisé pour le padding de html
         'htmlOverload'=>false // permet d'overload les appels aux méthodes clis avec du html
     ];
 
@@ -103,10 +104,26 @@ class Cli extends Root
 
     // callStatic
     // méthode qui attrape tous les appels à des méthodes non reconnus
-    // renvoie vers preset
-    public static function __callStatic(string $key,array $arg):?string
+    // renvoie vers flushPreset ou vers preset si camelCase a une longueur de deux et commence par get
+    public static function __callStatic(string $key,array $arg)
     {
-        return static::preset($key,...$arg);
+        $return = null;
+        $lower = strtolower($key);
+        $camelCase = null;
+        
+        if($lower !== $key)
+        $camelCase = Str::fromCamelCase($key);
+        
+        if(is_array($camelCase) && count($camelCase) === 2 && $camelCase[0] === 'get')
+        {
+            $key = strtolower($camelCase[1]);
+            $return = static::preset($key,...$arg);
+        }
+        
+        else
+        $return = static::flushPreset($key,...$arg);
+        
+        return $return;
     }
 
 
@@ -141,36 +158,6 @@ class Cli extends Root
             Buffer::flushEcho($eol);
             $value--;
         }
-
-        return;
-    }
-
-
-    // flushPos
-    // écrit et flush une string positive
-    public static function flushPos($value,int $eol=1):void
-    {
-        static::flushPreset('pos',$value,$eol);
-
-        return;
-    }
-
-
-    // flushNeg
-    // écrit et flush une string négative
-    public static function flushNeg($value,int $eol=1):void
-    {
-        static::flushPreset('neg',$value,$eol);
-
-        return;
-    }
-
-
-    // flushNeutral
-    // écrit et flush une string neutre
-    public static function flushNeutral($value,int $eol=1):void
-    {
-        static::flushPreset('neutral',$value,$eol);
 
         return;
     }
@@ -246,7 +233,8 @@ class Cli extends Root
         $style = (is_string($style))? static::getStyle($style,1):null;
         $background = (is_string($background))? static::getBackgroundColor($background,1):null;
         $styles = Arr::replace($foreground,$style,$background);
-
+        $styles['padding'] = static::$config['htmlPadding'] ?? null;
+        
         if(is_string($value) && strlen($value))
         $return .= Html::div($value,['style'=>$styles]);
 

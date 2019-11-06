@@ -35,21 +35,15 @@ class Cli extends Base\Test
         assert(Base\Cli::parseLongOptions('--=3') === []);
 
         // callStatic
-        assert(Base\Cli::pos('test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);
-        assert(Base\Cli::neg('test',2) === $escape.'[1;37m[1m[41mtest[0m'.$eol.$eol);
-        assert(Base\Cli::neutral('test',0) === $escape.'[0;30m[47mtest[0m');
+        assert(Base\Cli::getPos('test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);
+        assert(Base\Cli::getNeg('test',2) === $escape.'[1;37m[1m[41mtest[0m'.$eol.$eol);
+        assert(Base\Cli::getNeutral('test',0) === $escape.'[0;30m[47mtest[0m');
 
         // flush
 
         // flushPreset
 
         // flushEol
-
-        // flushPos
-
-        // flushNeg
-
-        // flushNeutral
 
         // make
         assert(Base\Cli::make('test') === 'test'.$eol);
@@ -60,8 +54,8 @@ class Cli extends Base\Test
         assert(strlen(Base\Cli::makeCli([1,2,3],'red','underline','gray')) === (69 + $eoll));
 
         // makeHtml
-        assert(Base\Cli::makeHtml('meé','cyan','bold','white') === "<div style='color: cyan; font-weight: bold;'>meé</div><br />");
-        assert(strlen(Base\Cli::makeHtml([1,2,3],'red','underline','gray')) === 138);
+        assert(Base\Cli::makeHtml('meé','cyan','bold','white') === "<div style='color: cyan; font-weight: bold; padding: 5px;'>meé</div><br />");
+        assert(strlen(Base\Cli::makeHtml([1,2,3],'red','underline','gray')) === 152);
 
         // preset
         assert(Base\Cli::preset('pos','test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);

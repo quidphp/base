@@ -248,11 +248,11 @@ class Csv extends File
     // écrit dans une ressource fichier csv, content doit être array uni ou multidimensionnel
     // retourne vrai si du contenu a été écrit
     // possible d'ajouter le bom si c'est un fichier utf8 (détecte automatique par excel)
-    // le séparateur newline à l'intérieur des cells est remplacé par un tab, car rien ne semble compatible avec excel
+    // cellSeparator permet de normaliser le caractère newline à l'intérieur d'une cellule
     public static function resWrite(array $content,$value,?array $option=null):bool
     {
         $return = false;
-        $option = Arr::plus(static::getFormat(),['latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\t",'bom'=>false],$option);
+        $option = Arr::plus(static::getFormat(),['latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\n",'bom'=>false],$option);
 
         if(static::isResource($value) && Res::isWritable($value))
         {

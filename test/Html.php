@@ -822,7 +822,7 @@ class Html extends Base\Test
 
         // hidden
         assert(Base\Html::hidden([2,3,4],'name') === "<input name='name' type='hidden' value='2'/>");
-        assert(Base\Html::hidden([2,3,4],'name',true) === "<input name='name' type='hidden' value='2'/><input name='name' type='hidden' value='3'/><input name='name' type='hidden' value='4'/>");
+        assert(Base\Html::hidden([2,3,4],'name',array('multi'=>true)) === "<input name='name[]' type='hidden' value='2'/><input name='name[]' type='hidden' value='3'/><input name='name[]' type='hidden' value='4'/>");
         assert(Base\Html::hidden(2,'name') === "<input name='name' type='hidden' value='2'/>");
 
         // autoHidden
@@ -878,14 +878,14 @@ class Html extends Base\Test
 
         // fakeselect
         $data = [1=>'test',2=>'ok',4=>'welll'];
-        assert(Base\Html::fakeselect($data,'important',['selected'=>4]) === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1'>test</li><li data-value='2'>ok</li><li data-value='4' class='selected'>welll</li></ul></div><input name='important' type='hidden' value='4'/></div>");
-        assert(Base\Html::fakeselect($data) === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1'>test</li><li data-value='2'>ok</li><li data-value='4'>welll</li></ul></div></div>");
-        assert(strlen(Base\Html::fakeselect($data,'important',['title'=>'JAMES','selected'=>4])) === 340);
-        assert(strlen(Base\Html::fakeselect($data,'important',['attr'=>'test'])) === 266);
-        assert(Base\Html::fakeselect(0,'myBool') === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='0'>false</li><li data-value='1'>true</li></ul></div><input name='myBool' type='hidden'/></div>");
+        assert(Base\Html::fakeselect($data,'important',['selected'=>4]) === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1'>test</li><li data-value='2'>ok</li><li data-value='4' class='selected'>welll</li></ul></div><input name='important' data-fakeselect='1' type='hidden' value='4'/></div>");
+        assert(Base\Html::fakeselect($data) === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1'>test</li><li data-value='2'>ok</li><li data-value='4'>welll</li></ul></div><input data-fakeselect='1' type='hidden'/></div>");
+        assert(strlen(Base\Html::fakeselect($data,'important',['title'=>'JAMES','selected'=>4])) === 360);
+        assert(strlen(Base\Html::fakeselect($data,'important',['attr'=>'test'])) === 286);
+        assert(Base\Html::fakeselect(0,'myBool') === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='0'>false</li><li data-value='1'>true</li></ul></div><input name='myBool' data-fakeselect='1' type='hidden'/></div>");
 
         // fakemultiselect
-        assert(Base\Html::fakemultiselect($data,['class'=>'ok','name'=>'important'],['selected'=>[1,2]]) === "<div data-multiple='1' class='fakemultiselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1' class='selected'>test</li><li data-value='2' class='selected'>ok</li><li data-value='4'>welll</li></ul></div><input class='ok' name='important' type='hidden' value='1'/><input class='ok' name='important' type='hidden' value='2'/></div>");
+        assert(Base\Html::fakemultiselect($data,['class'=>'ok','name'=>'important'],['selected'=>[1,2]]) === "<div data-multiple='1' class='fakemultiselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1' class='selected'>test</li><li data-value='2' class='selected'>ok</li><li data-value='4'>welll</li></ul></div><input class='ok' name='important[]' data-fakeselect='1' type='hidden' value='1'/><input class='ok' name='important[]' data-fakeselect='1' type='hidden' value='2'/></div>");
 
         // captcha
         assert(strlen(Base\Html::captcha('abcde','[assertCommon]/ttf.ttf')) > 3000);
