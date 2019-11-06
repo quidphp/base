@@ -110,19 +110,19 @@ class Cli extends Root
         $return = null;
         $lower = strtolower($key);
         $camelCase = null;
-        
+
         if($lower !== $key)
         $camelCase = Str::fromCamelCase($key);
-        
+
         if(is_array($camelCase) && count($camelCase) === 2 && $camelCase[0] === 'get')
         {
             $key = strtolower($camelCase[1]);
             $return = static::preset($key,...$arg);
         }
-        
+
         else
         $return = static::flushPreset($key,...$arg);
-        
+
         return $return;
     }
 
@@ -234,7 +234,7 @@ class Cli extends Root
         $background = (is_string($background))? static::getBackgroundColor($background,1):null;
         $styles = Arr::replace($foreground,$style,$background);
         $styles['padding'] = static::$config['htmlPadding'] ?? null;
-        
+
         if(is_string($value) && strlen($value))
         $return .= Html::div($value,['style'=>$styles]);
 

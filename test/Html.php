@@ -822,7 +822,7 @@ class Html extends Base\Test
 
         // hidden
         assert(Base\Html::hidden([2,3,4],'name') === "<input name='name' type='hidden' value='2'/>");
-        assert(Base\Html::hidden([2,3,4],'name',array('multi'=>true)) === "<input name='name[]' type='hidden' value='2'/><input name='name[]' type='hidden' value='3'/><input name='name[]' type='hidden' value='4'/>");
+        assert(Base\Html::hidden([2,3,4],'name',['multi'=>true]) === "<input name='name[]' type='hidden' value='2'/><input name='name[]' type='hidden' value='3'/><input name='name[]' type='hidden' value='4'/>");
         assert(Base\Html::hidden(2,'name') === "<input name='name' type='hidden' value='2'/>");
 
         // autoHidden

@@ -2758,7 +2758,7 @@ class Html extends Root
 
         $option = static::getOption('input','checkbox',$option);
         $attr = static::getAttr('input','checkbox',$attr);
-        
+
         if(!empty($option['autoHidden']))
         $return .= static::autoHidden($attr,$option);
 
@@ -2895,7 +2895,7 @@ class Html extends Root
         $multi = (array_key_exists('multi',$option) && $option['multi'] === true)? true:false;
         $attr = static::getAttrScalar('input',$attr);
         $attr['data-fakeselect'] = true;
-        $after = static::hidden($selected,$attr,array('multi'=>$multi));
+        $after = static::hidden($selected,$attr,['multi'=>$multi]);
         $title = $option['title'] ?? null;
         $divAttr = ($multi === true)? ['fakemultiselect','data-multiple'=>true]:'fakeselect';
         $divAttr = Attr::append($option['attr'] ?? null,$divAttr);
