@@ -25,7 +25,7 @@ class SlugPath extends Listing
 
     // is
     // retourne vrai si la valeur est un slugPath
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (Validate::regex('alphanumericSlugPath',$value))? true:false;
     }
@@ -33,7 +33,7 @@ class SlugPath extends Listing
 
     // parse
     // parse un tableau pathSlug
-    public static function parse(array $array,array $option):array
+    final public static function parse(array $array,array $option):array
     {
         $return = [];
         $slugOption = $option['slug'] ?? null;
@@ -57,7 +57,7 @@ class SlugPath extends Listing
 
     // prepareArr
     // prépare un array dans la méthode arr
-    public static function prepareArr(array $value,?array $option=null):array
+    final public static function prepareArr(array $value,?array $option=null):array
     {
         return $value;
     }
@@ -66,7 +66,7 @@ class SlugPath extends Listing
     // makeSlugs
     // génère les slugs dans pour le pathSlug
     // traitement particulier de l'option totalLength qui est divisé par le nombre d'entrée dans le tableau
-    public static function makeSlugs(array $array,?array $option=null):array
+    final public static function makeSlugs(array $array,?array $option=null):array
     {
         $return = [];
         $option = Arr::plus(['totalLength'=>null],$option);

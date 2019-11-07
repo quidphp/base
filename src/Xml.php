@@ -22,7 +22,7 @@ class Xml extends Root
 
     // is
     // retourne vrai si la valeur est xml
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (is_string($value) && Str::isStart('<?xml',$value))? true:false;
     }
@@ -31,7 +31,7 @@ class Xml extends Root
     // urlset
     // retourne un urlset, tel que paramétré dans config
     // si inexistant retourne la string
-    public static function urlset(string $value):?string
+    final public static function urlset(string $value):?string
     {
         return Arr::get($value,static::$config['urlset']);
     }

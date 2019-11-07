@@ -15,7 +15,7 @@ use Quid\Base;
 class Attr extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $html = "data-href='test' class='what  ok  lala' href='test2' style='color: #000; padding: 20px;'";

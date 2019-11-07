@@ -19,7 +19,7 @@ class Constant extends Root
 
     // is
     // retourne vrai si la constante est défini
-    public static function is($name):bool
+    final public static function is($name):bool
     {
         return (is_string($name) && defined($name))? true:false;
     }
@@ -27,7 +27,7 @@ class Constant extends Root
 
     // get
     // retourne la valeur d'une constante définie
-    public static function get(string $name)
+    final public static function get(string $name)
     {
         $return = null;
 
@@ -40,7 +40,7 @@ class Constant extends Root
 
     // set
     // crée une nouvelle constante si elle n'existe pas
-    public static function set(string $name,$value,bool $sensitive=false):bool
+    final public static function set(string $name,$value,bool $sensitive=false):bool
     {
         $return = false;
 
@@ -53,7 +53,7 @@ class Constant extends Root
 
     // all
     // retourne toutes les constantes définis
-    public static function all(?string $key=null,bool $categorize=true):array
+    final public static function all(?string $key=null,bool $categorize=true):array
     {
         $return = [];
         $constants = get_defined_constants($categorize);
@@ -73,7 +73,7 @@ class Constant extends Root
 
     // user
     // retourne les constantes définis par l'utilisateur
-    public static function user(bool $categorize=true):array
+    final public static function user(bool $categorize=true):array
     {
         return static::all('user',$categorize);
     }

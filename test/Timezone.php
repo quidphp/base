@@ -15,7 +15,7 @@ use Quid\Base;
 class Timezone extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $timezone = Base\Ini::getTimezone();

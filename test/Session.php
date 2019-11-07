@@ -15,7 +15,7 @@ use Quid\Base;
 class Session extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $cacheExpire = Base\Session::getCacheExpire();

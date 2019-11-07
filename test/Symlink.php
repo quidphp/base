@@ -15,7 +15,7 @@ use Quid\Base;
 class Symlink extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $storagePath = Base\Finder::normalize('[storage]');

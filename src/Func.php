@@ -19,7 +19,7 @@ class Func extends Root
 
     // is
     // retourne vrai si une fonction existe
-    public static function is($name):bool
+    final public static function is($name):bool
     {
         return (is_string($name) && function_exists($name))? true:false;
     }
@@ -27,7 +27,7 @@ class Func extends Root
 
     // call
     // appelle une fonction
-    public static function call(string $name,...$arg)
+    final public static function call(string $name,...$arg)
     {
         $return = false;
 
@@ -40,7 +40,7 @@ class Func extends Root
 
     // all
     // retourne toutes les fonctions définis
-    public static function all():array
+    final public static function all():array
     {
         return get_defined_functions();
     }
@@ -48,7 +48,7 @@ class Func extends Root
 
     // user
     // retourne les fonctions définis par l'utilisateur
-    public static function user():array
+    final public static function user():array
     {
         $return = [];
 

@@ -22,7 +22,7 @@ class Timezone extends Root
 
     // is
     // retourne vrai si la timezone existe
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (is_string($value) && in_array($value,static::all(),true))? true:false;
     }
@@ -30,7 +30,7 @@ class Timezone extends Root
 
     // get
     // retourne le timezone courant
-    public static function get():string
+    final public static function get():string
     {
         return date_default_timezone_get();
     }
@@ -40,7 +40,7 @@ class Timezone extends Root
     // change le timezone courant
     // cette valeur prend le dessus sur le ini default_timezone
     // possible de set dans ini aussi
-    public static function set($value,bool $ini=false):bool
+    final public static function set($value,bool $ini=false):bool
     {
         $return = false;
 
@@ -62,7 +62,7 @@ class Timezone extends Root
 
     // reset
     // remet le timezone de ini comme timezone courant
-    public static function reset(bool $ini=false):bool
+    final public static function reset(bool $ini=false):bool
     {
         $return = false;
         $timezone = null;
@@ -82,7 +82,7 @@ class Timezone extends Root
 
     // name
     // retourne le nom d'un timezone à partir d'une abbréviation
-    public static function name(string $abbr,int $offset=-1,int $isDst=-1):?string
+    final public static function name(string $abbr,int $offset=-1,int $isDst=-1):?string
     {
         return timezone_name_from_abbr($abbr,$offset,$isDst);
     }
@@ -90,7 +90,7 @@ class Timezone extends Root
 
     // location
     // retourne l'emplacement d'un timezone à partir d'un nom de timezone
-    public static function location(string $value):array
+    final public static function location(string $value):array
     {
         return timezone_location_get(timezone_open($value));
     }
@@ -98,7 +98,7 @@ class Timezone extends Root
 
     // transitions
     // retourne les transitions d'un timezone à partir d'un nom de timezone
-    public static function transitions(string $value,?int $begin=null,?int $end=null):array
+    final public static function transitions(string $value,?int $begin=null,?int $end=null):array
     {
         $return = [];
         $timezone = timezone_open($value);
@@ -120,7 +120,7 @@ class Timezone extends Root
     // sunrise
     // retourne l'heure du levée de soleil pour un timezone
     // possible de fournir un tableau avec une clé latitude et une clé longitude
-    public static function sunrise($value,$timestamp=null,$format=null,?array $option=null)
+    final public static function sunrise($value,$timestamp=null,$format=null,?array $option=null)
     {
         $return = null;
         $option = Arr::plus(['zenith'=>Ini::get('date.sunrise_zenith'),'gmtOffset'=>0],$option);
@@ -153,7 +153,7 @@ class Timezone extends Root
     // sunset
     // retourne l'heure du coucher de soleil pour un timezone
     // possible de fournir un tableau avec une clé latitude et une clé longitude
-    public static function sunset($value,$timestamp=null,$format=null,?array $option=null)
+    final public static function sunset($value,$timestamp=null,$format=null,?array $option=null)
     {
         $return = null;
         $option = Arr::plus(['zenith'=>Ini::get('date.sunset_zenith'),'gmtOffset'=>0],$option);
@@ -186,7 +186,7 @@ class Timezone extends Root
     // suninfo
     // retourne les informations relatives au soleil pour une timezone
     // possible de fournir un tableau avec une clé latitude et une clé longitude
-    public static function suninfo($value,$timestamp=null,$format=null):?array
+    final public static function suninfo($value,$timestamp=null,$format=null):?array
     {
         $return = null;
         $timestamp = Date::time($timestamp);
@@ -212,7 +212,7 @@ class Timezone extends Root
 
     // version
     // retourne la version de la db timezone
-    public static function version():string
+    final public static function version():string
     {
         return timezone_version_get();
     }
@@ -220,7 +220,7 @@ class Timezone extends Root
 
     // abbreviations
     // retourne un tableau multidimensionnel avec tous les timezone dans leur abbréviations
-    public static function abbreviations():array
+    final public static function abbreviations():array
     {
         return timezone_abbreviations_list();
     }
@@ -228,7 +228,7 @@ class Timezone extends Root
 
     // all
     // retourne un tableau avec tous les timezone
-    public static function all():array
+    final public static function all():array
     {
         return timezone_identifiers_list();
     }

@@ -30,7 +30,7 @@ class Slug extends Set
 
     // is
     // retourne vrai si la valeur est un slug
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (Validate::regex('alphanumericSlug',$value))? true:false;
     }
@@ -39,7 +39,7 @@ class Slug extends Set
     // keepAlphanumeric
     // enleve tous les caractères non alphanumérique et garde - et _
     // keep permet de garder des caractères supplémentaires
-    public static function keepAlphanumeric(string $value,string $keep=''):string
+    final public static function keepAlphanumeric(string $value,string $keep=''):string
     {
         return preg_replace("/[^A-Za-z0-9_\-$keep]/", '', $value);
     }
@@ -47,7 +47,7 @@ class Slug extends Set
 
     // parse
     // parse le tableau arr de slug
-    public static function parse(array $array,array $option):array
+    final public static function parse(array $array,array $option):array
     {
         $return = [];
         $separator = static::getSeparator(1);
@@ -121,7 +121,7 @@ class Slug extends Set
 
     // parseValue
     // parse une valeur string déjà explosé
-    public static function parseValue(string $return,?bool $replaceAccent=null):string
+    final public static function parseValue(string $return,?bool $replaceAccent=null):string
     {
         $segment = Segment::getDelimiter(null,true);
 

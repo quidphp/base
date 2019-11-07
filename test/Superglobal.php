@@ -15,7 +15,7 @@ use Quid\Base;
 class Superglobal extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $_GET['test'] = 2;

@@ -15,7 +15,7 @@ use Quid\Base;
 class Segment extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // isWrapped
         assert(Base\Segment::isWrapped('[]','[test]'));

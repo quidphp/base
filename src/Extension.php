@@ -23,7 +23,7 @@ class Extension extends Root
 
     // is
     // retourne vrai si une extension est chargé
-    public static function is(string $name):bool
+    final public static function is(string $name):bool
     {
         return (is_string($name) && extension_loaded($name))? true:false;
     }
@@ -31,7 +31,7 @@ class Extension extends Root
 
     // hasOpCache
     // retourne vrai si l'extension opcache est chargé
-    public static function hasOpCache(bool $ini=false):bool
+    final public static function hasOpCache(bool $ini=false):bool
     {
         $return = static::is('Zend OPcache');
 
@@ -44,7 +44,7 @@ class Extension extends Root
 
     // hasXdebug
     // retourne vrai si l'extension xdebug est chargé
-    public static function hasXdebug(bool $ini=false):bool
+    final public static function hasXdebug(bool $ini=false):bool
     {
         $return = static::is('xdebug');
 
@@ -57,7 +57,7 @@ class Extension extends Root
 
     // hasApcu
     // retourne vrai si l'extension apcu est chargé
-    public static function hasApcu(bool $ini=false):bool
+    final public static function hasApcu(bool $ini=false):bool
     {
         $return = static::is('apcu');
 
@@ -70,7 +70,7 @@ class Extension extends Root
 
     // functions
     // retourne les fonctions d'une extension
-    public static function functions(string $name):array
+    final public static function functions(string $name):array
     {
         $return = [];
 
@@ -83,7 +83,7 @@ class Extension extends Root
 
     // important
     // retourn un tableau avec les résultats des méthodes pour détecter opcache, xdebug et apcu
-    public static function important(bool $ini=false):array
+    final public static function important(bool $ini=false):array
     {
         $return = [];
         $return['opcache'] = static::hasOpCache($ini);
@@ -96,7 +96,7 @@ class Extension extends Root
 
     // all
     // retourne les extensions php
-    public static function all():array
+    final public static function all():array
     {
         return get_loaded_extensions();
     }
@@ -104,7 +104,7 @@ class Extension extends Root
 
     // requirement
     // lance les tests de requirement
-    public static function requirement():array
+    final public static function requirement():array
     {
         $return = [];
 

@@ -19,7 +19,7 @@ class Assert extends Root
 
     // call
     // fait une assertion sur une callable
-    public static function call(callable $call,$extra=null):bool
+    final public static function call(callable $call,$extra=null):bool
     {
         return assert($call(),$extra);
     }
@@ -27,7 +27,7 @@ class Assert extends Root
 
     // get
     // retourne la valeur d'une option
-    public static function get(int $key)
+    final public static function get(int $key)
     {
         return assert_options($key);
     }
@@ -35,7 +35,7 @@ class Assert extends Root
 
     // set
     // change la valeur d'une option d'assertion
-    public static function set(int $key,$value):bool
+    final public static function set(int $key,$value):bool
     {
         $return = false;
 
@@ -48,7 +48,7 @@ class Assert extends Root
 
     // setHandler
     // lie un handler lors des erreurs d'assertions
-    public static function setHandler(callable $call):bool
+    final public static function setHandler(callable $call):bool
     {
         return static::set(ASSERT_CALLBACK,$call);
     }

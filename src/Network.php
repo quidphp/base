@@ -19,7 +19,7 @@ class Network extends Root
 
     // isOnline
     // retourne vrai si le hostname est accessible ua port spécifié
-    public static function isOnline(string $hostname,int $port=80,int $timeout=2,&$errno=null,&$errstr=null):bool
+    final public static function isOnline(string $hostname,int $port=80,int $timeout=2,&$errno=null,&$errstr=null):bool
     {
         $return = false;
         $ping = static::ping($hostname,$port,$timeout,$errno,$errstr);
@@ -33,7 +33,7 @@ class Network extends Root
 
     // hasDns
     // retourne vrai si un enregistrement dns existe
-    public static function hasDns(string $hostname,string $type='MX'):bool
+    final public static function hasDns(string $hostname,string $type='MX'):bool
     {
         return checkdnsrr($hostname,$type);
     }
@@ -44,7 +44,7 @@ class Network extends Root
     // utilise fsocketopen, donc n'est pas si précis
     // retour le délai d'attente
     // si le host n'est pas joignable une erreur est généré mais caché par le gestionnaire d'erreur
-    public static function ping(string $hostname,int $port=80,int $timeout=10,&$errno=null,&$errstr=null):?float
+    final public static function ping(string $hostname,int $port=80,int $timeout=10,&$errno=null,&$errstr=null):?float
     {
         $return = null;
         $microtime = Date::microtime();
@@ -62,7 +62,7 @@ class Network extends Root
 
     // dns
     // retourne les enregistrements dns pour un hostname
-    public static function dns(string $hostname,int $type=DNS_ALL):array
+    final public static function dns(string $hostname,int $type=DNS_ALL):array
     {
         return dns_get_record($hostname,$type);
     }
@@ -70,7 +70,7 @@ class Network extends Root
 
     // mx
     // retourne les enregistrements mx pour un hostname
-    public static function mx(string $hostname,bool $weight=true):array
+    final public static function mx(string $hostname,bool $weight=true):array
     {
         $return = [];
         $weights = [];
@@ -87,7 +87,7 @@ class Network extends Root
 
     // getHostname
     // retourne un hostname à partir d'un ip
-    public static function getHostname(string $ip):?string
+    final public static function getHostname(string $ip):?string
     {
         $return = null;
 
@@ -104,7 +104,7 @@ class Network extends Root
 
     // getIp
     // retourne un ip à partir d'un hostname
-    public static function getIp(string $hostname):?string
+    final public static function getIp(string $hostname):?string
     {
         $return = null;
 
@@ -118,7 +118,7 @@ class Network extends Root
 
     // getProtocolNumber
     // retourne un numéro de protocole à partir de son nom
-    public static function getProtocolNumber(string $name):?int
+    final public static function getProtocolNumber(string $name):?int
     {
         $return = null;
 
@@ -132,7 +132,7 @@ class Network extends Root
 
     // getProtocolName
     // retourne un nom de protocole à partir de son numéro
-    public static function getProtocolName(int $no):?string
+    final public static function getProtocolName(int $no):?string
     {
         $return = null;
 
@@ -146,7 +146,7 @@ class Network extends Root
 
     // getServiceName
     // retourne un nom de service en fonction de son port et protocol
-    public static function getServiceName(int $port,string $protocol='tcp'):?string
+    final public static function getServiceName(int $port,string $protocol='tcp'):?string
     {
         $return = null;
 
@@ -160,7 +160,7 @@ class Network extends Root
 
     // getServicePort
     // retourne un port de service en fonction de son nom et protocol
-    public static function getServicePort(string $name,string $protocol='tcp'):?int
+    final public static function getServicePort(string $name,string $protocol='tcp'):?int
     {
         $return = null;
 

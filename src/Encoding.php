@@ -23,7 +23,7 @@ class Encoding extends Root
 
     // is
     // retourne vrai si la chaîne est valide pour un encodage spécifique
-    public static function is($value,?string $charset=null):bool
+    final public static function is($value,?string $charset=null):bool
     {
         return (is_string($value))? mb_check_encoding($value,static::getCharset($charset)):false;
     }
@@ -31,7 +31,7 @@ class Encoding extends Root
 
     // isMb
     // retourne vrai si la valeur est string et multibyte
-    public static function isMb($value):bool
+    final public static function isMb($value):bool
     {
         return (is_string($value) && strlen($value) !== mb_strlen($value,static::$config['charset']))? true:false;
     }
@@ -39,7 +39,7 @@ class Encoding extends Root
 
     // isMbs
     // retourne vrai si une des chaînes est multibyte
-    public static function isMbs(...$values):bool
+    final public static function isMbs(...$values):bool
     {
         $return = false;
 
@@ -58,7 +58,7 @@ class Encoding extends Root
 
     // isCharsetMb
     // retourne vrai si le charset est multibyte
-    public static function isCharsetMb($value):bool
+    final public static function isCharsetMb($value):bool
     {
         return (is_string($value) && Arr::in($value,static::$config['charsetMb'],false))? true:false;
     }
@@ -66,7 +66,7 @@ class Encoding extends Root
 
     // exists
     // retourne vrai si l'encodage existe
-    public static function exists(string $value):bool
+    final public static function exists(string $value):bool
     {
         return (in_array($value,mb_list_encodings(),true))? true:false;
     }
@@ -74,7 +74,7 @@ class Encoding extends Root
 
     // get
     // retourne l'encodage de la chaîne
-    public static function get(string $value,$list=null,bool $strict=false):?string
+    final public static function get(string $value,$list=null,bool $strict=false):?string
     {
         return mb_detect_encoding($value,$list,$strict);
     }
@@ -82,7 +82,7 @@ class Encoding extends Root
 
     // set
     // change l'encodage de la chaîne
-    public static function set(string $return,?string $charset=null,?string $from=null)
+    final public static function set(string $return,?string $charset=null,?string $from=null)
     {
         $charset = static::getCharset($charset);
         $from = static::getCharset($from);
@@ -96,7 +96,7 @@ class Encoding extends Root
 
     // scrub
     // permet de remplacer les caractères illégaux en ?
-    public static function scrub(string $return,?string $charset=null):string
+    final public static function scrub(string $return,?string $charset=null):string
     {
         return mb_scrub($return,static::getCharset($charset));
     }
@@ -104,7 +104,7 @@ class Encoding extends Root
 
     // getInternal
     // retourne l'encoding interne de l'extension mbstring
-    public static function getInternal():string
+    final public static function getInternal():string
     {
         return static::$config['charset'] = mb_internal_encoding();
     }
@@ -112,7 +112,7 @@ class Encoding extends Root
 
     // setInternal
     // change l'encoding interne de l'extension mbstring
-    public static function setInternal(string $charset):bool
+    final public static function setInternal(string $charset):bool
     {
         $return = mb_internal_encoding($charset);
         if($return === true)
@@ -124,7 +124,7 @@ class Encoding extends Root
 
     // getCharset
     // retourne le charset actuel ou celui donné en argument si c'est une string
-    public static function getCharset(?string $charset=null):string
+    final public static function getCharset(?string $charset=null):string
     {
         return (is_string($charset))? $charset:static::$config['charset'];
     }
@@ -132,7 +132,7 @@ class Encoding extends Root
 
     // setCharset
     // change le charset actuel, change aussi dans la classe str
-    public static function setCharset(string $value):void
+    final public static function setCharset(string $value):void
     {
         static::$config['charset'] = $value;
         Str::$config['charset'] = $value;
@@ -143,7 +143,7 @@ class Encoding extends Root
 
     // getMb
     // retourne si multibyte est true ou false
-    public static function getMb($mb=null,$value=null):bool
+    final public static function getMb($mb=null,$value=null):bool
     {
         $return = false;
 
@@ -163,7 +163,7 @@ class Encoding extends Root
     // getMbs
     // retourne si multibyte est true ou false
     // si une des string contient un caractère multibyte, alors retourne true
-    public static function getMbs($mb=null,...$values):bool
+    final public static function getMbs($mb=null,...$values):bool
     {
         $return = false;
 
@@ -182,7 +182,7 @@ class Encoding extends Root
 
     // setMb
     // change la valeur par défaut de mb
-    public static function setMb($mb):bool
+    final public static function setMb($mb):bool
     {
         $return = false;
 
@@ -201,7 +201,7 @@ class Encoding extends Root
 
     // toUtf8
     // alias pour utf8_encode
-    public static function toUtf8(string $value):string
+    final public static function toUtf8(string $value):string
     {
         return utf8_encode($value);
     }
@@ -209,7 +209,7 @@ class Encoding extends Root
 
     // fromUtf8
     // alias pour utf8_decode
-    public static function fromUtf8(string $value):string
+    final public static function fromUtf8(string $value):string
     {
         return utf8_decode($value);
     }
@@ -217,7 +217,7 @@ class Encoding extends Root
 
     // info
     // retourne les informations sur l'extension mbstring
-    public static function info():array
+    final public static function info():array
     {
         return mb_get_info();
     }
@@ -225,7 +225,7 @@ class Encoding extends Root
 
     // all
     // affiche tous les encodages supportés
-    public static function all():array
+    final public static function all():array
     {
         return mb_list_encodings();
     }

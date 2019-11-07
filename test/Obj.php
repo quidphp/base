@@ -16,7 +16,7 @@ namespace Quid\Test\Base
     class Obj extends Base\Test
     {
         // trigger
-        public static function trigger(array $data):bool
+        final public static function trigger(array $data):bool
         {
             // prepare
             $obj = new \stdclass();
@@ -238,42 +238,42 @@ namespace Quid\Test\Base\Obj
 
 
         // parentTraiPubDyn
-        public function parentTraiPubDyn()
+        final public function parentTraiPubDyn()
         {
             return true;
         }
 
 
         // parentTraiProDyn
-        protected function parentTraiProDyn()
+        final protected function parentTraiProDyn()
         {
             return true;
         }
 
 
         // parentTraiPrivDyn
-        private function parentTraiPrivDyn()
+        final private function parentTraiPrivDyn()
         {
             return true;
         }
 
 
         // parentTraiPubStat
-        public static function parentTraiPubStat()
+        final public static function parentTraiPubStat()
         {
             return true;
         }
 
 
         // parentTraiProStat
-        protected static function parentTraiProStat()
+        final protected static function parentTraiProStat()
         {
             return true;
         }
 
 
         // parentTraiPrivStat
-        private static function parentTraiPrivStat()
+        final private static function parentTraiPrivStat()
         {
             return true;
         }
@@ -306,42 +306,42 @@ namespace Quid\Test\Base\Obj
 
 
         // traiPubDyn
-        public function traiPubDyn()
+        final public function traiPubDyn()
         {
             return true;
         }
 
 
         // traiProDyn
-        protected function traiProDyn()
+        final protected function traiProDyn()
         {
             return true;
         }
 
 
         // traiPrivDyn
-        private function traiPrivDyn()
+        final private function traiPrivDyn()
         {
             return true;
         }
 
 
         // traiPubStat
-        public static function traiPubStat()
+        final public static function traiPubStat()
         {
             return true;
         }
 
 
         // traiProStat
-        protected static function traiProStat()
+        final protected static function traiProStat()
         {
             return true;
         }
 
 
         // traiPrivStat
-        private static function traiPrivStat()
+        final private static function traiPrivStat()
         {
             return true;
         }
@@ -391,42 +391,42 @@ namespace Quid\Test\Base\Obj
 
 
         // parentPubDyn
-        public function parentPubDyn()
+        final public function parentPubDyn()
         {
             return true;
         }
 
 
         // parentProDyn
-        protected function parentProDyn()
+        final protected function parentProDyn()
         {
             return true;
         }
 
 
         // parentPrivDyn
-        protected function parentPrivDyn()
+        final protected function parentPrivDyn()
         {
             return true;
         }
 
 
         // parentPubStat
-        public static function parentPubStat()
+        final public static function parentPubStat()
         {
             return true;
         }
 
 
         // parentProStat
-        protected static function parentProStat()
+        final protected static function parentProStat()
         {
             return true;
         }
 
 
         // parentPrivStat
-        private static function parentPrivStat()
+        final private static function parentPrivStat()
         {
             return true;
         }
@@ -449,56 +449,56 @@ namespace Quid\Test\Base\Obj
 
 
         // test
-        public function test()
+        final public function test()
         {
             return true;
         }
 
 
         // abstrai
-        public function abstrai()
+        final public function abstrai()
         {
             return true;
         }
 
 
         // pubDyn
-        public function pubDyn()
+        final public function pubDyn()
         {
             return true;
         }
 
 
         // proDyn
-        protected function proDyn()
+        final protected function proDyn()
         {
             return true;
         }
 
 
         // privDyn
-        private function privDyn()
+        final private function privDyn()
         {
             return true;
         }
 
 
         // pubStat
-        public static function pubStat()
+        final public static function pubStat()
         {
             return true;
         }
 
 
         // proStat
-        protected static function proStat()
+        final protected static function proStat()
         {
             return true;
         }
 
 
         // priStat
-        private static function privStat()
+        final private static function privStat()
         {
             return true;
         }

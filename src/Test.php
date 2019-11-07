@@ -24,7 +24,7 @@ abstract class Test extends Root
 
     // classTest
     // retourne la classe courante
-    public static function classTest():?string
+    final public static function classTest():?string
     {
         return (self::class !== static::class)? static::class:null;
     }

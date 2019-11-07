@@ -15,7 +15,7 @@ use Quid\Base;
 class Date extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $timestamp = 1512139242;

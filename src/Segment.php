@@ -30,7 +30,7 @@ class Segment extends Root
 
     // isWrapped
     // retourne vrai si la valeur est wrap dans le segment
-    public static function isWrapped($delimiter,string $value):bool
+    final public static function isWrapped($delimiter,string $value):bool
     {
         $return = false;
         $delimiter = static::getDelimiter($delimiter);
@@ -44,7 +44,7 @@ class Segment extends Root
 
     // has
     // retourne vrai si la chaîne contient des segments
-    public static function has($delimiter,string $value):bool
+    final public static function has($delimiter,string $value):bool
     {
         $return = false;
         $delimiter = static::getDelimiter($delimiter,false);
@@ -65,7 +65,7 @@ class Segment extends Root
     // getDelimiter
     // retourne le délimiteur à utiliser
     // si escape est true, envoie chaque délimiteur à la méthode escape
-    public static function getDelimiter($delimiter=null,bool $escape=false):?array
+    final public static function getDelimiter($delimiter=null,bool $escape=false):?array
     {
         $return = null;
         $delimiter = ($delimiter === null)? static::def():$delimiter;
@@ -96,7 +96,7 @@ class Segment extends Root
 
     // wrap
     // wrap la chaîne du délimiteur
-    public static function wrap($delimiter,string $return):string
+    final public static function wrap($delimiter,string $return):string
     {
         $delimiter = static::getDelimiter($delimiter);
 
@@ -109,7 +109,7 @@ class Segment extends Root
 
     // strip
     // enlève les délimiteurs enrobbant la chaîne
-    public static function strip($delimiter,string $return):string
+    final public static function strip($delimiter,string $return):string
     {
         $delimiter = static::getDelimiter($delimiter);
 
@@ -122,7 +122,7 @@ class Segment extends Root
 
     // escape
     // ajoute le caractère d'escape si la valeur est dans le tableau config:escape
-    public static function escape(string $return):string
+    final public static function escape(string $return):string
     {
         if(in_array($return,static::$config['escape'],true))
         $return = '\\'.$return;
@@ -133,7 +133,7 @@ class Segment extends Root
 
     // count
     // count le nombre de segments dans la chaîne
-    public static function count($delimiter,string $str):int
+    final public static function count($delimiter,string $str):int
     {
         return count(static::get($delimiter,$str));
     }
@@ -141,7 +141,7 @@ class Segment extends Root
 
     // exists
     // retourne vrai si un ou plusieurs segments existent
-    public static function exists($delimiter,$keys,string $str):bool
+    final public static function exists($delimiter,$keys,string $str):bool
     {
         $return = false;
         $delimiter = static::getDelimiter($delimiter,true);
@@ -172,7 +172,7 @@ class Segment extends Root
 
     // are
     // retourne vrai si les clés de segments fournis représentent tous les segments de la chaîne
-    public static function are($delimiter,array $segments,string $str):bool
+    final public static function are($delimiter,array $segments,string $str):bool
     {
         return (Arr::valuesAre($segments,static::get($delimiter,$str)))? true:false;
     }
@@ -182,7 +182,7 @@ class Segment extends Root
     // retourne un tableau avec tous les segments dans la chaîne
     // possible d'envoyer le tableau de retour dans prepare, si prepare est true
     // si un même segment est présent à multiples reprises, il est retourné plusieurs fois dans le bon ordre
-    public static function get($delimiter,string $str,bool $prepare=false):array
+    final public static function get($delimiter,string $str,bool $prepare=false):array
     {
         $return = [];
         $delimiter = static::getDelimiter($delimiter,true);
@@ -214,7 +214,7 @@ class Segment extends Root
     // set
     // change la valeur d'un segment dans la chaîne
     // support pour column si value est un tableau
-    public static function set($delimiter,$key,$value,string $return):string
+    final public static function set($delimiter,$key,$value,string $return):string
     {
         $replace = [];
         $delimiter = static::getDelimiter($delimiter);
@@ -262,7 +262,7 @@ class Segment extends Root
     // setArray
     // change la valeur d'un segment dans le tableau multidimensionnel
     // support pour column si value est un tableau
-    public static function setArray($delimiter,$key,$value,array $return):array
+    final public static function setArray($delimiter,$key,$value,array $return):array
     {
         foreach ($return as $k => $v)
         {
@@ -280,7 +280,7 @@ class Segment extends Root
     // sets
     // change la valeur de plusieurs segments dans la chaîne
     // support pour column si replace est multidimensionnel
-    public static function sets($delimiter,array $replace,string $return):string
+    final public static function sets($delimiter,array $replace,string $return):string
     {
         $delimiter = static::getDelimiter($delimiter);
 
@@ -322,7 +322,7 @@ class Segment extends Root
     // setsArray
     // change la valeur de plusieurs segments dans le tableau multidimensionnel
     // support pour column si replace est multidimensionnel
-    public static function setsArray($delimiter,array $replace,array $return):array
+    final public static function setsArray($delimiter,array $replace,array $return):array
     {
         foreach ($return as $k => $v)
         {
@@ -339,7 +339,7 @@ class Segment extends Root
 
     // unset
     // enlève un segment de la chaîne
-    public static function unset($delimiter,$key,string $return):string
+    final public static function unset($delimiter,$key,string $return):string
     {
         return static::set($delimiter,$key,'',$return);
     }
@@ -347,7 +347,7 @@ class Segment extends Root
 
     // unsets
     // enlève plusieurs segments de la chaîne
-    public static function unsets($delimiter,array $replace,string $return):string
+    final public static function unsets($delimiter,array $replace,string $return):string
     {
         if(!empty($replace))
         {
@@ -363,7 +363,7 @@ class Segment extends Root
     // prepare
     // prépare la string pour set et sets
     // remplate %lang% par la langue courante, permet de mettre la langue à l'intérieur d'un segment
-    public static function prepare(string $return):string
+    final public static function prepare(string $return):string
     {
         $lang = static::$config['lang'] ?? null;
         if(is_string($lang) && strpos($return,$lang) !== false)
@@ -375,7 +375,7 @@ class Segment extends Root
 
     // def
     // retourne le delimiteur par défaut
-    public static function def():string
+    final public static function def():string
     {
         return static::$config['default'];
     }

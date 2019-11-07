@@ -15,7 +15,7 @@ use Quid\Base;
 class Cli extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $escape = Base\Cli::getEscape();

@@ -46,7 +46,7 @@ class Path extends Set
     // is
     // retourne vrai si la valeur est un path
     // trop de possibilité, alors seulement is_string
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (is_string($value))? true:false;
     }
@@ -54,7 +54,7 @@ class Path extends Set
 
     // isWindowsDrive
     // retourne vrai si l'entrée semble être un drive windows, comme c:
-    public static function isWindowsDrive($value):bool
+    final public static function isWindowsDrive($value):bool
     {
         return (is_string($value) && strlen($value) === 2 && substr($value,1,1) === ':')? true:false;
     }
@@ -62,7 +62,7 @@ class Path extends Set
 
     // hasWindowsDrive
     // retourne vrai si le chemin contient un windows drive
-    public static function hasWindowsDrive($value):bool
+    final public static function hasWindowsDrive($value):bool
     {
         return (is_string($value) && strlen($value) >= 2 && static::isWindowsDrive(substr($value,0,2)))? true:false;
     }
@@ -70,7 +70,7 @@ class Path extends Set
 
     // hasExtension
     // retourne vrai si le chemin a une extension
-    public static function hasExtension(string $path):bool
+    final public static function hasExtension(string $path):bool
     {
         return (!empty(static::extension($path)))? true:false;
     }
@@ -78,7 +78,7 @@ class Path extends Set
 
     // hasLang
     // retourne vrai si le path a une lang
-    public static function hasLang(string $path,?array $option=null):bool
+    final public static function hasLang(string $path,?array $option=null):bool
     {
         return (static::lang($path,$option) !== null)? true:false;
     }
@@ -86,7 +86,7 @@ class Path extends Set
 
     // isSafe
     // retourne vrai si le chemin est sécuritaire
-    public static function isSafe(string $path,?array $option=null):bool
+    final public static function isSafe(string $path,?array $option=null):bool
     {
         $return = true;
         $option = Arr::plus(static::$config['safe'],$option);
@@ -133,7 +133,7 @@ class Path extends Set
 
     // isArgument
     // retourne vrai si le chemin est un argument, donc commence par -
-    public static function isArgument($value):bool
+    final public static function isArgument($value):bool
     {
         $return = false;
 
@@ -151,7 +151,7 @@ class Path extends Set
 
     // isLangCode
     // retourne vrai si la valeur est un code de langue
-    public static function isLangCode(string $value,?array $option=null):bool
+    final public static function isLangCode(string $value,?array $option=null):bool
     {
         $return = false;
         $option = Arr::plus(static::$config['lang'],$option);
@@ -173,7 +173,7 @@ class Path extends Set
 
     // isParent
     // retourne vrai si la valeur parent est un sous-directoire dans le chemin de path
-    public static function isParent(string $parent,string $path):bool
+    final public static function isParent(string $parent,string $path):bool
     {
         $return = false;
         $parent = static::str($parent);
@@ -190,7 +190,7 @@ class Path extends Set
     // retourne vrai si le chemin à une extension du type
     // possibilité de mettre une ou plusieurs target
     // insensible à la case
-    public static function isExtension($target,string $path):bool
+    final public static function isExtension($target,string $path):bool
     {
         $return = false;
 
@@ -208,7 +208,7 @@ class Path extends Set
 
     // isLang
     // retourne vrai si le path à la langue spécifié
-    public static function isLang($value,string $path,?array $option=null):bool
+    final public static function isLang($value,string $path,?array $option=null):bool
     {
         return (is_string($value) && $value === static::lang($path,$option))? true:false;
     }
@@ -216,7 +216,7 @@ class Path extends Set
 
     // isMimeGroup
     // retourne vrai si le mime est du group spécifé
-    public static function isMimeGroup($group,$value):bool
+    final public static function isMimeGroup($group,$value):bool
     {
         return (is_string($value) && is_string($group) && static::mimeGroup($value) === $group)? true:false;
     }
@@ -224,7 +224,7 @@ class Path extends Set
 
     // isMimeFamily
     // retourne vrai si le mime est de la famille spécifiée
-    public static function isMimeFamily($family,$value):bool
+    final public static function isMimeFamily($family,$value):bool
     {
         return (is_string($value) && is_string($family) && in_array($family,static::mimeFamilies($value),true))? true:false;
     }
@@ -232,7 +232,7 @@ class Path extends Set
 
     // isInterface
     // retourne vrai si le chemin semble pointer vers des interfaces
-    public static function isInterface($value):bool
+    final public static function isInterface($value):bool
     {
         return (is_string($value) && Str::isEnd('/contract',static::dirname($value),false))? true:false;
     }
@@ -242,7 +242,7 @@ class Path extends Set
     // permet de normalize un path, change tous les séparateurs pour /
     // retire le protocol file://
     // gère aussi les chemins windows (comme c:)
-    public static function normalize(string $return,bool $stripWrap=false):string
+    final public static function normalize(string $return,bool $stripWrap=false):string
     {
         $separator = static::getSeparator();
 
@@ -274,7 +274,7 @@ class Path extends Set
 
     // prepareStr
     // prépare une string dans la méthode arr, envoie à normalize
-    public static function prepareStr(string $value,array $option):array
+    final public static function prepareStr(string $value,array $option):array
     {
         return parent::prepareStr(static::normalize($value),$option);
     }
@@ -283,7 +283,7 @@ class Path extends Set
     // implode
     // implose un tableau dans une string set
     // gestion particulière si le path commence par un windows drive
-    public static function implode(array $value,?array $option=null):string
+    final public static function implode(array $value,?array $option=null):string
     {
         $return = '';
         $option = (array) $option;
@@ -305,7 +305,7 @@ class Path extends Set
     // info
     // retourne le tableau pathinfo
     // dirname est passé dans separator si pas false, '', ou '.'
-    public static function info(string $path):?array
+    final public static function info(string $path):?array
     {
         $path = static::normalize($path);
         $return = pathinfo($path);
@@ -328,7 +328,7 @@ class Path extends Set
 
     // infoOne
     // retourne une entrée de pathinfo
-    public static function infoOne($key,string $path):?string
+    final public static function infoOne($key,string $path):?string
     {
         if(is_string($key))
         $key = static::getInfoConstant($key);
@@ -352,8 +352,7 @@ class Path extends Set
     // infoDirname
     // méthode utilisé par info et infoOne pour gérer la valeur dirname retournée
     // gestion particulière pour windows drive
-    // méthode protégé
-    protected static function infoDirname(string $value,string $path):?string
+    final protected static function infoDirname(string $value,string $path):?string
     {
         $return = null;
 
@@ -377,7 +376,7 @@ class Path extends Set
     // getInfoConstant
     // retourne la constante à partir d'une string
     // utilisé pour pathinfo
-    public static function getInfoConstant(string $key):?int
+    final public static function getInfoConstant(string $key):?int
     {
         return static::$config['infoConstant'][$key] ?? null;
     }
@@ -385,7 +384,7 @@ class Path extends Set
 
     // getEmptyInfo
     // retourne un tableau vide similaire au retour de pathinfo
-    public static function getEmptyInfo():array
+    final public static function getEmptyInfo():array
     {
         return Arr::valuesAll(null,static::$config['infoConstant']);
     }
@@ -396,7 +395,7 @@ class Path extends Set
     // note: build et les méthodes de path ajoute un slash en début de la chaîne de retour
     // cette classe ajoute toujours un slash au début et enlève celui de la fin
     // utiliser la classe track pour générer des paths respectant les slashs fournis en argument
-    public static function build(array $parse):string
+    final public static function build(array $parse):string
     {
         $return = '';
 
@@ -434,7 +433,7 @@ class Path extends Set
 
     // rebuild
     // reconstruit un path à partir d'une string
-    public static function rebuild(string $return):string
+    final public static function rebuild(string $return):string
     {
         $info = static::info($return);
         $return = static::build($info);
@@ -445,7 +444,7 @@ class Path extends Set
 
     // change
     // change une ou plusieurs partis d'un path
-    public static function change(array $change,string $return):string
+    final public static function change(array $change,string $return):string
     {
         $info = static::info($return);
 
@@ -461,7 +460,7 @@ class Path extends Set
 
     // keep
     // garde une ou plusieurs partis d'un path
-    public static function keep($change,string $return):string
+    final public static function keep($change,string $return):string
     {
         $info = static::info($return);
 
@@ -477,7 +476,7 @@ class Path extends Set
 
     // remove
     // enlève une ou plusieurs partis d'un path
-    public static function remove($change,string $return):string
+    final public static function remove($change,string $return):string
     {
         $info = static::info($return);
 
@@ -499,7 +498,7 @@ class Path extends Set
     // dirname
     // retourne le dirname du path
     // ne tient pas compte des dirname .
-    public static function dirname(string $path):?string
+    final public static function dirname(string $path):?string
     {
         return static::infoOne('dirname',$path);
     }
@@ -507,7 +506,7 @@ class Path extends Set
 
     // changeDirname
     // change le dirname d'un path
-    public static function changeDirname(string $change,string $path):string
+    final public static function changeDirname(string $change,string $path):string
     {
         $return = '';
 
@@ -521,7 +520,7 @@ class Path extends Set
 
     // addDirname
     // ajoute un dirname à un path, le dirname s'ajoute au dirname existant
-    public static function addDirname(string $change,string $path):string
+    final public static function addDirname(string $change,string $path):string
     {
         $return = '';
 
@@ -536,7 +535,7 @@ class Path extends Set
 
     // removeDirname
     // enlève un dirname à un path
-    public static function removeDirname(string $path):string
+    final public static function removeDirname(string $path):string
     {
         return static::normalize(static::basename($path) ?? '',true);
     }
@@ -544,7 +543,7 @@ class Path extends Set
 
     // parent
     // retourne le chemin absolut du parent
-    public static function parent(string $path):?string
+    final public static function parent(string $path):?string
     {
         return static::dirname($path);
     }
@@ -553,7 +552,7 @@ class Path extends Set
     // parents
     // retourne les chemins absolus de tous les parents
     // gestion particulière pour un chemin qui est un windows drive
-    public static function parents(string $path):array
+    final public static function parents(string $path):array
     {
         $return = [];
         $x = static::arr($path);
@@ -576,7 +575,7 @@ class Path extends Set
 
     // basename
     // retourne le basename du path
-    public static function basename(string $path):?string
+    final public static function basename(string $path):?string
     {
         return static::infoOne('basename',$path);
     }
@@ -585,7 +584,7 @@ class Path extends Set
     // changeBasenameExtension
     // ajoute une extension à un basename, ne considère pas comme un path
     // possible de mettre l'extension lowerCase
-    public static function changeBasenameExtension(string $extension,string $basename,bool $lowerCase=false):string
+    final public static function changeBasenameExtension(string $extension,string $basename,bool $lowerCase=false):string
     {
         return static::makeBasename(static::filename($basename),$extension,$lowerCase);
     }
@@ -594,7 +593,7 @@ class Path extends Set
     // makeBasename
     // fait un basename à partir d'un filename et d'une extension
     // l'extension peut être ramené en lowercase
-    public static function makeBasename(string $return,?string $extension=null,bool $lowerCase=false):string
+    final public static function makeBasename(string $return,?string $extension=null,bool $lowerCase=false):string
     {
         if(is_string($extension))
         {
@@ -612,7 +611,7 @@ class Path extends Set
     // safeBasename
     // retourne un nom de fichier sécuritaire à partir d'un path ou basename
     // l'extension est toujours mise en lowercase et est passé dans extensionReplace
-    public static function safeBasename(string $value,?string $extension=null):?string
+    final public static function safeBasename(string $value,?string $extension=null):?string
     {
         $return = null;
 
@@ -643,7 +642,7 @@ class Path extends Set
 
     // parentBasename
     // fonction pour obtenir rapidement le basename du parent
-    public static function parentBasename(string $path):?string
+    final public static function parentBasename(string $path):?string
     {
         $return = null;
 
@@ -657,7 +656,7 @@ class Path extends Set
 
     // addBasename
     // ajoute le basename à un path
-    public static function addBasename(string $change,string $path):string
+    final public static function addBasename(string $change,string $path):string
     {
         $return = '';
 
@@ -671,7 +670,7 @@ class Path extends Set
 
     // changeBasename
     // change le basename d'un path
-    public static function changeBasename(string $change,string $path):string
+    final public static function changeBasename(string $change,string $path):string
     {
         $return = '';
 
@@ -685,7 +684,7 @@ class Path extends Set
 
     // removeBasename
     // enlève un basename à un path
-    public static function removeBasename(string $path):?string
+    final public static function removeBasename(string $path):?string
     {
         return static::normalize(static::dirname($path) ?? '',true);
     }
@@ -693,7 +692,7 @@ class Path extends Set
 
     // filename
     // retourne le filename du path
-    public static function filename(string $path):?string
+    final public static function filename(string $path):?string
     {
         return static::infoOne('filename',$path);
     }
@@ -701,7 +700,7 @@ class Path extends Set
 
     // addFilename
     // ajoute le filename à un path
-    public static function addFilename(string $change,string $path):string
+    final public static function addFilename(string $change,string $path):string
     {
         $return = '';
 
@@ -715,7 +714,7 @@ class Path extends Set
 
     // changeFilename
     // change le filename d'un path
-    public static function changeFilename(string $change,string $path):string
+    final public static function changeFilename(string $change,string $path):string
     {
         $return = '';
 
@@ -730,7 +729,7 @@ class Path extends Set
 
     // removeFilename
     // enlève un filename à un path
-    public static function removeFilename(string $path):string
+    final public static function removeFilename(string $path):string
     {
         return static::remove('filename',$path);
     }
@@ -738,7 +737,7 @@ class Path extends Set
 
     // extension
     // retourne l'extension du path
-    public static function extension(string $path,bool $lowerCase=false):?string
+    final public static function extension(string $path,bool $lowerCase=false):?string
     {
         $return = static::infoOne('extension',$path);
 
@@ -751,7 +750,7 @@ class Path extends Set
 
     // extensionLowerCase
     // retourne le chemin avec l'extension en lowercase
-    public static function extensionLowerCase(string $return):?string
+    final public static function extensionLowerCase(string $return):?string
     {
         $extension = static::extension($return);
         if(is_string($extension))
@@ -767,7 +766,7 @@ class Path extends Set
 
     // extensionReplace
     // permet de remplacer une extension par une autre, utiliser par safeBasename
-    public static function extensionReplace(string $return):string
+    final public static function extensionReplace(string $return):string
     {
         $return = strtolower($return);
 
@@ -780,7 +779,7 @@ class Path extends Set
 
     // addExtension
     // ajoute l'extension à un path
-    public static function addExtension(string $change,string $path):string
+    final public static function addExtension(string $change,string $path):string
     {
         $return = '';
 
@@ -798,7 +797,7 @@ class Path extends Set
 
     // changeExtension
     // change l'extension d'un path
-    public static function changeExtension(string $change,string $path):string
+    final public static function changeExtension(string $change,string $path):string
     {
         $return = '';
 
@@ -817,7 +816,7 @@ class Path extends Set
 
     // removeExtension
     // enlève une extension à un path
-    public static function removeExtension(string $path):string
+    final public static function removeExtension(string $path):string
     {
         return static::remove(['extension'],$path);
     }
@@ -827,7 +826,7 @@ class Path extends Set
     // retourne le mimetype du fichier à partir de son chemin ou extension
     // si path est seulement l'extension, la fonction retourne également le mime type
     // pratique pour les fichiers qui n'existent pas
-    public static function mime(string $value):?string
+    final public static function mime(string $value):?string
     {
         return Mime::fromPath($value);
     }
@@ -836,7 +835,7 @@ class Path extends Set
     // mimeGroup
     // retourne le groupe mimetype du fichier à partir de son extension
     // pour les fichiers qui n'existent pas
-    public static function mimeGroup(string $value):?string
+    final public static function mimeGroup(string $value):?string
     {
         $return = null;
         $mime = static::mime($value);
@@ -851,7 +850,7 @@ class Path extends Set
     // mimeFamilies
     // retourne les familles du mime type du chemin
     // pour les fichiers qui n'existent pas
-    public static function mimeFamilies(string $value):?array
+    final public static function mimeFamilies(string $value):?array
     {
         $return = null;
         $group = static::mimeGroup($value);
@@ -866,7 +865,7 @@ class Path extends Set
     // mimeFamily
     // retourne la première famille du mime type du chemin
     // pour les fichiers qui n'existent pas
-    public static function mimeFamily(string $value):?string
+    final public static function mimeFamily(string $value):?string
     {
         $return = null;
         $group = static::mimeGroup($value);
@@ -880,7 +879,7 @@ class Path extends Set
 
     // lang
     // retourne la lang de l'uri ou null si non existante
-    public static function lang(string $path,?array $option=null):?string
+    final public static function lang(string $path,?array $option=null):?string
     {
         $return = null;
         $value = static::get(0,$path);
@@ -895,7 +894,7 @@ class Path extends Set
     // addLang
     // ajoute un code de langue à un path
     // ajoute même si le code existe déjà
-    public static function addLang(string $value,string $path,?array $option=null):?string
+    final public static function addLang(string $value,string $path,?array $option=null):?string
     {
         $return = null;
 
@@ -908,7 +907,7 @@ class Path extends Set
 
     // changeLang
     // ajoute ou remplace un code de langue à un path
-    public static function changeLang(string $value,string $path,?array $option=null):?string
+    final public static function changeLang(string $value,string $path,?array $option=null):?string
     {
         $return = null;
 
@@ -929,7 +928,7 @@ class Path extends Set
     // removeLang
     // enlève un code de langue à un path
     // retourne le chemin dans tous les cas
-    public static function removeLang(string $return,?array $option=null):string
+    final public static function removeLang(string $return,?array $option=null):string
     {
         $lang = static::lang($return,$option);
 
@@ -943,7 +942,7 @@ class Path extends Set
     // match
     // retourne le chemin sans le code de langue et sans le wrap du début
     // si pas de lang, retourne pathStripStart quand même
-    public static function match(string $return,?array $option=null):string
+    final public static function match(string $return,?array $option=null):string
     {
         $return = static::removeLang($return,$option);
         $return = static::stripStart($return);
@@ -955,7 +954,7 @@ class Path extends Set
     // redirect
     // retourne le chemin de redirection si le path présente des défauts
     // par exemple path unsafe, double slash, slash à la fin ou manque pathLang
-    public static function redirect(string $path,?array $safeOpt=null,?array $langOpt=null):?string
+    final public static function redirect(string $path,?array $safeOpt=null,?array $langOpt=null):?string
     {
         $return = null;
         $path = static::stripStart($path);

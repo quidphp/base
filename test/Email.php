@@ -15,7 +15,7 @@ use Quid\Base;
 class Email extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // is
         assert(Base\Email::is('zwa@test.lz'));

@@ -15,7 +15,7 @@ use Quid\Base;
 class Lang extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         assert(Base\Lang::set('en',['fr','en','de']));

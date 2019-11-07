@@ -25,7 +25,7 @@ class Fqcn extends Set
 
     // is
     // retourne vrai si la valeur est un fqcn
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (Validate::regex('fqcn',$value))? true:false;
     }
@@ -34,7 +34,7 @@ class Fqcn extends Set
     // sameName
     // retourne vrai si les deux valeurs ont le même nom
     // la comparaison est insensible à la case
-    public static function sameName($same,$value):bool
+    final public static function sameName($same,$value):bool
     {
         $return = false;
         $same = (string) static::name($same);
@@ -50,7 +50,7 @@ class Fqcn extends Set
     // sameNamespace
     // retourne vrai si les deux valeurs ont le même namespace
     // la comparaison est insensible à la case
-    public static function sameNamespace($same,$value):bool
+    final public static function sameNamespace($same,$value):bool
     {
         $return = false;
         $same = (string) static::namespace($same);
@@ -66,7 +66,7 @@ class Fqcn extends Set
     // hasNamespace
     // retourne vrai si la valeur a exactement le namespace spécifié
     // la comparaison est insensible à la case
-    public static function hasNamespace($namespace,$value):bool
+    final public static function hasNamespace($namespace,$value):bool
     {
         $return = false;
         $value = static::str($value);
@@ -87,7 +87,7 @@ class Fqcn extends Set
     // inNamespace
     // retourne vrai si la valeur fait partie du namespace spécifié
     // la comparaison est insensible à la case
-    public static function inNamespace($namespace,$value):bool
+    final public static function inNamespace($namespace,$value):bool
     {
         $return = false;
         $namespace = static::str($namespace);
@@ -103,7 +103,7 @@ class Fqcn extends Set
     // str
     // retourne le fully qualified classname
     // value peut être une string, array ou objet
-    public static function str($value,?array $option=null):string
+    final public static function str($value,?array $option=null):string
     {
         $return = '';
 
@@ -123,7 +123,7 @@ class Fqcn extends Set
     // arr
     // retourne le nom fully qualified classname sous la forme d'un array
     // étend la méthode de la classe set
-    public static function arr($value,?array $option=null):array
+    final public static function arr($value,?array $option=null):array
     {
         $return = [];
 
@@ -143,7 +143,7 @@ class Fqcn extends Set
     // root
     // retourne le root du namespace d'un fqcn
     // si la classe n'a pas de namespace, retoure null
-    public static function root($value):?string
+    final public static function root($value):?string
     {
         $return = null;
         $value = static::str($value);
@@ -163,7 +163,7 @@ class Fqcn extends Set
 
     // name
     // retourne le nom d'un fqcn
-    public static function name($value):?string
+    final public static function name($value):?string
     {
         $return = null;
         $value = static::str($value);
@@ -189,7 +189,7 @@ class Fqcn extends Set
 
     // namespace
     // retourne le namespace, sans le nom de classe, d'un fqcn
-    public static function namespace($value):?string
+    final public static function namespace($value):?string
     {
         $return = null;
         $value = static::str($value);
@@ -209,7 +209,7 @@ class Fqcn extends Set
 
     // spliceRoot
     // retourne le fqcn sans le root
-    public static function spliceRoot($value,$replace=null):string
+    final public static function spliceRoot($value,$replace=null):string
     {
         return static::spliceFirst(static::str($value),$replace);
     }
@@ -217,7 +217,7 @@ class Fqcn extends Set
 
     // sliceMiddle
     // retoure un fqcn sans le root et le nom de classe
-    public static function sliceMiddle($value):string
+    final public static function sliceMiddle($value):string
     {
         return static::unsets([0,-1],static::str($value));
     }
@@ -226,7 +226,7 @@ class Fqcn extends Set
     // many
     // prépare une string classe, qui pourrait contenir plusieurs classes ou namespace séparés par +
     // retourne un tableau
-    public static function many($value):array
+    final public static function many($value):array
     {
         $return = [];
         $plusSeperator = static::$config['plusSeperator'];
@@ -254,7 +254,7 @@ class Fqcn extends Set
     // path
     // transforme un fully qualified classname en path
     // utiliser option path pour contrôler le output du path
-    public static function path($value,?array $option=null):?string
+    final public static function path($value,?array $option=null):?string
     {
         $return = null;
         $option = static::option($option);
@@ -276,7 +276,7 @@ class Fqcn extends Set
     // fromPath
     // transforme un chemin en fully qualified classname
     // utiliser option path pour contrôler le input du path
-    public static function fromPath(string $value,?array $option=null):?string
+    final public static function fromPath(string $value,?array $option=null):?string
     {
         $return = null;
         $option = static::option($option);
@@ -298,7 +298,7 @@ class Fqcn extends Set
     // fromPathRoot
     // retourne le fqcn à partir d'un path et d'une string root
     // option root permet de mettre une valeur en prepend du fqcn de retour
-    public static function fromPathRoot(string $value,string $root,?array $option=null):?string
+    final public static function fromPathRoot(string $value,string $root,?array $option=null):?string
     {
         $return = null;
 
@@ -321,7 +321,7 @@ class Fqcn extends Set
     // fromPathRoots
     // retourne le fqcn à partir d'un path et un tableau root
     // si les clés de roots sont string non numérique, append au path
-    public static function fromPathRoots(string $value,array $roots,?array $option=null):?string
+    final public static function fromPathRoots(string $value,array $roots,?array $option=null):?string
     {
         $return = null;
 
@@ -345,7 +345,7 @@ class Fqcn extends Set
     // extension
     // change l'extension du chemin
     // utilise relative, ne force pas l'ajout d'un forward slash au path
-    public static function extension(string $value,$extension=null):string
+    final public static function extension(string $value,$extension=null):string
     {
         return PathTrack::changeExtension($extension ?? static::getOption('extension'),$value);
     }

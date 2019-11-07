@@ -15,7 +15,7 @@ use Quid\Base;
 class Assert extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // call
         assert(Base\Assert::call(function() { return true; },'what'));

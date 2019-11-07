@@ -15,7 +15,7 @@ use Quid\Base;
 class Arrs extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // typecast
         $y = 2;

@@ -26,7 +26,7 @@ class Csv extends File
 
     // getFormat
     // retourne les configuration de format pour csv
-    public static function getFormat():array
+    final public static function getFormat():array
     {
         return static::$config['format'];
     }
@@ -34,7 +34,7 @@ class Csv extends File
 
     // same
     // retourne vrai si toutes les colonnes du tableau csv ont le même count et les mêmes clés
-    public static function same(array $value):bool
+    final public static function same(array $value):bool
     {
         return Column::same($value);
     }
@@ -43,7 +43,7 @@ class Csv extends File
     // clean
     // efface toutes les colonnes qui n'ont pas la même longueur et les mêmes clés que la première
     // si removeEmpty est true, une colonne dont toutes les valeurs sont vides est éliminé
-    public static function clean(array $return,bool $removeEmpty=true):array
+    final public static function clean(array $return,bool $removeEmpty=true):array
     {
         $return = Column::clean($return);
 
@@ -77,7 +77,7 @@ class Csv extends File
     // assoc
     // la première colonne contient les headers
     // le nom des headers est appliqué comme clé à chaque colonne
-    public static function assoc(array $array,bool $clean=false,bool $removeEmpty=true):array
+    final public static function assoc(array $array,bool $clean=false,bool $removeEmpty=true):array
     {
         $return = [];
 
@@ -111,7 +111,7 @@ class Csv extends File
     // inverse de assoc
     // prend un tableau sans headers mais avec clés associatives
     // retourne un tableau avec headers et des colonnes indexés
-    public static function list(array $array):array
+    final public static function list(array $array):array
     {
         $return = [];
 
@@ -139,7 +139,7 @@ class Csv extends File
     // strToArr
     // parse une string ou un tableau de strings csv et retourne un tableau uni ou multi-dimensionnel
     // utilise une resource temporaire pour gérer les enclosures
-    public static function strToArr($value,?array $option=null):?array
+    final public static function strToArr($value,?array $option=null):?array
     {
         $return = null;
         $option = Arr::plus(static::getFormat(),['removeBom'=>false],$option);
@@ -167,7 +167,7 @@ class Csv extends File
     // arrToStr
     // parse un tableau uni ou multi-dimensionnel csv et retourne une string
     // utilise une ressource php temp
-    public static function arrToStr(array $array,?array $option=null):?string
+    final public static function arrToStr(array $array,?array $option=null):?string
     {
         $return = null;
 
@@ -186,7 +186,7 @@ class Csv extends File
     // prepareContent
     // méthode utilisé pour préparer le contenu avant écriture dans une resource csv
     // peut retourner un tableau ou null
-    public static function prepareContent($value):?array
+    final public static function prepareContent($value):?array
     {
         $return = null;
 
@@ -209,7 +209,7 @@ class Csv extends File
     // prepareContentPrepend
     // méthode utilisé pour préparer le contenu à ajouter avant le contenu de la resource
     // peut retourner un tableau ou null
-    public static function prepareContentPrepend(array $prepend,$value,?array $option=null):?array
+    final public static function prepareContentPrepend(array $prepend,$value,?array $option=null):?array
     {
         $return = null;
 
@@ -227,7 +227,7 @@ class Csv extends File
 
     // resLine
     // permet de lire une ligne d'un fichier csv, au pointeur
-    public static function resLine($value,?array $option=null):?array
+    final public static function resLine($value,?array $option=null):?array
     {
         $return = null;
         $option = Arr::plus(static::getFormat(),$option);
@@ -249,7 +249,7 @@ class Csv extends File
     // retourne vrai si du contenu a été écrit
     // possible d'ajouter le bom si c'est un fichier utf8 (détecte automatique par excel)
     // cellSeparator permet de normaliser le caractère newline à l'intérieur d'une cellule
-    public static function resWrite(array $content,$value,?array $option=null):bool
+    final public static function resWrite(array $content,$value,?array $option=null):bool
     {
         $return = false;
         $option = Arr::plus(static::getFormat(),['latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\n",'bom'=>false],$option);

@@ -15,7 +15,7 @@ use Quid\Base;
 class ImageRaster extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $mediaJpg = '[assertMedia]/jpg.jpg';

@@ -15,7 +15,7 @@ use Quid\Base;
 class Uri extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         Base\Uri::setShortcut('tdn','https://tdn.google.com');

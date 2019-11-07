@@ -51,7 +51,7 @@ class Style extends Listing
     // ajoute url pour background-image
     // enlève les clés->valeurs dans un mauvais format
     // les clés du tableau sont insensible à la case
-    public static function parse(array $array,array $option):array
+    final public static function parse(array $array,array $option):array
     {
         $return = [];
 
@@ -97,7 +97,7 @@ class Style extends Listing
 
     // parseUri
     // parse un champ uri (background-image)
-    public static function parseUri($value,array $option):?string
+    final public static function parseUri($value,array $option):?string
     {
         $return = null;
 
@@ -119,7 +119,7 @@ class Style extends Listing
 
     // prepareStr
     // prépare une string dans la méthode arr
-    public static function prepareStr(string $value,array $option):array
+    final public static function prepareStr(string $value,array $option):array
     {
         $return = [];
         $separator = static::getSeparator(1,$option['explode']);
@@ -136,7 +136,7 @@ class Style extends Listing
 
     // explodeStr
     // explode une string style
-    public static function explodeStr(string $value,array $option):array
+    final public static function explodeStr(string $value,array $option):array
     {
         $return = [];
         $separator = static::getSeparator(0,$option['explode']);
@@ -156,7 +156,7 @@ class Style extends Listing
 
     // getUriOption
     // retourne les options uri pour style
-    public static function getUriOption():array
+    final public static function getUriOption():array
     {
         return static::$config['option']['uri'];
     }
@@ -164,7 +164,7 @@ class Style extends Listing
 
     // setUriOption
     // change les options uri pour style
-    public static function setUriOption(array $option):void
+    final public static function setUriOption(array $option):void
     {
         static::$config['option']['uri'] = Uri::option($option);
 

@@ -15,7 +15,7 @@ use Quid\Base;
 class PathTrack extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $_file_ = Base\Finder::normalize('[assertCommon]/class.php');

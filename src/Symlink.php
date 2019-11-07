@@ -19,7 +19,7 @@ class Symlink extends Finder
 
     // is
     // retourne vrai si le chemin est un lien symbolique
-    public static function is($path,bool $makePath=true):bool
+    final public static function is($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -35,7 +35,7 @@ class Symlink extends Finder
 
     // isReadable
     // retourne vrai si le chemin est un lien symbolique existant et lisible
-    public static function isReadable($path,bool $makePath=true):bool
+    final public static function isReadable($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -51,7 +51,7 @@ class Symlink extends Finder
 
     // isWritable
     // retourne vrai si le chemin est un lien symbolique existant et accessible en écriture
-    public static function isWritable($path,bool $makePath=true):bool
+    final public static function isWritable($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -67,7 +67,7 @@ class Symlink extends Finder
 
     // isExecutable
     // retourne vrai le chemin est un lien symbolique existant et éxécutable
-    public static function isExecutable($path,bool $makePath=true):bool
+    final public static function isExecutable($path,bool $makePath=true):bool
     {
         $return = false;
 
@@ -83,7 +83,7 @@ class Symlink extends Finder
 
     // inode
     // retourne le numéro d'inode du symlink
-    public static function inode($path):?int
+    final public static function inode($path):?int
     {
         $return = null;
         $ino = static::statValue('ino',$path);
@@ -97,7 +97,7 @@ class Symlink extends Finder
 
     // permission
     // retourne la permission du symlink
-    public static function permission($path,bool $format=false)
+    final public static function permission($path,bool $format=false)
     {
         $return = null;
         $mode = static::statValue('mode',$path);
@@ -111,7 +111,7 @@ class Symlink extends Finder
 
     // owner
     // retourne l'identifiant du propriétaire du symlink
-    public static function owner($path,bool $format=false)
+    final public static function owner($path,bool $format=false)
     {
         $return = null;
         $owner = static::statValue('uid',$path);
@@ -125,7 +125,7 @@ class Symlink extends Finder
 
     // ownerChange
     // change le owner du symlink
-    public static function ownerChange($user,$path):bool
+    final public static function ownerChange($user,$path):bool
     {
         $return = false;
         $path = static::path($path);
@@ -139,7 +139,7 @@ class Symlink extends Finder
 
     // group
     // retourne l'identifiant du groupe du symlink
-    public static function group($path,bool $format=false)
+    final public static function group($path,bool $format=false)
     {
         $return = null;
         $group = static::statValue('gid',$path);
@@ -153,7 +153,7 @@ class Symlink extends Finder
 
     // groupChange
     // change le groupe du symlink
-    public static function groupChange($group,$path):bool
+    final public static function groupChange($group,$path):bool
     {
         $return = false;
         $path = static::path($path);
@@ -167,7 +167,7 @@ class Symlink extends Finder
 
     // size
     // retourne la taille du symlink
-    public static function size($path,bool $format=false)
+    final public static function size($path,bool $format=false)
     {
         $return = null;
         $size = static::statValue('size',$path);
@@ -181,7 +181,7 @@ class Symlink extends Finder
 
     // dateAccess
     // retourne la dernière date d'accès du symlink
-    public static function dateAccess($path,bool $format=false)
+    final public static function dateAccess($path,bool $format=false)
     {
         $return = null;
         $atime = static::statValue('atime',$path);
@@ -195,7 +195,7 @@ class Symlink extends Finder
 
     // dateModify
     // retourne la date de modification du symlink
-    public static function dateModify($path,bool $format=false)
+    final public static function dateModify($path,bool $format=false)
     {
         $return = null;
         $mtime = static::statValue('mtime',$path);
@@ -209,7 +209,7 @@ class Symlink extends Finder
 
     // dateInodeModify
     // retourne la date de modification de l'inode du symlink
-    public static function dateInodeModify($path,bool $format=false)
+    final public static function dateInodeModify($path,bool $format=false)
     {
         $return = null;
         $ctime = static::statValue('ctime',$path);
@@ -224,7 +224,7 @@ class Symlink extends Finder
     // stat
     // retourne les informations stat du symlink
     // le chemin de symlink n'est pas suivi
-    public static function stat($path,bool $formatKey=false,bool $formatValue=false):?array
+    final public static function stat($path,bool $formatKey=false,bool $formatValue=false):?array
     {
         $return = null;
         $path = static::path($path);
@@ -249,7 +249,7 @@ class Symlink extends Finder
     // info
     // étend la méthode info de finder
     // ajoute la target, enlève size
-    public static function info($path,bool $clearStatCache=false,bool $format=true):?array
+    final public static function info($path,bool $clearStatCache=false,bool $format=true):?array
     {
         $return = null;
         $path = static::path($path);
@@ -281,7 +281,7 @@ class Symlink extends Finder
 
     // get
     // retourne le contenu d'un symlink
-    public static function get($path):?string
+    final public static function get($path):?string
     {
         $return = null;
         $path = static::path($path);
@@ -301,7 +301,7 @@ class Symlink extends Finder
     // getStat
     // retourne le tableau stat du fichier ou directoire référencé, si existant
     // sinon retourne null
-    public static function getStat($path,bool $format=true):?array
+    final public static function getStat($path,bool $format=true):?array
     {
         $return = null;
         $path = static::get($path);
@@ -316,7 +316,7 @@ class Symlink extends Finder
     // getInfo
     // retourne le tableau info du fichier ou directoire référencé, si le symlink existe
     // sinon retourne null
-    public static function getInfo($path,bool $format=true,bool $clearStatCache=false):?array
+    final public static function getInfo($path,bool $format=true,bool $clearStatCache=false):?array
     {
         $return = null;
         $path = static::get($path);
@@ -331,7 +331,7 @@ class Symlink extends Finder
     // set
     // créer un nouveau lien symbolique si la target est lisible et que la destination est créable
     // ne remplace pas si existant par défaut (mais on peut mettre true)
-    public static function set($to,$from,bool $replace=false):bool
+    final public static function set($to,$from,bool $replace=false):bool
     {
         $return = false;
         $to = static::path($to);
@@ -365,7 +365,7 @@ class Symlink extends Finder
     // retourne un tableau multidimensionnel avec status et from
     // un status a null signifie que le symlink existe déjà (vers le bon chemin)
     // support pour catchAll, et dig si from et to sont des directoires
-    public static function sets(array $array,bool $replace=false,bool $dig=false):array
+    final public static function sets(array $array,bool $replace=false,bool $dig=false):array
     {
         $return = [];
 
@@ -413,7 +413,7 @@ class Symlink extends Finder
 
     // touch
     // touche un symlink, pour ce faire il faut le détruire et le recréer
-    public static function touch($path):bool
+    final public static function touch($path):bool
     {
         $return = false;
         $path = static::path($path);
@@ -432,7 +432,7 @@ class Symlink extends Finder
     // rename
     // renome un symlink
     // le symlink garde le même target après avoir été déplacé
-    public static function rename($target,$path):bool
+    final public static function rename($target,$path):bool
     {
         $return = false;
         $target = static::path($target);
@@ -452,7 +452,7 @@ class Symlink extends Finder
     // copy
     // copy un symlink, pour ce faire il faut le recréer
     // le symlink garde la même target, il fait juste se créer à un nouvel endroit
-    public static function copy($to,$path):bool
+    final public static function copy($to,$path):bool
     {
         $return = false;
         $to = static::path($to);
@@ -472,7 +472,7 @@ class Symlink extends Finder
     // unset
     // efface un symlink, n'efface pas le fichier vers lequel il pointe
     // gestion d'un problème sous windows ou il faut utiliser rmdir si le symlink pointe vers un directoire
-    public static function unset($path):bool
+    final public static function unset($path):bool
     {
         $return = false;
         $path = static::path($path);
@@ -492,7 +492,7 @@ class Symlink extends Finder
 
     // reset
     // efface et recrée un symlink avec une nouvelle target
-    public static function reset($target,$path):bool
+    final public static function reset($target,$path):bool
     {
         $return = false;
         $target = static::path($target);

@@ -15,7 +15,7 @@ use Quid\Base;
 class Assoc extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $array = ['test'=>2,1,2];

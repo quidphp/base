@@ -11,7 +11,7 @@ namespace Quid\Base;
 
 // arr
 // class with static methods to work with unidimensional arrays
-final class Arr extends Root
+class Arr extends Root
 {
     // config
     public static $config = [];
@@ -19,7 +19,7 @@ final class Arr extends Root
 
     // typecast
     // typecasts des valeurs par référence
-    public static function typecast(&...$values):void
+    final public static function typecast(&...$values):void
     {
         foreach ($values as &$value)
         {
@@ -37,7 +37,7 @@ final class Arr extends Root
     // cast
     // permet de ramener les valeurs contenus dans un tableau dans leur cast naturel
     // par défaut, seul les nombres sont convertis
-    public static function cast($return,int $numberCast=1,int $boolCast=0):array
+    final public static function cast($return,int $numberCast=1,int $boolCast=0):array
     {
         $return = (array) $return;
         foreach ($return as $key => $value)
@@ -53,7 +53,7 @@ final class Arr extends Root
     // castMore
     // envoie à scalar cast avec paramètre 2,1
     // nombre sont convertis, virgule remplacer par décimal, et les string booleans sont transformés en bool
-    public static function castMore($return):array
+    final public static function castMore($return):array
     {
         $return = (array) $return;
         foreach ($return as $key => $value)
@@ -68,7 +68,7 @@ final class Arr extends Root
 
     // is
     // retourne vrai si la valeur est array
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (is_array($value))? true:false;
     }
@@ -76,7 +76,7 @@ final class Arr extends Root
 
     // isEmpty
     // retourne vrai si la valeur est array et vide
-    public static function isEmpty($value):bool
+    final public static function isEmpty($value):bool
     {
         return (is_array($value) && empty($value))? true:false;
     }
@@ -84,7 +84,7 @@ final class Arr extends Root
 
     // isNotEmpty
     // retourne vrai si la valeur est array et non vide
-    public static function isNotEmpty($value):bool
+    final public static function isNotEmpty($value):bool
     {
         return (is_array($value) && !empty($value))? true:false;
     }
@@ -92,7 +92,7 @@ final class Arr extends Root
 
     // isCleanEmpty
     // retourne vrai si le tableau est vide après avoir utiliser la methode clean
-    public static function isCleanEmpty($value):bool
+    final public static function isCleanEmpty($value):bool
     {
         $return = false;
 
@@ -110,7 +110,7 @@ final class Arr extends Root
     // hasNumericKey
     // retourne vrai si le tableau contient au moins une clé numérique
     // retourne faux si le tableau est vide
-    public static function hasNumericKey($value):bool
+    final public static function hasNumericKey($value):bool
     {
         $return = false;
 
@@ -133,7 +133,7 @@ final class Arr extends Root
     // hasNonNumericKey
     // retourne vrai si le tableau contient au moins une clé non numérique
     // retourne faux si le tableau est vide
-    public static function hasNonNumericKey($value):bool
+    final public static function hasNonNumericKey($value):bool
     {
         $return = false;
 
@@ -155,7 +155,7 @@ final class Arr extends Root
 
     // hasKeyCaseConflict
     // retourne vrai si le tableau contient au moins une clé en conflit de case si le tableau est insensible à la case
-    public static function hasKeyCaseConflict($value):bool
+    final public static function hasKeyCaseConflict($value):bool
     {
         return (is_array($value) && count($value) !== count(self::keysInsensitive($value)))? true:false;
     }
@@ -163,7 +163,7 @@ final class Arr extends Root
 
     // isIndexed
     // retourne vrai si le tableau est vide ou contient seulement des clés numériques
-    public static function isIndexed($value):bool
+    final public static function isIndexed($value):bool
     {
         $return = false;
 
@@ -187,7 +187,7 @@ final class Arr extends Root
 
     // isSequential
     // retourne vrai si le tableau est vide ou séquentielle
-    public static function isSequential($value):bool
+    final public static function isSequential($value):bool
     {
         return (is_array($value) && (empty($value) || array_keys($value) === range(0, (count($value) - 1))))? true:false;
     }
@@ -196,7 +196,7 @@ final class Arr extends Root
     // isAssoc
     // retourne vrai si le tableau est vide ou associatif
     // doit contenir au moins une clé non numérique
-    public static function isAssoc($value):bool
+    final public static function isAssoc($value):bool
     {
         return (is_array($value) && (empty($value) || !self::isIndexed($value)))? true:false;
     }
@@ -204,7 +204,7 @@ final class Arr extends Root
 
     // isUni
     // retourne vrai si le tableau est vide ou unidimensionnel
-    public static function isUni($value):bool
+    final public static function isUni($value):bool
     {
         $return = false;
 
@@ -228,7 +228,7 @@ final class Arr extends Root
 
     // isMulti
     // retourne vrai si le tableau est multidimensionel, retourne faux si vide
-    public static function isMulti($value):bool
+    final public static function isMulti($value):bool
     {
         return Arrs::is($value);
     }
@@ -236,7 +236,7 @@ final class Arr extends Root
 
     // onlyNumeric
     // retourne vrai si le tableau est vide ou a seulement des clés et valeurs numérique
-    public static function onlyNumeric($value):bool
+    final public static function onlyNumeric($value):bool
     {
         $return = false;
 
@@ -260,7 +260,7 @@ final class Arr extends Root
 
     // onlyString
     // retourne vrai si le tableau est vide ou a seulement des clés non numériques et valeurs string
-    public static function onlyString($value):bool
+    final public static function onlyString($value):bool
     {
         $return = false;
 
@@ -284,7 +284,7 @@ final class Arr extends Root
 
     // isSet
     // retourne vrai si le tableau est vide ou contient seulement des clés numériques et valeurs scalar
-    public static function isSet($value)
+    final public static function isSet($value)
     {
         $return = false;
 
@@ -308,7 +308,7 @@ final class Arr extends Root
 
     // isKey
     // retourne vrai si la valeur est une clé
-    public static function isKey($value):bool
+    final public static function isKey($value):bool
     {
         return (is_scalar($value) && !is_bool($value))? true:false;
     }
@@ -317,7 +317,7 @@ final class Arr extends Root
     // isKeyNotEmpty
     // retourne vrai si la valeur est une clé
     // la clé doit avoir une longueur
-    public static function isKeyNotEmpty($value):bool
+    final public static function isKeyNotEmpty($value):bool
     {
         return (is_scalar($value) && !is_bool($value) && strlen((string) $value))? true:false;
     }
@@ -326,7 +326,7 @@ final class Arr extends Root
     // isCount
     // retourne vrai si le count est celui spécifié
     // possible de donner un tableau comme count
-    public static function isCount($count,$value):bool
+    final public static function isCount($count,$value):bool
     {
         $count = (is_array($count))? count($count):$count;
         return (is_int($count) && is_array($value) && count($value) === $count)? true:false;
@@ -336,7 +336,7 @@ final class Arr extends Root
     // isMinCount
     // retourne vrai si le count est plus grand ou égal que celui spécifié
     // possible de donner un tableau comme count
-    public static function isMinCount($count,$value):bool
+    final public static function isMinCount($count,$value):bool
     {
         $count = (is_array($count))? count($count):$count;
         return (is_int($count) && is_array($value) && count($value) >= $count)? true:false;
@@ -346,7 +346,7 @@ final class Arr extends Root
     // isMaxCount
     // retourne vrai si le count est plus petit ou égal que celui spécifié
     // possible de donner un tableau comme count
-    public static function isMaxCount($count,$value):bool
+    final public static function isMaxCount($count,$value):bool
     {
         $count = (is_array($count))? count($count):$count;
         return (is_int($count) && is_array($value) && count($value) <= $count)? true:false;
@@ -355,7 +355,7 @@ final class Arr extends Root
 
     // same
     // compare que les tableaux ont toutes les clés du premier et ont le même count
-    public static function same(...$values):bool
+    final public static function same(...$values):bool
     {
         $return = false;
 
@@ -381,7 +381,7 @@ final class Arr extends Root
 
     // sameCount
     // compare que les tableaux ont le même compte que le premier
-    public static function sameCount(...$values):bool
+    final public static function sameCount(...$values):bool
     {
         $return = false;
 
@@ -407,7 +407,7 @@ final class Arr extends Root
 
     // sameKey
     // compare que les tableaux ont toutes les clés du premier
-    public static function sameKey(...$values):bool
+    final public static function sameKey(...$values):bool
     {
         $return = false;
 
@@ -433,7 +433,7 @@ final class Arr extends Root
 
     // sameKeyValue
     // compare que les tableaux ont toutes les clés et valeurs du premier, pas nécessairement dans le même ordre
-    public static function sameKeyValue(...$values):bool
+    final public static function sameKeyValue(...$values):bool
     {
         $return = false;
 
@@ -457,7 +457,7 @@ final class Arr extends Root
 
     // hasValueStart
     // retourne vrai si une des valeurs du tableaux est le début de la valeur donné en premier argument
-    public static function hasValueStart(string $value,array $array,bool $sensitive=true):bool
+    final public static function hasValueStart(string $value,array $array,bool $sensitive=true):bool
     {
         $return = false;
 
@@ -477,7 +477,7 @@ final class Arr extends Root
     // plus
     // combine plusieurs array ensemble + rapide
     // fonctionne si une valeur n'est pas un tableau
-    public static function plus(...$values):array
+    final public static function plus(...$values):array
     {
         if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
         $return = $values[0];
@@ -503,7 +503,7 @@ final class Arr extends Root
     // merge
     // wrapper pour array_merge
     // fonctionne si une valeur n'est pas un tableau
-    public static function merge(...$values):array
+    final public static function merge(...$values):array
     {
         self::typecast(...$values);
         return array_merge(...$values);
@@ -513,7 +513,7 @@ final class Arr extends Root
     // replace
     // wrapper pour array_replace
     // fonctionne si une valeur n'est pas un tableau
-    public static function replace(...$values):array
+    final public static function replace(...$values):array
     {
         if(count($values) === 2 && is_array($values[0]) && ($values[1] === null || $values[0] === $values[1]))
         $return = $values[0];
@@ -535,7 +535,7 @@ final class Arr extends Root
     // bigger remplacement seulement si la nouvelle valeur scalar ou array est plus grande que celle dans le premier tableau
     // smaller remplacement seulement si la nouvelle valeur scalar ou array est plus petite que celle dans le premier tableau
     // cette méthode n'est pas récursive
-    public static function replaceIf(string $type,...$values):array
+    final public static function replaceIf(string $type,...$values):array
     {
         if(in_array($type,['exists','notExists','bigger','smaller'],true))
         {
@@ -585,7 +585,7 @@ final class Arr extends Root
     // comme array_replace
     // efface toutes les clés du tableau de retour dont la valeur est null
     // fonctionne si une valeur n'est pas un tableau
-    public static function replaceCleanNull(...$values):array
+    final public static function replaceCleanNull(...$values):array
     {
         return self::cleanNull(self::replace(...$values));
     }
@@ -595,7 +595,7 @@ final class Arr extends Root
     // permet de unshift plusieurs valeurs au début d'un tableau, l'ordre des values est respecté
     // la première valeur n'a pas à être un tableau
     // aussi n'est pas passé par référence
-    public static function unshift($return,...$values)
+    final public static function unshift($return,...$values)
     {
         self::typecast($return);
 
@@ -612,7 +612,7 @@ final class Arr extends Root
     // permet de push plusieurs valeurs à la fin du tableau return, l'ordre des values est respecté
     // la première valeur n'a pas à être un tableau
     // aussi n'est pas passé par référence
-    public static function push($return,...$values):array
+    final public static function push($return,...$values):array
     {
         self::typecast($return);
 
@@ -629,7 +629,7 @@ final class Arr extends Root
     // prepend les values au début du tableau return, l'ordre des values est respecté
     // si une valeur secondaire est un array, les clés -> valeurs sont ajoutés au premier niveau du tableau de retour
     // les clés numériques existantes sont conservés, les clés string sont remplacés
-    public static function prepend($return,...$values)
+    final public static function prepend($return,...$values)
     {
         $values[] = $return;
         return self::append(...$values);
@@ -638,7 +638,7 @@ final class Arr extends Root
 
     // iprepend
     // comme prepend mais les clés sont insensibles à la case
-    public static function iprepend($return,...$values)
+    final public static function iprepend($return,...$values)
     {
         $values[] = $return;
         return self::iappend(...$values);
@@ -649,7 +649,7 @@ final class Arr extends Root
     // similaire à array_push
     // si une valeur secondaire est un array, les clés -> valeurs sont ajoutés au premier niveau du tableau de retour
     // les clés numériques existantes sont conservés, les clés string sont remplacés
-    public static function append($return,...$values):array
+    final public static function append($return,...$values):array
     {
         self::typecast($return);
         self::typecast(...$values);
@@ -672,7 +672,7 @@ final class Arr extends Root
 
     // iappend
     // comme append mais les clés sont insensibles à la case
-    public static function iappend($return,...$values):array
+    final public static function iappend($return,...$values):array
     {
         self::typecast($return);
         self::typecast(...$values);
@@ -701,7 +701,7 @@ final class Arr extends Root
     // appendUnique
     // append des valeurs si non existantes dans le tableau
     // les clés numériques existantes sont conservés, les clés string sont remplacés
-    public static function appendUnique($return,...$values):array
+    final public static function appendUnique($return,...$values):array
     {
         self::typecast($return);
         self::typecast(...$values);
@@ -728,7 +728,7 @@ final class Arr extends Root
     // appendiUnique
     // pousse des valeurs si non existantes dans le tableau de façon insensible à la case
     // les clés numériques existantes sont conservés, les clés string sont remplacés
-    public static function appendiUnique($return,...$values):array
+    final public static function appendiUnique($return,...$values):array
     {
         self::typecast($return);
         self::typecast(...$values);
@@ -754,7 +754,7 @@ final class Arr extends Root
 
     // smart
     // si la valeur est un tableau et contient un seul element retourne l'élément, sinon retourne le tableau
-    public static function smart(array $return):array
+    final public static function smart(array $return):array
     {
         if(count($return) === 1)
         $return = current($return);
@@ -766,7 +766,7 @@ final class Arr extends Root
     // clean
     // enlève des éléments du tableau vraiment vide
     // si reset est true, reset les clés du tableau
-    public static function clean(array $return,bool $reset=false):array
+    final public static function clean(array $return,bool $reset=false):array
     {
         foreach ($return as $k => $v)
         {
@@ -784,7 +784,7 @@ final class Arr extends Root
     // cleanEmpty
     // enlève des éléments du tableau vide
     // si reset est true, reset les clés du tableau
-    public static function cleanEmpty(array $return,bool $reset=false):array
+    final public static function cleanEmpty(array $return,bool $reset=false):array
     {
         foreach ($return as $k => $v)
         {
@@ -802,7 +802,7 @@ final class Arr extends Root
     // cleanNull
     // enlève les clés dont la valeur est null
     // si reset est true, reset les clés du tableau
-    public static function cleanNull(array $return,bool $reset=false):array
+    final public static function cleanNull(array $return,bool $reset=false):array
     {
         foreach ($return as $k => $v)
         {
@@ -820,7 +820,7 @@ final class Arr extends Root
     // cleanNullBool
     // enlève les clés dont la valeur est null ou bool
     // si reset est true, reset les clés du tableau
-    public static function cleanNullBool(array $return,bool $reset=false):array
+    final public static function cleanNullBool(array $return,bool $reset=false):array
     {
         foreach ($return as $k => $v)
         {
@@ -837,7 +837,7 @@ final class Arr extends Root
 
     // reallyEmptyToNull
     // change les éléments vides du tableau pour null
-    public static function reallyEmptyToNull(array $return):array
+    final public static function reallyEmptyToNull(array $return):array
     {
         foreach ($return as $k => $v)
         {
@@ -851,7 +851,7 @@ final class Arr extends Root
 
     // trim
     // fait un trim sur les clés et/ou valeurs string du tableau
-    public static function trim(array $array,bool $key=false,bool $value=true):array
+    final public static function trim(array $array,bool $key=false,bool $value=true):array
     {
         $return = [];
 
@@ -873,7 +873,7 @@ final class Arr extends Root
     // trimClean
     // fait trim et clean sur le tableau
     // trimKey permet de faire un trim sur les clés aussi
-    public static function trimClean(array $return,?bool $trimKey=false,?bool $trim=true,?bool $clean=true,?bool $reset=false):array
+    final public static function trimClean(array $return,?bool $trimKey=false,?bool $trim=true,?bool $clean=true,?bool $reset=false):array
     {
         if($clean === true)
         $return = self::clean($return,$reset ?? false);
@@ -887,7 +887,7 @@ final class Arr extends Root
 
     // validate
     // envoie chaque valeur du tableau dans validate::is
-    public static function validate($condition,array $value):bool
+    final public static function validate($condition,array $value):bool
     {
         return Validate::are($condition,...array_values($value));
     }
@@ -895,7 +895,7 @@ final class Arr extends Root
 
     // validates
     // envoie plusieurs tableaux dans validate::is
-    public static function validates($condition,array ...$values):bool
+    final public static function validates($condition,array ...$values):bool
     {
         $return = false;
 
@@ -913,7 +913,7 @@ final class Arr extends Root
 
     // validateSlice
     // garde les slices dont les valeurs répondent vrai à validate::is
-    public static function validateSlice($condition,array $return):array
+    final public static function validateSlice($condition,array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -927,7 +927,7 @@ final class Arr extends Root
 
     // validateStrip
     // enlève les slices dont les valeurs répondent vrai à validate::is
-    public static function validateStrip($condition,array $return):array
+    final public static function validateStrip($condition,array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -942,7 +942,7 @@ final class Arr extends Root
     // validateMap
     // comme map, mais la fonction de rappel est seulement utilisé lorsque la valeur passe la condition de validation
     // ne permet pas l'utilisation de multiples tableaux
-    public static function validateMap($condition,callable $callable,array $return,...$args):array
+    final public static function validateMap($condition,callable $callable,array $return,...$args):array
     {
         foreach ($return as $key => $value)
         {
@@ -958,7 +958,7 @@ final class Arr extends Root
     // comme filter, mais la fonction de rappel est seulement utilisé lorsque la valeur passe la condition de validation
     // si callable est closure, à ce moment trois arguments sont envoyés à la fonction = value, key et array
     // keep permet de spécifier si les valeurs qui n'ont pas passé la validation sont conservés
-    public static function validateFilter($condition,callable $callable,array $array,bool $keep=true):array
+    final public static function validateFilter($condition,callable $callable,array $array,bool $keep=true):array
     {
         $return = [];
 
@@ -987,7 +987,7 @@ final class Arr extends Root
     // get
     // retourne une valeur d'un tableau
     // support pour clé insensitive
-    public static function get($key,array $array,bool $sensitive=true)
+    final public static function get($key,array $array,bool $sensitive=true)
     {
         $return = null;
 
@@ -1011,7 +1011,7 @@ final class Arr extends Root
     // retourne une valeur du tableau si key est scalar et array est array
     // sinon, array est retourné s'il est bien un tableau
     // sinon retoure null
-    public static function getSafe($key,$array,$sensitive=true)
+    final public static function getSafe($key,$array,$sensitive=true)
     {
         $return = null;
 
@@ -1032,7 +1032,7 @@ final class Arr extends Root
     // retourne plusieurs valeurs d'un tableau
     // par défaut les valeurs des clés non existentes sont retournés comme null
     // support pour clé insensitive
-    public static function gets(array $keys,array $array,bool $sensitive=true,bool $exists=false):array
+    final public static function gets(array $keys,array $array,bool $sensitive=true,bool $exists=false):array
     {
         $return = [];
 
@@ -1059,7 +1059,7 @@ final class Arr extends Root
 
     // getsExists
     // comme gets mais la différence est que les clés non existentes ne sont pas retournés avec une valeur null
-    public static function getsExists(array $keys,array $array,bool $sensitive=true):array
+    final public static function getsExists(array $keys,array $array,bool $sensitive=true):array
     {
         return self::gets($keys,$array,$sensitive,true);
     }
@@ -1068,7 +1068,7 @@ final class Arr extends Root
     // indexPrepare
     // retourne la valeur positive d'un index négatif
     // count peut être numérique ou un tableau
-    public static function indexPrepare($index,$count)
+    final public static function indexPrepare($index,$count)
     {
         $return = (is_scalar($index))? (int) $index:null;
 
@@ -1104,7 +1104,7 @@ final class Arr extends Root
 
     // index
     // retourne une valeur à partir d'un index de tableau
-    public static function index(int $index,array $array)
+    final public static function index(int $index,array $array)
     {
         $return = null;
         $array = array_values($array);
@@ -1121,7 +1121,7 @@ final class Arr extends Root
 
     // indexes
     // retourne des valeurs à partir d'index de tableau
-    public static function indexes(array $indexes,array $array):array
+    final public static function indexes(array $indexes,array $array):array
     {
         $return = [];
         $array = array_values($array);
@@ -1148,7 +1148,7 @@ final class Arr extends Root
     // support pour clé insensitive
     // si key est null, append []
     // retourne le tableau
-    public static function set($key,$value,array $return,bool $sensitive=true):array
+    final public static function set($key,$value,array $return,bool $sensitive=true):array
     {
         if(self::isKey($key))
         {
@@ -1173,7 +1173,7 @@ final class Arr extends Root
     // change plusieurs valeurs d'un tableau
     // support pour clés insensitives
     // retourne le tableau
-    public static function sets(array $keyValue,array $return,bool $sensitive=true):array
+    final public static function sets(array $keyValue,array $return,bool $sensitive=true):array
     {
         if(!empty($keyValue))
         {
@@ -1194,7 +1194,7 @@ final class Arr extends Root
     // change une valeur d'un tableau passé par référence
     // possibilité d'une opération insensible à la case
     // si key est null, append []
-    public static function setRef($key,$value,array &$array,bool $sensitive=true):void
+    final public static function setRef($key,$value,array &$array,bool $sensitive=true):void
     {
         $array = self::set($key,$value,$array,$sensitive);
 
@@ -1205,7 +1205,7 @@ final class Arr extends Root
     // setsRef
     // change plusieurs valeurs d'un tableau passé par référence
     // possibilité d'une opération insensible à la case
-    public static function setsRef(array $keyValue,array &$array,bool $sensitive=true):void
+    final public static function setsRef(array $keyValue,array &$array,bool $sensitive=true):void
     {
         $array = self::sets($keyValue,$array,$sensitive);
 
@@ -1218,7 +1218,7 @@ final class Arr extends Root
     // support pour clé insensitive
     // si key est null, append []
     // retourne le tableau
-    public static function setMerge($key,$value,array $return,bool $sensitive=true):array
+    final public static function setMerge($key,$value,array $return,bool $sensitive=true):array
     {
         if(self::isKey($key))
         {
@@ -1246,7 +1246,7 @@ final class Arr extends Root
     // change plusieurs valeurs d'un tableau ou merge les valeurs dans un tableau si déjà existante
     // support pour clé insensitive
     // retourne le tableau
-    public static function setsMerge(array $values,array $return,bool $sensitive=true):array
+    final public static function setsMerge(array $values,array $return,bool $sensitive=true):array
     {
         foreach ($values as $key => $value)
         {
@@ -1261,7 +1261,7 @@ final class Arr extends Root
     // enlève une slice d'un tableau
     // support pour clé insensitive
     // retourne le tableau
-    public static function unset($key,array $return,bool $sensitive=true):array
+    final public static function unset($key,array $return,bool $sensitive=true):array
     {
         return self::keyStrip($key,$return,$sensitive);
     }
@@ -1271,7 +1271,7 @@ final class Arr extends Root
     // efface plusieurs slices dans un tableau
     // support pour clés insensitives
     // retourne le tableau
-    public static function unsets(array $keys,array $return,bool $sensitive=true):array
+    final public static function unsets(array $keys,array $return,bool $sensitive=true):array
     {
         return self::keysStrip($keys,$return,$sensitive);
     }
@@ -1280,7 +1280,7 @@ final class Arr extends Root
     // unsetRef
     // enlève une slice d'un tableau passé par référence
     // possibilité d'une opération insensible à la case
-    public static function unsetRef($key,array &$array,bool $sensitive=true):void
+    final public static function unsetRef($key,array &$array,bool $sensitive=true):void
     {
         $array = self::unset($key,$array,$sensitive);
 
@@ -1291,7 +1291,7 @@ final class Arr extends Root
     // unsetsRef
     // enlève plusieurs slices d'un tableau passé par référence
     // possibilité d'une opération insensible à la case
-    public static function unsetsRef(array $keys,array &$array,bool $sensitive=true):void
+    final public static function unsetsRef(array $keys,array &$array,bool $sensitive=true):void
     {
         $array = self::unsets($keys,$array,$sensitive);
 
@@ -1303,7 +1303,7 @@ final class Arr extends Root
     // permet de faire des modifications get/set sur un tableau unidimensionnel
     // le tableau est passé par référence
     // pas de support pour clé insensible à la case
-    public static function getSet($get=null,$set=null,array &$source)
+    final public static function getSet($get=null,$set=null,array &$source)
     {
         $return = null;
 
@@ -1339,7 +1339,7 @@ final class Arr extends Root
 
     // keyValue
     // retourne un tableau clé valeur à partir d'une clé pour clé et une clé pour valeur
-    public static function keyValue($key,$value,array $array):array
+    final public static function keyValue($key,$value,array $array):array
     {
         $return = [];
 
@@ -1355,7 +1355,7 @@ final class Arr extends Root
 
     // keyValueIndex
     // retourne un tableau clé valeur à partir d'un index pour clé et un index pour valeur
-    public static function keyValueIndex(int $key=0,int $value=1,array $array):array
+    final public static function keyValueIndex(int $key=0,int $value=1,array $array):array
     {
         $return = [];
         $array = array_values($array);
@@ -1372,7 +1372,7 @@ final class Arr extends Root
     // si valeur est null, la fonction ne cherche pas à moins que searchNull soit true
     // donc impossible de cherccher la valeur null avec cette fonction (utiliser arr::valueKey)
     // mb par défaut lors de la recherche insensitive
-    public static function keys(array $array,$value=null,bool $sensitive=true,bool $searchNull=false):array
+    final public static function keys(array $array,$value=null,bool $sensitive=true,bool $searchNull=false):array
     {
         $return = [];
 
@@ -1397,7 +1397,7 @@ final class Arr extends Root
     // values
     // retourne les valeurs d'un tableau
     // is permet de spécifier le type de valeurs à garder dans le tableau réindexé
-    public static function values(array $array,$is=null):array
+    final public static function values(array $array,$is=null):array
     {
         $return = [];
 
@@ -1420,7 +1420,7 @@ final class Arr extends Root
     // shift
     // dépile un ou plusieurs éléments au début d'un tableau
     // array est passé par référence
-    public static function shift(array &$array,int $amount=1)
+    final public static function shift(array &$array,int $amount=1)
     {
         $return = null;
 
@@ -1445,7 +1445,7 @@ final class Arr extends Root
     // pop
     // enlève un ou plusieurs éléments à la fin du tableau
     // array est passé par référence
-    public static function pop(array &$array,int $amount=1)
+    final public static function pop(array &$array,int $amount=1)
     {
         $return = null;
 
@@ -1470,7 +1470,7 @@ final class Arr extends Root
     // walk
     // wrapper pour array_walk
     // array est passé par référence
-    public static function walk(callable $callable,array &$array,$data=null):bool
+    final public static function walk(callable $callable,array &$array,$data=null):bool
     {
         return array_walk($array,$callable,$data);
     }
@@ -1480,7 +1480,7 @@ final class Arr extends Root
     // similaire à array_map, mais permet de spécifier des arguments en troisième arguments
     // pas possible de mettre plusieurs tableaux
     // si callable est closure à ce moment au moins trois arguments sont envoyés à la fonction = value, key et array
-    public static function map(callable $callable,array $array,...$args):array
+    final public static function map(callable $callable,array $array,...$args):array
     {
         $return = [];
 
@@ -1500,7 +1500,7 @@ final class Arr extends Root
     // filter
     // wrapper pour array_filter
     // si callable est closure, à ce moment trois arguments sont envoyés à la fonction = value, key et array
-    public static function filter(callable $callable,array $array,int $flag=0):array
+    final public static function filter(callable $callable,array $array,int $flag=0):array
     {
         $return = [];
 
@@ -1521,7 +1521,7 @@ final class Arr extends Root
 
     // reduce
     // wrapper pour array_reduce
-    public static function reduce(callable $callable,array $array,$data=null)
+    final public static function reduce(callable $callable,array $array,$data=null)
     {
         return array_reduce($array,$callable,$data);
     }
@@ -1530,7 +1530,7 @@ final class Arr extends Root
     // diffAssoc
     // retourne les slices des clés et valeurs du premier tableau qui ne sont trouvés dans aucun autre tableau
     // possibilité de mettre des valeurs non scalar
-    public static function diffAssoc(array ...$values):array
+    final public static function diffAssoc(array ...$values):array
     {
         $return = [];
 
@@ -1562,7 +1562,7 @@ final class Arr extends Root
 
     // diffKey
     // retourne les slices des clés du premier tableau qui ne sont trouvés dans aucun autre tableau
-    public static function diffKey(array ...$values):array
+    final public static function diffKey(array ...$values):array
     {
         return array_diff_key(...$values);
     }
@@ -1571,7 +1571,7 @@ final class Arr extends Root
     // diff
     // retourne les slices des valeurs du premier tableau qui ne sont trouvés dans aucun autre tableau
     // possibilité de mettre des valeurs non scalar
-    public static function diff(array ...$values):array
+    final public static function diff(array ...$values):array
     {
         $return = [];
 
@@ -1604,7 +1604,7 @@ final class Arr extends Root
     // intersectAssoc
     // retourne les slices identiques dans tous les tableaux
     // possibilité de mettre des valeurs non scalar
-    public static function intersectAssoc(array ...$values):array
+    final public static function intersectAssoc(array ...$values):array
     {
         $return = [];
 
@@ -1637,7 +1637,7 @@ final class Arr extends Root
 
     // intersectKey
     // retourne les slices des clés identiques dans tous les tableaux
-    public static function intersectKey(array ...$values):array
+    final public static function intersectKey(array ...$values):array
     {
         return array_intersect_key(...$values);
     }
@@ -1646,7 +1646,7 @@ final class Arr extends Root
     // intersect
     // retourne les slices des valeurs identiques dans tous les tableaux
     // possibilité de mettre des valeurs non scalar
-    public static function intersect(array ...$values):array
+    final public static function intersect(array ...$values):array
     {
         $return = [];
 
@@ -1679,7 +1679,7 @@ final class Arr extends Root
 
     // unsetBeforeKey
     // enlève les entrées avant une clé
-    public static function unsetBeforeKey($key,array $return):array
+    final public static function unsetBeforeKey($key,array $return):array
     {
         foreach ($return as $k => $v)
         {
@@ -1696,7 +1696,7 @@ final class Arr extends Root
 
     // unsetAfterKey
     // enlève les entrées après une clé
-    public static function unsetAfterKey($key,array $return):array
+    final public static function unsetAfterKey($key,array $return):array
     {
         $delete = false;
 
@@ -1716,7 +1716,7 @@ final class Arr extends Root
     // unsetBeforeValue
     // enlève les entrées avant une valeur
     // sensible à la case
-    public static function unsetBeforeValue($value,array $return):array
+    final public static function unsetBeforeValue($value,array $return):array
     {
         foreach ($return as $k => $v)
         {
@@ -1734,7 +1734,7 @@ final class Arr extends Root
     // unsetAfterValue
     // enlève les entrées après une valeur
     // sensible à la case
-    public static function unsetAfterValue($value,array $return):array
+    final public static function unsetAfterValue($value,array $return):array
     {
         $delete = false;
 
@@ -1753,7 +1753,7 @@ final class Arr extends Root
 
     // unsetBeforeIndex
     // enlève les entrées avant un certain index
-    public static function unsetBeforeIndex(int $index,array $return):array
+    final public static function unsetBeforeIndex(int $index,array $return):array
     {
         $i = 0;
         foreach ($return as $key => $value)
@@ -1770,7 +1770,7 @@ final class Arr extends Root
 
     // unsetAfterIndex
     // enlève les entrées après un certain index
-    public static function unsetAfterIndex(int $index,array $return):array
+    final public static function unsetAfterIndex(int $index,array $return):array
     {
         $i = 0;
         foreach ($return as $key => $value)
@@ -1787,7 +1787,7 @@ final class Arr extends Root
 
     // unsetBeforeCount
     // enlève les entrées avant un certain nombre
-    public static function unsetBeforeCount(int $count,array $return):array
+    final public static function unsetBeforeCount(int $count,array $return):array
     {
         $i = 1;
         foreach ($return as $key => $value)
@@ -1804,7 +1804,7 @@ final class Arr extends Root
 
     // unsetAfterCount
     // enlève les entrées après un certain nombre
-    public static function unsetAfterCount(int $count,array $return):array
+    final public static function unsetAfterCount(int $count,array $return):array
     {
         $i = 1;
         foreach ($return as $key => $value)
@@ -1821,7 +1821,7 @@ final class Arr extends Root
 
     // count
     // count les clés d'un tableau
-    public static function count(array $array):int
+    final public static function count(array $array):int
     {
         return count($array,COUNT_NORMAL);
     }
@@ -1831,7 +1831,7 @@ final class Arr extends Root
     // compte le nombre d'occurence d'une même valeur scalar dans un tableau
     // si une valeur n'est pas scalarNotBool, n'utilise pas la fonction php
     // mb par défaut lors de la recherche insensitive
-    public static function countValues(array $array,bool $sensitive=true):array
+    final public static function countValues(array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -1863,7 +1863,7 @@ final class Arr extends Root
     // retourne la clé de la première valeur trouvé
     // possibilité de faire une recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    public static function search($value,array $array,bool $sensitive=true)
+    final public static function search($value,array $array,bool $sensitive=true)
     {
         $return = null;
 
@@ -1885,7 +1885,7 @@ final class Arr extends Root
     // retourne la première clé qui existe dans le tableau
     // possibilité de faire une recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    public static function searchFirst(array $values,array $array,bool $sensitive=true)
+    final public static function searchFirst(array $values,array $array,bool $sensitive=true)
     {
         $return = null;
 
@@ -1914,7 +1914,7 @@ final class Arr extends Root
     // recherche si la valeur est dans un tableau via la fonction in_array
     // possibilité de faire une recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    public static function in($value,array $array,bool $sensitive=true):bool
+    final public static function in($value,array $array,bool $sensitive=true):bool
     {
         $return = false;
 
@@ -1935,7 +1935,7 @@ final class Arr extends Root
     // recherche que toutes les valeurs fournis sont dans le tableau via la fonction in_array
     // possibilité de faire une recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    public static function ins(array $values,array $array,bool $sensitive=true):bool
+    final public static function ins(array $values,array $array,bool $sensitive=true):bool
     {
         $return = false;
 
@@ -1967,7 +1967,7 @@ final class Arr extends Root
     // retourne la première valeur trouvé dans le tableau ou null si rien n'est trouvé
     // possibilité de faire une recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    public static function inFirst(array $values,array $array,bool $sensitive=true)
+    final public static function inFirst(array $values,array $array,bool $sensitive=true)
     {
         $return = null;
 
@@ -1995,7 +1995,7 @@ final class Arr extends Root
     // si value est scalar ou null, la valeur est utilisé pour chaque clé
     // pas obligé de fournir des array
     // retourne un array vide en cas d'erreur
-    public static function combine($keys,$values):array
+    final public static function combine($keys,$values):array
     {
         $return = [];
         $keys = (array) $keys;
@@ -2012,7 +2012,7 @@ final class Arr extends Root
 
     // uncombine
     // retourne un tableau à deux clés, avec array_keys et array_values
-    public static function uncombine(array $array):array
+    final public static function uncombine(array $array):array
     {
         return [array_keys($array),array_values($array)];
     }
@@ -2020,7 +2020,7 @@ final class Arr extends Root
 
     // range
     // fonction crée pour contourner un bogue dans range -> si min = 2, max = 3, inc = 2
-    public static function range(int $min,int $max,int $inc=1):array
+    final public static function range(int $min,int $max,int $inc=1):array
     {
         $return = [];
 
@@ -2035,7 +2035,7 @@ final class Arr extends Root
 
     // shuffle
     // mélange un tableau, mais conserve les clés
-    public static function shuffle(array $array,bool $preserve=true):array
+    final public static function shuffle(array $array,bool $preserve=true):array
     {
         $return = [];
 
@@ -2058,7 +2058,7 @@ final class Arr extends Root
 
     // reverse
     // invertit un tableau
-    public static function reverse(array $array,bool $preserve=true):array
+    final public static function reverse(array $array,bool $preserve=true):array
     {
         return array_reverse($array,$preserve);
     }
@@ -2066,7 +2066,7 @@ final class Arr extends Root
 
     // getSortAscDesc
     // méthode utilisé par toutes les méthodes sortent pour déterminer ordre ascendant ou descendant
-    public static function getSortAscDesc($sort):?string
+    final public static function getSortAscDesc($sort):?string
     {
         $return = null;
 
@@ -2084,7 +2084,7 @@ final class Arr extends Root
     // sort les clés ou valeurs d'un tableau
     // les clés sont conservés dans tous les cas
     // sort peut aussi être un int 1, 2, 3 ou 4
-    public static function sort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
+    final public static function sort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
     {
         $ascDesc = self::getSortAscDesc($sort);
 
@@ -2110,7 +2110,7 @@ final class Arr extends Root
     // sortNumbersFirst
     // sort un tableau, met les clés avec numéros en premier
     // l'ordre des clés non numériques sont conservés
-    public static function sortNumbersFirst(array $array,$sort=true):array
+    final public static function sortNumbersFirst(array $array,$sort=true):array
     {
         $return = [];
 
@@ -2136,7 +2136,7 @@ final class Arr extends Root
     // random
     // retourne une ou plusieurs clé valeur random d'un tableau
     // si csprng est true, utilise l'extension csprng pour généré le random
-    public static function random(array $array,int $count=1,bool $csprng=false):array
+    final public static function random(array $array,int $count=1,bool $csprng=false):array
     {
         $return = [];
 
@@ -2162,7 +2162,7 @@ final class Arr extends Root
 
     // pad
     // wrapper pour array_pad
-    public static function pad(int $size,$value,array $array):array
+    final public static function pad(int $size,$value,array $array):array
     {
         return array_pad($array,$size,$value);
     }
@@ -2172,7 +2172,7 @@ final class Arr extends Root
     // reformat un tableau en s'assurant que la valeur devienne la clé
     // value permet de specifier la valeur des nouvelles valeurs du tableau, si null prend la clé
     // exception permet d'exclure le contenu d'une clé du reformatage
-    public static function flip(array $array,$value=null,$exception=null):array
+    final public static function flip(array $array,$value=null,$exception=null):array
     {
         $return = [];
 
@@ -2201,7 +2201,7 @@ final class Arr extends Root
     // unique
     // support pour recherche non sensible à la case
     // si removeOriginal est true, la première valeur unique sera effacé si un duplicat est trouvé
-    public static function unique(array $array,bool $removeOriginal=false,bool $sensitive=true):array
+    final public static function unique(array $array,bool $removeOriginal=false,bool $sensitive=true):array
     {
         $return = [];
 
@@ -2237,7 +2237,7 @@ final class Arr extends Root
     // duplicate
     // retourne les valeurs dupliqués, l'inverse de arr::unique
     // support pour recherche non sensible à la case
-    public static function duplicate(array $array,bool $keepOriginal=false,bool $sensitive=true):array
+    final public static function duplicate(array $array,bool $keepOriginal=false,bool $sensitive=true):array
     {
         $return = [];
 
@@ -2259,7 +2259,7 @@ final class Arr extends Root
     // implode un tableau en chaine
     // le delimiter divise chaque entrée, les tableaux du tableau sont ignorés
     // possibilité de trim et clean
-    public static function implode(string $delimiter,array $value,bool $trim=false,bool $clean=false):string
+    final public static function implode(string $delimiter,array $value,bool $trim=false,bool $clean=false):string
     {
         $return = '';
 
@@ -2289,7 +2289,7 @@ final class Arr extends Root
     // implodeTrim
     // implode un tableau en chaine
     // trim chaque entrée du tableau au préalable
-    public static function implodeTrim(string $delimiter,array $value,bool $clean=false):string
+    final public static function implodeTrim(string $delimiter,array $value,bool $clean=false):string
     {
         return self::implode($delimiter,$value,true,$clean);
     }
@@ -2298,7 +2298,7 @@ final class Arr extends Root
     // implodeClean
     // implode un tableau en chaine
     // clean le tableau au préalable
-    public static function implodeClean(string $delimiter,array $value,bool $trim=false):string
+    final public static function implodeClean(string $delimiter,array $value,bool $trim=false):string
     {
         return self::implode($delimiter,$value,$trim,true);
     }
@@ -2307,7 +2307,7 @@ final class Arr extends Root
     // implodeTrimClean
     // implode un tableau en chaine
     // trim chaque entrée du tableau et clean le tableau au préalable
-    public static function implodeTrimClean(string $delimiter,array $value):string
+    final public static function implodeTrimClean(string $delimiter,array $value):string
     {
         return self::implode($delimiter,$value,true,true);
     }
@@ -2316,7 +2316,7 @@ final class Arr extends Root
     // implodeKey
     // fait un implode avec un deuxième délimiteur pour les clés
     // possibilité de trim et clean
-    public static function implodeKey(string $delimiter,string $keyDelimiter,array $value,$trim=false,bool $clean=false):string
+    final public static function implodeKey(string $delimiter,string $keyDelimiter,array $value,$trim=false,bool $clean=false):string
     {
         $return = '';
 
@@ -2340,7 +2340,7 @@ final class Arr extends Root
 
     // explode
     // explose et merge toutes les variables scalar d'un tableau
-    public static function explode(string $delimiter,array $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
+    final public static function explode(string $delimiter,array $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
     {
         $return = [];
         $limit = ($limit === null)? PHP_INT_MAX:$limit;
@@ -2362,7 +2362,7 @@ final class Arr extends Root
 
     // explodeKeyValue
     // explose les valeurs d'un tableau par deux et retourne sous une forme clé -> valeur
-    public static function explodeKeyValue(string $delimiter,array $value,bool $trim=false,bool $clean=false)
+    final public static function explodeKeyValue(string $delimiter,array $value,bool $trim=false,bool $clean=false)
     {
         $return = [];
 
@@ -2382,7 +2382,7 @@ final class Arr extends Root
 
     // fill
     // combine entre range et array_fill_keys
-    public static function fill(int $start=0,int $end=1,int $step=1,$value=true):array
+    final public static function fill(int $start=0,int $end=1,int $step=1,$value=true):array
     {
         $return = [];
         $keys = self::range($start,$end,$step);
@@ -2396,7 +2396,7 @@ final class Arr extends Root
 
     // fillKeys
     // wrapper pour array_fill_keys
-    public static function fillKeys(array $keys,$value=true):array
+    final public static function fillKeys(array $keys,$value=true):array
     {
         $return = [];
 
@@ -2410,7 +2410,7 @@ final class Arr extends Root
     // chunk
     // prend un tableau et le divise selon la longueur que doit avoir chaque groupe
     // retourne un array multi
-    public static function chunk(int $count,array $array,bool $preserve=true):array
+    final public static function chunk(int $count,array $array,bool $preserve=true):array
     {
         return array_chunk($array,$count,$preserve);
     }
@@ -2419,7 +2419,7 @@ final class Arr extends Root
     // chunkGroup
     // prend un tableau et le divise dans un nombre total de groupe
     // retourne un array multi
-    public static function chunkGroup(int $count,array $array,bool $preserve=true):array
+    final public static function chunkGroup(int $count,array $array,bool $preserve=true):array
     {
         $return = [];
 
@@ -2437,7 +2437,7 @@ final class Arr extends Root
     // prend un tableau et le divise dans le nombre de groupe spécifié
     // mix les entrées selon cette logique -> (1,4),(2,5),(3,6)
     // retourne un array multi
-    public static function chunkMix(int $count,array $array,bool $preserve=true):array
+    final public static function chunkMix(int $count,array $array,bool $preserve=true):array
     {
         $return = [];
 
@@ -2478,7 +2478,7 @@ final class Arr extends Root
     // si callback retourne faux, la colonne existante est stocké et fermé
     // si callback retourne null, la ligne est stocké si la colonne est ouverte, sinon elle est ignoré
     // retourne un tableau multidimensionnel colonne
-    public static function chunkWalk(callable $callback,array $array):array
+    final public static function chunkWalk(callable $callback,array $array):array
     {
         $return = [];
         $col = null;
@@ -2521,7 +2521,7 @@ final class Arr extends Root
     // compare un tableau selon un tableau in
     // toutes les clés de in doivent être dans array
     // la valeur dans le array doit être une des valeurs présentes dans le tableau in
-    public static function compareIn(array $in,array $array):bool
+    final public static function compareIn(array $in,array $array):bool
     {
         $return = true;
 
@@ -2558,7 +2558,7 @@ final class Arr extends Root
     // filtre un tableau selon un tableau out
     // array n'a pas besoin d'avoir les clés dans out
     // si la valeur dans le array est une des valeurs présentes dans le tableau out pour la même clé, retourne vrai
-    public static function compareOut(array $out,array $array):bool
+    final public static function compareOut(array $out,array $array):bool
     {
         $return = false;
 
@@ -2589,7 +2589,7 @@ final class Arr extends Root
     // hasSlices
     // retourne vrai si toutes les slices (key pairs) du premier argument se retrouvent dans le tableau en deuxième argument
     // retourne vrai si slices est array mais vide
-    public static function hasSlices(array $slices,array $array,bool $sensitive=true):bool
+    final public static function hasSlices(array $slices,array $array,bool $sensitive=true):bool
     {
         $return = true;
 
@@ -2616,7 +2616,7 @@ final class Arr extends Root
     // start représente la clé de départ
     // end est la clé de fin
     // support pour clé insensible à la case
-    public static function slice($start,$end,array $array,bool $sensitive=true):array
+    final public static function slice($start,$end,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -2650,7 +2650,7 @@ final class Arr extends Root
 
     // sliceIndex
     // wrapper pour array_slice
-    public static function sliceIndex(int $offset,?int $length,array $array):array
+    final public static function sliceIndex(int $offset,?int $length,array $array):array
     {
         $length = ($length === null)? 1:$length;
         return array_slice($array,$offset,$length,true);
@@ -2659,7 +2659,7 @@ final class Arr extends Root
 
     // sliceFirst
     // retourne la première slice du tableau
-    public static function sliceFirst(array $array):array
+    final public static function sliceFirst(array $array):array
     {
         return array_slice($array,0,1,true);
     }
@@ -2667,7 +2667,7 @@ final class Arr extends Root
 
     // sliceLast
     // retourne la dernière slice du tableau
-    public static function sliceLast(array $array):array
+    final public static function sliceLast(array $array):array
     {
         return array_slice($array,-1,1,true);
     }
@@ -2677,7 +2677,7 @@ final class Arr extends Root
     // permet de naviguer à travers les slices du tableau via l'argument nav
     // la navigation se fait par une addition donc 1 est à la prochaine clé et -1 est la précédente
     // retourne la slice ou null si non existante
-    public static function sliceNav($key,int $nav,array $source):?array
+    final public static function sliceNav($key,int $nav,array $source):?array
     {
         $return = null;
         $index = self::keyIndex($key,$source);
@@ -2698,7 +2698,7 @@ final class Arr extends Root
     // navigue les slices du tableau par index
     // la navigation se fait par une addition donc 1 est à la prochaine clé et -1 est la précédente
     // retourne la slice ou null si non existante
-    public static function sliceNavIndex(int $index,int $nav,array $source):?array
+    final public static function sliceNavIndex(int $index,int $nav,array $source):?array
     {
         $return = null;
         $newIndex = self::indexNav($index,$nav,$source);
@@ -2717,7 +2717,7 @@ final class Arr extends Root
     // à la différence de array_splice, les clés numérique ne sont pas réordonnées
     // important: les clés numériques existantes sont append, les clés string sont remplacés
     // support pour remplacement insensible à la case
-    public static function splice($start,$end,array $array,?array $replace=null,bool $sensitive=true):array
+    final public static function splice($start,$end,array $array,?array $replace=null,bool $sensitive=true):array
     {
         $return = [];
 
@@ -2766,7 +2766,7 @@ final class Arr extends Root
     // à la différence de array_splice, les clés numérique ne sont pas réordonnées
     // important: les clés numériques existantes sont append, les clés string sont remplacés
     // support pour remplacement insensible à la case
-    public static function spliceIndex(int $offset,?int $length,array $array,?array $replace=null,bool $sensitive=true):array
+    final public static function spliceIndex(int $offset,?int $length,array $array,?array $replace=null,bool $sensitive=true):array
     {
         $return = [];
         $length = ($length === null)? 1:$length;
@@ -2804,7 +2804,7 @@ final class Arr extends Root
     // retourne le tableau sans la première slice
     // possibilité d'inséré du contenu au début via le tableau replace
     // support pour remplacement insensible à la case
-    public static function spliceFirst(array $array,?array $replace=null,bool $sensitive=true):array
+    final public static function spliceFirst(array $array,?array $replace=null,bool $sensitive=true):array
     {
         return self::spliceIndex(0,1,$array,$replace,$sensitive);
     }
@@ -2814,7 +2814,7 @@ final class Arr extends Root
     // retourne le tableau sans la dernière slice
     // possibilité d'inséré du contenu à la fin via le tableau replace
     // support pour remplacement insensible à la case
-    public static function spliceLast(array $array,?array $replace=null,bool $sensitive=true):array
+    final public static function spliceLast(array $array,?array $replace=null,bool $sensitive=true):array
     {
         return self::spliceIndex(-1,1,$array,$replace,$sensitive);
     }
@@ -2824,7 +2824,7 @@ final class Arr extends Root
     // effectue un remplacement via la méthode splice
     // n'enlève aucune rangée du tableau
     // support pour ajout insensible à la case
-    public static function insert($start,array $replace,array $array,bool $sensitive=true):array
+    final public static function insert($start,array $replace,array $array,bool $sensitive=true):array
     {
         return self::splice($start,null,$array,$replace,$sensitive);
     }
@@ -2834,7 +2834,7 @@ final class Arr extends Root
     // effectue un remplacement via la méthode spliceIndex
     // n'enlève aucune rangée du tableau
     // support pour ajout insensible à la case
-    public static function insertIndex(int $offset,array $replace,array $array,bool $sensitive=true):array
+    final public static function insertIndex(int $offset,array $replace,array $array,bool $sensitive=true):array
     {
         return self::spliceIndex($offset,0,$array,$replace,$sensitive);
     }
@@ -2845,7 +2845,7 @@ final class Arr extends Root
     // fait un remplacement au début du tableau
     // n'enlève aucune rangée du tableau
     // support pour ajout insensible à la case
-    public static function insertFirst(array $replace,array $array,bool $sensitive=true):array
+    final public static function insertFirst(array $replace,array $array,bool $sensitive=true):array
     {
         return self::spliceIndex(0,0,$array,$replace,$sensitive);
     }
@@ -2856,7 +2856,7 @@ final class Arr extends Root
     // fait un remplacement avant la dernière clé du tableau
     // n'enlève aucune rangée du tableau
     // support pour ajout insensible à la case
-    public static function insertLast(array $replace,array $array,bool $sensitive=true):array
+    final public static function insertLast(array $replace,array $array,bool $sensitive=true):array
     {
         return self::spliceIndex(-1,0,$array,$replace,$sensitive);
     }
@@ -2865,7 +2865,7 @@ final class Arr extends Root
     // insertInOrder
     // permet d'insérer des slices dans un tableau tout en conservant le caractère séquentielle des clés
     // idéaleement les clés des tableaux doivent être toutes du même type, la comparaison entre string et chiffre ne donne pas toujours les résultats souhaités
-    public static function insertInOrder(array $replace,array $return)
+    final public static function insertInOrder(array $replace,array $return)
     {
         foreach ($replace as $key => $value)
         {
@@ -2892,7 +2892,7 @@ final class Arr extends Root
 
     // firstWithKey
     // retourne le premier tableau où la clé existe
-    public static function firstWithKey($key,array ...$values):?array
+    final public static function firstWithKey($key,array ...$values):?array
     {
         $return = null;
 
@@ -2916,7 +2916,7 @@ final class Arr extends Root
     // firstWithValue
     // retourne le premier tableau où la valeur existe
     // sensible à la case
-    public static function firstWithValue($value,array ...$values):?array
+    final public static function firstWithValue($value,array ...$values):?array
     {
         $return = null;
 
@@ -2936,7 +2936,7 @@ final class Arr extends Root
 
     // indexFirst
     // retourne le premier index du tableau
-    public static function indexFirst(array $array):?int
+    final public static function indexFirst(array $array):?int
     {
         return (!empty($array))? 0:null;
     }
@@ -2944,7 +2944,7 @@ final class Arr extends Root
 
     // indexLast
     // retourne le dernier index du tableau
-    public static function indexLast(array $array):?int
+    final public static function indexLast(array $array):?int
     {
         return (!empty($array))? (count($array) - 1):null;
     }
@@ -2952,7 +2952,7 @@ final class Arr extends Root
 
     // indexExists
     // retourne vrai si l'index existe dans le tableau
-    public static function indexExists(int $index,array $array):bool
+    final public static function indexExists(int $index,array $array):bool
     {
         $return = false;
         $array = array_values($array);
@@ -2969,7 +2969,7 @@ final class Arr extends Root
 
     // indexesExists
     // retourne vrai si les index existe dans le tableau
-    public static function indexesExists(array $indexes,array $array):bool
+    final public static function indexesExists(array $indexes,array $array):bool
     {
         $return = false;
         $array = array_values($array);
@@ -2995,7 +2995,7 @@ final class Arr extends Root
 
     // indexesAre
     // retourne vrai si les index existent dans le tableau et que ce sont tous les index
-    public static function indexesAre(array $indexes,array $array):bool
+    final public static function indexesAre(array $indexes,array $array):bool
     {
         $return = false;
         $indexes = self::indexPrepare($indexes,count($array));
@@ -3009,7 +3009,7 @@ final class Arr extends Root
 
     // indexesFirst
     // retourne le premier index trouvé dans un tableau
-    public static function indexesFirst(array $indexes,array $array):?int
+    final public static function indexesFirst(array $indexes,array $array):?int
     {
         $return = null;
         $array = array_values($array);
@@ -3030,7 +3030,7 @@ final class Arr extends Root
 
     // indexesFirstValue
     // retourne la valeur du premier index trouvé dans un tableau
-    public static function indexesFirstValue(array $indexes,array $array)
+    final public static function indexesFirstValue(array $indexes,array $array)
     {
         $return = null;
         $array = array_values($array);
@@ -3051,7 +3051,7 @@ final class Arr extends Root
 
     // indexKey
     // retourne la clé associé à un index de tableau
-    public static function indexKey(int $index,array $array)
+    final public static function indexKey(int $index,array $array)
     {
         $return = null;
 
@@ -3072,7 +3072,7 @@ final class Arr extends Root
 
     // indexesKey
     // retourne les clés associés aux index du tableau
-    public static function indexesKey(array $indexes,array $array):array
+    final public static function indexesKey(array $indexes,array $array):array
     {
         $return = [];
         $keys = array_keys($array);
@@ -3093,7 +3093,7 @@ final class Arr extends Root
 
     // indexSlice
     // retourne une slice à partir d'un index de tableau
-    public static function indexSlice(int $index,array $array):array
+    final public static function indexSlice(int $index,array $array):array
     {
         $return = [];
         $keys = array_keys($array);
@@ -3111,7 +3111,7 @@ final class Arr extends Root
 
     // indexesSlice
     // retourne des slices à partir d'index de tableau
-    public static function indexesSlice(array $indexes,array $array):array
+    final public static function indexesSlice(array $indexes,array $array):array
     {
         $return = [];
         $keys = array_keys($array);
@@ -3130,7 +3130,7 @@ final class Arr extends Root
 
     // indexStrip
     // retourne le tableau sans la slice de l'index
-    public static function indexStrip(int $index,array $return):array
+    final public static function indexStrip(int $index,array $return):array
     {
         $keys = array_keys($return);
         $array = array_values($return);
@@ -3147,7 +3147,7 @@ final class Arr extends Root
 
     // indexesStrip
     // retourne le tableau sans les slice des index
-    public static function indexesStrip(array $indexes,array $return):array
+    final public static function indexesStrip(array $indexes,array $return):array
     {
         $keys = array_keys($return);
         $array = array_values($return);
@@ -3167,7 +3167,7 @@ final class Arr extends Root
     // permet de naviguer à travers les index du tableau via l'argument nav
     // la navigation se fait par une addition donc 1 est à la prochaine clé et -1 est la précédente
     // retourne le nouvel index ou null
-    public static function indexNav(int $index,int $nav,array $array):?int
+    final public static function indexNav(int $index,int $nav,array $array):?int
     {
         $return = null;
         $keys = array_keys($array);
@@ -3182,7 +3182,7 @@ final class Arr extends Root
 
     // keyFirst
     // retourne la première key
-    public static function keyFirst(array $array)
+    final public static function keyFirst(array $array)
     {
         return array_key_first($array);
     }
@@ -3190,7 +3190,7 @@ final class Arr extends Root
 
     // keyLast
     // retourne la dernière key
-    public static function keyLast(array $array)
+    final public static function keyLast(array $array)
     {
         return array_key_last($array);
     }
@@ -3198,7 +3198,7 @@ final class Arr extends Root
 
     // ikey
     // retourne la première clé se comparant insensible à la case avec la clé donné en argument
-    public static function ikey($key,array $array)
+    final public static function ikey($key,array $array)
     {
         $return = null;
 
@@ -3217,7 +3217,7 @@ final class Arr extends Root
 
     // ikeys
     // retourne toutes les clés se comparant insensible à la case avec la clé donné en argument
-    public static function ikeys($key,array $array):array
+    final public static function ikeys($key,array $array):array
     {
         $return = [];
 
@@ -3234,7 +3234,7 @@ final class Arr extends Root
     // keyExists
     // pour vérifier l'existence d'une clé dans un tableau
     // support pour clé insensitive
-    public static function keyExists($key,array $array,bool $sensitive=true):bool
+    final public static function keyExists($key,array $array,bool $sensitive=true):bool
     {
         $return = false;
 
@@ -3257,7 +3257,7 @@ final class Arr extends Root
     // keysExists
     // pour vérifier l'existence de toutes les clés fournis en argument
     // support pour clé insensitive
-    public static function keysExists(array $keys,array $array,bool $sensitive=true):bool
+    final public static function keysExists(array $keys,array $array,bool $sensitive=true):bool
     {
         $return = false;
 
@@ -3288,7 +3288,7 @@ final class Arr extends Root
     // keysAre
     // pour vérifier l'existence de toutes les clés dans un tableau
     // support pour clé insensitive
-    public static function keysAre(array $keys,array $array,bool $sensitive=true):bool
+    final public static function keysAre(array $keys,array $array,bool $sensitive=true):bool
     {
         $return = false;
 
@@ -3311,7 +3311,7 @@ final class Arr extends Root
     // keysFirst
     // retourne la première clé trouvé dans un tableau
     // support pour clé insensitive
-    public static function keysFirst(array $keys,array $array,bool $sensitive=true)
+    final public static function keysFirst(array $keys,array $array,bool $sensitive=true)
     {
         $return = null;
 
@@ -3342,7 +3342,7 @@ final class Arr extends Root
     // retourne la première clé ou index trouvé dans un tableau
     // si la valeur est numérique, c'est considéré comme une recherche par index
     // support pour clé insensitive
-    public static function keysIndexesFirst(array $keys,array $array,bool $sensitive=true)
+    final public static function keysIndexesFirst(array $keys,array $array,bool $sensitive=true)
     {
         $return = null;
 
@@ -3385,7 +3385,7 @@ final class Arr extends Root
     // keysFirstValue
     // retourne la valeur de la première clé trouvé dans un tableau
     // support pour clé insensitive
-    public static function keysFirstValue(array $keys,array $array,bool $sensitive=true)
+    final public static function keysFirstValue(array $keys,array $array,bool $sensitive=true)
     {
         $return = null;
         $key = self::keysFirst($keys,$array,$sensitive);
@@ -3406,7 +3406,7 @@ final class Arr extends Root
     // retourne la valeur de la première clé ou index trouvé dans un tableau
     // si la valeur est numérique, c'est considéré comme une recherche par index
     // support pour clé insensitive
-    public static function keysIndexesFirstValue(array $keys,array $array,bool $sensitive=true)
+    final public static function keysIndexesFirstValue(array $keys,array $array,bool $sensitive=true)
     {
         $return = null;
         $key = self::keysIndexesFirst($keys,$array,$sensitive);
@@ -3427,7 +3427,7 @@ final class Arr extends Root
     // retourne l'index d'une clé dans un tableau
     // retourne null si clé non existante
     // support pour clé insensitive
-    public static function keyIndex($key,array $array,bool $sensitive=true):?int
+    final public static function keyIndex($key,array $array,bool $sensitive=true):?int
     {
         $return = null;
 
@@ -3455,7 +3455,7 @@ final class Arr extends Root
     // keysIndex
     // retourne les index de clé dans un tableau, retourne un tableau
     // support pour clé insensitive
-    public static function keysIndex(array $keys,array $array,bool $sensitive=true):array
+    final public static function keysIndex(array $keys,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -3493,7 +3493,7 @@ final class Arr extends Root
     // keySlice
     // retourne la slice du tableau à la clé donné
     // support pour clé insensitive, va retourner la dernière slice comparable insensible à la case avec la clé fournie
-    public static function keySlice($key,array $array,bool $sensitive=true):array
+    final public static function keySlice($key,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -3520,7 +3520,7 @@ final class Arr extends Root
     // keysSlice
     // tranche un array à une ou plusieurs clé
     // support pour clé insensitive, va retourner la dernière slice comparable insensible à la case avec la clé fournie
-    public static function keysSlice(array $keys,array $array,bool $sensitive=true):array
+    final public static function keysSlice(array $keys,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -3549,7 +3549,7 @@ final class Arr extends Root
 
     // ikeySlice
     // retourne toutes les slices avec des clés se comparant insensible à la case avec la clé donné en argument
-    public static function ikeySlice($key,array $array):array
+    final public static function ikeySlice($key,array $array):array
     {
         $return = [];
 
@@ -3569,7 +3569,7 @@ final class Arr extends Root
     // keyStrip
     // retourne le tableau sans la slice de la clé
     // support pour clé insensitive, va strip toutes les clés se comparant de façon insensible à la case
-    public static function keyStrip($key,array $return,bool $sensitive=true):array
+    final public static function keyStrip($key,array $return,bool $sensitive=true):array
     {
         if(self::isKey($key))
         {
@@ -3596,7 +3596,7 @@ final class Arr extends Root
     // keysStrip
     // retourne le tableau sans les slices des clés
     // support pour clé insensitive, va strip toutes les clés se comparant de façon insensible à la case
-    public static function keysStrip(array $keys,array $return,bool $sensitive=true):array
+    final public static function keysStrip(array $keys,array $return,bool $sensitive=true):array
     {
         foreach ($keys as $key)
         {
@@ -3627,7 +3627,7 @@ final class Arr extends Root
     // permet de naviguer à travers les clés du tableau via l'argument nav
     // la navigation se fait par une addition donc 1 est à la prochaine clé et -1 est la précédente
     // retourne la nouvelle clé ou null
-    public static function keyNav($key,int $nav,array $array)
+    final public static function keyNav($key,int $nav,array $array)
     {
         $return = null;
         $index = self::keyIndex($key,$array);
@@ -3650,7 +3650,7 @@ final class Arr extends Root
 
     // keysStart
     // retourne les slices des clés commençant par la chaîne
-    public static function keysStart(string $str,array $array,bool $sensitive=true):array
+    final public static function keysStart(string $str,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -3666,7 +3666,7 @@ final class Arr extends Root
 
     // keysEnd
     // retourne les slices des clés finissant par la chaîne
-    public static function keysEnd(string $str,array $array,bool $sensitive=true):array
+    final public static function keysEnd(string $str,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -3682,7 +3682,7 @@ final class Arr extends Root
 
     // keysMap
     // permet de changer les clés d'un tableau via callback
-    public static function keysMap(callable $callable,$array,bool $string=false,...$args):array
+    final public static function keysMap(callable $callable,$array,bool $string=false,...$args):array
     {
         $return = [];
 
@@ -3702,7 +3702,7 @@ final class Arr extends Root
     // keysChangeCase
     // change la case des clés dans le tableau
     // case peut etre CASE_LOWER, CASE_UPPER ou callable
-    public static function keysChangeCase($case,array $return,...$args):array
+    final public static function keysChangeCase($case,array $return,...$args):array
     {
         if(in_array($case,[CASE_LOWER,'lower','strtolower'],true))
         $return = self::keysLower($return,...$args);
@@ -3720,7 +3720,7 @@ final class Arr extends Root
     // keysLower
     // change la case des clés dans le tableau pour lowercase
     // support pour multibyte
-    public static function keysLower(array $array,?bool $mb=null):array
+    final public static function keysLower(array $array,?bool $mb=null):array
     {
         $return = [];
         $mb = ($mb === null)? Encoding::getMb($mb):$mb;
@@ -3744,7 +3744,7 @@ final class Arr extends Root
     // keysUpper
     // change la case des clés dans le tableau pour uppercase
     // support pour multibyte
-    public static function keysUpper(array $array,?bool $mb=null):array
+    final public static function keysUpper(array $array,?bool $mb=null):array
     {
         $return = [];
         $mb = ($mb === null)? Encoding::getMb($mb):$mb;
@@ -3770,7 +3770,7 @@ final class Arr extends Root
     // keysInsensitive
     // retourne une version du tableau avec les clés en conflit de case retirés
     // garde la même case
-    public static function keysInsensitive(array $array):array
+    final public static function keysInsensitive(array $array):array
     {
         $return = [];
 
@@ -3790,7 +3790,7 @@ final class Arr extends Root
     // permet de wrapper la clé dans un delimiteur
     // il y a 7 modes, par défaut 0
     // mb sert seulement si le caractère a wrap est accenté minuscule vs majuscule
-    public static function keysWrap(string $start,?string $end,array $array,int $mode=0,bool $sensitive=true):array
+    final public static function keysWrap(string $start,?string $end,array $array,int $mode=0,bool $sensitive=true):array
     {
         $return = [];
 
@@ -3834,7 +3834,7 @@ final class Arr extends Root
     // permet de unwrapper la clé d'un délimiteur
     // il y a 4 modes, par défaut 0
     // mb sert seulement si le caractère a unwrap est accenté minuscule vs majuscule
-    public static function keysUnwrap(string $start,?string $end,array $array,int $mode=0,bool $sensitive=true):array
+    final public static function keysUnwrap(string $start,?string $end,array $array,int $mode=0,bool $sensitive=true):array
     {
         $return = [];
 
@@ -3867,7 +3867,7 @@ final class Arr extends Root
 
     // keysReplace
     // str replace sur les clés du tableau
-    public static function keysReplace(array $replace,array $return,bool $sensitive=true):array
+    final public static function keysReplace(array $replace,array $return,bool $sensitive=true):array
     {
         if(!empty($replace))
         {
@@ -3890,7 +3890,7 @@ final class Arr extends Root
 
     // keysChange
     // permet de renommer des clés dans un tableau, tout en conservant les valeurs
-    public static function keysChange(array $replace,array $return):array
+    final public static function keysChange(array $replace,array $return):array
     {
         foreach ($replace as $what => $to)
         {
@@ -3909,7 +3909,7 @@ final class Arr extends Root
     // keysMissing
     // remplit les clés manquantes d'un tableau numérique
     // firstKey permet de spécifier à quel clé devrait commencer le remplacent, si null alors c'est à la première clé
-    public static function keysMissing(array $array,$value=false,?int $firstKey=null):array
+    final public static function keysMissing(array $array,$value=false,?int $firstKey=null):array
     {
         $return = [];
 
@@ -3943,7 +3943,7 @@ final class Arr extends Root
 
     // keysReindex
     // réindex les clés numériques d'un tableau
-    public static function keysReindex(array $array,int $i=0):array
+    final public static function keysReindex(array $array,int $i=0):array
     {
         $return = [];
 
@@ -3967,7 +3967,7 @@ final class Arr extends Root
     // sort un tableau par clé
     // on peut mettre asc, true ou desc, false à sort (ksort ou krsort)
     // renvoie à la méthode sort
-    public static function keysSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
+    final public static function keysSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
     {
         $ascDesc = self::getSortAscDesc($sort);
 
@@ -3983,7 +3983,7 @@ final class Arr extends Root
 
     // keyRandom
     // retourne la clé random d'un tableau
-    public static function keyRandom(array $array)
+    final public static function keyRandom(array $array)
     {
         $return = null;
         $slice = self::random($array,1);
@@ -3998,7 +3998,7 @@ final class Arr extends Root
     // valuesAre
     // retourne vrai si toutes les valeurs différentes du tableau sont dans le tableau values
     // support pour recherche insensible à la case
-    public static function valuesAre(array $values,array $array,bool $sensitive=true):bool
+    final public static function valuesAre(array $values,array $array,bool $sensitive=true):bool
     {
         $return = false;
 
@@ -4012,7 +4012,7 @@ final class Arr extends Root
 
     // valueFirst
     // retourne la première valeur
-    public static function valueFirst(array $array)
+    final public static function valueFirst(array $array)
     {
         $return = null;
 
@@ -4028,7 +4028,7 @@ final class Arr extends Root
 
     // valueLast
     // retourne la dernière valeur
-    public static function valueLast(array $array)
+    final public static function valueLast(array $array)
     {
         $return = null;
 
@@ -4045,7 +4045,7 @@ final class Arr extends Root
     // valueIndex
     // retourne tous les index contenant la valeur donnée
     // permet la recherche insensible à la case
-    public static function valueIndex($value,array $array,bool $sensitive=true):array
+    final public static function valueIndex($value,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -4060,7 +4060,7 @@ final class Arr extends Root
     // valuesIndex
     // retourne tous les index contenant les valeurs données
     // permet la recherche insensible à la case
-    public static function valuesIndex(array $values,array $array,bool $sensitive=true):array
+    final public static function valuesIndex(array $values,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -4076,7 +4076,7 @@ final class Arr extends Root
     // retourne toutes les clés contenant contenant la valeur donnée
     // permet la recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    public static function valueKey($value,array $array,bool $sensitive=true):array
+    final public static function valueKey($value,array $array,bool $sensitive=true):array
     {
         return self::keys($array,$value,$sensitive,true);
     }
@@ -4084,7 +4084,7 @@ final class Arr extends Root
 
     // valuesAll
     // permet de changer la valeur de toutes les clés du tableau
-    public static function valuesAll($value,array $return)
+    final public static function valuesAll($value,array $return)
     {
         foreach ($return as $k => $v)
         {
@@ -4099,7 +4099,7 @@ final class Arr extends Root
     // retourne toutes les clés contenant les valeurs données
     // permet la recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    public static function valuesKey(array $values,array $array,bool $sensitive=true):array
+    final public static function valuesKey(array $values,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -4125,7 +4125,7 @@ final class Arr extends Root
     // valueSlice
     // retourne toutes les slices contenant la valeur donnée
     // permet la recherche insensible à la case
-    public static function valueSlice($value,array $array,bool $sensitive=true):array
+    final public static function valueSlice($value,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -4141,7 +4141,7 @@ final class Arr extends Root
     // valuesSlice
     // retourne toutes les slices contenant les valeurs données
     // permet la recherche insensible à la case
-    public static function valuesSlice(array $values,array $array,bool $sensitive=true):array
+    final public static function valuesSlice(array $values,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -4158,7 +4158,7 @@ final class Arr extends Root
     // valueStrip
     // retourne le tableau sans toutes les slices avec la valeur donnée
     // permet la recherche insensible à la case
-    public static function valueStrip($value,array $return,bool $sensitive=true):array
+    final public static function valueStrip($value,array $return,bool $sensitive=true):array
     {
         foreach (self::valueKey($value,$return,$sensitive) as $key)
         {
@@ -4172,7 +4172,7 @@ final class Arr extends Root
     // valuesStrip
     // retourne le tableau sans toutes les slices avec les valeurs données
     // permet la recherche insensible à la case
-    public static function valuesStrip(array $values,array $return,bool $sensitive=true):array
+    final public static function valuesStrip(array $values,array $return,bool $sensitive=true):array
     {
         foreach (self::valuesKey($values,$return,$sensitive) as $key)
         {
@@ -4189,7 +4189,7 @@ final class Arr extends Root
     // si plusieurs valeurs identiques dans le tableau, la méthode prend le premier index
     // la navigation se fait par une addition donc 1 est à la prochaine clé et -1 est la précédente
     // retourne la nouvelle valeur ou null
-    public static function valueNav($value,int $nav,array $array)
+    final public static function valueNav($value,int $nav,array $array)
     {
         $return = null;
         $indexes = self::valueIndex($value,$array);
@@ -4213,7 +4213,7 @@ final class Arr extends Root
 
     // valueRandom
     // retourne la valeur random d'un tableau
-    public static function valueRandom(array $array)
+    final public static function valueRandom(array $array)
     {
         $return = null;
         $slice = self::random($array,1);
@@ -4229,7 +4229,7 @@ final class Arr extends Root
     // changement de valeur dans un tableau
     // sensible à la case
     // amount permet de spécifier combien de changements doivent être faire, en partant du début du tableau
-    public static function valuesChange($value,$change,array $return,?int $amount=null):array
+    final public static function valuesChange($value,$change,array $return,?int $amount=null):array
     {
         $i = 0;
         foreach ($return as $k => $v)
@@ -4250,7 +4250,7 @@ final class Arr extends Root
 
     // valuesReplace
     // str_replace sur les valeurs du tableau
-    public static function valuesReplace(array $replace,array $return,bool $sensitive=true):array
+    final public static function valuesReplace(array $replace,array $return,bool $sensitive=true):array
     {
         if(!empty($replace))
         {
@@ -4274,7 +4274,7 @@ final class Arr extends Root
     // permet de faire la recherche d'un needle dans les valeurs scalaires d'un tableau
     // support pour recherche multiple si prepare est true et needle contient un +
     // retourne toutes les slices ou le needle est trouvé
-    public static function valuesSearch(string $needle,array $array,bool $sensitive=true,bool $accentSensitive=true,bool $prepare=false,?string $separator=null):array
+    final public static function valuesSearch(string $needle,array $array,bool $sensitive=true,bool $accentSensitive=true,bool $prepare=false,?string $separator=null):array
     {
         $return = [];
 
@@ -4300,7 +4300,7 @@ final class Arr extends Root
     // valuesSubReplace
     // fait un remplacement substring sur toutes les valeurs du tableau
     // si le tableau ne contient pas uniquemment des string, utilise validate map
-    public static function valuesSubReplace($offset,$length,$replace,array $return):array
+    final public static function valuesSubReplace($offset,$length,$replace,array $return):array
     {
         if(self::validate('string',$return))
         $return = substr_replace($return,$replace,$offset,$length);
@@ -4317,7 +4317,7 @@ final class Arr extends Root
 
     // valuesStart
     // retourne les slices des valeurs commençant par la chaîne
-    public static function valuesStart(string $str,array $array,bool $sensitive=true):array
+    final public static function valuesStart(string $str,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -4333,7 +4333,7 @@ final class Arr extends Root
 
     // valuesEnd
     // retourne les slices des valeurs finissant par la chaîne
-    public static function valuesEnd(string $str,array $array,bool $sensitive=true):array
+    final public static function valuesEnd(string $str,array $array,bool $sensitive=true):array
     {
         $return = [];
 
@@ -4350,7 +4350,7 @@ final class Arr extends Root
     // valuesChangeCase
     // change la case des valeurs string dans le tableau
     // case peut etre CASE_LOWER, CASE_UPPER ou callable
-    public static function valuesChangeCase($case,array $return,...$args):array
+    final public static function valuesChangeCase($case,array $return,...$args):array
     {
         if(in_array($case,[CASE_LOWER,'lower','strtolower'],true))
         $return = self::valuesLower($return,...$args);
@@ -4368,7 +4368,7 @@ final class Arr extends Root
     // valuesLower
     // change la case des valeurs string dans le tableau pour lowercase
     // utilise multibyte
-    public static function valuesLower(array $array):array
+    final public static function valuesLower(array $array):array
     {
         return Str::map([Str::class,'lower'],$array,true);
     }
@@ -4377,7 +4377,7 @@ final class Arr extends Root
     // valuesUpper
     // change la case des valeurs string dans le tableau pour uppercase
     // utilise multibyte
-    public static function valuesUpper(array $array):array
+    final public static function valuesUpper(array $array):array
     {
         return Str::map([Str::class,'upper'],$array,true);
     }
@@ -4387,7 +4387,7 @@ final class Arr extends Root
     // retourne le tableau avec les entrées string ayant une longueur entre min et max
     // utilise multibyte
     // possible de garder les entrées numérique mais si elles n'ont pas la length
-    public static function valuesSliceLength(int $min,?int $max,array $array):array
+    final public static function valuesSliceLength(int $min,?int $max,array $array):array
     {
         $return = [];
         $max = ($max === null)? PHP_INT_MAX:$max;
@@ -4411,7 +4411,7 @@ final class Arr extends Root
     // retourne le tableau sans les entrées string ayant une longueur entre min et max
     // enlève aussi les entrées non string
     // utilise multibyte
-    public static function valuesStripLength(int $min,?int $max,array $array):array
+    final public static function valuesStripLength(int $min,?int $max,array $array):array
     {
         $return = [];
         $max = ($max === null)? PHP_INT_MAX:$max;
@@ -4435,7 +4435,7 @@ final class Arr extends Root
     // retourne le tableau avec les entrées string rentrant dans une longueur totale
     // la première entrée pourrait être truncate si plus courte que length
     // utilise multibyte
-    public static function valuesTotalLength(int $length,array $array):array
+    final public static function valuesTotalLength(int $length,array $array):array
     {
         $return = [];
         $inLength = 0;
@@ -4468,7 +4468,7 @@ final class Arr extends Root
     // permet de wrapper les valeurs scalar dans un delimiteur
     // il y a 7 modes, par défaut 0
     // mb sert seulement si le caractère a wrap est accenté minuscule vs majuscule
-    public static function valuesWrap(string $start,?string $end,array $return,int $mode=0,bool $sensitive=true):array
+    final public static function valuesWrap(string $start,?string $end,array $return,int $mode=0,bool $sensitive=true):array
     {
         if($end === null)
         $end = $start;
@@ -4512,7 +4512,7 @@ final class Arr extends Root
     // permet de unwrapper les valeurs string d'un délimiteur
     // il y a 4 modes, par défaut 0
     // mb sert seulement si le caractère a unwrap est accenté minuscule vs majuscule
-    public static function valuesUnwrap(string $start,?string $end,array $return,int $mode=0,bool $sensitive=true):array
+    final public static function valuesUnwrap(string $start,?string $end,array $return,int $mode=0,bool $sensitive=true):array
     {
         if($end === null)
         $end = $start;
@@ -4546,7 +4546,7 @@ final class Arr extends Root
     // on peut mettre asc, true ou desc, false à sort (sort ou rsort)
     // les valeurs non scalar sont retirés et les clés ne sont pas conservés
     // renvoie à la méthode sort
-    public static function valuesSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
+    final public static function valuesSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
     {
         $return = self::validateSlice('scalar',$return);
         $ascDesc = self::getSortAscDesc($sort);
@@ -4566,7 +4566,7 @@ final class Arr extends Root
     // on peut mettre asc, true ou desc, false à sort (asort ou arsort)
     // les valeurs non scalar sont retirés et les clés sont conservés
     // renvoie à la méthode sort
-    public static function valuesSortKeepAssoc(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
+    final public static function valuesSortKeepAssoc(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
     {
         $return = self::validateSlice('scalar',$return);
         $ascDesc = self::getSortAscDesc($sort);
@@ -4584,7 +4584,7 @@ final class Arr extends Root
     // valuesExcerpt
     // permet de passer toutes les valeurs string du tableau dans la méthode str/excerpt
     // mb est true par défaut
-    public static function valuesExcerpt(?int $length,array $array,?array $option=null):array
+    final public static function valuesExcerpt(?int $length,array $array,?array $option=null):array
     {
         $return = [];
         $option = self::plus(['mb'=>true],$option);
@@ -4605,7 +4605,7 @@ final class Arr extends Root
     // keysValuesLower
     // change la case des valeurs et clés string dans le tableau pour lowercase
     // valeur mb seulement pour keysLower, values utilise mb
-    public static function keysValuesLower(array $return,?bool $mb=null):array
+    final public static function keysValuesLower(array $return,?bool $mb=null):array
     {
         $return = self::keysLower($return,$mb);
         $return = self::valuesLower($return);
@@ -4617,7 +4617,7 @@ final class Arr extends Root
     // keysValuesUpper
     // change la case des valeurs et clés string dans le tableau pour uppercase
     // valeur mb seulement pour keysUpper, values utilise mb
-    public static function keysValuesUpper(array $return,?bool $mb=null):array
+    final public static function keysValuesUpper(array $return,?bool $mb=null):array
     {
         $return = self::keysUpper($return,$mb);
         $return = self::valuesUpper($return);
@@ -4630,7 +4630,7 @@ final class Arr extends Root
     // permet de reformater un tableau assoc
     // toutes les entrées avec clés string sont transformés en array(key,...value)
     // retourne un tableau multidimensionnel séquentielle
-    public static function keysStrToArrs(array $array):array
+    final public static function keysStrToArrs(array $array):array
     {
         $return = [];
 
@@ -4650,7 +4650,7 @@ final class Arr extends Root
     // camelCaseParent
     // prend un tableau contenant des string camelCase et identifie le premier parent de chacun
     // retourne un tableau clé->valeur, les clés sont parents ont la valeur null mais sont retournés quand même
-    public static function camelCaseParent(array $array):array
+    final public static function camelCaseParent(array $array):array
     {
         $return = [];
         $camelCase = [];
@@ -4696,7 +4696,7 @@ final class Arr extends Root
     // combination
     // retourne toutes les combinaisons possibles des slices d'un tableau
     // retourne un tableau multidimensionnel
-    public static function combination(array $array,?bool $sort=true):array
+    final public static function combination(array $array,?bool $sort=true):array
     {
         $return = [[]];
 
@@ -4724,7 +4724,7 @@ final class Arr extends Root
     // methodSort
     // permet de faire un sort su un tableau unidimensionnel contenant des noms de classes ou des objets
     // le type doit être obj ou classe
-    public static function methodSort(string $type,string $method,$sort=true,array $return,...$args):array
+    final public static function methodSort(string $type,string $method,$sort=true,array $return,...$args):array
     {
         uasort($return, function($a,$b) use ($type,$method,$sort,$args)
         {
@@ -4771,7 +4771,7 @@ final class Arr extends Root
     // methodSorts
     // permet de faire plusieurs sorts su un tableau unidimensionnel contenant des noms de classes ou des objets
     // le type doit être obj ou classe
-    public static function methodSorts(string $type,array $sorts,array $return):array
+    final public static function methodSorts(string $type,array $sorts,array $return):array
     {
         uasort($return, function($first,$second) use ($type,$sorts)
         {

@@ -28,7 +28,7 @@ class Debug extends Root
 
     // helper
     // charge les helpers
-    public static function helper():void
+    final public static function helper():void
     {
         if(!empty(static::$config['helper']))
         {
@@ -44,7 +44,7 @@ class Debug extends Root
     // génère le détail d'une variable selon la méthode dans config
     // si echo est false, la string est retourné mais pas affiché
     // si echo est true, flush peut être true
-    public static function var($value=null,bool $wrap=true,bool $echo=true,bool $flush=false):string
+    final public static function var($value=null,bool $wrap=true,bool $echo=true,bool $flush=false):string
     {
         $return = '';
         $method = static::varMethod();
@@ -66,7 +66,7 @@ class Debug extends Root
 
     // varFlush
     // comme var mais echo et flush
-    public static function varFlush($value=null,bool $wrap=true):string
+    final public static function varFlush($value=null,bool $wrap=true):string
     {
         return static::var($value,$wrap,true,true);
     }
@@ -74,7 +74,7 @@ class Debug extends Root
 
     // varGet
     // retourne le détail d'une variable selon la méthode dans config, pas de echo
-    public static function varGet($value=null,bool $wrap=true):string
+    final public static function varGet($value=null,bool $wrap=true):string
     {
         return static::var($value,$wrap,false);
     }
@@ -83,7 +83,7 @@ class Debug extends Root
     // vars
     // génère le détail de variables selon la méthode dans config
     // echo et retourne un array
-    public static function vars(...$values):array
+    final public static function vars(...$values):array
     {
         $return = [];
 
@@ -99,7 +99,7 @@ class Debug extends Root
     // varsFlush
     // génère le détail de variables selon la méthode dans config
     // echo, et retourne un array, flush est utilisé
-    public static function varsFlush(...$values):array
+    final public static function varsFlush(...$values):array
     {
         $return = [];
 
@@ -115,7 +115,7 @@ class Debug extends Root
     // varsGet
     // génère le détail de variables selon la méthode dans config
     // n'écho rien, retourne une string
-    public static function varsGet(...$values):string
+    final public static function varsGet(...$values):string
     {
         $return = '';
 
@@ -131,7 +131,7 @@ class Debug extends Root
     // dead
     // génère le détail d'une variable selon la méthode dans config et meurt
     // utilise la méthode par défaut
-    public static function dead($value=null):void
+    final public static function dead($value=null):void
     {
         static::var($value);
         Response::kill();
@@ -141,7 +141,7 @@ class Debug extends Root
     // deads
     // génère le détail de variables selon la méthode dans config et meurt
     // utilise la méthode par défaut
-    public static function deads(...$values):void
+    final public static function deads(...$values):void
     {
         foreach ($values as $value)
         {
@@ -154,7 +154,7 @@ class Debug extends Root
 
     // echoFlush
     // permet d'echo la valeur ou de la echo + flush si flush est true
-    public static function echoFlush($value,bool $flush=true):void
+    final public static function echoFlush($value,bool $flush=true):void
     {
         if($flush === true)
         Buffer::flushEcho($value);
@@ -169,7 +169,7 @@ class Debug extends Root
     // varMethod
     // retourne la méthode à utiliser pour faire un dump de données
     // détecte si xdebug est installé sur le système
-    public static function varMethod():?string
+    final public static function varMethod():?string
     {
         $return = static::$config['method'];
 
@@ -189,7 +189,7 @@ class Debug extends Root
     // wrap
     // gère l'enrobage de la valeur
     // différent si c'est du cli
-    public static function wrap(?string $return):string
+    final public static function wrap(?string $return):string
     {
         if(Server::isCli())
         $return = Cli::preset(static::$config['cliPreset'],$return);
@@ -204,7 +204,7 @@ class Debug extends Root
     // printr
     // retourne les détail d'une variable avec print_r
     // si wrap est true, la string est enrobbé de pre
-    public static function printr($value=null,bool $wrap=false):string
+    final public static function printr($value=null,bool $wrap=false):string
     {
         $return = print_r($value,true);
 
@@ -220,7 +220,7 @@ class Debug extends Root
     // ouvre et ferme un buffer
     // si wrap est true, la string est enrobbé de pre
     // si extra est true, passe la string dans specialChars et met la longueur entre paranthèses avant (utile pour html)
-    public static function dump($value=null,bool $wrap=true,bool $extra=true):string
+    final public static function dump($value=null,bool $wrap=true,bool $extra=true):string
     {
         $return = '';
         $isOverloaded = Ini::isVarDumpOverloaded();
@@ -257,7 +257,7 @@ class Debug extends Root
     // si la variable n'est pas array ou objet, envoie à dump
     // si wrap est true, la string est passé dans stripslashes et ensuite highlight_string
     // si extra est true, ajoute le compte si c'est un tableau ou la longueur si c'est une string
-    public static function export($value=null,bool $wrap=true,bool $extra=true):string
+    final public static function export($value=null,bool $wrap=true,bool $extra=true):string
     {
         $return = var_export($value,true);
         $isCli = Server::isCli();
@@ -297,7 +297,7 @@ class Debug extends Root
     // highlight une string php ou un fichier source php
     // si wrap est true, enrobe la string des open et close tag de php
     // si unwrap est true, essaie d'enlèver les open et close tag de php du code html
-    public static function highlight(string $string,bool $wrap=false,bool $unwrap=false,bool $file=false):string
+    final public static function highlight(string $string,bool $wrap=false,bool $unwrap=false,bool $file=false):string
     {
         $return = '';
 
@@ -323,7 +323,7 @@ class Debug extends Root
 
     // sourceStrip
     // retourne la source d'un fichier php sans espace blanc
-    public static function sourceStrip(string $value):?string
+    final public static function sourceStrip(string $value):?string
     {
         $return = null;
 
@@ -338,7 +338,7 @@ class Debug extends Root
     // génère le debug_backtrace
     // premier argument permet l'affichage ou non des arguments du backtrace
     // shift permet d'enlever un nombre d'entrée au début du tableau
-    public static function trace(bool $showArgs=false,int $shift=0):array
+    final public static function trace(bool $showArgs=false,int $shift=0):array
     {
         $option = ($showArgs === true)? 0:DEBUG_BACKTRACE_IGNORE_ARGS;
         $return = debug_backtrace($option);
@@ -351,7 +351,7 @@ class Debug extends Root
     // traceStart
     // retourne un trace à partir d'un point de départ file et line (facultatif)
     // showArgs permet d'enlever les arguments
-    public static function traceStart(string $file,?int $line=null,bool $showArgs=false,?array $trace=null):array
+    final public static function traceStart(string $file,?int $line=null,bool $showArgs=false,?array $trace=null):array
     {
         $return = [];
         $trace = ($trace === null)? static::trace(false,1):$trace;
@@ -382,7 +382,7 @@ class Debug extends Root
     // traceIndex
     // retourne un index de trace
     // les arguments de traceStart peuvent aussi être fournis en 2e et 3e position
-    public static function traceIndex(int $index=0,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):?array
+    final public static function traceIndex(int $index=0,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):?array
     {
         $return = null;
         $trace = ($trace === null)? static::trace(false,1):$trace;
@@ -402,7 +402,7 @@ class Debug extends Root
     // traceSlice
     // permet de slice un tableau trace via offset et length
     // les arguments de traceStart peuvent aussi être fournis en 3e et 4e position
-    public static function traceSlice(int $offset,?int $length=null,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):array
+    final public static function traceSlice(int $offset,?int $length=null,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):array
     {
         $return = [];
         $trace = ($trace === null)? static::trace(false,1):$trace;
@@ -422,7 +422,7 @@ class Debug extends Root
     // traceLastCall
     // retourne la dernière fonction appelé
     // les arguments de traceStart peuvent être fournis en 1ère et 2e position
-    public static function traceLastCall(?string $file=null,?int $line=null,?array $trace=null):?string
+    final public static function traceLastCall(?string $file=null,?int $line=null,?array $trace=null):?string
     {
         $return = null;
         $trace = ($trace === null)? static::trace(false,1):$trace;
@@ -453,7 +453,7 @@ class Debug extends Root
     // traceBeforeClass
     // retoure la première entrée trace trouvé qui a une classe et qui n'est pas la classe présente ou celle en argument
     // exception si c'est une des classes données et que c'est un constructeur
-    public static function traceBeforeClass($class=null,bool $construct=true,?array $trace=null):?array
+    final public static function traceBeforeClass($class=null,bool $construct=true,?array $trace=null):?array
     {
         $return = null;
         $trace = ($trace === null)? static::trace(false,1):$trace;
@@ -477,7 +477,7 @@ class Debug extends Root
 
     // traceBeforeFile
     // retoure la première entrée trace avant le fichier fourni en argument
-    public static function traceBeforeFile(string $file,?array $trace=null):?array
+    final public static function traceBeforeFile(string $file,?array $trace=null):?array
     {
         $return = null;
         $trace = ($trace === null)? static::trace(false,1):$trace;
@@ -497,7 +497,7 @@ class Debug extends Root
 
     // traceRemoveArgs
     // enlève les arguments d'un tableau multidimensionnel trace
-    public static function traceRemoveArgs(array $return):array
+    final public static function traceRemoveArgs(array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -515,7 +515,7 @@ class Debug extends Root
     // speed
     // calcule la différence entre deux microtime, par défaut getMicrotime dans date
     // round permet d'arrondir la différence
-    public static function speed(?float $value=null,int $round=3):float
+    final public static function speed(?float $value=null,int $round=3):float
     {
         $return = 0;
         $value = (is_numeric($value))? $value:Date::getMicrotime();
@@ -530,7 +530,7 @@ class Debug extends Root
     // call
     // permet de faire des itérations sur une callable
     // retourne le temps d'éxécutions
-    public static function call(int $iteration=5000,callable $call,...$arg):float
+    final public static function call(int $iteration=5000,callable $call,...$arg):float
     {
         $return = 0;
         $microtime = Date::microtime();
@@ -551,7 +551,7 @@ class Debug extends Root
 
     // data
     // retourne le tableau data
-    public static function data():array
+    final public static function data():array
     {
         return static::$data;
     }

@@ -15,7 +15,7 @@ use Quid\Base;
 class Html extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         Base\Attr::addSelectedUri(['/test/laa.php'=>true]);

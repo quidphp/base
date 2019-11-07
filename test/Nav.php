@@ -15,7 +15,7 @@ use Quid\Base;
 class Nav extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // isPage
         assert(Base\Nav::isPage(2,20,6));

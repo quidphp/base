@@ -15,7 +15,7 @@ use Quid\Base;
 class Root extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // root
         assert(Base\Root::classFqcn() === Base\Root::class);

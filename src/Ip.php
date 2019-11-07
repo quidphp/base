@@ -29,7 +29,7 @@ class Ip extends Root
 
     // is
     // retourne vrai si la valeur est un ip
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (Validate::regex('ip',$value))? true:false;
     }
@@ -37,7 +37,7 @@ class Ip extends Root
 
     // isLocal
     // retourne vrai si l'ip est local
-    public static function isLocal($value):bool
+    final public static function isLocal($value):bool
     {
         return (static::is($value) && ($value === '127.0.0.1' || strpos($value,'192.168.') === 0))? true:false;
     }
@@ -46,7 +46,7 @@ class Ip extends Root
     // normalize
     // normalize le ip, par exemple si c'est ::1
     // si invalide retourne 0.0.0.0
-    public static function normalize($value):string
+    final public static function normalize($value):string
     {
         $return = '0.0.0.0';
 
@@ -66,7 +66,7 @@ class Ip extends Root
     // allowed
     // retourne vrai si le ip passe le test du whitelist et blacklist
     // si option est un tableau indexé, c'est un whitelist
-    public static function allowed(string $value,?array $option=null):bool
+    final public static function allowed(string $value,?array $option=null):bool
     {
         $return = false;
 
@@ -99,7 +99,7 @@ class Ip extends Root
     // compareRange
     // retourne vrai si le ip est dans le range
     // le range identifié par le caractère *
-    public static function compareRange(string $value,string $range):bool
+    final public static function compareRange(string $value,string $range):bool
     {
         $return = false;
         $value = static::explode($value);
@@ -126,7 +126,7 @@ class Ip extends Root
     // compareLevel
     // compare deux valeurs ip
     // level permet de spécifier jusqu'à quel hauteur ils doivent être identique (1 à 4)
-    public static function compareLevel(string $value,string $compare,int $level=2):bool
+    final public static function compareLevel(string $value,string $compare,int $level=2):bool
     {
         $return = false;
 
@@ -160,7 +160,7 @@ class Ip extends Root
     // in
     // retourne vrai si le ip est dans la list
     // un test via compareRange et compareLevel peut être fait
-    public static function in(string $value,array $array,bool $range=true,?int $level=null):bool
+    final public static function in(string $value,array $array,bool $range=true,?int $level=null):bool
     {
         $return = false;
 
@@ -195,7 +195,7 @@ class Ip extends Root
     // reformat
     // permet de reformater un ip dont la dernière partie est de type 0/22 ou 0/24
     // représente des groupes de 256 ips
-    public static function reformat(string $value):?array
+    final public static function reformat(string $value):?array
     {
         $return = null;
         $explode = static::explode($value);
@@ -237,7 +237,7 @@ class Ip extends Root
     // reformats
     // permet de reformater plusieurs ips dont la dernière partie est de type 0/22 ou 0/24
     // un tableau multidimensionnel est retourné
-    public static function reformats(string ...$values):array
+    final public static function reformats(string ...$values):array
     {
         $return = [];
 
@@ -253,7 +253,7 @@ class Ip extends Root
     // reformatsUnique
     // permet de reformater plusieurs ips dont la dernière partie est de type 0/22 ou 0/24
     // un tableau unidimensionnel avec les ips unique sont retournés
-    public static function reformatsUnique(string ...$values):array
+    final public static function reformatsUnique(string ...$values):array
     {
         $return = [];
 
@@ -271,7 +271,7 @@ class Ip extends Root
 
     // toLong
     // convertit une ip en int
-    public static function toLong(string $value):?int
+    final public static function toLong(string $value):?int
     {
         $return = null;
 
@@ -285,7 +285,7 @@ class Ip extends Root
 
     // fromLong
     // retourne une string ip à partir d'un int long
-    public static function fromLong(int $long):?string
+    final public static function fromLong(int $long):?string
     {
         $return = null;
 
@@ -299,7 +299,7 @@ class Ip extends Root
 
     // explode
     // explode un ip et retourne un tableau à 4 clés
-    public static function explode(string $value):?array
+    final public static function explode(string $value):?array
     {
         $return = null;
 
@@ -313,7 +313,7 @@ class Ip extends Root
 
     // implode
     // implode un tableau à 4 clés en un chaîne
-    public static function implode(array $value):?string
+    final public static function implode(array $value):?string
     {
         $return = null;
 

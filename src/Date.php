@@ -71,7 +71,7 @@ class Date extends Root
 
     // isNow
     // retourne vrai si la temps donné est maintenant
-    public static function isNow($value=null,$format=null):bool
+    final public static function isNow($value=null,$format=null):bool
     {
         return (static::time($value,$format) === static::getTimestamp())? true:false;
     }
@@ -80,7 +80,7 @@ class Date extends Root
     // isValid
     // retourne vrai si une date est valide
     // value peut être int ou array, si c'est int ça représente year
-    public static function isValid($value,?int $month=null,?int $day=null):bool
+    final public static function isValid($value,?int $month=null,?int $day=null):bool
     {
         $return = false;
         $year = (is_int($value))? $value:null;
@@ -103,7 +103,7 @@ class Date extends Root
 
     // isYearValid
     // retourne vrai si le timestamp est une année valide
-    public static function isYearValid($value):bool
+    final public static function isYearValid($value):bool
     {
         return (is_int($value) && $value >= 0 && $value <= static::$config['amount']['maxYear'])? true:false;
     }
@@ -112,7 +112,7 @@ class Date extends Root
     // isYearLeap
     // retourne vrai si l'année est bisextile
     // la valeur peut être une année 4 chiffres ou un timestamp
-    public static function isYearLeap($value=null,$format=null):bool
+    final public static function isYearLeap($value=null,$format=null):bool
     {
         $return = false;
         $value = static::time($value,$format,true);
@@ -126,7 +126,7 @@ class Date extends Root
 
     // isToday
     // retourne vrai si la temps donné est aujourd'hui
-    public static function isToday($value=null,$format=null):bool
+    final public static function isToday($value=null,$format=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -140,7 +140,7 @@ class Date extends Root
 
     // isTomorrow
     // retourne vrai si la temps donné est demain
-    public static function isTomorrow($value=null,$format=null):bool
+    final public static function isTomorrow($value=null,$format=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -155,7 +155,7 @@ class Date extends Root
 
     // isYesterday
     // retourne vrai si la temps donné est hier
-    public static function isYesterday($value=null,$format=null):bool
+    final public static function isYesterday($value=null,$format=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -170,7 +170,7 @@ class Date extends Root
 
     // isYear
     // retourne vrai si le temps donné a la même année que timestamp
-    public static function isYear($value=null,$format=null,?int $timestamp=null):bool
+    final public static function isYear($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -184,7 +184,7 @@ class Date extends Root
 
     // isMonth
     // retourne vrai si le temps donné est identique jusqu'au mois de timestamp
-    public static function isMonth($value=null,$format=null,?int $timestamp=null):bool
+    final public static function isMonth($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -198,7 +198,7 @@ class Date extends Root
 
     // isDay
     // retourne vrai si le temps donné est identique jusqu'au jour de timestamp
-    public static function isDay($value=null,$format=null,?int $timestamp=null):bool
+    final public static function isDay($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -212,7 +212,7 @@ class Date extends Root
 
     // isDayStart
     // retourne vrai si le temps est exactement le début d'un jour
-    public static function isDayStart($value=null,$format=null):bool
+    final public static function isDayStart($value=null,$format=null):bool
     {
         return (static::secondsInDay($value,$format) === 0)? true:false;
     }
@@ -220,7 +220,7 @@ class Date extends Root
 
     // isHour
     // retourne vrai si le temps donné est identique jusqu'à l'heure de timestamp
-    public static function isHour($value=null,$format=null,?int $timestamp=null):bool
+    final public static function isHour($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -234,7 +234,7 @@ class Date extends Root
 
     // isMinute
     // retourne vrai si le temps donné est identique jusqu'à la minute de timestamp
-    public static function isMinute($value=null,$format=null,?int $timestamp=null):bool
+    final public static function isMinute($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -248,7 +248,7 @@ class Date extends Root
 
     // isSecond
     // retourne vrai si le temps donné est identique à timestamp
-    public static function isSecond($value=null,$format=null,?int $timestamp=null):bool
+    final public static function isSecond($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
         $value = static::time($value,$format);
@@ -262,7 +262,7 @@ class Date extends Root
 
     // isFormat
     // retourne vrai si la date est bien du format spécifé
-    public static function isFormat($format=null,$value):bool
+    final public static function isFormat($format=null,$value):bool
     {
         $return = false;
 
@@ -288,7 +288,7 @@ class Date extends Root
     // isFormatDateToDay
     // retourne vrai si le format est dateToDay
     // ce format change selon la langue
-    public static function isFormatDateToDay($value):bool
+    final public static function isFormatDateToDay($value):bool
     {
         return static::isFormat('dateToDay',$value);
     }
@@ -297,7 +297,7 @@ class Date extends Root
     // isFormatDateToMinute
     // retourne vrai si le format est dateToMinute
     // ce format change selon la langue
-    public static function isFormatDateToMinute($value):bool
+    final public static function isFormatDateToMinute($value):bool
     {
         return static::isFormat('dateToMinute',$value);
     }
@@ -306,7 +306,7 @@ class Date extends Root
     // isFormatDateToSecond
     // retourne vrai si le format est dateToSecond
     // ce format change selon la langue
-    public static function isFormatDateToSecond($value):bool
+    final public static function isFormatDateToSecond($value):bool
     {
         return static::isFormat('dateToSecond',$value);
     }
@@ -314,7 +314,7 @@ class Date extends Root
 
     // getTimestamp
     // retourne le timestamp courant archivé dans les config de la classe
-    public static function getTimestamp():int
+    final public static function getTimestamp():int
     {
         $return = static::$config['timestamp'];
 
@@ -327,7 +327,7 @@ class Date extends Root
 
     // setTimestamp
     // change le timestamp courant archivé dans les config de la classe
-    public static function setTimestamp(int $value):void
+    final public static function setTimestamp(int $value):void
     {
         static::$config['timestamp'] = $value;
 
@@ -337,7 +337,7 @@ class Date extends Root
 
     // getMicrotime
     // retourne le microtime courant archivé dans les config de la classe
-    public static function getMicrotime():float
+    final public static function getMicrotime():float
     {
         $return = static::$config['microtime'];
 
@@ -350,7 +350,7 @@ class Date extends Root
 
     // setMicrotime
     // change le microtime archivé dans les config de la classe
-    public static function setMicrotime(float $value):void
+    final public static function setMicrotime(float $value):void
     {
         static::$config['microtime'] = $value;
 
@@ -361,7 +361,7 @@ class Date extends Root
     // seconds
     // retourne le nombre de secondes dans une année, mois, jour, heure, minute ou seconde
     // possibilité de changer le nombre de jour dans une année ou un mois
-    public static function seconds(?array $option=null):array
+    final public static function seconds(?array $option=null):array
     {
         $return = [];
         $option = Arr::plus(static::getAmount(),$option);
@@ -379,7 +379,7 @@ class Date extends Root
 
     // getAmount
     // retourne le tableau amount, spécifié dans config
-    public static function getAmount():array
+    final public static function getAmount():array
     {
         return static::$config['amount'];
     }
@@ -387,7 +387,7 @@ class Date extends Root
 
     // getStr
     // retourne le tableau pour la méthode, mergé avec celui de lang si disponible
-    public static function getStr(?string $lang=null):array
+    final public static function getStr(?string $lang=null):array
     {
         return Arr::plus(Lang\En::$config['date']['str'],Lang::dateStr(null,$lang));
     }
@@ -395,7 +395,7 @@ class Date extends Root
 
     // getMonths
     // retourne le tableau de mois, mergé avec celui de lang si disponible
-    public static function getMonths(?string $lang=null):array
+    final public static function getMonths(?string $lang=null):array
     {
         return Arr::plus(Lang\En::$config['date']['month'],Lang::dateMonth(null,$lang));
     }
@@ -403,7 +403,7 @@ class Date extends Root
 
     // getDays
     // retourne le tableau des jours, mergé avec celui de lang si disponible
-    public static function getDays(?string $lang=null):array
+    final public static function getDays(?string $lang=null):array
     {
         return Arr::plus(Lang\En::$config['date']['day'],Lang::dateDay(null,$lang));
     }
@@ -411,7 +411,7 @@ class Date extends Root
 
     // getDaysShort
     // retourne le tableau des jours courts, mergé avec celui de lang si disponible
-    public static function getDaysShort(?string $lang=null):array
+    final public static function getDaysShort(?string $lang=null):array
     {
         return Arr::plus(Lang\En::$config['date']['dayShort'],Lang::dateDayShort(null,$lang));
     }
@@ -419,7 +419,7 @@ class Date extends Root
 
     // local
     // retourne le tableau associatif pour localtime
-    public static function local($value=null,bool $assoc=true):?array
+    final public static function local($value=null,bool $assoc=true):?array
     {
         $return = null;
         $value = static::time($value);
@@ -433,7 +433,7 @@ class Date extends Root
 
     // timeOfDay
     // retourne le tableau associatif time of day
-    public static function timeOfDay():array
+    final public static function timeOfDay():array
     {
         return gettimeofday(false);
     }
@@ -442,7 +442,7 @@ class Date extends Root
     // timestamp
     // retourne le timestamp courant
     // il faut utiliser getTimestamp pour avoir le temps du début de requête
-    public static function timestamp():int
+    final public static function timestamp():int
     {
         return time();
     }
@@ -450,7 +450,7 @@ class Date extends Root
 
     // microtime
     // retourne le microtime comme float
-    public static function microtime():float
+    final public static function microtime():float
     {
         return microtime(true);
     }
@@ -458,7 +458,7 @@ class Date extends Root
 
     // strtotime
     // alias pour strtotime
-    public static function strtotime(string $format,$value=null):?int
+    final public static function strtotime(string $format,$value=null):?int
     {
         $return = null;
         $value = static::time($value);
@@ -476,7 +476,7 @@ class Date extends Root
 
     // getLocaleFormat
     // retourne le format pour locale
-    public static function getLocaleFormat(string $return):string
+    final public static function getLocaleFormat(string $return):string
     {
         if(array_key_exists($return,static::$config['format']['locale']))
         $return = static::$config['format']['locale'][$return];
@@ -489,7 +489,7 @@ class Date extends Root
     // format une date via la fonction strftime ou gmstrftime
     // le format doit être string, pas de support pour timezone
     // le format peut être un raccourci pour le tableau config
-    public static function localeFormat(string $format,$value=null):?string
+    final public static function localeFormat(string $format,$value=null):?string
     {
         $return = null;
         $value = static::time($value);
@@ -504,7 +504,7 @@ class Date extends Root
     // gmtLocaleFormat
     // format une date via la fonction gmstrftime, le temps retourné est timezone GMT
     // le format doit être string
-    public static function gmtLocaleFormat(string $format,$value=null):?string
+    final public static function gmtLocaleFormat(string $format,$value=null):?string
     {
         $return = null;
         $value = static::time($value);
@@ -518,7 +518,7 @@ class Date extends Root
 
     // getFormats
     // retourne les formats de date en mergant avec lang, si disponible
-    public static function getFormats(?string $lang=null):array
+    final public static function getFormats(?string $lang=null):array
     {
         return Arr::plus(static::$config['format']['date'],Lang\En::$config['date']['format'],Lang::dateFormat(null,$lang));
     }
@@ -527,7 +527,7 @@ class Date extends Root
     // getFormat
     // retourne le format selon la clé et le type
     // si clé est true, c'est le format par défaut 0
-    public static function getFormat($key,?string $lang=null):?string
+    final public static function getFormat($key,?string $lang=null):?string
     {
         $return = null;
         $formats = static::getFormats($lang);
@@ -554,7 +554,7 @@ class Date extends Root
     // getFormatReplace
     // retourne le format et le remplacement selon la clé et le type
     // si clé est true, c'est le format par défaut
-    public static function getFormatReplace($key,?string $lang=null):?array
+    final public static function getFormatReplace($key,?string $lang=null):?array
     {
         $return = null;
         $format = static::getFormat($key,$lang);
@@ -588,7 +588,7 @@ class Date extends Root
 
     // setFormat
     // ajoute ou modifie un format dans les config
-    public static function setFormat($key,string $value):bool
+    final public static function setFormat($key,string $value):bool
     {
         $return = false;
 
@@ -604,7 +604,7 @@ class Date extends Root
 
     // unsetFormat
     // enlève un format des config
-    public static function unsetFormat($key):bool
+    final public static function unsetFormat($key):bool
     {
         $return = false;
 
@@ -620,7 +620,7 @@ class Date extends Root
 
     // parseFormat
     // retourne un tableau contenant le format, le timezone et le replace en vue d'un formattage ou d'un parse
-    public static function parseFormat($key):array
+    final public static function parseFormat($key):array
     {
         $return = [];
         $format = null;
@@ -661,7 +661,7 @@ class Date extends Root
     // pour le support timezone, utilise date_create
     // remplacement peut être effectué avant le retour
     // possible de spécifier le format from (de value)
-    public static function format($format=true,$value=null,$from=null):?string
+    final public static function format($format=true,$value=null,$from=null):?string
     {
         $return = null;
         $value = static::time($value,$from);
@@ -693,7 +693,7 @@ class Date extends Root
     // formatDayStart
     // permet de formatter une date
     // le format est différent si le timestamp est en début de jour (seconde 0 du jour)
-    public static function formatDayStart($start=null,?array $option=null):?string
+    final public static function formatDayStart($start=null,?array $option=null):?string
     {
         $return = null;
         $option = Arr::plus(['format'=>'ymdhis','formatDay'=>'ymd'],$option);
@@ -715,7 +715,7 @@ class Date extends Root
     // permet de faire un formattage de date à partir de deux variables
     // le jour n'est pas répété si les deux dates sont dans la même journée
     // format différent si start et/ou end sont début du jour
-    public static function formatStartEnd($start=null,$end=null,?array $option=null):?string
+    final public static function formatStartEnd($start=null,$end=null,?array $option=null):?string
     {
         $return = null;
         $option = Arr::plus(['format'=>'ymdhis','formatTime'=>'his','formatDay'=>'ymd','dayStart'=>true,'separator'=>' - '],$option);
@@ -765,7 +765,7 @@ class Date extends Root
     // format une date via la fonction gmdate, le temps retourné est timezone GMT
     // les formats sont définis dans config avec le type date
     // remplacement peut être effectué avant le retour
-    public static function gmtFormat($format=true,$value=null):?string
+    final public static function gmtFormat($format=true,$value=null):?string
     {
         return static::format(Arr::plus((array) $format,['timezone'=>true]),$value);
     }
@@ -773,7 +773,7 @@ class Date extends Root
 
     // formats
     // permet de formatter un tableau unidimmensionnel avec plusieurs dates
-    public static function formats($format,array $return):array
+    final public static function formats($format,array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -787,7 +787,7 @@ class Date extends Root
     // formatReplace
     // fait un remplacement après les méthodes format
     // replace peut être un array ou une callable
-    public static function formatReplace(string $return,array $replace)
+    final public static function formatReplace(string $return,array $replace)
     {
         if(strlen($return) && !empty($replace))
         {
@@ -807,7 +807,7 @@ class Date extends Root
 
     // getPlaceholders
     // retourne les placeholders de format de date en mergant avec lang, si disponible
-    public static function getPlaceholders(?string $lang=null):array
+    final public static function getPlaceholders(?string $lang=null):array
     {
         return Arr::plus(Lang\En::$config['date']['placeholder'],Lang::datePlaceholder(null,$lang));
     }
@@ -815,7 +815,7 @@ class Date extends Root
 
     // placeholder
     // retourne un placeholder de format de date
-    public static function placeholder($value,?string $lang=null):?string
+    final public static function placeholder($value,?string $lang=null):?string
     {
         $return = null;
         $placeholders = static::getPlaceholders($lang);
@@ -829,7 +829,7 @@ class Date extends Root
 
     // dmy
     // formatte une date au format dmy
-    public static function dmy($value=null,$timezone=null,$format=null):?string
+    final public static function dmy($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['dmy',$timezone],static::time($value,$format));
     }
@@ -837,7 +837,7 @@ class Date extends Root
 
     // ymd
     // formatte une date au format ymd
-    public static function ymd($value=null,$timezone=null,$format=null):?string
+    final public static function ymd($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['ymd',$timezone],static::time($value,$format));
     }
@@ -845,7 +845,7 @@ class Date extends Root
 
     // ymdhis
     // formatte une date au format ymdhis
-    public static function ymdhis($value=null,$timezone=null,$format=null):?string
+    final public static function ymdhis($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['ymdhis',$timezone],static::time($value,$format));
     }
@@ -853,7 +853,7 @@ class Date extends Root
 
     // ym
     // formatte une date au format ym
-    public static function ym($value=null,$timezone=null,$format=null):?string
+    final public static function ym($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['ym',$timezone],static::time($value,$format));
     }
@@ -861,7 +861,7 @@ class Date extends Root
 
     // his
     // formatte une date au format his
-    public static function his($value=null,$timezone=null,$format=null):?string
+    final public static function his($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['his',$timezone],static::time($value,$format));
     }
@@ -869,7 +869,7 @@ class Date extends Root
 
     // rfc822
     // formatte une date au format rfc822
-    public static function rfc822($value=null,$timezone=null,$format=null):?string
+    final public static function rfc822($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['rfc822',$timezone],static::time($value,$format));
     }
@@ -877,7 +877,7 @@ class Date extends Root
 
     // sql
     // formatte une date au format sql
-    public static function sql($value=null,$timezone=null,$format=null):?string
+    final public static function sql($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['sql',$timezone],static::time($value,$format));
     }
@@ -885,7 +885,7 @@ class Date extends Root
 
     // compact
     // formatte une date au format compact
-    public static function compact($value=null,$timezone=null,$format=null):?string
+    final public static function compact($value=null,$timezone=null,$format=null):?string
     {
         return static::format(['compact',$timezone],static::time($value,$format));
     }
@@ -893,7 +893,7 @@ class Date extends Root
 
     // gmt
     // formatte une date au format gmt
-    public static function gmt($value=null,$format=null):?string
+    final public static function gmt($value=null,$format=null):?string
     {
         return static::gmtFormat('gmt',static::time($value,$format));
     }
@@ -903,7 +903,7 @@ class Date extends Root
     // format une date et retourne un int
     // la longueur de key ne peut être que un
     // pour support timezone, renvoie à la méthode format
-    public static function iformat($format,$value=null):?int
+    final public static function iformat($format,$value=null):?int
     {
         $return = null;
         $value = static::time($value);
@@ -929,7 +929,7 @@ class Date extends Root
 
     // countDaysInMonth
     // retourne le nombre de jour dans un mois
-    public static function countDaysInMonth($value=null,$timezone=null,$format=null):?int
+    final public static function countDaysInMonth($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['daysInMonth',$timezone],static::time($value,$format));
     }
@@ -937,7 +937,7 @@ class Date extends Root
 
     // weekDay
     // retourne le numéro du jour dans la semaine
-    public static function weekDay($value=null,$timezone=null,$format=null):?int
+    final public static function weekDay($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['weekDay',$timezone],static::time($value,$format));
     }
@@ -946,7 +946,7 @@ class Date extends Root
     // weekNo
     // retourne le numéro de la semaine dans l'année
     // possible de mettre dimanche plutôt que lundi comme premier jour de la semaine
-    public static function weekNo($value=null,bool $sundayFirst=false,$timezone=null,$format=null):?int
+    final public static function weekNo($value=null,bool $sundayFirst=false,$timezone=null,$format=null):?int
     {
         $return = static::iformat(['weekNo',$timezone],static::time($value,$format));
 
@@ -969,7 +969,7 @@ class Date extends Root
 
     // year
     // retourne l'année d'un timestamp en int
-    public static function year($value=null,$timezone=null,$format=null):?int
+    final public static function year($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['year',$timezone],static::time($value,$format));
     }
@@ -977,7 +977,7 @@ class Date extends Root
 
     // month
     // retourne le mois d'un timestamp en int
-    public static function month($value=null,$timezone=null,$format=null):?int
+    final public static function month($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['month',$timezone],static::time($value,$format));
     }
@@ -985,7 +985,7 @@ class Date extends Root
 
     // day
     // retourne le jour d'un timestamp en int
-    public static function day($value=null,$timezone=null,$format=null):?int
+    final public static function day($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['day',$timezone],static::time($value,$format));
     }
@@ -993,7 +993,7 @@ class Date extends Root
 
     // hour
     // retourne l'heure d'un timestamp en int
-    public static function hour($value=null,$timezone=null,$format=null):?int
+    final public static function hour($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['hour',$timezone],static::time($value,$format));
     }
@@ -1001,7 +1001,7 @@ class Date extends Root
 
     // minute
     // retourne la minute d'un timestamp en int
-    public static function minute($value=null,$timezone=null,$format=null):?int
+    final public static function minute($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['minute',$timezone],static::time($value,$format));
     }
@@ -1009,7 +1009,7 @@ class Date extends Root
 
     // second
     // retourne la seconde d'un timestamp en int
-    public static function second($value=null,$timezone=null,$format=null):?int
+    final public static function second($value=null,$timezone=null,$format=null):?int
     {
         return static::iformat(['second',$timezone],static::time($value,$format));
     }
@@ -1019,7 +1019,7 @@ class Date extends Root
     // retourne un tableau détaillé à partir d'une date formatté
     // possible de remplacer avant le parse
     // retourne null s'il y a une erreur dans le parse
-    public static function parse($format,$value):?array
+    final public static function parse($format,$value):?array
     {
         $return = null;
         $format = static::parseFormat($format);
@@ -1045,7 +1045,7 @@ class Date extends Root
     // possible de remplacer avant le parse
     // retourne null s'il y a une erreur dans le parse
     // la date peut être parse et converti dans timezone
-    public static function parseMake($format,$value):?int
+    final public static function parseMake($format,$value):?int
     {
         $return = null;
         $parse = static::parse($format,$value);
@@ -1061,7 +1061,7 @@ class Date extends Root
     // parse une string compatible avec strtotime et retourne un tableau ou null
     // retourne null s'il y a une erreur dans le parse
     // les éléments relatifs seront additionnés dans le tableau de retour
-    public static function parseStr($value):?array
+    final public static function parseStr($value):?array
     {
         $return = null;
         $value = Str::cast($value);
@@ -1076,7 +1076,7 @@ class Date extends Root
 
     // parseReplace
     // fait un remplacement avant la méthode parse
-    public static function parseReplace(string $return,array $replace):string
+    final public static function parseReplace(string $return,array $replace):string
     {
         if(strlen($return) && !empty($replace))
         {
@@ -1100,7 +1100,7 @@ class Date extends Root
     // enlève les clés commeçant par warning ou error
     // enlève les clés dont les valeurs sont false ou ''
     // ajuste les éléments de dates relatifs au besoin
-    public static function parsePrepare(array $return):array
+    final public static function parsePrepare(array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -1138,7 +1138,7 @@ class Date extends Root
     // retourne un timestamp
     // un format avec timezone peut être fourni pour le parse
     // convertYear permet de convertir une année valide en timestamp, faux par défaut
-    public static function time($value=null,$format=null,bool $convertYear=false):?int
+    final public static function time($value=null,$format=null,bool $convertYear=false):?int
     {
         $return = null;
         $value = Obj::cast($value);
@@ -1167,7 +1167,7 @@ class Date extends Root
     // get
     // parse un timestamp et retourne son année, mois, jour, heure, minute et seconde
     // s'il y a une timezone spécifié, change et remet le timezone par défaut
-    public static function get($value=null,$timezone=null):array
+    final public static function get($value=null,$timezone=null):array
     {
         $return = [];
         $value = static::time($value);
@@ -1202,7 +1202,7 @@ class Date extends Root
     // capture seulement les valeurs plus grande que zéro
     // si la valeur initial est un tableau, ne la passe pas dans get
     // peut être utilisé par diff
-    public static function keep(int $amount=2,$value=null):?array
+    final public static function keep(int $amount=2,$value=null):?array
     {
         $return = null;
         $value = (!is_array($value))? static::get($value):$value;
@@ -1233,7 +1233,7 @@ class Date extends Root
     // passe value dans la méthode keep
     // les différentes clés du tableau sont passés dans lang
     // retourne une string
-    public static function str(int $amount=2,$value=null,?string $lang=null):string
+    final public static function str(int $amount=2,$value=null,?string $lang=null):string
     {
         $return = '';
         $str = static::getStr($lang);
@@ -1269,7 +1269,7 @@ class Date extends Root
     // construit un timestamp via un tableau
     // l'ordre des index du tableau n'est pas le même que mktime
     // possibilité de spécifier un timezone, true est GMT
-    public static function make(array $value,$timezone=null):?int
+    final public static function make(array $value,$timezone=null):?int
     {
         $return = null;
         $floor = static::$config['floor'];
@@ -1312,7 +1312,7 @@ class Date extends Root
 
     // gmtMake
     // construit un timestamp d'une date GMT via un tableau
-    public static function gmtMake(array $value):?int
+    final public static function gmtMake(array $value):?int
     {
         return static::make($value,true);
     }
@@ -1320,7 +1320,7 @@ class Date extends Root
 
     // mk
     // comme make mais le premier argument n'est pas un tableau
-    public static function mk(?int $year=null,?int $month=null,?int $day=null,?int $hour=null,?int $minute=null,?int $second=null,$timezone=null)
+    final public static function mk(?int $year=null,?int $month=null,?int $day=null,?int $hour=null,?int $minute=null,?int $second=null,$timezone=null)
     {
         return static::make([$year,$month,$day,$hour,$minute,$second],$timezone);
     }
@@ -1329,7 +1329,7 @@ class Date extends Root
     // add
     // permet d'additionner ou soustraire des composantes temps de la valeur
     // possibilité d'utiliser un format en entrée
-    public static function add(array $values,$value=null,$format=null):?int
+    final public static function add(array $values,$value=null,$format=null):?int
     {
         $return = false;
         $value = static::time($value,$format);
@@ -1354,7 +1354,7 @@ class Date extends Root
     // change
     // permet de changer des composantes temps de la valeur
     // possibilité d'utiliser un format en entrée
-    public static function change(array $values,$value=null,$format=null):?int
+    final public static function change(array $values,$value=null,$format=null):?int
     {
         $return = null;
         $value = static::time($value,$format);
@@ -1377,7 +1377,7 @@ class Date extends Root
     // remove
     // permet d'enlever des composantes temps de la valeur
     // possibilité d'utiliser un format en entrée
-    public static function remove(array $values,$value=null,$format=null):?int
+    final public static function remove(array $values,$value=null,$format=null):?int
     {
         $return = null;
         $value = static::time($value,$format);
@@ -1408,7 +1408,7 @@ class Date extends Root
     // getFloor
     // retourne le tableau des données pour une date ceil
     // une date floor est la première seconde possible dans une période spécifié
-    public static function getFloor(string $period,$value=null,$format=null):?array
+    final public static function getFloor(string $period,$value=null,$format=null):?array
     {
         $return = null;
         $ceil = static::$config['floor'];
@@ -1441,7 +1441,7 @@ class Date extends Root
     // getCeil
     // retourne le tableau des données pour une date ceil
     // une date ceil est la dernière seconde possible dans une période spécifié
-    public static function getCeil(string $period,$value=null,$format=null):?array
+    final public static function getCeil(string $period,$value=null,$format=null):?array
     {
         $return = null;
         $ceil = static::$config['ceil'];
@@ -1479,7 +1479,7 @@ class Date extends Root
 
     // getFloorCeil
     // retourne un tableau avec les valeur tableau floor et ceil d'une date
-    public static function getFloorCeil(string $period,$value=null,$format=null):array
+    final public static function getFloorCeil(string $period,$value=null,$format=null):array
     {
         $return = [];
         $return['floor'] = static::getFloor($period,$value,$format);
@@ -1491,7 +1491,7 @@ class Date extends Root
 
     // floor
     // retourne une date floor en timestamp
-    public static function floor(string $period,$value=null,$format=null):?int
+    final public static function floor(string $period,$value=null,$format=null):?int
     {
         $return = null;
         $floor = static::getFloor($period,$value,$format);
@@ -1505,7 +1505,7 @@ class Date extends Root
 
     // ceil
     // retourne une date ceil en timestamp
-    public static function ceil(string $period,$value=null,$format=null):?int
+    final public static function ceil(string $period,$value=null,$format=null):?int
     {
         $return = null;
         $ceil = static::getCeil($period,$value,$format);
@@ -1519,7 +1519,7 @@ class Date extends Root
 
     // floorCeil
     // retourne un tableau avec les valeur floor et ceil d'une date
-    public static function floorCeil(string $period,$value=null,$format=null):array
+    final public static function floorCeil(string $period,$value=null,$format=null):array
     {
         $return = [];
         $return['floor'] = static::floor($period,$value,$format);
@@ -1532,7 +1532,7 @@ class Date extends Root
     // addYear
     // permet d'additionner ou soustraire l'année d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function addYear(int $change,$value=null,$format=null):?int
+    final public static function addYear(int $change,$value=null,$format=null):?int
     {
         return static::add(['year'=>$change],$value,$format);
     }
@@ -1541,7 +1541,7 @@ class Date extends Root
     // changeYear
     // permet de changer l'année d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function changeYear(int $change,$value=null,$format=null):?int
+    final public static function changeYear(int $change,$value=null,$format=null):?int
     {
         return static::change(['year'=>$change],$value,$format);
     }
@@ -1550,7 +1550,7 @@ class Date extends Root
     // removeYear
     // permet d'enlever l'année d'une valeur date, devient 2000
     // possibilité d'utiliser un format en entrée
-    public static function removeYear($value=null,$format=null):?int
+    final public static function removeYear($value=null,$format=null):?int
     {
         return static::remove(['year'],$value,$format);
     }
@@ -1559,7 +1559,7 @@ class Date extends Root
     // floorYear
     // permet de floor l'année d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function floorYear($value=null,$format=null):?int
+    final public static function floorYear($value=null,$format=null):?int
     {
         return static::floor('year',$value,$format);
     }
@@ -1568,7 +1568,7 @@ class Date extends Root
     // ceilYear
     // permet de ceil l'année d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function ceilYear($value=null,$format=null):?int
+    final public static function ceilYear($value=null,$format=null):?int
     {
         return static::ceil('year',$value,$format);
     }
@@ -1577,7 +1577,7 @@ class Date extends Root
     // floorCeilYear
     // retourne le tableau floor ceil d'une année
     // possibilité d'utiliser un format en entrée
-    public static function floorCeilYear($value=null,$format=null):array
+    final public static function floorCeilYear($value=null,$format=null):array
     {
         return static::floorCeil('year',$value,$format);
     }
@@ -1586,7 +1586,7 @@ class Date extends Root
     // addMonth
     // permet d'additionner ou soustraire le mois d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function addMonth(int $change,$value=null,$format=null):?int
+    final public static function addMonth(int $change,$value=null,$format=null):?int
     {
         return static::add(['month'=>$change],$value,$format);
     }
@@ -1595,7 +1595,7 @@ class Date extends Root
     // changeMonth
     // permet de changer le mois d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function changeMonth(int $change,$value=null,$format=null):?int
+    final public static function changeMonth(int $change,$value=null,$format=null):?int
     {
         return static::change(['month'=>$change],$value,$format);
     }
@@ -1604,7 +1604,7 @@ class Date extends Root
     // removeMonth
     // permet d'enlever le mois d'une valeur date, devient 1
     // possibilité d'utiliser un format en entrée
-    public static function removeMonth($value=null,$format=null):?int
+    final public static function removeMonth($value=null,$format=null):?int
     {
         return static::remove(['month'],$value,$format);
     }
@@ -1613,7 +1613,7 @@ class Date extends Root
     // floorMonth
     // permet de floor le mois d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function floorMonth($value=null,$format=null):?int
+    final public static function floorMonth($value=null,$format=null):?int
     {
         return static::floor('month',$value,$format);
     }
@@ -1622,7 +1622,7 @@ class Date extends Root
     // ceilMonth
     // permet de ceil le mois d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function ceilMonth($value=null,$format=null):?int
+    final public static function ceilMonth($value=null,$format=null):?int
     {
         return static::ceil('month',$value,$format);
     }
@@ -1631,7 +1631,7 @@ class Date extends Root
     // floorCeilMonth
     // retourne le tableau floor ceil d'un mois
     // possibilité d'utiliser un format en entrée
-    public static function floorCeilMonth($value=null,$format=null):array
+    final public static function floorCeilMonth($value=null,$format=null):array
     {
         return static::floorCeil('month',$value,$format);
     }
@@ -1640,7 +1640,7 @@ class Date extends Root
     // addDay
     // permet d'additionner ou soustraire le jour d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function addDay(int $change,$value=null,$format=null):?int
+    final public static function addDay(int $change,$value=null,$format=null):?int
     {
         return static::add(['day'=>$change],$value,$format);
     }
@@ -1649,7 +1649,7 @@ class Date extends Root
     // changeDay
     // permet de changer le jour d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function changeDay(int $change,$value=null,$format=null):?int
+    final public static function changeDay(int $change,$value=null,$format=null):?int
     {
         return static::change(['day'=>$change],$value,$format);
     }
@@ -1658,7 +1658,7 @@ class Date extends Root
     // removeDay
     // permet d'enlever le jour d'une valeur date, devient 1
     // possibilité d'utiliser un format en entrée
-    public static function removeDay($value=null,$format=null):?int
+    final public static function removeDay($value=null,$format=null):?int
     {
         return static::remove(['day'],$value,$format);
     }
@@ -1667,7 +1667,7 @@ class Date extends Root
     // floorDay
     // permet de floor le jour d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function floorDay($value=null,$format=null):?int
+    final public static function floorDay($value=null,$format=null):?int
     {
         return static::floor('day',$value,$format);
     }
@@ -1676,7 +1676,7 @@ class Date extends Root
     // ceilDay
     // permet de ceil le jour d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function ceilDay($value=null,$format=null):?int
+    final public static function ceilDay($value=null,$format=null):?int
     {
         return static::ceil('day',$value,$format);
     }
@@ -1685,7 +1685,7 @@ class Date extends Root
     // floorCeilDay
     // retourne le tableau floor ceil d'un jour
     // possibilité d'utiliser un format en entrée
-    public static function floorCeilDay($value=null,$format=null):array
+    final public static function floorCeilDay($value=null,$format=null):array
     {
         return static::floorCeil('day',$value,$format);
     }
@@ -1694,7 +1694,7 @@ class Date extends Root
     // addHour
     // permet d'additionner ou soustraire l'heure d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function addHour(int $change,$value=null,$format=null):?int
+    final public static function addHour(int $change,$value=null,$format=null):?int
     {
         return static::add(['hour'=>$change],$value,$format);
     }
@@ -1703,7 +1703,7 @@ class Date extends Root
     // changeHour
     // permet de changer l'heure d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function changeHour(int $change,$value=null,$format=null):?int
+    final public static function changeHour(int $change,$value=null,$format=null):?int
     {
         return static::change(['hour'=>$change],$value,$format);
     }
@@ -1712,7 +1712,7 @@ class Date extends Root
     // removeHour
     // permet d'enlever l'heure d'une valeur date, devient 0
     // possibilité d'utiliser un format en entrée
-    public static function removeHour($value=null,$format=null):?int
+    final public static function removeHour($value=null,$format=null):?int
     {
         return static::remove(['hour'],$value,$format);
     }
@@ -1721,7 +1721,7 @@ class Date extends Root
     // floorHour
     // permet de floor l'heure d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function floorHour($value=null,$format=null):?int
+    final public static function floorHour($value=null,$format=null):?int
     {
         return static::floor('hour',$value,$format);
     }
@@ -1730,7 +1730,7 @@ class Date extends Root
     // ceilHour
     // permet de ceil l'heure d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function ceilHour($value=null,$format=null):?int
+    final public static function ceilHour($value=null,$format=null):?int
     {
         return static::ceil('hour',$value,$format);
     }
@@ -1739,7 +1739,7 @@ class Date extends Root
     // floorCeilHour
     // retourne le tableau floor ceil d'une heure
     // possibilité d'utiliser un format en entrée
-    public static function floorCeilHour($value=null,$format=null):array
+    final public static function floorCeilHour($value=null,$format=null):array
     {
         return static::floorCeil('hour',$value,$format);
     }
@@ -1748,7 +1748,7 @@ class Date extends Root
     // addMinute
     // permet d'additionner ou soustraire les minutes d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function addMinute(int $change,$value=null,$format=null):?int
+    final public static function addMinute(int $change,$value=null,$format=null):?int
     {
         return static::add(['minute'=>$change],$value,$format);
     }
@@ -1757,7 +1757,7 @@ class Date extends Root
     // changeMinute
     // permet de changer les minutes d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function changeMinute(int $change,$value=null,$format=null):?int
+    final public static function changeMinute(int $change,$value=null,$format=null):?int
     {
         return static::change(['minute'=>$change],$value,$format);
     }
@@ -1766,7 +1766,7 @@ class Date extends Root
     // removeMinute
     // permet d'enlever la minute d'une valeur date, devient 0
     // possibilité d'utiliser un format en entrée
-    public static function removeMinute($value=null,$format=null):?int
+    final public static function removeMinute($value=null,$format=null):?int
     {
         return static::remove(['minute'],$value,$format);
     }
@@ -1775,7 +1775,7 @@ class Date extends Root
     // floorMinute
     // permet de floor la minute d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function floorMinute($value=null,$format=null):?int
+    final public static function floorMinute($value=null,$format=null):?int
     {
         return static::floor('minute',$value,$format);
     }
@@ -1784,7 +1784,7 @@ class Date extends Root
     // ceilMinute
     // permet de ceil la minute d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function ceilMinute($value=null,$format=null):?int
+    final public static function ceilMinute($value=null,$format=null):?int
     {
         return static::ceil('minute',$value,$format);
     }
@@ -1793,7 +1793,7 @@ class Date extends Root
     // floorCeilMinute
     // retourne le tableau floor ceil d'une minute
     // possibilité d'utiliser un format en entrée
-    public static function floorCeilMinute($value=null,$format=null):array
+    final public static function floorCeilMinute($value=null,$format=null):array
     {
         return static::floorCeil('minute',$value,$format);
     }
@@ -1802,7 +1802,7 @@ class Date extends Root
     // addSecond
     // permet d'additionner ou soustraire les secondes d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function addSecond(int $change,$value=null,$format=null):?int
+    final public static function addSecond(int $change,$value=null,$format=null):?int
     {
         return static::add(['second'=>$change],$value,$format);
     }
@@ -1811,7 +1811,7 @@ class Date extends Root
     // changeSecond
     // permet de changer les secondes d'une valeur date
     // possibilité d'utiliser un format en entrée
-    public static function changeSecond(int $change,$value=null,$format=null):?int
+    final public static function changeSecond(int $change,$value=null,$format=null):?int
     {
         return static::change(['second'=>$change],$value,$format);
     }
@@ -1820,7 +1820,7 @@ class Date extends Root
     // removeSecond
     // permet d'enlever la minute d'une valeur date, devient 0
     // possibilité d'utiliser un format en entrée
-    public static function removeSecond($value=null,$format=null):?int
+    final public static function removeSecond($value=null,$format=null):?int
     {
         return static::remove(['second'],$value,$format);
     }
@@ -1831,7 +1831,7 @@ class Date extends Root
     // par défaut value2 est 0
     // l'ordre des valeurs n'a pas d'importance
     // peut spécifier un format et timezone pour chaque valeur
-    public static function diff($value=null,$value2=0,$format=null,$format2=null):?array
+    final public static function diff($value=null,$value2=0,$format=null,$format2=null):?array
     {
         $return = null;
         $value = static::time($value,$format);
@@ -1862,7 +1862,7 @@ class Date extends Root
     // ceil à true permet d'arrondir vers le haut les différentes valeurs du tableau si une des valeurs plus petite n'est pas vide
     // time ne permet pas les années (4 chiffres)
     // peut spécifier un format et timezone pour chaque valeur
-    public static function diffTotal($value=null,$value2=0,bool $ceil=true,$format=null,$format2=null):?array
+    final public static function diffTotal($value=null,$value2=0,bool $ceil=true,$format=null,$format2=null):?array
     {
         $return = null;
         $value = static::time($value,$format);
@@ -1900,7 +1900,7 @@ class Date extends Root
 
     // diffKeep
     // garde seulement un nombre de valeur du tableau de différence
-    public static function diffKeep(int $amount=2,$value=null,$value2=0,$format=null,$format2=null):?array
+    final public static function diffKeep(int $amount=2,$value=null,$value2=0,$format=null,$format2=null):?array
     {
         $return = null;
         $diff = static::diff($value,$value2,$format,$format2);
@@ -1915,7 +1915,7 @@ class Date extends Root
     // diffStr
     // garde seulement un nombre de valeur du tableau de différence
     // retourne une version string de la différence
-    public static function diffStr(int $amount=2,$value=null,$value2=0,$format=null,$format2=null):string
+    final public static function diffStr(int $amount=2,$value=null,$value2=0,$format=null,$format2=null):string
     {
         $return = '';
         $diff = static::diff($value,$value2,$format,$format2);
@@ -1931,7 +1931,7 @@ class Date extends Root
     // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
     // peut spécifier un format et timezone pour la valeur
     // possible de garder seulement un nombre de valeur du tableau de différence
-    public static function ago($value=null,$format=null,?int $amount=null):?array
+    final public static function ago($value=null,$format=null,?int $amount=null):?array
     {
         $return = null;
         $value = static::time($value,$format);
@@ -1952,7 +1952,7 @@ class Date extends Root
     // comme diff mais par défaut value2 est null et value doit être plus petit que timestamp
     // garde seulement un nombre de valeur du tableau de différence
     // retourne une version string de la différence
-    public static function agoStr(int $amount=2,$value=null,$format=null):string
+    final public static function agoStr(int $amount=2,$value=null,$format=null):string
     {
         $return = '';
         $diff = static::ago($value,$format);
@@ -1968,7 +1968,7 @@ class Date extends Root
     // comme diff mais par défaut value2 est null, donc timestamp courant
     // peut spécifier un format et timezone pour la valeur
     // possible de garder seulement un nombre de valeur du tableau de différence
-    public static function diffNow($value=null,$format=null,?int $amount=null):?array
+    final public static function diffNow($value=null,$format=null,?int $amount=null):?array
     {
         $return = static::diff($value,null,$format);
 
@@ -1983,7 +1983,7 @@ class Date extends Root
     // comme diff mais par défaut value2 est null, donc timestamp courant
     // garde seulement un nombre de valeur du tableau de différence
     // retourne une version string de la différence
-    public static function diffNowStr(int $amount=2,$value=null,$format=null):string
+    final public static function diffNowStr(int $amount=2,$value=null,$format=null):string
     {
         $return = '';
         $diff = static::diffNow($value,$format);
@@ -1999,7 +1999,7 @@ class Date extends Root
     // cette méthode permet de donner un temps non lié à un timestamp
     // retourne un tableau diff avec nombre de seconde, minute, etc
     // possible de garder seulement un nombre de valeur du tableau de différence
-    public static function amount(int $value,?int $amount=null):?array
+    final public static function amount(int $value,?int $amount=null):?array
     {
         return static::diffNow(($value + static::timestamp()),null,$amount);
     }
@@ -2007,7 +2007,7 @@ class Date extends Root
 
     // amountStr
     // comme amountKeep mais retourne plutôt une string formatté
-    public static function amountStr(int $amount=2,int $value):string
+    final public static function amountStr(int $amount=2,int $value):string
     {
         $return = '';
         $diff = static::amount($value);
@@ -2023,7 +2023,7 @@ class Date extends Root
     // construit un tableau multidimensionnel calendrier avec le numéro de la semaine, les numéos de jour dans la semaine et les timestamp
     // possible de mettre dimanche comme premier jour de la semaine si sundayFirst est true
     // possible de remplir les trous dans le calendrier avec des mois des autres jours si fill est true
-    public static function calendar($value=null,bool $sundayFirst=false,bool $fill=false):array
+    final public static function calendar($value=null,bool $sundayFirst=false,bool $fill=false):array
     {
         $return = [];
         $daysInMonths = static::daysInMonth($value);
@@ -2045,7 +2045,7 @@ class Date extends Root
 
     // fillCalendar
     // remplit les trous dans le tableau multidimnesionnel calendrier
-    public static function fillCalendar(array $return):array
+    final public static function fillCalendar(array $return):array
     {
         foreach ($return as $weekNo => $weekDays)
         {
@@ -2094,7 +2094,7 @@ class Date extends Root
     // retourne la différence de jour entre deux valeurs
     // peut spécifier un format et timezone pour chaque valeur
     // la différence est toujours retourner dans un entier positif
-    public static function daysDiff($min=null,$max=null,$format=null,$format2=null):?int
+    final public static function daysDiff($min=null,$max=null,$format=null,$format2=null):?int
     {
         $return = null;
         $min = static::floorDay($min,$format);
@@ -2119,7 +2119,7 @@ class Date extends Root
     // retourne la différence de mois entre deux valeurs
     // peut spécifier un format et timezone pour chaque valeur
     // la différence est toujours retourner dans un entier positif
-    public static function monthsDiff($min=null,$max=null,$format=null,$format2=null):?int
+    final public static function monthsDiff($min=null,$max=null,$format=null,$format2=null):?int
     {
         $return = null;
         $amount = static::getAmount();
@@ -2142,7 +2142,7 @@ class Date extends Root
     // retourne la différence d'années entre deux valeurs
     // peut spécifier un format et timezone pour chaque valeur
     // la différence est toujours retourner dans un entier positif
-    public static function yearsDiff($min=null,$max=null,$format=null,$format2=null):?int
+    final public static function yearsDiff($min=null,$max=null,$format=null,$format2=null):?int
     {
         $return = null;
         $min = static::floorYear($min,$format);
@@ -2165,7 +2165,7 @@ class Date extends Root
     // format seulement utilisé pour le output
     // cette méthode est inclusive: max est inclu
     // floor est true par défaut
-    public static function days($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
+    final public static function days($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
     {
         $return = [];
         $diff = static::daysDiff($min,$max);
@@ -2203,7 +2203,7 @@ class Date extends Root
     // secondsInDay
     // retourne le nombre de secondes dans le jour
     // retourne 0 si le temps est au début du jour
-    public static function secondsInDay($value=null,$format=null):?int
+    final public static function secondsInDay($value=null,$format=null):?int
     {
         $return = null;
         $value = static::time($value,$format);
@@ -2228,7 +2228,7 @@ class Date extends Root
     // possibilité de changer interval
     // si un format est spécifié, le timestamp devient la clé et le format la valeur
     // format seulement utilisé pour le output
-    public static function daysInMonth($value=null,?int $interval=null,$format=null):array
+    final public static function daysInMonth($value=null,?int $interval=null,$format=null):array
     {
         $return = [];
         $interval = (is_int($interval))? $interval:1;
@@ -2260,7 +2260,7 @@ class Date extends Root
     // daysDefault
     // retourne un tableau de jour par défaut
     // possibilité de changer interval
-    public static function daysDefault(int $min=1,?int $max=null,?int $interval=null):array
+    final public static function daysDefault(int $min=1,?int $max=null,?int $interval=null):array
     {
         return Arr::range($min,$max ?? static::$config['amount']['daysInMonth'],$interval ?? 1);
     }
@@ -2273,7 +2273,7 @@ class Date extends Root
     // format seulement utilisé pour le output
     // cette méthode est inclusive: max est inclu
     // floor est true par défaut
-    public static function months($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
+    final public static function months($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
     {
         $return = [];
         $diff = static::monthsDiff($min,$max);
@@ -2314,7 +2314,7 @@ class Date extends Root
     // si un format est spécifié, le timestamp devient la clé et le format la valeur
     // format seulement utilisé pour le output
     // peut convertir les années
-    public static function monthsInYear($value=null,?int $interval=null,$format=null):array
+    final public static function monthsInYear($value=null,?int $interval=null,$format=null):array
     {
         $return = [];
         $interval = (is_int($interval))? $interval:1;
@@ -2345,7 +2345,7 @@ class Date extends Root
     // monthsDefault
     // retourne un tableau de mois par défaut
     // possibilité de changer interval
-    public static function monthsDefault(int $min=1,?int $max=null,?int $interval=null):array
+    final public static function monthsDefault(int $min=1,?int $max=null,?int $interval=null):array
     {
         return Arr::range($min,$max ?? static::$config['amount']['monthsInYear'],$interval ?? 1);
     }
@@ -2358,7 +2358,7 @@ class Date extends Root
     // format seulement utilisé pour le output
     // cette méthode est inclusive: max est inclu
     // floor est true par défaut
-    public static function years($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
+    final public static function years($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
     {
         $return = [];
         $interval = (is_int($interval))? $interval:1;
@@ -2397,7 +2397,7 @@ class Date extends Root
     // retourne un tableau d'années par défaut
     // retourne un nombre d'années avant et après l'année courante
     // possibilité de changer interval
-    public static function yearsDefault(int $before=-100,int $after=30,?int $interval=null,$format=null):array
+    final public static function yearsDefault(int $before=-100,int $after=30,?int $interval=null,$format=null):array
     {
         $return = [];
         $year = static::year();
@@ -2413,7 +2413,7 @@ class Date extends Root
     // onSet
     // helper pour une méthode onSet de colonne
     // transforme une int en format de date
-    public static function onSet($return,$format=true)
+    final public static function onSet($return,$format=true)
     {
         if(is_string($return))
         $return = static::time($return,$format);
@@ -2425,7 +2425,7 @@ class Date extends Root
     // onGet
     // helper pour une méthode onGet de colonne
     // envoie en format de date par défaut si int
-    public static function onGet($return,$format=true)
+    final public static function onGet($return,$format=true)
     {
         if(is_int($return))
         $return = static::format($format,$return);

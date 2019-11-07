@@ -58,7 +58,7 @@ class Cli extends Root
 
     // is
     // retourne vrai si php est présentement dans cli
-    public static function is():bool
+    final public static function is():bool
     {
         return Server::isCli();
     }
@@ -66,7 +66,7 @@ class Cli extends Root
 
     // isHtmlOverload
     // retourne vrai si les méthodes cli doivent générer du html
-    public static function isHtmlOverload():bool
+    final public static function isHtmlOverload():bool
     {
         return (static::$config['htmlOverload'] === true)? true:false;
     }
@@ -75,7 +75,7 @@ class Cli extends Root
     // parseLongOptions
     // prend un tableau des argv et retourne un tableau avec toutes les options longues
     // l'ordre des options n'a pas d'importance, mais il faut que l'entrée commence par --
-    public static function parseLongOptions(string ...$values):array
+    final public static function parseLongOptions(string ...$values):array
     {
         $return = [];
 
@@ -105,7 +105,7 @@ class Cli extends Root
     // callStatic
     // méthode qui attrape tous les appels à des méthodes non reconnus
     // renvoie vers flushPreset ou vers preset si camelCase a une longueur de deux et commence par get
-    public static function __callStatic(string $key,array $arg)
+    final public static function __callStatic(string $key,array $arg)
     {
         $return = null;
         $lower = strtolower($key);
@@ -129,7 +129,7 @@ class Cli extends Root
 
     // flush
     // écrit et flush une valeur au cli
-    public static function flush($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):void
+    final public static function flush($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):void
     {
         Buffer::flushEcho(static::make($value,$foreground,$style,$background,$eol));
 
@@ -139,7 +139,7 @@ class Cli extends Root
 
     // flushPreset
     // écrit et flush une valeur au cli en utilisant le style d'un preset
-    public static function flushPreset(string $key,$value,int $eol=1):void
+    final public static function flushPreset(string $key,$value,int $eol=1):void
     {
         Buffer::flushEcho(static::preset($key,$value,$eol));
 
@@ -149,7 +149,7 @@ class Cli extends Root
 
     // flushEol
     // écrit et flush une ou plusieurs fins de lignes
-    public static function flushEol(int $value=1):void
+    final public static function flushEol(int $value=1):void
     {
         $eol = static::eol();
 
@@ -166,7 +166,7 @@ class Cli extends Root
     // make
     // cette méthode envoie à makeCli pour générer la string
     // possible d'envoyer à makeHtml si la configuration htmlOverload est true
-    public static function make($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
+    final public static function make($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
     {
         $return = '';
 
@@ -183,7 +183,7 @@ class Cli extends Root
     // makeCli
     // génère une version avec couleur d'une valeur à envoyer au cli
     // possible de générer des newlines après
-    public static function makeCli($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
+    final public static function makeCli($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
     {
         $return = '';
         $value = static::prepareValue($value);
@@ -225,7 +225,7 @@ class Cli extends Root
     // makeHtml
     // génère une version html couleur d'une valeur
     // possible de générer des br après
-    public static function makeHtml($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
+    final public static function makeHtml($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):string
     {
         $return = '';
         $value = static::prepareValue($value);
@@ -246,7 +246,7 @@ class Cli extends Root
 
     // preset
     // génère une string via un preset
-    public static function preset(string $key,$value,int $eol=1):string
+    final public static function preset(string $key,$value,int $eol=1):string
     {
         $return = '';
         $arg = static::getPreset($key);
@@ -260,7 +260,7 @@ class Cli extends Root
 
     // eol
     // retourne le caractère de fin de ligne
-    public static function eol():string
+    final public static function eol():string
     {
         return static::$config['eol'];
     }
@@ -269,7 +269,7 @@ class Cli extends Root
     // prepareValue
     // prépare la valeur à envoyer au cli
     // si c'est un tableau, utilise print_r
-    public static function prepareValue($value):?string
+    final public static function prepareValue($value):?string
     {
         $return = null;
         $value = Obj::cast($value);
@@ -285,7 +285,7 @@ class Cli extends Root
 
     // getPreset
     // retourne les arguments pour générer un preset
-    public static function getPreset(string $value):array
+    final public static function getPreset(string $value):array
     {
         return static::$config['preset'][$value] ?? [];
     }
@@ -294,7 +294,7 @@ class Cli extends Root
     // setPreset
     // permet d'ajouter un nouveau preset dans la configuration
     // value doit être un tableau avec trois valeurs
-    public static function setPreset(string $key,array $value):void
+    final public static function setPreset(string $key,array $value):void
     {
         if(count($value) === 3)
         static::$config['preset'][$key] = array_values($value);
@@ -305,7 +305,7 @@ class Cli extends Root
 
     // getEscape
     // retourne le caractère d'échappement
-    public static function getEscape():string
+    final public static function getEscape():string
     {
         return static::$config['escape'];
     }
@@ -313,7 +313,7 @@ class Cli extends Root
 
     // getForegroundColor
     // retourne le code de la couleur de texte à utiliser
-    public static function getForegroundColor(string $value,int $index=0)
+    final public static function getForegroundColor(string $value,int $index=0)
     {
         return static::$config['foreground'][$value][$index] ?? null;
     }
@@ -321,7 +321,7 @@ class Cli extends Root
 
     // getBackgroundColor
     // retourne le code de la couleur d'arrière-plan à utiliser
-    public static function getBackgroundColor(string $value,int $index=0)
+    final public static function getBackgroundColor(string $value,int $index=0)
     {
         return static::$config['background'][$value][$index] ?? null;
     }
@@ -329,7 +329,7 @@ class Cli extends Root
 
     // getStyle
     // retourne le code du style à utiliser
-    public static function getStyle(string $value,int $index=0)
+    final public static function getStyle(string $value,int $index=0)
     {
         return static::$config['style'][$value][$index] ?? null;
     }
@@ -337,7 +337,7 @@ class Cli extends Root
 
     // setHtmlOverload
     // active ou désactive le overload du html
-    public static function setHtmlOverload(bool $value):void
+    final public static function setHtmlOverload(bool $value):void
     {
         static::$config['htmlOverload'] = $value;
 

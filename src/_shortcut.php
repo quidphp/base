@@ -19,7 +19,7 @@ trait _shortcut
 
     // isShortcut
     // retourne vrai si le shortcut existe
-    public static function isShortcut(string $key):bool
+    final public static function isShortcut(string $key):bool
     {
         return (array_key_exists($key,static::$shortcut))? true:false;
     }
@@ -27,7 +27,7 @@ trait _shortcut
 
     // getShortcut
     // retourne la valeur du shortcut ou null si non existant
-    public static function getShortcut(string $key):?string
+    final public static function getShortcut(string $key):?string
     {
         return Arr::get($key,static::$shortcut);
     }
@@ -36,7 +36,7 @@ trait _shortcut
     // setShortcut
     // ajoute ou change un shortcut
     // le shortcut est passé dans la méthode shortcut avant d'être conservé dans config
-    public static function setShortcut(string $key,string $value):void
+    final public static function setShortcut(string $key,string $value):void
     {
         $method = static::setShortcutMethod();
         Arr::setRef($key,$method($value),static::$shortcut);
@@ -47,7 +47,7 @@ trait _shortcut
 
     // setsShortcut
     // ajoute ou change plusieurs shortcuts
-    public static function setsShortcut(array $keyValue):void
+    final public static function setsShortcut(array $keyValue):void
     {
         foreach ($keyValue as $key => $value)
         {
@@ -61,7 +61,7 @@ trait _shortcut
 
     // setShortcutMethod
     // méthode utilisé lors de l'ajout du shortcut
-    public static function setShortcutMethod():callable
+    final public static function setShortcutMethod():callable
     {
         return [static::class,'shortcut'];
     }
@@ -69,7 +69,7 @@ trait _shortcut
 
     // unsetShortcut
     // enlève un shortcut
-    public static function unsetShortcut(string $key):void
+    final public static function unsetShortcut(string $key):void
     {
         Arr::unsetRef($key,static::$shortcut);
 
@@ -79,7 +79,7 @@ trait _shortcut
 
     // shortcut
     // remplace des segments dans une string ou un tableau à partir des shortcuts
-    public static function shortcut($return)
+    final public static function shortcut($return)
     {
         if(!empty(static::$shortcut))
         {
@@ -96,7 +96,7 @@ trait _shortcut
 
     // shortcuts
     // permet de remplacer plusieurs valeurs contenants un shortcut
-    public static function shortcuts(array $return):array
+    final public static function shortcuts(array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -109,7 +109,7 @@ trait _shortcut
 
     // allShortcuts
     // retourne tous les shortcuts
-    public static function allShortcuts():array
+    final public static function allShortcuts():array
     {
         return static::$shortcut;
     }
@@ -117,7 +117,7 @@ trait _shortcut
 
     // emptyShortcut
     // vide les shortcuts
-    public static function emptyShortcut():void
+    final public static function emptyShortcut():void
     {
         static::$shortcut = [];
 

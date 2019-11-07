@@ -20,7 +20,7 @@ trait _cacheFile
     // cacheFile
     // retourne la cache si existante, sinon crée la cache à partir de la closure sans argument
     // si callable est null, unset
-    public static function cacheFile($key,?\Closure $closure=null,bool $cache=true)
+    final public static function cacheFile($key,?\Closure $closure=null,bool $cache=true)
     {
         $return = null;
 
@@ -68,7 +68,7 @@ trait _cacheFile
     // getCacheFileStorage
     // retourne le chemin du storage pour la classe
     // va envoyer une exception si cacheFile est toujours null
-    public static function getCacheFileStorage():string
+    final public static function getCacheFileStorage():string
     {
         $return = null;
 
@@ -85,7 +85,7 @@ trait _cacheFile
 
     // setCacheFileStorage
     // permet de changer le chemin du storage pour la file cache
-    public static function setCacheFileStorage(string $value):void
+    final public static function setCacheFileStorage(string $value):void
     {
         static::$cacheFile = $value;
 
@@ -95,7 +95,7 @@ trait _cacheFile
 
     // emptyCacheFile
     // efface tous les fichiers de cache pour la classe
-    public static function emptyCacheFile():bool
+    final public static function emptyCacheFile():bool
     {
         return Dir::emptyAndUnlink(static::getCacheFileStorage());
     }
@@ -103,7 +103,7 @@ trait _cacheFile
 
     // allCacheFile
     // retourne tous les fichiers de cache pour la classe
-    public static function allCacheFile():array
+    final public static function allCacheFile():array
     {
         return Dir::get(static::getCacheFileStorage());
     }

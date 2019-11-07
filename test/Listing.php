@@ -15,7 +15,7 @@ use Quid\Base;
 class Listing extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $string = "test:bla\njames:ok \nwhat:123\nJames: YEHA ";

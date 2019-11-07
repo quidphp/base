@@ -21,12 +21,12 @@ class Autoload
 
     // construct
     // constructeur protégé
-    protected function __construct() { }
+    final protected function __construct() { }
 
 
     // call
     // recherche un nom de classe à travers tout le pool autoload
-    public static function call(string $class):bool
+    final public static function call(string $class):bool
     {
         $return = false;
 
@@ -44,7 +44,7 @@ class Autoload
 
     // getExtensions
     // retourne les extensions utilisés dans l'implémentation par défaut
-    public static function getExtensions():string
+    final public static function getExtensions():string
     {
         return spl_autoload_extensions();
     }
@@ -52,7 +52,7 @@ class Autoload
 
     // setExtensions
     // change les extensions utilisés dans l'implémentation par défaut
-    public static function setExtensions($value):bool
+    final public static function setExtensions($value):bool
     {
         $return = false;
 
@@ -79,7 +79,7 @@ class Autoload
     // si tout est vide, utilise l'implémentation spl_autoload par défaut qui se base sur les include path
     // si call est true, utilise la méthode manual
     // note: l'implémentation spl_autoload par défaut ne déclenche pas le callback __init sur les classes
-    public static function register(?callable $call=null,bool $throw=true,bool $prepend=false):bool
+    final public static function register(?callable $call=null,bool $throw=true,bool $prepend=false):bool
     {
         $return = false;
 
@@ -95,7 +95,7 @@ class Autoload
 
     // unregister
     // enlève une fonction du pool autoload
-    public static function unregister(callable $call):bool
+    final public static function unregister(callable $call):bool
     {
         return spl_autoload_unregister($call);
     }
@@ -103,7 +103,7 @@ class Autoload
 
     // unregisterAll
     // enlève toutes les fonctions autoload enregistrés
-    public static function unregisterAll():array
+    final public static function unregisterAll():array
     {
         $return = [];
 
@@ -118,7 +118,7 @@ class Autoload
 
     // all
     // retourne les fonctions autoload enregistrés
-    public static function all():array
+    final public static function all():array
     {
         $return = spl_autoload_functions();
 
@@ -131,7 +131,7 @@ class Autoload
 
     // index
     // permet de retourner une callable autoload, via index
-    public static function index(int $index):?callable
+    final public static function index(int $index):?callable
     {
         return Arr::index($index,static::all());
     }
@@ -140,8 +140,7 @@ class Autoload
     // getPath
     // retourne le psr4 ainsi que le path à utiliser pour autoload la classe
     // ceci est utilisé par getFilePath et getDirPath
-    // méthode protégé
-    protected static function getPath(string $class,bool $different=true):?string
+    final protected static function getPath(string $class,bool $different=true):?string
     {
         $return = null;
         $psr4 = static::getPsr4($class,$different);
@@ -167,7 +166,7 @@ class Autoload
     // getFilePath
     // retourne un chemin de classe à partir d'un fqcn
     // possible de spécifier s'il doit exister
-    public static function getFilePath(string $class,bool $exists=true,bool $different=true):?string
+    final public static function getFilePath(string $class,bool $exists=true,bool $different=true):?string
     {
         $return = static::getPath($class,$different);
 
@@ -186,7 +185,7 @@ class Autoload
     // getDirPath
     // retourne un chemin de dossier à partir d'un fqcn
     // possible de spécifier s'il doit exister
-    public static function getDirPath(string $class,bool $exists=true,bool $different=false):?string
+    final public static function getDirPath(string $class,bool $exists=true,bool $different=false):?string
     {
         $return = static::getPath($class,$different);
 
@@ -200,7 +199,7 @@ class Autoload
     // getPsr4
     // retourne un tableau clé valeur avec le psr4 à utiliser
     // sinon null
-    public static function getPsr4(string $class,bool $different=false):?array
+    final public static function getPsr4(string $class,bool $different=false):?array
     {
         $return = null;
         $source = static::$config['psr4'];
@@ -223,7 +222,7 @@ class Autoload
 
     // setPsr4
     // change ou ajoute un point racine
-    public static function setPsr4(string $key,string $value):void
+    final public static function setPsr4(string $key,string $value):void
     {
         static::$config['psr4'][$key] = $value;
 
@@ -233,7 +232,7 @@ class Autoload
 
     // setsPsr4
     // change ou ajoute plusieurs racine de classe
-    public static function setsPsr4(array $keyValue):void
+    final public static function setsPsr4(array $keyValue):void
     {
         foreach ($keyValue as $key => $value)
         {
@@ -247,7 +246,7 @@ class Autoload
 
     // unsetPsr4
     // enlève un point racine
-    public static function unsetPsr4(string $key):void
+    final public static function unsetPsr4(string $key):void
     {
         if(array_key_exists($key,static::$config['psr4']))
         unset(static::$config['psr4'][$key]);
@@ -259,7 +258,7 @@ class Autoload
     // allPsr4
     // retourne le tableau des psr4
     // possible de fournir un callback et de sort
-    public static function allPsr4(?callable $callable=null,bool $sort=false):array
+    final public static function allPsr4(?callable $callable=null,bool $sort=false):array
     {
         $return = static::$config['psr4'];
 
@@ -283,7 +282,7 @@ class Autoload
     // retirer les noms de classes qui semblent être des alias
     // les alias sont stockés en lowercase par php
     // la logique quid vaut que la classe ait un namespace et que le nom termine par alias
-    public static function removeAlias(array $return):array
+    final public static function removeAlias(array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -298,7 +297,7 @@ class Autoload
     // overview
     // génère un tableau multidimensionnel avec le count, size et line pour chaque namespace dans psr4
     // possible de filtrer par une callable
-    public static function overview(?callable $callable=null,bool $sort=true):array
+    final public static function overview(?callable $callable=null,bool $sort=true):array
     {
         $return = [];
         $extension = static::phpExtension();
@@ -318,7 +317,7 @@ class Autoload
 
     // phpExtension
     // retourne l'extension de php
-    public static function phpExtension():string
+    final public static function phpExtension():string
     {
         return 'php';
     }

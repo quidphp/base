@@ -12,10 +12,10 @@ use Quid\Base;
 
 // arr
 // class for testing Quid\Base\Arr
-final class Arr extends Base\Test
+class Arr extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $isCli = Base\Server::isCli();

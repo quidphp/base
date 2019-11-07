@@ -25,7 +25,7 @@ class ImageRaster extends File
     // captcha
     // construit une image captcha et retourne une resource temporaire php
     // si font est null, prend la police par défaut
-    public static function captcha(string $value,?string $font=null,$res=null,?array $option=null)
+    final public static function captcha(string $value,?string $font=null,$res=null,?array $option=null)
     {
         $return = null;
         $option = Arr::plus(['background'=>[0,0,0],'line'=>[155,155,155],'pixel'=>[155,155,155],'text'=>[255,255,255]],$option);
@@ -86,7 +86,7 @@ class ImageRaster extends File
 
     // bestFit
     // génère le calcul de résolution pour le redimensionnement best fit
-    public static function bestFit(int $maxWidth,int $maxHeight,int $width,int $height,bool $expand=false):?array
+    final public static function bestFit(int $maxWidth,int $maxHeight,int $width,int $height,bool $expand=false):?array
     {
         $image = null;
 
@@ -138,7 +138,7 @@ class ImageRaster extends File
 
     // bestFitExpand
     // permet d'agrandir une image qui a été passé dans bestfit pour qu'elle prenne l'espace maximale
-    public static function bestFitExpand(int $maxWidth,int $maxHeight,int $width,int $height):?array
+    final public static function bestFitExpand(int $maxWidth,int $maxHeight,int $width,int $height):?array
     {
         $image = null;
 

@@ -22,7 +22,7 @@ class Exception extends Root
     // setHandler
     // lie une callable comme gestionnaire d'exceptions
     // si la valeur passé est null, le handler est remis à son état initial
-    public static function setHandler(?callable $value=null):void
+    final public static function setHandler(?callable $value=null):void
     {
         set_exception_handler($value);
 
@@ -32,7 +32,7 @@ class Exception extends Root
 
     // restoreHandler
     // remet le handler à ce qu'il était avant le dernière appel à set
-    public static function restoreHandler():bool
+    final public static function restoreHandler():bool
     {
         return restore_exception_handler();
     }
@@ -42,7 +42,7 @@ class Exception extends Root
     // prépare le message
     // la valeur est passé dans obj cast préalablement
     // une entrée du message tableau associatif ou à multiple niveaux est passé dans json encode
-    public static function message($value):string
+    final public static function message($value):string
     {
         $return = '';
         $value = Obj::cast($value);
@@ -74,7 +74,7 @@ class Exception extends Root
     // classFunction
     // prepend les clés classe et function au tableau pour le message
     // possible de spécifier une classe statique qui prend le dessus sur celle de trace
-    public static function classFunction($trace,?string $staticClass,array $return):array
+    final public static function classFunction($trace,?string $staticClass,array $return):array
     {
         $class = null;
         $function = null;

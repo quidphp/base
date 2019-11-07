@@ -24,7 +24,7 @@ trait _init
     // possible de faire un merge recursif custom, selon la callable défini dans callableConfig
     // permet de merge une configuration des traits en dessous de la configuration courante de la classe
     // les config traits sont effacé pour éviter que d'autres classes utilisent les mêmes config pour le merge
-    public static function __init(bool $force=false):void
+    final public static function __init(bool $force=false):void
     {
         $class = static::class;
 
@@ -85,7 +85,7 @@ trait _init
 
     // getInitCallable
     // retourne la closure à utiliser pour le merge des propriétés static
-    public static function getInitCallable():\Closure
+    final protected static function getInitCallable():\Closure
     {
         $return = static::$initCallable;
 
@@ -107,7 +107,7 @@ trait _init
 
     // setInitCallable
     // permet de changer la closure à utiliser pour le merge des propriétés static
-    public static function setInitCallable(?\Closure $value=null):void
+    final protected static function setInitCallable(?\Closure $value=null):void
     {
         static::$initCallable = $value;
 
@@ -117,7 +117,7 @@ trait _init
 
     // initReplaceMode
     // retourne le tableau des clés à ne pas merger recursivement
-    public static function initReplaceMode():array
+    protected static function initReplaceMode():array
     {
         return [];
     }

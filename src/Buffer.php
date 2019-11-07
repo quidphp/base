@@ -19,7 +19,7 @@ class Buffer extends Root
 
     // has
     // retourne vrai s'il y a un buffer d'ouvert
-    public static function has():bool
+    final public static function has():bool
     {
         return (ob_get_level() > 0)? true:false;
     }
@@ -27,7 +27,7 @@ class Buffer extends Root
 
     // count
     // retourne le nombre de buffer ouvert
-    public static function count():int
+    final public static function count():int
     {
         return ob_get_level();
     }
@@ -35,7 +35,7 @@ class Buffer extends Root
 
     // status
     // retourne les informations sur le ou les buffer
-    public static function status(bool $all=true):array
+    final public static function status(bool $all=true):array
     {
         return ob_get_status($all);
     }
@@ -43,7 +43,7 @@ class Buffer extends Root
 
     // handler
     // retourne les informations sur les handlers du ou des buffer
-    public static function handler():array
+    final public static function handler():array
     {
         return ob_list_handlers();
     }
@@ -51,7 +51,7 @@ class Buffer extends Root
 
     // size
     // retourne la taille du buffer courant
-    public static function size():?int
+    final public static function size():?int
     {
         $return = ob_get_length();
 
@@ -64,7 +64,7 @@ class Buffer extends Root
 
     // start
     // démarre un buffer, permet d'y joindre une fonction de rappel
-    public static function start(?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function start(?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         return ob_start($callback,$chunk,$flag);
     }
@@ -72,7 +72,7 @@ class Buffer extends Root
 
     // startEcho
     // démarre un buffer et echo des données
-    public static function startEcho($data,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function startEcho($data,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = ob_start($callback,$chunk,$flag);
         $data = Str::cast($data);
@@ -84,7 +84,7 @@ class Buffer extends Root
 
     // startCallGet
     // démarre un buffer, lance le callable, ferme le buffer et retourne les données
-    public static function startCallGet(callable $callable,array $arg=[],?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):?string
+    final public static function startCallGet(callable $callable,array $arg=[],?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):?string
     {
         $return = null;
         static::start($callback,$chunk,$flag);
@@ -98,7 +98,7 @@ class Buffer extends Root
 
     // get
     // retourne le contenu du niveau actuel de buffer, ne ferme pas le buffer
-    public static function get():?string
+    final public static function get():?string
     {
         $return = ob_get_contents();
 
@@ -114,7 +114,7 @@ class Buffer extends Root
     // si keep est true, les données sont retournés et conservés dans un nouveau buffer
     // garde toujours le dernier buffer ouvert que keep soit true ou false
     // note que le ob_clean sur le dernier buffer envoie quand même le contenu dans la fonction callback même s'il le buffer ne ferme pas
-    public static function getAll(bool $keep=true):string
+    final public static function getAll(bool $keep=true):string
     {
         $return = '';
         $buffer = [];
@@ -150,7 +150,7 @@ class Buffer extends Root
 
     // getClean
     // retourne le contenu du niveau actuel de buffer et ferme le buffer
-    public static function getClean():?string
+    final public static function getClean():?string
     {
         $return = null;
 
@@ -164,7 +164,7 @@ class Buffer extends Root
     // getCleanAll
     // retourne le contenu de tous les buffers et ferme les buffer
     // par défaut les buffer sont retournés dans l'ordre inverse
-    public static function getCleanAll():array
+    final public static function getCleanAll():array
     {
         $return = [];
 
@@ -182,7 +182,7 @@ class Buffer extends Root
 
     // getCleanAllEcho
     // echo le contenu de getCleanAll dans un nouvel outbut buffer
-    public static function getCleanAllEcho(?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function getCleanAllEcho(?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = false;
 
@@ -196,7 +196,7 @@ class Buffer extends Root
 
     // keepFlush
     // flush et vide un buffer s'il y en a un d'ouvert, le buffer reste ouvert
-    public static function keepFlush(bool $flush=true):void
+    final public static function keepFlush(bool $flush=true):void
     {
         if(ob_get_level())
         ob_flush();
@@ -210,7 +210,7 @@ class Buffer extends Root
 
     // endFlush
     // flush le buffer et ferme le buffer
-    public static function endFlush(bool $flush=true):bool
+    final public static function endFlush(bool $flush=true):bool
     {
         $return = false;
 
@@ -226,7 +226,7 @@ class Buffer extends Root
 
     // endFlushAll
     // flush les buffers et ferme les buffers
-    public static function endFlushAll(bool $flush=true):array
+    final public static function endFlushAll(bool $flush=true):array
     {
         $return = [];
 
@@ -248,7 +248,7 @@ class Buffer extends Root
     // clean
     // vide un buffer, le buffer reste ouvert
     // note que ob_clean sur le dernier buffer envoie quand même le contenu dans la fonction callback même s'il le buffer ne ferme pas
-    public static function clean():bool
+    final public static function clean():bool
     {
         $return = false;
 
@@ -265,7 +265,7 @@ class Buffer extends Root
     // cleanAll
     // vide tous les buffer, le dernier buffer reste ouvert
     // note que ob_clean sur le dernier buffer envoie quand même le contenu dans la fonction callback même s'il le buffer ne ferme pas
-    public static function cleanAll():array
+    final public static function cleanAll():array
     {
         $return = [];
 
@@ -295,7 +295,7 @@ class Buffer extends Root
     // remplace le contenu du buffer par les données echo
     // ne ferme pas le buffer
     // possibilité de flush si flush est true (le buffer n'est pas fermé)
-    public static function cleanEcho($value,bool $flush=false,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function cleanEcho($value,bool $flush=false,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = false;
 
@@ -324,7 +324,7 @@ class Buffer extends Root
     // remplace le contenu du premier buffer par les données echo
     // ne ferme pas le buffer
     // possibilité de flush si flush est true (le buffer n'est pas fermé)
-    public static function cleanAllEcho($value,bool $flush=false,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function cleanAllEcho($value,bool $flush=false,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = false;
 
@@ -350,7 +350,7 @@ class Buffer extends Root
 
     // endClean
     // vide le buffer, ferme le buffer et rien d'afficher
-    public static function endClean():bool
+    final public static function endClean():bool
     {
         $return = false;
 
@@ -363,7 +363,7 @@ class Buffer extends Root
 
     // endCleanAll
     // vide les buffer, ferme les buffer et rien d'afficher
-    public static function endCleanAll():array
+    final public static function endCleanAll():array
     {
         $return = [];
 
@@ -379,7 +379,7 @@ class Buffer extends Root
     // flush
     // flush les buffers et ferme les buffers
     // démarre un buffer, permet d'y joindre une fonction de rappel
-    public static function flush(bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function flush(bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         static::endFlushAll($flush);
 
@@ -390,7 +390,7 @@ class Buffer extends Root
     // flushEcho
     // ouvre un buffer, echo des donnés et flush ferme tous les buffer
     // ouvre un autre buffer à la fin du processus
-    public static function flushEcho($value,bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function flushEcho($value,bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = static::startEcho($value,$callback,$chunk,$flag);
         static::flush($flush,$callback,$chunk,$flag);
@@ -402,7 +402,7 @@ class Buffer extends Root
     // prependEcho
     // echo du contenu au début du buffer
     // les buffer sont applatis, ramenés à un niveau
-    public static function prependEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function prependEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = false;
 
@@ -427,7 +427,7 @@ class Buffer extends Root
 
     // appendEcho
     // echo du contenu à la fin du buffer
-    public static function appendEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
+    final public static function appendEcho($value,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
         $return = true;
 

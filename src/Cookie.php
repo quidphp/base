@@ -27,7 +27,7 @@ class Cookie extends Root
 
     // is
     // retoune vrai si le cookie existe
-    public static function is($name):bool
+    final public static function is($name):bool
     {
         return Superglobal::cookieExists($name);
     }
@@ -35,7 +35,7 @@ class Cookie extends Root
 
     // get
     // retourne la valeur du cookie
-    public static function get(string $name):?string
+    final public static function get(string $name):?string
     {
         return Superglobal::getCookie($name);
     }
@@ -44,7 +44,7 @@ class Cookie extends Root
     // set
     // crée ou met à jour un cookie
     // si global est true, le cookie est ajouté dans la superglobale cookie
-    public static function set(string $name,string $value,?array $option=null):bool
+    final public static function set(string $name,string $value,?array $option=null):bool
     {
         $return = false;
         $option = static::option('set',$option);
@@ -59,7 +59,7 @@ class Cookie extends Root
     // unset
     // enlève un cookie
     // si global est true, le cookie est enlevé de la superglobale cookie
-    public static function unset(string $name,?array $option=null):bool
+    final public static function unset(string $name,?array $option=null):bool
     {
         $return = false;
         $option = static::option('unset',$option);
@@ -73,7 +73,7 @@ class Cookie extends Root
 
     // option
     // prépare le tableau option pour cookie
-    public static function option(string $mode,?array $option=null):array
+    final public static function option(string $mode,?array $option=null):array
     {
         $return = [];
         $option = Arr::plus(static::$config,$option);

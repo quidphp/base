@@ -19,7 +19,7 @@ class Boolean extends Root
 
     // typecast
     // typecasts des valeurs par référence
-    public static function typecast(&...$values):void
+    final public static function typecast(&...$values):void
     {
         foreach ($values as &$value)
         {
@@ -33,7 +33,7 @@ class Boolean extends Root
     // cast
     // cast une boolean
     // boolCast à 1 remplace les string
-    public static function cast($value,bool $extra=true)
+    final public static function cast($value,bool $extra=true)
     {
         $return = null;
 
@@ -86,7 +86,7 @@ class Boolean extends Root
 
     // is
     // retourne vrai si la valeur est boolean
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (is_bool($value))? true:false;
     }
@@ -94,7 +94,7 @@ class Boolean extends Root
 
     // isTrue
     // retourne vrai si la valeur est vrai
-    public static function isTrue($value):bool
+    final public static function isTrue($value):bool
     {
         return ($value === true)? true:false;
     }
@@ -102,7 +102,7 @@ class Boolean extends Root
 
     // isFalse
     // retourne vrai si la valeur est false
-    public static function isFalse($value):bool
+    final public static function isFalse($value):bool
     {
         return ($value === false)? true:false;
     }
@@ -110,7 +110,7 @@ class Boolean extends Root
 
     // isNull
     // retourne vrai si la valeur est null
-    public static function isNull($value):bool
+    final public static function isNull($value):bool
     {
         return ($value === null)? true:false;
     }
@@ -120,7 +120,7 @@ class Boolean extends Root
     // génère un boolean random
     // si min est 1 et max est 1 alors 100% de générer un true
     // option pour utiliser csprng
-    public static function random(int $min=0,int $max=1,bool $csprng=false):bool
+    final public static function random(int $min=0,int $max=1,bool $csprng=false):bool
     {
         $return = false;
 
@@ -138,7 +138,7 @@ class Boolean extends Root
 
     // str
     // retourne la version str d'un booléan
-    public static function str($value):string
+    final public static function str($value):string
     {
         $return = '';
 
@@ -157,7 +157,7 @@ class Boolean extends Root
 
     // toggle
     // toggle des valeurs primaires
-    public static function toggle($value)
+    final public static function toggle($value)
     {
         $return = null;
 

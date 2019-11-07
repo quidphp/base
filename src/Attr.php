@@ -68,7 +68,7 @@ class Attr extends Listing
 
     // isDataKey
     // retourne vrai si l'attribut est data
-    public static function isDataKey($value):bool
+    final public static function isDataKey($value):bool
     {
         return (is_string($value) && strpos($value,'data-') === 0 && strlen($value) > 5)? true:false;
     }
@@ -76,7 +76,7 @@ class Attr extends Listing
 
     // isDataUri
     // retourne vrai si l'attribut est une data-uri -> string encodé en base 64
-    public static function isDataUri($value):bool
+    final public static function isDataUri($value):bool
     {
         return (is_string($value) && strpos($value,'data:') === 0 && strpos($value,';base64,') !== false)? true:false;
     }
@@ -84,7 +84,7 @@ class Attr extends Listing
 
     // isSelectedUri
     // retourne vrai si l'uri fourni est sélectionné
-    public static function isSelectedUri($value):bool
+    final public static function isSelectedUri($value):bool
     {
         return (is_string($value) && array_key_exists($value,static::$selectedUri))? true:false;
     }
@@ -92,7 +92,7 @@ class Attr extends Listing
 
     // hasId
     // retourne vrai si les attributs ont le id spécifiés
-    public static function hasId(string $value,$attr):bool
+    final public static function hasId(string $value,$attr):bool
     {
         return (static::getId($attr) === $value)? true:false;
     }
@@ -100,7 +100,7 @@ class Attr extends Listing
 
     // hasClass
     // retourne vrai si les attributs ont la ou les classes spécifiés
-    public static function hasClass($value,$attr):bool
+    final public static function hasClass($value,$attr):bool
     {
         $return = false;
         $value = (array) static::parseClass($value);
@@ -115,7 +115,7 @@ class Attr extends Listing
 
     // styleExists
     // retourne vrai si les attributs ont la clé style spécifié
-    public static function styleExists(string $key,$attr,?array $option=null):bool
+    final public static function styleExists(string $key,$attr,?array $option=null):bool
     {
         return (($style = static::style($attr,$option)) && Arr::keyExists($key,$style,static::getSensitive()))? true:false;
     }
@@ -123,7 +123,7 @@ class Attr extends Listing
 
     // stylesExists
     // retourne vrai si les attributs ont les clés style spécifiés
-    public static function stylesExists(array $keys,$attr,?array $option=null):bool
+    final public static function stylesExists(array $keys,$attr,?array $option=null):bool
     {
         return (($style = static::style($attr,$option)) && Arr::keysExists($keys,$style,static::getSensitive()))? true:false;
     }
@@ -131,7 +131,7 @@ class Attr extends Listing
 
     // dataExists
     // retourne vrai si les attributs ont la clé data spécifié
-    public static function dataExists(string $key,$attr,?array $option=null):bool
+    final public static function dataExists(string $key,$attr,?array $option=null):bool
     {
         return (($data = static::data($attr,$option)) && Arr::keyExists(static::parseDataKey($key),$data,static::getSensitive()))? true:false;
     }
@@ -139,7 +139,7 @@ class Attr extends Listing
 
     // datasExists
     // retourne vrai si les attributs ont les clés data spécifié
-    public static function datasExists(array $keys,$attr,?array $option=null):bool
+    final public static function datasExists(array $keys,$attr,?array $option=null):bool
     {
         $return = false;
         $data = static::data($attr,$option);
@@ -156,7 +156,7 @@ class Attr extends Listing
     // compare différents chaînes attributs
     // doivent avoir même clé, même count, même valeur, même classe et même clés de style
     // l'ordre peut être différent entre les tableaux
-    public static function compare(...$values):bool
+    final public static function compare(...$values):bool
     {
         $return = false;
 
@@ -181,9 +181,8 @@ class Attr extends Listing
 
 
     // prepareParse
-    // méthode protégé
     // prépare le tableau en provenant de arr avant parse
-    protected static function prepareParse(array $return,array $option):array
+    final protected static function prepareParse(array $return,array $option):array
     {
         // prepareStyle
         if(array_key_exists('style',$return) && !is_array($return['style']))
@@ -241,7 +240,7 @@ class Attr extends Listing
 
     // prepareParseHref
     // méthode protégé pour parseHref
-    protected static function prepareParseHref($value,array $return,array $option):array
+    final protected static function prepareParseHref($value,array $return,array $option):array
     {
         $key = 'href';
         $href = $option[$key];
@@ -287,10 +286,9 @@ class Attr extends Listing
 
 
     // prepareGroup
-    // méthode protégé
     // prépare et append les groups à l'intérieur d'un tableau d'attributs
     // retourne null si le tableau d'attribut ne contient pas de group
-    protected static function prepareGroup(array $array,array $option):?array
+    final protected static function prepareGroup(array $array,array $option):?array
     {
         $return = null;
 
@@ -321,7 +319,7 @@ class Attr extends Listing
     // parse
     // passe à travers un tableau attr explosé
     // si le tableau contient un ou des groupes, il n'est pas parse à nouveau
-    public static function parse(array $array,array $option):array
+    final public static function parse(array $array,array $option):array
     {
         $return = [];
         $group = static::prepareGroup($array,$option);
@@ -381,7 +379,7 @@ class Attr extends Listing
     // parse une entrée basic du tableau attr
     // ceci signifie une valeur d'une clé numérique du tableau
     // peut seulement contenir id ou classe
-    public static function parseBasic($value):?array
+    final public static function parseBasic($value):?array
     {
         $return = null;
         $id = static::$config['id'];
@@ -442,7 +440,7 @@ class Attr extends Listing
     // parseId
     // parse une valeur qui pourrait être un id
     // si value est true, envoie à randomId
-    public static function parseId($value):?string
+    final public static function parseId($value):?string
     {
         $return = null;
 
@@ -459,7 +457,7 @@ class Attr extends Listing
     // parseAlt
     // parse un champ alt
     // le retour est une slug
-    public static function parseAlt($value,?array $option=null):?string
+    final public static function parseAlt($value,?array $option=null):?string
     {
         return (is_string($value) && !empty($value))? Slug::str($value,$option):null;
     }
@@ -468,7 +466,7 @@ class Attr extends Listing
     // parseClass
     // parse une valeur classe, peut être string ou array
     // si return est fourni, les classes uniques sont ajoutés à return
-    public static function parseClass($value,?array $return=null):?array
+    final public static function parseClass($value,?array $return=null):?array
     {
         if(!empty($value))
         {
@@ -492,7 +490,7 @@ class Attr extends Listing
     // parseUri
     // parse un champ uri (href, action ou src)
     // extension par défaut seulement ajouté si uri relative
-    public static function parseUri($value,?string $extension=null):?string
+    final public static function parseUri($value,?string $extension=null):?string
     {
         $return = null;
 
@@ -515,7 +513,7 @@ class Attr extends Listing
     // outputUri
     // méthode utilisé pour faire un output d'uri
     // option append est enlevé si l'uri est absolute
-    public static function outputUri(string $value,?array $option=null):string
+    final public static function outputUri(string $value,?array $option=null):string
     {
         $return = null;
         $option = Arr::plus(['append'=>null],$option);
@@ -531,7 +529,7 @@ class Attr extends Listing
 
     // parseStyle
     // parse un champ style
-    public static function parseStyle($value,array $option=null):?array
+    final public static function parseStyle($value,array $option=null):?array
     {
         $return = null;
 
@@ -544,7 +542,7 @@ class Attr extends Listing
 
     // parseData
     // parse un champ data qui est un tableau avec multiples clés datas
-    public static function parseData(array $value,$case=null):?array
+    final public static function parseData(array $value,$case=null):?array
     {
         $return = null;
 
@@ -570,7 +568,7 @@ class Attr extends Listing
     // parseDataKey
     // parse une clé data, ajoute data- au besoin
     // traite aussi les entrées data camelCase
-    public static function parseDataKey(string $return):string
+    final public static function parseDataKey(string $return):string
     {
         if(!static::isDataKey($return))
         $return = 'data-'.$return;
@@ -593,7 +591,7 @@ class Attr extends Listing
 
     // parseDataKeys
     // parse un tableau de clés data
-    public static function parseDataKeys(array $keys):array
+    final public static function parseDataKeys(array $keys):array
     {
         $return = [];
 
@@ -610,7 +608,7 @@ class Attr extends Listing
     // parseMerge
     // merge un tableau parse sur un tableau existant
     // seules les clés data peuvent accepter une valeur bool, pas les attributs normaux
-    public static function parseMerge(array $array,array $return=[]):array
+    final public static function parseMerge(array $array,array $return=[]):array
     {
         foreach ($array as $key => $value)
         {
@@ -653,7 +651,7 @@ class Attr extends Listing
 
     // append
     // append plusieurs valeurs attributes et retourne un grand tableau parsed
-    public static function append(...$values):array
+    final public static function append(...$values):array
     {
         $return = [];
 
@@ -678,7 +676,7 @@ class Attr extends Listing
     // les options de list peuvent être null
     // explose et implose une valeur
     // retourne un tableau unidimensionnel avec clé numérique
-    public static function list($array,?array $option=null):array
+    final public static function list($array,?array $option=null):array
     {
         $return = [];
         $option = static::option($option);
@@ -712,7 +710,7 @@ class Attr extends Listing
 
     // prepareStr
     // prépare une string dans la méthode arr
-    public static function prepareStr(string $value,array $option):array
+    final public static function prepareStr(string $value,array $option):array
     {
         $return = [];
         $separator = static::getSeparator(1,$option['explode']);
@@ -729,7 +727,7 @@ class Attr extends Listing
 
     // prepareArr
     // prépare un array dans la méthode arr
-    public static function prepareArr(array $value,?array $option=null):array
+    final public static function prepareArr(array $value,?array $option=null):array
     {
         return $value;
     }
@@ -738,7 +736,7 @@ class Attr extends Listing
     // explodeStr
     // explode une string attr avec preg_match_all
     // ne peut pas fonctionner si un attribut contient un single ou double quote à l'intérieur des quotes
-    public static function explodeStr(string $value):array
+    final public static function explodeStr(string $value):array
     {
         $return = [];
         $match = [];
@@ -766,7 +764,7 @@ class Attr extends Listing
     // explodeClass
     // explose une string de classe
     // sensible à la case
-    public static function explodeClass(string $value,?array $return=[]):array
+    final public static function explodeClass(string $value,?array $return=[]):array
     {
         $return = ($return === null)? []:$return;
 
@@ -793,7 +791,7 @@ class Attr extends Listing
 
     // classImplode
     // retourne une string class à partir d'un array
-    public static function classImplode(array $value):?string
+    final public static function classImplode(array $value):?string
     {
         $return = null;
 
@@ -807,7 +805,7 @@ class Attr extends Listing
 
     // prepareClass
     // retourne une string class correctement formatté
-    public static function prepareClass($value):?string
+    final public static function prepareClass($value):?string
     {
         $return = null;
         $value = static::parseClass($value);
@@ -823,7 +821,7 @@ class Attr extends Listing
     // ramène le tableau arr à un tableau unidimensionnel
     // toutes les clés et valeurs du tableau sont des string
     // les valeurs sont passés dans quote et entities ou specialchars par défaut
-    public static function keyValue(array $array,array $option):array
+    final public static function keyValue(array $array,array $option):array
     {
         $return = [];
         $option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? [$option['encode']]:$option['encode'];
@@ -872,7 +870,7 @@ class Attr extends Listing
 
     // getId
     // retourne le id à partir d'une valeur attribut
-    public static function getId($assoc,?array $option=null):?string
+    final public static function getId($assoc,?array $option=null):?string
     {
         return static::get('id',$assoc,$option);
     }
@@ -880,7 +878,7 @@ class Attr extends Listing
 
     // setId
     // change le id d'une valeur attribut
-    public static function setId(string $value,$assoc,?array $option=null):?array
+    final public static function setId(string $value,$assoc,?array $option=null):?array
     {
         $return = null;
 
@@ -894,7 +892,7 @@ class Attr extends Listing
 
     // randomId
     // génère un id random
-    public static function randomId(?string $name=null,?array $option=null):string
+    final public static function randomId(?string $name=null,?array $option=null):string
     {
         return Str::randomPrefix((is_string($name))? $name:'',...array_values(Arr::plus(static::$config['randomId'],$option)));
     }
@@ -902,7 +900,7 @@ class Attr extends Listing
 
     // getClass
     // retourne le tableau des classes uniques à partir d'une valeur attribut
-    public static function getClass($assoc,?array $option=null):?array
+    final public static function getClass($assoc,?array $option=null):?array
     {
         return static::get('class',$assoc,$option);
     }
@@ -910,7 +908,7 @@ class Attr extends Listing
 
     // getOddEvenClass
     // retourne le nom de la classe dépendamment si la valeur est numérique odd ou even
-    public static function getOddEvenClass($value):?string
+    final public static function getOddEvenClass($value):?string
     {
         $return = null;
 
@@ -929,7 +927,7 @@ class Attr extends Listing
 
     // getOddClass
     // retourne le nom de la classe pour odd
-    public static function getOddClass():?string
+    final public static function getOddClass():?string
     {
         return (!empty(static::$config['oddEven'][0]))? static::$config['oddEven'][0]:null;
     }
@@ -937,7 +935,7 @@ class Attr extends Listing
 
     // getEvenClass
     // retourne le nom de la classe pour even
-    public static function getEvenClass():?string
+    final public static function getEvenClass():?string
     {
         return (!empty(static::$config['oddEven'][1]))? static::$config['oddEven'][1]:null;
     }
@@ -945,7 +943,7 @@ class Attr extends Listing
 
     // setClass
     // change les classes d'une valeur attribut
-    public static function setClass($value,$assoc,?array $option=null):?array
+    final public static function setClass($value,$assoc,?array $option=null):?array
     {
         return static::set('class',static::parseClass($value),$assoc,$option);
     }
@@ -953,7 +951,7 @@ class Attr extends Listing
 
     // addClass
     // ajoute une ou plusieurs classes à une valeur attribut
-    public static function addClass($value,$assoc,?array $option=null):?array
+    final public static function addClass($value,$assoc,?array $option=null):?array
     {
         return static::set('class',static::parseClass($value,static::getClass($assoc,$option)),$assoc,$option);
     }
@@ -961,7 +959,7 @@ class Attr extends Listing
 
     // removeClass
     // enlève une ou plusieurs classes à une valeur attribut
-    public static function removeClass($value,$assoc,?array $option=null):?array
+    final public static function removeClass($value,$assoc,?array $option=null):?array
     {
         $return = null;
         $value = (array) static::parseClass($value);
@@ -977,7 +975,7 @@ class Attr extends Listing
     // toggleClass
     // ajoute une ou plusieurs classes non existante dans la valeur attribut
     // enlève une ou plusieurs classes existante dans la valeur attribut
-    public static function toggleClass($value,$assoc,?array $option=null):?array
+    final public static function toggleClass($value,$assoc,?array $option=null):?array
     {
         $return = false;
         $value = (array) static::parseClass($value);
@@ -1003,7 +1001,7 @@ class Attr extends Listing
 
     // style
     // retourne un tableau contenant l'ensemble des styles d'un attribut ou null si non existant
-    public static function style($assoc,?array $option=null):?array
+    final public static function style($assoc,?array $option=null):?array
     {
         return static::get('style',$assoc,$option);
     }
@@ -1011,7 +1009,7 @@ class Attr extends Listing
 
     // getStyle
     // retourne un style à partir d'un attribut
-    public static function getStyle(string $key,$assoc,?array $option=null)
+    final public static function getStyle(string $key,$assoc,?array $option=null)
     {
         return Arr::get($key,static::style($assoc,$option),static::getSensitive());
     }
@@ -1019,7 +1017,7 @@ class Attr extends Listing
 
     // getsStyle
     // retourne plusieurs styles à partir d'un attribut
-    public static function getsStyle(array $keys,$assoc,?array $option=null):array
+    final public static function getsStyle(array $keys,$assoc,?array $option=null):array
     {
         return Arr::gets($keys,static::style($assoc,$option),static::getSensitive());
     }
@@ -1027,7 +1025,7 @@ class Attr extends Listing
 
     // setStyle
     // change un style à l'intérieur d'un attribut
-    public static function setStyle(string $key,$value,$assoc,?array $option=null):?array
+    final public static function setStyle(string $key,$value,$assoc,?array $option=null):?array
     {
         return static::set('style',Arr::set($key,$value,static::style($assoc,$option),static::getSensitive()),$assoc,$option);
     }
@@ -1035,7 +1033,7 @@ class Attr extends Listing
 
     // setsStyle
     // change plusieurs styles à l'intérieur d'un attribut
-    public static function setsStyle(array $values,$assoc,?array $option=null):?array
+    final public static function setsStyle(array $values,$assoc,?array $option=null):?array
     {
         return static::set('style',Arr::sets($values,static::style($assoc,$option),static::getSensitive()),$assoc,$option);
     }
@@ -1043,7 +1041,7 @@ class Attr extends Listing
 
     // unsetStyle
     // enlève un style à l'intérieur d'un attribut
-    public static function unsetStyle(string $key,$assoc,?array $option=null):?array
+    final public static function unsetStyle(string $key,$assoc,?array $option=null):?array
     {
         return static::set('style',Arr::unset($key,static::style($assoc,$option),static::getSensitive()),$assoc,$option);
     }
@@ -1051,7 +1049,7 @@ class Attr extends Listing
 
     // unsetsStyle
     // enlève plusieurs styles à l'intérieur d'un attribut
-    public static function unsetsStyle(array $keys,$assoc,?array $option=null):?array
+    final public static function unsetsStyle(array $keys,$assoc,?array $option=null):?array
     {
         return static::set('style',Arr::unsets($keys,static::style($assoc,$option),static::getSensitive()),$assoc,$option);
     }
@@ -1059,7 +1057,7 @@ class Attr extends Listing
 
     // emptyStyle
     // enlève tous les styles d'un attribut
-    public static function emptyStyle($assoc,?array $option=null):?array
+    final public static function emptyStyle($assoc,?array $option=null):?array
     {
         return static::unset('style',$assoc,$option);
     }
@@ -1068,7 +1066,7 @@ class Attr extends Listing
     // data
     // retourne un tableau contenant l'ensemble des datas d'un attribut
     // retourne null si non existant
-    public static function data($assoc,?array $option=null):?array
+    final public static function data($assoc,?array $option=null):?array
     {
         $return = null;
 
@@ -1085,7 +1083,7 @@ class Attr extends Listing
     // getData
     // retourne un data à partir d'un attribut
     // la clé est passé dans parseDataKey pour ajouter data- si manquant
-    public static function getData(string $key,$assoc,?array $option=null)
+    final public static function getData(string $key,$assoc,?array $option=null)
     {
         return static::get(static::parseDataKey($key),$assoc,$option);
     }
@@ -1094,7 +1092,7 @@ class Attr extends Listing
     // getsData
     // retourne plusieurs datas à partir d'un attribut
     // les clés sont passés dans parseDataKeys pour ajouter data- si manquant
-    public static function getsData(array $keys,$assoc,?array $option=null):array
+    final public static function getsData(array $keys,$assoc,?array $option=null):array
     {
         return static::gets(static::parseDataKeys($keys),$assoc,$option);
     }
@@ -1103,7 +1101,7 @@ class Attr extends Listing
     // setData
     // change un data à l'intérieur d'un attribut
     // la clé est passé dans parseDataKey pour ajouter data- si manquant
-    public static function setData(string $key,$value,$assoc,?array $option=null):?array
+    final public static function setData(string $key,$value,$assoc,?array $option=null):?array
     {
         return static::set(static::parseDataKey($key),$value,$assoc,$option);
     }
@@ -1112,7 +1110,7 @@ class Attr extends Listing
     // setsData
     // change plusieurs datas à l'intérieur d'un attribut
     // les clés sont passés dans parseDataKeys pour ajouter data- si manquant
-    public static function setsData(array $values,$assoc,?array $option=null):?array
+    final public static function setsData(array $values,$assoc,?array $option=null):?array
     {
         return static::set('data',Arr::sets($values,static::data($assoc,$option),static::getSensitive()),$assoc,$option);
     }
@@ -1121,7 +1119,7 @@ class Attr extends Listing
     // unsetData
     // enlève un data à l'intérieur d'un attribut
     // la clé est passé dans parseDataKey pour ajouter data- si manquant
-    public static function unsetData(string $key,$assoc,?array $option=null):?array
+    final public static function unsetData(string $key,$assoc,?array $option=null):?array
     {
         return static::unset(static::parseDataKey($key),$assoc,$option);
     }
@@ -1130,7 +1128,7 @@ class Attr extends Listing
     // unsetsData
     // enlève plusieurs datas à l'intérieur d'un attribut
     // les clés sont passés dans parseDataKeys pour ajouter data- si manquant
-    public static function unsetsData(array $keys,$assoc,?array $option=null):?array
+    final public static function unsetsData(array $keys,$assoc,?array $option=null):?array
     {
         return static::unsets(static::parseDataKeys($keys),$assoc,$option);
     }
@@ -1138,7 +1136,7 @@ class Attr extends Listing
 
     // emptyData
     // enlève toutes les clés data des attributs
-    public static function emptyData($assoc,?array $option=null):?array
+    final public static function emptyData($assoc,?array $option=null):?array
     {
         $return = null;
         $data = static::data($assoc,$option);
@@ -1152,7 +1150,7 @@ class Attr extends Listing
 
     // selectedUri
     // retourne le tableau des uri sélectionnés
-    public static function selectedUri():array
+    final public static function selectedUri():array
     {
         return static::$selectedUri;
     }
@@ -1160,7 +1158,7 @@ class Attr extends Listing
 
     // selectedUriArray
     // retourne le tableau des uri sélectionnés, sans les classes
-    public static function selectedUriArray():array
+    final public static function selectedUriArray():array
     {
         return array_keys(static::$selectedUri);
     }
@@ -1168,7 +1166,7 @@ class Attr extends Listing
 
     // getSelectedUri
     // retourne la classe à utiliser pour une uri sélectionnée
-    public static function getSelectedUri(string $key)
+    final public static function getSelectedUri(string $key)
     {
         return (array_key_exists($key,static::$selectedUri))? static::$selectedUri[$key]:null;
     }
@@ -1177,7 +1175,7 @@ class Attr extends Listing
     // addSelectedUri
     // ajoute ou plusieurs uri sélectionné
     // il faut soumettre un tableau uri->class, si class est true, la classe par défaut sera utilisé
-    public static function addSelectedUri(array $values):void
+    final public static function addSelectedUri(array $values):void
     {
         static::$selectedUri = Arr::replace(static::$selectedUri,$values);
 
@@ -1187,7 +1185,7 @@ class Attr extends Listing
 
     // removeSelectedUri
     // enlève une ou plusieurs uri sélectionné
-    public static function removeSelectedUri(string ...$uris):void
+    final public static function removeSelectedUri(string ...$uris):void
     {
         $return = false;
 
@@ -1203,7 +1201,7 @@ class Attr extends Listing
 
     // getUriOption
     // retourne les options uri pour attr
-    public static function getUriOption():array
+    final public static function getUriOption():array
     {
         return static::$config['option']['uri'];
     }
@@ -1211,7 +1209,7 @@ class Attr extends Listing
 
     // setUriOption
     // change les options uri pour attr
-    public static function setUriOption(array $option):void
+    final public static function setUriOption(array $option):void
     {
         static::$config['option']['uri'] = Uri::option($option);
 

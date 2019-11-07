@@ -42,7 +42,7 @@ class Browser extends Root
 
     // is
     // retourne vrai si le browser est reconnu par browscap
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (is_string($value) && static::name($value) !== 'Default Browser')? true:false;
     }
@@ -50,7 +50,7 @@ class Browser extends Root
 
     // isDesktop
     // retourne vrai si le browser est desktop
-    public static function isDesktop($value):bool
+    final public static function isDesktop($value):bool
     {
         return (is_string($value) && static::device($value) === 'Desktop')? true:false;
     }
@@ -58,7 +58,7 @@ class Browser extends Root
 
     // isMobile
     // retourne vrai si le browser est mobile
-    public static function isMobile($value):bool
+    final public static function isMobile($value):bool
     {
         $return = false;
 
@@ -75,7 +75,7 @@ class Browser extends Root
 
     // isOldIe
     // retourne vrai si le browser est Internet Explorer < 9
-    public static function isOldIe($value):bool
+    final public static function isOldIe($value):bool
     {
         $return = false;
 
@@ -92,7 +92,7 @@ class Browser extends Root
 
     // isMac
     // retourne vrai si le browser est sur MacOs
-    public static function isMac($value):bool
+    final public static function isMac($value):bool
     {
         return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'mac') !== false)? true:false;
     }
@@ -100,7 +100,7 @@ class Browser extends Root
 
     // isLinux
     // retourne vrai si le browser est sur Linux
-    public static function isLinux($value):bool
+    final public static function isLinux($value):bool
     {
         return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'linux') !== false)? true:false;
     }
@@ -108,7 +108,7 @@ class Browser extends Root
 
     // isWindows
     // retourne vrai si le browser est sur Windows
-    public static function isWindows($value):bool
+    final public static function isWindows($value):bool
     {
         return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'win') !== false)? true:false;
     }
@@ -116,7 +116,7 @@ class Browser extends Root
 
     // isBot
     // retourne vrai si le user agent est un bot
-    public static function isBot($value):bool
+    final public static function isBot($value):bool
     {
         $return = false;
 
@@ -140,7 +140,7 @@ class Browser extends Root
     // retourne les informations sur le browser en fonction du user agent
     // les informations sont mis en cache selon le user agent, donc multiple appel n'est pas lourd
     // utilise la fonction php get_browser
-    public static function cap(string $value):?array
+    final public static function cap(string $value):?array
     {
         return static::cacheStatic([__METHOD__,$value],function() use ($value) {
             return (strlen($value))? get_browser($value,true):null;
@@ -151,7 +151,7 @@ class Browser extends Root
     // name
     // retourne le nom browser en fonction du user agent
     // utilise la fonction php get_browser
-    public static function name(string $value):?string
+    final public static function name(string $value):?string
     {
         $return = null;
         $cap = static::cap($value);
@@ -166,7 +166,7 @@ class Browser extends Root
     // platform
     // retourne la plateforme browser en fonction du user agent
     // utilise la fonction php get_browser
-    public static function platform(string $value):?string
+    final public static function platform(string $value):?string
     {
         $return = null;
         $cap = static::cap($value);
@@ -181,7 +181,7 @@ class Browser extends Root
     // device
     // retourne le device du browser en fonction du user agent
     // utilise la fonction php get_browser
-    public static function device(string $value):?string
+    final public static function device(string $value):?string
     {
         $return = null;
         $cap = static::cap($value);

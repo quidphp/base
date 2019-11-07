@@ -150,7 +150,7 @@ class Validate extends Root
 
     // is
     // fonction de validation globale
-    public static function is($condition,$value,bool $onlyBool=true)
+    final public static function is($condition,$value,bool $onlyBool=true)
     {
         $return = null;
 
@@ -199,7 +199,7 @@ class Validate extends Root
 
     // isNot
     // inverse de is
-    public static function isNot($condition,$value):bool
+    final public static function isNot($condition,$value):bool
     {
         return (static::is($condition,$value))? false:true;
     }
@@ -209,7 +209,7 @@ class Validate extends Root
     // fait la validation
     // si la validation est fausse, retourne un tableau qui sera utilisé pour retourner une explication via lang
     // si la condition est une closure, la closure peut retourner une string ou un array comme message (plutôt que la clé)
-    public static function isCom($condition,$value,$key=null)
+    final public static function isCom($condition,$value,$key=null)
     {
         $return = static::is($condition,$value,false);
 
@@ -238,7 +238,7 @@ class Validate extends Root
     // isAnd
     // plusieurs conditions
     // boucle de type and
-    public static function isAnd(array $conditions,$value):bool
+    final public static function isAnd(array $conditions,$value):bool
     {
         $return = false;
 
@@ -257,7 +257,7 @@ class Validate extends Root
     // isAndCom
     // plusieurs conditions, boucle de type and
     // retourne true ou un tableau utilisé pour générer des messages d'explications sur l'erreur de validation
-    public static function isAndCom(array $conditions,$value)
+    final public static function isAndCom(array $conditions,$value)
     {
         $return = [];
 
@@ -279,7 +279,7 @@ class Validate extends Root
     // isOr
     // plusieurs conditions
     // boucle de validation de type or
-    public static function isOr(array $conditions,$value):bool
+    final public static function isOr(array $conditions,$value):bool
     {
         $return = false;
 
@@ -298,7 +298,7 @@ class Validate extends Root
     // isXor
     // plusieurs conditions
     // boucle de validation de type xor, une seule condition peut être vrai
-    public static function isXor(array $conditions,$value):bool
+    final public static function isXor(array $conditions,$value):bool
     {
         $return = false;
 
@@ -326,7 +326,7 @@ class Validate extends Root
     // are
     // plusieurs valeurs, une condition
     // une validation avec type ou closure est plus rapide
-    public static function are($condition,...$values):bool
+    final public static function are($condition,...$values):bool
     {
         $return = false;
         $callable = null;
@@ -355,7 +355,7 @@ class Validate extends Root
     // areNot
     // plusieurs valeurs, une condition
     // inverse de are
-    public static function areNot($condition,...$values):bool
+    final public static function areNot($condition,...$values):bool
     {
         return (static::are($condition,...$values))? false:true;
     }
@@ -364,7 +364,7 @@ class Validate extends Root
     // areAnd
     // plusieurs valeurs, plusieurs conditions
     // boucle de type and
-    public static function areAnd(array $conditions,...$values):bool
+    final public static function areAnd(array $conditions,...$values):bool
     {
         $return = false;
 
@@ -383,7 +383,7 @@ class Validate extends Root
     // areOr
     // plusieurs valeurs, plusieurs conditions
     // boucle de type or
-    public static function areOr(array $conditions,...$values):bool
+    final public static function areOr(array $conditions,...$values):bool
     {
         $return = false;
 
@@ -402,7 +402,7 @@ class Validate extends Root
     // areXor
     // plusieurs valeurs, plusieurs conditions
     // boucle de type xor
-    public static function areXor(array $conditions,...$values):bool
+    final public static function areXor(array $conditions,...$values):bool
     {
         $return = false;
 
@@ -420,7 +420,7 @@ class Validate extends Root
 
     // one
     // permet de faire des appels de validation avec méthode de 1 argument
-    public static function one(string $key,$arg):bool
+    final public static function one(string $key,$arg):bool
     {
         $return = false;
 
@@ -438,7 +438,7 @@ class Validate extends Root
 
     // two
     // permet de faire des appels de validation avec méthode de 2 arguments
-    public static function two(string $key,$value,$arg):bool
+    final public static function two(string $key,$value,$arg):bool
     {
         $return = false;
 
@@ -457,7 +457,7 @@ class Validate extends Root
     // regex
     // wrapper pour les regex
     // par défaut la classe va prendre les regex à partir du tableau config
-    public static function regex(string $input,$value):bool
+    final public static function regex(string $input,$value):bool
     {
         $return = false;
 
@@ -482,7 +482,7 @@ class Validate extends Root
 
     // preg
     // wrapper pour la fonction preg_match
-    public static function preg(string $regex,$value):bool
+    final public static function preg(string $regex,$value):bool
     {
         $return = false;
 
@@ -499,7 +499,7 @@ class Validate extends Root
 
     // instance
     // valide que la valeur est une instance de la classe
-    public static function instance($class,$value):bool
+    final public static function instance($class,$value):bool
     {
         $return = false;
 
@@ -516,7 +516,7 @@ class Validate extends Root
 
     // isCompareSymbol
     // retourne vrai si le symbole est un symbol de comparaison valide
-    public static function isCompareSymbol($symbol):bool
+    final public static function isCompareSymbol($symbol):bool
     {
         return (is_string($symbol) && array_key_exists($symbol,static::$config['compare']))? true:false;
     }
@@ -524,7 +524,7 @@ class Validate extends Root
 
     // compare
     // fonction de comparaison entre deux chaines
-    public static function compare($value1,string $symbol='===',$value2):bool
+    final public static function compare($value1,string $symbol='===',$value2):bool
     {
         $return = false;
 
@@ -566,7 +566,7 @@ class Validate extends Root
     // value peut être une string ou un array
     // si c'est un array et que la clé est string, value est utiliser pour remplacer %%% dans le pattern
     // si rien n'a été trouvé mais que value est une string non vide, retourne value
-    public static function pattern($value):?string
+    final public static function pattern($value):?string
     {
         $return = null;
         $key = static::patternKey($value);
@@ -601,7 +601,7 @@ class Validate extends Root
     // patternKey
     // retourne le nom du premier pattern trouvé à partir de l'argument value
     // peut retourner string ou array
-    public static function patternKey($value)
+    final public static function patternKey($value)
     {
         $return = null;
         $array = (!is_array($value))? [$value]:$value;
@@ -624,8 +624,7 @@ class Validate extends Root
 
     // prepareConditions
     // prépare le tableau pour plusieurs conditions
-    // méthode protégé
-    protected static function prepareConditions(array $conditions):array
+    final protected static function prepareConditions(array $conditions):array
     {
         $return = [];
 
@@ -647,7 +646,7 @@ class Validate extends Root
 
     // sameType
     // vérifie que toutes les valeurs donnés ont le même type ou la même instance de classe
-    public static function sameType(...$values):bool
+    final public static function sameType(...$values):bool
     {
         $return = false;
 
@@ -678,7 +677,7 @@ class Validate extends Root
 
     // isEmpty
     // retourne vrai si empty
-    public static function isEmpty($value):bool
+    final public static function isEmpty($value):bool
     {
         return (empty($value))? true:false;
     }
@@ -686,7 +685,7 @@ class Validate extends Root
 
     // isNotEmpty
     // inverse de isEmpty
-    public static function isNotEmpty($value):bool
+    final public static function isNotEmpty($value):bool
     {
         return (!static::isEmpty($value))? true:false;
     }
@@ -696,7 +695,7 @@ class Validate extends Root
     // retourne vrai si empty, sans etre numérique ni boolean ni une string avec une longueur
     // en somme, ca retourne faux pour 0, '0' et false
     // si removeWhiteSpace est true et que c'est une string, envoie dans str::removeWhiteSpace avant
-    public static function isReallyEmpty($value,bool $removeWhiteSpace=false):bool
+    final public static function isReallyEmpty($value,bool $removeWhiteSpace=false):bool
     {
         $return = false;
 
@@ -711,7 +710,7 @@ class Validate extends Root
 
     // isNotReallyEmpty
     // inverse de isReallyEmpty
-    public static function isNotReallyEmpty($value,bool $removeWhiteSpace=false):bool
+    final public static function isNotReallyEmpty($value,bool $removeWhiteSpace=false):bool
     {
         return (static::isReallyEmpty($value,$removeWhiteSpace))? false:true;
     }
@@ -719,7 +718,7 @@ class Validate extends Root
 
     // isAlpha
     // retourne vrai si la valeur passe le regex alpha
-    public static function isAlpha($value):bool
+    final public static function isAlpha($value):bool
     {
         return static::regex('alpha',$value);
     }
@@ -727,7 +726,7 @@ class Validate extends Root
 
     // isAlphanumeric
     // retourne vrai si la valeur passe le regex alphanumeric
-    public static function isAlphanumeric($value):bool
+    final public static function isAlphanumeric($value):bool
     {
         return static::regex('alphanumeric',$value);
     }
@@ -735,7 +734,7 @@ class Validate extends Root
 
     // isAlphanumericDash
     // retourne vrai si la valeur passe le regex isAlphanumericDash
-    public static function isAlphanumericDash($value):bool
+    final public static function isAlphanumericDash($value):bool
     {
         return static::regex('alphanumericDash',$value);
     }
@@ -743,7 +742,7 @@ class Validate extends Root
 
     // isAlphanumericSlug
     // retourne vrai si la valeur passe le regex alphanumericSlug
-    public static function isAlphanumericSlug($value):bool
+    final public static function isAlphanumericSlug($value):bool
     {
         return static::regex('alphanumericSlug',$value);
     }
@@ -751,7 +750,7 @@ class Validate extends Root
 
     // isAlphanumericSlugPath
     // retourne vrai si la valeur passe le regex isAlphanumericSlugPath
-    public static function isAlphanumericSlugPath($value):bool
+    final public static function isAlphanumericSlugPath($value):bool
     {
         return static::regex('alphanumericSlugPath',$value);
     }
@@ -759,7 +758,7 @@ class Validate extends Root
 
     // isAlphanumericPlus
     // retourne vrai si la valeur passe le regex alphanumericPlus
-    public static function isAlphanumericPlus($value):bool
+    final public static function isAlphanumericPlus($value):bool
     {
         return static::regex('alphanumericPlus',$value);
     }
@@ -767,7 +766,7 @@ class Validate extends Root
 
     // isAlphanumericPlusSpace
     // retourne vrai si la valeur passe le regex alphanumericPlusSpace
-    public static function isAlphanumericPlusSpace($value):bool
+    final public static function isAlphanumericPlusSpace($value):bool
     {
         return static::regex('alphanumericPlusSpace',$value);
     }
@@ -776,7 +775,7 @@ class Validate extends Root
     // isUsername
     // retourne vrai si la valeur passe le regex username
     // possible de spécifier un niveau de sécurité pour le regex
-    public static function isUsername($value,?string $security=null):bool
+    final public static function isUsername($value,?string $security=null):bool
     {
         return static::regex('username'.((is_string($security))? ucfirst($security):''),$value);
     }
@@ -785,7 +784,7 @@ class Validate extends Root
     // isPassword
     // retourne vrai si la valeur passe le regex password
     // possible de spécifier un niveau de sécurité pour le regex
-    public static function isPassword($value,?string $security=null):bool
+    final public static function isPassword($value,?string $security=null):bool
     {
         return static::regex('password'.((is_string($security))? ucfirst($security):''),$value);
     }
@@ -793,7 +792,7 @@ class Validate extends Root
 
     // isEmail
     // retourne vrai si la valeur passe le regex email
-    public static function isEmail($value):bool
+    final public static function isEmail($value):bool
     {
         return static::regex('email',$value);
     }
@@ -801,7 +800,7 @@ class Validate extends Root
 
     // isHex
     // retourne vrai si la valeur passe le regex hex
-    public static function isHex($value):bool
+    final public static function isHex($value):bool
     {
         return static::regex('hex',$value);
     }
@@ -809,7 +808,7 @@ class Validate extends Root
 
     // isTag
     // retourne vrai si la valeur passe le regex tag
-    public static function isTag($value):bool
+    final public static function isTag($value):bool
     {
         return static::regex('tag',$value);
     }
@@ -817,7 +816,7 @@ class Validate extends Root
 
     // isYear
     // retourne vrai si la valeur passe le regex year
-    public static function isYear($value):bool
+    final public static function isYear($value):bool
     {
         return static::regex('year',$value);
     }
@@ -825,7 +824,7 @@ class Validate extends Root
 
     // isAmericanZipcode
     // retourne vrai si la valeur passe le regex zipcode
-    public static function isAmericanZipcode($value):bool
+    final public static function isAmericanZipcode($value):bool
     {
         return static::regex('americanZipcode',$value);
     }
@@ -833,7 +832,7 @@ class Validate extends Root
 
     // isCanadianPostalcode
     // retourne vrai si la valeur passe le regex postalcode
-    public static function isCanadianPostalcode($value):bool
+    final public static function isCanadianPostalcode($value):bool
     {
         return static::regex('canadianPostalcode',$value);
     }
@@ -841,7 +840,7 @@ class Validate extends Root
 
     // isNorthAmericanPhone
     // retourne vrai si la valeur passe le regex americanPhone
-    public static function isNorthAmericanPhone($value):bool
+    final public static function isNorthAmericanPhone($value):bool
     {
         return static::regex('northAmericanPhone',$value);
     }
@@ -849,7 +848,7 @@ class Validate extends Root
 
     // isPhone
     // retourne vrai si la valeur passe le regex phone
-    public static function isPhone($value):bool
+    final public static function isPhone($value):bool
     {
         return static::regex('phone',$value);
     }
@@ -857,7 +856,7 @@ class Validate extends Root
 
     // isIp
     // retourne vrai si la valeur passe le regex ip
-    public static function isIp($value):bool
+    final public static function isIp($value):bool
     {
         return static::regex('ip',$value);
     }
@@ -865,7 +864,7 @@ class Validate extends Root
 
     // isDate
     // retourne vrai si la valeur passe le regex date
-    public static function isDate($value):bool
+    final public static function isDate($value):bool
     {
         return static::regex('date',$value);
     }
@@ -873,7 +872,7 @@ class Validate extends Root
 
     // isDatetime
     // retourne vrai si la valeur passe le regex datetime
-    public static function isDatetime($value):bool
+    final public static function isDatetime($value):bool
     {
         return static::regex('datetime',$value);
     }
@@ -881,7 +880,7 @@ class Validate extends Root
 
     // isTime
     // retourne vrai si la valeur passe le regex time
-    public static function isTime($value):bool
+    final public static function isTime($value):bool
     {
         return static::regex('time',$value);
     }
@@ -889,7 +888,7 @@ class Validate extends Root
 
     // isUri
     // retourne vrai si la valeur passe le regex uri
-    public static function isUri($value):bool
+    final public static function isUri($value):bool
     {
         return static::regex('uri',$value);
     }
@@ -897,7 +896,7 @@ class Validate extends Root
 
     // isUriPath
     // retourne vrai si la valeur passe le regex uri path
-    public static function isUriPath($value):bool
+    final public static function isUriPath($value):bool
     {
         return static::regex('uriPath',$value);
     }
@@ -905,7 +904,7 @@ class Validate extends Root
 
     // isFqcn
     // retourne vrai si la valeur passe le regex fqcn
-    public static function isFqcn($value):bool
+    final public static function isFqcn($value):bool
     {
         return static::regex('fqcn',$value);
     }
@@ -913,7 +912,7 @@ class Validate extends Root
 
     // isTable
     // retourne vrai si la valeur passe le regex table
-    public static function isTable($value):bool
+    final public static function isTable($value):bool
     {
         return static::regex('table',$value);
     }
@@ -921,7 +920,7 @@ class Validate extends Root
 
     // isCol
     // retourne vrai si la valeur passe le regex col
-    public static function isCol($value):bool
+    final public static function isCol($value):bool
     {
         return static::regex('col',$value);
     }
@@ -929,7 +928,7 @@ class Validate extends Root
 
     // isEqual
     // retourne vrai si les deux valeurs sont égales ===
-    public static function isEqual($value1,$value2):bool
+    final public static function isEqual($value1,$value2):bool
     {
         return static::compare($value1,'===',$value2);
     }
@@ -937,7 +936,7 @@ class Validate extends Root
 
     // isSoftEqual
     // retourne vrai si les deux valeurs sont égales ==
-    public static function isSoftEqual($value1,$value2):bool
+    final public static function isSoftEqual($value1,$value2):bool
     {
         return static::compare($value1,'==',$value2);
     }
@@ -945,7 +944,7 @@ class Validate extends Root
 
     // isInequal
     // retourne vrai si les deux valeurs sont inégales !==
-    public static function isInequal($value1,$value2):bool
+    final public static function isInequal($value1,$value2):bool
     {
         return static::compare($value1,'!==',$value2);
     }
@@ -953,7 +952,7 @@ class Validate extends Root
 
     // isSoftInequal
     // retourne vrai si les deux valeurs sont inégales !=
-    public static function isSoftInequal($value1,$value2):bool
+    final public static function isSoftInequal($value1,$value2):bool
     {
         return static::compare($value1,'!=',$value2);
     }
@@ -961,7 +960,7 @@ class Validate extends Root
 
     // isBigger
     // retourne vrai si la première valeur est plus grande
-    public static function isBigger($value1,$value2):bool
+    final public static function isBigger($value1,$value2):bool
     {
         return static::compare($value1,'>',$value2);
     }
@@ -969,7 +968,7 @@ class Validate extends Root
 
     // isBiggerOrEqual
     // retourne vrai si la première valeur est plus grande ou égale
-    public static function isBiggerOrEqual($value1,$value2):bool
+    final public static function isBiggerOrEqual($value1,$value2):bool
     {
         return static::compare($value1,'>=',$value2);
     }
@@ -977,7 +976,7 @@ class Validate extends Root
 
     // isSmaller
     // retourne vrai si la première valeur est plus petite
-    public static function isSmaller($value1,$value2):bool
+    final public static function isSmaller($value1,$value2):bool
     {
         return static::compare($value1,'<',$value2);
     }
@@ -985,7 +984,7 @@ class Validate extends Root
 
     // isSmallerOrEqual
     // retourne vrai si la première valeur est plus petite ou égale
-    public static function isSmallerOrEqual($value1,$value2):bool
+    final public static function isSmallerOrEqual($value1,$value2):bool
     {
         return static::compare($value1,'<=',$value2);
     }
@@ -996,7 +995,7 @@ class Validate extends Root
     // on peut faire une validation sur l'ensemble ou sur certaine clé
     // les méthodes isEmpty et isNotEmpty sont utilisés pour la validation de clé dans le tableau (true/false)
     // utiliser par core/routeMatch
-    public static function arr($is,array $array,bool $removeWhiteSpace=false):bool
+    final public static function arr($is,array $array,bool $removeWhiteSpace=false):bool
     {
         $return = false;
 
@@ -1057,7 +1056,7 @@ class Validate extends Root
     // dig
     // valide que toutes les valeurs non array dans la valeur remplisse la condition
     // creuse dans le tableau s'il est multidimensionnel
-    public static function dig($condition,$value):bool
+    final public static function dig($condition,$value):bool
     {
         $return = false;
 

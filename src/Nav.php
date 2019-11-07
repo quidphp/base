@@ -20,7 +20,7 @@ class Nav extends Root
     // isPage
     // retourne vrai si la page existe
     // nav peut être un int ou un tableau
-    public static function isPage(int $value,$nav,int $limit):bool
+    final public static function isPage(int $value,$nav,int $limit):bool
     {
         $return = false;
         $max = static::pageMax($nav,$limit);
@@ -35,7 +35,7 @@ class Nav extends Root
     // isPageFull
     // retourne vrai si la page existe et est pleine
     // nav peut être un int ou un tableau
-    public static function isPageFull(int $value,$nav,int $limit):bool
+    final public static function isPageFull(int $value,$nav,int $limit):bool
     {
         return (static::pageSpecificCount($value,$nav,$limit) === $limit)? true:false;
     }
@@ -44,7 +44,7 @@ class Nav extends Root
     // isSpecificInPage
     // retourne vrai si le specific est présent dans la page
     // nav doit être un array
-    public static function isSpecificInPage($specific,int $value,array $nav,int $limit):bool
+    final public static function isSpecificInPage($specific,int $value,array $nav,int $limit):bool
     {
         $return = false;
         $specificPage = static::specificPage($specific,$nav,$limit);
@@ -58,7 +58,7 @@ class Nav extends Root
 
     // parseLimit
     // prend une valeur offset, limit et retoure un tableau avec les clés offset, limit et page
-    public static function parseLimit($value):?array
+    final public static function parseLimit($value):?array
     {
         $return = null;
         $offset = null;
@@ -124,7 +124,7 @@ class Nav extends Root
     // limitPage
     // prend une page et une limite et retourne un tableau offset limit, compatible avec sql
     // utile pour page
-    public static function limitPage(int $page,int $limit):?array
+    final public static function limitPage(int $page,int $limit):?array
     {
         $return = null;
 
@@ -140,7 +140,7 @@ class Nav extends Root
 
     // pageSlice
     // comme pour limitPage mais retourne le tableau array slicé aux bons index
-    public static function pageSlice(int $page,int $limit,array $array):array
+    final public static function pageSlice(int $page,int $limit,array $array):array
     {
         $return = [];
         $limitPage = static::limitPage($page,$limit);
@@ -154,7 +154,7 @@ class Nav extends Root
 
     // slice
     // comme pageSlice mais value peut être de n'importe quel format compatible avec limit dans sql
-    public static function slice($value,array $array):array
+    final public static function slice($value,array $array):array
     {
         $return = [];
         $page = 1;
@@ -170,7 +170,7 @@ class Nav extends Root
     // pageMax
     // retourne le nombre maximum de page en fonction d'un count et d'une limite par page
     // nav peut être un int ou un tableau
-    public static function pageMax($nav,int $limit):?int
+    final public static function pageMax($nav,int $limit):?int
     {
         $return = null;
 
@@ -187,7 +187,7 @@ class Nav extends Root
     // pageFromIndex
     // retourne le numéro de page d'un index
     // nav peut être un int ou un tableau
-    public static function pageFromIndex(int $index,$nav,int $limit):?int
+    final public static function pageFromIndex(int $index,$nav,int $limit):?int
     {
         $return = null;
         $position = $index + 1;
@@ -205,7 +205,7 @@ class Nav extends Root
     // pages
     // retourne un tableau de toutes les pages en fonction d'un count et d'une limite par page
     // nav peut être un int ou un tableau
-    public static function pages($nav,int $limit):array
+    final public static function pages($nav,int $limit):array
     {
         $return = [];
         $max = static::pageMax($nav,$limit);
@@ -226,7 +226,7 @@ class Nav extends Root
     // retourne un tableau contenant toutes les pages et la position par rapport à la page courante
     // nav peut être un int ou un tableau
     // retorne null si la page n'existe pas, sinon un tableau
-    public static function pagesPosition(int $value,$nav,int $limit):?array
+    final public static function pagesPosition(int $value,$nav,int $limit):?array
     {
         $return = null;
         $max = static::pageMax($nav,$limit);
@@ -249,7 +249,7 @@ class Nav extends Root
     // retourne un tableau contenant les pages entourant la page courante
     // nav peut être un int ou un tableau
     // retorne null si la page n'existe pas, sinon un tableau
-    public static function pagesClose(int $value,$nav,int $limit,int $amount=3):?array
+    final public static function pagesClose(int $value,$nav,int $limit,int $amount=3):?array
     {
         $return = null;
 
@@ -274,7 +274,7 @@ class Nav extends Root
     // pageSpecificCount
     // retourne le nombre d'éléments contenu dans une page
     // nav peut être un int ou un tableau
-    public static function pageSpecificCount(int $value,$nav,int $limit):?int
+    final public static function pageSpecificCount(int $value,$nav,int $limit):?int
     {
         $return = null;
 
@@ -305,7 +305,7 @@ class Nav extends Root
     // pageFirst
     // retourne la première page
     // nav peut être un int ou un tableau
-    public static function pageFirst($nav,int $limit):?int
+    final public static function pageFirst($nav,int $limit):?int
     {
         return (is_int(static::pageMax($nav,$limit)))? 1:null;
     }
@@ -314,7 +314,7 @@ class Nav extends Root
     // pagePrev
     // retourne la page précédente
     // nav peut être un int ou un tableau
-    public static function pagePrev(int $value,$nav,int $limit):?int
+    final public static function pagePrev(int $value,$nav,int $limit):?int
     {
         return (is_int(static::pageMax($nav,$limit)) && ($value - 1) >= 1)? ($value - 1):null;
     }
@@ -323,7 +323,7 @@ class Nav extends Root
     // pageNext
     // retourne la page suivante
     // nav peut être un int ou un tableau
-    public static function pageNext(int $value,$nav,int $limit):?int
+    final public static function pageNext(int $value,$nav,int $limit):?int
     {
         $return = null;
         $max = static::pageMax($nav,$limit);
@@ -338,7 +338,7 @@ class Nav extends Root
     // pageLast
     // retourne la dernière page
     // nav peut être un int ou un tableau
-    public static function pageLast($nav,int $limit):?int
+    final public static function pageLast($nav,int $limit):?int
     {
         $return = null;
         $pageMax = static::pageMax($nav,$limit);
@@ -354,7 +354,7 @@ class Nav extends Root
     // retourne un tableau contenant un maximum d'informations relatives aux pages
     // nav peut être un int ou un tableau
     // first et last seulement retourné si différent de prev/next
-    public static function general(int $value,$nav,int $limit,int $amount=3):?array
+    final public static function general(int $value,$nav,int $limit,int $amount=3):?array
     {
         $return = null;
 
@@ -384,7 +384,7 @@ class Nav extends Root
     // pagesWithSpecific
     // retourne un tableau multidimensionnel avec les pages et les éléments contenus dans chaque page
     // nav doit être un array
-    public static function pagesWithSpecific(array $nav,int $limit):array
+    final public static function pagesWithSpecific(array $nav,int $limit):array
     {
         $return = [];
 
@@ -414,7 +414,7 @@ class Nav extends Root
     // pageWithSpecific
     // retourne les éléments contenus dans une page
     // nav doit être un array
-    public static function pageWithSpecific(int $value,array $nav,int $limit):?array
+    final public static function pageWithSpecific(int $value,array $nav,int $limit):?array
     {
         $return = null;
 
@@ -433,7 +433,7 @@ class Nav extends Root
     // pageFirstSpecific
     // retourne le premier élément contenu dans la page
     // nav doit être un array
-    public static function pageFirstSpecific(int $value,array $nav,int $limit)
+    final public static function pageFirstSpecific(int $value,array $nav,int $limit)
     {
         $return = null;
         $content = static::pageWithSpecific($value,$nav,$limit);
@@ -448,7 +448,7 @@ class Nav extends Root
     // pageLastSpecific
     // retourne le dernier élément contenu dans la page
     // nav doit être un array
-    public static function pageLastSpecific(int $value,array $nav,int $limit)
+    final public static function pageLastSpecific(int $value,array $nav,int $limit)
     {
         $return = null;
         $content = static::pageWithSpecific($value,$nav,$limit);
@@ -463,7 +463,7 @@ class Nav extends Root
     // specificIndex
     // retourne le offset, ou index d'un spécifique
     // nav doit être array
-    public static function specificIndex($value,array $nav):?int
+    final public static function specificIndex($value,array $nav):?int
     {
         $return = null;
         $index = array_search($value,$nav,true);
@@ -478,7 +478,7 @@ class Nav extends Root
     // specificPage
     // retourne le numéro de page d'une valeur specific dans un tableau
     // nav doit être un array
-    public static function specificPage($value,array $nav,int $limit):?int
+    final public static function specificPage($value,array $nav,int $limit):?int
     {
         $return = null;
         $index = static::specificIndex($value,$nav);
@@ -493,7 +493,7 @@ class Nav extends Root
     // specificFirst
     // retourne le premier contenu du tableau
     // nav doit être un array
-    public static function specificFirst(array $nav)
+    final public static function specificFirst(array $nav)
     {
         return Arr::valueFirst($nav);
     }
@@ -502,7 +502,7 @@ class Nav extends Root
     // specificPrev
     // retourne le contenu précédent du tableau
     // nav doit être un array
-    public static function specificPrev($specific,array $nav)
+    final public static function specificPrev($specific,array $nav)
     {
         return Arr::valueNav($specific,-1,$nav);
     }
@@ -511,7 +511,7 @@ class Nav extends Root
     // specificPrevInPage
     // retourne le contenu précédant dans la page
     // nav doit être un array
-    public static function specificPrevInPage($specific,array $nav,int $limit)
+    final public static function specificPrevInPage($specific,array $nav,int $limit)
     {
         $return = null;
         $pageNumber = static::specificPage($specific,$nav,$limit);
@@ -531,7 +531,7 @@ class Nav extends Root
     // specificNext
     // retourne le contenu suivant du tableau
     // nav doit être un array
-    public static function specificNext($specific,array $nav)
+    final public static function specificNext($specific,array $nav)
     {
         return Arr::valueNav($specific,1,$nav);
     }
@@ -540,7 +540,7 @@ class Nav extends Root
     // specificNextInPage
     // retourne le contenu suivant dans la page
     // nav doit être un array
-    public static function specificNextInPage($specific,array $nav,int $limit)
+    final public static function specificNextInPage($specific,array $nav,int $limit)
     {
         $return = null;
         $pageNumber = static::specificPage($specific,$nav,$limit);
@@ -559,7 +559,7 @@ class Nav extends Root
     // specificLast
     // retourne le dernier contenu du tableau
     // nav doit être un array
-    public static function specificLast(array $nav)
+    final public static function specificLast(array $nav)
     {
         return Arr::valueLast($nav);
     }
@@ -569,7 +569,7 @@ class Nav extends Root
     // retourne un ensemble d'information sur une entrée spécifique du tableau de nav
     // nav doit être un array
     // first et last seulement retourné si différent de prev/next
-    public static function specific($specific,array $nav,int $limit):?array
+    final public static function specific($specific,array $nav,int $limit):?array
     {
         $return = null;
         $index = static::specificIndex($specific,$nav);

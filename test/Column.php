@@ -15,7 +15,7 @@ use Quid\Base;
 class Column extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // is
         $array = [1,2,3,[]];

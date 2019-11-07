@@ -15,7 +15,7 @@ use Quid\Base;
 class Call extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // cast
         $date = new \DateTime();
@@ -121,7 +121,9 @@ class Call extends Base\Test
         assert(Base\Call::map('string',[Base\Str::class,'upper'],'éste@gmail.com',true) === 'ÉSTE@GMAIL.COM');
 
         // withObj
-
+        
+        // bindTo
+        
         // digStaticMethod
         $test = ['test'=>[Base\Request::class,'host'],'well'=>['ok'=>function() { return true; },'james'=>[Base\Request::class,'isSsl']]];
         assert(Base\Call::digStaticMethod($test)['well']['james'] === Base\Request::isSsl());

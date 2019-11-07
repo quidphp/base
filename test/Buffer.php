@@ -15,7 +15,7 @@ use Quid\Base;
 class Buffer extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $content = Base\Buffer::getAll(false);

@@ -15,7 +15,7 @@ use Quid\Base;
 class Debug extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $isVarDumpOverload = Base\Ini::isVarDumpOverloaded();

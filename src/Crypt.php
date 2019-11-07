@@ -32,7 +32,7 @@ class Crypt extends Root
 
     // passwordInfo
     // retourne les informations sur la variable hash
-    public static function passwordInfo(string $hash):array
+    final public static function passwordInfo(string $hash):array
     {
         return password_get_info($hash);
     }
@@ -41,7 +41,7 @@ class Crypt extends Root
     // passwordHash
     // hash une string avec password_pash
     // cette méthode cast les scalaires en string, pouvait crée des problèmes avec les données cast provenant de post
-    public static function passwordHash(string $value,?array $option=null):?string
+    final public static function passwordHash(string $value,?array $option=null):?string
     {
         $return = null;
         $option = Arr::plus(static::$config['passwordHash'],$option);
@@ -56,7 +56,7 @@ class Crypt extends Root
 
     // passwordVerify
     // verifie le mot de passe avec password_verify
-    public static function passwordVerify(string $value,string $hash):bool
+    final public static function passwordVerify(string $value,string $hash):bool
     {
         return password_verify($value,$hash);
     }
@@ -65,7 +65,7 @@ class Crypt extends Root
     // passwordNeedsRehash
     // retourne vrai si le hash n'est pas compatible avec l'algorythme et les options
     // de même, seul un password qui passe validate/isPassword est considéré
-    public static function passwordNeedsRehash(string $value,?array $option=null):bool
+    final public static function passwordNeedsRehash(string $value,?array $option=null):bool
     {
         $return = false;
         $option = Arr::plus(static::$config['passwordHash'],$option);
@@ -79,7 +79,7 @@ class Crypt extends Root
     // crée un nouveau mot de passe qui sera comptable avec la méthode validate/isPassword
     // longueur minimum de 5, le password aura toujours au moins 2 chiffres
     // utiliser lors du reset des mots de passe
-    public static function passwordNew(?int $length=null):?string
+    final public static function passwordNew(?int $length=null):?string
     {
         $return = null;
         $length = $length ?? static::$config['passwordNew'] ?? null;
@@ -98,7 +98,7 @@ class Crypt extends Root
     // retourne les messages négatifs en lien avec un changement de mot de passe
     // newPasswordConfirm, oldPassword et oldPasswordHash sont facultatifs
     // ceci est utilisé dans la classe user pour changer le mot de passe
-    public static function passwordValidate(string $newPassword,?string $newPasswordConfirm=null,?string $oldPassword=null,?string $oldPasswordHash=null,?string $security=null,?array $option=null):?string
+    final public static function passwordValidate(string $newPassword,?string $newPasswordConfirm=null,?string $oldPassword=null,?string $oldPasswordHash=null,?string $security=null,?array $option=null):?string
     {
         $return = null;
 
@@ -132,7 +132,7 @@ class Crypt extends Root
 
     // passwordActivate
     // retourne une string sha1, tel qu'utilisé pour générer la hash d'activation d'un password
-    public static function passwordActivate(string $value):string
+    final public static function passwordActivate(string $value):string
     {
         return static::sha($value,1);
     }
@@ -140,7 +140,7 @@ class Crypt extends Root
 
     // md5
     // retourne un hash md5
-    public static function md5(string $value,bool $binary=false):string
+    final public static function md5(string $value,bool $binary=false):string
     {
         return md5($value,$binary);
     }
@@ -148,7 +148,7 @@ class Crypt extends Root
 
     // sha
     // retourne un hash sha
-    public static function sha(string $value,int $type=256):?string
+    final public static function sha(string $value,int $type=256):?string
     {
         return hash('sha'.$type,$value);
     }
@@ -156,7 +156,7 @@ class Crypt extends Root
 
     // randomBytes
     // à partir d'une fonction CSPRNG
-    public static function randomBytes(int $length=11):string
+    final public static function randomBytes(int $length=11):string
     {
         return random_bytes($length);
     }
@@ -164,7 +164,7 @@ class Crypt extends Root
 
     // randomBool
     // à partir d'une fonction CSPRNG
-    public static function randomBool(int $min=0,int $max=1):bool
+    final public static function randomBool(int $min=0,int $max=1):bool
     {
         $return = false;
 
@@ -178,7 +178,7 @@ class Crypt extends Root
 
     // randomInt
     // à partir d'une fonction CSPRNG
-    public static function randomInt(?int $length=null,int $min=0,int $max=PHP_INT_MAX):int
+    final public static function randomInt(?int $length=null,int $min=0,int $max=PHP_INT_MAX):int
     {
         $return = random_int($min,$max);
 
@@ -192,7 +192,7 @@ class Crypt extends Root
     // randomString
     // génère une string random à partir d'une chaîne de caracètre possible
     // random généré à partir d'une fonction CSPRNG
-    public static function randomString(int $length=40,?string $random=null,?bool $mb=null):string
+    final public static function randomString(int $length=40,?string $random=null,?bool $mb=null):string
     {
         $return = '';
         $random = static::getRandomString($random);
@@ -229,7 +229,7 @@ class Crypt extends Root
 
     // getRandomString
     // retourne les chars pour la méthode randomString
-    public static function getRandomString(?string $value=null):?string
+    final public static function getRandomString(?string $value=null):?string
     {
         $return = null;
 
@@ -252,7 +252,7 @@ class Crypt extends Root
     // randomArray
     // retourne une ou plusieurs slices d'un array de façon random
     // random généré à partir d'une fonction CSPRNG
-    public static function randomArray(array $array,int $length=1):array
+    final public static function randomArray(array $array,int $length=1):array
     {
         $return = [];
 
@@ -285,7 +285,7 @@ class Crypt extends Root
     // microtime
     // retourne une string unique à partir de uniqid qui se base sur microtime
     // 13 caractères si moreEntropy est false, 23 si true
-    public static function microtime($value=null,bool $moreEntropy=false):?string
+    final public static function microtime($value=null,bool $moreEntropy=false):?string
     {
         $return = null;
         $prefix = '';
@@ -305,7 +305,7 @@ class Crypt extends Root
 
     // base64
     // encode une chaîne en base64
-    public static function base64(string $value):string
+    final public static function base64(string $value):string
     {
         return base64_encode($value);
     }
@@ -313,7 +313,7 @@ class Crypt extends Root
 
     // base64Decode
     // décode une chaîne présentement en base64
-    public static function base64Decode(string $value,bool $strict=false):string
+    final public static function base64Decode(string $value,bool $strict=false):string
     {
         return base64_decode($value,$strict);
     }
@@ -322,7 +322,7 @@ class Crypt extends Root
     // openssl
     // encrypte une chaîne à partir de openssl
     // possible de décrypter la chaîne
-    public static function openssl(string $value,string $key,string $iv=''):?string
+    final public static function openssl(string $value,string $key,string $iv=''):?string
     {
         $return = null;
 
@@ -345,7 +345,7 @@ class Crypt extends Root
 
     // opensslDecrypt
     // décrypte une chaîne à partir de openssl
-    public static function opensslDecrypt(string $value,string $key,string $iv=''):?string
+    final public static function opensslDecrypt(string $value,string $key,string $iv=''):?string
     {
         $return = null;
 
@@ -368,7 +368,7 @@ class Crypt extends Root
 
     // serialize
     // serialize une variable, retourne une string
-    public static function serialize($value):string
+    final public static function serialize($value):string
     {
         return serialize($value);
     }
@@ -377,7 +377,7 @@ class Crypt extends Root
     // unserialize
     // unserialize une string, retourne la variable
     // allowed classes permet de spécifier les classes de retour acceptés si la valeur contient des objets
-    public static function unserialize(string $value,$allowedClasses=true)
+    final public static function unserialize(string $value,$allowedClasses=true)
     {
         $return = null;
         $option = ['allowed_classes'=>($allowedClasses === false)? $allowedClasses:true];
@@ -411,7 +411,7 @@ class Crypt extends Root
     // onSetSerialize
     // helper pour une méthode onSet de colonne
     // serialize si array ou objet
-    public static function onSetSerialize($return)
+    final public static function onSetSerialize($return)
     {
         if(is_array($return) || is_object($return))
         $return = static::serialize($return);
@@ -423,7 +423,7 @@ class Crypt extends Root
     // onGetSerialize
     // helper pour une méthode onGet de colonne
     // déserialize si string
-    public static function onGetSerialize($return)
+    final public static function onGetSerialize($return)
     {
         if(is_string($return))
         $return = static::unserialize($return);

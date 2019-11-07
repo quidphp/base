@@ -34,7 +34,7 @@ class Listing extends Assoc
 
     // isSeparatorStart
     // retourne vrai si le listing a un separator au début
-    public static function isSeparatorStart(string $listing):bool
+    final public static function isSeparatorStart(string $listing):bool
     {
         return Str::isStart(static::getSeparator(),$listing,static::getSensitive());
     }
@@ -42,7 +42,7 @@ class Listing extends Assoc
 
     // isSeparatorEnd
     // retourne vrai si le listing a un separator à la fin et n'est pas seulement le séparateur
-    public static function isSeparatorEnd(string $listing):bool
+    final public static function isSeparatorEnd(string $listing):bool
     {
         return ($listing !== ($separator = static::getSeparator()) && Str::isEnd($separator,$listing,static::getSensitive()))? true:false;
     }
@@ -50,7 +50,7 @@ class Listing extends Assoc
 
     // hasSeparatorDouble
     // retourne vrai si le listing contient un double séparateur
-    public static function hasSeparatorDouble(string $listing):bool
+    final public static function hasSeparatorDouble(string $listing):bool
     {
         return (!empty($separator = static::getSeparator()) && Str::posIpos($separator.$separator,$listing,static::getSensitive()) !== null)? true:false;
     }
@@ -59,7 +59,7 @@ class Listing extends Assoc
     // getSeparator
     // retourne un des séparateurs via index
     // possiblité de retourner la version avec espace via index2
-    public static function getSeparator(int $index=0,int $index2=0):?string
+    final public static function getSeparator(int $index=0,int $index2=0):?string
     {
         $return = null;
 
@@ -76,7 +76,7 @@ class Listing extends Assoc
     // str
     // explose et implose une valeur
     // retourne une string correctement formattée
-    public static function str($value,?array $option=null):string
+    final public static function str($value,?array $option=null):string
     {
         return static::implode(static::arr($value,$option),$option);
     }
@@ -129,7 +129,7 @@ class Listing extends Assoc
     // arr
     // explose une string listing
     // de même si listing est déjà un array, retourne le après parse
-    public static function arr($value,?array $option=null):array
+    final public static function arr($value,?array $option=null):array
     {
         $return = [];
         $option = static::option($option);
@@ -214,7 +214,7 @@ class Listing extends Assoc
     // implode
     // implose un tableau qui a été passé dans arr
     // fonctionne aussi avec les tableaux list
-    public static function implode(array $value,?array $option=null):string
+    final public static function implode(array $value,?array $option=null):string
     {
         $return = '';
         $option = static::option($option);
@@ -241,7 +241,7 @@ class Listing extends Assoc
 
     // stripWrap
     // ajoute ou enlève le séparateur en début ou fin de chaîne
-    public static function stripWrap(string $listing,?bool $start=null,?bool $end=null):string
+    final public static function stripWrap(string $listing,?bool $start=null,?bool $end=null):string
     {
         return Str::stripWrap(static::getSeparator(),$listing,$start,$end,static::getSensitive());
     }
@@ -249,7 +249,7 @@ class Listing extends Assoc
 
     // stripStart
     // retourne le listing sans le séparateur du début
-    public static function stripStart(string $listing):string
+    final public static function stripStart(string $listing):string
     {
         return Str::stripStart(static::getSeparator(),$listing,static::getSensitive());
     }
@@ -257,7 +257,7 @@ class Listing extends Assoc
 
     // stripEnd
     // retourne le listing sans le séparateur de la fin
-    public static function stripEnd(string $listing):string
+    final public static function stripEnd(string $listing):string
     {
         return Str::stripEnd(static::getSeparator(),$listing,static::getSensitive());
     }
@@ -265,7 +265,7 @@ class Listing extends Assoc
 
     // wrapStart
     // wrap un listing au début s'il ne l'est pas déjà
-    public static function wrapStart(string $listing):string
+    final public static function wrapStart(string $listing):string
     {
         return Str::wrapStart(static::getSeparator(),$listing,static::getSensitive());
     }
@@ -273,7 +273,7 @@ class Listing extends Assoc
 
     // wrapEnd
     // wrap un listing à la fin s'il ne l'est pas déjà
-    public static function wrapEnd(string $listing):string
+    final public static function wrapEnd(string $listing):string
     {
         return Str::wrapEnd(static::getSeparator(),$listing,static::getSensitive());
     }

@@ -20,7 +20,7 @@ trait _cacheStatic
     // cacheStatic
     // retourne la cache si existante, sinon crée la cache à partir de la closure sans argument
     // si callable est null, unset
-    public static function cacheStatic($key,?\Closure $closure=null,bool $cache=true)
+    final public static function cacheStatic($key,?\Closure $closure=null,bool $cache=true)
     {
         $return = null;
 
@@ -57,7 +57,7 @@ trait _cacheStatic
 
     // emptyCacheStatic
     // vide le tableau de cache statique
-    public static function emptyCacheStatic():bool
+    final public static function emptyCacheStatic():bool
     {
         $return = true;
         static::$cacheStatic = [];
@@ -68,7 +68,7 @@ trait _cacheStatic
 
     // allCacheStatic
     // retourne le tableau de la cache statique
-    public static function allCacheStatic():array
+    final public static function allCacheStatic():array
     {
         return static::$cacheStatic;
     }

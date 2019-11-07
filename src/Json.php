@@ -27,7 +27,7 @@ class Json extends Assoc
 
     // is
     // retourne vrai si la chaîne est du json
-    public static function is($value):bool
+    final public static function is($value):bool
     {
         return (is_string($value) && static::decode($value) !== null)? true:false;
     }
@@ -35,7 +35,7 @@ class Json extends Assoc
 
     // isEmpty
     // retourne vrai si la chaîne est du json mais vide
-    public static function isEmpty($value):bool
+    final public static function isEmpty($value):bool
     {
         return (is_string($value) && ($json = static::decode($value)) !== null && empty($json))? true:false;
     }
@@ -43,7 +43,7 @@ class Json extends Assoc
 
     // isNotEmpty
     // retourne vrai si la chaîne est du json non vide
-    public static function isNotEmpty($value):bool
+    final public static function isNotEmpty($value):bool
     {
         return (is_string($value) && ($json = static::decode($value)) !== null && !empty($json))? true:false;
     }
@@ -53,7 +53,7 @@ class Json extends Assoc
     // encode une variable en json
     // option à null enlève les options, si option est set remplace les options par défaut
     // note: json_encode retourne false si une erreur survient, à ce moment une erreur est déclenché
-    public static function encode($value,?int $flag=null,?int $depth=null):?string
+    final public static function encode($value,?int $flag=null,?int $depth=null):?string
     {
         $return = null;
         $option = static::option();
@@ -69,7 +69,7 @@ class Json extends Assoc
     // encodeOption
     // encode une variable en json
     // option append les options par défaut
-    public static function encodeOption($value,int $flag,?int $depth=null):?string
+    final public static function encodeOption($value,int $flag,?int $depth=null):?string
     {
         $return = null;
         $option = static::option();
@@ -83,7 +83,7 @@ class Json extends Assoc
     // encodePretty
     // encode une variable en json
     // append json_pretty_print aux options par défaut
-    public static function encodePretty($value,int $depth=null):?string
+    final public static function encodePretty($value,int $depth=null):?string
     {
         $return = null;
         $option = static::option();
@@ -96,7 +96,7 @@ class Json extends Assoc
 
     // encodeSpecialchars
     // encode en json et envoie la string dans specialchars
-    public static function encodeSpecialchars($value,?int $flag=null,?int $depth=null):?string
+    final public static function encodeSpecialchars($value,?int $flag=null,?int $depth=null):?string
     {
         $return = '';
         $json = static::encode($value,$flag,$depth);
@@ -110,7 +110,7 @@ class Json extends Assoc
 
     // encodeVar
     // encode une valeur et retourne la dans une variable javascript
-    public static function encodeVar(string $var,$value,?int $flag=null,?int $depth=null):?string
+    final public static function encodeVar(string $var,$value,?int $flag=null,?int $depth=null):?string
     {
         $return = null;
         $value = static::encode($value,$flag,$depth);
@@ -124,7 +124,7 @@ class Json extends Assoc
 
     // var
     // écrit une valeur js dans une variable javascript
-    public static function var(string $var,string $value):string
+    final public static function var(string $var,string $value):string
     {
         $return = $var;
         $return .= ' = ';
@@ -139,7 +139,7 @@ class Json extends Assoc
     // decode une chaine json
     // option à null enlève les options
     // note: json_decode retourne false si une erreur survient
-    public static function decode(string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
+    final public static function decode(string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
     {
         $return = null;
         $option = static::option();
@@ -156,7 +156,7 @@ class Json extends Assoc
 
     // decodeKeys
     // decode une chaîne json et retourne les clés demandés
-    public static function decodeKeys(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
+    final public static function decodeKeys(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
     {
         $return = null;
         $decode = static::decode($value,$assoc,$flag,$depth);
@@ -170,7 +170,7 @@ class Json extends Assoc
 
     // decodeKeysExists
     // decode une chaîne json et retourne le tableau seulement si les clés existent
-    public static function decodeKeysExists(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
+    final public static function decodeKeysExists(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
     {
         $return = null;
         $decode = static::decode($value,$assoc,$flag,$depth);
@@ -184,7 +184,7 @@ class Json extends Assoc
 
     // error
     // retourne les informations sur la dernière erreur json
-    public static function error():array
+    final public static function error():array
     {
         return ['code'=>json_last_error(),'msg'=>json_last_error_msg()];
     }
@@ -193,7 +193,7 @@ class Json extends Assoc
     // arr
     // explose une string json
     // retourne tableau vide si après decode ce n'est pas un tableau
-    public static function arr($value,?array $option=null):array
+    final public static function arr($value,?array $option=null):array
     {
         $return = [];
         $option = static::option($option);
@@ -219,7 +219,7 @@ class Json extends Assoc
     // onSet
     // helper pour une méthode onSet de colonne
     // encode en json si array ou objet
-    public static function onSet($return)
+    final public static function onSet($return)
     {
         if(is_array($return) || is_object($return))
         $return = static::encode($return);
@@ -231,7 +231,7 @@ class Json extends Assoc
     // onGet
     // helper pour une méthode onGet de colonne
     // décode de json si scalar
-    public static function onGet($return)
+    final public static function onGet($return)
     {
         if(is_scalar($return))
         $return = static::decode($return);

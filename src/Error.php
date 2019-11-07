@@ -20,7 +20,7 @@ class Error extends Root
     // setHandler
     // lie une callable comme gestionnaire d'erreur
     // si la valeur passé est null, le handler est remis à son état initial
-    public static function setHandler(?callable $value=null,int $type=E_ALL | E_STRICT):void
+    final public static function setHandler(?callable $value=null,int $type=E_ALL | E_STRICT):void
     {
         set_error_handler($value,$type);
 
@@ -30,7 +30,7 @@ class Error extends Root
 
     // restoreHandler
     // remet le handler à ce qu'il était avant le dernière appel à set
-    public static function restoreHandler():bool
+    final public static function restoreHandler():bool
     {
         return restore_error_handler();
     }
@@ -38,7 +38,7 @@ class Error extends Root
 
     // last
     // retourne les informations sur la dernière erreur
-    public static function last():?array
+    final public static function last():?array
     {
         return error_get_last();
     }
@@ -46,7 +46,7 @@ class Error extends Root
 
     // clearLast
     // efface les informations sur la dernière erreur
-    public static function clearLast():void
+    final public static function clearLast():void
     {
         error_clear_last();
 
@@ -56,7 +56,7 @@ class Error extends Root
 
     // log
     // log une erreur à l'endroit défini dans error_log
-    public static function log($message):bool
+    final public static function log($message):bool
     {
         return error_log(static::logPrepareMessage($message),0);
     }
@@ -64,7 +64,7 @@ class Error extends Root
 
     // logEmail
     // log une erreur et envoie par email
-    public static function logEmail($message,string $email,string $headers=''):bool
+    final public static function logEmail($message,string $email,string $headers=''):bool
     {
         $return = false;
 
@@ -78,7 +78,7 @@ class Error extends Root
     // logFile
     // log une erreur dans un autre fichier que celui par défaut
     // accepte des chemins (pas besoin d'exister) ou des resources
-    public static function logFile($message,$path):bool
+    final public static function logFile($message,$path):bool
     {
         $return = false;
 
@@ -94,7 +94,7 @@ class Error extends Root
 
     // logPrepareMessage
     // prépare le message en fonction de la fonction error_log
-    public static function logPrepareMessage($value):string
+    final public static function logPrepareMessage($value):string
     {
         $return = '';
 
@@ -120,7 +120,7 @@ class Error extends Root
     // trigger
     // génère une erreur, le type est par défaut E_USER_ERROR
     // aucune erreur de générer si le tableau est vide ou si le message final n'est pas string
-    public static function trigger($value,int $type=E_USER_ERROR):bool
+    final public static function trigger($value,int $type=E_USER_ERROR):bool
     {
         $return = false;
 
@@ -137,7 +137,7 @@ class Error extends Root
     // triggers
     // tente de générer des erreurs à partir de différentes valeurs
     // aucune erreur de générer si le tableau est vide ou si le message final n'est pas string
-    public static function triggers(...$values):bool
+    final public static function triggers(...$values):bool
     {
         $return = false;
 
@@ -155,7 +155,7 @@ class Error extends Root
 
     // reporting
     // retourne le niveau actuel de error reporting
-    public static function reporting():int
+    final public static function reporting():int
     {
         return error_reporting();
     }
@@ -163,7 +163,7 @@ class Error extends Root
 
     // getCodes
     // retourne le tableau de codes, mergé avec celui de lang au besoin
-    public static function getCodes(?string $lang=null):array
+    final public static function getCodes(?string $lang=null):array
     {
         return Arr::plus(Lang\En::$config['error']['code'],Lang::errorCode(null,$lang));
     }
@@ -171,7 +171,7 @@ class Error extends Root
 
     // code
     // cette fonctionne retourne le nom associé au code erreur de PHP
-    public static function code(int $code,?string $lang=null):?string
+    final public static function code(int $code,?string $lang=null):?string
     {
         $return = null;
         $codes = static::getCodes($lang);
@@ -185,7 +185,7 @@ class Error extends Root
 
     // init
     // initialise la prise en charge des erreurs
-    public static function init():void
+    final public static function init():void
     {
         Uri::setNotFound([static::class,'trigger']);
         File::setNotFound([static::class,'trigger']);
