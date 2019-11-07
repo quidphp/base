@@ -327,20 +327,20 @@ class Call extends Root
         return $return;
     }
 
-    
+
     // bindTo
     // bind un objet à une closure et lance la closure
     // permet d'appeler les méthodes protégés à l'intérieeur d'un objet
-    final public static function bindTo(object $obj,\Closure $closure) 
+    final public static function bindTo(object $obj,\Closure $closure)
     {
         $return = null;
         $bind = $closure->bindTo($obj,$obj);
         $return = $bind();
-        
+
         return $return;
     }
-    
-    
+
+
     // digStaticMethod
     // creuse dans un tableau et call toutes les méthodes statiques safe
     // les closures ne sont pas appelés
