@@ -4588,8 +4588,8 @@ class Arr extends Root
     {
         $return = [];
         $option = self::plus(['mb'=>true],$option);
-        $callable = ($html === true)? array(Html::class,'excerpt'):array(Str::class,'excerpt');
-        
+        $callable = ($html === true)? [Html::class,'excerpt']:[Str::class,'excerpt'];
+
         foreach ($array as $key => $value)
         {
             if(is_scalar($value) && !is_bool($value))
