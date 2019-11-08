@@ -4582,19 +4582,20 @@ class Arr extends Root
 
 
     // valuesExcerpt
-    // permet de passer toutes les valeurs string du tableau dans la méthode str/excerpt
+    // permet de passer toutes les valeurs string du tableau dans la méthode str/excerpt ou html/excerpt
     // mb est true par défaut
-    final public static function valuesExcerpt(?int $length,array $array,?array $option=null):array
+    final public static function valuesExcerpt(?int $length,array $array,bool $html=false,?array $option=null):array
     {
         $return = [];
         $option = self::plus(['mb'=>true],$option);
-
+        $callable = ($html === true)? array(Html::class,'excerpt'):array(Str::class,'excerpt');
+        
         foreach ($array as $key => $value)
         {
             if(is_scalar($value) && !is_bool($value))
             {
                 $value = (string) $value;
-                $return[$key] = Str::excerpt($length,$value,$option);
+                $return[$key] = $callable($length,$value,$option);
             }
         }
 
