@@ -33,6 +33,7 @@ class Html extends Root
             'default'=>'%label%%form%',
             'reverse'=>'%form%%label%',
             'br'=>'%label%<br/>%form%',
+            'form'=>'%form%',
             'table'=>'<table><tr><td>%label%</td><td>%form%</td></tr></table>',
             'divtable'=>"<div class='table'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
             'divtableClass'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
