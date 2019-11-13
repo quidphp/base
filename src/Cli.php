@@ -147,11 +147,11 @@ class Cli extends Root
     }
 
 
-    // flushEol
+    // eol
     // écrit et flush une ou plusieurs fins de lignes
-    final public static function flushEol(int $value=1):void
+    final public static function eol(int $value=1):void
     {
-        $eol = static::eol();
+        $eol = static::getEol();
 
         while ($value > 0)
         {
@@ -192,7 +192,7 @@ class Cli extends Root
         $background = (is_string($background))? static::getBackgroundColor($background,0):null;
         $changed = false;
         $escape = static::getEscape();
-        $eolChar = static::eol();
+        $eolChar = static::getEol();
 
         if(is_string($value) && strlen($value))
         {
@@ -236,7 +236,10 @@ class Cli extends Root
         $styles['padding'] = static::$config['htmlPadding'] ?? null;
 
         if(is_string($value) && strlen($value))
-        $return .= Html::div($value,['style'=>$styles]);
+        {
+            $value = Html::nl2br($value);
+            $return .= Html::div($value,['style'=>$styles]);
+        }
 
         $return .= Html::brs($eol);
 
@@ -258,9 +261,9 @@ class Cli extends Root
     }
 
 
-    // eol
+    // getEol
     // retourne le caractère de fin de ligne
-    final public static function eol():string
+    final public static function getEol():string
     {
         return static::$config['eol'];
     }

@@ -714,13 +714,17 @@ class Str extends Base\Test
         assert('true' === Base\Str::replace(['%a%'=>'e'],'true'));
         assert('bla' === Base\Str::replace(['%a%'=>['e']],'bla'));
         assert($string === Base\Str::replace(['PETITE'=>'grandé'],$string));
-        assert('La grandés %a%venir' === Base\Str::replace(['PETITE'=>'grandé'],$string,false));
+        assert('La grandés %a%venir' === Base\Str::replace(['PETITE'=>'grandé'],$string,false,false));
         $string = 'éÉè';
         assert('eEe' === Base\Str::replace(['éÉè'=>'eEe'],$string));
         assert('eEe' === Base\Str::replace(['éÉè'=>'eEe'],$string));
-        assert('éÉè' === Base\Str::replace(['ééè'=>'eEe'],$string,false));
+        assert('éÉè' === Base\Str::replace(['ééè'=>'eEe'],$string,false,false));
         assert(Base\Str::replace(['É'=>null],$string) === 'éè');
         assert(Base\Str::replace(['É'=>''],$string) === 'éè');
+        assert(Base\Str::replace(array('a'=>'z','b'=>'y','c'=>'x'),'La betice') === 'Lz yetixe');
+        assert(Base\Str::replace(array('a'=>'z','be'=>'y','b'=>'z','y'=>'z'),'La betice') === 'Lz ytice');
+        assert(Base\Str::replace(array('é'=>'è'),'La bétice') === 'La bètice');
+        assert(Base\Str::replace(array('é'=>'è'),'La bÉtice') === 'La bÉtice');
 
         // ireplace
         $string = 'La petites %a%venir';
@@ -728,7 +732,7 @@ class Str extends Base\Test
         $string = 'La pétites %a%venir';
         assert(Base\Str::ireplace(['PéTITE'=>'grandé'],$string) === 'La grandés %a%venir');
         assert(Base\Str::ireplace(['PÉTITE'=>'grandé'],$string) === 'La pétites %a%venir'); // ireplace ne remplace pas les caractère accentés pas dans la bonne case
-
+        
         // explode
         assert(['test','test2','test3'] === Base\Str::explode('|','test|test2|test3'));
         assert(['test',' test2 ','test3'] === Base\Str::explode('|','test| test2 |test3'));
@@ -888,11 +892,6 @@ class Str extends Base\Test
         $string = 'Le%s% cheva%l% %est% grand%s%';
         assert('Le cheval est grand' === Base\Str::plural([],$string,['l'=>'ux','est'=>'sont']));
         assert('Les chevaux sont grands' === Base\Str::plural(2,$string,['l'=>'ux','est'=>'sont']));
-
-        // replaceChar
-        assert(Base\Str::replaceChar('abc','zyx','La betice') === 'Lz yetixe');
-        assert(strlen(Base\Str::replaceChar('abç','àyx','La betiçe')) === 10);
-        assert(Base\Str::replaceChar('abç','àyx','La betiçe',true) === 'Là yetixe');
 
         // replaceAccent
         assert('TESTEeeac' === Base\Str::replaceAccent('TESTÉéèàç'));

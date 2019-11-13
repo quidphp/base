@@ -1320,7 +1320,8 @@ class Arrs extends Root
     // hierarchy
     // retourne un tableau hierarchy sous une forme logique
     // un parent non existant peut être ajouté dans la hiérarchie si existe est true
-    final public static function hierarchy(array $array,bool $exists=true):array
+    // si climb est true, si un groupe n'a qu'un enfant, retire le groupe
+    final public static function hierarchy(array $array,bool $exists=true,bool $climb=false):array
     {
         $return = [];
         $structure = static::hierarchyStructure($array,$exists);
@@ -1333,7 +1334,24 @@ class Arrs extends Root
         }
 
         $return = static::sets($sets,$return);
-
+        
+        if($climb === true)
+        {
+            $array = $return;
+            $return = array();
+            
+            foreach ($array as $key => $value) 
+            {
+                if(is_array($value) && count($value) === 1 && current($value) === null)
+                {
+                    $key = key($value);
+                    $value = null;
+                }
+                
+                $return[$key] = $value;
+            }
+        }
+        
         return $return;
     }
 
@@ -1773,7 +1791,7 @@ class Arrs extends Root
 
     // valuesReplace
     // str_replace sur les valeurs du tableau multidimensionnel
-    final public static function valuesReplace(array $replace,array $return,bool $sensitive=true):array
+    final public static function valuesReplace(array $replace,array $return,bool $once=true,bool $sensitive=true):array
     {
         if(!empty($replace))
         {
@@ -1781,14 +1799,14 @@ class Arrs extends Root
             {
                 if(is_string($value))
                 {
-                    $v = Str::replace($replace,$value,$sensitive);
+                    $v = Str::replace($replace,$value,$once,$sensitive);
 
                     if($value !== $v)
                     $return[$key] = $v;
                 }
 
                 elseif(is_array($value))
-                $return[$key] = static::valuesReplace($replace,$value,$sensitive);
+                $return[$key] = static::valuesReplace($replace,$value,$once,$sensitive);
             }
         }
 

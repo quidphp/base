@@ -19,7 +19,7 @@ class Cli extends Base\Test
     {
         // prepare
         $escape = Base\Cli::getEscape();
-        $eol = Base\Cli::eol();
+        $eol = Base\Cli::getEol();
         $eoll = strlen($eol);
 
         // is
@@ -43,7 +43,7 @@ class Cli extends Base\Test
 
         // flushPreset
 
-        // flushEol
+        // eol
 
         // make
         assert(Base\Cli::make('test') === 'test'.$eol);
@@ -55,15 +55,15 @@ class Cli extends Base\Test
 
         // makeHtml
         assert(Base\Cli::makeHtml('meé','cyan','bold','white') === "<div style='color: cyan; font-weight: bold; padding: 5px;'>meé</div><br />");
-        assert(strlen(Base\Cli::makeHtml([1,2,3],'red','underline','gray')) === 152);
+        assert(strlen(Base\Cli::makeHtml([1,2,3],'red','underline','gray')) === 182);
 
         // preset
         assert(Base\Cli::preset('pos','test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);
         assert(Base\Cli::preset('neg','test') === $escape.'[1;37m[1m[41mtest[0m'.$eol);
         assert(Base\Cli::preset('neutral','test') === $escape.'[0;30m[47mtest[0m'.$eol);
 
-        // eol
-        assert(Base\Cli::eol() === PHP_EOL);
+        // getEol
+        assert(Base\Cli::getEol() === PHP_EOL);
 
         // prepareValue
         assert(strlen(Base\Cli::prepareValue(['test'=>2,3,4])) === 52);

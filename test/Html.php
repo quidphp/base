@@ -763,9 +763,11 @@ class Html extends Base\Test
         assert(Base\Html::email('test','ok') === "<email class='ok'>test</email>");
 
         // buttonOpen
-        assert(Base\Html::buttonOpen('test','ok') === "<button name='ok' type='button'>test");
-        assert(Base\Html::button('test','ok') === "<button name='ok' type='button'>test</button>");
-
+        assert(Base\Html::buttonOpen('test','ok') === "<button type='button' class='ok'>test");
+        assert(Base\Html::button('test','ok') === "<button type='button' class='ok'>test</button>");
+        assert(Base\Html::buttonOp('ok') === "<button type='button' class='ok'>");
+        assert(Base\Html::buttonCl() === "</button>");
+        
         // submitOpen
         assert(Base\Html::submitOpen('test','what') === "<button name='what' type='submit'>test");
         assert(strlen(Base\Html::submit('test',true)) === 55);
@@ -809,7 +811,8 @@ class Html extends Base\Test
         // formWrapStr
         assert(Base\Html::formWrapStr('LABEL','FORM','table',null,'forId') === "<table><tr><td><label for='forId'>LABEL</label></td><td>FORM</td></tr></table>");
         assert(Base\Html::formWrapStr('LABEL','FORM','table',null,null) === '<table><tr><td><label>LABEL</label></td><td>FORM</td></tr></table>');
-
+        assert(Base\Html::formWrapStr('zx%form%zx','FORM','table',null,'forId') === "<table><tr><td><label for='forId'>zx%form%zx</label></td><td>FORM</td></tr></table>");
+        
         // formWrapArray
         $array = ['label'=>'label','description'=>'description','type'=>'inputText','required'=>true];
         $wrap = "<div class='labelDescription'>%label%%description%</div>%form%";
@@ -871,21 +874,6 @@ class Html extends Base\Test
         assert(strlen(Base\Html::multiselect([1=>'james',2=>'james2'],'name',['value'=>2])) === 136);
         assert(strlen(Base\Html::multiselect([1=>'james',2=>'james2'],'name')) === 116);
         assert(Base\Html::multiselect([1=>'james',2=>'james2'],'name') === "<select multiple='multiple' name='name[]'><option value='1'>james</option><option value='2'>james2</option></select>");
-
-        // clickOpen
-        assert(Base\Html::clickOpen('lorem',null,'ok','myFakeSelect') === "<div class='myFakeSelect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'>lorem</div>ok</div>");
-        assert(Base\Html::clickOpen('lorem','myTitle','ok','myFakeSelect') === "<div class='myFakeSelect'><div class='trigger'><div data-title='myTitle' class='title'>myTitle</div><div class='ico'></div></div><div class='popup'>lorem</div>ok</div>");
-
-        // fakeselect
-        $data = [1=>'test',2=>'ok',4=>'welll'];
-        assert(Base\Html::fakeselect($data,'important',['selected'=>4]) === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1'>test</li><li data-value='2'>ok</li><li data-value='4' class='selected'>welll</li></ul></div><input name='important' data-fakeselect='1' type='hidden' value='4'/></div>");
-        assert(Base\Html::fakeselect($data) === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1'>test</li><li data-value='2'>ok</li><li data-value='4'>welll</li></ul></div><input data-fakeselect='1' type='hidden'/></div>");
-        assert(strlen(Base\Html::fakeselect($data,'important',['title'=>'JAMES','selected'=>4])) === 360);
-        assert(strlen(Base\Html::fakeselect($data,'important',['attr'=>'test'])) === 286);
-        assert(Base\Html::fakeselect(0,'myBool') === "<div class='fakeselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='0'>false</li><li data-value='1'>true</li></ul></div><input name='myBool' data-fakeselect='1' type='hidden'/></div>");
-
-        // fakemultiselect
-        assert(Base\Html::fakemultiselect($data,['class'=>'ok','name'=>'important'],['selected'=>[1,2]]) === "<div data-multiple='1' class='fakemultiselect'><div class='trigger'><div class='title'></div><div class='ico'></div></div><div class='popup'><ul><li data-value='1' class='selected'>test</li><li data-value='2' class='selected'>ok</li><li data-value='4'>welll</li></ul></div><input class='ok' name='important[]' data-fakeselect='1' type='hidden' value='1'/><input class='ok' name='important[]' data-fakeselect='1' type='hidden' value='2'/></div>");
 
         // captcha
         assert(strlen(Base\Html::captcha('abcde','[assertCommon]/ttf.ttf')) > 3000);

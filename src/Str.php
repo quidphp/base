@@ -1908,36 +1908,58 @@ class Str extends Root
         return $return;
     }
 
+    
+    // replacePrepare
+    // prépare le tableau de remplacement pour replace, ireplace et replaceOne
+    // si value est scalar transformé en string, si null transformé en empty string
+    final protected static function replacePrepare(array $array):array 
+    {
+        $return = array();
+        
+        foreach ($array as $k => $v)
+        {
+            $k = (string) $k;
 
+            if(is_object($v))
+            $v = Obj::cast($v);
+
+            if(is_scalar($v))
+            $v = (string) $v;
+
+            if($v === null)
+            $v = '';
+            
+            if(is_string($v))
+            $return[$k] = $v;
+        }
+
+        return $return;
+    }
+    
+    
     // replace
     // remplace tous les éléments dans une chaîne à partir d'un tableau from => to
-    // si value est scalar transformé en string, si null transformé en empty string
-    final public static function replace(array $replace,string $return,bool $sensitive=true):string
+    // il est possible qu'une même chaîne soit remplacé plusieurs fois
+    final public static function replace(array $replace,string $return,bool $once=true,bool $sensitive=true):string
     {
-        if(!empty($replace))
+        $replace = static::replacePrepare($replace);
+        
+        if($sensitive === false)
+        $once = false;
+        
+        if($once === true)
+        $return = strtr($return,$replace);
+        
+        else
         {
-            foreach ($replace as $k => $v)
-            {
-                $k = (string) $k;
+            $keys = array_keys($replace);
+            $values = array_values($replace);
+            
+            if($sensitive === true)
+            $return = str_replace($keys,$values,$return);
 
-                if(is_object($v))
-                $v = Obj::cast($v);
-
-                if(is_scalar($v))
-                $v = (string) $v;
-
-                if($v === null)
-                $v = '';
-
-                if(is_string($v))
-                {
-                    if($sensitive === true)
-                    $return = str_replace($k,$v,$return);
-
-                    else
-                    $return = str_ireplace($k,$v,$return);
-                }
-            }
+            else
+            $return = str_ireplace($keys,$values,$return);
         }
 
         return $return;
@@ -1946,13 +1968,13 @@ class Str extends Root
 
     // ireplace
     // remplace tous les éléments dans une chaîne à partir d'un tableau from => to
-    // non sensible à la case
+    // non sensible à la case, utilise str_ireplace dont un remplacement peut avoir l'air plus d'une fois
     final public static function ireplace(array $replace,string $return):string
     {
-        return static::replace($replace,$return,false);
+        return static::replace($replace,$return,false,false);
     }
 
-
+    
     // explode
     // explose une string selon un delimiter
     // si trim est true, passe chaque élément du tableau dans trim
@@ -2471,28 +2493,6 @@ class Str extends Root
             elseif($isPlural && is_string($letter) && !self::isEnd($letter,$return))
             $return .= $letter;
         }
-
-        return $return;
-    }
-
-
-    // replaceChar
-    // wrapper pour strtr qui fonctionne avec deux string
-    // supporte multibyte
-    final public static function replaceChar(string $from,string $to,string $str,?bool $mb=null):string
-    {
-        $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$from,$to,$str);
-
-        if($mb === true)
-        {
-            $from = static::chars($from,$mb);
-            $to = static::chars($to,$mb);
-            $replace = array_combine(array_values($from),array_values($to));
-            $return = strtr($str,$replace);
-        }
-        else
-        $return = strtr($str,$from,$to);
 
         return $return;
     }

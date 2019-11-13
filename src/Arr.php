@@ -3867,14 +3867,14 @@ class Arr extends Root
 
     // keysReplace
     // str replace sur les clés du tableau
-    final public static function keysReplace(array $replace,array $return,bool $sensitive=true):array
+    final public static function keysReplace(array $replace,array $return,bool $once=true,bool $sensitive=true):array
     {
         if(!empty($replace))
         {
             foreach ($return as $key => $value)
             {
                 $strKey = (string) $key;
-                $k = Str::replace($replace,$strKey,$sensitive);
+                $k = Str::replace($replace,$strKey,$once,$sensitive);
 
                 if($k !== $strKey)
                 {
@@ -4250,7 +4250,7 @@ class Arr extends Root
 
     // valuesReplace
     // str_replace sur les valeurs du tableau
-    final public static function valuesReplace(array $replace,array $return,bool $sensitive=true):array
+    final public static function valuesReplace(array $replace,array $return,bool $once=true,bool $sensitive=true):array
     {
         if(!empty($replace))
         {
@@ -4258,7 +4258,7 @@ class Arr extends Root
             {
                 if(is_string($value))
                 {
-                    $v = Str::replace($replace,$value,$sensitive);
+                    $v = Str::replace($replace,$value,$once,$sensitive);
 
                     if($value !== $v)
                     $return[$key] = $v;

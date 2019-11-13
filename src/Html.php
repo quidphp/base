@@ -42,8 +42,6 @@ class Html extends Root
             'special'=>['cond','many','or','loop'],
             'openClose'=>['open','close','op','cl']],
         'multi'=>'[]', // caractère pour nom multi
-        'clickOpen'=>['popup'=>'popup','trigger'=>'trigger','title'=>'title','icon'=>'ico'], // classes pour clickOpen
-        'fakeSelect'=>['selected'=>'selected'], // classes pour fakeSelect
         'separator'=>"\n", // caractère séparateur new line
         'genuine'=>'-genuine-', // nom pour l'input genuine
         'randomNameWrap'=>'-', // caractère utilisé pour wrapper un name qui est true
@@ -166,7 +164,6 @@ class Html extends Root
                     'enctype'=>['get'=>null,'post'=>'multipart/form-data']]],
             'button'=>[
                 'attrCallable'=>[self::class,'buttonAttr'],
-                'scalarAttr'=>['name'],
                 'typeAttr'=>'type'],
             'input'=>[ // config pour input
                 'attrCallable'=>[self::class,'inputAttr'],
@@ -2394,6 +2391,7 @@ class Html extends Root
 
     // buttonOpen
     // ouvre un tag button, le type du button est button donc ne soumet pas le formulaire
+    // contrairement à submit, une string dans attr est un nom de classe
     final public static function buttonOpen($value=null,$attr=null,?array $option=null):string
     {
         return static::start('button',$value,static::getAttr('button','button',$attr),static::getOption('button','button',$option));
@@ -2402,9 +2400,10 @@ class Html extends Root
 
     // submitOpen
     // ouvre un tag button, le type du button est submit donc soumet le formulaire
+    // attr utilise input/submit donc une string est name
     final public static function submitOpen($value=null,$attr=null,?array $option=null):string
     {
-        return static::start('button',$value,static::getAttr('button','submit',$attr),static::getOption('button','submit',$option));
+        return static::start('button',$value,static::getAttr('input','submit',$attr),static::getOption('button','submit',$option));
     }
 
 
@@ -2811,108 +2810,6 @@ class Html extends Root
     final public static function multiselect($value,$attr=null,?array $option=null):string
     {
         return static::select($value,Arr::plus(static::getAttrScalar('select',$attr),['multiple'=>true]),Arr::plus($option,['multi'=>true]));
-    }
-
-
-    // clickOpen
-    // génère une balise clickOpen, qui contient un container
-    // est la base pour un fakeSelect
-    final public static function clickOpen(?string $value=null,?string $title=null,?string $after=null,$attr=null,?array $option=null):string
-    {
-        $return = '';
-        $option = Arrs::replace(['class'=>static::$config['clickOpen']],$option);
-        $class = $option['class'];
-        $return .= static::divOpen(null,$attr);
-
-        if(!empty($class['trigger']))
-        {
-            $return .= static::divOpen(null,$class['trigger']);
-
-            $attrTitle = (array) $class['title'];
-
-            if(is_string($title))
-            {
-                $dataTitle = strip_tags($title);
-                if(!empty($dataTitle))
-                $attrTitle['data-title'] = $dataTitle;
-            }
-
-            $return .= static::div($title,$attrTitle);
-
-            if(!empty($class['icon']))
-            $return .= static::div(null,$class['icon']);
-
-            $return .= static::divClose();
-        }
-
-        $return .= static::divOpen(null,$class['popup']);
-
-        if(is_string($value))
-        $return .= $value;
-
-        $return .= static::divClose();
-
-        if(is_string($after))
-        $return .= $after;
-
-        $return .= static::divClose();
-
-        return $return;
-    }
-
-
-    // fakeselect
-    // génère un input fakeselect, une relation dans un div et une structure ul > li
-    // un input hidden est générer avec les attributs pour donner un nom au formulaire
-    // la classe de la div est déterminé dans les config de la classe
-    final public static function fakeselect($value=null,$attr=null,?array $option=null):string
-    {
-        $return = '';
-
-        if($value === true || is_int($value))
-        $value = static::getBool($value);
-
-        $option = Arrs::replace(['class'=>static::$config['fakeSelect']],$option);
-        $option = static::getOption('option',null,$option);
-        $selectedClass = $option['class']['selected'] ?? null;
-        $selected = (array_key_exists('selected',$option))? $option['selected']:null;
-        $selected = (!is_array($selected))? [$selected]:$selected;
-        $multi = (array_key_exists('multi',$option) && $option['multi'] === true)? true:false;
-        $attr = static::getAttrScalar('input',$attr);
-        $attr['data-fakeselect'] = true;
-        $after = static::hidden($selected,$attr,['multi'=>$multi]);
-        $title = $option['title'] ?? null;
-        $divAttr = ($multi === true)? ['fakemultiselect','data-multiple'=>true]:'fakeselect';
-        $divAttr = Attr::append($option['attr'] ?? null,$divAttr);
-
-        if(is_string($title))
-        $return .= static::li($title,['data-value'=>'']);
-
-        if(!empty($value))
-        {
-            foreach ($value as $val => $label)
-            {
-                $val = Scalar::cast($val);
-                $class = (in_array($val,$selected,true))? $selectedClass:null;
-                $return .= static::li($label,[$class,'data-value'=>$val]);
-            }
-        }
-
-        if(!empty($return))
-        $return = static::ul($return);
-
-        if(!empty($return))
-        $return = static::clickOpen($return,$title,$after,$divAttr,$option);
-
-        return $return;
-    }
-
-
-    // fakemultiselect
-    // génère un fakemultiselect à partir d'un tableau de relation
-    final public static function fakemultiselect(array $value,$attr=null,?array $option=null):string
-    {
-        return static::fakeselect($value,$attr,Arr::plus($option,['multi'=>true]));
     }
 
 
