@@ -1284,7 +1284,7 @@ class Arr extends Base\Test
         assert(['test'=>[2],'lapa'=>true] === Base\Arr::keysReplace(['TEST'=>'lapa'],['test'=>[2],'lapa'=>true]));
         assert(['lapa'=>[2]] === Base\Arr::keysReplace(['TEST'=>'lapa'],['test'=>[2],'lapa'=>true],true,false));
         assert(['lapa'=>[2]] === Base\Arr::keysReplace(['TEST'=>'lapa'],['test'=>[2],'lapa'=>true],false,false));
-        
+
         // keysChange
         assert(['zla'=>'test','zla2'=>'test2'] === Base\Arr::keysChange(['bla'=>'zla','bla2'=>'zla2'],['bla'=>'test','bla2'=>'test2']));
 
@@ -1436,7 +1436,7 @@ class Arr extends Base\Test
         assert(Base\Arr::valuesReplace(['test'=>'lapa','la'=>'ok'],['test'=>'testtest'],false)['test'] === 'okpaokpa');
         assert(Base\Arr::valuesReplace(['test'=>'lapa','la'=>'ok'],['test'=>'testtest'],true)['test'] === 'lapalapa');
         assert(Base\Arr::valuesReplace(['test'=>'lapa','la'=>'ok'],['test'=>'testtest'])['test'] === 'lapalapa');
-        
+
         // valuesSearch
         $array = ['test','okÉÉÉ','TEST','james',3];
         assert(Base\Arr::valuesSearch('test',$array,true) === ['test']);

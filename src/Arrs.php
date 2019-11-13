@@ -1334,24 +1334,24 @@ class Arrs extends Root
         }
 
         $return = static::sets($sets,$return);
-        
+
         if($climb === true)
         {
             $array = $return;
-            $return = array();
-            
-            foreach ($array as $key => $value) 
+            $return = [];
+
+            foreach ($array as $key => $value)
             {
                 if(is_array($value) && count($value) === 1 && current($value) === null)
                 {
                     $key = key($value);
                     $value = null;
                 }
-                
+
                 $return[$key] = $value;
             }
         }
-        
+
         return $return;
     }
 

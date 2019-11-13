@@ -766,8 +766,8 @@ class Html extends Base\Test
         assert(Base\Html::buttonOpen('test','ok') === "<button type='button' class='ok'>test");
         assert(Base\Html::button('test','ok') === "<button type='button' class='ok'>test</button>");
         assert(Base\Html::buttonOp('ok') === "<button type='button' class='ok'>");
-        assert(Base\Html::buttonCl() === "</button>");
-        
+        assert(Base\Html::buttonCl() === '</button>');
+
         // submitOpen
         assert(Base\Html::submitOpen('test','what') === "<button name='what' type='submit'>test");
         assert(strlen(Base\Html::submit('test',true)) === 55);
@@ -812,7 +812,7 @@ class Html extends Base\Test
         assert(Base\Html::formWrapStr('LABEL','FORM','table',null,'forId') === "<table><tr><td><label for='forId'>LABEL</label></td><td>FORM</td></tr></table>");
         assert(Base\Html::formWrapStr('LABEL','FORM','table',null,null) === '<table><tr><td><label>LABEL</label></td><td>FORM</td></tr></table>');
         assert(Base\Html::formWrapStr('zx%form%zx','FORM','table',null,'forId') === "<table><tr><td><label for='forId'>zx%form%zx</label></td><td>FORM</td></tr></table>");
-        
+
         // formWrapArray
         $array = ['label'=>'label','description'=>'description','type'=>'inputText','required'=>true];
         $wrap = "<div class='labelDescription'>%label%%description%</div>%form%";

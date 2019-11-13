@@ -1908,14 +1908,14 @@ class Str extends Root
         return $return;
     }
 
-    
+
     // replacePrepare
     // prépare le tableau de remplacement pour replace, ireplace et replaceOne
     // si value est scalar transformé en string, si null transformé en empty string
-    final protected static function replacePrepare(array $array):array 
+    final protected static function replacePrepare(array $array):array
     {
-        $return = array();
-        
+        $return = [];
+
         foreach ($array as $k => $v)
         {
             $k = (string) $k;
@@ -1928,33 +1928,33 @@ class Str extends Root
 
             if($v === null)
             $v = '';
-            
+
             if(is_string($v))
             $return[$k] = $v;
         }
 
         return $return;
     }
-    
-    
+
+
     // replace
     // remplace tous les éléments dans une chaîne à partir d'un tableau from => to
     // il est possible qu'une même chaîne soit remplacé plusieurs fois
     final public static function replace(array $replace,string $return,bool $once=true,bool $sensitive=true):string
     {
         $replace = static::replacePrepare($replace);
-        
+
         if($sensitive === false)
         $once = false;
-        
+
         if($once === true)
         $return = strtr($return,$replace);
-        
+
         else
         {
             $keys = array_keys($replace);
             $values = array_values($replace);
-            
+
             if($sensitive === true)
             $return = str_replace($keys,$values,$return);
 
@@ -1974,7 +1974,7 @@ class Str extends Root
         return static::replace($replace,$return,false,false);
     }
 
-    
+
     // explode
     // explose une string selon un delimiter
     // si trim est true, passe chaque élément du tableau dans trim
