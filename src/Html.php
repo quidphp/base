@@ -2643,7 +2643,7 @@ class Html extends Root
     {
         $return = '';
         $value = Obj::cast($value);
-        
+
         if(!is_array($value))
         $value = [$value];
 

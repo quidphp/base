@@ -120,7 +120,7 @@ class Call extends Base\Test
         $test = ['test'=>[Base\Request::class,'host'],'well'=>['ok'=>function() { return true; },'james'=>[Base\Request::class,'isSsl']]];
         assert(Base\Call::digStaticMethod($test)['well']['james'] === Base\Request::isSsl());
         assert(Base\Call::digStaticMethod($test)['well']['ok'] instanceof \Closure);
-        
+
         // root
         assert(Base\Call::isCallable(function() { }));
         assert(Base\Call::isCallable([Base\Str::class,'lower']));

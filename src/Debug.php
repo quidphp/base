@@ -292,15 +292,15 @@ class Debug extends Root
         return $return;
     }
 
-    
+
     // exportExtra
     // comme export mais extra est true
-    final public static function exportExtra($value=null,bool $wrap=true) 
+    final public static function exportExtra($value=null,bool $wrap=true)
     {
         return static::export($value,$wrap,true);
     }
-    
-    
+
+
     // highlight
     // highlight une string php ou un fichier source php
     // si wrap est true, enrobe la string des open et close tag de php

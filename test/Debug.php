@@ -65,10 +65,10 @@ class Debug extends Base\Test
 
         // export
         assert(Base\Debug::export('test',false,false) === "'test'");
-        
+
         // exportExtra
         assert(strlen(Base\Debug::exportExtra([1,2,3],false)) === 43);
-        
+
         if(!$isCli)
         {
             assert(strlen(Base\Debug::export([2,3,4,5],true,false)) === 877);
@@ -76,7 +76,7 @@ class Debug extends Base\Test
             assert(strlen(Base\Debug::exportExtra([2,3,4,5])) === 892);
             assert(strlen(Base\Debug::exportExtra([1,2,3],true)) === 710);
         }
-        
+
         // highlight
         assert(strlen(Base\Debug::highlight('$x = array(1,2,"test");',true,true)) === 379);
         assert(strlen(Base\Debug::highlight('$x = array(1,2,"test");',false,true)) === 84);

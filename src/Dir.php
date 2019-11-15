@@ -963,20 +963,20 @@ class Dir extends Finder
         return $return;
     }
 
-    
+
     // overview
     // génère un tableau avec count, size et line pour un dossier
-    final public static function overview($value,$extension=null):array 
+    final public static function overview($value,$extension=null):array
     {
         $return = [];
         $return['count'] = static::count($value,$extension,true);
         $return['size'] = static::size($value,true);
         $return['line'] = static::line($value);
-        
+
         return $return;
     }
-    
-    
+
+
     // set
     // créer une structure de dossier, si non existante et si créable
     // cette méthode ne crée pas de fichier, seulement des dossiers
