@@ -304,11 +304,7 @@ class Autoload
 
         foreach (static::allPsr4($callable,$sort) as $key => $value)
         {
-            $array = [];
-            $array['count'] = Dir::count($value,$extension,true);
-            $array['size'] = Dir::size($value,true);
-            $array['line'] = Dir::line($value);
-            $return[$key] = $array;
+            $return[$key] = Dir::overview($value,$extension);
         }
 
         return $return;

@@ -569,10 +569,10 @@ class Date extends Root
                 {
                     if(is_string($char) && is_array($array) && array_key_exists('call',$array) && strpos($format,$char) !== false)
                     {
-                        if(static::classIsCallable($array['call']))
+                        if(static::isCallable($array['call']))
                         $return['replace'][$char] = $array['call']($lang);
 
-                        if(array_key_exists('map',$array) && static::classIsCallable($array['map']))
+                        if(array_key_exists('map',$array) && static::isCallable($array['map']))
                         {
                             $args = (array_key_exists('args',$array))? (array) $array['args']:[];
                             $return['replace'][$char] = Arr::map($array['map'],$return['replace'][$char],...$args);

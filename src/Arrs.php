@@ -1320,8 +1320,7 @@ class Arrs extends Root
     // hierarchy
     // retourne un tableau hierarchy sous une forme logique
     // un parent non existant peut être ajouté dans la hiérarchie si existe est true
-    // si climb est true, si un groupe n'a qu'un enfant, retire le groupe
-    final public static function hierarchy(array $array,bool $exists=true,bool $climb=false):array
+    final public static function hierarchy(array $array,bool $exists=true):array
     {
         $return = [];
         $structure = static::hierarchyStructure($array,$exists);
@@ -1334,23 +1333,6 @@ class Arrs extends Root
         }
 
         $return = static::sets($sets,$return);
-
-        if($climb === true)
-        {
-            $array = $return;
-            $return = [];
-
-            foreach ($array as $key => $value)
-            {
-                if(is_array($value) && count($value) === 1 && current($value) === null)
-                {
-                    $key = key($value);
-                    $value = null;
-                }
-
-                $return[$key] = $value;
-            }
-        }
 
         return $return;
     }

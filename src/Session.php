@@ -257,7 +257,7 @@ class Session extends Root
                 {
                     $return = false;
 
-                    if(static::classIsCallable($v))
+                    if(static::isCallable($v))
                     {
                         $val = static::get($k);
 
@@ -847,7 +847,7 @@ class Session extends Root
             {
                 foreach ($callback as $k => $v)
                 {
-                    if(static::classIsCallable($v))
+                    if(static::isCallable($v))
                     {
                         $val = static::get($k);
 

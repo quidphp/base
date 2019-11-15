@@ -179,7 +179,7 @@ class Debug extends Root
             $return = 'dump';
 
             else
-            $return = 'export';
+            $return = 'exportExtra';
         }
 
         return $return;
@@ -257,7 +257,7 @@ class Debug extends Root
     // si la variable n'est pas array ou objet, envoie à dump
     // si wrap est true, la string est passé dans stripslashes et ensuite highlight_string
     // si extra est true, ajoute le compte si c'est un tableau ou la longueur si c'est une string
-    final public static function export($value=null,bool $wrap=true,bool $extra=true):string
+    final public static function export($value=null,bool $wrap=true,bool $extra=false):string
     {
         $return = var_export($value,true);
         $isCli = Server::isCli();
@@ -292,7 +292,15 @@ class Debug extends Root
         return $return;
     }
 
-
+    
+    // exportExtra
+    // comme export mais extra est true
+    final public static function exportExtra($value=null,bool $wrap=true) 
+    {
+        return static::export($value,$wrap,true);
+    }
+    
+    
     // highlight
     // highlight une string php ou un fichier source php
     // si wrap est true, enrobe la string des open et close tag de php

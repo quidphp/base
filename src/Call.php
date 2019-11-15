@@ -67,14 +67,6 @@ class Call extends Root
     }
 
 
-    // isCallable
-    // retourne vrai si la valeur est une closure ou une callable dans un array qui est considéré comme safe (isSafe)
-    final public static function isCallable($value):bool
-    {
-        return ($value instanceof \Closure || static::isSafeStaticMethod($value,true))? true:false;
-    }
-
-
     // isFunction
     // retourne vrai si la valeur est callable et function
     final public static function isFunction($value):bool
@@ -331,11 +323,11 @@ class Call extends Root
     // bindTo
     // bind un objet à une closure et lance la closure
     // permet d'appeler les méthodes protégés à l'intérieeur d'un objet
-    final public static function bindTo(object $obj,\Closure $closure)
+    final public static function bindTo(object $obj,\Closure $closure,...$args)
     {
         $return = null;
         $bind = $closure->bindTo($obj,$obj);
-        $return = $bind();
+        $return = $bind(...$args);
 
         return $return;
     }

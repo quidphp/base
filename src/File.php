@@ -467,7 +467,7 @@ class File extends Finder
             $return = true;
         }
 
-        elseif(static::classIsCallable(static::$config['notFoundCallable']))
+        elseif(static::isCallable(static::$config['notFoundCallable']))
         {
             if(empty($value) && is_string($original))
             $value = $original;

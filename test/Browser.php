@@ -31,7 +31,10 @@ class Browser extends Base\Test
 
         // isOldIe
         assert(Base\Browser::isOldIe('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0'));
-        assert(!Base\Browser::isOldIe('Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0'));
+        assert(Base\Browser::isOldIe('Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0'));
+        assert(Base\Browser::isOldIe('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'));
+        assert(!Base\Browser::isOldIe('Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'));
+        assert(!Base\Browser::isOldIe('Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0'));
 
         // isMac
         assert(Base\Browser::isMac('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8'));
@@ -77,7 +80,7 @@ class Browser extends Base\Test
         assert(null === Base\Browser::device(''));
 
         // cacheStatic
-        assert(count(Base\Browser::allCacheStatic()) === 9);
+        assert(count(Base\Browser::allCacheStatic()) === 12);
         assert(Base\Browser::emptyCacheStatic() === true);
         assert(Base\Browser::allCacheStatic() === []);
 

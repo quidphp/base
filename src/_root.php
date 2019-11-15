@@ -19,7 +19,17 @@ trait _root
     use _cacheStatic;
     use _cacheFile;
 
-
+    
+    // isCallable
+    // retourne vrai si la classe peut appeler la callable closure ou dans un array
+    // la validation est très stricte pour éviter des bogues de mauvais call
+    // retourne vrai aux méthodes protégés pour la classe courante
+    final public static function isCallable($value):bool
+    {
+        return ($value instanceof \Closure || (Call::isSafeStaticMethod($value) && is_callable($value)))? true:false;
+    }
+    
+    
     // classFqcn
     // retourne le fqcn de la classe
     final public static function classFqcn():string
@@ -63,16 +73,6 @@ trait _root
     final public static function classHelp(bool $deep=true):array
     {
         return Classe::info(static::class,$deep);
-    }
-
-
-    // classIsCallable
-    // retourne vrai si la classe peut appeler la callable closure ou dans un array
-    // la validation est très stricte pour éviter des bogues de mauvais call
-    // retourne vrai aux méthodes protégés pour la classe courante
-    final public static function classIsCallable($value):bool
-    {
-        return ($value instanceof \Closure || (Call::isSafeStaticMethod($value) && is_callable($value)))? true:false;
     }
 
 

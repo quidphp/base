@@ -23,8 +23,8 @@ class Root extends Base\Test
         assert(Base\Root::className() === 'Root');
         assert(Base\Root::classParents() === []);
         assert(count(Base\Root::classHelp()) === 9);
-        assert(Base\Root::classIsCallable([Base\Str::class,'upper']));
-        assert(!Base\Root::classIsCallable('strtoupper'));
+        assert(Base\Root::isCallable([Base\Str::class,'upper']));
+        assert(!Base\Root::isCallable('strtoupper'));
 
         return true;
     }

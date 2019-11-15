@@ -2311,7 +2311,7 @@ class Res extends Root
             if($option['removeBom'] === true)
             $return = Str::removeBom($return);
 
-            if(static::classIsCallable($option['callback']))
+            if(static::isCallable($option['callback']))
             $return = $option['callback']($return);
         }
 
@@ -2790,7 +2790,7 @@ class Res extends Root
         $return = false;
         $option = Arr::plus(['callback'=>null,'seek'=>null,'lock'=>false,'flush'=>false,'csv'=>false],$option);
 
-        if(static::classIsCallable($option['callback']))
+        if(static::isCallable($option['callback']))
         $content = $option['callback']($content);
 
         $content = static::prepareContent($content,$option);

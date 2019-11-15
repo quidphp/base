@@ -186,7 +186,7 @@ class Validate extends Root
 
         if(!is_bool($return))
         {
-            if(static::classIsCallable($condition))
+            if(static::isCallable($condition))
             $return = $condition($value);
 
             if(!is_bool($return) && $onlyBool === true)
@@ -221,7 +221,7 @@ class Validate extends Root
             elseif($condition instanceof \Closure)
             $return = (is_string($key))? $key:'closure';
 
-            elseif(static::classIsCallable($condition))
+            elseif(static::isCallable($condition))
             $return = (is_string($key))? $key:'callable';
 
             elseif(is_object($condition))
@@ -442,7 +442,7 @@ class Validate extends Root
     {
         $return = false;
 
-        if(array_key_exists($key,static::$config['two']) && static::classIsCallable(static::$config['two'][$key]))
+        if(array_key_exists($key,static::$config['two']) && static::isCallable(static::$config['two'][$key]))
         {
             $return = static::$config['two'][$key]($value,$arg);
 
@@ -633,7 +633,7 @@ class Validate extends Root
             if(is_numeric($key))
             $return[] = $value;
 
-            elseif(static::classIsCallable($value))
+            elseif(static::isCallable($value))
             $return[$key] = $value;
 
             else

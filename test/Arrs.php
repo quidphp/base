@@ -464,7 +464,6 @@ class Arrs extends Base\Test
         // hierarchy
         assert(Base\Arrs::hierarchy(['test'=>null,'ok'=>null,2=>'test','test5'=>2,'test3'=>'test4']) === ['test'=>[2=>['test5'=>null]],'ok'=>null]);
         assert(Base\Arrs::hierarchy(['test'=>null,'ok'=>null,2=>'test','test5'=>2,'test3'=>'test4'],false)['test4'] === ['test3'=>null]);
-        assert(Base\Arrs::hierarchy(['test'=>null,'ok'=>null,2=>'test','test5'=>2,'test3'=>'test4'],false,true)['test3'] === null);
         assert(!array_key_exists('test3',Base\Arrs::hierarchy(['test'=>null,'ok'=>null,2=>'test','test5'=>2,'test3'=>'test4'],false,false)));
 
         // hierarchyStructure

@@ -2642,7 +2642,8 @@ class Html extends Root
     final public static function hidden($value,$attr=null,?array $option=null):string
     {
         $return = '';
-
+        $value = Obj::cast($value);
+        
         if(!is_array($value))
         $value = [$value];
 

@@ -56,19 +56,11 @@ class Lang extends Root
     }
 
 
-    // isCallable
-    // retourne vrai si la callable est celle fourni
-    final public static function isCallable($value):bool
-    {
-        return (static::classIsCallable($value) && static::$callable === $value)? true:false;
-    }
-
-
     // hasCallable
     // retourne vrai s'il y a une callable lang
     final public static function hasCallable():bool
     {
-        return (static::classIsCallable(static::$callable))? true:false;
+        return (!empty(static::$callable))? true:false;
     }
 
 

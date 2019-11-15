@@ -200,7 +200,10 @@ class Dir extends Base\Test
 
         // subDirLine
         assert(count(Base\Dir::subDirLine($common)) === 0);
-
+        
+        // overview
+        assert(count(Base\Dir::overview($common)) === 3);
+        
         // set
         assert(!Base\Dir::set($_dir_));
         assert(Base\Dir::set($storage.'/what'));

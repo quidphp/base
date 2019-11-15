@@ -690,7 +690,7 @@ class Classe extends Root
         if($value === false)
         $return = [Arr::class,'replace'];
 
-        elseif(static::classIsCallable($value))
+        elseif(static::isCallable($value))
         $return = $value;
 
         return $return;

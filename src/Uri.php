@@ -426,7 +426,7 @@ class Uri extends Root
             if($option['encode'] === true)
             $return = static::encodeAll($return,$option['decode']);
 
-            if($option['exists'] === true && static::classIsCallable($option['notFoundCallable']))
+            if($option['exists'] === true && static::isCallable($option['notFoundCallable']))
             {
                 $host = (is_string($option['schemeHost']))? $option['schemeHost']:Request::schemeHost();
                 if(!Finder::isUriToPath($return,$host))
@@ -480,7 +480,7 @@ class Uri extends Root
             if($option['encode'] === true)
             $return = static::encodeAll($return,$option['decode']);
 
-            if($option['exists'] === true && static::classIsCallable($option['notFoundCallable']))
+            if($option['exists'] === true && static::isCallable($option['notFoundCallable']))
             {
                 $host = static::host($return);
                 if(Finder::isHost($host) && !Finder::isUriToPath($return))

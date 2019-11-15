@@ -74,7 +74,7 @@ class Browser extends Root
 
 
     // isOldIe
-    // retourne vrai si le browser est Internet Explorer < 9
+    // retourne vrai si le browser est Internet Explorer < 11
     final public static function isOldIe($value):bool
     {
         $return = false;
@@ -82,7 +82,7 @@ class Browser extends Root
         if(is_string($value))
         {
             $cap = static::cap($value);
-            if(!empty($cap['browser']) && $cap['browser'] === 'IE' && !empty($cap['version']) && (int) $cap['version'] < 9)
+            if(!empty($cap['browser']) && $cap['browser'] === 'IE' && !empty($cap['version']) && (int) $cap['version'] < 11)
             $return = true;
         }
 

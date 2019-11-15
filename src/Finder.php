@@ -971,7 +971,7 @@ class Finder extends Root
 
         if(is_string($path))
         {
-            if(static::classIsCallable($value))
+            if(static::isCallable($value))
             {
                 $basename = Path::basename($path);
                 $value = $value($basename);
@@ -1033,7 +1033,7 @@ class Finder extends Root
 
         if(is_string($path))
         {
-            if(static::classIsCallable($value))
+            if(static::isCallable($value))
             {
                 $basename = Path::basename($path);
                 $value = $value($basename);

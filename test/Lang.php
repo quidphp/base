@@ -32,9 +32,6 @@ class Lang extends Base\Test
         assert(Base\Lang::isOther('fr'));
         assert(!Base\Lang::isOther('en'));
 
-        // isCallable
-        assert(!Base\Lang::isCallable('bla'));
-
         // hasCallable
 
         // current

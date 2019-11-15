@@ -43,14 +43,6 @@ class Call extends Base\Test
         assert(!Base\Call::isSafeStaticMethod(['test'=>Base\Str::class,'lower']));
         assert(!Base\Call::isSafeStaticMethod('strtolower'));
 
-        // isCallable
-        assert(Base\Call::isCallable(function() { }));
-        assert(Base\Call::isCallable([Base\Str::class,'lower']));
-        assert(Base\Call::isCallable([$date,'setDate']));
-        assert(!Base\Call::isCallable([$date,'setDatez']));
-        assert(!Base\Call::isCallable(['test'=>Base\Str::class,'lower']));
-        assert(!Base\Call::isCallable('strtolower'));
-
         // isFunction
         assert(Base\Call::isFunction('strtolower'));
 
@@ -128,6 +120,14 @@ class Call extends Base\Test
         $test = ['test'=>[Base\Request::class,'host'],'well'=>['ok'=>function() { return true; },'james'=>[Base\Request::class,'isSsl']]];
         assert(Base\Call::digStaticMethod($test)['well']['james'] === Base\Request::isSsl());
         assert(Base\Call::digStaticMethod($test)['well']['ok'] instanceof \Closure);
+        
+        // root
+        assert(Base\Call::isCallable(function() { }));
+        assert(Base\Call::isCallable([Base\Str::class,'lower']));
+        assert(Base\Call::isCallable([$date,'setDate']));
+        assert(!Base\Call::isCallable([$date,'setDatez']));
+        assert(!Base\Call::isCallable(['test'=>Base\Str::class,'lower']));
+        assert(!Base\Call::isCallable('strtolower'));
 
         return true;
     }
