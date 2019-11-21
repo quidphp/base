@@ -577,7 +577,13 @@ class Arrs extends Base\Test
         assert(['test'=>['lapa'],'lapa2','2'] === Base\Arrs::valuesReplace(['test'=>'lapa'],['test'=>['test'],'test2','2']));
         assert(['test'=>['lapa'],'lapa2','2'] === Base\Arrs::valuesReplace(['test'=>'lapa'],['test'=>['test'],'TEST2','2'],false,false));
         assert(['test'=>['lapa'],'TEST2','2'] === Base\Arrs::valuesReplace(['test'=>'lapa'],['test'=>['test'],'TEST2','2'],false,true));
-
+        
+        // valuesAppend
+        $append = ['%test%'=>array('OK','james'=>'what')];
+        assert(Base\Arrs::valuesAppend($append,['test'=>array('zoro','lol'=>'meh','%test%')])['test'] === array('zoro','lol'=>'meh',1=>'OK','james'=>'what'));
+        $append = ['%test%'=>'mmm'];
+        assert(Base\Arrs::valuesAppend($append,['test'=>array('zoro','lol'=>'meh','%test%')])['test'] === array('zoro','lol'=>'meh',1=>'mmm'));
+        
         // valuesLower
         assert(Base\Arrs::valuesLower(['Test',['OK','TÉS',['VlÉ']]])[1][2][0] === 'vlé');
 

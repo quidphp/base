@@ -2828,7 +2828,7 @@ class Html extends Root
         if(is_string($value) && strlen($value))
         {
             if(is_string($value))
-            $value = ImageRaster::captcha($value,$font,$option);
+            $value = ImageRaster::captcha($value,$font,null,$option);
 
             if(is_resource($value))
             $return = static::img($value,$alt,$attr);
