@@ -1795,13 +1795,13 @@ class Arrs extends Root
         return $return;
     }
 
-    
+
     // valuesAppend
     // cette méthode est utilisé pour le remplacement dans les routes
     // si une même clé existe, efface la valeur et ensuite fait un arr::append entre le tableau restant et la nouvelle valeur
     final public static function valuesAppend(array $append,array $return,bool $once=true,bool $sensitive=true):array
     {
-        foreach ($append as $k => $v) 
+        foreach ($append as $k => $v)
         {
             foreach ($return as $key => $value)
             {
@@ -1818,7 +1818,7 @@ class Arrs extends Root
                         }
                     }
                 }
-                
+
                 elseif(is_array($value))
                 $return[$key] = static::valuesAppend($append,$value,$once,$sensitive);
             }
@@ -1826,8 +1826,8 @@ class Arrs extends Root
 
         return $return;
     }
-    
-    
+
+
     // valuesLower
     // change la case des valeurs dans le tableau multidimensionnel
     // utilise multibyte
