@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Author: Pierre-Philippe Emond <emondpph@gmail.com>
  * Website: https://quidphp.com
  * License: https://github.com/quidphp/base/blob/master/LICENSE
- * Readme: https://github.com/quidphp/base/blob/master/README
+ * Readme: https://github.com/quidphp/base/blob/master/README.md
  */
 
 namespace Quid\Test\Base
