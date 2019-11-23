@@ -996,7 +996,7 @@ class Html extends Base\Test
         ],false,false)) === 170);
 
         // docTitleBody
-        assert(Base\Html::docTitleBody('test','ok') === '<html><head><title>test</title></head><body>ok</body></html>');
+        assert(Base\Html::docTitleBody('test','ok') === '<!DOCTYPE html><html><head><title>test</title></head><body>ok</body></html>');
 
         // excerpt
         assert(Base\Html::excerpt(30,"la👦🏼👦👦 vie ést <b>belle</b> l'article\"deux lorem ipsuma ") === "la vie ést belle lorem ipsu<span class='excerptSuffix'>...</span>");

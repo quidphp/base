@@ -3194,10 +3194,11 @@ class Html extends Root
 
     // docTitleBody
     // ouvre et ferme un document html très simplement
-    // possible de fournir un title et un body
-    final public static function docTitleBody(?string $title=null,?string $body = null):string
+    // possible de fournir un title, un body et des attributs pour le html
+    final public static function docTitleBody(?string $title=null,?string $body = null,$attr=null):string
     {
-        $return = '<html>';
+        $return = static::doctype();
+        $return .= static::htmlOp($attr);
         $return .= '<head>';
 
         if(is_string($title))
@@ -3211,7 +3212,7 @@ class Html extends Root
 
         $return .= '</body>';
         $return .= '</html>';
-
+        
         return $return;
     }
 
