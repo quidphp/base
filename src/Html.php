@@ -3212,7 +3212,7 @@ class Html extends Root
 
         $return .= '</body>';
         $return .= '</html>';
-        
+
         return $return;
     }
 
