@@ -3192,18 +3192,26 @@ class Html extends Root
     }
 
 
-    // docTitleBody
+    // docSimple
     // ouvre et ferme un document html très simplement
     // possible de fournir un title, un body et des attributs pour le html
-    final public static function docTitleBody(?string $title=null,?string $body = null,$attr=null):string
+    final public static function docSimple(?string $title=null,?string $body=null,?array $option=null):string
     {
-        $return = static::doctype();
-        $return .= static::htmlOp($attr);
+        $return = '';
+        $option = (array) $option;
+        $html = (!empty($option['html']) && is_string($option['html']))? ' '.$option['html']:'';
+        $head = $option['head'] ?? null;
+        
+        $return .= '<!DOCTYPE html>';
+        $return .= "<html$html>";
         $return .= '<head>';
-
+        
         if(is_string($title))
         $return .= "<title>$title</title>";
-
+        
+        if(is_string($head))
+        $return .= $head;
+        
         $return .= '</head>';
         $return .= '<body>';
 

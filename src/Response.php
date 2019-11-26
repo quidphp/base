@@ -511,15 +511,23 @@ class Response extends Root
         }
 
         if(empty($referer) && $fallback === true)
-        $referer = Request::schemeHost();
+        $referer = static::redirectSchemeHost();
 
-        if(!empty($referer))
+        elseif(!empty($referer))
         $return = static::redirect($referer,$code,$kill,$encode);
 
         return $return;
     }
 
-
+    
+    // redirectSchemeHost
+    // redirige vers le scheme host courant
+    final public static function redirectSchemeHost($code=true,bool $kill=true,bool $encode=true):bool
+    {
+        return static::redirect(Request::schemeHost(),$code,$kill,$encode);
+    }
+    
+    
     // download
     // force le téléchargement de la valeur donné en argument dans le navigateur
     // si value est string, alors ouvre une resource
