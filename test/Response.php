@@ -193,9 +193,9 @@ class Response extends Base\Test
         // redirect
 
         // redirectReferer
-        
+
         // redirectSchemeHost
-        
+
         // download
 
         // toScreen

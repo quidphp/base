@@ -3201,17 +3201,17 @@ class Html extends Root
         $option = (array) $option;
         $html = (!empty($option['html']) && is_string($option['html']))? ' '.$option['html']:'';
         $head = $option['head'] ?? null;
-        
+
         $return .= '<!DOCTYPE html>';
         $return .= "<html$html>";
         $return .= '<head>';
-        
+
         if(is_string($title))
         $return .= "<title>$title</title>";
-        
+
         if(is_string($head))
         $return .= $head;
-        
+
         $return .= '</head>';
         $return .= '<body>';
 

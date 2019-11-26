@@ -997,8 +997,8 @@ class Html extends Base\Test
 
         // docSimple
         assert(Base\Html::docSimple('test','ok') === '<!DOCTYPE html><html><head><title>test</title></head><body>ok</body></html>');
-        assert(Base\Html::docSimple('test','ok',array('html'=>"data-ok='1'",'head'=>"<link rel='stylesheet' type='text/css' href='/css/app.css'/>")) === "<!DOCTYPE html><html data-ok='1'><head><title>test</title><link rel='stylesheet' type='text/css' href='/css/app.css'/></head><body>ok</body></html>");
-        
+        assert(Base\Html::docSimple('test','ok',['html'=>"data-ok='1'",'head'=>"<link rel='stylesheet' type='text/css' href='/css/app.css'/>"]) === "<!DOCTYPE html><html data-ok='1'><head><title>test</title><link rel='stylesheet' type='text/css' href='/css/app.css'/></head><body>ok</body></html>");
+
         // excerpt
         assert(Base\Html::excerpt(30,"la👦🏼👦👦 vie ést <b>belle</b> l'article\"deux lorem ipsuma ") === "la vie ést belle lorem ipsu<span class='excerptSuffix'>...</span>");
         assert(Base\Html::excerpt(30,"la👦🏼👦👦 vie ést <b>belle</b> l'article\"deux lorem ipsum, ") === "la vie ést belle lorem ipsu<span class='excerptSuffix'>...</span>");
