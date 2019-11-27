@@ -28,7 +28,7 @@ class Mime extends Root
             'html'=>'html',
             'imageRaster'=>['jpg','gif','jpeg','png'],
             'imageVector'=>'svg',
-            'js'=>'js',
+            'js'=>array('js','jsx'),
             'json'=>'json',
             'pdf'=>'pdf',
             'php'=>'php',
