@@ -17,8 +17,8 @@ class Vari extends Root
 {
     // config
     public static $config = [];
-    
-    
+
+
     // isEmpty
     // retourne vrai si empty
     final public static function isEmpty($value):bool
@@ -59,15 +59,15 @@ class Vari extends Root
         return (self::isReallyEmpty($value,$removeWhiteSpace))? false:true;
     }
 
-    
+
     // isType
     // retourne vrai si la variable est du type fournie en argument
-    final public static function isType($type,$value):bool 
+    final public static function isType($type,$value):bool
     {
         return (self::type($value) === $type)? true:false;
     }
-    
-    
+
+
     // sameType
     // vérifie que toutes les valeurs donnés ont le même type ou la même instance de classe
     final public static function sameType(...$values):bool
@@ -97,11 +97,11 @@ class Vari extends Root
 
         return $return;
     }
-    
-    
+
+
     // type
     // retourne le type de la variable
-    final public static function type($value):string 
+    final public static function type($value):string
     {
         return gettype($value);
     }

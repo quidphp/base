@@ -40,11 +40,11 @@ class Vari extends Base\Test
         // isNotReallyEmpty
         assert(Base\Vari::isNotReallyEmpty(0));
         assert(!Base\Vari::isNotReallyEmpty(null));
-        
+
         // isType
         assert(Base\Vari::isType('NULL',null));
         assert(Base\Vari::isType('array',[]));
-        
+
         // sameType
         assert(Base\Vari::sameType(false,false));
         assert(Base\Vari::sameType(2,1));
@@ -53,11 +53,11 @@ class Vari extends Base\Test
         assert(Base\Vari::sameType(new \stdclass(),new \stdclass()));
         assert(!Base\Vari::sameType(new \DateTime('now'),new \stdclass()));
         assert(Base\Vari::sameType(new \DateTime('now'),new \DateTime('now'),new \DateTime('now')));
-        
+
         // type
         assert(Base\Vari::type(true) === 'boolean');
         assert(Base\Vari::type(new \stdclass()) === 'object');
-        
+
         return true;
     }
 }

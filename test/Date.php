@@ -14,7 +14,7 @@ use Quid\Base;
 
 // datetime
 // class for testing Quid\Base\Datetime
-class Datetime extends Base\Test
+class Date extends Base\Test
 {
     // trigger
     final public static function trigger(array $data):bool
