@@ -383,16 +383,16 @@ class Finder extends Root
             if(is_array($permission))
             $permission = current($permission);
 
-            if(is_int($permission) && Number::len($permission) === 3)
+            if(is_int($permission) && Num::len($permission) === 3)
             {
                 if(static::isOwner($path,$user))
-                $permission = Number::sub(0,1,$permission);
+                $permission = Num::sub(0,1,$permission);
 
                 elseif(static::isGroup($path,$group))
-                $permission = Number::sub(1,1,$permission);
+                $permission = Num::sub(1,1,$permission);
 
                 else
-                $permission = Number::sub(2,1,$permission);
+                $permission = Num::sub(2,1,$permission);
 
                 if(is_int($permission) && in_array($permission,static::$config['perms'][$type],true))
                 $return = true;
@@ -500,7 +500,7 @@ class Finder extends Root
     // format une valeur de permission, pour obtenir 3 chiffres comme 777 ou 755
     final public static function permissionFormat(int $value):int
     {
-        return Number::toOctal($value,2);
+        return Num::toOctal($value,2);
     }
 
 
@@ -508,7 +508,7 @@ class Finder extends Root
     // retourne la valeur octale d'une permission comme 777 ou 755
     final public static function permissionOctal(int $value):int
     {
-        return Number::fromOctal($value);
+        return Num::fromOctal($value);
     }
 
 
@@ -866,16 +866,16 @@ class Finder extends Root
         elseif($return !== null)
         {
             if($format === 'size')
-            $return = Number::sizeFormat($return);
+            $return = Num::sizeFormat($return);
 
             elseif($format === 'dateAccess')
-            $return = Date::sql($return);
+            $return = Datetime::sql($return);
 
             elseif($format === 'dateModify')
-            $return = Date::sql($return);
+            $return = Datetime::sql($return);
 
             elseif($format === 'dateInodeModify')
-            $return = Date::sql($return);
+            $return = Datetime::sql($return);
         }
 
         return $return;

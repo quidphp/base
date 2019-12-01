@@ -486,7 +486,7 @@ class Dir extends Finder
     {
         $return = null;
         $get = static::getFormat($path,$format,$dig,$option);
-        $value = ($value === null)? Date::getTimestamp():$value;
+        $value = ($value === null)? Datetime::getTimestamp():$value;
 
         if(is_array($get))
         {
@@ -933,7 +933,7 @@ class Dir extends Finder
             }
 
             if($format === true)
-            $return = Number::sizeFormat($return);
+            $return = Num::sizeFormat($return);
         }
 
         return $return;

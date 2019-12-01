@@ -23,7 +23,7 @@ class Session extends Base\Test
         $cacheExpire = Base\Session::getCacheExpire();
         $cacheLimiter = Base\Session::getCacheLimiter();
         $savePath = Base\Session::getSavePath();
-        $time = Base\Date::time();
+        $time = Base\Datetime::time();
         $boot = $data['boot'];
         $type = $boot->type();
         $default = ['type'=>$type,'env'=>$boot->env(),'version'=>$boot->version()];

@@ -336,7 +336,7 @@ class Column extends Root
         $values = static::value($col,$array);
 
         if(!empty($values))
-        $return = Number::math($symbol,$values,$round);
+        $return = Num::math($symbol,$values,$round);
 
         return $return;
     }

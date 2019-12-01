@@ -528,10 +528,10 @@ class Debug extends Root
     final public static function speed(?float $value=null,int $round=3):float
     {
         $return = 0;
-        $value = (is_numeric($value))? $value:Date::getMicrotime();
+        $value = (is_numeric($value))? $value:Datetime::getMicrotime();
 
         if(is_numeric($value))
-        $return = Number::round((Date::microtime() - $value),$round);
+        $return = Num::round((Datetime::microtime() - $value),$round);
 
         return $return;
     }
@@ -543,7 +543,7 @@ class Debug extends Root
     final public static function call(int $iteration=5000,callable $call,...$arg):float
     {
         $return = 0;
-        $microtime = Date::microtime();
+        $microtime = Datetime::microtime();
 
         if($iteration > 0)
         {

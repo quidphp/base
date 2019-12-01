@@ -772,7 +772,7 @@ class Arr extends Root
     {
         foreach ($return as $k => $v)
         {
-            if(Validate::isReallyEmpty($v))
+            if(Vari::isReallyEmpty($v))
             unset($return[$k]);
         }
 
@@ -790,7 +790,7 @@ class Arr extends Root
     {
         foreach ($return as $k => $v)
         {
-            if(Validate::isEmpty($v))
+            if(Vari::isEmpty($v))
             unset($return[$k]);
         }
 
@@ -843,7 +843,7 @@ class Arr extends Root
     {
         foreach ($return as $k => $v)
         {
-            if(Validate::isReallyEmpty($v))
+            if(Vari::isReallyEmpty($v))
             $return[$k] = null;
         }
 
@@ -4400,7 +4400,7 @@ class Arr extends Root
             {
                 $len = Str::len($v,true);
 
-                if(Number::in($min,$len,$max))
+                if(Num::in($min,$len,$max))
                 $return[$k] = $v;
             }
         }
@@ -4424,7 +4424,7 @@ class Arr extends Root
             {
                 $len = Str::len($v,true);
 
-                if(!Number::in($min,$len,$max))
+                if(!Num::in($min,$len,$max))
                 $return[$k] = $v;
             }
         }

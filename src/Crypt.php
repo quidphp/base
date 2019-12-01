@@ -185,7 +185,7 @@ class Crypt extends Root
         $return = random_int($min,$max);
 
         if(is_int($length))
-        $return = Number::sub(0,$length,$return);
+        $return = Num::sub(0,$length,$return);
 
         return $return;
     }

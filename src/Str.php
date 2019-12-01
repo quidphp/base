@@ -417,7 +417,7 @@ class Str extends Root
     {
         $return = null;
 
-        $return = Number::cast($value,$extra);
+        $return = Num::cast($value,$extra);
         if(!is_numeric($return))
         $return = (float) $return;
 
@@ -431,7 +431,7 @@ class Str extends Root
     {
         $return = null;
 
-        $number = Number::cast($value);
+        $number = Num::cast($value);
         $return = (int) $number;
 
         return $return;
@@ -445,7 +445,7 @@ class Str extends Root
     {
         $return = null;
 
-        $number = Number::cast($value,$extra);
+        $number = Num::cast($value,$extra);
         $return = (float) $number;
 
         return $return;
@@ -1775,7 +1775,7 @@ class Str extends Root
         {
             $wordLen = static::len($word,$mb);
 
-            if(Number::in($min,$wordLen,$max))
+            if(Num::in($min,$wordLen,$max))
             $array[] = $word;
         }
 
@@ -1799,7 +1799,7 @@ class Str extends Root
         {
             $wordLen = static::len($word,$mb);
 
-            if(!Number::in($min,$wordLen,$max))
+            if(!Num::in($min,$wordLen,$max))
             $array[] = $word;
         }
 

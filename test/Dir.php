@@ -117,10 +117,10 @@ class Dir extends Base\Test
         assert(Base\Dir::getFormatSymbol($common,'>',5000,'size') !== Base\Dir::getFormat($common,'size'));
 
         // getFormatSmaller
-        assert(is_array(Base\Dir::getFormatSmaller($common,Base\Date::addMinute(-1))));
+        assert(is_array(Base\Dir::getFormatSmaller($common,Base\Datetime::addMinute(-1))));
 
         // getFormatBigger
-        assert(is_array(Base\Dir::getFormatBigger($common,Base\Date::addMinute(-1))));
+        assert(is_array(Base\Dir::getFormatBigger($common,Base\Datetime::addMinute(-1))));
 
         // getFormatSort
 

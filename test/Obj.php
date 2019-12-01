@@ -25,9 +25,9 @@ namespace Quid\Test\Base
             $obj->test = 2;
             $obj->{'2'} = 2;
             $datetime = new \Datetime('now');
-            $datetime2 = new \Datetime('@'.Base\Date::mk(2017,1,1));
-            $datetime3 = new \Datetime('@'.Base\Date::mk(2016,1,1));
-            $datetime4 = new \Datetime('@'.Base\Date::mk(2015,1,1));
+            $datetime2 = new \Datetime('@'.Base\Datetime::mk(2017,1,1));
+            $datetime3 = new \Datetime('@'.Base\Datetime::mk(2016,1,1));
+            $datetime4 = new \Datetime('@'.Base\Datetime::mk(2015,1,1));
             $class = new Obj\MyClass();
             $classname = Obj\MyClass::class;
             $parentClass = Obj\ParentClass::class;

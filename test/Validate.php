@@ -210,37 +210,6 @@ class Validate extends Base\Test
 
         // prepareConditions
 
-        // sameType
-        assert(Base\Validate::sameType(false,false));
-        assert(Base\Validate::sameType(2,1));
-        assert(Base\Validate::sameType(2,1,3,4,5,6,7));
-        assert(!Base\Validate::sameType(2,'1',3,4,5,6,7));
-        assert(Base\Validate::sameType(new \stdclass(),new \stdclass()));
-        assert(!Base\Validate::sameType(new \DateTime('now'),new \stdclass()));
-        assert(Base\Validate::sameType(new \DateTime('now'),new \DateTime('now'),new \DateTime('now')));
-
-        // isEmpty
-        assert(Base\Validate::isEmpty(false));
-        assert(Base\Validate::isEmpty(0));
-        assert(!Base\Validate::isEmpty(1));
-
-        // isNotEmpty
-        assert(Base\Validate::isNotEmpty(true));
-
-        // isReallyEmpty
-        assert(Base\Validate::isReallyEmpty(''));
-        assert(Base\Validate::isReallyEmpty(null));
-        assert(Base\Validate::isReallyEmpty([]));
-        assert(!Base\Validate::isReallyEmpty(false));
-        assert(!Base\Validate::isReallyEmpty(0));
-        assert(!Base\Validate::isReallyEmpty('0'));
-        assert(!Base\Validate::isReallyEmpty(' '));
-        assert(Base\Validate::isReallyEmpty(' ',true));
-
-        // isNotReallyEmpty
-        assert(Base\Validate::isNotReallyEmpty(0));
-        assert(!Base\Validate::isNotReallyEmpty(null));
-
         // isAlpha
         assert(Base\Validate::isAlpha('abcd'));
         assert(!Base\Validate::isAlpha('ab1cd'));

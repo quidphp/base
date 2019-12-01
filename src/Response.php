@@ -827,12 +827,12 @@ class Response extends Root
     // si une value d'une header par défaut est int, alors additionne le timestamp courant et formate au format GMT
     final public static function prepareHeaderDefault(array $return):array
     {
-        $time = Date::time();
+        $time = Datetime::time();
 
         foreach ($return as $key => $value)
         {
             if(is_int($value))
-            $return[$key] = Date::gmt($value += $time);
+            $return[$key] = Datetime::gmt($value += $time);
         }
 
         return $return;
@@ -909,10 +909,10 @@ class Response extends Root
 
         if($value > 0)
         {
-            $microtime = Date::microtime();
+            $microtime = Datetime::microtime();
             $uvalue = (int) ($value * 1000000);
             usleep($uvalue);
-            $return = Date::microtime() - $microtime;
+            $return = Datetime::microtime() - $microtime;
         }
 
         return $return;
@@ -926,10 +926,10 @@ class Response extends Root
     final public static function sleepUntil(float $value):?float
     {
         $return = null;
-        $microtime = Date::microtime();
+        $microtime = Datetime::microtime();
 
         if($value > $microtime && time_sleep_until($value))
-        $return = Date::microtime() - $microtime;
+        $return = Datetime::microtime() - $microtime;
 
         return $return;
     }

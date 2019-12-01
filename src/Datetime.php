@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Quid\Base;
 
-// date
+// datetime
 // class with static methods to generate, format and parse dates
-class Date extends Root
+class Datetime extends Root
 {
     // config
     public static $config = [
@@ -2437,6 +2437,6 @@ class Date extends Root
 }
 
 // init
-Date::setTimestamp(Date::time());
-Date::setMicrotime(Date::microtime());
+Datetime::setTimestamp(Datetime::time());
+Datetime::setMicrotime(Datetime::microtime());
 ?>

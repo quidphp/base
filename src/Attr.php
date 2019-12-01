@@ -916,10 +916,10 @@ class Attr extends Listing
 
         if(is_numeric($value))
         {
-            if(Number::isOdd($value))
+            if(Num::isOdd($value))
             $return = static::getOddClass();
 
-            elseif(Number::isEven($value))
+            elseif(Num::isEven($value))
             $return = static::getEvenClass();
         }
 

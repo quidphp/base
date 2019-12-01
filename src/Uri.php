@@ -527,7 +527,7 @@ class Uri extends Root
                 if(is_scalar($v))
                 {
                     if($v === true)
-                    $v = Date::time();
+                    $v = Datetime::time();
 
                     $query[$k] = $v;
                 }

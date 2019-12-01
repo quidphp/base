@@ -49,7 +49,7 @@ class Network extends Root
     final public static function ping(string $hostname,int $port=80,int $timeout=10,&$errno=null,&$errstr=null):?float
     {
         $return = null;
-        $microtime = Date::microtime();
+        $microtime = Datetime::microtime();
         $socket = @fsockopen($hostname,$port,$errno,$errstr,$timeout);
 
         if(!empty($socket))

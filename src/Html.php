@@ -2427,7 +2427,7 @@ class Html extends Root
         $value = Ini::uploadMaxFilesize(1);
 
         if(is_string($value))
-        $value = Number::fromSizeFormat($value);
+        $value = Num::fromSizeFormat($value);
 
         if(is_int($value))
         {

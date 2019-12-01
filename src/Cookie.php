@@ -82,7 +82,7 @@ class Cookie extends Root
 
         if(in_array($mode,['set','unset','cookieParams'],true))
         {
-            $time = Date::time();
+            $time = Datetime::time();
             $return = $option;
 
             // expire et lifetime set

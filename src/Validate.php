@@ -91,23 +91,23 @@ class Validate extends Root
             'resource'=>'is_resource',
             'scalar'=>'is_scalar',
             'string'=>'is_string',
-            'empty'=>[self::class,'isEmpty'],
-            'notEmpty'=>[self::class,'isNotEmpty'],
-            'reallyEmpty'=>[self::class,'isReallyEmpty'],
-            'notReallyEmpty'=>[self::class,'isNotReallyEmpty'],
+            'empty'=>[Vari::class,'isEmpty'],
+            'notEmpty'=>[Vari::class,'isNotEmpty'],
+            'reallyEmpty'=>[Vari::class,'isReallyEmpty'],
+            'notReallyEmpty'=>[Vari::class,'isNotReallyEmpty'],
             'arrKey'=>[Arr::class,'isKey'],
             'arrNotEmpty'=>[Arr::class,'isNotEmpty'],
-            'dateToDay'=>[Date::class,'isFormatDateToDay'],
-            'dateToMinute'=>[Date::class,'isFormatDateToMinute'],
-            'dateToSecond'=>[Date::class,'isFormatDateToSecond'],
-            'numberNotEmpty'=>[Number::class,'isNotEmpty'],
-            'numberPositive'=>[Number::class,'isPositive'],
-            'numberNegative'=>[Number::class,'isNegative'],
-            'numberOdd'=>[Number::class,'isOdd'],
-            'numberEven'=>[Number::class,'isEven'],
-            'numberWhole'=>[Number::class,'isWhole'],
-            'numberWholeNotEmpty'=>[Number::class,'isWholeNotEmpty'],
-            'numberDecimal'=>[Number::class,'isDecimal'],
+            'dateToDay'=>[Datetime::class,'isFormatDateToDay'],
+            'dateToMinute'=>[Datetime::class,'isFormatDateToMinute'],
+            'dateToSecond'=>[Datetime::class,'isFormatDateToSecond'],
+            'numberNotEmpty'=>[Num::class,'isNotEmpty'],
+            'numberPositive'=>[Num::class,'isPositive'],
+            'numberNegative'=>[Num::class,'isNegative'],
+            'numberOdd'=>[Num::class,'isOdd'],
+            'numberEven'=>[Num::class,'isEven'],
+            'numberWhole'=>[Num::class,'isWhole'],
+            'numberWholeNotEmpty'=>[Num::class,'isWholeNotEmpty'],
+            'numberDecimal'=>[Num::class,'isDecimal'],
             'scalarNotBool'=>[Scalar::class,'isNotBool'],
             'slug'=>[Slug::class,'is'],
             'slugPath'=>[SlugPath::class,'is'],
@@ -129,13 +129,13 @@ class Validate extends Root
             'arrCount'=>[Arr::class,'isCount'],
             'arrMinCount'=>[Arr::class,'isMinCount'],
             'arrMaxCount'=>[Arr::class,'isMaxCount'],
-            'dateFormat'=>[Date::class,'isFormat'],
+            'dateFormat'=>[Datetime::class,'isFormat'],
             'fileCount'=>[File::class,'isCount'],
             'fileMinCount'=>[File::class,'isMinCount'],
             'fileMaxCount'=>[File::class,'isMaxCount'],
-            'numberLength'=>[Number::class,'isLength'],
-            'numberMinLength'=>[Number::class,'isMinLength'],
-            'numberMaxLength'=>[Number::class,'isMaxLength'],
+            'numberLength'=>[Num::class,'isLength'],
+            'numberMinLength'=>[Num::class,'isMinLength'],
+            'numberMaxLength'=>[Num::class,'isMaxLength'],
             'jsonCount'=>[Json::class,'isCount'],
             'jsonMinCount'=>[Json::class,'isMinCount'],
             'jsonMaxCount'=>[Json::class,'isMaxCount'],
@@ -646,78 +646,6 @@ class Validate extends Root
     }
 
 
-    // sameType
-    // vérifie que toutes les valeurs donnés ont le même type ou la même instance de classe
-    final public static function sameType(...$values):bool
-    {
-        $return = false;
-
-        foreach ($values as $v)
-        {
-            if(!empty($type))
-            {
-                if(gettype($v) !== $type)
-                $return = false;
-
-                elseif(!empty($class) && (!is_object($v) || !is_a($v,$class)))
-                $return = false;
-
-                else
-                $return = true;
-
-                if($return === false)
-                break;
-            }
-
-            $type = gettype($v);
-            $class = (is_object($v))? get_class($v):false;
-        }
-
-        return $return;
-    }
-
-
-    // isEmpty
-    // retourne vrai si empty
-    final public static function isEmpty($value):bool
-    {
-        return (empty($value))? true:false;
-    }
-
-
-    // isNotEmpty
-    // inverse de isEmpty
-    final public static function isNotEmpty($value):bool
-    {
-        return (!static::isEmpty($value))? true:false;
-    }
-
-
-    // isReallyEmpty
-    // retourne vrai si empty, sans etre numérique ni boolean ni une string avec une longueur
-    // en somme, ca retourne faux pour 0, '0' et false
-    // si removeWhiteSpace est true et que c'est une string, envoie dans str::removeWhiteSpace avant
-    final public static function isReallyEmpty($value,bool $removeWhiteSpace=false):bool
-    {
-        $return = false;
-
-        if($removeWhiteSpace === true && is_string($value))
-        $value = Str::removeWhiteSpace($value);
-
-        $return = (empty($value) && !is_numeric($value) && !is_bool($value) && !(is_string($value) && strlen($value)))? true:false;
-
-        return $return;
-    }
-
-
-    // isNotReallyEmpty
-    // inverse de isReallyEmpty
-    final public static function isNotReallyEmpty($value,bool $removeWhiteSpace=false):bool
-    {
-        return (static::isReallyEmpty($value,$removeWhiteSpace))? false:true;
-    }
-
-
     // isAlpha
     // retourne vrai si la valeur passe le regex alpha
     final public static function isAlpha($value):bool
@@ -1030,10 +958,10 @@ class Validate extends Root
 
                 elseif(is_string($k) && array_key_exists($k,$array))
                 {
-                    if($v === true && static::isNotReallyEmpty($array[$k],$removeWhiteSpace))
+                    if($v === true && Vari::isNotReallyEmpty($array[$k],$removeWhiteSpace))
                     $r = true;
 
-                    elseif($v === false && static::isReallyEmpty($array[$k],$removeWhiteSpace))
+                    elseif($v === false && Vari::isReallyEmpty($array[$k],$removeWhiteSpace))
                     $r = true;
 
                     elseif(is_int($v) && $array[$k] === $v)

@@ -226,14 +226,14 @@ class Ini extends Root
     {
         if($format >= 1)
         {
-            $return = Number::fromSizeFormatMb($return);
+            $return = Num::fromSizeFormatMb($return);
 
             if(is_int($return) && $format === 2)
-            $return = Number::sizeFormat($return,$format);
+            $return = Num::sizeFormat($return,$format);
         }
 
         else
-        $return = Number::castFromString($return);
+        $return = Num::castFromString($return);
 
         return $return;
     }

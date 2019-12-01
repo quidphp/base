@@ -60,7 +60,7 @@ class Scalar extends Root
             if(!is_bool($value) && $numberCast > 0)
             {
                 $extra = ($numberCast === 2)? true:false;
-                $value = Number::cast($value,$extra);
+                $value = Num::cast($value,$extra);
             }
 
             // boolCast

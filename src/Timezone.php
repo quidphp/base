@@ -126,7 +126,7 @@ class Timezone extends Root
     {
         $return = null;
         $option = Arr::plus(['zenith'=>Ini::get('date.sunrise_zenith'),'gmtOffset'=>0],$option);
-        $timestamp = Date::time($timestamp);
+        $timestamp = Datetime::time($timestamp);
         $timezone = null;
 
         if(is_string($value))
@@ -144,7 +144,7 @@ class Timezone extends Root
                 $return = $sunrise;
 
                 if(!empty($format))
-                $return = Date::format($format,$return);
+                $return = Datetime::format($format,$return);
             }
         }
 
@@ -159,7 +159,7 @@ class Timezone extends Root
     {
         $return = null;
         $option = Arr::plus(['zenith'=>Ini::get('date.sunset_zenith'),'gmtOffset'=>0],$option);
-        $timestamp = Date::time($timestamp);
+        $timestamp = Datetime::time($timestamp);
         $timezone = null;
 
         if(is_string($value))
@@ -177,7 +177,7 @@ class Timezone extends Root
                 $return = $sunset;
 
                 if(!empty($format))
-                $return = Date::format($format,$return);
+                $return = Datetime::format($format,$return);
             }
         }
 
@@ -191,7 +191,7 @@ class Timezone extends Root
     final public static function suninfo($value,$timestamp=null,$format=null):?array
     {
         $return = null;
-        $timestamp = Date::time($timestamp);
+        $timestamp = Datetime::time($timestamp);
         $timezone = null;
 
         if(is_string($value))
@@ -205,7 +205,7 @@ class Timezone extends Root
             $return = date_sun_info($timestamp,$value['latitude'],$value['longitude']);
 
             if(!empty($format) && !empty($return))
-            $return = Date::formats($format,$return);
+            $return = Datetime::formats($format,$return);
         }
 
         return $return;

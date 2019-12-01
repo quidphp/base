@@ -106,8 +106,8 @@ class Debug extends Base\Test
         // traceRemoveArgs
 
         // speed
-        assert(round(23500.45) === round(Base\Debug::speed(Base\Date::microtime() - 23500.45)));
-        assert(round(23500) === round(Base\Debug::speed(Base\Date::microtime() - 23500)));
+        assert(round(23500.45) === round(Base\Debug::speed(Base\Datetime::microtime() - 23500.45)));
+        assert(round(23500) === round(Base\Debug::speed(Base\Datetime::microtime() - 23500)));
 
         // call
 

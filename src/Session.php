@@ -614,7 +614,7 @@ class Session extends Root
         $lifetime = static::getLifetime();
 
         if(is_int($lifetime))
-        $return = Date::time() + $lifetime;
+        $return = Datetime::time() + $lifetime;
 
         return $return;
     }
@@ -627,7 +627,7 @@ class Session extends Root
     final public static function setExpire(int $value,?int $buffer=null):bool
     {
         $return = false;
-        $time = Date::time();
+        $time = Datetime::time();
 
         if($value > $time)
         $return = static::setLifetime($value - $time,$buffer);
@@ -657,7 +657,7 @@ class Session extends Root
     final public static function setGarbageCollect(array $value):bool
     {
         $return = false;
-        $time = Date::time();
+        $time = Datetime::time();
 
         if(!static::isStarted())
         {
@@ -930,7 +930,7 @@ class Session extends Root
         $return = static::getExpire();
 
         elseif($mode === 'is')
-        $return = (is_int($value) && $value > Date::time())? true:false;
+        $return = (is_int($value) && $value > Datetime::time())? true:false;
 
         return $return;
     }
@@ -944,12 +944,12 @@ class Session extends Root
         $return = $value;
 
         if($mode === 'insert')
-        $return = ['current'=>Date::timestamp(),'previous'=>null];
+        $return = ['current'=>Datetime::timestamp(),'previous'=>null];
 
         elseif($mode === 'update')
         {
             $return['previous'] = $return['current'];
-            $return['current'] = Date::timestamp();
+            $return['current'] = Datetime::timestamp();
         }
 
         elseif($mode === 'is')

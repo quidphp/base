@@ -670,7 +670,7 @@ class File extends Finder
         $array[] = $prefix;
 
         if(!empty($option['dateFormat']) && is_string($option['dateFormat']))
-        $array[] = Date::format($option['dateFormat']);
+        $array[] = Datetime::format($option['dateFormat']);
 
         if(!empty($option['random']) && is_int($option['random']))
         $array[] = Str::random($option['random']);

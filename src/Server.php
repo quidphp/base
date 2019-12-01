@@ -686,7 +686,7 @@ class Server extends Root
         $return['peakRealUsage'] = memory_get_peak_usage(true);
 
         if($format === true)
-        $return = array_map([Number::class,'sizeFormat'],$return);
+        $return = array_map([Num::class,'sizeFormat'],$return);
 
         return $return;
     }
@@ -701,7 +701,7 @@ class Server extends Root
         $return['total'] = disk_total_space($directory);
 
         if($format === true)
-        $return = array_map([Number::class,'sizeFormat'],$return);
+        $return = array_map([Num::class,'sizeFormat'],$return);
 
         return $return;
     }

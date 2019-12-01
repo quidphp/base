@@ -196,7 +196,7 @@ class Email extends Root
         $message = Call::ableArrs(static::$config['message']);
         $value = Arr::replace($message,$value);
         $value['from'] = static::address($value['from']);
-        $value['date'] = (is_int($value['date']))? $value['date']:Date::timestamp();
+        $value['date'] = (is_int($value['date']))? $value['date']:Datetime::timestamp();
         $value = Arr::replace($value,static::prepareContentTypeCharset($value['contentType'],$value['charset']));
 
         foreach (static::$config['contact'] as $v)
@@ -281,7 +281,7 @@ class Email extends Root
                     $return[$v] = static::prepareAddress($value[$k],false);
 
                     elseif($k === 'date')
-                    $return[$v] = Date::rfc822($value[$k]);
+                    $return[$v] = Datetime::rfc822($value[$k]);
 
                     elseif(is_scalar($value[$k]))
                     $return[$v] = $value[$k];
