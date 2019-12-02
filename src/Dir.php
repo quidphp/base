@@ -486,7 +486,7 @@ class Dir extends Finder
     {
         $return = null;
         $get = static::getFormat($path,$format,$dig,$option);
-        $value = ($value === null)? Datetime::getTimestamp():$value;
+        $value = ($value === null)? Datetime::now():$value;
 
         if(is_array($get))
         {

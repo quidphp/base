@@ -944,12 +944,12 @@ class Session extends Root
         $return = $value;
 
         if($mode === 'insert')
-        $return = ['current'=>Datetime::timestamp(),'previous'=>null];
+        $return = ['current'=>Datetime::now(),'previous'=>null];
 
         elseif($mode === 'update')
         {
             $return['previous'] = $return['current'];
-            $return['current'] = Datetime::timestamp();
+            $return['current'] = Datetime::now();
         }
 
         elseif($mode === 'is')

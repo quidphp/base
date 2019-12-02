@@ -196,7 +196,7 @@ class Email extends Root
         $message = Call::ableArrs(static::$config['message']);
         $value = Arr::replace($message,$value);
         $value['from'] = static::address($value['from']);
-        $value['date'] = (is_int($value['date']))? $value['date']:Datetime::timestamp();
+        $value['date'] = (is_int($value['date']))? $value['date']:Datetime::now();
         $value = Arr::replace($value,static::prepareContentTypeCharset($value['contentType'],$value['charset']));
 
         foreach (static::$config['contact'] as $v)

@@ -75,7 +75,7 @@ class Datetime extends Root
     // retourne vrai si la temps donné est maintenant
     final public static function isNow($value=null,$format=null):bool
     {
-        return (static::time($value,$format) === static::getTimestamp())? true:false;
+        return (static::time($value,$format) === static::now())? true:false;
     }
 
 
@@ -314,22 +314,24 @@ class Datetime extends Root
     }
 
 
-    // getTimestamp
+    // getInitTimestamp
     // retourne le timestamp courant archivé dans les config de la classe
-    final public static function getTimestamp():int
+    // ceci représente le temps au lancement de l'éxécution du script
+    final public static function getInitTimestamp():int
     {
         $return = static::$config['timestamp'];
 
         if(!is_int($return))
-        $return = static::$config['timestamp'] = static::timestamp();
+        $return = static::$config['timestamp'] = static::now();
 
         return $return;
     }
 
 
-    // setTimestamp
+    // setInitTimestamp
     // change le timestamp courant archivé dans les config de la classe
-    final public static function setTimestamp(int $value):void
+    // ceci représente le temps au lancement de l'éxécution du script
+    final public static function setInitTimestamp(int $value):void
     {
         static::$config['timestamp'] = $value;
 
@@ -337,9 +339,9 @@ class Datetime extends Root
     }
 
 
-    // getMicrotime
+    // getInitMicrotime
     // retourne le microtime courant archivé dans les config de la classe
-    final public static function getMicrotime():float
+    final public static function getInitMicrotime():float
     {
         $return = static::$config['microtime'];
 
@@ -350,9 +352,9 @@ class Datetime extends Root
     }
 
 
-    // setMicrotime
+    // setInitMicrotime
     // change le microtime archivé dans les config de la classe
-    final public static function setMicrotime(float $value):void
+    final public static function setInitMicrotime(float $value):void
     {
         static::$config['microtime'] = $value;
 
@@ -441,10 +443,10 @@ class Datetime extends Root
     }
 
 
-    // timestamp
+    // now
     // retourne le timestamp courant
     // il faut utiliser getTimestamp pour avoir le temps du début de requête
-    final public static function timestamp():int
+    final public static function now():int
     {
         return time();
     }
@@ -1146,7 +1148,7 @@ class Datetime extends Root
         $value = Obj::cast($value);
 
         if($value === null)
-        $return = static::getTimestamp();
+        $return = static::now();
 
         elseif(is_array($value))
         $return = static::make($value,static::parseFormat($format)['timezone'] ?? null);
@@ -2003,7 +2005,7 @@ class Datetime extends Root
     // possible de garder seulement un nombre de valeur du tableau de différence
     final public static function amount(int $value,?int $amount=null):?array
     {
-        return static::diffNow(($value + static::timestamp()),null,$amount);
+        return static::diffNow(($value + static::now()),null,$amount);
     }
 
 
@@ -2437,6 +2439,6 @@ class Datetime extends Root
 }
 
 // init
-Datetime::setTimestamp(Datetime::time());
-Datetime::setMicrotime(Datetime::microtime());
+Datetime::setInitTimestamp(Datetime::time());
+Datetime::setInitMicrotime(Datetime::microtime());
 ?>

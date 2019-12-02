@@ -253,8 +253,8 @@ class Response extends Base\Test
             assert(Base\Response::getHeader('test2') === ['ok3','ok2']);
             assert(Base\Response::headerExists('test2'));
         }
-        assert(Base\Response::setHeader('Last-Modified',Base\Datetime::gmt(Base\Datetime::getTimestamp())) === 1);
-        assert(Base\Response::setHeader('last-modified',Base\Datetime::gmt(Base\Datetime::getTimestamp() + 1)) === 1);
+        assert(Base\Response::setHeader('Last-Modified',Base\Datetime::gmt(Base\Datetime::now())) === 1);
+        assert(Base\Response::setHeader('last-modified',Base\Datetime::gmt(Base\Datetime::now() + 1)) === 1);
         if($isCli === false)
         assert(Base\Response::getHeader('Last-Modified') === Base\Response::getHeader('last-modified'));
 

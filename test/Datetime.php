@@ -14,7 +14,7 @@ use Quid\Base;
 
 // datetime
 // class for testing Quid\Base\Datetime
-class Date extends Base\Test
+class Datetime extends Base\Test
 {
     // trigger
     final public static function trigger(array $data):bool
@@ -23,7 +23,7 @@ class Date extends Base\Test
         $timestamp = 1512139242;
 
         // isNow
-        assert(Base\Datetime::isNow(Base\Datetime::getTimestamp()));
+        assert(Base\Datetime::isNow(Base\Datetime::now()));
         assert(!Base\Datetime::isNow($timestamp));
 
         // isValid
@@ -42,29 +42,29 @@ class Date extends Base\Test
         assert(Base\Datetime::isYearLeap(Base\Datetime::make([2016,2,2])));
 
         // isToday
-        assert(Base\Datetime::isToday(Base\Datetime::getTimestamp()));
-        assert(Base\Datetime::isToday(Base\Datetime::format('ymd',Base\Datetime::getTimestamp()),'ymd'));
+        assert(Base\Datetime::isToday(Base\Datetime::now()));
+        assert(Base\Datetime::isToday(Base\Datetime::format('ymd',Base\Datetime::now()),'ymd'));
 
         // isTomorrow
-        assert(!Base\Datetime::isTomorrow(Base\Datetime::getTimestamp()));
+        assert(!Base\Datetime::isTomorrow(Base\Datetime::now()));
         assert(Base\Datetime::isTomorrow(Base\Datetime::addDay(1)));
 
         // isYesterday
-        assert(!Base\Datetime::isYesterday(Base\Datetime::getTimestamp()));
+        assert(!Base\Datetime::isYesterday(Base\Datetime::now()));
         assert(Base\Datetime::isYesterday(Base\Datetime::addDay(-1)));
 
         // isYear
-        assert(Base\Datetime::isYear(Base\Datetime::getTimestamp()));
+        assert(Base\Datetime::isYear(Base\Datetime::now()));
         assert(!Base\Datetime::isYear(Base\Datetime::addYear(1)));
 
         // isMonth
-        assert(Base\Datetime::isMonth(Base\Datetime::getTimestamp()));
+        assert(Base\Datetime::isMonth(Base\Datetime::now()));
         assert(!Base\Datetime::isMonth(Base\Datetime::addMonth(1)));
         assert(!Base\Datetime::isMonth(Base\Datetime::addYear(1)));
         assert(Base\Datetime::isMonth(Base\Datetime::changeDay(2)));
 
         // isDay
-        assert(Base\Datetime::isDay(Base\Datetime::getTimestamp()));
+        assert(Base\Datetime::isDay(Base\Datetime::now()));
         assert(!Base\Datetime::isDay(Base\Datetime::addDay(1)));
         assert(!Base\Datetime::isDay(Base\Datetime::addMonth(1)));
         assert(Base\Datetime::isDay(Base\Datetime::changeHour(2)));
@@ -75,15 +75,15 @@ class Date extends Base\Test
         assert(!Base\Datetime::isDayStart('2-3-2017 00:00:01','d-m-Y H:i:s'));
 
         // isHour
-        assert(Base\Datetime::isHour(Base\Datetime::getTimestamp()));
+        assert(Base\Datetime::isHour(Base\Datetime::now()));
         assert(!Base\Datetime::isHour(Base\Datetime::addHour(1)));
 
         // isMinute
-        assert(Base\Datetime::isMinute(Base\Datetime::getTimestamp()));
+        assert(Base\Datetime::isMinute(Base\Datetime::now()));
         assert(!Base\Datetime::isMinute(Base\Datetime::addMinute(1)));
 
         // isSecond
-        assert(Base\Datetime::isSecond(Base\Datetime::getTimestamp()));
+        assert(Base\Datetime::isSecond(Base\Datetime::now()));
         assert(!Base\Datetime::isSecond(Base\Datetime::addSecond(2)));
 
         // isFormat
@@ -106,19 +106,19 @@ class Date extends Base\Test
         assert(Base\Datetime::isFormatDateToSecond('12-03-2017 11:40:30'));
         assert(!Base\Datetime::isFormatDateToSecond('12-03-2017 11:40'));
 
-        // getTimestamp
-        assert(is_int(Base\Datetime::time()));
+        // getInitTimestamp
+        assert(is_int(Base\Datetime::getInitTimestamp()));
 
-        // setTimestamp
-        Base\Datetime::setTimestamp(1);
-        assert(Base\Datetime::time() === 1);
-        Base\Datetime::setTimestamp(time());
+        // setInitTimestamp
+        Base\Datetime::setInitTimestamp(1);
+        assert(Base\Datetime::getInitTimestamp() === 1);
+        Base\Datetime::setInitTimestamp(time());
 
-        // getMicrotime
-        assert(is_float(Base\Datetime::getMicrotime()));
+        // getInitMicrotime
+        assert(is_float(Base\Datetime::getInitMicrotime()));
 
-        // setMicrotime
-        Base\Datetime::setMicrotime(Base\Datetime::getMicrotime());
+        // setInitMicrotime
+        Base\Datetime::setInitMicrotime(Base\Datetime::getInitMicrotime());
 
         // seconds
         assert(count(Base\Datetime::seconds()) === 6);
@@ -144,8 +144,8 @@ class Date extends Base\Test
         // timeOfDay
         assert(count(Base\Datetime::timeOfDay()) === 4);
 
-        // timestamp
-        assert(is_int(Base\Datetime::timestamp()));
+        // now
+        assert(is_int(Base\Datetime::now()));
 
         // microtime
         assert(is_float(Base\Datetime::microtime()));
@@ -495,7 +495,7 @@ class Date extends Base\Test
 
         // addDay
         assert(Base\Datetime::sql(Base\Datetime::addDay(32,$timestamp)) === '2018-01-02 09:40:42');
-        assert(Base\Datetime::addDay(1) > Base\Datetime::getTimestamp());
+        assert(Base\Datetime::addDay(1) > Base\Datetime::now());
 
         // changeDay
         assert(Base\Datetime::sql(Base\Datetime::changeDay(13,$timestamp)) === '2017-12-13 09:40:42');

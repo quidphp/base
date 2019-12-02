@@ -36,9 +36,9 @@ class Cookie extends Base\Test
         assert(Base\Cookie::option('set',['lifetime'=>null,'expires'=>Base\Datetime::time() + 1]) === Base\Cookie::option('set',['lifetime'=>1,'expires'=>null]));
         assert(Base\Cookie::option('set',['lifetime'=>0])['expires'] === Base\Datetime::time());
         assert(!array_key_exists('lifetime',Base\Cookie::option('set',['lifetime'=>0])));
-        assert(Base\Cookie::option('set')['expires'] > Base\Datetime::getTimestamp());
+        assert(Base\Cookie::option('set')['expires'] > Base\Datetime::now());
         assert(count(Base\Cookie::option('unset')) === 6);
-        assert(Base\Cookie::option('unset')['expires'] < Base\Datetime::getTimestamp());
+        assert(Base\Cookie::option('unset')['expires'] < Base\Datetime::now());
         assert(Base\Cookie::option('unset',['lifetime'=>0])['expires'] < Base\Datetime::time());
         assert(!array_key_exists('lifetime',Base\Cookie::option('unset',['lifetime'=>0])));
         assert(empty(Base\Cookie::option('removez')));
