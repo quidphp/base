@@ -29,9 +29,9 @@ class Cli extends Base\Test
 
         // isHtmlOverload
         assert(is_bool(Base\Cli::isHtmlOverload()));
-        
+
         // isInLine
-        
+
         // parseLongOptions
         assert(Base\Cli::parseLongOptions('--james2=2','--lol','--james2=3','lo') === ['james2'=>3,'lol'=>'']);
         assert(Base\Cli::parseLongOptions('--','--z','--=','--é;é=4') === ['z'=>'','é;é'=>4]);
@@ -100,9 +100,9 @@ class Cli extends Base\Test
         // setHtmlOverload
 
         // in
-        
+
         // inLine
-        
+
         return true;
     }
 }

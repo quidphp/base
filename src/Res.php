@@ -1366,7 +1366,7 @@ class Res extends Root
 
                     else
                     $return = fopen($value,$mode,$option['useIncludePath']);
-                    
+
                     if(!empty($return) && array_key_exists('block',$option) && is_bool($option['block']))
                     stream_set_blocking($return,$option['block']);
                 }
@@ -1467,11 +1467,11 @@ class Res extends Root
         // phpMemory
         elseif($kind === 'phpMemory')
         $return = static::$config['mode']['readWrite'];
-        
+
         // stdin
         elseif($kind === 'stdin')
         $return = static::$config['mode']['read'];
-        
+
         // binary
         if(!empty($return) && $option['binary'] === true)
         $return .= static::$config['binary'];
@@ -1657,16 +1657,16 @@ class Res extends Root
         return static::phpWritable('memory',Arr::plus(['mime'=>$mime,'basename'=>$basename],$option));
     }
 
-    
+
     // stdin
     // ouvre une resource de type stdin
     // par défaut est binaire et bloque
     final public static function stdin(?array $option=null)
     {
-        return static::open('php://stdin',Arr::plus(array('binary'=>true,'block'=>true),$option));
+        return static::open('php://stdin',Arr::plus(['binary'=>true,'block'=>true],$option));
     }
-    
-    
+
+
     // tmpFile
     // retourne une ressource fichier dans le dossier temporaire
     // par défaut change l'extension si ce n'est pas la même

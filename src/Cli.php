@@ -73,28 +73,28 @@ class Cli extends Root
         return (static::$config['htmlOverload'] === true)? true:false;
     }
 
-    
+
     // isInLine
     // retourne vrai si la dernière ligne du stdin est la valeur en argument
     final public static function isInLine($value,$stdin,bool $lower=false):bool
     {
         $return = false;
-        
+
         if(is_resource($stdin))
         {
             $line = static::inLine($stdin,$lower);
-            
+
             if(!is_array($value))
             $value = (array) $value;
-            
+
             if(in_array($line,$value,true))
             $return = true;
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // parseLongOptions
     // prend un tableau des argv et retourne un tableau avec toutes les options longues
     // l'ordre des options n'a pas d'importance, mais il faut que l'entrée commence par --
@@ -369,36 +369,36 @@ class Cli extends Root
 
         return;
     }
-    
-    
+
+
     // in
     // retourne la resource stdin
     final public static function in(bool $block=true)
     {
-        return Res::stdin(array('block'=>$block));
+        return Res::stdin(['block'=>$block]);
     }
-    
-    
+
+
     // inLine
     // retourne la dernière ligne du stdin
     // par défaut tout est remené en lowerCase
     final public static function inLine($stdin,bool $lower=false):?string
     {
         $return = null;
-        
+
         if(is_resource($stdin))
         {
             $line = fgets($stdin);
-            
+
             if(is_string($line))
             {
                 $return = trim($line);
-                
+
                 if($lower === true)
                 $return = strtolower($return);
             }
         }
-        
+
         return $return;
     }
 }

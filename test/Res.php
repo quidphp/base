@@ -722,9 +722,9 @@ class Res extends Base\Test
         // memory
         $memory = Base\Res::memory('jpg','test.jpg',['write'=>['test'=>'ok','test2'=>[true]]]);
         assert(Base\Res::isPhpMemory($memory));
-        
+
         // stdin
-        
+
         // tmpFile
         $tmp2 = Base\Res::tmpFile();
         assert(Base\Res::extension($tmp2) === 'tmp');
