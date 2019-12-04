@@ -937,12 +937,9 @@ class Arr extends Base\Test
         assert(Base\Arr::slice('test','ok',$slice2) === Base\Arr::sliceIndex(3,6,$slice2));
         assert(Base\Arr::slice('test','ok',$slice2) === Base\Arr::sliceIndex(-7,6,$slice2));
 
-        // sliceFirst
+        // sliceStart
         $slice = ['test'=>'test','test2'=>'test2','test3'=>'test3'];
-        assert(['test'=>'test'] === Base\Arr::sliceFirst($slice));
-
-        // sliceLast
-        assert(['test3'=>'test3'] === Base\Arr::sliceLast($slice));
+        assert(Base\Arr::sliceStart(1,$slice) === array('test2'=>'test2','test3'=>'test3'));
 
         // sliceNav
         $slice = ['test'=>'testv','test2'=>'test2v','test3'=>'test3v'];
@@ -993,7 +990,14 @@ class Arr extends Base\Test
         assert(Base\Arr::spliceLast($array,['beurp']) === [1,'test'=>2,1=>3,2=>4,3=>5,4=>6,'end'=>'what',5=>'beurp']);
         assert(Base\Arr::spliceLast($array,[6=>'beurp']) === [1,'test'=>2,1=>3,2=>4,3=>5,4=>6,'end'=>'what',6=>'beurp']);
         assert(Base\Arr::spliceLast($array,['end'=>'beurp']) === [1,'test'=>2,1=>3,2=>4,3=>5,4=>6,'end'=>'beurp']);
-
+        
+        // spliceValue
+        $array = [1,'test'=>2,3,4,5,6,'end'=>'what',8];
+        assert(Base\Arr::spliceValue(3,$array) === array(3));
+        assert(count($array) === 7);
+        assert(Base\Arr::spliceValue('what',$array,'OK') === array('end'=>'what'));
+        assert($array[4] === 'OK');
+        
         // insert
         $slice = ['test'=>'testv','test2'=>'test2v','test3'=>'test3v'];
         assert([0=>'testa','test'=>'testv','test2'=>'test2v','test3'=>'test3v'] === Base\Arr::insert('test',['testa'],$slice));
