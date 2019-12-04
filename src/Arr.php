@@ -2661,7 +2661,7 @@ class Arr extends Root
 
     // sliceStart
     // fait un slice à partir du début d'un tableau
-    final public static function sliceStart(int$start,array $array):array
+    final public static function sliceStart(int $start,array $array):array
     {
         return array_slice($array,$start,null,true);
     }
@@ -2813,29 +2813,29 @@ class Arr extends Root
         return self::spliceIndex(-1,1,$array,$replace,$sensitive);
     }
 
-    
+
     // spliceValue
     // permet de splice une valeur d'un tableau et de faire un remplacement
     // à la différence des autres méthodes splice, celle-ci utilise une référence
-    final public static function spliceValue($value,array &$array,$replace=null):array 
+    final public static function spliceValue($value,array &$array,$replace=null):array
     {
         $return = null;
         $index = static::valueIndex($value,$array);
-        
+
         if(!empty($index))
         {
             $index = current($index);
-            
+
             if($replace !== null)
             $return = array_splice($array,$index,1,$replace);
             else
             $return = array_splice($array,$index,1);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // insert
     // effectue un remplacement via la méthode splice
     // n'enlève aucune rangée du tableau
