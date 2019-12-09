@@ -40,11 +40,11 @@ class Vari extends Base\Test
         // isNotReallyEmpty
         assert(Base\Vari::isNotReallyEmpty(0));
         assert(!Base\Vari::isNotReallyEmpty(null));
-        
+
         // isNull
         assert(!Base\Vari::isNull(false));
         assert(Base\Vari::isNull(null));
-        
+
         // isType
         assert(Base\Vari::isType('NULL',null));
         assert(Base\Vari::isType('array',[]));

@@ -556,14 +556,14 @@ class Arr extends Base\Test
             if(is_array($a) && is_int($v))
             return true;
         }) === [1=>2,2=>4]);
-        assert(Base\Arr::filter($array,array(Base\Str::class,'is')) === ['test',3=>'test4']);
-        
+        assert(Base\Arr::filter($array,[Base\Str::class,'is']) === ['test',3=>'test4']);
+
         // find
         $array = ['test',2,4,'test4'];
         assert(Base\Arr::find($array,function($v,$k,$a) {
             return (is_int($v))? true:false;
         }) === 2);
-        
+
         // reduce
         $array = ['test',2,4,'test4'];
         assert(Base\Arr::reduce($array,function($carry,$item) {

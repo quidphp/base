@@ -17,8 +17,8 @@ class Floating extends Root
 {
     // config
     public static $config = [];
-    
-    
+
+
     // typecast
     // typecasts des valeurs float par référence
     final public static function typecast(&...$values):void
@@ -30,8 +30,8 @@ class Floating extends Root
 
         return;
     }
-    
-    
+
+
     // cast
     // cast une valeur en float, utilise num::cast
     final public static function cast($value,bool $extra=true):?float
@@ -43,8 +43,8 @@ class Floating extends Root
 
         return $return;
     }
-    
-    
+
+
     // is
     // retourne vrai si la valeur est float
     final public static function is($value):bool
@@ -67,8 +67,8 @@ class Floating extends Root
     {
         return (is_float($value) && !empty($value))? true:false;
     }
-    
-    
+
+
     // isCast
     // vérifie que la valeur est numérique et float après cast
     final public static function isCast($value):bool
@@ -103,8 +103,8 @@ class Floating extends Root
 
         return $return;
     }
-    
-    
+
+
     // fromString
     // permet de cast une valeur string en gardant seulement ces caractères numériques
     final public static function fromString(string $value):?float

@@ -108,8 +108,8 @@ class Boolean extends Root
     {
         return $value === true;
     }
-    
-    
+
+
     // random
     // génère un boolean random
     // si min est 1 et max est 1 alors 100% de générer un true
@@ -148,7 +148,7 @@ class Boolean extends Root
         return $return;
     }
 
-    
+
     // fromInt
     // retourne un booléean à partir d'un int
     final public static function fromInt(int $value):?bool
@@ -163,8 +163,8 @@ class Boolean extends Root
 
         return $return;
     }
-    
-    
+
+
     // toggle
     // toggle des valeurs primaires (true/false)
     final public static function toggle($value)

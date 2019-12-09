@@ -17,8 +17,8 @@ class Integer extends Root
 {
     // config
     public static $config = [];
-    
-    
+
+
     // typecast
     // typecasts des valeurs int par référence
     final public static function typecast(&...$values):void
@@ -30,8 +30,8 @@ class Integer extends Root
 
         return;
     }
-    
-    
+
+
     // cast
     // cast une valeur en int, utilise num::cast
     final public static function cast($value,bool $extra=true):?int
@@ -43,8 +43,8 @@ class Integer extends Root
 
         return $return;
     }
-    
-    
+
+
     // is
     // retourne vrai si la valeur est int
     final public static function is($value):bool
@@ -67,8 +67,8 @@ class Integer extends Root
     {
         return is_int($value) && !empty($value);
     }
-    
-    
+
+
     // isCast
     // vérifie que la valeur est numérique et un int après cast
     final public static function isCast($value):bool
@@ -103,8 +103,8 @@ class Integer extends Root
 
         return $return;
     }
-    
-    
+
+
     // fromString
     // permet de cast une valeur string en gardant seulement ces caractères numériques
     final public static function fromString(string $value):?int
@@ -118,8 +118,8 @@ class Integer extends Root
 
         return $return;
     }
-    
-    
+
+
     // fromBool
     // retourne un numéro à partir d'un boolean
     final public static function fromBool(bool $bool):?int
@@ -134,8 +134,8 @@ class Integer extends Root
 
         return $return;
     }
-    
-    
+
+
     // toggle
     // toggle des valeurs primaires (1/0)
     final public static function toggle($value)

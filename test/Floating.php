@@ -25,12 +25,12 @@ class Floating extends Base\Test
         Base\Floating::typecast($a,$b);
         assert($a === 23.2);
         assert($b === (float) 0);
-        
+
         // cast
         assert(Base\Floating::cast('30MB') === null);
         assert(Base\Floating::cast(true) === 1.0);
         assert(Base\Floating::cast('1.5') === 1.5);
-        
+
         // is
         assert(Base\Floating::is((float) 1));
         assert(!Base\Floating::is(1));
@@ -39,10 +39,10 @@ class Floating extends Base\Test
         // isEmpty
         assert(!Base\Floating::isEmpty(1));
         assert(Base\Floating::isEmpty((float) 0));
-        
+
         // isNotEmpty
         assert(Base\Floating::isNotEmpty(1.2));
-        
+
         // isCast
         assert(!Base\Floating::isCast(-1));
         assert(Base\Floating::isCast(1.5));
@@ -52,11 +52,11 @@ class Floating extends Base\Test
         // isCastNotEmpty
         assert(Base\Floating::isCastNotEmpty(1.5));
         assert(!Base\Floating::isCastNotEmpty(0));
-        
+
         // fromString
         assert(Base\Floating::fromString('3.2') === 3.2);
         assert(Base\Floating::fromString('3') === (float) 3);
-        
+
         return true;
     }
 }

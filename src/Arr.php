@@ -1514,21 +1514,21 @@ class Arr extends Root
                 $return[$key] = $value;
             }
         }
-        
+
         else
         $return = array_filter($array,$callable,$flag);
 
         return $return;
     }
 
-    
+
     // find
     // retourne la première valuer qui remplit la condition de la callable
-    final public static function find(array $array,callable $callable) 
+    final public static function find(array $array,callable $callable)
     {
         $return = null;
-        
-        foreach ($array as $key => $value) 
+
+        foreach ($array as $key => $value)
         {
             if($callable($value,$key,$array))
             {
@@ -1536,11 +1536,11 @@ class Arr extends Root
                 break;
             }
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // reduce
     // wrapper pour array_reduce
     final public static function reduce(array $array,callable $callable,$data=null)
