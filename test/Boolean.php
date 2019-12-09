@@ -44,18 +44,14 @@ class Boolean extends Base\Test
         assert(Base\Boolean::is(true));
         assert(!Base\Boolean::is(null));
 
-        // isTrue
-        assert(Base\Boolean::isTrue(true));
-        assert(!Base\Boolean::isTrue(1));
+        // isEmpty
+        assert(Base\Boolean::isEmpty(false));
+        assert(!Base\Boolean::isEmpty(true));
+        assert(!Base\Boolean::isEmpty(0));
 
-        // isFalse
-        assert(Base\Boolean::isFalse(false));
-        assert(!Base\Boolean::isFalse(true));
-        assert(!Base\Boolean::isFalse(0));
-
-        // isNull
-        assert(Base\Boolean::isNull(null));
-        assert(!Base\Boolean::isNull(true));
+        // isNotEmpty
+        assert(Base\Boolean::isNotEmpty(true));
+        assert(!Base\Boolean::isNotEmpty(1));
 
         // random
         assert(Base\Boolean::random(1,1));
@@ -66,12 +62,15 @@ class Boolean extends Base\Test
         assert(Base\Boolean::str(false) === 'FALSE');
         assert(Base\Boolean::str(true) === 'TRUE');
         assert(Base\Boolean::str(null) === 'NULL');
-
+        
+        // fromInt
+        assert(Base\Boolean::fromInt(1) === true);
+        assert(Base\Boolean::fromInt(0) === false);
+        assert(Base\Boolean::fromInt(2) === null);
+        
         // toggle
-        assert(!Base\Boolean::toggle(true));
-        assert('1' === Base\Boolean::toggle('0'));
-        assert(1 === Base\Boolean::toggle(0));
-        assert('1' !== Base\Boolean::toggle(0));
+        assert(Base\Boolean::toggle(true) === false);
+        assert(null === Base\Boolean::toggle('0'));
 
         return true;
     }

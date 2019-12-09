@@ -3109,7 +3109,7 @@ class Res extends Root
 
             if(!empty($lines))
             {
-                $return = Arr::filter($callback,$lines);
+                $return = Arr::filter($lines,$callback);
 
                 if($overwrite === true)
                 static::overwrite($return,$value,$option);

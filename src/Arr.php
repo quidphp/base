@@ -1472,7 +1472,7 @@ class Arr extends Root
     // walk
     // wrapper pour array_walk
     // array est passé par référence
-    final public static function walk(callable $callable,array &$array,$data=null):bool
+    final public static function walk(array &$array,callable $callable,$data=null):bool
     {
         return array_walk($array,$callable,$data);
     }
@@ -1502,7 +1502,7 @@ class Arr extends Root
     // filter
     // wrapper pour array_filter
     // si callable est closure, à ce moment trois arguments sont envoyés à la fonction = value, key et array
-    final public static function filter(callable $callable,array $array,int $flag=0):array
+    final public static function filter(array $array,callable $callable,int $flag=0):array
     {
         $return = [];
 
@@ -1514,16 +1514,36 @@ class Arr extends Root
                 $return[$key] = $value;
             }
         }
+        
         else
         $return = array_filter($array,$callable,$flag);
 
         return $return;
     }
 
-
+    
+    // find
+    // retourne la première valuer qui remplit la condition de la callable
+    final public static function find(array $array,callable $callable) 
+    {
+        $return = null;
+        
+        foreach ($array as $key => $value) 
+        {
+            if($callable($value,$key,$array))
+            {
+                $return = $value;
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // reduce
     // wrapper pour array_reduce
-    final public static function reduce(callable $callable,array $array,$data=null)
+    final public static function reduce(array $array,callable $callable,$data=null)
     {
         return array_reduce($array,$callable,$data);
     }

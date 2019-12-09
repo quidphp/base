@@ -34,7 +34,7 @@ class Vari extends Root
         return (!self::isEmpty($value))? true:false;
     }
 
-
+    
     // isReallyEmpty
     // retourne vrai si empty, sans etre numérique ni boolean ni une string avec une longueur
     // en somme, ca retourne faux pour 0, '0' et false
@@ -57,6 +57,14 @@ class Vari extends Root
     final public static function isNotReallyEmpty($value,bool $removeWhiteSpace=false):bool
     {
         return (self::isReallyEmpty($value,$removeWhiteSpace))? false:true;
+    }
+
+    
+    // isNull
+    // retourne vrai si la valeur est null
+    final public static function isNull($value):bool
+    {
+        return $value === null;
     }
 
 

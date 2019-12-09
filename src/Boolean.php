@@ -90,34 +90,26 @@ class Boolean extends Root
     // retourne vrai si la valeur est boolean
     final public static function is($value):bool
     {
-        return (is_bool($value))? true:false;
+        return is_bool($value);
     }
 
 
-    // isTrue
-    // retourne vrai si la valeur est vrai
-    final public static function isTrue($value):bool
-    {
-        return ($value === true)? true:false;
-    }
-
-
-    // isFalse
+    // isEmpty
     // retourne vrai si la valeur est false
-    final public static function isFalse($value):bool
+    final public static function isEmpty($value):bool
     {
-        return ($value === false)? true:false;
+        return $value === false;
     }
 
 
-    // isNull
-    // retourne vrai si la valeur est null
-    final public static function isNull($value):bool
+    // isNotEmpty
+    // retourne vrai si la valeur est vrai
+    final public static function isNotEmpty($value):bool
     {
-        return ($value === null)? true:false;
+        return $value === true;
     }
-
-
+    
+    
     // random
     // génère un boolean random
     // si min est 1 et max est 1 alors 100% de générer un true
@@ -156,9 +148,25 @@ class Boolean extends Root
         return $return;
     }
 
+    
+    // fromInt
+    // retourne un booléean à partir d'un int
+    final public static function fromInt(int $value):?bool
+    {
+        $return = null;
 
+        if($value === 1)
+        $return = true;
+
+        elseif($value === 0)
+        $return = false;
+
+        return $return;
+    }
+    
+    
     // toggle
-    // toggle des valeurs primaires
+    // toggle des valeurs primaires (true/false)
     final public static function toggle($value)
     {
         $return = null;
@@ -168,18 +176,6 @@ class Boolean extends Root
 
         elseif($value === false)
         $return = true;
-
-        elseif($value === 1)
-        $return = 0;
-
-        elseif($value === 0)
-        $return = 1;
-
-        elseif($value === '1')
-        $return = '0';
-
-        elseif($value === '0')
-        $return = '1';
 
         return $return;
     }

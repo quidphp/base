@@ -26,20 +26,6 @@ class Num extends Base\Test
         assert($a === 23.2);
         assert($b === 'string');
 
-        // typecastInt
-        $a = '23.2';
-        $b = 'string';
-        Base\Num::typecastInt($a,$b);
-        assert($a === 23);
-        assert($b === 0);
-        $a = '23.2';
-        $b = 'string';
-
-        // typecastFloat
-        Base\Num::typecastFloat($a,$b);
-        assert($a === 23.2);
-        assert($b === (float) 0);
-
         // cast
         assert(Base\Num::cast('000000') === 0);
         assert(Base\Num::cast('000111') === 111);
@@ -72,20 +58,6 @@ class Num extends Base\Test
         assert(null === Base\Num::cast(null));
         assert(Base\Num::cast('30MB') === '30MB');
 
-        // castToInt
-        assert(Base\Num::castToInt('30MB') === null);
-        assert(Base\Num::castToInt(true) === 1);
-        assert(Base\Num::castToInt('1.5') === 1);
-
-        // castToFloat
-        assert(Base\Num::castToFloat('30MB') === null);
-        assert(Base\Num::castToFloat(true) === 1.0);
-        assert(Base\Num::castToFloat('1.5') === 1.5);
-
-        // castFromString
-        assert(Base\Num::castFromString('30MB') === 30);
-        assert(Base\Num::castFromString('abc') === null);
-
         // is
         assert(Base\Num::is('2'));
         assert(!Base\Num::is(true));
@@ -101,15 +73,6 @@ class Num extends Base\Test
         // isString
         assert(Base\Num::isString('1'));
         assert(!Base\Num::isString(2));
-
-        // isInt
-        assert(Base\Num::isInt(1));
-        assert(!Base\Num::isInt(2.3));
-
-        // isFloat
-        assert(Base\Num::isFloat((float) 1));
-        assert(!Base\Num::isFloat(1));
-        assert(Base\Num::isFloat(log(0)));
 
         // isFinite
         assert(!Base\Num::isFinite(log(0)));
@@ -152,24 +115,6 @@ class Num extends Base\Test
         assert(Base\Num::isEven(-2));
         assert(Base\Num::isEven(4));
 
-        // isWhole
-        assert(!Base\Num::isWhole('1.5'));
-        assert(Base\Num::isWhole(-1));
-        assert(!Base\Num::isWhole(1.5));
-        assert(Base\Num::isWhole(0));
-
-        // isWholeNotEmpty
-        assert(!Base\Num::isWholeNotEmpty('1.5'));
-        assert(Base\Num::isWholeNotEmpty(-1));
-        assert(!Base\Num::isWholeNotEmpty(1.5));
-        assert(!Base\Num::isWholeNotEmpty(0));
-
-        // isDecimal
-        assert(!Base\Num::isDecimal(-1));
-        assert(Base\Num::isDecimal(1.5));
-        assert(Base\Num::isDecimal('1.5'));
-        assert(!Base\Num::isDecimal('2'));
-
         // isOverflow
         assert(Base\Num::isOverflow('123321123312231312213123312312312312'));
 
@@ -195,10 +140,6 @@ class Num extends Base\Test
         // append
         assert(Base\Num::append('23',4.2,4) === 234.24);
         assert(Base\Num::append('23',4.2,2.4) === '234.22.4');
-
-        // fromBool
-        assert(1 === Base\Num::fromBool(true));
-        assert(0 === Base\Num::fromBool(false));
 
         // commaToDecimal
         assert(1.1 === Base\Num::commaToDecimal(1.1));

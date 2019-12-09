@@ -233,7 +233,7 @@ class Ini extends Root
         }
 
         else
-        $return = Num::castFromString($return);
+        $return = Integer::fromString($return);
 
         return $return;
     }

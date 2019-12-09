@@ -528,20 +528,20 @@ class Arr extends Base\Test
 
         // walk
         $array = ['test',2,4,'test4'];
-        Base\Arr::walk(function(&$v,$k,$extra) {
+        Base\Arr::walk($array,function(&$v,$k,$extra) {
             if(is_int($v))
             $v += 1000;
             else
             $v .= $extra;
-        },$array,'bla');
+        },'bla');
         assert($array === ['testbla',1002,1004,'test4bla']);
         $array = ['test',[2],[4],'test4'];
-        Base\Arr::walk(function(&$v,$k,$extra) {
+        Base\Arr::walk($array,function(&$v,$k,$extra) {
             if(is_int($v))
             $v += 1000;
             elseif(is_string($v))
             $v .= $extra;
-        },$array,'bla');
+        },'bla');
         assert($array === ['testbla',[2],[4],'test4bla']);
 
         // map
@@ -552,17 +552,23 @@ class Arr extends Base\Test
 
         // filter
         $array = ['test',2,4,'test4'];
-        assert(Base\Arr::filter(function($v,$k,$a) {
+        assert(Base\Arr::filter($array,function($v,$k,$a) {
             if(is_array($a) && is_int($v))
             return true;
-        },$array) === [1=>2,2=>4]);
-        assert(Base\Arr::filter('is_string',$array) === ['test',3=>'test4']);
-
+        }) === [1=>2,2=>4]);
+        assert(Base\Arr::filter($array,array(Base\Str::class,'is')) === ['test',3=>'test4']);
+        
+        // find
+        $array = ['test',2,4,'test4'];
+        assert(Base\Arr::find($array,function($v,$k,$a) {
+            return (is_int($v))? true:false;
+        }) === 2);
+        
         // reduce
         $array = ['test',2,4,'test4'];
-        assert(Base\Arr::reduce(function($carry,$item) {
+        assert(Base\Arr::reduce($array,function($carry,$item) {
             return $carry.$item;
-        },$array,'bla') === 'blatest24test4');
+        },'bla') === 'blatest24test4');
 
         // diffAssoc
         $simple1 = ['test'=>true,'test3'=>'bla'];

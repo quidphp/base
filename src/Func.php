@@ -23,7 +23,7 @@ class Func extends Root
     // retourne vrai si une fonction existe
     final public static function is($name):bool
     {
-        return (is_string($name) && function_exists($name))? true:false;
+        return is_string($name) && function_exists($name);
     }
 
 

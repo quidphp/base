@@ -48,32 +48,6 @@ class Num extends Root
     }
 
 
-    // typecastInt
-    // typecasts des valeurs int par référence
-    final public static function typecastInt(&...$values):void
-    {
-        foreach ($values as &$value)
-        {
-            $value = (int) $value;
-        }
-
-        return;
-    }
-
-
-    // typecastFloat
-    // typecasts des valeurs float par référence
-    final public static function typecastFloat(&...$values):void
-    {
-        foreach ($values as &$value)
-        {
-            $value = (float) $value;
-        }
-
-        return;
-    }
-
-
     // cast
     // retourne la valeur dans le type (int ou float) si celle ci est numérique
     // extra permet de remplacer la virgule par un décimal et aussi de forcer le cast des chaînes numériques commençant par zéro
@@ -118,47 +92,6 @@ class Num extends Root
     }
 
 
-    // castToInt
-    // comme cast, mais la valeur de retour est soit null ou int
-    final public static function castToInt($value,bool $extra=true):?int
-    {
-        $return = null;
-        $value = static::cast($value,$extra);
-        if(is_numeric($value))
-        $return = (int) $value;
-
-        return $return;
-    }
-
-
-    // castToFloat
-    // comme cast, mais la valeur de retour est soit null ou float
-    final public static function castToFloat($value,bool $extra=true):?float
-    {
-        $return = null;
-        $value = static::cast($value,$extra);
-        if(is_numeric($value))
-        $return = (float) $value;
-
-        return $return;
-    }
-
-
-    // castFromString
-    // permet de cast une valeur string en gardant seulement ces caractères numériques
-    final public static function castFromString(string $value):?int
-    {
-        $return = null;
-        $value = Str::keepNumeric($value);
-        $value = static::cast($value);
-
-        if(is_int($value))
-        $return = $value;
-
-        return $return;
-    }
-
-
     // is
     // retourne vrai si la valeur est numerique
     final public static function is($value):bool
@@ -188,22 +121,6 @@ class Num extends Root
     final public static function isString($value):bool
     {
         return (is_numeric($value) && is_string($value))? true:false;
-    }
-
-
-    // isInt
-    // retourne vrai si la valeur est int
-    final public static function isInt($value):bool
-    {
-        return (is_int($value))? true:false;
-    }
-
-
-    // isFloat
-    // retourne vrai si la valeur est float
-    final public static function isFloat($value):bool
-    {
-        return (is_float($value))? true:false;
     }
 
 
@@ -287,60 +204,6 @@ class Num extends Root
     }
 
 
-    // isWhole
-    // vérifie que la valeur est numérique et un int après cast
-    final public static function isWhole($value):bool
-    {
-        $return = false;
-
-        if(is_numeric($value))
-        {
-            static::typecast($value);
-
-            if(is_int($value))
-            $return = true;
-        }
-
-        return $return;
-    }
-
-
-    // isWholeNotEmpty
-    // vérifie que la valeur est numérique et un int après cast et n'est pas 0
-    final public static function isWholeNotEmpty($value):bool
-    {
-        $return = false;
-
-        if(is_numeric($value))
-        {
-            static::typecast($value);
-
-            if(is_int($value) && !empty($value))
-            $return = true;
-        }
-
-        return $return;
-    }
-
-
-    // isDecimal
-    // vérifie que la valeur est numérique et un chiffre flottant après cast
-    final public static function isDecimal($value):bool
-    {
-        $return = false;
-
-        if(is_numeric($value))
-        {
-            static::typecast($value);
-
-            if(is_float($value))
-            $return = true;
-        }
-
-        return $return;
-    }
-
-
     // isOverflow
     // vérifie que la valeur est numérique et une string après cast
     // peu signifé que le numéro est out of bounds (plus grand que php_int_max)
@@ -413,22 +276,6 @@ class Num extends Root
     {
         $return = Str::append(...$values);
         static::typecast($return);
-
-        return $return;
-    }
-
-
-    // fromBool
-    // retourne un numéro à partir d'un boolean
-    final public static function fromBool(bool $bool):?int
-    {
-        $return = null;
-
-        if($bool === true)
-        $return = 1;
-
-        elseif($bool === false)
-        $return = 0;
 
         return $return;
     }
@@ -1204,7 +1051,7 @@ class Num extends Root
         $alpha = Str::keepAlpha($value);
         $alpha = strtolower($alpha);
         $alpha = Str::stripEnd('s',$alpha,false);
-        $value = static::castFromString($value);
+        $value = Integer::fromString($value);
 
         if(!empty($formatOriginal['text']) && strlen($alpha) && is_int($value))
         {
@@ -1239,7 +1086,7 @@ class Num extends Root
     final public static function fromSizeFormatMb(string $value):?int
     {
         $return = null;
-        $value = static::castFromString($value);
+        $value = Integer::fromString($value);
 
         if(is_int($value))
         {
