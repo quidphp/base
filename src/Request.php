@@ -1266,11 +1266,8 @@ class Request extends Root
     // est utilisé par le cli
     final public static function change(array $values,bool $default=false):void
     {
-        if($default === true)
-        {
-            $isCli = Server::isCli();
-            $values = Arr::replace(static::default($isCli),$values);
-        }
+        if($default === true && Server::isCli())
+        $values = Arr::replace(static::defaultCli(),$values);
 
         foreach (static::prepareChangeArray($values) as $key => $value)
         {
@@ -1299,20 +1296,15 @@ class Request extends Root
     }
 
 
-    // default
-    // retourne les défauts
-    // différent pour le cli
-    final public static function default(bool $cli):array
+    // defaultCli
+    // retourne les défauts pour cli
+    final public static function defaultCli():array
     {
-        $return = ['scheme'=>'http'];
-
-        if($cli === true)
-        {
-            $return['query'] = [];
-            $return['ip'] = Server::ip();
-            $return['userAgent'] = Server::quidName();
-            $return['langHeader'] = Lang::default();
-        }
+        $return['scheme'] = 'http';
+        $return['query'] = [];
+        $return['ip'] = Server::ip();
+        $return['userAgent'] = Server::quidName();
+        $return['langHeader'] = Lang::default();
 
         return $return;
     }

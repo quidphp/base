@@ -529,9 +529,8 @@ class Request extends Base\Test
         // prepareChangeArray
         assert(Base\Request::prepareChangeArray([0=>'test','method'=>'post']) === ['method'=>'post','uri'=>'test']);
 
-        // default
-        assert(count(Base\Request::default(false)) === 1);
-        assert(count(Base\Request::default(true)) === 5);
+        // defaultCli
+        assert(count(Base\Request::defaultCli()) === 5);
 
         // cleanup
         Base\Request::setMethod('get');
