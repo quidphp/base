@@ -259,30 +259,30 @@ class Server extends Root
         return (connection_aborted() === 1)? true:false;
     }
 
-    
+
     // isRoot
     // retourne vrai si l'utilisateur éxécutant est root ou système
     // se base seulement sur la superglobale serveur
-    final public static function isRoot():bool 
+    final public static function isRoot():bool
     {
         $return = false;
         $serverUser = static::userExecute();
-        
+
         if(is_string($serverUser))
         {
             $serverUser = strtolower($serverUser);
-            
+
             if(static::isWindows())
-            $return = in_array($serverUser,array('system','administrator',true));
-            
+            $return = in_array($serverUser,['system','administrator',true], true);
+
             else
             $return = ($serverUser === 'root');
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // timeLimit
     // alias pour set_time_limit
     final public static function timeLimit(int $value=0):bool
@@ -665,32 +665,32 @@ class Server extends Root
     {
         return Superglobal::getServer('USERNAME');
     }
-    
-    
+
+
     // userStr
     // retourne le username avec son id entre paranthèse
     // possible d'inclure le nom de l'utilisateur éxécutant le fichier (dans la superglobale server)
-    final public static function userStr(bool $withExecute=false):string 
+    final public static function userStr(bool $withExecute=false):string
     {
         $return = '';
         $id = static::user(false);
         $name = static::user(true);
-        
+
         if($withExecute === true)
         {
             $execute = static::userExecute();
-            
+
             if(is_string($execute) && $execute !== $name)
-            $return .= $execute." -> ";
+            $return .= $execute.' -> ';
         }
-        
+
         $return .= $name;
         $return .= " ($id)";
-        
+
         return $return;
     }
-    
-    
+
+
     // group
     // retourne le groupe qui possède le script courant
     final public static function group():int

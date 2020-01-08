@@ -98,10 +98,10 @@ class Server extends Base\Test
 
         // isConnectionAborted
         assert(Base\Server::isConnectionAborted() === false);
-        
+
         // isRoot
         assert(is_bool(Base\Server::isRoot()));
-        
+
         // timeLimit
 
         // connectionStatus
@@ -215,12 +215,12 @@ class Server extends Base\Test
         // user
         assert(is_int(Base\Server::user()));
         assert(is_string(Base\Server::user(true)));
-        
+
         // userExecute
-        
+
         // userStr
         assert(is_string(Base\Server::userStr(true)));
-        
+
         // group
         assert(is_int(Base\Server::group()));
 

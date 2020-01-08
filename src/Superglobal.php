@@ -117,7 +117,7 @@ class Superglobal extends Root
         return Arrs::keyExists($key,static::server(),$sensitive);
     }
 
-    
+
     // hasServerLength
     // retourne vrai si le tableau serveur a la clé content_length de spécifié
     final public static function hasServerLength():bool
