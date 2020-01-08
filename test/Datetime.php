@@ -36,7 +36,6 @@ class Datetime extends Base\Test
         assert(!Base\Datetime::isYearValid($timestamp));
 
         // isYearLeap
-        assert(!Base\Datetime::isYearLeap());
         assert(Base\Datetime::isYearLeap(2016));
         assert(!Base\Datetime::isYearLeap(2017));
         assert(Base\Datetime::isYearLeap(Base\Datetime::make([2016,2,2])));
@@ -588,7 +587,7 @@ class Datetime extends Base\Test
         assert(Base\Datetime::diffStr(4,Base\Datetime::mk(2018,1,2),Base\Datetime::mk(2021,3,4)) === '3 years 2 months and 2 days');
 
         // ago
-        assert(Base\Datetime::ago(Base\Datetime::mk(2020,1,1)) === null);
+        assert(Base\Datetime::ago(Base\Datetime::mk(2120,1,1)) === null);
         assert(count(Base\Datetime::ago(Base\Datetime::mk(2014,1,1))) === 6);
         assert(!empty(Base\Datetime::ago(Base\Datetime::mk(2012,8,2),null,4)));
 

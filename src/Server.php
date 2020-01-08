@@ -259,7 +259,30 @@ class Server extends Root
         return (connection_aborted() === 1)? true:false;
     }
 
-
+    
+    // isRoot
+    // retourne vrai si l'utilisateur éxécutant est root ou système
+    // se base seulement sur la superglobale serveur
+    final public static function isRoot():bool 
+    {
+        $return = false;
+        $serverUser = static::userExecute();
+        
+        if(is_string($serverUser))
+        {
+            $serverUser = strtolower($serverUser);
+            
+            if(static::isWindows())
+            $return = in_array($serverUser,array('system','administrator',true));
+            
+            else
+            $return = ($serverUser === 'root');
+        }
+        
+        return $return;
+    }
+    
+    
     // timeLimit
     // alias pour set_time_limit
     final public static function timeLimit(int $value=0):bool
@@ -628,31 +651,48 @@ class Server extends Root
 
 
     // user
-    // retourne l'utilisateur courant
-    // peut être string ou int
-    // possible de retourner le username avec son id entre paranthèse
-    final public static function user(bool $name=false,bool $withId=false)
+    // retourne l'utilisateur qui possède le script courant, peut être string ou int
+    final public static function user(bool $name=false)
     {
-        $return = null;
-        $id = getmyuid();
-
-        if($name === true)
-        {
-            $return = get_current_user();
-
-            if($withId === true)
-            $return .= " ($id)";
-        }
-
-        else
-        $return = $id;
-
-        return $return;
+        return ($name === true)? get_current_user():getmyuid();
     }
 
 
+    // userExecute
+    // retourne l'utilisateur éxécutant du script si disponible
+    // n'utilise pas posix, retourne seulement le nom dans la superglobale serveur sinon null
+    final public static function userExecute():?string
+    {
+        return Superglobal::getServer('USERNAME');
+    }
+    
+    
+    // userStr
+    // retourne le username avec son id entre paranthèse
+    // possible d'inclure le nom de l'utilisateur éxécutant le fichier (dans la superglobale server)
+    final public static function userStr(bool $withExecute=false):string 
+    {
+        $return = '';
+        $id = static::user(false);
+        $name = static::user(true);
+        
+        if($withExecute === true)
+        {
+            $execute = static::userExecute();
+            
+            if(is_string($execute) && $execute !== $name)
+            $return .= $execute." -> ";
+        }
+        
+        $return .= $name;
+        $return .= " ($id)";
+        
+        return $return;
+    }
+    
+    
     // group
-    // retourne le groupe courant
+    // retourne le groupe qui possède le script courant
     final public static function group():int
     {
         return getmygid();
@@ -731,7 +771,8 @@ class Server extends Root
         $return['sapi'] = static::sapi();
         $return['ip'] = static::ip(true);
         $return['hostname'] = static::hostname();
-        $return['username'] = static::user(true,true);
+        $return['root'] = static::isRoot();
+        $return['username'] = static::userStr(true);
         $return['group'] = static::group();
         $return['caseSensitive'] = static::isCaseSensitive();
         $return = Arr::append($return,Extension::important(true));
@@ -760,8 +801,9 @@ class Server extends Root
         $return['online'] = static::isOnline();
         $return['hostname'] = static::hostname();
         $return['script'] = static::script();
+        $return['root'] = static::isRoot();
         $return['user'] = static::user();
-        $return['username'] = static::user(true,true);
+        $return['username'] = static::userStr(true);
         $return['group'] = static::group();
         $return['resourceUsage'] = static::resourceUsage();
         $return['memory'] = static::memory();

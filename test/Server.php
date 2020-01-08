@@ -98,7 +98,10 @@ class Server extends Base\Test
 
         // isConnectionAborted
         assert(Base\Server::isConnectionAborted() === false);
-
+        
+        // isRoot
+        assert(is_bool(Base\Server::isRoot()));
+        
         // timeLimit
 
         // connectionStatus
@@ -212,8 +215,12 @@ class Server extends Base\Test
         // user
         assert(is_int(Base\Server::user()));
         assert(is_string(Base\Server::user(true)));
-        assert(Base\Server::user(true,true) !== Base\Server::user(true));
-
+        
+        // userExecute
+        
+        // userStr
+        assert(is_string(Base\Server::userStr(true)));
+        
         // group
         assert(is_int(Base\Server::group()));
 
@@ -232,10 +239,10 @@ class Server extends Base\Test
         // phpInfo
 
         // overview
-        assert(count(Base\Server::overview()) === 16);
+        assert(count(Base\Server::overview()) === 17);
 
         // info
-        assert(count(Base\Server::info()) === 25);
+        assert(count(Base\Server::info()) === 26);
 
         // requirement
         assert(empty(Base\Server::requirement()));
