@@ -2051,10 +2051,10 @@ class Arr extends Root
         $max = $min;
 
         $return = range($min,$max,$inc);
-        
+
         if($combine === true)
         $return = array_combine($return,$return);
-        
+
         return $return;
     }
 

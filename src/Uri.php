@@ -416,12 +416,12 @@ class Uri extends Root
 
         if(static::isAbsolute($return))
         $return = static::removeBefore('path',$return,$option['decode']);
-        
+
         if($return !== '#')
         {
             if($return === '')
             $return = '/';
-            
+
             if(strlen($return))
             {
                 if(!empty($option['append']))

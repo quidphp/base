@@ -23,7 +23,7 @@ class Uri extends Base\Test
         Base\Uri::setShortcut('tdn','https://tdn.google.com');
         Base\Uri::setShortcut('extra','https://tdn.google.com/relative/ok');
         assert(!empty(Base\Uri::schemeStatic(['scheme.com'=>true,'james.com'=>443,'notScheme.com'=>'http'])));
-        
+
         // is
         assert(Base\Uri::is('/test.php?test=yeah'));
         assert(!Base\Uri::is(''));
@@ -191,7 +191,7 @@ class Uri extends Base\Test
         assert(Base\Uri::output('#test') === '#test');
         assert(Base\Uri::output('#test',['absolute'=>true]) === Base\Request::schemeHost().'/#test');
         assert(Base\Uri::output('test') === '/test');
-        assert(Base\Uri::output("#") === '#');
+        assert(Base\Uri::output('#') === '#');
         Base\Uri::setAllAbsolute(true);
         assert(Base\Uri::output('test') === Base\Request::schemeHost().'/test');
         assert(Base\Uri::output('#test') === '#test');
