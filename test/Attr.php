@@ -108,7 +108,8 @@ class Attr extends Base\Test
         assert(Base\Attr::parse(['href'=>'https://google.com/en/test.jpg'],Base\Attr::option(['href'=>['active'=>false]])) === ['href'=>'https://google.com/en/test.jpg']);
         assert(Base\Attr::parse(['href'=>'test@gmail.com'],Base\Attr::option()) === ['href'=>'mailto:test@gmail.com']);
         assert(Base\Attr::parse(['value'=>''],Base\Attr::option()) === ['value'=>'']);
-
+        assert(Base\Attr::parse(array('href'=>'#'),Base\Attr::option()) === array('href'=>'#'));
+        
         // parseBasic
         assert(Base\Attr::parseBasic(['test.test2.test3#test4']) === ['id'=>'test4','class'=>['test','test2','test3']]);
         assert(Base\Attr::parseBasic(['.test.test2.test3#test4']) === ['id'=>'test4','class'=>['test','test2','test3']]);
@@ -136,7 +137,8 @@ class Attr extends Base\Test
         // parseUri
         assert(Base\Attr::parseUri('test','jpg') === '/test.jpg');
         assert(Base\Attr::parseUri('test') === 'test');
-
+        assert(Base\Attr::parseUri('#') === '#');
+        
         // outputUri
         assert(Base\Attr::outputUri('test') === '/test');
         assert(Base\Attr::outputUri('test',['append'=>['t'=>'ok']]) === '/test?t=ok');

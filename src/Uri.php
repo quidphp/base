@@ -416,23 +416,26 @@ class Uri extends Root
 
         if(static::isAbsolute($return))
         $return = static::removeBefore('path',$return,$option['decode']);
-
-        if($return === '')
-        $return = '/';
-
-        if(strlen($return))
+        
+        if($return !== '#')
         {
-            if(!empty($option['append']))
-            $return = static::append($option['append'],$return);
-
-            if($option['encode'] === true)
-            $return = static::encodeAll($return,$option['decode']);
-
-            if($option['exists'] === true && static::isCallable($option['notFoundCallable']))
+            if($return === '')
+            $return = '/';
+            
+            if(strlen($return))
             {
-                $host = (is_string($option['schemeHost']))? $option['schemeHost']:Request::schemeHost();
-                if(!Finder::isUriToPath($return,$host))
-                $return = static::existsCallable($return,$option['notFoundCallable']);
+                if(!empty($option['append']))
+                $return = static::append($option['append'],$return);
+
+                if($option['encode'] === true)
+                $return = static::encodeAll($return,$option['decode']);
+
+                if($option['exists'] === true && static::isCallable($option['notFoundCallable']))
+                {
+                    $host = (is_string($option['schemeHost']))? $option['schemeHost']:Request::schemeHost();
+                    if(!Finder::isUriToPath($return,$host))
+                    $return = static::existsCallable($return,$option['notFoundCallable']);
+                }
             }
         }
 
