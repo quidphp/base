@@ -143,7 +143,7 @@ class Mime extends Root
     final public static function get($value,bool $charset=true):?string
     {
         $return = null;
-        
+
         if(is_resource($value))
         $return = static::getFromResource($value,$charset,true);
 
@@ -171,7 +171,7 @@ class Mime extends Root
                 Res::close($finfo);
             }
         }
-        
+
         return $return;
     }
 

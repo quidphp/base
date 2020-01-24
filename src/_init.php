@@ -38,7 +38,7 @@ trait _init
                 {
                     $init = false;
                     $callable = static::getInitCallable();
-                    
+
                     $merge = [];
                     $vars = get_class_vars($class);
                     foreach (array_reverse($vars) as $key => $value)
