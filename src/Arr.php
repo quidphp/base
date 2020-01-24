@@ -307,7 +307,31 @@ class Arr extends Root
         return $return;
     }
 
-
+    
+    // isRange
+    // retourne vrai si le tableau est un range valide (min, max, inc)
+    final public static function isRange($value):bool 
+    {
+        $return = false;
+        
+        if(is_array($value) && count($value) === 3)
+        {
+            $value = array_values($value);
+            
+            if(is_int($value[0]) && $value[0] >= 0)
+            {
+                if(is_int($value[1]) && $value[1] >= $value[0])
+                {
+                    if(is_int($value[2]) && $value[2] > 0)
+                    $return = true;
+                }
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // isKey
     // retourne vrai si la valeur est une clé
     final public static function isKey($value):bool

@@ -126,7 +126,13 @@ class Arr extends Base\Test
         assert(!Base\Arr::isSet([1,'test'=>2]));
         assert(Base\Arr::isSet([1,'test']));
         assert(!Base\Arr::isSet(false));
-
+        
+        // isRange
+        assert(Base\Arr::isRange(array(0,10,2)));
+        assert(!Base\Arr::isRange(array(0,10,0)));
+        assert(Base\Arr::isRange(array(2,2,2)));
+        assert(!Base\Arr::isRange(array(3,2,2)));
+        
         // isKey
         assert(Base\Arr::isKey(2));
         assert(Base\Arr::isKey('test'));
