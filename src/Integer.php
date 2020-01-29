@@ -150,8 +150,8 @@ class Integer extends Root
 
         return $return;
     }
-    
-    
+
+
     // range
     // fonction crée pour contourner un bogue dans range -> si min = 2, max = 3, inc = 2
     // si combine est true, alors les clés seront la même chose que les valeurs

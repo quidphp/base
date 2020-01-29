@@ -65,14 +65,14 @@ class Integer extends Base\Test
         // toggle
         assert(null === Base\Integer::toggle('0'));
         assert(1 === Base\Integer::toggle(0));
-        
+
         // range
         assert([0,2,4] === Base\Integer::range(0,5,2));
         assert([2] === Base\Integer::range(2,3,2));
         assert(Base\Integer::range(2,3,2,true) === [2=>2]);
         assert(count(Base\Integer::range(1,100,1)) === 100);
         assert(count(Base\Integer::range(2,18,3)) === 6);
-        
+
         return true;
     }
 }
