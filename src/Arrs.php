@@ -1277,7 +1277,7 @@ class Arrs extends Root
             if(is_array($dimension) && Arr::validate('int',$dimension))
             $arg = array_replace($arg,array_values($dimension));
 
-            $range = Arr::range(...$arg);
+            $range = Integer::range(...$arg);
 
             if(!empty($range))
             {

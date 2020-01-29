@@ -261,7 +261,7 @@ class Nav extends Root
 
             if(!empty($pages))
             {
-                foreach (Arr::range(-$amount,$amount) as $v)
+                foreach (Integer::range(-$amount,$amount) as $v)
                 {
                     if(in_array($v,$pages,true))
                     $return[] = array_search($v,$pages,true);

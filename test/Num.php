@@ -93,11 +93,13 @@ class Num extends Base\Test
         // isPositive
         assert(Base\Num::isPositive('2'));
         assert(!Base\Num::isPositive(0));
+        assert(Base\Num::isPositive(0,true));
         assert(!Base\Num::isPositive(-2));
         assert(!Base\Num::isPositive('test'));
 
         // isNegative
         assert(!Base\Num::isNegative(0));
+        assert(Base\Num::isNegative('0',true));
         assert(!Base\Num::isNegative('2'));
         assert(Base\Num::isNegative(-2));
         assert(!Base\Num::isNegative('test'));

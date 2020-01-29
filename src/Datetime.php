@@ -2185,7 +2185,7 @@ class Datetime extends Root
             if($min > $max)
             $interval = -$interval;
 
-            $range = Arr::range(1,$diff,$interval);
+            $range = Integer::range(1,$diff,$interval);
 
             foreach ($range as $v)
             {
@@ -2243,7 +2243,7 @@ class Datetime extends Root
             $year = static::year($value);
             $month = static::month($value);
             $daysInMonth = static::countDaysInMonth($value);
-            $range = Arr::range(1,$daysInMonth,$interval);
+            $range = Integer::range(1,$daysInMonth,$interval);
 
             foreach ($range as $v)
             {
@@ -2266,7 +2266,7 @@ class Datetime extends Root
     // possibilité de changer interval
     final public static function daysDefault(int $min=1,?int $max=null,?int $interval=null):array
     {
-        return Arr::range($min,$max ?? static::$config['amount']['daysInMonth'],$interval ?? 1);
+        return Integer::range($min,$max ?? static::$config['amount']['daysInMonth'],$interval ?? 1);
     }
 
 
@@ -2293,7 +2293,7 @@ class Datetime extends Root
             if($min > $max)
             $interval = -$interval;
 
-            $range = Arr::range(1,$diff,$interval);
+            $range = Integer::range(1,$diff,$interval);
 
             foreach ($range as $v)
             {
@@ -2328,7 +2328,7 @@ class Datetime extends Root
         if(is_int($value))
         {
             $year = static::year($value);
-            $range = Arr::range(1,$amount['monthsInYear'],$interval);
+            $range = Integer::range(1,$amount['monthsInYear'],$interval);
 
             foreach ($range as $v)
             {
@@ -2351,7 +2351,7 @@ class Datetime extends Root
     // possibilité de changer interval
     final public static function monthsDefault(int $min=1,?int $max=null,?int $interval=null):array
     {
-        return Arr::range($min,$max ?? static::$config['amount']['monthsInYear'],$interval ?? 1);
+        return Integer::range($min,$max ?? static::$config['amount']['monthsInYear'],$interval ?? 1);
     }
 
 
@@ -2378,7 +2378,7 @@ class Datetime extends Root
             if($min > $max)
             $interval = -$interval;
 
-            $range = Arr::range(1,$diff,$interval);
+            $range = Integer::range(1,$diff,$interval);
 
             foreach ($range as $v)
             {

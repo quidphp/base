@@ -150,12 +150,13 @@ class Num extends Root
 
     // isPositive
     // vérifie que la valeur est un chiffre positif
-    final public static function isPositive($value):bool
+    // si allowZero est true, retourne true si zero
+    final public static function isPositive($value,bool $allowZero=false):bool
     {
         $return = false;
         static::typecast($value);
 
-        if($value > 0)
+        if($value > 0 || ($allowZero === true && $value === 0))
         $return = true;
 
         return $return;
@@ -164,12 +165,13 @@ class Num extends Root
 
     // isNegative
     // vérifie que la valeur est un chiffre négatif
-    final public static function isNegative($value):bool
+    // si allowZero est true, retourne true si zero
+    final public static function isNegative($value,bool $allowZero=false):bool
     {
         $return = false;
         static::typecast($value);
 
-        if($value < 0)
+        if($value < 0 || ($allowZero === true && $value === 0))
         $return = true;
 
         return $return;

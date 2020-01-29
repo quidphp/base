@@ -758,11 +758,6 @@ class Arr extends Base\Test
         assert($x = Base\Arr::uncombine($source));
         assert(Base\Arr::combine(...$x) === $source);
 
-        // range
-        assert([0,2,4] === Base\Arr::range(0,5,2));
-        assert([2] === Base\Arr::range(2,3,2));
-        assert(Base\Arr::range(2,3,2,true) === [2=>2]);
-
         // shuffle
         $array = [1,'test'=>2,3];
         $array2 = Base\Arr::shuffle($array);

@@ -150,5 +150,24 @@ class Integer extends Root
 
         return $return;
     }
+    
+    
+    // range
+    // fonction crée pour contourner un bogue dans range -> si min = 2, max = 3, inc = 2
+    // si combine est true, alors les clés seront la même chose que les valeurs
+    final public static function range(int $min,int $max,int $inc=1,bool $combine=false):array
+    {
+        $return = [];
+
+        if(($max > 0 && (($max - $inc) < $min)) || $max < $min)
+        $max = $min;
+
+        $return = range($min,$max,$inc);
+
+        if($combine === true)
+        $return = array_combine($return,$return);
+
+        return $return;
+    }
 }
 ?>

@@ -89,9 +89,9 @@ class Fr extends Base\Config
 
             // placeholder
             'placeholder'=>[
-                'dateToDay'=>'DD-MM-YYYY',
-                'dateToMinute'=>'DD-MM-YYYY HH:MM',
-                'dateToSecond'=>'DD-MM-YYYY HH:MM:SS'
+                'dateToDay'=>'JJ-MM-AAAA',
+                'dateToMinute'=>'JJ-MM-AAAA HH:MM',
+                'dateToSecond'=>'JJ-MM-AAAA HH:MM:SS'
             ],
 
             // str
