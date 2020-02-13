@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // response
-// class with static methods to change the current response
+// class with static methods to alter the current response
 class Response extends Root
 {
     // config

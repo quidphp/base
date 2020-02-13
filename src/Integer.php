@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // integer
-// class with static methods to work integers
+// class with static methods to work with integers
 class Integer extends Root
 {
     // config

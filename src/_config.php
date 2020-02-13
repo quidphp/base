@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // _config
-// trait that grants static methods to deal with static config
+// trait that grants static methods to get or set data within static config
 trait _config
 {
     // config

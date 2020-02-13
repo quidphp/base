@@ -41,14 +41,14 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 ## Convention
 **QuidPHP/Base** is built on the following conventions:
 - *Traits*: Traits filenames start with an underscore (_).
-- *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 - *Type*: Files, function arguments and return types are strict typed.
 - *Static*: All class constructors are private, thus all methods are static and there is no object instantiation.
 - *Error*: The only exceptions that are thrown are related to function arguments and return types.
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
+- *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 
 ## Overview
-**QuidPHP/Base** contains 74 classes and traits. Here is an overview:
+**QuidPHP/Base** contains 79 classes and traits. Here is an overview:
 - [Arr](src/Arr.php) - Class with static methods to work with unidimensional arrays
 - [Arrs](src/Arrs.php) - Class with static methods to work with multidimensional arrays (an array containing at least another array)
 - [Assert](src/Assert.php) - Class with methods a layer over the native PHP assert functions
@@ -59,14 +59,15 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Browser](src/Browser.php) - Class with methods a layer over the native PHP get_browser function
 - [Buffer](src/Buffer.php) - Class with methods a layer over the native PHP output buffering functions
 - [Call](src/Call.php) - Class with static methods to manage callables and callbacks
-- [Classe](src/Classe.php) - Class with static methods to deal with classes with fully qualified class name strings
+- [Classe](src/Classe.php) - Class with static methods to deal with classes using fully qualified class name strings
+- [Cli](src/Cli.php) - Class with static methods to generate output for cli
 - [Column](src/Column.php) - Class with static methods to work with multidimensional column arrays (like a database query result array)
 - [Config](src/Config.php) - Class with config property, used for extending other classes
 - [Constant](src/Constant.php) - Class with static methods to work with PHP constants
 - [Cookie](src/Cookie.php) - Class with static methods to add and remove cookies
 - [Crypt](src/Crypt.php) - Class which contains methods to deal with the most common PHP cryptography functions
 - [Csv](src/Csv.php) - Class with static methods to easily work with CSV files
-- [Date](src/Date.php) - Class with static methods to generate, format and parse dates
+- [Datetime](src/Datetime.php) - Class with static methods to generate, format and parse dates
 - [Debug](src/Debug.php) - Class with tools to help for debugging, also injects some helper functions
 - [Dir](src/Dir.php) - Class with static methods to list, open and parse directories
 - [Email](src/Email.php) - Class with methods a layer over the native PHP send_mail function, handles mail headers
@@ -76,38 +77,40 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Extension](src/Extension.php) - Class which contains methods to deal with PHP extensions
 - [File](src/File.php) - Class with static methods to create, read and write files (accepts path strings and resources)
 - [Finder](src/Finder.php) - Class that provides methods to deal with the filesystem (used by Dir, File and Symlink)
+- [Floating](src/Floating.php) - Class with static methods to work with floating numbers
 - [Fqcn](src/Fqcn.php) - Class with static methods to deal with fully qualified class name strings
 - [Func](src/Func.php) - Class with static methods to work with simple functions
 - [Globals](src/Globals.php) - Class with static methods to manage global variables
 - [Header](src/Header.php) - Class with static methods to work with HTTP headers
 - [Html](src/Html.php) - Class with static methods for easily generating HTML
 - [Http](src/Http.php) - Class with static methods related to the HTTP protocol
-- [ImageRaster](src/ImageRaster.php) - Class with static methods to easily work with pixelated images
+- [ImageRaster](src/ImageRaster.php) - Class with static methods to work with pixelated images
 - [Ini](src/Ini.php) - Class with methods a layer over the native PHP ini functions
+- [Integer](src/Integer.php) - Class with static methods to work with integers
 - [Ip](src/Ip.php) - Class with static methods to work with IP strings
 - [Json](src/Json.php) - Class with static methods to encode and decode JSON
 - [Lang](src/Lang.php) - Class to manage language text and translations
     - [En](src/Lang/En.php) - English language content used by this namespace
     - [Fr](src/Lang/Fr.php) - French language content used by this namespace
-- [Listing](src/Listing.php) - Class to deal with associative strings and arrays (test: 1, test2: 2)
+- [Listing](src/Listing.php) - Class to deal with associative strings and arrays
 - [Mime](src/Mime.php) - Class with static methods to get or guess mime types
 - [Nav](src/Nav.php) - Class which contains methods to build a complex pagination engine
 - [Network](src/Network.php) - Class with static network-related methods (dns, mx, ping, hostname and more)
-- [Number](src/Number.php) - Class with static methods to work with strings, ints and floats numbers
+- [Num](src/Num.php) - Class with static methods to work with strings, ints and floats numbers
 - [Obj](src/Obj.php) - Class with static methods to deal with objects, does not accept fqcn strings
 - [Path](src/Path.php) - Class with static methods to deal with filesystem paths
 - [PathTrack](src/PathTrack.php) - Class with static methods to deal with filesystem paths (without a starting slash)
 - [Request](src/Request.php) - Class with static methods to analyze the current request
 - [Res](src/Res.php) - Class with static methods to create and modify resources of all types
-- [Response](src/Response.php) - Class with static methods to change the current response
+- [Response](src/Response.php) - Class with static methods to alter the current response
 - [Root](src/Root.php) - Abstract class extended by almost all others
 - [Scalar](src/Scalar.php) - Class with static methods to deal with scalar types
 - [Segment](src/Segment.php) - Class that provides the logic to replace bracket segment within a string
 - [Server](src/Server.php) - Class that provides a set of methods to analyze the current server
 - [Session](src/Session.php) - Class with static methods to manage a session (built over the native PHP session functions)
-- [Set](src/Set.php) - Class with static methods to deal with set strings (test, test2)
-- [Slug](src/Slug.php) - Class with static methods to deal with URI slugs (test-test2)
-- [SlugPath](src/SlugPath.php) - Class with static methods to deal with URI slugs within an URI path (test/test2-test3)
+- [Set](src/Set.php) - Class with static methods to deal with set strings
+- [Slug](src/Slug.php) - Class with static methods to deal with URI slugs
+- [SlugPath](src/SlugPath.php) - Class with static methods to deal with URI slugs within an URI path
 - [Str](src/Str.php) - Class with static methods to work with strings
 - [Style](src/Style.php) - Class with static methods to generate an HTML style attribute
 - [Superglobal](src/Superglobal.php) - Class with static methods to deal with superglobal variables
@@ -116,16 +119,18 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Timezone](src/Timezone.php) - Class with static methods to deal with timezone
 - [Uri](src/Uri.php) - Class with static methods to generate URI (absolute and relative)
 - [Validate](src/Validate.php) - Class that provides validation logic and methods
+- [Vari](src/Vari.php) - Class with some general static methods related to variables
 - [Xml](src/Xml.php) - Class with some static methods related to XML
 - [_cacheFile](src/_cacheFile.php) - Trait that provides methods to get or set a cached value from a file
 - [_cacheStatic](src/_cacheStatic.php) - Trait that provides methods to get or set a cached value from a static property
-- [_config](src/_config.php) - Trait that provides the logic to recursively merge the $config static property with the parent's property
+- [_config](src/_config.php) - Trait that grants static methods to get or set data within static config
+- [_init](src/_init.php) - Trait that provides the logic to recursively merge the static properties with the parent's properties
 - [_option](src/_option.php) - Trait that grants static methods to deal with static options (within the $config static property)
 - [_root](src/_root.php) - Trait that provides some basic fqcn methods
 - [_shortcut](src/_shortcut.php) - Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)
 
 ## Testing
-**QuidPHP/Base** contains 66 test classes:
+**QuidPHP/Base** contains 68 test classes:
 - [Arr](test/Arr.php) - Class for testing Quid\Base\Arr
 - [Arrs](test/Arrs.php) - Class for testing Quid\Base\Arrs
 - [Assert](test/Assert.php) - Class for testing Quid\Base\Assert
@@ -137,13 +142,13 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Buffer](test/Buffer.php) - Class for testing Quid\Base\Buffer
 - [Call](test/Call.php) - Class for testing Quid\Base\Call
 - [Classe](test/Classe.php) - Class for testing Quid\Base\Classe
+- [Cli](test/Cli.php) - Class for testing Quid\Base\Cli
 - [Column](test/Column.php) - Class for testing Quid\Base\Column
-- [Config](test/Config.php) - Class for testing Quid\Base\Config
 - [Constant](test/Constant.php) - Class for testing Quid\Base\Constant
 - [Cookie](test/Cookie.php) - Class for testing Quid\Base\Cookie
 - [Crypt](test/Crypt.php) - Class for testing Quid\Base\Crypt
 - [Csv](test/Csv.php) - Class for testing Quid\Base\Csv
-- [Date](test/Date.php) - Class for testing Quid\Base\Date
+- [Datetime](test/Datetime.php) - Class for testing Quid\Base\Datetime
 - [Debug](test/Debug.php) - Class for testing Quid\Base\Debug
 - [Dir](test/Dir.php) - Class for testing Quid\Base\Dir
 - [Email](test/Email.php) - Class for testing Quid\Base\Email
@@ -153,6 +158,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Extension](test/Extension.php) - Class for testing Quid\Base\Extension
 - [File](test/File.php) - Class for testing Quid\Base\File
 - [Finder](test/Finder.php) - Class for testing Quid\Base\Finder
+- [Floating](test/Floating.php) - Class for testing Quid\Base\Floating
 - [Fqcn](test/Fqcn.php) - Class for testing Quid\Base\Fqcn
 - [Func](test/Func.php) - Class for testing Quid\Base\Func
 - [Globals](test/Globals.php) - Class for testing Quid\Base\Globals
@@ -161,6 +167,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Http](test/Http.php) - Class for testing Quid\Base\Http
 - [ImageRaster](test/ImageRaster.php) - Class for testing Quid\Base\ImageRaster
 - [Ini](test/Ini.php) - Class for testing Quid\Base\Ini
+- [Integer](test/Integer.php) - Class for testing Quid\Base\Integer
 - [Ip](test/Ip.php) - Class for testing Quid\Base\Ip
 - [Json](test/Json.php) - Class for testing Quid\Base\Json
 - [Lang](test/Lang.php) - Class for testing Quid\Base\Lang
@@ -168,7 +175,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Mime](test/Mime.php) - Class for testing Quid\Base\Mime
 - [Nav](test/Nav.php) - Class for testing Quid\Base\Nav
 - [Network](test/Network.php) - Class for testing Quid\Base\Network
-- [Number](test/Number.php) - Class for testing Quid\Base\Number
+- [Num](test/Num.php) - Class for testing Quid\Base\Num
 - [Obj](test/Obj.php) - Class for testing Quid\Base\Obj
 - [Path](test/Path.php) - Class for testing Quid\Base\Path
 - [PathTrack](test/PathTrack.php) - Class for testing Quid\Base\PathTrack
@@ -187,10 +194,10 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Style](test/Style.php) - Class for testing Quid\Base\Style
 - [Superglobal](test/Superglobal.php) - Class for testing Quid\Base\Superglobal
 - [Symlink](test/Symlink.php) - Class for testing Quid\Base\Symlink
-- [Test](test/Test.php) - Class for testing Quid\Base\Test
 - [Timezone](test/Timezone.php) - Class for testing Quid\Base\Timezone
 - [Uri](test/Uri.php) - Class for testing Quid\Base\Uri
 - [Validate](test/Validate.php) - Class for testing Quid\Base\Validate
+- [Vari](test/Vari.php) - Class for testing Quid\Base\Vari
 - [Xml](test/Xml.php) - Class for testing Quid\Base\Xml
 
 **QuidPHP/Base** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).

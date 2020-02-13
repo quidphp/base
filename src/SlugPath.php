@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // slugPath
-// class with static methods to deal with URI slugs within an URI path (test/test2-test3)
+// class with static methods to deal with URI slugs within an URI path
 class SlugPath extends Listing
 {
     // config

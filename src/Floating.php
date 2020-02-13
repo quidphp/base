@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Quid\Base;
 
 // floating
-// class with static methods to work floting numbers
+// class with static methods to work with floating numbers
 class Floating extends Root
 {
     // config
