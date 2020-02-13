@@ -13,7 +13,7 @@ namespace Quid\Base;
 
 // autoload
 // class with methods a layer over the native PHP autoload logic
-class Autoload
+class Autoload extends Root
 {
     // config
     public static $config = [
