@@ -38,7 +38,6 @@ class Html extends Root
             'form'=>'%form%',
             'table'=>'<table><tr><td>%label%</td><td>%form%</td></tr></table>',
             'divtable'=>"<div class='table'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
-            'divtableClass'=>"<div class='table %class%'><div class='table-row'><div class='table-cell label-cell'>%label%</div><div class='table-cell form-cell'>%form%</div></div></div>",
             'div'=>'<div>%label%</div><div>%form%</div>'],
         'static'=>[ // terme accepté pour callStatic
             'special'=>['cond','many','or','loop'],
