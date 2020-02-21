@@ -213,9 +213,29 @@ class Segment extends Root
     }
 
 
+    // doReplace
+    // méthode protégé utilisé par set et sets pour faire le remplacement
+    final protected static function doReplace(string $return,array $delimiter,array $replace):string
+    {
+        $replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
+        $pattern = array_keys($replace);
+        $replacement = array_values($replace);
+
+        foreach ($replacement as $key => $value)
+        {
+            $replacement[$key] = str_replace('$','\$',$value);
+        }
+
+        $return = preg_replace($pattern,$replacement,$return);
+
+        return $return;
+    }
+
+
     // set
     // change la valeur d'un segment dans la chaîne
     // support pour column si value est un tableau
+    // si value contient un $, celui ci est escape
     final public static function set($delimiter,$key,$value,string $return):string
     {
         $replace = [];
@@ -249,12 +269,7 @@ class Segment extends Root
             }
 
             if(!empty($replace))
-            {
-                $replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
-                $pattern = array_keys($replace);
-                $replacement = array_values($replace);
-                $return = preg_replace($pattern,$replacement,$return);
-            }
+            $return = static::doReplace($return,$delimiter,$replace);
         }
 
         return $return;
@@ -309,12 +324,7 @@ class Segment extends Root
             }
 
             if(!empty($replace))
-            {
-                $replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
-                $pattern = array_keys($replace);
-                $replacement = array_values($replace);
-                $return = preg_replace($pattern,$replacement,$return);
-            }
+            $return = static::doReplace($return,$delimiter,$replace);
         }
 
         return $return;

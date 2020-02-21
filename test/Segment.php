@@ -89,6 +89,8 @@ class Segment extends Base\Test
         $string = 'test [test/james] asd [test2] [test3][test4]';
         assert(Base\Segment::get(null,$string)[0] === 'test/james');
 
+        // doReplace
+
         // set
         $string = 'test [test] asd [tést2/test3]';
         assert(Base\Segment::set(null,'tést2/test3','bla',$string) === 'test [test] asd bla');
@@ -99,6 +101,11 @@ class Segment extends Base\Test
         assert('test [test] asd [tést2/name] [test3][test4]' === Base\Segment::set(['[',']'],'tést2',['name'=>['HWAT']],$string));
         $string = 'test [test] asd [tést2] [test3][test4]';
         assert(Base\Segment::set(null,'tést2',null,$string) === 'test [test] asd  [test3][test4]');
+        $string = 'test [test]';
+        assert(Base\Segment::set(null,'test','$24.00',$string) === 'test $24.00');
+        assert(Base\Segment::set(null,'test','?',$string) === 'test ?');
+        assert(Base\Segment::set(null,'test','$',$string) === 'test $');
+        assert(Base\Segment::set(null,'test','#&',$string) === 'test #&');
 
         // setArray
         $array = ['ok'=>'test [test] asd [tést2] [test3][test4]'];
@@ -118,6 +125,9 @@ class Segment extends Base\Test
         $string = 'test [test] asd [test2/test3]';
         $replace = ['test'=>null,'test/test3'=>'non'];
         assert(Base\Segment::sets(null,$replace,$string) === 'test  asd [test2/test3]');
+        $string = 'test [test] asd [test2]';
+        $replace = ['test'=>'ok $50.00','test2'=>'?!#&$'];
+        assert(Base\Segment::sets(null,$replace,$string) === 'test ok $50.00 asd ?!#&$');
 
         // setsArray
         $array = ['test [test] asd [test2] [test3][test4]'];
