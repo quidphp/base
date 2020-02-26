@@ -21,6 +21,7 @@ class Segment extends Root
         'column'=>'/', // séparateur pour column
         'lang'=>'%lang%', // à remplacer lors du prepare, pour mettre %lang% dans un segment
         'escape'=>['[',']','(',')','{','}',',','.','|','$','?','*','+','/'], // délimiteur qu'il faut escape
+        'replace'=>['/'=>'\/','$'=>'\$'], // valeur de remplacement pour certains caractère spéciaux
         'delimiter'=>[ // liste des délimiteurs strings
             '[]'=>['[',']'],
             '()'=>['(',')'],
@@ -213,9 +214,10 @@ class Segment extends Root
     }
 
 
-    // doReplace
+    // doSet
     // méthode protégé utilisé par set et sets pour faire le remplacement
-    final protected static function doReplace(string $return,array $delimiter,array $replace):string
+    // se charge du escape de la valeur $
+    final protected static function doSet(string $return,array $delimiter,array $replace):string
     {
         $replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
         $pattern = array_keys($replace);
@@ -253,7 +255,7 @@ class Segment extends Root
             {
                 $value = (string) $value;
                 $replace = [$key=>$value];
-                $replace = Arr::keysReplace(['/'=>'\/'],$replace);
+                $replace = Arr::keysReplace(static::$config['replace'],$replace);
             }
 
             elseif(is_array($value))
@@ -262,14 +264,15 @@ class Segment extends Root
                 {
                     if(is_scalar($v))
                     {
-                        $newKey = $key.static::escape(static::$config['column']).$k;
+                        $column = static::$config['column'];
+                        $newKey = $key.static::escape($column).$k;
                         $replace[$newKey] = (string) $v;
                     }
                 }
             }
 
             if(!empty($replace))
-            $return = static::doReplace($return,$delimiter,$replace);
+            $return = static::doSet($return,$delimiter,$replace);
         }
 
         return $return;
@@ -309,13 +312,14 @@ class Segment extends Root
 
             if(Arrs::is($replace))
             {
+                $column = static::$config['column'];
                 $replace = Arrs::crush($replace);
-                $keysReplace = [static::$config['column']=>static::escape(static::$config['column'])];
+                $keysReplace = [$column=>static::escape($column)];
                 $replace = Arr::keysReplace($keysReplace,$replace);
             }
 
             else
-            $replace = Arr::keysReplace(['/'=>'\/'],$replace);
+            $replace = Arr::keysReplace(static::$config['replace'],$replace);
 
             foreach ($replace as $key => $value)
             {
@@ -324,7 +328,7 @@ class Segment extends Root
             }
 
             if(!empty($replace))
-            $return = static::doReplace($return,$delimiter,$replace);
+            $return = static::doSet($return,$delimiter,$replace);
         }
 
         return $return;
