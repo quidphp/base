@@ -676,6 +676,7 @@ class Html extends Base\Test
         assert(Base\Html::aOpen($res,'well') === "<a href='".$mediaJpgUri."'>well");
         assert(Base\Html::aOpen($res) === "<a href='".$mediaJpgUri."'>");
         assert(Base\Html::aOpen('#','test') === "<a href='#'>test");
+        assert(Base\Html::aOpen('https://google.com/in/what','test') === "<a href='https://google.com/in/what' target='_blank'>test");
 
         // imgOpen
         assert(Base\Html::imgOpen('james2.jpg','mon alt loé','#james') === "<img alt='mon-alt-loe' src='/james2.jpg' id='james'/>");

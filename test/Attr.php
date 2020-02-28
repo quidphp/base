@@ -99,7 +99,7 @@ class Attr extends Base\Test
         assert(Base\Attr::parse(['target'=>true],Base\Attr::option()) === ['target'=>'_blank']);
         assert(Base\Attr::parse(['method'=>true],Base\Attr::option()) === ['method'=>'post']);
         assert(Base\Attr::parse(['src'=>'test'],Base\Attr::option()) === ['src'=>'/test.jpg']);
-        assert(Base\Attr::parse(['href'=>'https://google.com/en/test.jpg'],Base\Attr::option()) === ['href'=>'https://google.com/en/test.jpg','target'=>'_blank','hreflang'=>'en']);
+        assert(Base\Attr::parse(['href'=>'https://google.com/en/test.jpg'],Base\Attr::option()) === ['href'=>'https://google.com/en/test.jpg','target'=>'_blank']);
         assert(Base\Attr::parse(['class'=>'test test2','oddEven'=>1],Base\Attr::option()) === ['class'=>['test','test2','odd']]);
         assert(Base\Attr::parse(['class'=>['test','test2'],'oddEven'=>2],Base\Attr::option()) === ['class'=>['test','test2','even']]);
         assert(Base\Attr::parse(['james'=>false,'value'=>false,'data-ok'=>false],Base\Attr::option()) === ['james'=>false,'value'=>false,'data-ok'=>false]);

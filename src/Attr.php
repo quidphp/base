@@ -258,7 +258,9 @@ class Attr extends Listing
             {
                 if($href['active'] === true)
                 {
-                    if(is_string($href['targetExternal']) && !array_key_exists('target',$return) && Uri::isExternal($value))
+                    $isExternal = Uri::isExternal($value);
+
+                    if(is_string($href['targetExternal']) && !array_key_exists('target',$return) && $isExternal === true)
                     $return['target'] = $href['targetExternal'];
 
                     if(!empty($href['selected']) && static::isSelectedUri($value))
@@ -268,7 +270,7 @@ class Attr extends Listing
                         $return['class'][] = $selected;
                     }
 
-                    if(!empty($href['lang']))
+                    if(!empty($href['lang']) && $isExternal === false)
                     {
                         $lang = Uri::lang($value);
                         if(!empty($lang))
