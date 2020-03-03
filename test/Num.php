@@ -110,12 +110,14 @@ class Num extends Base\Test
         assert(Base\Num::isOdd(3.0));
         assert(!Base\Num::isOdd(3.1));
         assert(!Base\Num::isOdd(-2));
+        assert(!Base\Num::isOdd(0));
 
         // isEven
         assert(!Base\Num::isEven('1'));
         assert(!Base\Num::isEven(3));
         assert(Base\Num::isEven(-2));
         assert(Base\Num::isEven(4));
+        assert(Base\Num::isEven(0));
 
         // isOverflow
         assert(Base\Num::isOverflow('123321123312231312213123312312312312'));
