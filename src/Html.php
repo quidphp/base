@@ -198,6 +198,7 @@ class Html extends Root
                     'hidden'=>'hidden',
                     'text'=>'text',
                     'email'=>'text',
+                    'tel'=>'text',
                     'date'=>'text',
                     'radio'=>'enum',
                     'checkbox'=>'set',
