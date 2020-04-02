@@ -203,4 +203,4 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Vari](test/Vari.php) - Class for testing Quid\Base\Vari
 - [Xml](test/Xml.php) - Class for testing Quid\Base\Xml
 
-**QuidPHP/Base** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
+**QuidPHP/Base** PHP testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
