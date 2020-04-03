@@ -72,6 +72,7 @@ class Html extends Base\Test
 
         // isTextTag
         assert(Base\Html::isTextTag('input'));
+        assert(Base\Html::isTextTag('textarea'));
         assert(!Base\Html::isTextTag('select'));
         assert(!Base\Html::isTextTag('inputHidden'));
         assert(Base\Html::isTextTag('inputText'));
