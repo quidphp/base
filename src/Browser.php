@@ -42,6 +42,28 @@ class Browser extends Root
     protected static $cacheStatic = []; // conserve les données de la cache statique
 
 
+    // isBot
+    // retourne vrai si le user agent est un bot
+    final public static function isBot($value):bool
+    {
+        $return = false;
+
+        if(is_string($value) && !empty(static::$config['bots']))
+        {
+            foreach(static::$config['bots'] as $v)
+            {
+                if(stripos($value,$v) !== false)
+                {
+                    $return = true;
+                    break;
+                }
+            }
+        }
+
+        return $return;
+    }
+
+
     // is
     // retourne vrai si le browser est reconnu par browscap
     final public static function is($value):bool
@@ -113,28 +135,6 @@ class Browser extends Root
     final public static function isWindows($value):bool
     {
         return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'win') !== false)? true:false;
-    }
-
-
-    // isBot
-    // retourne vrai si le user agent est un bot
-    final public static function isBot($value):bool
-    {
-        $return = false;
-
-        if(is_string($value) && !empty(static::$config['bots']))
-        {
-            foreach(static::$config['bots'] as $v)
-            {
-                if(stripos($value,$v) !== false)
-                {
-                    $return = true;
-                    break;
-                }
-            }
-        }
-
-        return $return;
     }
 
 

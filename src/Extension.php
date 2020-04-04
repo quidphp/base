@@ -19,7 +19,7 @@ class Extension extends Root
     public static $config = [
         'required'=>[ // extensions requises
             'curl','date','fileinfo','gd','iconv','json','mbstring','pcre',
-            'PDO','pdo_mysql','openssl','session','SimpleXML','Zend OPcache','zip']
+            'PDO','pdo_mysql','openssl','session','SimpleXML','zip']
     ];
 
 

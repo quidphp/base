@@ -115,24 +115,6 @@ class Request extends Base\Test
         // hasUserAgent
         assert(Base\Request::hasUserAgent());
 
-        // isDesktop
-        assert(is_bool(Base\Request::isDesktop()));
-
-        // isMobile
-        assert(is_bool(Base\Request::isMobile()));
-
-        // isOldIe
-        assert(is_bool(Base\Request::isOldIe()));
-
-        // isMac
-        assert(is_bool(Base\Request::isMac()));
-
-        // isLinux
-        assert(is_bool(Base\Request::isLinux()));
-
-        // isWindows
-        assert(is_bool(Base\Request::isWindows()));
-
         // isBot
         assert(!Base\Request::isBot());
 
@@ -434,7 +416,6 @@ class Request extends Base\Test
         Base\Request::setUserAgent(null);
         assert(!array_key_exists('User-Agent',Base\Request::headers()));
         assert(Base\Request::userAgent() === null);
-        assert(Base\Request::browserCap() === null);
         Base\Request::setUserAgent($userAgent);
 
         // referer
@@ -445,18 +426,6 @@ class Request extends Base\Test
         assert(Base\Request::referer(true) === null);
         assert(Base\Request::setReferer(null) === null);
         assert(Base\Request::referer() === null);
-
-        // browserCap
-        assert(is_array(Base\Request::browserCap()));
-
-        // browserName
-        assert(is_string(Base\Request::browserName()));
-
-        // browserPlatform
-        assert(is_string(Base\Request::browserPlatform()));
-
-        // browserDevice
-        assert(is_string(Base\Request::browserDevice()));
 
         // langHeader
         assert(strlen(Base\Request::langHeader()) === 2);

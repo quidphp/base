@@ -254,54 +254,6 @@ class Request extends Root
     }
 
 
-    // isDesktop
-    // retourne vrai si le useragent est desktop
-    final public static function isDesktop():bool
-    {
-        return Browser::isDesktop(static::userAgent())? true:false;
-    }
-
-
-    // isMobile
-    // retourne vrai si le useragent est mobile
-    final public static function isMobile():bool
-    {
-        return Browser::isMobile(static::userAgent())? true:false;
-    }
-
-
-    // isOldIe
-    // retourne vrai si le useragent est Internet Explorer < 9
-    final public static function isOldIe():bool
-    {
-        return Browser::isOldIe(static::userAgent())? true:false;
-    }
-
-
-    // isMac
-    // retourne vrai si le useragent est sur MacOs
-    final public static function isMac():bool
-    {
-        return Browser::isMac(static::userAgent())? true:false;
-    }
-
-
-    // isLinux
-    // retourne vrai si le useragent est sur Linux
-    final public static function isLinux():bool
-    {
-        return Browser::isLinux(static::userAgent())? true:false;
-    }
-
-
-    // isWindows
-    // retourne vrai si le useragent est sur Windows
-    final public static function isWindows():bool
-    {
-        return Browser::isWindows(static::userAgent())? true:false;
-    }
-
-
     // isBot
     // retourne vrai si le userAgent est un bot
     final public static function isBot():bool
@@ -1133,38 +1085,6 @@ class Request extends Root
         static::setHeader('Referer',$value);
 
         return;
-    }
-
-
-    // browserCap
-    // retourne les capacités du browser en fonction du useragent
-    final public static function browserCap():?array
-    {
-        return (is_string($userAgent = static::userAgent()))? Browser::cap($userAgent):null;
-    }
-
-
-    // browserName
-    // retourne le nom du browser du useragent
-    final public static function browserName():?string
-    {
-        return (is_string($userAgent = static::userAgent()))? Browser::name($userAgent):null;
-    }
-
-
-    // browserPlatform
-    // retourne la plateforme du browser du useragent
-    final public static function browserPlatform():?string
-    {
-        return (is_string($userAgent = static::userAgent()))? Browser::platform($userAgent):null;
-    }
-
-
-    // browserDevice
-    // retourne le device du browser du useragent
-    final public static function browserDevice():?string
-    {
-        return (is_string($userAgent = static::userAgent()))? Browser::device($userAgent):null;
     }
 
 

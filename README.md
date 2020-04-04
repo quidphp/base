@@ -35,7 +35,6 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
     - openssl
     - session
     - SimpleXML
-    - Zend OPcache
     - zip
 
 ## Comment

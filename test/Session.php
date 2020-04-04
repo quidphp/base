@@ -46,24 +46,6 @@ class Session extends Base\Test
         // isCaptcha
         assert(!Base\Session::isCaptcha('sad'));
 
-        // isDesktop
-        assert(!Base\Session::isDesktop());
-
-        // isMobile
-        assert(!Base\Session::isMobile());
-
-        // isOldIe
-        assert(!Base\Session::isOldIe());
-
-        // isMac
-        assert(!Base\Session::isMac());
-
-        // isLinux
-        assert(!Base\Session::isLinux());
-
-        // isWindows
-        assert(!Base\Session::isWindows());
-
         // isBot
         assert(!Base\Session::isBot());
 
@@ -334,18 +316,6 @@ class Session extends Base\Test
 
         // userAgent
         assert(is_string(Base\Session::userAgent()));
-
-        // browserCap
-        assert(count(Base\Session::browserCap()) === 10);
-
-        // browserName
-        assert(!empty(Base\Session::browserName()));
-
-        // browserPlatform
-        assert(!empty(Base\Session::browserPlatform()));
-
-        // browserDevice
-        assert(!empty(Base\Session::browserDevice()));
 
         // ip
         assert(is_string(Base\Session::ip()));

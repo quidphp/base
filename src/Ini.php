@@ -473,9 +473,6 @@ class Ini extends Root
         if(static::memoryLimit() < 128)
         $return[] = 'memory_limit';
 
-        if(!static::get('browscap'))
-        $return[] = 'browscap';
-
         return $return;
     }
 
