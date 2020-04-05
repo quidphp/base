@@ -1261,8 +1261,6 @@ class Arr extends Base\Test
         // keysLower
         $array = [1=>'no',1.2=>'ok','1.2'=>'ok','test'=>'no','TEST'=>'no','tEST'=>'ok','TÉST'=>'mb'];
         assert(Base\Arr::keysLower($array,true) === [1=>'ok','1.2'=>'ok','test'=>'ok','tést'=>'mb']);
-        if($isCli === false)
-        assert(Base\Arr::keysLower($array,false) === [1=>'ok','1.2'=>'ok','test'=>'ok','tÉst'=>'mb']); // je ne sais pas ce qui cause ceci sur cli
 
         // keysUpper
         $array = [1=>'no',1.2=>'ok','1.2'=>'ok','test'=>'no','TEST'=>'no','tEST'=>'ok','téST'=>'mb'];

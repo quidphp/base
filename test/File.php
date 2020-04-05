@@ -176,7 +176,7 @@ class File extends Base\Test
         assert(Base\File::mimeBasename($currentFile,'test.jpg') === 'test.jpg');
 
         // mime
-        assert(Base\File::mime($temp) === 'inode/x-empty; charset=binary');
+        assert(Base\Mime::isEmpty(Base\File::mime($temp)));
         assert(null === Base\File::mime('bla/bla/bla'));
         assert(is_string(Base\File::mime($currentFile)));
         assert(!empty(Base\File::mime($array)));

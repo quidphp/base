@@ -646,10 +646,9 @@ class Datetime extends Root
         if(is_scalar($format) || is_scalar($timezone))
         {
             $format = static::getFormatReplace($format,$lang);
-
-            $return['format'] = $format['format'];
+            $return['format'] = (is_array($format))? $format['format']:null;
             $return['timezone'] = (is_scalar($timezone) && !empty($timezone))? $timezone:null;
-            $return['replace'] = (is_array($format['replace']) && !empty($format['replace']))? $format['replace']:null;
+            $return['replace'] = (is_array($format) && is_array($format['replace']) && !empty($format['replace']))? $format['replace']:null;
 
             if(is_array($replace) && !empty($replace) && Arrs::is($replace))
             $return['replace'] = Arrs::replace($return['replace'],$replace);

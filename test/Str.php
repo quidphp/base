@@ -869,8 +869,6 @@ class Str extends Base\Test
 
         // toCamelCase
         assert('camelCaseTest' === Base\Str::toCamelCase('_','camel_case_test'));
-        if($isCli === false)
-        assert('cameléCaseTest' === Base\Str::toCamelCase('_','camelé_case_test'));
         assert('camelCaseTest23' === Base\Str::toCamelCase('_','camel_case_test_2_3'));
         assert('testTest23Test4' === Base\Str::toCamelCase('_',['test','test2',3,'3','test4']));
         assert('testÉtst23Test4' === Base\Str::toCamelCase('_',['test','étst2',3,'3','test4'],true));

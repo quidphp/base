@@ -72,7 +72,7 @@ class Mime extends Root
     // retourne vrai si le mime type en est un d'un fichier vide
     final public static function isEmpty($value):bool
     {
-        return (is_string($value) && strpos($value,'inode/x-empty') === 0)? true:false;
+        return is_string($value) && Str::isStarts(['inode/x-empty','application/x-empty'],$value);
     }
 
 

@@ -124,7 +124,7 @@ class Nav extends Base\Test
         assert(Base\Nav::pageLast(0,2) === null);
 
         // general
-        assert(Base\Nav::general(1114,50,4,3)['next'] === null);
+        assert(Base\Nav::general(1114,50,4,3) === null);
         assert(count(Base\Nav::general(4,50,4,3)) === 9);
         assert(count(Base\Nav::general(2,[1,2,3,4,5,6,7,8,1,2,3],4,3)) === 9);
 

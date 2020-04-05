@@ -27,6 +27,7 @@ class Mime extends Base\Test
         // isEmpty
         assert(!Base\Mime::isEmpty('text/csv; charset=us-ascii'));
         assert(Base\Mime::isEmpty('inode/x-empty'));
+        assert(Base\Mime::isEmpty('application/x-empty'));
 
         // isGroup
         assert(Base\Mime::isGroup('php',$file,true));

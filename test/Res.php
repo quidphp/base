@@ -600,7 +600,7 @@ class Res extends Base\Test
         assert(Base\Res::size($output) === 0);
 
         // mime
-        assert(Base\Res::mime($fp) === 'inode/x-empty; charset=binary');
+        assert(Base\Mime::isEmpty(Base\Res::mime($fp)));
         assert(strpos(Base\Res::mime($current),'text/x-php;') === 0);
         assert(Base\Res::mime($http) === 'image/jpeg');
         assert(Base\Res::mime($output) === null);
