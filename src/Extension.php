@@ -18,7 +18,7 @@ class Extension extends Root
     // config
     public static $config = [
         'required'=>[ // extensions requises
-            'curl','date','fileinfo','gd','iconv','json','mbstring','pcre',
+            'ctype','curl','date','fileinfo','gd','iconv','json','mbstring','pcre',
             'PDO','pdo_mysql','openssl','session','SimpleXML','zip']
     ];
 
