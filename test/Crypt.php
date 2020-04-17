@@ -56,10 +56,18 @@ class Crypt extends Base\Test
         assert(strlen(Base\Crypt::md5('test')) === 32);
         assert(strlen(Base\Crypt::md5('test',true)) === 16);
 
+        // hash
+        assert(strlen(Base\Crypt::hash('sha1','test')) === 40);
+
         // sha
         assert(!empty(Base\Crypt::sha('')));
         assert(hash('sha256','test') === Base\Crypt::sha('test',256));
         assert(hash('sha1','test') === Base\Crypt::sha('test',1));
+        assert(Base\Crypt::sha('test',256,true) !== Base\Crypt::sha('test',256,false));
+        assert(!Base\Str::isPrintable(Base\Crypt::sha('test',256,true)));
+
+        // hashHmac
+        assert(strlen(Base\Crypt::hashHmac('sha1','test','bla')) === 40);
 
         // randomBytes
         assert(is_string(Base\Crypt::randomBytes()));

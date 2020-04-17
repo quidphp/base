@@ -1814,7 +1814,7 @@ class Res extends Root
             // header
             if(!empty($header))
             {
-                $header = Header::arr($header);
+                $header = Header::list($header);
                 curl_setopt($return,CURLOPT_HTTPHEADER,$header);
             }
 

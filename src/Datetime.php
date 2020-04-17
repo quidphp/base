@@ -460,6 +460,20 @@ class Datetime extends Root
     }
 
 
+    // nowWithDecimal
+    // retourne un tableau avec le timestamp et la décimale
+    final public static function nowWithDecimal():array
+    {
+        $return = [];
+        $microtime = microtime();
+        $array = explode(' ', $microtime);
+        $return['now'] = (int) $array[1];
+        $return['decimal'] = (float) $array[0];
+
+        return $return;
+    }
+
+
     // strtotime
     // alias pour strtotime
     final public static function strtotime(string $format,$value=null):?int

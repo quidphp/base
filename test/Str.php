@@ -125,6 +125,11 @@ class Str extends Base\Test
 		'));
         assert(!Base\Str::hasNullByte('Привет всем участникам форума! Класный у вас сайт! '));
 
+        // isPrintable
+        assert(!Base\Str::isPrintable(Base\Crypt::sha('test',256,true)));
+        assert(Base\Str::isPrintable(Base\Crypt::sha('test',256,false)));
+        assert(!Base\Str::isPrintable('Привет всем участникам форума! Класный у вас сайт'));
+
         // icompare
         assert(Base\Str::icompare('string','String'));
         assert(Base\Str::icompare('string','string'));

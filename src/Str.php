@@ -278,12 +278,15 @@ class Str extends Root
     // peut être utilie pour détecter qu'une chaîne contient des caractères binaires
     final public static function hasNullByte($value):bool
     {
-        $return = false;
+        return is_string($value) && strpos($value,"\0") !== false;
+    }
 
-        if(is_string($value) && strpos($value,"\0") !== false)
-        $return = true;
 
-        return $return;
+    // isPrintable
+    // retourne vrai si la chaîne est imprimable (tous les caractères)
+    final public static function isPrintable($value):bool
+    {
+        return is_string($value) && ctype_print($value);
     }
 
 

@@ -149,6 +149,9 @@ class Datetime extends Base\Test
         // microtime
         assert(is_float(Base\Datetime::microtime()));
 
+        // nowWithDecimal
+        assert(count(Base\Datetime::nowWithDecimal()) === 2);
+
         // strtotime
         assert(Base\Datetime::strtotime('3 weeks from now') === null);
         assert(Base\Datetime::strtotime('+3 weeks') > Base\Datetime::time());

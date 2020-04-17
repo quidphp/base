@@ -148,11 +148,27 @@ class Crypt extends Root
     }
 
 
+    // hash
+    // retourne un hash
+    final public static function hash(string $algo,string $value,bool $binary=false):string
+    {
+        return hash($algo,$value,$binary);
+    }
+
+
     // sha
     // retourne un hash sha
-    final public static function sha(string $value,int $type=256):?string
+    final public static function sha(string $value,int $type=256,bool $binary=false):string
     {
-        return hash('sha'.$type,$value);
+        return static::hash('sha'.$type,$value,$binary);
+    }
+
+
+    // hashHmac
+    // retourne un hash avec une clé
+    final public static function hashHmac(string $algo,string $value,string $key,bool $binary=false):string
+    {
+        return hash_hmac($algo,$value,$key,$binary);
     }
 
 
