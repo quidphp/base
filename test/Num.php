@@ -57,6 +57,8 @@ class Num extends Base\Test
         assert(0 === Base\Num::cast(false));
         assert(null === Base\Num::cast(null));
         assert(Base\Num::cast('30MB') === '30MB');
+        assert(Base\Num::cast('0.02316447') === 0.02316447);
+        assert(Base\Num::cast('0.02316447',false) === 0.02316447);
 
         // is
         assert(Base\Num::is('2'));

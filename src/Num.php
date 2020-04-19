@@ -69,13 +69,14 @@ class Num extends Root
                 $stringLength = strlen($string);
                 $float = (float) $string;
                 $int = (int) $float;
+                $hasDot = (strpos($string,'.') !== false);
 
                 // string si longueur trop longue
-                if(strpos($string,'.') === false && $stringLength > static::$config['intMaxLength'])
+                if($hasDot === false && $stringLength > static::$config['intMaxLength'])
                 $return = $string;
 
                 // si premier caractère est zéro, contient plus d'un caractère et extra est false
-                elseif($extra === false && $stringLength > 1 && $string[0] === '0')
+                elseif($hasDot === false && $extra === false && $stringLength > 1 && $string[0] === '0')
                 $return = $string;
 
                 // si valeur égale à int

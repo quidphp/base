@@ -42,6 +42,7 @@ class Arr extends Base\Test
         assert(['000111',1,1.2,'12345678901123123',true,false,null,null] === Base\Arr::cast(['000111','1','1.2','12345678901123123','true','false','null',null],1,1));
         assert([1,1.2,1.3,12345678901,true,false,null,null] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null],2,1));
         assert([1,1.2,1.3,12345678901,true,false,null,null,true,false] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null,'on','off'],2,2));
+        assert(Base\Arr::cast(['0.02316447']) === [0.02316447]);
 
         // castMore
         assert([111,1,1.2,1.3,12345678901,true,false,null,null] === Base\Arr::castMore(['000111','1','1.2','1,3','12345678901','true','false','null',null]));
