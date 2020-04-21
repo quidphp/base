@@ -1006,7 +1006,7 @@ class Html extends Root
         $lower = strtolower($key);
 
         if($lower !== $key)
-        $camelCase = Str::fromCamelCase($key);
+        $camelCase = Str::explodeCamelCase($key);
 
         if(is_array($camelCase) && !empty($camelCase))
         $callable = static::getCallStatic($camelCase,$arg);

@@ -4704,7 +4704,7 @@ class Arr extends Root
         foreach ($array as $value)
         {
             if(is_string($value))
-            $camelCase[$value] = Str::fromCamelCase($value);
+            $camelCase[$value] = Str::explodeCamelCase($value);
         }
 
         $copy = $camelCase;

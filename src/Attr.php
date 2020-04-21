@@ -578,16 +578,7 @@ class Attr extends Listing
         $return = 'data-'.$return;
 
         if(strtolower($return) !== $return)
-        {
-            $camelCase = Str::fromCamelCase($return);
-
-            if(!empty($camelCase))
-            {
-                $camelCase = Arr::map('trim',$camelCase,'-');
-                $camelCase = array_map('strtolower',$camelCase);
-                $return = implode('-',$camelCase);
-            }
-        }
+        $return = Str::fromCamelCase('-',$return);
 
         return $return;
     }

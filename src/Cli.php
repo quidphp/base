@@ -135,7 +135,7 @@ class Cli extends Root
         $camelCase = null;
 
         if($lower !== $key)
-        $camelCase = Str::fromCamelCase($key);
+        $camelCase = Str::explodeCamelCase($key);
 
         if(is_array($camelCase) && count($camelCase) === 2 && $camelCase[0] === 'get')
         {

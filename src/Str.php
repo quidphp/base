@@ -2353,11 +2353,31 @@ class Str extends Root
     }
 
 
-    // fromCamelCase
-    // explose une string camelCase
-    final public static function fromCamelCase(string $str):array
+    // explodeCamelCase
+    // explose une string camelCase, retourne un tableau
+    final public static function explodeCamelCase(string $str):array
     {
         return preg_split('#([A-Z][^A-Z]*)#',$str,0,PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+    }
+
+
+    // fromCamelCase
+    // permet de transformer une string camelcase vers une string avec séparateur
+    final public static function fromCamelCase(string $delimiter,string $value)
+    {
+        $return = '';
+        $explode = static::explodeCamelCase($value);
+
+        if(!empty($explode))
+        {
+            $explode = Arr::map(function(string $value) use($delimiter) {
+                return strtolower(trim($value,$delimiter));
+            },$explode,$delimiter);
+
+            $return = implode($delimiter,$explode);
+        }
+
+        return $return;
     }
 
 

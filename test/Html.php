@@ -393,6 +393,8 @@ class Html extends Base\Test
         assert(Base\Html::divAnchorOpen('test') === "<div><a href='/test'>");
         assert(Base\Html::inputTel('5145090202') === "<input type='tel' value='5145090202'/>");
         assert(Base\Html::inputTel(5145090202) === "<input type='tel' value='5145090202'/>");
+        assert(Base\Html::button([1,2,3]) === "<button type='button'>1, 2, 3</button>");
+        assert(Base\Html::button(['test'=>'OKÉÉÉ', 'ble'=> 'MEH']) === "<button type='button'>OKÉÉÉ, MEH</button>");
 
         // get
         assert(Base\Html::get('a') === 'a');

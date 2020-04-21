@@ -862,15 +862,18 @@ class Str extends Base\Test
         // randomPrefix
         assert(strlen(Base\Str::randomPrefix('WHAT',10)) === 14);
 
+        // explodeCamelCase
+        assert([] === Base\Str::explodeCamelCase(''));
+        assert([0=>'camel'] === Base\Str::explodeCamelCase('camel'));
+        assert([0=>'camel',1=>'Case'] === Base\Str::explodeCamelCase('camelCase'));
+        assert([0=>'camel',1=>'CaseÉtest'] === Base\Str::explodeCamelCase('camelCaseÉtest'));
+        assert([0=>'camel',1=>'Case',2=>'Eest'] === Base\Str::explodeCamelCase('camelCaseEest'));
+        assert(Base\Str::explodeCamelCase('jAmesOk') === ['j','Ames','Ok']);
+        assert(Base\Str::explodeCamelCase('JAmesOk') === ['J','Ames','Ok']);
+        assert(Base\Str::explodeCamelCase('JamesOk') === ['James','Ok']);
+
         // fromCamelCase
-        assert([] === Base\Str::fromCamelCase(''));
-        assert([0=>'camel'] === Base\Str::fromCamelCase('camel'));
-        assert([0=>'camel',1=>'Case'] === Base\Str::fromCamelCase('camelCase'));
-        assert([0=>'camel',1=>'CaseÉtest'] === Base\Str::fromCamelCase('camelCaseÉtest'));
-        assert([0=>'camel',1=>'Case',2=>'Eest'] === Base\Str::fromCamelCase('camelCaseEest'));
-        assert(Base\Str::fromCamelCase('jAmesOk') === ['j','Ames','Ok']);
-        assert(Base\Str::fromCamelCase('JAmesOk') === ['J','Ames','Ok']);
-        assert(Base\Str::fromCamelCase('JamesOk') === ['James','Ok']);
+        assert(Base\Str::fromCamelCase('-','testOkTwo') === 'test-ok-two');
 
         // toCamelCase
         assert('camelCaseTest' === Base\Str::toCamelCase('_','camel_case_test'));
