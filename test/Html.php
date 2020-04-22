@@ -395,6 +395,8 @@ class Html extends Base\Test
         assert(Base\Html::inputTel(5145090202) === "<input type='tel' value='5145090202'/>");
         assert(Base\Html::button([1,2,3]) === "<button type='button'>1, 2, 3</button>");
         assert(Base\Html::button(['test'=>'OKÉÉÉ', 'ble'=> 'MEH']) === "<button type='button'>OKÉÉÉ, MEH</button>");
+        assert(Base\Html::spanCond(0,'what') === "<span class='what'>0</span>");
+        assert(Base\Html::spanCond(true,'what') === "<span class='what'>&nbsp;</span>");
 
         // get
         assert(Base\Html::get('a') === 'a');
