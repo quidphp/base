@@ -64,7 +64,7 @@ class Res extends Root
     // retourne vrai si la variable est une resource
     final public static function is($value):bool
     {
-        return (is_resource($value))? true:false;
+        return (is_resource($value));
     }
 
 
@@ -81,10 +81,10 @@ class Res extends Root
             $kind = static::kind($value);
 
             if($kind === 'dir')
-            $return = (static::readDir(null,1,$value,['dot'=>false]) === null)? true:false;
+            $return = (static::readDir(null,1,$value,['dot'=>false]) === null);
 
             else
-            $return = empty(static::size($value))? true:false;
+            $return = empty(static::size($value));
         }
 
         return $return;
@@ -147,7 +147,7 @@ class Res extends Root
     // retourne vrai si la resource est de type stream
     final public static function isStream($value):bool
     {
-        return (static::type($value) === 'stream')? true:false;
+        return (static::type($value) === 'stream');
     }
 
 
@@ -170,7 +170,7 @@ class Res extends Root
     // retourne vrai si la resource est de type curl
     final public static function isCurl($value):bool
     {
-        return (static::type($value) === 'curl')? true:false;
+        return (static::type($value) === 'curl');
     }
 
 
@@ -178,7 +178,7 @@ class Res extends Root
     // retourne vrai si la resource est de type finfo
     final public static function isFinfo($value):bool
     {
-        return (static::type($value) === 'file_info')? true:false;
+        return (static::type($value) === 'file_info');
     }
 
 
@@ -186,7 +186,7 @@ class Res extends Root
     // retourne vrai si la resource est de type stream context
     final public static function isContext($value):bool
     {
-        return (static::type($value) === 'stream-context')? true:false;
+        return (static::type($value) === 'stream-context');
     }
 
 
@@ -244,7 +244,7 @@ class Res extends Root
     // retourne vrai si la resource est fileLike, c'est à dire file, phpMemory ou phpTemp
     final public static function isFileLike($value):bool
     {
-        return (static::isFileExists($value) || static::isPhpMemory($value) || static::isPhpTemp($value))? true:false;
+        return (static::isFileExists($value) || static::isPhpMemory($value) || static::isPhpTemp($value));
     }
 
 
@@ -252,7 +252,7 @@ class Res extends Root
     // retourne vrai si la resource est un fichier uploadé
     final public static function isFileUploaded($value):bool
     {
-        return (File::isUploaded($value))? true:false;
+        return (File::isUploaded($value));
     }
 
 
@@ -260,7 +260,7 @@ class Res extends Root
     // retourne vrai si la resource est un fichier visible
     final public static function isFileVisible($value):bool
     {
-        return (File::isVisible($value))? true:false;
+        return (File::isVisible($value));
     }
 
 
@@ -268,7 +268,7 @@ class Res extends Root
     // retourne vrai si le chemin de la resource peut être transformé en uri
     final public static function isFilePathToUri($value):bool
     {
-        return (File::isPathToUri($value))? true:false;
+        return (File::isPathToUri($value));
     }
 
 
@@ -276,7 +276,7 @@ class Res extends Root
     // vérifie que le parent direct de la resource fichier existe et est un directoire
     final public static function isFileParentExists($value):bool
     {
-        return (File::isVisible($value))? true:false;
+        return (File::isVisible($value));
     }
 
 
@@ -284,7 +284,7 @@ class Res extends Root
     // vérifie que le parent direct de la resource fichier existe et est un directoire accessible en lecture
     final public static function isFileParentReadable($value):bool
     {
-        return (File::isParentReadable($value))? true:false;
+        return (File::isParentReadable($value));
     }
 
 
@@ -292,7 +292,7 @@ class Res extends Root
     // vérifie que le parent direct de la resource fichier existe et est un directoire accessible en écriture
     final public static function isFileParentWritable($value):bool
     {
-        return (File::isParentWritable($value))? true:false;
+        return (File::isParentWritable($value));
     }
 
 
@@ -300,7 +300,7 @@ class Res extends Root
     // vérifie que le parent direct de la resource fichier existe et est un directoire éxécutable
     final public static function isFileParentExecutable($value):bool
     {
-        return (File::isParentExecutable($value))? true:false;
+        return (File::isParentExecutable($value));
     }
 
 
@@ -308,7 +308,7 @@ class Res extends Root
     // retourne vrai si la resource est de kind directoire
     final public static function isDir($value):bool
     {
-        return (static::streamType($value) === 'dir')? true:false;
+        return (static::streamType($value) === 'dir');
     }
 
 
@@ -316,7 +316,7 @@ class Res extends Root
     // retourne vrai si la resource est de kind http
     final public static function isHttp($value):bool
     {
-        return (static::wrapperType($value) === 'http')? true:false;
+        return (static::wrapperType($value) === 'http');
     }
 
 
@@ -324,7 +324,7 @@ class Res extends Root
     // retourne vrai si la resource est une des ressources PHP
     final public static function isPhp($value):bool
     {
-        return (static::wrapperType($value) === 'PHP')? true:false;
+        return (static::wrapperType($value) === 'PHP');
     }
 
 
@@ -332,7 +332,7 @@ class Res extends Root
     // retourne vrai si le stream est de type php et écrivable
     final public static function isPhpWritable($value):bool
     {
-        return (static::isPhp($value) && static::streamType($value) !== 'Input')? true:false;
+        return (static::isPhp($value) && static::streamType($value) !== 'Input');
     }
 
 
@@ -340,7 +340,7 @@ class Res extends Root
     // retourne vrai si la resource est de kind PHP input
     final public static function isPhpInput($value):bool
     {
-        return (static::isPhp($value) && static::streamType($value) === 'Input')? true:false;
+        return (static::isPhp($value) && static::streamType($value) === 'Input');
     }
 
 
@@ -348,7 +348,7 @@ class Res extends Root
     // retourne vrai si la resource est de kind PHP output
     final public static function isPhpOutput($value):bool
     {
-        return (static::isPhp($value) && static::streamType($value) === 'Output')? true:false;
+        return (static::isPhp($value) && static::streamType($value) === 'Output');
     }
 
 
@@ -356,7 +356,7 @@ class Res extends Root
     // retourne vrai si la resource est de kind PHP temp
     final public static function isPhpTemp($value):bool
     {
-        return (static::isPhp($value) && static::streamType($value) === 'TEMP')? true:false;
+        return (static::isPhp($value) && static::streamType($value) === 'TEMP');
     }
 
 
@@ -364,7 +364,7 @@ class Res extends Root
     // retourne vrai si la resource est de kind PHP memory
     final public static function isPhpMemory($value):bool
     {
-        return (static::isPhp($value) && static::streamType($value) === 'MEMORY')? true:false;
+        return (static::isPhp($value) && static::streamType($value) === 'MEMORY');
     }
 
 
@@ -373,7 +373,7 @@ class Res extends Root
     // les flux fichiers et http lisibles retournent vrai
     final public static function isResponsable($value):bool
     {
-        return (static::isPhpWritable($value) || (static::isReadable($value) && (static::isFileExists($value) || static::isHttp($value))))? true:false;
+        return (static::isPhpWritable($value) || (static::isReadable($value) && (static::isFileExists($value) || static::isHttp($value))));
     }
 
 
@@ -381,7 +381,7 @@ class Res extends Root
     // retourne vrai si la resource est local
     final public static function isLocal($value):bool
     {
-        return (static::canLocal($value) && stream_is_local($value))? true:false;
+        return (static::canLocal($value) && stream_is_local($value));
     }
 
 
@@ -389,7 +389,7 @@ class Res extends Root
     // retourne vrai si la resource est remote
     final public static function isRemote($value):bool
     {
-        return (static::canLocal($value) && !stream_is_local($value))? true:false;
+        return (static::canLocal($value) && !stream_is_local($value));
     }
 
 
@@ -397,7 +397,7 @@ class Res extends Root
     // retourne vrai si le flux a atteint le délai d'expiration
     final public static function isTimedOut($value):bool
     {
-        return (static::metaValue('timed_out',$value) === true)? true:false;
+        return (static::metaValue('timed_out',$value) === true);
     }
 
 
@@ -405,7 +405,7 @@ class Res extends Root
     // retourne vrai si le flux est en mode bloquant
     final public static function isBlocked($value):bool
     {
-        return (static::metaValue('blocked',$value) === true)? true:false;
+        return (static::metaValue('blocked',$value) === true);
     }
 
 
@@ -413,7 +413,7 @@ class Res extends Root
     // retourne vrai si on peut rechercher dans le flux courant via le pointeur
     final public static function isSeekable($value):bool
     {
-        return (static::metaValue('seekable',$value) === true)? true:false;
+        return (static::metaValue('seekable',$value) === true);
     }
 
 
@@ -422,7 +422,7 @@ class Res extends Root
     // ceci exclut donc les directoires
     final public static function isSeekableTellable($value):bool
     {
-        return (!static::isDir($value) && static::metaValue('seekable',$value) === true)? true:false;
+        return (!static::isDir($value) && static::metaValue('seekable',$value) === true);
     }
 
 
@@ -430,7 +430,7 @@ class Res extends Root
     // retourne vrai si la ressource peut être barré et débarré par flock
     final public static function isLockable($value):bool
     {
-        return (static::isFileExists($value))? true:false;
+        return (static::isFileExists($value));
     }
 
 
@@ -439,7 +439,7 @@ class Res extends Root
     // la resource doit être seekable et ne fonctionne pas avec les dir
     final public static function isStart($value):bool
     {
-        return (static::position($value) === 0)? true:false;
+        return (static::position($value) === 0);
     }
 
 
@@ -448,7 +448,7 @@ class Res extends Root
     // la resource doit être seekable et ne fonctionne pas avec les dir
     final public static function isEnd($value):bool
     {
-        return (is_resource($value) && feof($value))? true:false;
+        return (is_resource($value) && feof($value));
     }
 
 
@@ -464,7 +464,7 @@ class Res extends Root
     // retourne vrai si la resource supporte les appels à stream_is_local
     final public static function canLocal($value):bool
     {
-        return (static::is($value) && !static::isContext($value) && static::isRegularType($value))? true:false;
+        return (static::is($value) && !static::isContext($value) && static::isRegularType($value));
     }
 
 
@@ -472,7 +472,7 @@ class Res extends Root
     // retourne vrai si la resource supporte les appels à stream_get_meta
     final public static function canMeta($value):bool
     {
-        return (static::is($value) && !static::isContext($value) && static::isRegularType($value))? true:false;
+        return (static::is($value) && !static::isContext($value) && static::isRegularType($value));
     }
 
 
@@ -480,7 +480,7 @@ class Res extends Root
     // retourne vrai si la resource supporte les appels à stream_context
     final public static function canContext($value):bool
     {
-        return (static::is($value) && static::isRegularType($value))? true:false;
+        return (static::is($value) && static::isRegularType($value));
     }
 
 
@@ -489,7 +489,7 @@ class Res extends Root
     // attention: certains types de resources, comme file peuvent être fonctionnelles sans avoir de scheme
     final public static function hasScheme($value):bool
     {
-        return (static::scheme($value) !== null)? true:false;
+        return (static::scheme($value) !== null);
     }
 
 
@@ -497,7 +497,7 @@ class Res extends Root
     // retourne vrai si la resource a une extension dans son uri
     final public static function hasExtension($value):bool
     {
-        return (static::extension($value) !== null)? true:false;
+        return (static::extension($value) !== null);
     }
 
 
@@ -506,7 +506,7 @@ class Res extends Root
     // attention: certains types de resources, comme file peuvent être fonctionnelles sans avoir de scheme
     final public static function isScheme(string $target,$value):bool
     {
-        return (!empty($target) && static::scheme($value) === $target)? true:false;
+        return (!empty($target) && static::scheme($value) === $target);
     }
 
 
@@ -1774,7 +1774,7 @@ class Res extends Root
 
             // ssl
             if($option['ssl'] === null)
-            $option['ssl'] = (Uri::isSsl($value))? true:false;
+            $option['ssl'] = (Uri::isSsl($value));
 
             if($option['ssl'] === true)
             {
@@ -1974,7 +1974,7 @@ class Res extends Root
         $return = false;
 
         if(static::isDir($value))
-        $return = static::seekDir($seek,$value,($type === SEEK_SET)? true:false,$option['dot'] ?? false);
+        $return = static::seekDir($seek,$value,($type === SEEK_SET),$option['dot'] ?? false);
 
         elseif(static::isSeekable($value))
         {
@@ -2361,7 +2361,7 @@ class Res extends Root
             static::seek($seek,$handle,SEEK_SET,$option);
 
             $return = [];
-            $array = ($amount > 1)? true:false;
+            $array = ($amount > 1);
 
             while ($amount > 0)
             {

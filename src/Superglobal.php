@@ -25,7 +25,7 @@ class Superglobal extends Root
     // retourne vrai si la superglobale session est déclarée
     final public static function hasSession():bool
     {
-        return (isset($_SESSION))? true:false;
+        return (isset($_SESSION));
     }
 
 
@@ -73,7 +73,7 @@ class Superglobal extends Root
     // vérifie l'existence d'une clé dans la superglobale session si démarré
     final public static function sessionExists($key):bool
     {
-        return (static::hasSession() && Arrs::keyExists($key,static::session()))? true:false;
+        return (static::hasSession() && Arrs::keyExists($key,static::session()));
     }
 
 
@@ -81,7 +81,7 @@ class Superglobal extends Root
     // vérifie l'existence de plusieurs clés dans la superglobale session si démarré
     final public static function sessionsExists(array $keys):bool
     {
-        return (static::hasSession() && Arrs::keysExists($keys,static::session()))? true:false;
+        return (static::hasSession() && Arrs::keysExists($keys,static::session()));
     }
 
 
@@ -122,7 +122,7 @@ class Superglobal extends Root
     // retourne vrai si le tableau serveur a la clé content_length de spécifié
     final public static function hasServerLength():bool
     {
-        return (is_numeric(static::getServer('CONTENT_LENGTH')))? true:false;
+        return (is_numeric(static::getServer('CONTENT_LENGTH')));
     }
 
 
@@ -131,7 +131,7 @@ class Superglobal extends Root
     // ceci signifie normalement un chargement de fichier qui a échoué
     final public static function hasServerLengthWithoutPost():bool
     {
-        return (static::hasServerLength() && empty(static::post()))? true:false;
+        return (static::hasServerLength() && empty(static::post()));
     }
 
 

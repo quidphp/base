@@ -245,7 +245,7 @@ class Finder extends Root
     // ne vérifie pas l'existence du chemin
     final public static function isDot(string $path):bool
     {
-        return (in_array(Path::basename(static::path($path)),['.','..'],true))? true:false;
+        return (in_array(Path::basename(static::path($path)),['.','..'],true));
     }
 
 
@@ -273,7 +273,7 @@ class Finder extends Root
     // retourne vrai si l'host existe dans les paramètres de finder
     final public static function isHost(string $value):bool
     {
-        return (static::getHostPath($value) !== null)? true:false;
+        return (static::getHostPath($value) !== null);
     }
 
 

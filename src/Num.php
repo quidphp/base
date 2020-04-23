@@ -97,7 +97,7 @@ class Num extends Root
     // retourne vrai si la valeur est numerique
     final public static function is($value):bool
     {
-        return (is_numeric($value))? true:false;
+        return (is_numeric($value));
     }
 
 
@@ -105,7 +105,7 @@ class Num extends Root
     // retourne vrai si la valeur est numerique et vide
     final public static function isEmpty($value):bool
     {
-        return (is_numeric($value) && empty($value))? true:false;
+        return (is_numeric($value) && empty($value));
     }
 
 
@@ -113,7 +113,7 @@ class Num extends Root
     // retourne vrai si la valeur est numerique et non vide
     final public static function isNotEmpty($value):bool
     {
-        return (is_numeric($value) && !empty($value))? true:false;
+        return (is_numeric($value) && !empty($value));
     }
 
 
@@ -121,7 +121,7 @@ class Num extends Root
     // retourne vrai si la valeur est numérique et string
     final public static function isString($value):bool
     {
-        return (is_numeric($value) && is_string($value))? true:false;
+        return (is_numeric($value) && is_string($value));
     }
 
 
@@ -129,7 +129,7 @@ class Num extends Root
     // retourne vrai si le nombre est fini
     final public static function isFinite($value):bool
     {
-        return (is_numeric($value) && is_finite((float) $value))? true:false;
+        return (is_numeric($value) && is_finite((float) $value));
     }
 
 
@@ -137,7 +137,7 @@ class Num extends Root
     // retourne vrai si le nombre est infini
     final public static function isInfinite($value):bool
     {
-        return (is_numeric($value) && is_infinite((float) $value))? true:false;
+        return (is_numeric($value) && is_infinite((float) $value));
     }
 
 
@@ -145,7 +145,7 @@ class Num extends Root
     // retourne vrai si le nombre est nan
     final public static function isNan($value):bool
     {
-        return (is_numeric($value) && is_nan((float) $value))? true:false;
+        return (is_numeric($value) && is_nan((float) $value));
     }
 
 
@@ -231,7 +231,7 @@ class Num extends Root
     final public static function isLength(int $length,$value):bool
     {
         static::typecast($value);
-        return (is_numeric($value) && static::len($value) === $length)? true:false;
+        return (is_numeric($value) && static::len($value) === $length);
     }
 
 
@@ -240,7 +240,7 @@ class Num extends Root
     final public static function isMinLength(int $length,$value):bool
     {
         static::typecast($value);
-        return (is_numeric($value) && static::len($value) >= $length)? true:false;
+        return (is_numeric($value) && static::len($value) >= $length);
     }
 
 
@@ -249,7 +249,7 @@ class Num extends Root
     final public static function isMaxLength(int $length,$value):bool
     {
         static::typecast($value);
-        return (is_numeric($value) && static::len($value) <= $length)? true:false;
+        return (is_numeric($value) && static::len($value) <= $length);
     }
 
 

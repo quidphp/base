@@ -568,7 +568,7 @@ class Arr extends Base\Test
         // find
         $array = ['test',2,4,'test4'];
         assert(Base\Arr::find($array,function($v,$k,$a) {
-            return (is_int($v))? true:false;
+            return is_int($v);
         }) === 2);
 
         // reduce

@@ -71,7 +71,7 @@ class Uri extends Root
     // retourne vrai si la valeur est uri relative ou absolut
     final public static function is($value,bool $decode=false):bool
     {
-        return (is_string($value) && static::info($value,$decode)['type'] !== false)? true:false;
+        return (is_string($value) && static::info($value,$decode)['type'] !== false);
     }
 
 
@@ -115,7 +115,7 @@ class Uri extends Root
     // retourne vrai si l'uri est https
     final public static function isSsl(string $uri,bool $decode=false):bool
     {
-        return (static::scheme($uri,$decode) === Http::scheme(true))? true:false;
+        return (static::scheme($uri,$decode) === Http::scheme(true));
     }
 
 
@@ -123,7 +123,7 @@ class Uri extends Root
     // retourne vrai si le scheme est supporté par la classe
     final public static function isSchemeValid($value):bool
     {
-        return (is_string($value) && in_array(strtolower($value),static::$config['scheme'],true))? true:false;
+        return (is_string($value) && in_array(strtolower($value),static::$config['scheme'],true));
     }
 
 
@@ -131,7 +131,7 @@ class Uri extends Root
     // retourne vrai si le scheme est relatif au protocl
     final public static function isSchemeProtocolRelative(string $uri):bool
     {
-        return (substr($uri,0,2) === static::$config['protocolRelative'])? true:false;
+        return (substr($uri,0,2) === static::$config['protocolRelative']);
     }
 
 
@@ -139,7 +139,7 @@ class Uri extends Root
     // retourne vrai si l'uri a un scheme
     final public static function hasScheme(string $uri,bool $decode=false):bool
     {
-        return (!empty(static::scheme($uri,$decode)))? true:false;
+        return (!empty(static::scheme($uri,$decode)));
     }
 
 
@@ -147,7 +147,7 @@ class Uri extends Root
     // retourne vrai si le chemin a une extension
     final public static function hasExtension(string $uri,bool $decode=false):bool
     {
-        return (!empty(static::extension($uri,$decode)))? true:false;
+        return (!empty(static::extension($uri,$decode)));
     }
 
 
@@ -155,7 +155,7 @@ class Uri extends Root
     // retourne vrai si le chemin a un query
     final public static function hasQuery(string $uri,bool $decode=false):bool
     {
-        return (!empty(static::query($uri,$decode)))? true:false;
+        return (!empty(static::query($uri,$decode)));
     }
 
 
@@ -163,7 +163,7 @@ class Uri extends Root
     // retourne vrai si l'uri a une lang
     final public static function hasLang(string $uri,bool $decode=false):bool
     {
-        return (static::lang($uri,$decode) !== null)? true:false;
+        return (static::lang($uri,$decode) !== null);
     }
 
 
@@ -215,7 +215,7 @@ class Uri extends Root
     // retourne vrai si l'url commence par le caractère de fragment
     final public static function isFragment($value):bool
     {
-        return (is_string($value) && strpos($value,static::$config['build']['fragment']) === 0)? true:false;
+        return (is_string($value) && strpos($value,static::$config['build']['fragment']) === 0);
     }
 
 
@@ -314,7 +314,7 @@ class Uri extends Root
     // retourne vrai si l'uri a la langue spécifié
     final public static function isLang($value,string $uri,bool $decode=false):bool
     {
-        return (is_string($value) && $value === static::lang($uri,$decode))? true:false;
+        return (is_string($value) && $value === static::lang($uri,$decode));
     }
 
 

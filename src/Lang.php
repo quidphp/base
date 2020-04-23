@@ -46,7 +46,7 @@ class Lang extends Root
     // retourne vrai si la langue courante est la valeur
     final public static function isCurrent($value):bool
     {
-        return (static::prepareCode($value) === static::$current)? true:false;
+        return (static::prepareCode($value) === static::$current);
     }
 
 
@@ -54,7 +54,7 @@ class Lang extends Root
     // retourne vrai si la langue est valide, et n'est pas la langue courante
     final public static function isOther($value):bool
     {
-        return (static::is($value) && !static::isCurrent($value))? true:false;
+        return (static::is($value) && !static::isCurrent($value));
     }
 
 
@@ -62,7 +62,7 @@ class Lang extends Root
     // retourne vrai s'il y a une callable lang
     final public static function hasCallable():bool
     {
-        return (!empty(static::$callable))? true:false;
+        return (!empty(static::$callable));
     }
 
 

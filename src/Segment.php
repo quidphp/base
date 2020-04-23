@@ -177,7 +177,7 @@ class Segment extends Root
     // retourne vrai si les clés de segments fournis représentent tous les segments de la chaîne
     final public static function are($delimiter,array $segments,string $str):bool
     {
-        return (Arr::valuesAre($segments,static::get($delimiter,$str)))? true:false;
+        return (Arr::valuesAre($segments,static::get($delimiter,$str)));
     }
 
 

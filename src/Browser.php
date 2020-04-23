@@ -68,7 +68,7 @@ class Browser extends Root
     // retourne vrai si le browser est reconnu par browscap
     final public static function is($value):bool
     {
-        return (is_string($value) && static::name($value) !== 'Default Browser')? true:false;
+        return (is_string($value) && static::name($value) !== 'Default Browser');
     }
 
 
@@ -76,7 +76,7 @@ class Browser extends Root
     // retourne vrai si le browser est desktop
     final public static function isDesktop($value):bool
     {
-        return (is_string($value) && static::device($value) === 'Desktop')? true:false;
+        return (is_string($value) && static::device($value) === 'Desktop');
     }
 
 
@@ -118,7 +118,7 @@ class Browser extends Root
     // retourne vrai si le browser est sur MacOs
     final public static function isMac($value):bool
     {
-        return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'mac') !== false)? true:false;
+        return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'mac') !== false);
     }
 
 
@@ -126,7 +126,7 @@ class Browser extends Root
     // retourne vrai si le browser est sur Linux
     final public static function isLinux($value):bool
     {
-        return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'linux') !== false)? true:false;
+        return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'linux') !== false);
     }
 
 
@@ -134,7 +134,7 @@ class Browser extends Root
     // retourne vrai si le browser est sur Windows
     final public static function isWindows($value):bool
     {
-        return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'win') !== false)? true:false;
+        return (is_string($value) && ($platform = static::platform($value)) && stripos($platform,'win') !== false);
     }
 
 

@@ -58,7 +58,7 @@ class File extends Finder
     // value peut être une string ou une resource
     final public static function isEmpty($value):bool
     {
-        return (static::is($value) && static::size($value) === 0)? true:false;
+        return (static::is($value) && static::size($value) === 0);
     }
 
 
@@ -67,7 +67,7 @@ class File extends Finder
     // value peut être une string ou une resource
     final public static function isNotEmpty($value):bool
     {
-        return (static::is($value) && static::size($value) !== 0)? true:false;
+        return (static::is($value) && static::size($value) !== 0);
     }
 
 
@@ -94,7 +94,7 @@ class File extends Finder
 
         foreach ($values as $value)
         {
-            $return = (is_array($value) && Arr::keysExists(['name','type','tmp_name','error','size'],$value))? true:false;
+            $return = (is_array($value) && Arr::keysExists(['name','type','tmp_name','error','size'],$value));
 
             if($return === false)
             break;
@@ -115,7 +115,7 @@ class File extends Finder
             foreach ($values as $value)
             {
                 if($value['error'] === 4 || $value['size'] === 0)
-                $return = ($empty === true)? true:false;
+                $return = ($empty === true);
 
                 else
                 $return = ($empty === true)? false:true;
@@ -176,7 +176,7 @@ class File extends Finder
     {
         $return = false;
         $value = static::getLoadPath($value);
-        $normalize = (Server::isWindows())? true:false;
+        $normalize = (Server::isWindows());
 
         if(!empty($value) && in_array($value,static::loaded($normalize),true))
         $return = true;
@@ -190,7 +190,7 @@ class File extends Finder
     // gère aussi le mime group pour les classes qui étendent
     final public static function isResource($value):bool
     {
-        $return = (is_resource($value) && Res::isFileLike($value))? true:false;
+        $return = (is_resource($value) && Res::isFileLike($value));
 
         if($return === true)
         {

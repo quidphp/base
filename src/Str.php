@@ -82,7 +82,7 @@ class Str extends Root
     // retourne vrai si la valeur est string
     final public static function is($value):bool
     {
-        return (is_string($value))? true:false;
+        return (is_string($value));
     }
 
 
@@ -90,7 +90,7 @@ class Str extends Root
     // retourne vrai si la valeur est string et vide
     final public static function isEmpty($value):bool
     {
-        return (is_string($value) && !strlen($value))? true:false;
+        return (is_string($value) && !strlen($value));
     }
 
 
@@ -98,7 +98,7 @@ class Str extends Root
     // retourne vrai si la valeur est string et non vide
     final public static function isNotEmpty($value):bool
     {
-        return (is_string($value) && strlen($value))? true:false;
+        return (is_string($value) && strlen($value));
     }
 
 
@@ -106,7 +106,7 @@ class Str extends Root
     // retourne vrai si la length est celle spécifié
     final public static function isLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_string($value) && static::len($value,$mb) === $length)? true:false;
+        return (is_string($value) && static::len($value,$mb) === $length);
     }
 
 
@@ -114,7 +114,7 @@ class Str extends Root
     // retourne vrai si la length est plus grande ou égale que celle spécifié
     final public static function isMinLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_string($value) && static::len($value,$mb) >= $length)? true:false;
+        return (is_string($value) && static::len($value,$mb) >= $length);
     }
 
 
@@ -122,7 +122,7 @@ class Str extends Root
     // retourne vrai si la length est plus petite ou égale que celui spécifié
     final public static function isMaxLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_string($value) && static::len($value,$mb) <= $length)? true:false;
+        return (is_string($value) && static::len($value,$mb) <= $length);
     }
 
 
@@ -137,9 +137,9 @@ class Str extends Root
             $value = (string) $value;
 
             if($sensitive === true)
-            $return = (static::pos($needle,$value,0,false) === 0)? true:false;
+            $return = (static::pos($needle,$value,0,false) === 0);
             else
-            $return = (static::ipos($needle,$value,0,true) === 0)? true:false;
+            $return = (static::ipos($needle,$value,0,true) === 0);
         }
 
         return $return;
@@ -173,13 +173,13 @@ class Str extends Root
         if(is_scalar($value))
         {
             $value = (string) $value;
-            $mb = ($sensitive === false)? true:false;
+            $mb = ($sensitive === false);
             $length = static::len($value,$mb) - static::len($needle,$mb);
 
             if($sensitive === true)
-            $return = (static::posRev($needle,$value,0,false) === $length)? true:false;
+            $return = (static::posRev($needle,$value,0,false) === $length);
             else
-            $return = (static::iposRev($needle,$value,0,true) === $length)? true:false;
+            $return = (static::iposRev($needle,$value,0,true) === $length);
         }
 
         return $return;
@@ -964,7 +964,7 @@ class Str extends Root
     // retourne la chaine sans le needle du debut
     final public static function stripStart(string $needle,string $return,bool $sensitive=true):string
     {
-        $mb = ($sensitive === false)? true:false;
+        $mb = ($sensitive === false);
 
         if(static::isStart($needle,$return,$sensitive))
         $return = static::sub($needle,null,$return,$mb);
@@ -977,7 +977,7 @@ class Str extends Root
     // retourne la chaine sans le needle de la fin
     final public static function stripEnd(string $needle,string $return,bool $sensitive=true):string
     {
-        $mb = ($sensitive === false)? true:false;
+        $mb = ($sensitive === false);
 
         if(static::isEnd($needle,$return,$sensitive))
         $return = static::sub(0,-static::len($needle,$mb),$return,$mb);
@@ -992,7 +992,7 @@ class Str extends Root
     {
         if(static::isStartEnd($startNeedle,$endNeedle,$return,$sensitive))
         {
-            $mb = ($sensitive === false)? true:false;
+            $mb = ($sensitive === false);
             $return = static::sub($startNeedle,null,$return,$mb);
             $return = static::sub(0,-static::len($endNeedle,$mb),$return,$mb);
         }
@@ -2490,7 +2490,7 @@ class Str extends Root
 
         if(is_int($value) && is_string($return))
         {
-            $isPlural = ($value > 1)? true:false;
+            $isPlural = ($value > 1);
             $letter = (is_string($letter))? $letter:static::$config['plural']['letter'];
             $wrap = (!empty($wrap))? $wrap:static::$config['plural']['wrap'];
             $delimiter = Segment::getDelimiter($wrap);

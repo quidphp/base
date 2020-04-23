@@ -70,7 +70,7 @@ class Cli extends Root
     // retourne vrai si les méthodes cli doivent générer du html
     final public static function isHtmlOverload():bool
     {
-        return (static::$config['htmlOverload'] === true)? true:false;
+        return (static::$config['htmlOverload'] === true);
     }
 
 

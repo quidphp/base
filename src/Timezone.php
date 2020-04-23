@@ -26,7 +26,7 @@ class Timezone extends Root
     // retourne vrai si la timezone existe
     final public static function is($value):bool
     {
-        return (is_string($value) && in_array($value,static::all(),true))? true:false;
+        return (is_string($value) && in_array($value,static::all(),true));
     }
 
 

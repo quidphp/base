@@ -31,7 +31,7 @@ class Json extends Assoc
     // retourne vrai si la chaîne est du json
     final public static function is($value):bool
     {
-        return (is_string($value) && static::decode($value) !== null)? true:false;
+        return (is_string($value) && static::decode($value) !== null);
     }
 
 
@@ -39,7 +39,7 @@ class Json extends Assoc
     // retourne vrai si la chaîne est du json mais vide
     final public static function isEmpty($value):bool
     {
-        return (is_string($value) && ($json = static::decode($value)) !== null && empty($json))? true:false;
+        return (is_string($value) && ($json = static::decode($value)) !== null && empty($json));
     }
 
 
@@ -47,7 +47,7 @@ class Json extends Assoc
     // retourne vrai si la chaîne est du json non vide
     final public static function isNotEmpty($value):bool
     {
-        return (is_string($value) && ($json = static::decode($value)) !== null && !empty($json))? true:false;
+        return (is_string($value) && ($json = static::decode($value)) !== null && !empty($json));
     }
 
 

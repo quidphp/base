@@ -94,7 +94,7 @@ class Session extends Root
     // la session doit être active
     final public static function isLang($value):bool
     {
-        return (is_string($value) && $value === static::lang())? true:false;
+        return (is_string($value) && $value === static::lang());
     }
 
 
@@ -103,7 +103,7 @@ class Session extends Root
     // la session doit être active
     final public static function isIp($value):bool
     {
-        return (is_string($value) && $value === static::ip())? true:false;
+        return (is_string($value) && $value === static::ip());
     }
 
 
@@ -112,7 +112,7 @@ class Session extends Root
     // la session doit être active
     final public static function isCsrf($value):bool
     {
-        return (is_string($value) && $value === static::csrf())? true:false;
+        return (is_string($value) && $value === static::csrf());
     }
 
 
@@ -150,7 +150,7 @@ class Session extends Root
     // la session doit être active
     final public static function isBot():bool
     {
-        return (Browser::isBot(static::userAgent()))? true:false;
+        return (Browser::isBot(static::userAgent()));
     }
 
 
@@ -158,7 +158,7 @@ class Session extends Root
     // retourne vrai si la session est active
     final public static function isStarted():bool
     {
-        return (session_status() === PHP_SESSION_ACTIVE)? true:false;
+        return (session_status() === PHP_SESSION_ACTIVE);
     }
 
 
@@ -166,7 +166,7 @@ class Session extends Root
     // retourne vrai si la session est démarré et vide
     final public static function isEmpty():bool
     {
-        return (static::isStarted() && empty(Superglobal::session()))? true:false;
+        return (static::isStarted() && empty(Superglobal::session()));
     }
 
 
@@ -174,7 +174,7 @@ class Session extends Root
     // retourne vrai si la session est démarré et pas vide
     final public static function isNotEmpty():bool
     {
-        return (static::isStarted() && !empty(Superglobal::session()))? true:false;
+        return (static::isStarted() && !empty(Superglobal::session()));
     }
 
 
@@ -182,7 +182,7 @@ class Session extends Root
     // retourne vrai si la classe a un save handler
     final public static function hasSaveHandler():bool
     {
-        return (!empty(static::$handler))? true:false;
+        return (!empty(static::$handler));
     }
 
 
@@ -822,7 +822,7 @@ class Session extends Root
         $return = $env;
 
         elseif($mode === 'is')
-        $return = (is_string($value) && $value === $env)? true:false;
+        $return = (is_string($value) && $value === $env);
 
         return $return;
     }
@@ -840,7 +840,7 @@ class Session extends Root
         $return = $type;
 
         elseif($mode === 'is')
-        $return = (is_string($value) && $value === $type)? true:false;
+        $return = (is_string($value) && $value === $type);
 
         return $return;
     }
@@ -859,7 +859,7 @@ class Session extends Root
         $return = $version;
 
         elseif($mode === 'is')
-        $return = (is_string($value) && ($versionMatch === false || $value === $version))? true:false;
+        $return = (is_string($value) && ($versionMatch === false || $value === $version));
 
         return $return;
     }
@@ -876,7 +876,7 @@ class Session extends Root
         $return = static::getExpire();
 
         elseif($mode === 'is')
-        $return = (is_int($value) && $value > Datetime::time())? true:false;
+        $return = (is_int($value) && $value > Datetime::time());
 
         return $return;
     }
@@ -899,7 +899,7 @@ class Session extends Root
         }
 
         elseif($mode === 'is')
-        $return = (is_array($value) && Arr::keysAre(['current','previous'],$value) && is_int($return['current']))? true:false;
+        $return = (is_array($value) && Arr::keysAre(['current','previous'],$value) && is_int($return['current']));
 
         return $return;
     }
@@ -919,7 +919,7 @@ class Session extends Root
         $return = $value + 1;
 
         elseif($mode === 'is')
-        $return = (is_int($value) && $value > 0)? true:false;
+        $return = (is_int($value) && $value > 0);
 
         return $return;
     }
@@ -938,7 +938,7 @@ class Session extends Root
         $return = $userAgent;
 
         elseif($mode === 'is')
-        $return = (is_string($value) && ($userAgentMatch === false || $userAgent === $value))? true:false;
+        $return = (is_string($value) && ($userAgentMatch === false || $userAgent === $value));
 
         return $return;
     }
@@ -955,7 +955,7 @@ class Session extends Root
         $return = Request::ip(true);
 
         elseif($mode === 'is')
-        $return = (Ip::is($value))? true:false;
+        $return = (Ip::is($value));
 
         return $return;
     }
@@ -977,7 +977,7 @@ class Session extends Root
         $return = $fingerprint;
 
         elseif($mode === 'is')
-        $return = (!is_string($value) || !is_string($fingerprint) || $fingerprint === $value)? true:false;
+        $return = (!is_string($value) || !is_string($fingerprint) || $fingerprint === $value);
 
         return $return;
     }
@@ -1013,7 +1013,7 @@ class Session extends Root
         }
 
         elseif($mode === 'is')
-        $return = (is_string($value) && Lang::is($value))? true:false;
+        $return = (is_string($value) && Lang::is($value));
 
         return $return;
     }
@@ -1032,7 +1032,7 @@ class Session extends Root
         elseif($mode === 'is')
         {
             $option = static::getCsrfOption();
-            $return = (is_string($value) && strlen($value) === $option['length'])? true:false;
+            $return = (is_string($value) && strlen($value) === $option['length']);
         }
 
         return $return;
@@ -1049,7 +1049,7 @@ class Session extends Root
         if($mode === 'is')
         {
             $option = static::getCaptchaOption();
-            $return = ($value === null || (is_string($value) && strlen($value) === $option['length']))? true:false;
+            $return = ($value === null || (is_string($value) && strlen($value) === $option['length']));
         }
 
         return $return;
@@ -1067,7 +1067,7 @@ class Session extends Root
         $return = null;
 
         elseif($mode === 'is')
-        $return = (is_array($value) || $value === null)? true:false;
+        $return = (is_array($value) || $value === null);
 
         return $return;
     }

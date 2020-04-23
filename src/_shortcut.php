@@ -23,7 +23,7 @@ trait _shortcut
     // retourne vrai si le shortcut existe
     final public static function isShortcut(string $key):bool
     {
-        return (array_key_exists($key,static::$shortcut))? true:false;
+        return (array_key_exists($key,static::$shortcut));
     }
 
 

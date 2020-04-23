@@ -33,7 +33,7 @@ class Ip extends Root
     // retourne vrai si la valeur est un ip
     final public static function is($value):bool
     {
-        return (Validate::regex('ip',$value))? true:false;
+        return (Validate::regex('ip',$value));
     }
 
 
@@ -41,7 +41,7 @@ class Ip extends Root
     // retourne vrai si l'ip est local
     final public static function isLocal($value):bool
     {
-        return (static::is($value) && ($value === '127.0.0.1' || strpos($value,'192.168.') === 0))? true:false;
+        return (static::is($value) && ($value === '127.0.0.1' || strpos($value,'192.168.') === 0));
     }
 
 

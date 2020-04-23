@@ -521,7 +521,7 @@ class Validate extends Root
     // retourne vrai si le symbole est un symbol de comparaison valide
     final public static function isCompareSymbol($symbol):bool
     {
-        return (is_string($symbol) && array_key_exists($symbol,static::$config['compare']))? true:false;
+        return (is_string($symbol) && array_key_exists($symbol,static::$config['compare']));
     }
 
 
@@ -536,28 +536,28 @@ class Validate extends Root
             $symbol = static::$config['compare'][$symbol];
 
             if($symbol === '===')
-            $return = ($value1 === $value2)? true:false;
+            $return = ($value1 === $value2);
 
             elseif($symbol === '==')
-            $return = ($value1 == $value2)? true:false;
+            $return = ($value1 == $value2);
 
             elseif($symbol === '!=')
-            $return = ($value1 != $value2)? true:false;
+            $return = ($value1 != $value2);
 
             elseif($symbol === '!==')
-            $return = ($value1 !== $value2)? true:false;
+            $return = ($value1 !== $value2);
 
             elseif($symbol === '<')
-            $return = ($value1 < $value2)? true:false;
+            $return = ($value1 < $value2);
 
             elseif($symbol === '<=')
-            $return = ($value1 <= $value2)? true:false;
+            $return = ($value1 <= $value2);
 
             elseif($symbol === '>')
-            $return = ($value1 > $value2)? true:false;
+            $return = ($value1 > $value2);
 
             elseif($symbol === '>=')
-            $return = ($value1 >= $value2)? true:false;
+            $return = ($value1 >= $value2);
         }
 
         return $return;

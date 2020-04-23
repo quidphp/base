@@ -123,7 +123,7 @@ class Boolean extends Root
         else
         {
             $int = mt_rand($min,$max);
-            $return = ($int === 1)? true:false;
+            $return = ($int === 1);
         }
 
         return $return;

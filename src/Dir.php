@@ -141,7 +141,7 @@ class Dir extends Finder
     // retourne vrai si la ressource est de type directoire
     final public static function isResource($value):bool
     {
-        return (is_resource($value) && Res::isDir($value))? true:false;
+        return (is_resource($value) && Res::isDir($value));
     }
 
 
@@ -261,11 +261,11 @@ class Dir extends Finder
         $in = (array) $in;
         $out = (array) $out;
         $type = Finder::type($path);
-        $filterExtension = (array_key_exists('extension',$in) || array_key_exists('extension',$out))? true:false;
-        $filterBasename = (array_key_exists('basename',$in) || array_key_exists('basename',$out))? true:false;
-        $filterFilename = (array_key_exists('filename',$in) || array_key_exists('filename',$out))? true:false;
-        $filterVisible = (array_key_exists('visible',$in) || array_key_exists('visible',$out))? true:false;
-        $filterEmpty = (array_key_exists('empty',$in) || array_key_exists('empty',$out))? true:false;
+        $filterExtension = (array_key_exists('extension',$in) || array_key_exists('extension',$out));
+        $filterBasename = (array_key_exists('basename',$in) || array_key_exists('basename',$out));
+        $filterFilename = (array_key_exists('filename',$in) || array_key_exists('filename',$out));
+        $filterVisible = (array_key_exists('visible',$in) || array_key_exists('visible',$out));
+        $filterEmpty = (array_key_exists('empty',$in) || array_key_exists('empty',$out));
 
         $filter = [];
         $filter['type'] = $type;

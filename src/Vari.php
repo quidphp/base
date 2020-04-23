@@ -23,7 +23,7 @@ class Vari extends Root
     // retourne vrai si empty
     final public static function isEmpty($value):bool
     {
-        return (empty($value))? true:false;
+        return (empty($value));
     }
 
 
@@ -31,7 +31,7 @@ class Vari extends Root
     // inverse de isEmpty
     final public static function isNotEmpty($value):bool
     {
-        return (!self::isEmpty($value))? true:false;
+        return (!self::isEmpty($value));
     }
 
 
@@ -46,7 +46,7 @@ class Vari extends Root
         if($removeWhiteSpace === true && is_string($value))
         $value = Str::removeWhiteSpace($value);
 
-        $return = (empty($value) && !is_numeric($value) && !is_bool($value) && !(is_string($value) && strlen($value)))? true:false;
+        $return = (empty($value) && !is_numeric($value) && !is_bool($value) && !(is_string($value) && strlen($value)));
 
         return $return;
     }
@@ -72,7 +72,7 @@ class Vari extends Root
     // retourne vrai si la variable est du type fournie en argument
     final public static function isType($type,$value):bool
     {
-        return (self::type($value) === $type)? true:false;
+        return (self::type($value) === $type);
     }
 
 

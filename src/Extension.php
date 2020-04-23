@@ -27,7 +27,7 @@ class Extension extends Root
     // retourne vrai si une extension est chargé
     final public static function is(string $name):bool
     {
-        return (is_string($name) && extension_loaded($name))? true:false;
+        return (is_string($name) && extension_loaded($name));
     }
 
 

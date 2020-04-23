@@ -46,7 +46,7 @@ class Listing extends Assoc
     // retourne vrai si le listing a un separator à la fin et n'est pas seulement le séparateur
     final public static function isSeparatorEnd(string $listing):bool
     {
-        return ($listing !== ($separator = static::getSeparator()) && Str::isEnd($separator,$listing,static::getSensitive()))? true:false;
+        return ($listing !== ($separator = static::getSeparator()) && Str::isEnd($separator,$listing,static::getSensitive()));
     }
 
 
@@ -54,7 +54,7 @@ class Listing extends Assoc
     // retourne vrai si le listing contient un double séparateur
     final public static function hasSeparatorDouble(string $listing):bool
     {
-        return (!empty($separator = static::getSeparator()) && Str::posIpos($separator.$separator,$listing,static::getSensitive()) !== null)? true:false;
+        return (!empty($separator = static::getSeparator()) && Str::posIpos($separator.$separator,$listing,static::getSensitive()) !== null);
     }
 
 

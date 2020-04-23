@@ -34,7 +34,7 @@ class Request extends Root
     // retourne vrai si la requete courante est ssl
     final public static function isSsl():bool
     {
-        return (Superglobal::getServer('HTTPS') === 'on')? true:false;
+        return Superglobal::getServer('HTTPS') === 'on';
     }
 
 
@@ -42,7 +42,7 @@ class Request extends Root
     // retourne vrai si la requête courante est ajax
     final public static function isAjax():bool
     {
-        return (static::getHeader('X-Requested-With') === 'XMLHttpRequest')? true:false;
+        return static::getHeader('X-Requested-With') === 'XMLHttpRequest';
     }
 
 
@@ -50,7 +50,7 @@ class Request extends Root
     // retourne vrai si la requête courante est get
     final public static function isGet():bool
     {
-        return (static::method() === 'get')? true:false;
+        return static::method() === 'get';
     }
 
 
@@ -58,7 +58,7 @@ class Request extends Root
     // retourne vrai si la requête courante est post
     final public static function isPost():bool
     {
-        return (static::method() === 'post')? true:false;
+        return static::method() === 'post';
     }
 
 
@@ -67,7 +67,7 @@ class Request extends Root
     // ceci peut arriver lors du chargement d'un fichier plus lourd que php ini
     final public static function isPostWithoutData():bool
     {
-        return (static::isPost() && empty(static::post()))? true:false;
+        return static::isPost() && empty(static::post());
     }
 
 
@@ -76,7 +76,7 @@ class Request extends Root
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public static function isRefererInternal($hosts=null):bool
     {
-        return (!empty(static::referer(true,$hosts)))? true:false;
+        return !empty(static::referer(true,$hosts));
     }
 
 
@@ -85,7 +85,7 @@ class Request extends Root
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public static function isInternalPost($hosts=null):bool
     {
-        return (static::isPost() && static::isRefererInternal($hosts))? true:false;
+        return static::isPost() && static::isRefererInternal($hosts);
     }
 
 
@@ -94,7 +94,7 @@ class Request extends Root
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public static function isExternalPost($hosts=null):bool
     {
-        return (static::isPost() && !static::isRefererInternal($hosts))? true:false;
+        return static::isPost() && !static::isRefererInternal($hosts);
     }
 
 
@@ -102,7 +102,7 @@ class Request extends Root
     // retourne vrai si la requête courante est de méthode get et pas ajax
     final public static function isStandard():bool
     {
-        return (static::isGet() && !static::isAjax())? true:false;
+        return static::isGet() && !static::isAjax();
     }
 
 
@@ -110,7 +110,7 @@ class Request extends Root
     // retourne vrai si le chemin est vide (ou seulement /)
     final public static function isPathEmpty():bool
     {
-        return (static::pathStripStart() === '')? true:false;
+        return static::pathStripStart() === '';
     }
 
 
@@ -118,7 +118,7 @@ class Request extends Root
     // retourne vrai si le chemin est sécuritaire
     final public static function isPathSafe():bool
     {
-        return (Path::isSafe(static::path(),static::$config['safe']))? true:false;
+        return Path::isSafe(static::path(),static::$config['safe']);
     }
 
 
@@ -134,7 +134,7 @@ class Request extends Root
     // retourne vrai si le chemin est un argument (commence par - ) mais que la requête n'est pas cli
     final public static function isPathArgumentNotCli():bool
     {
-        return (static::isPathArgument() && !static::isCli())? true:false;
+        return static::isPathArgument() && !static::isCli();
     }
 
 
@@ -142,7 +142,7 @@ class Request extends Root
     // retourne vrai si la requête courante provient du cli, renvoie vers server
     final public static function isCli():bool
     {
-        return (Server::isCli())? true:false;
+        return Server::isCli();
     }
 
 
@@ -150,7 +150,7 @@ class Request extends Root
     // retourne vrai si la requête semble être un envoie de fichier raté
     final public static function isFailedFileUpload():bool
     {
-        return (static::isPostWithoutData() && Base\Superglobal::hasServerLengthWithoutPost())? true:false;
+        return static::isPostWithoutData() && Base\Superglobal::hasServerLengthWithoutPost();
     }
 
 
@@ -158,7 +158,7 @@ class Request extends Root
     // retourne vrai si la requête courante a un query string
     final public static function hasQuery():bool
     {
-        return (strlen(static::query()))? true:false;
+        return strlen(static::query()) > 0;
     }
 
 
@@ -166,7 +166,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient des données get
     final public static function hasGet():bool
     {
-        return (!empty(static::get()))? true:false;
+        return !empty(static::get());
     }
 
 
@@ -174,7 +174,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient des données post
     final public static function hasPost():bool
     {
-        return (!empty(static::post()))? true:false;
+        return !empty(static::post());
     }
 
 
@@ -182,7 +182,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient des données get ou post
     final public static function hasData():bool
     {
-        return (static::hasGet() || static::hasPost())? true:false;
+        return static::hasGet() || static::hasPost();
     }
 
 
@@ -210,7 +210,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un user
     final public static function hasUser():bool
     {
-        return (is_string(static::user()))? true:false;
+        return is_string(static::user());
     }
 
 
@@ -218,7 +218,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un pass
     final public static function hasPass():bool
     {
-        return (is_string(static::pass()))? true:false;
+        return is_string(static::pass());
     }
 
 
@@ -226,7 +226,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un fragment
     final public static function hasFragment():bool
     {
-        return (is_string(static::fragment()))? true:false;
+        return is_string(static::fragment());
     }
 
 
@@ -234,7 +234,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un ip
     final public static function hasIp(bool $validIp=true):bool
     {
-        return (!empty(static::ip($validIp)))? true:false;
+        return !empty(static::ip($validIp));
     }
 
 
@@ -242,7 +242,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un header lang
     final public static function hasLangHeader():bool
     {
-        return (!empty(static::langHeader()))? true:false;
+        return !empty(static::langHeader());
     }
 
 
@@ -250,7 +250,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un userAgent
     final public static function hasUserAgent():bool
     {
-        return (!empty(static::userAgent()))? true:false;
+        return !empty(static::userAgent());
     }
 
 
@@ -258,7 +258,7 @@ class Request extends Root
     // retourne vrai si le userAgent est un bot
     final public static function isBot():bool
     {
-        return Browser::isBot(static::userAgent())? true:false;
+        return Browser::isBot(static::userAgent());
     }
 
 
@@ -274,7 +274,7 @@ class Request extends Root
     // retourne vrai si la langue est celle fourni
     final public static function isLang($value):bool
     {
-        return (is_string($value) && $value === static::lang())? true:false;
+        return is_string($value) && $value === static::lang();
     }
 
 
@@ -282,7 +282,7 @@ class Request extends Root
     // retourne vrai si le scheme est celui fourni
     final public static function isScheme($value):bool
     {
-        return (is_string($value) && $value === static::scheme())? true:false;
+        return is_string($value) && $value === static::scheme();
     }
 
 
@@ -290,7 +290,7 @@ class Request extends Root
     // retourne vrai si l'host est celui fourni
     final public static function isHost($value):bool
     {
-        return (is_string($value) && $value === static::host())? true:false;
+        return is_string($value) && $value === static::host();
     }
 
 
@@ -298,7 +298,7 @@ class Request extends Root
     // retourne vrai si le scheme host est celui fourni
     final public static function isSchemeHost($value):bool
     {
-        return (is_string($value) && $value === static::schemeHost())? true:false;
+        return is_string($value) && $value === static::schemeHost();
     }
 
 
@@ -306,7 +306,7 @@ class Request extends Root
     // retourne vrai si le ip est celui fourni
     final public static function isIp($value,bool $validIp=true):bool
     {
-        return (is_string($value) && $value === static::ip($validIp))? true:false;
+        return is_string($value) && $value === static::ip($validIp);
     }
 
 
@@ -314,7 +314,7 @@ class Request extends Root
     // retourne vrai si la langue du header est celle fournie
     final public static function isLangHeader(string $value):bool
     {
-        return ($value === static::langHeader())? true:false;
+        return $value === static::langHeader();
     }
 
 
@@ -346,7 +346,7 @@ class Request extends Root
     // retourne vrai si la requête contient des fichiers
     final public static function hasFiles():bool
     {
-        return (!empty(static::files()))? true:false;
+        return !empty(static::files());
     }
 
 
@@ -507,7 +507,7 @@ class Request extends Root
     final public static function setScheme(string $value):void
     {
         if(in_array($value,['http','https'],true))
-        static::setSsl(($value === 'https')? true:false);
+        static::setSsl(($value === 'https'));
 
         return;
     }
@@ -598,7 +598,7 @@ class Request extends Root
     // change la valeur de port dans la requête courante
     final public static function setPort(int $value):void
     {
-        static::setSsl(Http::isPortSsl($value)? true:false);
+        static::setSsl(Http::isPortSsl($value));
 
         return;
     }

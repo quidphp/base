@@ -39,7 +39,7 @@ class Obj extends Root
     // retourne vrai si la valeur est objet
     final public static function is($value):bool
     {
-        return (is_object($value))? true:false;
+        return (is_object($value));
     }
 
 
@@ -47,7 +47,7 @@ class Obj extends Root
     // retourne vrai si l'objet est une instance de la classe incomplete
     final public static function isIncomplete($value):bool
     {
-        return (is_object($value) && $value instanceof \__PHP_Incomplete_Class)? true:false;
+        return (is_object($value) && $value instanceof \__PHP_Incomplete_Class);
     }
 
 
@@ -79,7 +79,7 @@ class Obj extends Root
     // retourne vrai si l'objet a la méthode qu'elle soit publique ou privé
     final public static function hasMethod($method,object $value):bool
     {
-        return (is_string($method) && method_exists($value,$method))? true:false;
+        return (is_string($method) && method_exists($value,$method));
     }
 
 
@@ -87,7 +87,7 @@ class Obj extends Root
     // retourne vrai si la propriété existe dans l'objet qu'elle soit publique ou privé
     final public static function hasProperty($property,object $value):bool
     {
-        return (is_string($property) && property_exists($value,$property))? true:false;
+        return (is_string($property) && property_exists($value,$property));
     }
 
 
@@ -475,11 +475,11 @@ class Obj extends Root
     // si l'objet a la méthode cast, l'objet est remplacé par le retour de la méthode
     // mode permet de spécifier une valeur de retour de la valeur, une erreur est lancé si non respect du type de retour
     // une resource est transformé en sa version base64
-    final public static function cast($return,int $mode=0)
+    final public static function cast($return,int $mode=0,?string $method=null)
     {
         if(is_object($return))
         {
-            $method = static::$config['method'];
+            $method = $method ?? static::$config['method'];
 
             if($return instanceof \Closure)
             $return = $return();
@@ -492,7 +492,7 @@ class Obj extends Root
         {
             foreach ($return as $key => $value)
             {
-                $return[$key] = static::cast($value,0);
+                $return[$key] = static::cast($value,0,$method);
             }
         }
 

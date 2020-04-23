@@ -26,7 +26,7 @@ class Xml extends Root
     // retourne vrai si la valeur est xml
     final public static function is($value):bool
     {
-        return (is_string($value) && Str::isStart('<?xml',$value))? true:false;
+        return (is_string($value) && Str::isStart('<?xml',$value));
     }
 
 

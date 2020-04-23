@@ -23,7 +23,7 @@ class Constant extends Root
     // retourne vrai si la constante est défini
     final public static function is($name):bool
     {
-        return (is_string($name) && defined($name))? true:false;
+        return (is_string($name) && defined($name));
     }
 
 

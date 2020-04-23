@@ -128,7 +128,7 @@ class Classe extends Root
     // retourne vrai si le nom du fichier semble être une classe
     final public static function isNameClass($value):bool
     {
-        return (is_string($value) && strlen($value) && strpos($value,'_') === false && stripos($value,'Interface') === false)? true:false;
+        return (is_string($value) && strlen($value) && strpos($value,'_') === false && stripos($value,'Interface') === false);
     }
 
 
@@ -137,7 +137,7 @@ class Classe extends Root
     // doit commencer par un _
     final public static function isNameTrait($value):bool
     {
-        return (is_string($value) && strlen($value) && strpos($value,'_') === 0)? true:false;
+        return (is_string($value) && strlen($value) && strpos($value,'_') === 0);
     }
 
 
@@ -146,7 +146,7 @@ class Classe extends Root
     // doit contenir Interface avec un i majuscule
     final public static function isNameInterface($value):bool
     {
-        return (is_string($value) && strlen($value) && strpos($value,'_') === false && stripos($value,'Interface') > 0)? true:false;
+        return (is_string($value) && strlen($value) && strpos($value,'_') === false && stripos($value,'Interface') > 0);
     }
 
 
