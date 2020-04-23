@@ -49,7 +49,7 @@ class Floating extends Root
     // retourne vrai si la valeur est float
     final public static function is($value):bool
     {
-        return (is_float($value));
+        return is_float($value);
     }
 
 
@@ -57,7 +57,7 @@ class Floating extends Root
     // retourne vrai si la valeur est float et vide
     final public static function isEmpty($value):bool
     {
-        return (is_float($value) && empty($value));
+        return is_float($value) && empty($value);
     }
 
 
@@ -65,7 +65,7 @@ class Floating extends Root
     // retourne vrai si la valeur est float et non vide
     final public static function isNotEmpty($value):bool
     {
-        return (is_float($value) && !empty($value));
+        return is_float($value) && !empty($value);
     }
 
 

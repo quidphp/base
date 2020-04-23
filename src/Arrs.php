@@ -119,7 +119,7 @@ class Arrs extends Root
     // retourne vrai si le tableau multidimensionnel contient au moins une clé en conflit de case si le tableau est insensible à la case
     final public static function hasKeyCaseConflict(array $value):bool
     {
-        return (static::is($value) && static::count($value) !== static::count(static::keysInsensitive($value)));
+        return static::is($value) && static::count($value) !== static::count(static::keysInsensitive($value));
     }
 
 

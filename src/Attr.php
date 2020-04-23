@@ -72,7 +72,7 @@ class Attr extends Listing
     // retourne vrai si l'attribut est data
     final public static function isDataKey($value):bool
     {
-        return (is_string($value) && strpos($value,'data-') === 0 && strlen($value) > 5);
+        return is_string($value) && strpos($value,'data-') === 0 && strlen($value) > 5;
     }
 
 
@@ -80,7 +80,7 @@ class Attr extends Listing
     // retourne vrai si l'attribut est une data-uri -> string encodé en base 64
     final public static function isDataUri($value):bool
     {
-        return (is_string($value) && strpos($value,'data:') === 0 && strpos($value,';base64,') !== false);
+        return is_string($value) && strpos($value,'data:') === 0 && strpos($value,';base64,') !== false;
     }
 
 
@@ -88,7 +88,7 @@ class Attr extends Listing
     // retourne vrai si l'uri fourni est sélectionné
     final public static function isSelectedUri($value):bool
     {
-        return (is_string($value) && array_key_exists($value,static::$selectedUri));
+        return is_string($value) && array_key_exists($value,static::$selectedUri);
     }
 
 
@@ -96,7 +96,7 @@ class Attr extends Listing
     // retourne vrai si les attributs ont le id spécifiés
     final public static function hasId(string $value,$attr):bool
     {
-        return (static::getId($attr) === $value);
+        return static::getId($attr) === $value;
     }
 
 
@@ -119,7 +119,7 @@ class Attr extends Listing
     // retourne vrai si les attributs ont la clé style spécifié
     final public static function styleExists(string $key,$attr,?array $option=null):bool
     {
-        return (($style = static::style($attr,$option)) && Arr::keyExists($key,$style,static::getSensitive()));
+        return ($style = static::style($attr,$option)) && Arr::keyExists($key,$style,static::getSensitive());
     }
 
 
@@ -127,7 +127,7 @@ class Attr extends Listing
     // retourne vrai si les attributs ont les clés style spécifiés
     final public static function stylesExists(array $keys,$attr,?array $option=null):bool
     {
-        return (($style = static::style($attr,$option)) && Arr::keysExists($keys,$style,static::getSensitive()));
+        return ($style = static::style($attr,$option)) && Arr::keysExists($keys,$style,static::getSensitive());
     }
 
 
@@ -135,7 +135,7 @@ class Attr extends Listing
     // retourne vrai si les attributs ont la clé data spécifié
     final public static function dataExists(string $key,$attr,?array $option=null):bool
     {
-        return (($data = static::data($attr,$option)) && Arr::keyExists(static::parseDataKey($key),$data,static::getSensitive()));
+        return ($data = static::data($attr,$option)) && Arr::keyExists(static::parseDataKey($key),$data,static::getSensitive());
     }
 
 

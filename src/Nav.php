@@ -39,7 +39,7 @@ class Nav extends Root
     // nav peut être un int ou un tableau
     final public static function isPageFull(int $value,$nav,int $limit):bool
     {
-        return (static::pageSpecificCount($value,$nav,$limit) === $limit);
+        return static::pageSpecificCount($value,$nav,$limit) === $limit;
     }
 
 

@@ -275,7 +275,7 @@ class Html extends Root
     // retourne vrai si la valeur est un alias de tag
     final public static function isAlias($value):bool
     {
-        return (is_string($value) && !empty(static::$config['alias'][$value]));
+        return is_string($value) && !empty(static::$config['alias'][$value]);
     }
 
 
@@ -283,7 +283,7 @@ class Html extends Root
     // retourne vrai si la valeur est un type de input
     final public static function isInputType($value):bool
     {
-        return (is_string($value) && array_key_exists($value,static::$config['tag']['input']['all']));
+        return is_string($value) && array_key_exists($value,static::$config['tag']['input']['all']);
     }
 
 
@@ -291,7 +291,7 @@ class Html extends Root
     // retourne vrai si la méthode en est une de input
     final public static function isInputMethod($value):bool
     {
-        return (is_string($value) && !empty(static::getTypeFromInputMethod($value)));
+        return is_string($value) && !empty(static::getTypeFromInputMethod($value));
     }
 
 
@@ -342,7 +342,7 @@ class Html extends Root
     // retourne vrai si la tag en est une de relation
     final public static function isRelationTag($value,bool $inputMethod=true):bool
     {
-        return (static::isEnumTag($value,$inputMethod) || static::isSetTag($value,$inputMethod));
+        return static::isEnumTag($value,$inputMethod) || static::isSetTag($value,$inputMethod);
     }
 
 
@@ -376,7 +376,7 @@ class Html extends Root
     // retourne vrai si le nom du input est multi
     final public static function isNameMulti($value):bool
     {
-        return (is_string($value) && Str::isEnd(static::$config['multi'],$value));
+        return is_string($value) && Str::isEnd(static::$config['multi'],$value);
     }
 
 
@@ -384,7 +384,7 @@ class Html extends Root
     // retourne vrai si la valeur est un tag self closing
     final public static function isSelfClosing($value):bool
     {
-        return (is_string($value) && array_key_exists($value,static::$config['tag']) && !empty(static::$config['tag'][$value]['selfClosing']));
+        return is_string($value) && array_key_exists($value,static::$config['tag']) && !empty(static::$config['tag'][$value]['selfClosing']);
     }
 
 
@@ -392,7 +392,7 @@ class Html extends Root
     // retourne vrai si le nom meta doit utilisé property plutôt que name
     final public static function isMetaProperty($value):bool
     {
-        return (is_string($value) && in_array($value,static::$config['tag']['meta']['property'],true));
+        return is_string($value) && in_array($value,static::$config['tag']['meta']['property'],true);
     }
 
 
@@ -400,7 +400,7 @@ class Html extends Root
     // retourne vrai si la balise meta représente une uri
     final public static function isMetaUri($value):bool
     {
-        return (is_string($value) && in_array($value,static::$config['tag']['meta']['uri']['key'],true));
+        return is_string($value) && in_array($value,static::$config['tag']['meta']['uri']['key'],true);
     }
 
 
@@ -408,7 +408,7 @@ class Html extends Root
     // retourne vrai si la tag a des options d'uri
     final public static function isUriOption($tag):bool
     {
-        return (is_string($tag) && isset(static::$config['tag'][$tag]['option']['attr']['uri']));
+        return is_string($tag) && isset(static::$config['tag'][$tag]['option']['attr']['uri']);
     }
 
 
@@ -437,7 +437,7 @@ class Html extends Root
     // retourne si le type d'encodage est multipart form-data, pour formulaire avec fichier
     final public static function isMultipartFormData($value):bool
     {
-        return (is_string($value) && strtolower($value) === 'multipart/form-data');
+        return is_string($value) && strtolower($value) === 'multipart/form-data';
     }
 
 

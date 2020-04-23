@@ -82,7 +82,7 @@ class Str extends Root
     // retourne vrai si la valeur est string
     final public static function is($value):bool
     {
-        return (is_string($value));
+        return is_string($value);
     }
 
 
@@ -90,7 +90,7 @@ class Str extends Root
     // retourne vrai si la valeur est string et vide
     final public static function isEmpty($value):bool
     {
-        return (is_string($value) && !strlen($value));
+        return is_string($value) && !strlen($value);
     }
 
 
@@ -98,7 +98,7 @@ class Str extends Root
     // retourne vrai si la valeur est string et non vide
     final public static function isNotEmpty($value):bool
     {
-        return (is_string($value) && strlen($value));
+        return is_string($value) && strlen($value);
     }
 
 
@@ -106,7 +106,7 @@ class Str extends Root
     // retourne vrai si la length est celle spécifié
     final public static function isLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_string($value) && static::len($value,$mb) === $length);
+        return is_string($value) && static::len($value,$mb) === $length;
     }
 
 
@@ -114,7 +114,7 @@ class Str extends Root
     // retourne vrai si la length est plus grande ou égale que celle spécifié
     final public static function isMinLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_string($value) && static::len($value,$mb) >= $length);
+        return is_string($value) && static::len($value,$mb) >= $length;
     }
 
 
@@ -122,7 +122,7 @@ class Str extends Root
     // retourne vrai si la length est plus petite ou égale que celui spécifié
     final public static function isMaxLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_string($value) && static::len($value,$mb) <= $length);
+        return is_string($value) && static::len($value,$mb) <= $length;
     }
 
 

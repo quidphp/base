@@ -35,7 +35,7 @@ class Encoding extends Root
     // retourne vrai si la valeur est string et multibyte
     final public static function isMb($value):bool
     {
-        return (is_string($value) && strlen($value) !== mb_strlen($value,static::$config['charset']));
+        return is_string($value) && strlen($value) !== mb_strlen($value,static::$config['charset']);
     }
 
 
@@ -62,7 +62,7 @@ class Encoding extends Root
     // retourne vrai si le charset est multibyte
     final public static function isCharsetMb($value):bool
     {
-        return (is_string($value) && Arr::in($value,static::$config['charsetMb'],false));
+        return is_string($value) && Arr::in($value,static::$config['charsetMb'],false);
     }
 
 
@@ -70,7 +70,7 @@ class Encoding extends Root
     // retourne vrai si l'encodage existe
     final public static function exists(string $value):bool
     {
-        return (in_array($value,mb_list_encodings(),true));
+        return in_array($value,mb_list_encodings(),true);
     }
 
 

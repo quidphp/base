@@ -58,7 +58,7 @@ class Response extends Root
     // retourne vrai si le code de la réponse est positive (200 à 399) mais pas 301
     final public static function isCodeLoggable():bool
     {
-        return (!static::isCodePositive() || static::isCode(301));
+        return !static::isCodePositive() || static::isCode(301);
     }
 
 
@@ -106,7 +106,7 @@ class Response extends Root
     // retourne vrai si la réponse est de content type html ou automatique
     final public static function isHtmlOrAuto():bool
     {
-        return (empty(static::contentType()) || static::isHtml());
+        return empty(static::contentType()) || static::isHtml();
     }
 
 
@@ -895,7 +895,7 @@ class Response extends Root
     // vide le contenu du body de la réponse
     final public static function emptyBody():bool
     {
-        return (!empty(Buffer::cleanAll()));
+        return !empty(Buffer::cleanAll());
     }
 
 

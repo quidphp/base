@@ -33,7 +33,7 @@ class Header extends Listing
     // retourne vrai si la string header est une entrée status
     final public static function isStatus($value):bool
     {
-        return (is_string($value) && stripos($value,'HTTP/') === 0);
+        return is_string($value) && stripos($value,'HTTP/') === 0;
     }
 
 
@@ -49,7 +49,7 @@ class Header extends Listing
     // retourne vrai si le code de la réponse est positive (200 à 399)
     final public static function isCodePositive($header):bool
     {
-        return (static::isCodeBetween(200,399,$header));
+        return static::isCodeBetween(200,399,$header);
     }
 
 
@@ -57,7 +57,7 @@ class Header extends Listing
     // retourne vrai si le code de la réponse est positive mais pas 301
     final public static function isCodeLoggable($header):bool
     {
-        return (!static::isCodePositive($header) || static::isCode(301,$header));
+        return !static::isCodePositive($header) || static::isCode(301,$header);
     }
 
 
@@ -65,7 +65,7 @@ class Header extends Listing
     // retourne vrai si le code dans le tableau header est 400 ou 404
     final public static function isCodeError($header):bool
     {
-        return (static::isCodeIn(400,$header));
+        return static::isCodeIn(400,$header);
     }
 
 
@@ -73,7 +73,7 @@ class Header extends Listing
     // retourne vrai si le code dans le tableau header est 500
     final public static function isCodeServerError($header):bool
     {
-        return (static::isCodeIn(500,$header));
+        return static::isCodeIn(500,$header);
     }
 
 
@@ -81,7 +81,7 @@ class Header extends Listing
     // retourne vrai si le code existe dans le tableau config
     final public static function isCodeValid($value):bool
     {
-        return (is_int($value) && array_key_exists($value,Lang\En::$config['header']['responseStatus']));
+        return is_int($value) && array_key_exists($value,Lang\En::$config['header']['responseStatus']);
     }
 
 
@@ -89,7 +89,7 @@ class Header extends Listing
     // retourne vrai si le texte de status existe dans le tableau config
     final public static function isStatusTextValid($value):bool
     {
-        return (is_string($value) && in_array($value,Lang\En::$config['header']['responseStatus'],true));
+        return is_string($value) && in_array($value,Lang\En::$config['header']['responseStatus'],true);
     }
 
 
@@ -236,7 +236,7 @@ class Header extends Listing
     // retourne vrai si le protocol est http1
     final public static function isHttp1($value):bool
     {
-        return (in_array(static::protocol($value),['HTTP/1','HTTP/1.0','HTTP/1.1'],true));
+        return in_array(static::protocol($value),['HTTP/1','HTTP/1.0','HTTP/1.1'],true);
     }
 
 
@@ -244,7 +244,7 @@ class Header extends Listing
     // retourne vrai si le protocol est http2
     final public static function isHttp2($value):bool
     {
-        return (in_array(static::protocol($value),['HTTP/2','HTTP/2.0'],true));
+        return in_array(static::protocol($value),['HTTP/2','HTTP/2.0'],true);
     }
 
 

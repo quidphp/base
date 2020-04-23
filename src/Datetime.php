@@ -75,7 +75,7 @@ class Datetime extends Root
     // retourne vrai si la temps donné est maintenant
     final public static function isNow($value=null,$format=null):bool
     {
-        return (static::time($value,$format) === static::now());
+        return static::time($value,$format) === static::now();
     }
 
 
@@ -107,7 +107,7 @@ class Datetime extends Root
     // retourne vrai si le timestamp est une année valide
     final public static function isYearValid($value):bool
     {
-        return (is_int($value) && $value >= 0 && $value <= static::$config['amount']['maxYear']);
+        return is_int($value) && $value >= 0 && $value <= static::$config['amount']['maxYear'];
     }
 
 
@@ -216,7 +216,7 @@ class Datetime extends Root
     // retourne vrai si le temps est exactement le début d'un jour
     final public static function isDayStart($value=null,$format=null):bool
     {
-        return (static::secondsInDay($value,$format) === 0);
+        return static::secondsInDay($value,$format) === 0;
     }
 
 

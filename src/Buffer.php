@@ -23,7 +23,7 @@ class Buffer extends Root
     // retourne vrai s'il y a un buffer d'ouvert
     final public static function has():bool
     {
-        return (ob_get_level() > 0);
+        return ob_get_level() > 0;
     }
 
 

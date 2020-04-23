@@ -72,7 +72,7 @@ class Arr extends Root
     // retourne vrai si la valeur est array
     final public static function is($value):bool
     {
-        return (is_array($value));
+        return is_array($value);
     }
 
 
@@ -80,7 +80,7 @@ class Arr extends Root
     // retourne vrai si la valeur est array et vide
     final public static function isEmpty($value):bool
     {
-        return (is_array($value) && empty($value));
+        return is_array($value) && empty($value);
     }
 
 
@@ -88,7 +88,7 @@ class Arr extends Root
     // retourne vrai si la valeur est array et non vide
     final public static function isNotEmpty($value):bool
     {
-        return (is_array($value) && !empty($value));
+        return is_array($value) && !empty($value);
     }
 
 
@@ -159,7 +159,7 @@ class Arr extends Root
     // retourne vrai si le tableau contient au moins une clé en conflit de case si le tableau est insensible à la case
     final public static function hasKeyCaseConflict($value):bool
     {
-        return (is_array($value) && count($value) !== count(self::keysInsensitive($value)));
+        return is_array($value) && count($value) !== count(self::keysInsensitive($value));
     }
 
 
@@ -191,7 +191,7 @@ class Arr extends Root
     // retourne vrai si le tableau est vide ou séquentielle
     final public static function isSequential($value):bool
     {
-        return (is_array($value) && (empty($value) || array_keys($value) === range(0, (count($value) - 1))));
+        return is_array($value) && (empty($value) || array_keys($value) === range(0, (count($value) - 1)));
     }
 
 
@@ -200,7 +200,7 @@ class Arr extends Root
     // doit contenir au moins une clé non numérique
     final public static function isAssoc($value):bool
     {
-        return (is_array($value) && (empty($value) || !self::isIndexed($value)));
+        return is_array($value) && (empty($value) || !self::isIndexed($value));
     }
 
 
@@ -336,7 +336,7 @@ class Arr extends Root
     // retourne vrai si la valeur est une clé
     final public static function isKey($value):bool
     {
-        return (is_scalar($value) && !is_bool($value));
+        return is_scalar($value) && !is_bool($value);
     }
 
 
@@ -345,7 +345,7 @@ class Arr extends Root
     // la clé doit avoir une longueur
     final public static function isKeyNotEmpty($value):bool
     {
-        return (is_scalar($value) && !is_bool($value) && strlen((string) $value));
+        return is_scalar($value) && !is_bool($value) && strlen((string) $value);
     }
 
 
@@ -355,7 +355,7 @@ class Arr extends Root
     final public static function isCount($count,$value):bool
     {
         $count = (is_array($count))? count($count):$count;
-        return (is_int($count) && is_array($value) && count($value) === $count);
+        return is_int($count) && is_array($value) && count($value) === $count;
     }
 
 
@@ -365,7 +365,7 @@ class Arr extends Root
     final public static function isMinCount($count,$value):bool
     {
         $count = (is_array($count))? count($count):$count;
-        return (is_int($count) && is_array($value) && count($value) >= $count);
+        return is_int($count) && is_array($value) && count($value) >= $count;
     }
 
 
@@ -375,7 +375,7 @@ class Arr extends Root
     final public static function isMaxCount($count,$value):bool
     {
         $count = (is_array($count))? count($count):$count;
-        return (is_int($count) && is_array($value) && count($value) <= $count);
+        return is_int($count) && is_array($value) && count($value) <= $count;
     }
 
 

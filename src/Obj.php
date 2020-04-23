@@ -39,7 +39,7 @@ class Obj extends Root
     // retourne vrai si la valeur est objet
     final public static function is($value):bool
     {
-        return (is_object($value));
+        return is_object($value);
     }
 
 
@@ -47,7 +47,7 @@ class Obj extends Root
     // retourne vrai si l'objet est une instance de la classe incomplete
     final public static function isIncomplete($value):bool
     {
-        return (is_object($value) && $value instanceof \__PHP_Incomplete_Class);
+        return is_object($value) && $value instanceof \__PHP_Incomplete_Class;
     }
 
 
@@ -79,7 +79,7 @@ class Obj extends Root
     // retourne vrai si l'objet a la méthode qu'elle soit publique ou privé
     final public static function hasMethod($method,object $value):bool
     {
-        return (is_string($method) && method_exists($value,$method));
+        return is_string($method) && method_exists($value,$method);
     }
 
 
@@ -87,7 +87,7 @@ class Obj extends Root
     // retourne vrai si la propriété existe dans l'objet qu'elle soit publique ou privé
     final public static function hasProperty($property,object $value):bool
     {
-        return (is_string($property) && property_exists($value,$property));
+        return is_string($property) && property_exists($value,$property);
     }
 
 

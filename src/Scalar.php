@@ -92,7 +92,7 @@ class Scalar extends Root
     // retourne vrai si la valeur est scalar
     final public static function is($value):bool
     {
-        return (is_scalar($value));
+        return is_scalar($value);
     }
 
 
@@ -100,7 +100,7 @@ class Scalar extends Root
     // retourne vrai si la valeur est scalar et vide
     final public static function isEmpty($value):bool
     {
-        return (is_scalar($value) && empty($value));
+        return is_scalar($value) && empty($value);
     }
 
 
@@ -108,7 +108,7 @@ class Scalar extends Root
     // retourne vrai si la valeur est scalar et non vide
     final public static function isNotEmpty($value):bool
     {
-        return (is_scalar($value) && !empty($value));
+        return is_scalar($value) && !empty($value);
     }
 
 
@@ -116,7 +116,7 @@ class Scalar extends Root
     // retourne vrai si scalar mais pas bool
     final public static function isNotBool($value):bool
     {
-        return (is_scalar($value) && !is_bool($value));
+        return is_scalar($value) && !is_bool($value);
     }
 
 
@@ -124,7 +124,7 @@ class Scalar extends Root
     // retourne vrai si scalar mais pas numérique
     final public static function isNotNumeric($value):bool
     {
-        return (is_scalar($value) && !is_numeric($value));
+        return is_scalar($value) && !is_numeric($value);
     }
 
 
@@ -132,7 +132,7 @@ class Scalar extends Root
     // retourne vrai si scalar mais pas int
     final public static function isNotInt($value):bool
     {
-        return (is_scalar($value) && !is_int($value));
+        return is_scalar($value) && !is_int($value);
     }
 
 
@@ -140,7 +140,7 @@ class Scalar extends Root
     // retourne vrai si scalar mais pas float
     final public static function isNotFloat($value):bool
     {
-        return (is_scalar($value) && !is_float($value));
+        return is_scalar($value) && !is_float($value);
     }
 
 
@@ -148,7 +148,7 @@ class Scalar extends Root
     // retourne vrai si scalar mais pas string
     final public static function isNotString($value):bool
     {
-        return (is_scalar($value) && !is_string($value));
+        return is_scalar($value) && !is_string($value);
     }
 
 
@@ -156,7 +156,7 @@ class Scalar extends Root
     // retourne vrai si la length est celle spécifié
     final public static function isLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_scalar($value) && Str::len((string) $value,$mb) === $length);
+        return is_scalar($value) && Str::len((string) $value,$mb) === $length;
     }
 
 
@@ -164,7 +164,7 @@ class Scalar extends Root
     // retourne vrai si la length est plus grande ou égale que celle spécifié
     final public static function isMinLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_scalar($value) && Str::len((string) $value,$mb) >= $length);
+        return is_scalar($value) && Str::len((string) $value,$mb) >= $length;
     }
 
 
@@ -172,7 +172,7 @@ class Scalar extends Root
     // retourne vrai si la length est plus petite ou égale que celui spécifié
     final public static function isMaxLength(int $length,$value,?bool $mb=null):bool
     {
-        return (is_scalar($value) && Str::len((string) $value,$mb) <= $length);
+        return is_scalar($value) && Str::len((string) $value,$mb) <= $length;
     }
 }
 ?>

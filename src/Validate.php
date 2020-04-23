@@ -521,7 +521,7 @@ class Validate extends Root
     // retourne vrai si le symbole est un symbol de comparaison valide
     final public static function isCompareSymbol($symbol):bool
     {
-        return (is_string($symbol) && array_key_exists($symbol,static::$config['compare']));
+        return is_string($symbol) && array_key_exists($symbol,static::$config['compare']);
     }
 
 

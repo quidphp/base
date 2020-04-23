@@ -27,7 +27,7 @@ class Http extends Root
     // retourne vrai si le scheme est compatible http
     final public static function isScheme($value):bool
     {
-        return (is_string($value) && in_array(strtolower($value),['http','https'],true));
+        return is_string($value) && in_array(strtolower($value),['http','https'],true);
     }
 
 
@@ -35,7 +35,7 @@ class Http extends Root
     // retourne vrai si la valeur est un host potentiel
     final public static function isHost($value):bool
     {
-        return (is_string($value) && !empty($value));
+        return is_string($value) && !empty($value);
     }
 
 
@@ -43,7 +43,7 @@ class Http extends Root
     // retourne vrai si le port fourni est compatible http
     final public static function isPort($value):bool
     {
-        return ($value === 80 || $value === 443);
+        return $value === 80 || $value === 443;
     }
 
 
@@ -51,7 +51,7 @@ class Http extends Root
     // retourne vrai si le port fourni est https
     final public static function isPortSsl($value):bool
     {
-        return ($value === 443);
+        return $value === 443;
     }
 
 

@@ -46,7 +46,7 @@ class Call extends Root
     // retourne vrai si la valeur est callable
     final public static function is($value):bool
     {
-        return (is_callable($value));
+        return is_callable($value);
     }
 
 
@@ -73,7 +73,7 @@ class Call extends Root
     // retourne vrai si la valeur est callable et function
     final public static function isFunction($value):bool
     {
-        return (is_string($value) && function_exists($value));
+        return is_string($value) && function_exists($value);
     }
 
 
@@ -81,7 +81,7 @@ class Call extends Root
     // retourne vrai si la valeur est callable et closure
     final public static function isClosure($value):bool
     {
-        return ($value instanceof \Closure);
+        return $value instanceof \Closure;
     }
 
 
@@ -89,7 +89,7 @@ class Call extends Root
     // retourne vrai si la valeur est callable et dynamic method
     final public static function isDynamicMethod($value):bool
     {
-        return (static::type($value) === 'dynamicMethod');
+        return static::type($value) === 'dynamicMethod';
     }
 
 
@@ -97,7 +97,7 @@ class Call extends Root
     // retourne vrai si la valeur est callable et static method
     final public static function isStaticMethod($value):bool
     {
-        return (static::type($value) === 'staticMethod');
+        return static::type($value) === 'staticMethod';
     }
 
 

@@ -94,7 +94,7 @@ class Session extends Root
     // la session doit être active
     final public static function isLang($value):bool
     {
-        return (is_string($value) && $value === static::lang());
+        return is_string($value) && $value === static::lang();
     }
 
 
@@ -103,7 +103,7 @@ class Session extends Root
     // la session doit être active
     final public static function isIp($value):bool
     {
-        return (is_string($value) && $value === static::ip());
+        return is_string($value) && $value === static::ip();
     }
 
 
@@ -112,7 +112,7 @@ class Session extends Root
     // la session doit être active
     final public static function isCsrf($value):bool
     {
-        return (is_string($value) && $value === static::csrf());
+        return is_string($value) && $value === static::csrf();
     }
 
 
@@ -150,7 +150,7 @@ class Session extends Root
     // la session doit être active
     final public static function isBot():bool
     {
-        return (Browser::isBot(static::userAgent()));
+        return Browser::isBot(static::userAgent());
     }
 
 
@@ -158,7 +158,7 @@ class Session extends Root
     // retourne vrai si la session est active
     final public static function isStarted():bool
     {
-        return (session_status() === PHP_SESSION_ACTIVE);
+        return session_status() === PHP_SESSION_ACTIVE;
     }
 
 
@@ -166,7 +166,7 @@ class Session extends Root
     // retourne vrai si la session est démarré et vide
     final public static function isEmpty():bool
     {
-        return (static::isStarted() && empty(Superglobal::session()));
+        return static::isStarted() && empty(Superglobal::session());
     }
 
 
@@ -174,7 +174,7 @@ class Session extends Root
     // retourne vrai si la session est démarré et pas vide
     final public static function isNotEmpty():bool
     {
-        return (static::isStarted() && !empty(Superglobal::session()));
+        return static::isStarted() && !empty(Superglobal::session());
     }
 
 
@@ -182,7 +182,7 @@ class Session extends Root
     // retourne vrai si la classe a un save handler
     final public static function hasSaveHandler():bool
     {
-        return (!empty(static::$handler));
+        return !empty(static::$handler);
     }
 
 

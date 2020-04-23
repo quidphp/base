@@ -23,7 +23,7 @@ class Globals extends Root
     // retourne vrai si la variable est une globale
     final public static function is($key):bool
     {
-        return (Arr::isKey($key) && array_key_exists($key,$GLOBALS));
+        return Arr::isKey($key) && array_key_exists($key,$GLOBALS);
     }
 
 

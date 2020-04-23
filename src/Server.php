@@ -40,7 +40,7 @@ class Server extends Root
     // retourne vrai si le système est macOs
     final public static function isMac():bool
     {
-        return (static::isOs('darwin'));
+        return static::isOs('darwin');
     }
 
 
@@ -64,7 +64,7 @@ class Server extends Root
     // retourne vrai si le système est Linux
     final public static function isLinux():bool
     {
-        return (static::isOs('linux'));
+        return static::isOs('linux');
     }
 
 
@@ -86,7 +86,7 @@ class Server extends Root
     // retourne vrai si le serveur est apache
     final public static function isApache():bool
     {
-        return (static::isSoftware('apache'));
+        return static::isSoftware('apache');
     }
 
 
@@ -94,7 +94,7 @@ class Server extends Root
     // retourne vrai si le serveur est nginx
     final public static function isNginx():bool
     {
-        return (static::isSoftware('nginx'));
+        return static::isSoftware('nginx');
     }
 
 
@@ -102,7 +102,7 @@ class Server extends Root
     // retourne vrai si le serveur est iis
     final public static function isIis():bool
     {
-        return (static::isSoftware('iis'));
+        return static::isSoftware('iis');
     }
 
 
@@ -110,7 +110,7 @@ class Server extends Root
     // retourne vrai si le protocol http utilisé est 1.0 ou 1.1
     final public static function isHttp1():bool
     {
-        return (in_array(static::httpProtocol(),['HTTP/1','HTTP/1.0','HTTP/1.1'],true));
+        return in_array(static::httpProtocol(),['HTTP/1','HTTP/1.0','HTTP/1.1'],true);
     }
 
 
@@ -118,7 +118,7 @@ class Server extends Root
     // retourne vrai si le protocol http utilisé est 2.0
     final public static function isHttp2():bool
     {
-        return (in_array(static::httpProtocol(),['HTTP/2','HTTP/2.0'],true));
+        return in_array(static::httpProtocol(),['HTTP/2','HTTP/2.0'],true);
     }
 
 
@@ -142,7 +142,7 @@ class Server extends Root
     // retourne vrai si php roule à partir d'un commande line (plutôt qu'un browser)
     final public static function isCli():bool
     {
-        return (static::sapi() === 'cli' || defined('STDIN'));
+        return static::sapi() === 'cli' || defined('STDIN');
     }
 
 
@@ -150,7 +150,7 @@ class Server extends Root
     // retourne vrai si le filesystem est sensible à la casse
     final public static function isCaseSensitive():bool
     {
-        return (!file_exists(strtoupper(__FILE__)) || !file_exists(strtolower(__FILE__)));
+        return !file_exists(strtoupper(__FILE__)) || !file_exists(strtolower(__FILE__));
     }
 
 
@@ -166,7 +166,7 @@ class Server extends Root
     // retourne vrai si la version php est égale
     final public static function isPhpVersion(string $value):bool
     {
-        return (version_compare(static::phpVersion(),$value) === 0);
+        return version_compare(static::phpVersion(),$value) === 0;
     }
 
 
@@ -174,7 +174,7 @@ class Server extends Root
     // retourne vrai si la version php est plus vieille que celle fourni
     final public static function isPhpVersionOlder(string $value):bool
     {
-        return (version_compare(static::phpVersion(),$value) === -1);
+        return version_compare(static::phpVersion(),$value) === -1;
     }
 
 
@@ -182,7 +182,7 @@ class Server extends Root
     // retourne vrai si la version php est plus récente que celle fourni
     final public static function isPhpVersionNewer(string $value):bool
     {
-        return (version_compare(static::phpVersion(),$value) === 1);
+        return version_compare(static::phpVersion(),$value) === 1;
     }
 
 
@@ -190,7 +190,7 @@ class Server extends Root
     // retourne vrai les fonctions d'apache sont chargés
     final public static function hasApacheFunctions():bool
     {
-        return (function_exists('apache_get_modules'));
+        return function_exists('apache_get_modules');
     }
 
 
@@ -248,7 +248,7 @@ class Server extends Root
     // retourne vrai si la connection est normal
     final public static function isConnectionNormal():bool
     {
-        return (static::connectionStatus() === CONNECTION_NORMAL);
+        return static::connectionStatus() === CONNECTION_NORMAL;
     }
 
 
@@ -256,7 +256,7 @@ class Server extends Root
     // retourne vrai si la connection est aborted
     final public static function isConnectionAborted():bool
     {
-        return (connection_aborted() === 1);
+        return connection_aborted() === 1;
     }
 
 

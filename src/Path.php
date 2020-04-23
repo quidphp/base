@@ -50,7 +50,7 @@ class Path extends Set
     // trop de possibilité, alors seulement is_string
     final public static function is($value):bool
     {
-        return (is_string($value));
+        return is_string($value);
     }
 
 
@@ -58,7 +58,7 @@ class Path extends Set
     // retourne vrai si l'entrée semble être un drive windows, comme c:
     final public static function isWindowsDrive($value):bool
     {
-        return (is_string($value) && strlen($value) === 2 && substr($value,1,1) === ':');
+        return is_string($value) && strlen($value) === 2 && substr($value,1,1) === ':';
     }
 
 
@@ -66,7 +66,7 @@ class Path extends Set
     // retourne vrai si le chemin contient un windows drive
     final public static function hasWindowsDrive($value):bool
     {
-        return (is_string($value) && strlen($value) >= 2 && static::isWindowsDrive(substr($value,0,2)));
+        return is_string($value) && strlen($value) >= 2 && static::isWindowsDrive(substr($value,0,2));
     }
 
 
@@ -74,7 +74,7 @@ class Path extends Set
     // retourne vrai si le chemin a une extension
     final public static function hasExtension(string $path):bool
     {
-        return (!empty(static::extension($path)));
+        return !empty(static::extension($path));
     }
 
 
@@ -82,7 +82,7 @@ class Path extends Set
     // retourne vrai si le path a une lang
     final public static function hasLang(string $path,?array $option=null):bool
     {
-        return (static::lang($path,$option) !== null);
+        return static::lang($path,$option) !== null;
     }
 
 
@@ -212,7 +212,7 @@ class Path extends Set
     // retourne vrai si le path à la langue spécifié
     final public static function isLang($value,string $path,?array $option=null):bool
     {
-        return (is_string($value) && $value === static::lang($path,$option));
+        return is_string($value) && $value === static::lang($path,$option);
     }
 
 
@@ -220,7 +220,7 @@ class Path extends Set
     // retourne vrai si le mime est du group spécifé
     final public static function isMimeGroup($group,$value):bool
     {
-        return (is_string($value) && is_string($group) && static::mimeGroup($value) === $group);
+        return is_string($value) && is_string($group) && static::mimeGroup($value) === $group;
     }
 
 
@@ -228,7 +228,7 @@ class Path extends Set
     // retourne vrai si le mime est de la famille spécifiée
     final public static function isMimeFamily($family,$value):bool
     {
-        return (is_string($value) && is_string($family) && in_array($family,static::mimeFamilies($value),true));
+        return is_string($value) && is_string($family) && in_array($family,static::mimeFamilies($value),true);
     }
 
 
@@ -236,7 +236,7 @@ class Path extends Set
     // retourne vrai si le chemin semble pointer vers des interfaces
     final public static function isInterface($value):bool
     {
-        return (is_string($value) && Str::isEnd('/contract',static::dirname($value),false));
+        return is_string($value) && Str::isEnd('/contract',static::dirname($value),false);
     }
 
 

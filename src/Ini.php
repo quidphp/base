@@ -64,7 +64,7 @@ class Ini extends Root
     // retourne vrai si la valeur ini existe
     final public static function is($value):bool
     {
-        return (is_string($value) && array_key_exists($value,static::all()));
+        return is_string($value) && array_key_exists($value,static::all());
     }
 
 
@@ -72,7 +72,7 @@ class Ini extends Root
     // retourne vrai si l'extension xdebug est active et var dump est overloadé
     final public static function isVarDumpOverloaded():bool
     {
-        return (Extension::hasXdebug() && static::xdebug());
+        return Extension::hasXdebug() && static::xdebug();
     }
 
 
@@ -414,7 +414,7 @@ class Ini extends Root
     // retourne vrai si opcache roule
     final public static function opcache():bool
     {
-        return (!empty(static::get('opcache.enable')));
+        return !empty(static::get('opcache.enable'));
     }
 
 
@@ -422,7 +422,7 @@ class Ini extends Root
     // retourne vrai si xdebug roule
     final public static function xdebug():bool
     {
-        return (!empty(static::get('xdebug.overload_var_dump')));
+        return !empty(static::get('xdebug.overload_var_dump'));
     }
 
 
@@ -430,7 +430,7 @@ class Ini extends Root
     // retourne vrai si apcu roule
     final public static function apcu():bool
     {
-        return (!empty(static::get('apc.enabled')));
+        return !empty(static::get('apc.enabled'));
     }
 
 

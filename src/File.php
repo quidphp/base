@@ -58,7 +58,7 @@ class File extends Finder
     // value peut être une string ou une resource
     final public static function isEmpty($value):bool
     {
-        return (static::is($value) && static::size($value) === 0);
+        return static::is($value) && static::size($value) === 0;
     }
 
 
@@ -67,7 +67,7 @@ class File extends Finder
     // value peut être une string ou une resource
     final public static function isNotEmpty($value):bool
     {
-        return (static::is($value) && static::size($value) !== 0);
+        return static::is($value) && static::size($value) !== 0;
     }
 
 

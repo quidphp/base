@@ -79,7 +79,7 @@ class Email extends Root
     // retourne vrai si l'envoie de courriel est activé
     final public static function isActive():bool
     {
-        return (static::$config['active'] === true);
+        return static::$config['active'] === true;
     }
 
 

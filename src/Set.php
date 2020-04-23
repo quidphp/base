@@ -50,7 +50,7 @@ class Set extends Root
     // retourne vrai si le set a un separator à la fin
     final public static function isSeparatorEnd(string $set):bool
     {
-        return ($set !== ($separator = static::getSeparator()) && Str::isEnd($separator,$set,static::getSensitive()));
+        return $set !== ($separator = static::getSeparator()) && Str::isEnd($separator,$set,static::getSensitive());
     }
 
 
@@ -58,7 +58,7 @@ class Set extends Root
     // retourne vrai si le set contient un double séparateur
     final public static function hasSeparatorDouble(string $set):bool
     {
-        return (!empty($separator = static::getSeparator()) && Str::posIpos($separator.$separator,$set,static::getSensitive()) !== null);
+        return !empty($separator = static::getSeparator()) && Str::posIpos($separator.$separator,$set,static::getSensitive()) !== null;
     }
 
 

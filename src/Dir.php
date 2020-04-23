@@ -141,7 +141,7 @@ class Dir extends Finder
     // retourne vrai si la ressource est de type directoire
     final public static function isResource($value):bool
     {
-        return (is_resource($value) && Res::isDir($value));
+        return is_resource($value) && Res::isDir($value);
     }
 
 
