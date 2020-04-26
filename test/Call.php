@@ -35,15 +35,15 @@ class Call extends Base\Test
         assert(Base\Call::is([$date,'setDate']));
         assert(Base\Call::is(function() { }));
 
-        // isSafeStaticMethod
-        assert(!Base\Call::isSafeStaticMethod(function() { }));
-        assert(Base\Call::isSafeStaticMethod([Base\Str::class,'lower']));
-        assert(Base\Call::isSafeStaticMethod([$date,'setDatez']));
-        assert(!Base\Call::isSafeStaticMethod([\Datetime::class,'setDate']));
-        assert(!Base\Call::isSafeStaticMethod(["\Datetime",'setDate']));
-        assert(Base\Call::isSafeStaticMethod(["D\atetime",'setDate']));
-        assert(!Base\Call::isSafeStaticMethod(['test'=>Base\Str::class,'lower']));
-        assert(!Base\Call::isSafeStaticMethod('strtolower'));
+        // isSafeArrayCallable
+        assert(!Base\Call::isSafeArrayCallable(function() { }));
+        assert(Base\Call::isSafeArrayCallable([Base\Str::class,'lower']));
+        assert(Base\Call::isSafeArrayCallable([$date,'setDatez']));
+        assert(!Base\Call::isSafeArrayCallable([\Datetime::class,'setDate']));
+        assert(!Base\Call::isSafeArrayCallable(["\Datetime",'setDate']));
+        assert(Base\Call::isSafeArrayCallable(["D\atetime",'setDate']));
+        assert(!Base\Call::isSafeArrayCallable(['test'=>Base\Str::class,'lower']));
+        assert(!Base\Call::isSafeArrayCallable('strtolower'));
 
         // isFunction
         assert(Base\Call::isFunction('strtolower'));
@@ -77,7 +77,7 @@ class Call extends Base\Test
         // ableArray
         assert('b' === Base\Call::ableArray(['substr',['bla',0,1]]));
         assert('BLA' === Base\Call::ableArray(['strtoupper',['bla']]));
-        $array = ['upper'=>'strtoupper','closure'=>function($x) { if($x === 'bla') return true; }];
+        $array = ['upper'=>'strtoupper','closure'=>fn($x) => ($x === 'bla')];
 
         // ableArrs
 
@@ -95,7 +95,7 @@ class Call extends Base\Test
         assert(Base\Call::backBool('closure',$array,'bla'));
 
         // arr
-        $array = ['upper'=>'strtoupper','closure'=>function($x) { if($x === 'bla') return true; }];
+        $array = ['upper'=>'strtoupper','closure'=>fn($x) => ($x === 'bla')];
         Base\Call::arr('upper',$array,'bla');
         assert($array['upper'] === 'BLA');
 
@@ -119,7 +119,7 @@ class Call extends Base\Test
         // bindTo
 
         // digStaticMethod
-        $test = ['test'=>[Base\Request::class,'host'],'well'=>['ok'=>function() { return true; },'james'=>[Base\Request::class,'isSsl']]];
+        $test = ['test'=>[Base\Request::class,'host'],'well'=>['ok'=>fn() => true,'james'=>[Base\Request::class,'isSsl']]];
         assert(Base\Call::digStaticMethod($test)['well']['james'] === Base\Request::isSsl());
         assert(Base\Call::digStaticMethod($test)['well']['ok'] instanceof \Closure);
 

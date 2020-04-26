@@ -20,15 +20,15 @@ abstract class Root
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // static
     // remet une copie des propriétés des traits incluent car c'est plus facile à gérer
-    protected static $initStaticProp = []; // voir _init
-    protected static $initCallable = null; // voir _init
-    protected static $cacheStatic = []; // voir _cacheStatic
-    protected static $cacheFile = null; // voir _cacheFile
+    protected static array $initStaticProp = []; // voir _init
+    protected static $initCallable; // voir _init
+    protected static array $cacheStatic = []; // voir _cacheStatic
+    protected static string $cacheFile; // voir _cacheFile
 
 
     // construct

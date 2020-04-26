@@ -70,7 +70,6 @@ class Boolean extends Base\Test
 
         // toggle
         assert(Base\Boolean::toggle(true) === false);
-        assert(null === Base\Boolean::toggle('0'));
 
         return true;
     }

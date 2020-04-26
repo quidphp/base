@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Csv extends File
 {
     // config
-    public static $config = [
+    public static array $config = [
         'mimeGroup'=>'csv', // mime groupe de la classe
         'format'=>['delimiter'=>';','enclosure'=>'"','escape'=>'\\'],
         'load'=>'csv', // extension permise pour la méthode csv::load

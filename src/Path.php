@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Path extends Set
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'start'=>true,
             'clean'=>true],
@@ -468,7 +468,7 @@ class Path extends Set
 
         if(!empty($change) && !empty($info))
         {
-            $info = Arr::keysSlice((array) $change,$info);
+            $info = Arr::getsExists((array) $change,$info);
             $return = static::build($info);
         }
 

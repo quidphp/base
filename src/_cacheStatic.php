@@ -16,7 +16,7 @@ namespace Quid\Base;
 trait _cacheStatic
 {
     // cacheStatic
-    protected static $cacheStatic = []; // conserve les données de la cache statique, important de recréer la propriété dans chaque classe sinon la cache sera partagée
+    protected static array $cacheStatic = []; // conserve les données de la cache statique, important de recréer la propriété dans chaque classe sinon la cache sera partagée
 
 
     // cacheStatic

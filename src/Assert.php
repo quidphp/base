@@ -16,14 +16,14 @@ namespace Quid\Base;
 class Assert extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // call
-    // fait une assertion sur une callable
-    final public static function call(callable $call,$extra=null):bool
+    // fait une assertion sur une closure
+    final public static function call(\Closure $closure,$extra=null):bool
     {
-        return assert($call(),$extra);
+        return assert($closure(),$extra);
     }
 
 

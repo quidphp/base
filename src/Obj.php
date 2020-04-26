@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Obj extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'method'=>'_cast', // méthode pour cast
         'cast'=>null // méthode à appeler si cast ne respecte pas le type
     ];
@@ -479,7 +479,7 @@ class Obj extends Root
     {
         if(is_object($return))
         {
-            $method = $method ?? static::$config['method'];
+            $method ??= static::$config['method'];
 
             if($return instanceof \Closure)
             $return = $return();

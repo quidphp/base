@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Symlink extends Finder
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // is

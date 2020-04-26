@@ -339,7 +339,7 @@ class Html extends Base\Test
         assert(Base\Html::label('james','ok') === "<label for='ok'>james</label>");
         assert(Base\Html::htmlOpen(null,['lang'=>'fr','data-route'=>'home']) === "<html lang='fr' data-route='home'>");
         assert(Base\Html::bodyOpen(null,'home') === "<body class='home'>");
-        assert(Base\Html::script(function() { return 'YEAH'; }) === '<script>YEAH</script>');
+        assert(Base\Html::script(fn() => 'YEAH') === '<script>YEAH</script>');
         assert(Base\Html::span('strlen','james') === "<span class='james'>strlen</span>");
         assert(Base\Html::linkOpen('http://google.com/test.jpg','prev') === "<link rel='prev' href='http://google.com/test.jpg'/>");
         assert(Base\Html::linkOpen('/test/bla','stylesheet') === "<link rel='stylesheet' type='text/css' media='screen,print' href='/test/bla.css'/>");
@@ -377,15 +377,9 @@ class Html extends Base\Test
         assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>false])) === 102);
         assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>null])) === 102);
         assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>''])) === 128);
-        $closure = function() {
-            return 'a';
-        };
-        $closureAttr = function() {
-            return 'b';
-        };
-        $closureArr = function() {
-            return ['test'=>'ok','james'=>2];
-        };
+        $closure = fn() => 'a';
+        $closureAttr = fn() => 'b';
+        $closureArr = fn() => ['test'=>'ok','james'=>2];
         assert(Base\Html::div($closure,['data-test'=>$closureAttr]) === "<div data-test='b'>a</div>");
         assert(strlen(Base\Html::div([Base\Str::class,'lower'],['data-test'=>[Base\Str::class,'lower']])) === 91);
         assert(Base\Html::div($closure,['data'=>$closureArr]) === "<div data-test='ok' data-james='2'>a</div>");
@@ -933,11 +927,11 @@ class Html extends Base\Test
                 'charset'=>true,
                 'description'=>['jaems','deux'],
                 [['jaems','deux'],'keywords'],
-                'og:title'=>function() { return '<OKÉz>'; },
+                'og:title'=>fn() => '<OKÉz>',
                 [['jaems','deux'],'og:description'],
                 'og:url'=>'http://google.com/test.jpg',
                 'viewport'=>'width=device-width, initial-scale=1',
-                'fb:app_id'=>function() { return 12345; },
+                'fb:app_id'=>fn() => 12345,
                 ['http://google.com/test.jpg','og:image']],
             'link'=>[
                 ['http://google.com/test.jpg','prev'],
@@ -946,7 +940,7 @@ class Html extends Base\Test
                 'test3'],
             'script'=>[
                 'james: test;',
-                function() { return 'YEAH'; },
+                fn() => 'YEAH',
                 [[1,2,3],'app']],
             'css'=>[
                 'james',
@@ -995,7 +989,7 @@ class Html extends Base\Test
         assert(strlen(Base\Html::docClose([
             'script'=>[
                 'james: test;',
-                function() { return 'YEAH'; },
+                fn() => 'YEAH',
                 [[1,2,3],'app']],
             'js'=>[
                 'jquery',

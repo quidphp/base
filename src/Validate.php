@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Validate extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
 
         // regex
         'regex'=>[ // liste de regex utilisé à travers le site

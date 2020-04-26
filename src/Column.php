@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Column extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // is
@@ -654,77 +654,9 @@ class Column extends Root
         elseif($ascDesc === 'desc')
         $sort = SORT_DESC;
 
-        $counts = array_map('count',$return);
+        $counts = Arr::map($return,fn($value) => count($value));
 
         array_multisort($counts,$sort,$return);
-
-        return $return;
-    }
-
-
-    // map
-    // array_map pour un tableau multidimensionnel
-    // col spécifie quelle colonne est affecté
-    // si la colonne existe, le résultat de la fonction est inscrite dans le tableau de retour
-    // si callable est closure, à ce moment au moins trois arguments sont envoyés à la fonction = value, col et array
-    final public static function map($col,callable $callable,array $return,...$args):array
-    {
-        if(static::is($return) && Arr::isKey($col))
-        {
-            foreach ($return as $key => $value)
-            {
-                if(array_key_exists($col,$value))
-                {
-                    $v = $value[$col];
-
-                    if($callable instanceof \Closure)
-                    $return[$key][$col] = $callable($v,$col,$value,...$args);
-
-                    else
-                    $return[$key][$col] = $callable($v,...$args);
-                }
-            }
-        }
-
-        return $return;
-    }
-
-
-    // filter
-    // array_filter pour un tableau multidimensionnel
-    // col spécifie quelle colonne est affecté
-    // si la callable retourne false, ou si col n'existe pas, toute la colonne est enlevé
-    // si callable est closure, à ce moment trois arguments sont envoyés à la fonction = value, col et array
-    final public static function filter($col,callable $callable,array $return,int $flag=0):array
-    {
-        if(static::is($return) && Arr::isKey($col))
-        {
-            foreach ($return as $key => $value)
-            {
-                $result = false;
-
-                if(array_key_exists($col,$value))
-                {
-                    $v = $value[$col];
-
-                    if($callable instanceof \Closure)
-                    $result = $callable($v,$col,$value);
-
-                    else
-                    {
-                        if($flag === ARRAY_FILTER_USE_BOTH)
-                        $result = $callable($v,$col);
-                        elseif($flag === ARRAY_FILTER_USE_KEY)
-                        $result = $callable($col);
-                        else
-                        $result = $callable($v);
-                    }
-                }
-
-                if(!$result)
-                unset($return[$key]);
-            }
-        }
 
         return $return;
     }

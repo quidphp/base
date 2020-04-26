@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Json extends Assoc
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'encode'=>JSON_INVALID_UTF8_IGNORE | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES, // flag encode
             'decode'=>JSON_INVALID_UTF8_IGNORE | JSON_BIGINT_AS_STRING, // flag decode

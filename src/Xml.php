@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Xml extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'urlset'=>[ // défini les urlset utilisés par xml
             'sitemap'=>"<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'></urlset>"]
     ];

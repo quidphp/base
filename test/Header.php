@@ -165,12 +165,12 @@ class Header extends Base\Test
         assert(Base\Header::list(Base\Header::arr($status)) === Base\Header::list($status));
         assert(Base\Header::list("Test: ok \r\nHTTP/1.1 OK 200 \r\n Test2:what2") === ['HTTP/1.1 OK 200','Test: ok','Test2: what2']);
         assert(Base\Header::list(['set-cookie '=>['test','test2']]) === ['Set-Cookie: test','Set-Cookie: test2']);
-        assert(Base\Header::list(['james'=>function() { return 'OK'; }]) === [0=>'James: OK']);
+        assert(Base\Header::list(['james'=>fn() => 'OK']) === [0=>'James: OK']);
         if($isCli === false)
         assert(Base\Header::list($response) === headers_list());
 
         // keyValue
-        assert(Base\Header::keyValue(['james'=>function() { return 'OK'; }],Base\Header::option()) === []);
+        assert(Base\Header::keyValue(['james'=>fn() => 'OK'],Base\Header::option()) === []);
 
         // uni
         assert(Base\Header::list(['set-cookie'=>['test','test']]) === ['Set-Cookie: test','Set-Cookie: test']);
@@ -331,9 +331,7 @@ class Header extends Base\Test
         assert(is_string(Base\Header::gets(['host'],$request)['host']));
         assert(Base\Header::gets(['status'],$status) === ['status'=>'HTTP/1.0 200 OK']);
         assert(strlen(Base\Header::implode($status)) === 25);
-        assert(Base\Header::arr(['test'=>2,'OK'=>function() {
-            return 'James';
-        }]) === ['test'=>2,'OK'=>'James']);
+        assert(Base\Header::arr(['test'=>2,'OK'=>fn() => 'James']) === ['test'=>2,'OK'=>'James']);
         assert(is_string(Base\Header::arr(['test'=>2,'OK'=>Base\Request::absolute()])['OK']));
         assert(Base\Header::arr(['test2'=>true,'test'=>0,'user-agent'=>false,'ok'=>'0','james'=>'','james-test'=>null]) === ['test2'=>true,'test'=>0,'user-agent'=>false,'ok'=>'0']);
         assert(strlen(Base\Header::str(['test2'=>true,'test'=>0,'user-agent'=>false,'ok'=>'0','james'=>'','james-test'=>null])) === 39);

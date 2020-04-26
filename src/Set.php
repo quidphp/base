@@ -20,7 +20,7 @@ class Set extends Root
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'implode'=>0, // index du séparateur à utiliser lors du implode
             'explode'=>0, // index du séparateur à utiliser lors du explode

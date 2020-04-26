@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Scalar extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // typecast

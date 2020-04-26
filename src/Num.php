@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Num extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'intMaxLength'=>11, // longueur maximale d'une int pour le cast
         'alias'=>[ // alias de méthode pour math
             'avg'=>'average',
@@ -735,7 +735,7 @@ class Num extends Root
         $return = null;
 
         static::typecast(...$values);
-        $values = Arr::validateSlice('numeric',$values);
+        $values = Arr::filter($values,fn($value) => is_numeric($value));
         $return = min(...$values);
 
         return $return;
@@ -749,7 +749,7 @@ class Num extends Root
         $return = null;
 
         static::typecast(...$values);
-        $values = Arr::validateSlice('numeric',$values);
+        $values = Arr::filter($values,fn($value) => is_numeric($value));
         $return = max(...$values);
 
         return $return;
@@ -999,7 +999,7 @@ class Num extends Root
     // sizeFormat
     // transforme une entrée de taille numérique en bytes en une taille formatté
     // si round est true, le niveau d'arrondissement est défini dans les config selon le niveau de taille
-    final public static function sizeFormat(int $size,$round=true,?string $lang=null,?array $option=null):string
+    final public static function sizeFormat(float $size,$round=true,?string $lang=null,?array $option=null):string
     {
         $return = '';
         $option = static::getSizeFormat($lang,$option);

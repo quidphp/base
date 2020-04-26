@@ -16,7 +16,7 @@ namespace Quid\Base;
 trait _shortcut
 {
     // config
-    protected static $shortcut = []; // conserve les shortcuts de la classe
+    protected static array $shortcut = []; // conserve les shortcuts de la classe
 
 
     // isShortcut
@@ -63,9 +63,9 @@ trait _shortcut
 
     // setShortcutMethod
     // méthode utilisé lors de l'ajout du shortcut
-    final public static function setShortcutMethod():callable
+    final public static function setShortcutMethod():\Closure
     {
-        return [static::class,'shortcut'];
+        return fn($value) => static::shortcut($value);
     }
 
 

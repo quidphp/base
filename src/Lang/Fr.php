@@ -17,7 +17,7 @@ use Quid\Base;
 class Fr extends Base\Config
 {
     // config
-    public static $config = [
+    public static array $config = [
         // number
         'number'=>[
 

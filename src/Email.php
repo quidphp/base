@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Email extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'active'=>true, // permet d'activer ou non l'envoie d'email
         'message'=>[ // contenu par défaut pour un tableau message
             'priority'=>null,
@@ -233,7 +233,7 @@ class Email extends Root
     final public static function prepareContentTypeCharset($value=null,?string $charset=null):array
     {
         $return = [];
-        $charset = $charset ?? Encoding::getCharset();
+        $charset ??= Encoding::getCharset();
         $contentType = 'txt';
         $contentTypes = static::$config['contentType'];
         $showCharset = Encoding::isCharsetMb($charset);

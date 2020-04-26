@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Segment extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'default'=>'[]', // délimiteur par défaut
         'column'=>'/', // séparateur pour column
         'lang'=>'%lang%', // à remplacer lors du prepare, pour mettre %lang% dans un segment

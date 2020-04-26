@@ -16,7 +16,7 @@ namespace Quid\Base;
 trait _cacheFile
 {
     // cacheFile
-    protected static $cacheFile = null; // dirname pour le storage, peut être changé par classe mais il faut répéter cette propriété
+    protected static string $cacheFile; // dirname pour le storage, peut être changé par classe mais il faut répéter cette propriété
 
 
     // cacheFile
@@ -72,14 +72,9 @@ trait _cacheFile
     // va envoyer une exception si cacheFile est toujours null
     final public static function getCacheFileStorage():string
     {
-        $return = null;
-
-        if(is_string(static::$cacheFile))
-        {
-            $return = Finder::normalize(static::$cacheFile);
-            $class = str_replace('\\','',static::class);
-            $return = Str::replace(['%class%'=>$class],$return);
-        }
+        $return = Finder::normalize(static::$cacheFile);
+        $class = str_replace('\\','',static::class);
+        $return = Str::replace(['%class%'=>$class],$return);
 
         return $return;
     }

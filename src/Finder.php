@@ -20,7 +20,7 @@ class Finder extends Root
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'perms'=>[ // les numéros de permission valables selon le type d'accès
             'readable'=>[4,5,6,7],
             'writable'=>[2,3,6,7],
@@ -43,7 +43,7 @@ class Finder extends Root
 
 
     // host
-    protected static $host = []; // tableau associatif entre host et chemin serveur, le même tableau est utilisé par toutes les classes
+    protected static array $host = []; // tableau associatif entre host et chemin serveur, le même tableau est utilisé par toutes les classes
 
 
     // is
@@ -1115,9 +1115,7 @@ class Finder extends Root
     // permet d'effacer un fichier ou un directoire au shutdown s'il existe toujours
     final public static function unlinkOnShutdown($path):void
     {
-        Response::onShutdown(function($path) {
-            static::unlink($path);
-        },$path);
+        Response::onShutdown(fn($path) => static::unlink($path),$path);
 
         return;
     }
@@ -1179,9 +1177,9 @@ class Finder extends Root
 
     // setShortcutMethod
     // remplacement de setShortcutMethod dans le trait shortcut
-    final public static function setShortcutMethod():callable
+    final public static function setShortcutMethod():\Closure
     {
-        return [static::class,'normalize'];
+        return fn($value) => static::normalize($value);
     }
 
 
@@ -1304,7 +1302,7 @@ class Finder extends Root
     // permet de retourner, ajouter, modifier et enlever des host en une méthode
     final public static function host(?array $array=null):array
     {
-        return (is_array($array))? (static::$host = Arr::replaceCleanNull(static::$host,$array)):static::$host;
+        return (is_array($array))? (static::$host = Arr::cleanNull(Arr::replace(static::$host,$array))):static::$host;
     }
 
 

@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Server extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'version'=>null, // version courante de quid
         'online'=>'google.com' // domaine à utiliser pour tester si le serveur est online
     ];
@@ -726,7 +726,7 @@ class Server extends Root
         $return['peakRealUsage'] = memory_get_peak_usage(true);
 
         if($format === true)
-        $return = array_map([Num::class,'sizeFormat'],$return);
+        $return = Arr::map($return,fn($value) => Num::sizeFormat($value));
 
         return $return;
     }
@@ -741,7 +741,7 @@ class Server extends Root
         $return['total'] = disk_total_space($directory);
 
         if($format === true)
-        $return = array_map([Num::class,'sizeFormat'],$return);
+        $return = Arr::map($return,fn($value) => Num::sizeFormat($value));
 
         return $return;
     }

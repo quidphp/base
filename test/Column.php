@@ -240,26 +240,6 @@ class Column extends Base\Test
         assert(Base\Column::sortByLength($sort,true) === Base\Column::sortByLength($sort));
         assert(Base\Column::sortByLength($sort,false)[1] = ['james',3]);
 
-        // map
-        $col = [[1=>'yes'],[1=>'no','test'=>'ok']];
-        assert([[1=>'YES'],[1=>'NO','test'=>'ok']] === Base\Column::map(1,'strtoupper',$col));
-        assert([[1=>'yes'],[1=>'no','test'=>'OK']] === Base\Column::map('test','strtoupper',$col));
-        assert([[1=>'YES'],[1=>'NO','test'=>'ok']] === Base\Column::map(1,[Base\Str::class,'upper'],$col));
-        Base\Column::map(1,function($v,$k,$value) {
-            assert(is_string($v));
-            assert(is_int($k));
-            assert(is_array($value));
-        },$col);
-
-        // filter
-        $col = [['test'=>'yes',2=>'TESa'],['test'=>'no',2=>'TEST'],['testa'=>'bla']];
-        $col = Base\Column::filter('test',function($v,$k,$value) {
-            if($v === 'yes' && is_array($value))
-            return true;
-        },$col);
-        assert(count($col) === 1);
-        $col = [['test'=>'yes',2=>'TESa'],['test'=>'no',2=>'TEST'],['testa'=>'bla']];
-
         // arr
         $multi = [0=>['name'=>'test','user'=>'testa'],3=>['name'=>'test2','user'=>'testa2'],2=>['user'=>['testa3'],'meh'=>'test','bla'=>'2']];
         assert(['testa','testa2',['testa3']] === Base\Column::keyValue(null,'user',$multi));

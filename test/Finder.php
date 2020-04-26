@@ -277,9 +277,7 @@ class Finder extends Base\Test
         assert(Base\Finder::changeBasename('WHAT',Base\Path::addBasename($fileBase,$storage)));
         assert(Base\Finder::unlink(Base\Path::addBasename('WHAT',$storage)));
         assert(Base\Finder::changeBasename($storage.'/dirRename',$storage.'/dirMove'));
-        assert(Base\Finder::changeBasename(function($value) {
-            return 'dirRename2';
-        },$storage.'/dirRename'));
+        assert(Base\Finder::changeBasename(fn($value) => 'dirRename2',$storage.'/dirRename'));
         assert(Base\Finder::changeBasename('sym2',$storage.'/dirRename2/move/sym'));
 
         // copy
@@ -294,9 +292,7 @@ class Finder extends Base\Test
         // copyInDirname
         assert(Base\Finder::copyInDirname('copyKeepDirname',$filename));
         assert(Base\Finder::copyInDirname('symKeepDirname',$sym));
-        assert(count(Base\Finder::copyInDirname(function() {
-            return 'test2';
-        },$storage.'/test')) > 5);
+        assert(count(Base\Finder::copyInDirname(fn() => 'test2',$storage.'/test')) > 5);
 
         // copyWithBasename
         assert(Base\Finder::copyWithBasename('[assertCurrent]/copyKeepBasename',$filename));

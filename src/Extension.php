@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Extension extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'required'=>[ // extensions requises
             'ctype','curl','date','fileinfo','gd','iconv','json','mbstring','pcre',
             'PDO','pdo_mysql','openssl','session','SimpleXML','zip']

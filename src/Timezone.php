@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Timezone extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'current'=>null, // conserve le timezone courant pour le set/reset
         'default'=>'UTC' // timezone par défaut, lorsque value est true
     ];

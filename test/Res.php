@@ -1067,15 +1067,8 @@ class Res extends Base\Test
         assert(strlen(Base\Res::get($csv)) === 277);
 
         // lineFilter
-        assert(count(Base\Res::lineFilter(function($v) {
-            if(empty(trim($v)))
-            return false;
-            return true;
-        },$splice,false)) < 900);
-        assert(count(Base\Res::lineFilter(function($v,$k) {
-            if($k === 2 || $k === 4)
-            return true;
-        },$csv,true,['csv'=>true])) === 2);
+        assert(count(Base\Res::lineFilter(fn($v) => !empty(trim($v)),$splice,false)) < 900);
+        assert(count(Base\Res::lineFilter(fn($v,$k) => ($k === 2 || $k === 4),$csv,true,['csv'=>true])) === 2);
 
         // lineMap
         assert(Base\Res::lineMap(function($v,$k) {

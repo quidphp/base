@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Res extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'binary'=>'b', // caractère pour représenter un mode binaire
         'readable'=>['r','r+','w+','a+','x+','c+'], // mode de stream readable
         'writable'=>['r+','w','w+','a','a+','x','x+','c','c+'], // mode de resource writable
@@ -2678,7 +2678,7 @@ class Res extends Root
     // si callback retourne faux, la colonne existante est stocké et fermé
     // si callback retourne null, la ligne est stocké si la colonne est ouverte, sinon elle est ignoré
     // retourne un tableau multidimensionnel colonne
-    final public static function lineChunkWalk(callable $callback,$value,?array $option=null):?array
+    final public static function lineChunkWalk(\Closure $callback,$value,?array $option=null):?array
     {
         $return = null;
         $lines = static::lines(true,true,$value,$option);
@@ -2966,11 +2966,11 @@ class Res extends Root
 
     // concatenate
     // permet de concatener plusieurs ressources et écrire le rendu dans une resource
-    // un séparateur doit être fourni, une callable peut être fourni
-    final public static function concatenate($value,?callable $callable=null,string $separator,...$values)
+    // un séparateur doit être fourni, une closure peut être fourni
+    final public static function concatenate($value,?\Closure $closure=null,string $separator,...$values)
     {
         $return = false;
-        $content = static::concatenateString($callable,$separator,...$values);
+        $content = static::concatenateString($closure,$separator,...$values);
 
         if(is_string($content))
         $return = static::write($content,$value);
@@ -2981,8 +2981,8 @@ class Res extends Root
 
     // concatenateString
     // permet de concatener plusieurs ressources et retourner le rendu combiné dans une string
-    // un séparateur doit être fourni, une callable peut être fourni
-    final public static function concatenateString(?callable $callable=null,string $separator,...$values):?string
+    // un séparateur doit être fourni, une closure peut être fourni
+    final public static function concatenateString(?\Closure $closure=null,string $separator,...$values):?string
     {
         $return = null;
 
@@ -2999,8 +2999,8 @@ class Res extends Root
             }
         }
 
-        if(!empty($return) && !empty($callable))
-        $return = $callable($return);
+        if(!empty($return) && !empty($closure))
+        $return = $closure($return);
 
         return $return;
     }
@@ -3099,7 +3099,7 @@ class Res extends Root
     // si le callback retourne faux, la ligne est retiré
     // la ressource est automatiquement modifié
     // retourne un tableau des lignes filtrés, possibilité d'écrire le résultat dans la ressource si overwrite est true
-    final public static function lineFilter(callable $callback,$value,bool $overwrite=true,?array $option=null):?array
+    final public static function lineFilter(\Closure $callback,$value,bool $overwrite=true,?array $option=null):?array
     {
         $return = null;
 
@@ -3124,7 +3124,7 @@ class Res extends Root
     // permet de passer chaque ligne de la resource dans un callback
     // la ligne est remplacé par la valeur de retour du callback
     // retourne un tableau des nouvelles lignes, possibilité d'écrire le résultat dans la ressource si overwrite est true
-    final public static function lineMap(callable $callback,$value,bool $overwrite=true,?array $option=null):?array
+    final public static function lineMap(\Closure $callback,$value,bool $overwrite=true,?array $option=null):?array
     {
         $return = null;
 
@@ -3134,7 +3134,7 @@ class Res extends Root
 
             if(!empty($lines))
             {
-                $return = Arr::map($callback,$lines);
+                $return = Arr::map($lines,$callback);
 
                 if($overwrite === true)
                 static::overwrite($return,$value,$option);

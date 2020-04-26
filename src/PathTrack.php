@@ -16,7 +16,7 @@ namespace Quid\Base;
 class PathTrack extends Path
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'start'=>null, // aucun changement au séparateur au début lors du implode
             'end'=>null] // aucun changement au séparateur à la fin lors du implode

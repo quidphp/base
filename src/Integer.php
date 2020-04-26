@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Integer extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // typecast
@@ -138,7 +138,7 @@ class Integer extends Root
 
     // toggle
     // toggle des valeurs primaires (1/0)
-    final public static function toggle($value)
+    final public static function toggle(int $value):?int
     {
         $return = null;
 

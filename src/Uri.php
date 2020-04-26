@@ -21,7 +21,7 @@ class Uri extends Root
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'absolute'=>null, // si l'uri doit être absolute
             'schemeHost'=>null, // schemehost pour uri relative passé dans une méthode absolute, aussi pour exists
@@ -60,11 +60,11 @@ class Uri extends Root
 
 
     // absolute
-    protected static $absolute = false; // détermine si toutes les requêtes dans output doivent être absolute
+    protected static bool $absolute = false; // détermine si toutes les requêtes dans output doivent être absolute
 
 
     // scheme
-    protected static $scheme = []; // tableau associatif entre host et scheme
+    protected static array $scheme = []; // tableau associatif entre host et scheme
 
 
     // is
@@ -1941,7 +1941,7 @@ class Uri extends Root
     // permet de retourner, ajouter, modifier et enlever des host/scheme en une méthode
     final public static function schemeStatic(?array $array=null):array
     {
-        return (is_array($array))? (static::$scheme = Arr::replaceCleanNull(static::$scheme,$array)):static::$scheme;
+        return (is_array($array))? (static::$scheme = Arr::cleanNull(Arr::replace(static::$scheme,$array))):static::$scheme;
     }
 
 

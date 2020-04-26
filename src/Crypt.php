@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Crypt extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'passwordHash'=>[ // configuration pour password_hash et password_verify
             'algo'=>PASSWORD_DEFAULT,
             'options'=>['cost'=>11]],
@@ -84,7 +84,7 @@ class Crypt extends Root
     final public static function passwordNew(?int $length=null):?string
     {
         $return = null;
-        $length = $length ?? static::$config['passwordNew'] ?? null;
+        $length ??= static::$config['passwordNew'] ?? null;
 
         if(is_int($length) && $length > 4)
         {
@@ -137,6 +137,14 @@ class Crypt extends Root
     final public static function passwordActivate(string $value):string
     {
         return static::sha($value,1);
+    }
+
+
+    // passwordAlgos
+    // retourne la liste des algorythmes de hash pour mot de passe
+    final public static function passwordAlgos():array
+    {
+        return password_algos();
     }
 
 

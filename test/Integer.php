@@ -63,7 +63,6 @@ class Integer extends Base\Test
         assert(0 === Base\Integer::fromBool(false));
 
         // toggle
-        assert(null === Base\Integer::toggle('0'));
         assert(1 === Base\Integer::toggle(0));
 
         // range

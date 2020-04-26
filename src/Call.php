@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Call extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // typecast
@@ -36,9 +36,7 @@ class Call extends Root
     // cast la variable dans une closure
     final public static function cast($value):\Closure
     {
-        return function() use($value) {
-            return $value;
-        };
+        return fn() => $value;
     }
 
 
@@ -50,9 +48,9 @@ class Call extends Root
     }
 
 
-    // isSafeStaticMethod
+    // isSafeArrayCallable
     // retourne vrai seulement si la valeur est un tableau callable, très stricte
-    final public static function isSafeStaticMethod($value,bool $callable=false):bool
+    final public static function isSafeArrayCallable($value,bool $callable=false):bool
     {
         $return = false;
 
@@ -304,7 +302,7 @@ class Call extends Root
     // withObj
     // permet de lancer une callable
     // si callable est closure, alors obj est le new this
-    // sinon l'objet est mis comme dernier argument
+    // sinon l'objet est mis comme premier argument
     final public static function withObj(object $obj,callable $callable,...$args)
     {
         $return = false;
@@ -313,10 +311,7 @@ class Call extends Root
         $return = $callable->call($obj,...$args);
 
         else
-        {
-            $args[] = $obj;
-            $return = $callable(...$args);
-        }
+        $return = $callable($obj,...$args);
 
         return $return;
     }
@@ -344,7 +339,7 @@ class Call extends Root
         {
             foreach ($return as $key => $value)
             {
-                if(static::isSafeStaticMethod($value,true))
+                if(static::isSafeArrayCallable($value,true))
                 $return[$key] = $value(...$args);
 
                 elseif(is_array($value))

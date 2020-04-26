@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Style extends Listing
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'implode'=>1, // index du séparateur à utiliser lors du implode
             'end'=>true, // ajoute le premier séparateur à la fin lors du implode

@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Constant extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // is

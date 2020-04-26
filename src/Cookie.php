@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Cookie extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'lifetime'=>3600, // durée de vie, 0 signifie fermeture du browser, a priorité sur expire car le timestamp courant est ajouté
         'expires'=>null, // expiration, 0 signifie fermeture du browser, le timestamp n'est pas additionné, a priorité sur lifetime
         'path'=>'/', // chemin dans le domaine

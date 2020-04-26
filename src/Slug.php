@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Slug extends Set
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'caseImplode'=>'lower', // les valeurs sont ramenés dans cette case lors du implode
             'replaceAccent'=>true, // replace les accents par les caractères non accentés

@@ -16,16 +16,16 @@ namespace Quid\Base;
 class Lang extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'default'=>'en', // langue par défaut à appliquer au chargement de la classe
         'field'=>'_', // délimiteur pour les méthodes field
     ];
 
 
     // static
-    protected static $current = null; // langue courante
-    protected static $all = []; // toute les langues, la première est la langue par défaut
-    protected static $callable = null; // callable d'un objet lang
+    protected static ?string $current = null; // langue courante
+    protected static array $all = []; // toute les langues, la première est la langue par défaut
+    protected static $callable; // callable d'un objet lang
 
 
     // is

@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Datetime extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'format'=>[
             'replace'=>[ // contenu de remplacement pour date, via une callable et éventuellement un map
                 '%'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'lower'],'args'=>[true]],
@@ -593,7 +593,10 @@ class Datetime extends Root
                         if(array_key_exists('map',$array) && static::isCallable($array['map']))
                         {
                             $args = (array_key_exists('args',$array))? (array) $array['args']:[];
-                            $return['replace'][$char] = Arr::map($array['map'],$return['replace'][$char],...$args);
+                            $callable = $array['map'];
+                            $closure = fn($v) => $callable($v,...$args);
+
+                            $return['replace'][$char] = Arr::map($return['replace'][$char],$closure);
                         }
                     }
                 }

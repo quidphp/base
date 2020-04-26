@@ -158,7 +158,7 @@ class Dir extends Base\Test
 
         // getChangeBasename
         assert(Base\Dir::set($storage.'/what'));
-        assert(count(Base\Dir::getChangeBasename(function($value) { return $value.'OK'; },$storage)) === 1);
+        assert(count(Base\Dir::getChangeBasename(fn($value) => $value.'OK',$storage)) === 1);
         assert(Base\Dir::is($storage.'/whatOK'));
 
         // sortPriority

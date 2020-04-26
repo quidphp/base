@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Request extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'idLength'=>10, // longueur du id de la requête
         'safe'=>[ // paramètre par défaut pour la méhode isPathSafe
             'regex'=>'uriPath'],
@@ -27,7 +27,7 @@ class Request extends Root
 
 
     // id
-    protected static $id = null; // id unique de la requête
+    protected static ?string $id = null; // id unique de la requête
 
 
     // isSsl

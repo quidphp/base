@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Ip extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'allowed'=>[ // option par défaut pour la méthode allowed
             'whiteList'=>null,'blackList'=>null,'range'=>true,'level'=>null],
         'range'=>'*', // caractère pour range

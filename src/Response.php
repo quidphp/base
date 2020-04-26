@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Response extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'idLength'=>10, // longueur du id de la réponse
         'closeDown'=>[], // callbacks à lancer lors d'un closeDown
         'closeBody'=>[], // callbacks à lancer lors d'un closeBody
@@ -35,7 +35,7 @@ class Response extends Root
 
 
     // id
-    protected static $id = null; // id unique de la réponse
+    protected static ?string $id = null; // id unique de la réponse
 
 
     // is200

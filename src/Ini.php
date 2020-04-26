@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Ini extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'default'=>[ // ini à appliquer par défaut lors du chargement
             'default_charset'=>'UTF-8',
             'auto_detect_line_endings'=>true,
@@ -213,7 +213,10 @@ class Ini extends Root
         $scanned = php_ini_scanned_files();
 
         if(!empty($scanned))
-        $return['scanned'] = array_map('trim',explode(',',$scanned));
+        {
+            $explode = explode(',',$scanned);
+            $return['scanned'] = Arr::map($explode,fn($value) => trim($value));
+        }
 
         return $return;
     }

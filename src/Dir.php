@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Dir extends Finder
 {
     // config
-    public static $config = [
+    public static array $config = [
         'defaultPermission'=>755 // permission par défaut pour un directoire
     ];
 
@@ -703,8 +703,8 @@ class Dir extends Finder
 
     // getChangeBasename
     // fait une requête get
-    // permet de passer une callable pour changer les basenames de tous les fichiers incluents
-    final public static function getChangeBasename(callable $callable,$path,bool $dig=false,?array $option=null):array
+    // permet de passer une closure pour changer les basenames de tous les fichiers incluents
+    final public static function getChangeBasename(\Closure $closure,$path,bool $dig=false,?array $option=null):array
     {
         $return = [];
         $get = static::get($path,$dig,$option);
@@ -713,7 +713,7 @@ class Dir extends Finder
         {
             foreach (array_reverse($get) as $value)
             {
-                $return[$value] = Finder::changeBasename($callable,$value);
+                $return[$value] = Finder::changeBasename($closure,$value);
             }
         }
 
@@ -810,19 +810,19 @@ class Dir extends Finder
 
     // concatenate
     // permet de concatener plusieurs ressources et écrire le rendu dans le fichier
-    // un séparateur doit être fourni, une callable peut être fourni
-    final public static function concatenate($value,$path,$extension=null,?callable $callable=null,string $separator=PHP_EOL)
+    // un séparateur doit être fourni, une closure peut être fourni
+    final public static function concatenate($value,$path,$extension=null,?\Closure $closure=null,string $separator=PHP_EOL)
     {
-        return File::concatenate($value,$callable,$separator,...static::getExtension($path,$extension) ?? []);
+        return File::concatenate($value,$closure,$separator,...static::getExtension($path,$extension) ?? []);
     }
 
 
     // concatenateString
     // permet de concatener plusieurs ressources et retourner le rendu combiné dans une string
-    // un séparateur doit être fourni, une callable peut être fourni
-    final public static function concatenateString($path,$extension=null,?callable $callable=null,string $separator=PHP_EOL):?string
+    // un séparateur doit être fourni, une closure peut être fourni
+    final public static function concatenateString($path,$extension=null,?\Closure $closure=null,string $separator=PHP_EOL):?string
     {
-        return File::concatenateString($callable,$separator,...static::getExtension($path,$extension) ?? []);
+        return File::concatenateString($closure,$separator,...static::getExtension($path,$extension) ?? []);
     }
 
 

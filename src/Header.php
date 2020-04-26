@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Header extends Listing
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'implode'=>1, // index du séparateur à utiliser lors du implode
             'caseImplode'=>[self::class,'keyCase']], // les clés sont ramenés dans cette case lors du implode
@@ -291,7 +291,7 @@ class Header extends Listing
                     if(array_key_exists($key,$return))
                     $return[$key] = $value;
                     else
-                    $return = Arr::prepend($return,[$key=>$value]);
+                    $return = Arr::append([$key=>$value],$return);
                 }
 
                 elseif(Arr::keyExists($key,$return,static::getSensitive()))

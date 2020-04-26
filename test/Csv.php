@@ -147,11 +147,11 @@ class Csv extends Base\Test
         assert(count(Base\Csv::lineSpliceLast('[assertCurrent]/test.csv',null,true)) === 2);
         assert(count(Base\Csv::getLines('[assertCurrent]/test.csv')) === 2);
         assert(Base\Csv::lineInsert(0,[['what',2],['ok',['TEST']]],'[assertCurrent]/test.csv',false)[1][1] === ['TEST']);
-        assert(count(Base\Csv::lineFilter(function($v,$k,$lines) {
+        assert(count(Base\Csv::lineFilter(function($v,$k) {
             assert(is_array($v));
             return true;
         },'[assertCurrent]/test.csv')) === 2);
-        assert(Base\Csv::lineMap(function($v,$k,$lines) {
+        assert(Base\Csv::lineMap(function($v,$k) {
             $v[2] = 'TEST';
             return $v;
         },'[assertCurrent]/test.csv')[0] === ['test','test2','TEST']);

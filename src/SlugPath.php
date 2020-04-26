@@ -16,7 +16,7 @@ namespace Quid\Base;
 class SlugPath extends Listing
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'slug'=>null],
         'separator'=>[ // les séparateurs de listing, le deuxième index est la version avec espace

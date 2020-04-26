@@ -16,7 +16,7 @@ namespace Quid\Base;
 class ImageRaster extends File
 {
     // config
-    public static $config = [
+    public static array $config = [
         'mimeGroup'=>'imageRaster', // mime groupe de la classe
         'load'=>null, // extension permise pour la méthode imageRaster::load
         'prefix'=>[ // option image file::temp

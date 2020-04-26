@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Browser extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'bots'=>[ // noms pouvant se retrouver dans le user-agent signifiant un bot
             'msnbot',
             'googlebot',
@@ -39,28 +39,14 @@ class Browser extends Root
 
 
     // cacheStatic
-    protected static $cacheStatic = []; // conserve les données de la cache statique
+    protected static array $cacheStatic = []; // conserve les données de la cache statique
 
 
     // isBot
     // retourne vrai si le user agent est un bot
     final public static function isBot($value):bool
     {
-        $return = false;
-
-        if(is_string($value) && !empty(static::$config['bots']))
-        {
-            foreach(static::$config['bots'] as $v)
-            {
-                if(stripos($value,$v) !== false)
-                {
-                    $return = true;
-                    break;
-                }
-            }
-        }
-
-        return $return;
+        return (is_string($value))? Arr::some(static::$config['bots'],fn($v) => stripos($value,$v) !== false):false;
     }
 
 
@@ -84,16 +70,7 @@ class Browser extends Root
     // retourne vrai si le browser est mobile
     final public static function isMobile($value):bool
     {
-        $return = false;
-
-        if(is_string($value))
-        {
-            $cap = static::cap($value);
-            if(!empty($cap['ismobiledevice']))
-            $return = true;
-        }
-
-        return $return;
+        return (is_string($value))? !empty(static::cap($value)['ismobiledevice']):false;
     }
 
 
@@ -144,54 +121,31 @@ class Browser extends Root
     // utilise la fonction php get_browser
     final public static function cap(string $value):?array
     {
-        return static::cacheStatic([__METHOD__,$value],function() use ($value) {
-            return (strlen($value))? get_browser($value,true):null;
-        });
+        return (strlen($value))? static::cacheStatic([__METHOD__,$value],fn() => get_browser($value,true)):null;
     }
 
 
     // name
     // retourne le nom browser en fonction du user agent
-    // utilise la fonction php get_browser
     final public static function name(string $value):?string
     {
-        $return = null;
-        $cap = static::cap($value);
-
-        if(!empty($cap['browser']))
-        $return = $cap['browser'];
-
-        return $return;
+        return static::cap($value)['browser'] ?? null;
     }
 
 
     // platform
     // retourne la plateforme browser en fonction du user agent
-    // utilise la fonction php get_browser
     final public static function platform(string $value):?string
     {
-        $return = null;
-        $cap = static::cap($value);
-
-        if(!empty($cap['platform']))
-        $return = $cap['platform'];
-
-        return $return;
+        return static::cap($value)['platform'] ?? null;
     }
 
 
     // device
     // retourne le device du browser en fonction du user agent
-    // utilise la fonction php get_browser
     final public static function device(string $value):?string
     {
-        $return = null;
-        $cap = static::cap($value);
-
-        if(!empty($cap['device_type']))
-        $return = $cap['device_type'];
-
-        return $return;
+        return static::cap($value)['device_type'] ?? null;
     }
 }
 ?>

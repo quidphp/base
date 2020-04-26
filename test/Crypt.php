@@ -51,6 +51,9 @@ class Crypt extends Base\Test
         // passwordActivate
         assert(strlen(Base\Crypt::passwordActivate('dsadssda')) === 40);
 
+        // passwordAlgos
+        assert(count(Base\Crypt::passwordAlgos()) === 3);
+
         // md5
         assert(md5('test') === Base\Crypt::md5('test'));
         assert(strlen(Base\Crypt::md5('test')) === 32);

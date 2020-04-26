@@ -34,7 +34,7 @@ class Validate extends Base\Test
         assert(Base\Validate::is('email','lololooo@mail.zom'));
         assert(!Base\Validate::is('username','lololooo@mail.zom'));
         assert(Base\Validate::is('string','lololooo@mail.zom'));
-        assert(Base\Validate::is(function($x) { if(is_string($x)) return true; },'lololooo@mail.zom'));
+        assert(Base\Validate::is(fn($x) => is_string($x),'lololooo@mail.zom'));
         assert(!Base\Validate::is('arr','lololooo@mail.zom'));
         assert(Base\Validate::is(['='=>'test'],'test'));
         assert(Base\Validate::is(['>='=>2],2));
@@ -42,7 +42,7 @@ class Validate extends Base\Test
         assert(!Base\Validate::is(['!='=>'test'],'test'));
         assert(Base\Validate::is(new \DateTime('now'),new \DateTime('now')));
         assert(Base\Validate::is(\DateTime::class,new \DateTime('now')));
-        assert(Base\Validate::is(function($x) { if(is_object($x)) return true; },new \DateTime('now')));
+        assert(Base\Validate::is(fn($x) => is_object($x),new \DateTime('now')));
         assert(Base\Validate::is("/^\d{4}$/",2013));
         assert(!Base\Validate::is('',2013));
         assert(Base\Validate::is(\DateTime::class,new \DateTime('now')));
@@ -54,12 +54,12 @@ class Validate extends Base\Test
         // isCom
         assert(Base\Validate::isCom('string',[]) === 'string');
         assert(Base\Validate::isCom('email',[]) === 'email');
-        assert(Base\Validate::isCom(function() { },[]) === 'closure');
+        assert(Base\Validate::isCom(fn() => null,[]) === 'closure');
         assert(Base\Validate::isCom(new \DateTime('now'),[]) === ['instance'=>'DateTime']);
         assert(Base\Validate::isCom(['<'=>3],3) === ['<'=>3]);
         assert(Base\Validate::isCom(['strLength'=>3],3) === ['strLength'=>3]);
         assert(Base\Validate::isCom(\James::class,new \DateTime('now')) === 'James');
-        assert(Base\Validate::isCom(function() { return 'well'; },2) === 'well');
+        assert(Base\Validate::isCom(fn() => 'well',2) === 'well');
         assert(Base\Validate::isCom(['extension'=>'jpg'],$_file_) === ['extension'=>'jpg']);
         assert(Base\Validate::isCom(['extension'=>['jpg','php']],$_file_));
         assert(Base\Validate::isCom(['extensions'=>['jpg','php']],[$_file_]));
@@ -91,7 +91,7 @@ class Validate extends Base\Test
         assert(Base\Validate::isXor(['array','strEmpty','strLength'=>3],'lop'));
 
         // are
-        assert(Base\Validate::are(function($x) { return true; },'lop','zip'));
+        assert(Base\Validate::are(fn($x) => true,'lop','zip'));
         assert(Base\Validate::are(['strLength'=>3],'lop','zip'));
         assert(!Base\Validate::are(['strLength'=>3],'lozp','zip'));
 

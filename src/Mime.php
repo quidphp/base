@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Mime extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'defaultFamily'=>'binary', // famille par défaut pour la méthode add
         'groupToExtension'=>[ // permet de lier des extensions à des groupes
             'audio'=>'mp3',

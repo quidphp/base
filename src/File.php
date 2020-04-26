@@ -16,7 +16,7 @@ namespace Quid\Base;
 class File extends Finder
 {
     // config
-    public static $config = [
+    public static array $config = [
         'mimeGroup'=>null, // mime groupe de la classe, pour les classes qui étendent
         'load'=>['php','html'], // extension permise pour la méthode file::load, peut être une string
         'notFoundCallable'=>[Error::class,'trigger'], // callable à déclencher si un path n'est pas chargable dans la méthode load
@@ -514,7 +514,7 @@ class File extends Finder
         $return = get_included_files();
 
         if($normalize === true)
-        $return = array_map([Path::class,'normalize'],$return);
+        $return = Arr::map($return,fn($value) => Path::normalize($value));
 
         return $return;
     }
@@ -910,7 +910,7 @@ class File extends Finder
     // si callback retourne faux, la colonne existante est stocké et fermé
     // si callback retourne null, la ligne est stocké si la colonne est ouverte, sinon elle est ignoré
     // retourne un tableau multidimensionnel colonne
-    final public static function lineChunkWalk(callable $callback,$value,?array $option=null):?array
+    final public static function lineChunkWalk(\Closure $callback,$value,?array $option=null):?array
     {
         return static::res('lineChunkWalk',false,1,2,$callback,$value,$option);
     }
@@ -1055,19 +1055,19 @@ class File extends Finder
     // concatenate
     // permet de concatener plusieurs ressources et écrire le rendu dans le fichier
     // crée le fichier destination si non existant
-    // un séparateur doit être fourni, une callable peut être fourni
-    final public static function concatenate($value,?callable $callable=null,string $separator,...$values)
+    // un séparateur doit être fourni, une closure peut être fourni
+    final public static function concatenate($value,?\Closure $closure=null,string $separator,...$values)
     {
-        return Res::concatenate(static::resource($value,['create'=>true]),$callable,$separator,...static::resources(...$values));
+        return Res::concatenate(static::resource($value,['create'=>true]),$closure,$separator,...static::resources(...$values));
     }
 
 
     // concatenateString
     // permet de concatener plusieurs ressources et retourner le rendu combiné dans une string
-    // un séparateur doit être fourni, une callable peut être fourni
-    final public static function concatenateString(?callable $callable=null,string $separator,...$values):?string
+    // un séparateur doit être fourni, une closure peut être fourni
+    final public static function concatenateString(?\Closure $closure=null,string $separator,...$values):?string
     {
-        return Res::concatenateString($callable,$separator,...static::resources(...$values));
+        return Res::concatenateString($closure,$separator,...static::resources(...$values));
     }
 
 
@@ -1115,7 +1115,7 @@ class File extends Finder
     // si le callback retourne faux, la ligne est retiré
     // le fichier est automatiquement modifié
     // retourne un tableau des lignes filtrés, possibilité d'écrire le résultat dans la ressource si overwrite est true
-    final public static function lineFilter(callable $callback,$value,bool $overwrite=true,?array $option=null):?array
+    final public static function lineFilter(\Closure $callback,$value,bool $overwrite=true,?array $option=null):?array
     {
         return static::res('lineFilter',false,1,3,$callback,$value,$overwrite,$option);
     }
@@ -1125,7 +1125,7 @@ class File extends Finder
     // permet de passer chaque ligne du fichier ou de la ressource fichier dans un callaback
     // la ligne est remplacé par la valeur de retour du callback
     // retourne un tableau des nouvelles lignes, possibilité d'écrire le résultat dans la ressource si overwrite est true
-    final public static function lineMap(callable $callback,$value,bool $overwrite=true,?array $option=null):?array
+    final public static function lineMap(\Closure $callback,$value,bool $overwrite=true,?array $option=null):?array
     {
         return static::res('lineMap',false,1,3,$callback,$value,$overwrite,$option);
     }

@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Fqcn extends Set
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'extension'=>'php'], // extension du path
         'separator'=>['\\'], // séparateur pour les fully qualified classname

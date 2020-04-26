@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Classe extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // is
@@ -859,7 +859,7 @@ class Classe extends Root
                         }
 
                         if(!empty($deep))
-                        $return = Arr::appendIUnique($return,$deep);
+                        $return = Arr::iappendUnique($return,$deep);
                     }
                 }
             }

@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Cli extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'escape'=>"\033", // caractère d'échappement
         'eol'=>PHP_EOL, // caractère de fin de ligne
         'foreground'=>[ // code pour couleur avant-plan

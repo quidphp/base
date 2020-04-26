@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Boolean extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // typecast
@@ -132,7 +132,7 @@ class Boolean extends Root
 
     // str
     // retourne la version str d'un booléan
-    final public static function str($value):string
+    final public static function str(?bool $value):string
     {
         $return = '';
 
@@ -167,7 +167,7 @@ class Boolean extends Root
 
     // toggle
     // toggle des valeurs primaires (true/false)
-    final public static function toggle($value)
+    final public static function toggle(bool $value):bool
     {
         $return = null;
 

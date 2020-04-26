@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Arrs extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'delimiter'=>'/' // séparateur pour les méthode comme gets et sets
     ];
 
@@ -80,38 +80,7 @@ class Arrs extends Root
     // retourne vrai si la valeur est un tableau qui contient au moins un tableau, retourne faux si vide
     final public static function is($value):bool
     {
-        $return = false;
-
-        if(is_array($value) && !empty($value))
-        {
-            foreach ($value as $v)
-            {
-                if(is_array($v))
-                {
-                    $return = true;
-                    break;
-                }
-            }
-        }
-
-        return $return;
-    }
-
-
-    // isCleanEmpty
-    // retourne vrai si le tableau multidimensionnel est vide après avoir utiliser la methode clean
-    final public static function isCleanEmpty(array $value):bool
-    {
-        $return = false;
-
-        if(static::is($value))
-        {
-            $value = static::clean($value);
-            if(empty($value))
-            $return = true;
-        }
-
-        return $return;
+        return (is_array($value) && !empty($value))? Arr::some($value,fn($v) => is_array($v)):false;
     }
 
 
@@ -626,12 +595,7 @@ class Arrs extends Root
     // support pour clé insensible à la case
     final public static function sets(array $value,array $return,bool $sensitive=true):array
     {
-        foreach ($value as $k => $v)
-        {
-            $return = static::set($k,$v,$return,$sensitive);
-        }
-
-        return $return;
+        return Arr::reduce($return,$value,fn($r,$v,$k) => static::set($k,$v,$r,$sensitive));
     }
 
 
@@ -802,11 +766,8 @@ class Arrs extends Root
 
         elseif($level > 0)
         {
-            foreach ($array as $key => $value)
-            {
-                if(is_array($value))
-                $return += static::countLevel(($level - 1),$array[$key]);
-            }
+            $closure = fn($value) => is_array($value)? static::countLevel(($level - 1),$value):null;
+            $return = Arr::accumulate($return,$array,$closure);
         }
 
         return $return;
@@ -1091,37 +1052,12 @@ class Arrs extends Root
     }
 
 
-    // map
-    // array_map pour un tableau multidimensionnel
-    // ermet de spécifier des arguments en troisième arguments
-    // ne supporte pas plusieurs tableaux
-    // si callable est closure à ce moment au moins trois arguments sont envoyés à la fonction = value, key et array
-    final public static function map(callable $callable,array $return,...$args):array
-    {
-        foreach ($return as $key => $value)
-        {
-            if(is_array($value))
-            $return[$key] = static::map($callable,$value,...$args);
-
-            else
-            {
-                if($callable instanceof \Closure)
-                $return[$key] = $callable($value,$key,$return,...$args);
-                else
-                $return[$key] = $callable($value,...$args);
-            }
-        }
-
-        return $return;
-    }
-
-
     // walk
     // wrapper pour array_walk_recursive
     // array est passé par référence
-    final public static function walk(callable $callable,array &$array,$data=null):bool
+    final public static function walk(\Closure $closure,array &$array,$data=null):bool
     {
-        return array_walk_recursive($array,$callable,$data);
+        return array_walk_recursive($array,$closure,$data);
     }
 
 

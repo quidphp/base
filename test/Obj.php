@@ -231,12 +231,12 @@ namespace Quid\Test\Base\Obj
     trait ParentTrai
     {
         // property
-        public $parentTraiPubDyn = null;
-        protected $parentTraiProDyn = null;
-        private $parentTraiPrivDyn = null;
-        public static $parentTraiPubStat = null;
-        protected static $parentTraiProStat = null;
-        private static $parentTraiPrivStat = null;
+        public $parentTraiPubDyn;
+        protected $parentTraiProDyn;
+        private $parentTraiPrivDyn;
+        public static $parentTraiPubStat;
+        protected static $parentTraiProStat;
+        private static $parentTraiPrivStat;
 
 
         // parentTraiPubDyn
@@ -295,16 +295,16 @@ namespace Quid\Test\Base\Obj
 
 
         // property
-        public $traiPubDyn = null;
-        protected $traiProDyn = null;
-        private $traiPrivDyn = null;
-        public static $traiPubStat = null;
-        protected static $traiProStat = null;
-        private static $traiPrivStat = null;
+        public $traiPubDyn;
+        protected $traiProDyn;
+        private $traiPrivDyn;
+        public static $traiPubStat;
+        protected static $traiProStat;
+        private static $traiPrivStat;
 
 
         // abstrai
-        public abstract function abstrai();
+        abstract public function abstrai();
 
 
         // traiPubDyn
@@ -377,12 +377,12 @@ namespace Quid\Test\Base\Obj
 
 
         // property
-        public $parentPubDyn = ['test'=>['what'=>[1,2,3]]];
-        protected $parentProDyn = null;
-        private $parentPrivDyn = null;
-        public static $parentPubStat = ['test'=>['what'=>[1,2,3]]];
-        protected static $parentProStat = null;
-        private static $parentPrivStat = null;
+        public array $parentPubDyn = ['test'=>['what'=>[1,2,3]]];
+        protected $parentProDyn;
+        private $parentPrivDyn;
+        public static array $parentPubStat = ['test'=>['what'=>[1,2,3]]];
+        protected static $parentProStat;
+        private static $parentPrivStat;
 
 
         // absTest
@@ -442,12 +442,12 @@ namespace Quid\Test\Base\Obj
 
 
         // property
-        public $pubDyn = null;
-        protected $proDyn = null;
-        private $privDyn = null;
-        public static $pubStat = null;
-        protected static $proStat = null;
-        private static $privStat = null;
+        public $pubDyn;
+        protected $proDyn;
+        private $privDyn;
+        public static $pubStat;
+        protected static $proStat;
+        private static $privStat;
 
 
         // test

@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Superglobal extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'postKeys'=>['MAX_FILE_SIZE'] // clés post pouvant être enlevés
     ];
 
@@ -325,8 +325,8 @@ class Superglobal extends Root
                 {
                     if(count($explode) > 1)
                     array_shift($explode);
-                    $explode = array_map('strtolower',$explode);
-                    $explode = array_map('ucfirst',$explode);
+                    $explode = Arr::map($explode,fn($v) => strtolower($v));
+                    $explode = Arr::map($explode,fn($v) => ucfirst($v));
                     $key = implode('-',$explode);
                     $return[$key] = $value;
                 }

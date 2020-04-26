@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Html extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'default'=>'specialChars', // méthode par défaut pour encode/décode
         'entities'=>[ // pour htmlentities
             'flag'=>ENT_QUOTES | ENT_SUBSTITUTE, // flag utilisé par la fonction
@@ -1913,8 +1913,12 @@ class Html extends Root
             if(is_array($value))
             {
                 $value = Arr::trimClean($value);
+
                 if(!empty($option['case']))
-                $value = Arr::map([Str::class,$option['case']],$value,true);
+                {
+                    $method = $option['case'];
+                    $value = Arr::map($value,fn(string $v) => Str::$method($v,true));
+                }
 
                 $return = implode($option['separator'],$value);
             }

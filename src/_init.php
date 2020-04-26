@@ -16,8 +16,8 @@ namespace Quid\Base;
 trait _init
 {
     // static
-    protected static $initStaticProp = []; // tableau qui garde en mémoire les classes qui ont été init
-    protected static $initCallable = null; // garde une copie de la callable à utiliser, par défaut array_replace_recursive
+    protected static array $initStaticProp = []; // tableau qui garde en mémoire les classes qui ont été init
+    protected static $initCallable; // garde une copie de la callable à utiliser, par défaut array_replace_recursive
 
 
     // __init

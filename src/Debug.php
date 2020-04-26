@@ -16,7 +16,7 @@ namespace Quid\Base {
 class Debug extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'method'=>true, // méthode par défaut pour générer l'affichage des détails d'une variable, si true c'est automatique
         'helper'=>null, // closure pour helper
         'inc'=>0, // permet de test le nombre d'appel,
@@ -25,7 +25,7 @@ class Debug extends Root
 
 
     // data
-    public static $data = []; // peut être utilisé comme variable statique pour le débogagge
+    public static array $data = []; // peut être utilisé comme variable statique pour le débogagge
 
 
     // helper
@@ -538,9 +538,9 @@ class Debug extends Root
 
 
     // call
-    // permet de faire des itérations sur une callable
+    // permet de faire des itérations sur une closure
     // retourne le temps d'éxécutions
-    final public static function call(int $iteration=5000,callable $call,...$arg):float
+    final public static function call(int $iteration=5000,\Closure $closure,...$arg):float
     {
         $return = 0;
         $microtime = Datetime::microtime();
@@ -549,7 +549,7 @@ class Debug extends Root
         {
             for ($i=0; $i < $iteration; $i++)
             {
-                $call(...$arg);
+                $closure(...$arg);
             }
         }
 

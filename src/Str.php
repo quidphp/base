@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Str extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'charset'=>'UTF-8', // charset, peut être changé via encoding
         'plural'=>['letter'=>'s','wrap'=>'%'], // pour la fonction plural
         'excerpt'=>['suffix'=>'...'], // suffix pour la méthode excerpt
@@ -1562,13 +1562,7 @@ class Str extends Root
         if($length > 0)
         {
             if($mb === true)
-            {
-                $len = static::len($str,$mb);
-                for($i = 0; $i < $len; $i += $length)
-                {
-                    $return[] = static::sub($i,$length,$str,$mb);
-                }
-            }
+            $return = mb_str_split($str,$length,static::$config['charset']);
 
             else
             $return = str_split($str,$length);
@@ -1641,7 +1635,7 @@ class Str extends Root
         $return = explode(PHP_EOL,static::normalizeLine($str));
 
         if($trim === true)
-        $return = array_map('trim',$return);
+        $return = Arr::map($return,fn($value) => trim($value));
 
         return $return;
     }
@@ -1991,7 +1985,7 @@ class Str extends Root
         if(!empty($return))
         {
             if($trim === true)
-            $return = array_map('trim',$return);
+            $return = Arr::map($return,fn($value) => trim($value));
 
             if($clean === true)
             {
@@ -2363,17 +2357,15 @@ class Str extends Root
 
     // fromCamelCase
     // permet de transformer une string camelcase vers une string avec séparateur
-    final public static function fromCamelCase(string $delimiter,string $value)
+    final public static function fromCamelCase(string $delimiter,string $value):string
     {
         $return = '';
         $explode = static::explodeCamelCase($value);
 
         if(!empty($explode))
         {
-            $explode = Arr::map(function(string $value) use($delimiter) {
-                return strtolower(trim($value,$delimiter));
-            },$explode,$delimiter);
-
+            $closure = fn(string $value):string => strtolower(trim($value,$delimiter));
+            $explode = Arr::map($explode,$closure);
             $return = implode($delimiter,$explode);
         }
 

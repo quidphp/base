@@ -59,12 +59,6 @@ class Arr extends Base\Test
         assert(!Base\Arr::isNotEmpty([]));
         assert(Base\Arr::isNotEmpty([1]));
 
-        // isCleanEmpty
-        assert(Base\Arr::isCleanEmpty(['',null]));
-        assert(Base\Arr::isCleanEmpty(['',[]]));
-        assert(!Base\Arr::isCleanEmpty(['',[null]]));
-        assert(!Base\Arr::isCleanEmpty(['',null,false]));
-
         // hasNumericKey
         assert(!Base\Arr::hasNumericKey([]));
         assert(Base\Arr::hasNumericKey([0,1,2,'test']));
@@ -140,9 +134,6 @@ class Arr extends Base\Test
         assert(!Base\Arr::isKey(false));
         assert(Base\Arr::isKey(''));
 
-        // isKeyNotEmpty
-        assert(!Base\Arr::isKeyNotEmpty(''));
-
         // isCount
         assert(Base\Arr::isCount(2,[1,2]));
         assert(Base\Arr::isCount(['bla','ok'],[1,2]));
@@ -217,23 +208,6 @@ class Arr extends Base\Test
         assert(['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla','4'=>'ok'] === Base\Arr::replace($merge1,$merge2));
         assert(Base\Arr::replace(['test'],$obj2,$obj2) === [$obj2]);
 
-        // replaceIf
-        $slice = ['test'=>'test','test2'=>'test2','test3'=>'test3'];
-        assert(['test'=>'test4','test2'=>'test2','test3'=>'test3'] === Base\Arr::replaceIf('exists',$slice,['test'=>'test4']));
-        assert(['test'=>'test','test2'=>'test2','test3'=>'test3'] === Base\Arr::replaceIf('exists',$slice,['test4'=>'test4']));
-        $slice = ['test'=>'test','test2'=>'test2','test3'=>'test3'];
-        assert(['test'=>'test','test2'=>'test2','test3'=>'test3'] === Base\Arr::replaceIf('notExists',$slice,['test'=>'test4']));
-        assert(['test'=>'test','test2'=>'test2','test3'=>'test3','test4'=>'test4'] === Base\Arr::replaceIf('notExists',$slice,['test4'=>'test4']));
-        $merge1 = ['test'=>1,'test2'=>2,'test3'=>'ok','test4'=>[1]];
-        $merge2 = ['test'=>2,'test2'=>1,'test3'=>'bla','test4'=>[2,2],'test5'=>4];
-        assert(['test'=>2,'test2'=>2,'test3'=>'ok','test4'=>[2,2],'test5'=>4] === Base\Arr::replaceIf('bigger',$merge1,$merge2));
-        $merge1 = ['test'=>1,'test2'=>2,'test3'=>'ok','test4'=>[1,4]];
-        $merge2 = ['test'=>2,'test2'=>1,'test3'=>'bla','test4'=>[2],'test5'=>3];
-        assert(['test'=>1,'test2'=>1,'test3'=>'bla','test4'=>[2]] === Base\Arr::replaceIf('smaller',$merge1,$merge2));
-
-        // replaceCleanNull
-        assert(Base\Arr::replaceCleanNull(['test2'=>'ok',12,3],['test2'=>null,'james'=>'ok']) === [12,3,'james'=>'ok']);
-
         // unshift
         assert(Base\Arr::unshift('test','test2') === ['test2','test']);
         assert(Base\Arr::unshift(['test'],['test2']) === [['test2'],'test']);
@@ -245,17 +219,6 @@ class Arr extends Base\Test
         assert(Base\Arr::push('test','test2',['test3',['test4']]) === ['test','test2',['test3',['test4']]]);
         assert(Base\Arr::push(['test'],'test2',['test3','test4']) === ['test','test2',['test3','test4']]);
         assert(Base\Arr::push(['test'],$obj,$obj2) === ['test',$obj,$obj2]);
-
-        // prepend
-        assert(Base\Arr::prepend('test',['test2'],['test3','test4']) === ['test2','test3','test4','test']);
-        assert(Base\Arr::prepend(['test'],'test2',[30=>'test3','test4']) === [0=>'test2',30=>'test3',31=>'test4',32=>'test']);
-        assert(Base\Arr::prepend(['test','test'=>'ok'],['james','what'=>'james','test'=>'BURP'],$obj2) === ['james','what'=>'james','test'=>'ok',$obj2,'test']);
-        assert(Base\Arr::prepend(['test','test'=>'ok'],['james','what'=>'james','test'=>'BURP']) === ['james','what'=>'james','test'=>'ok',1=>'test']);
-        assert(Base\Arr::prepend(['test'=>2,'ok'=>3],['TEST'=>3]) === ['TEST'=>3,'test'=>2,'ok'=>3]);
-
-        // iprepend
-        assert(Base\Arr::iprepend(['test'=>2,'ok'=>3],['TEST'=>3]) === ['test'=>2,'ok'=>3]);
-        assert(Base\Arr::iprepend(['test'=>2,'ok'=>3],['TEST'=>3],2,3,'james') === [2,3,'james','test'=>2,'ok'=>3]);
 
         // append
         assert(Base\Arr::append(['test'],'test2',['test3','test4']) === ['test','test2','test3','test4']);
@@ -275,12 +238,8 @@ class Arr extends Base\Test
         assert(Base\Arr::appendUnique(true,false,'what',['test'=>'What']) === [true,false,'what','test'=>'What']);
         assert(Base\Arr::appendUnique(true,false,[10=>'what','What']) === [true,false,10=>'what',11=>'What']);
 
-        // appendiUnique
-        assert(Base\Arr::appendiUnique(true,false,[5=>'what'],['test'=>'What']) === [true,false,5=>'what']);
-
-        // smart
-        $smart = [['test']];
-        assert(['test'] === Base\Arr::smart($smart));
+        // iappendUnique
+        assert(Base\Arr::iappendUnique(true,false,[5=>'what'],['test'=>'What']) === [true,false,5=>'what']);
 
         // clean
         $clean = ['',0,null,[]];
@@ -328,50 +287,6 @@ class Arr extends Base\Test
         assert(Base\Arr::validates('email',['test@gmail.com'],['e@test.ca']));
         assert(!Base\Arr::validates('email',['test@gmail.com'],[true]));
         assert(!Base\Arr::validates('bool',['test'=>false],['test2'=>'ok']));
-
-        // validateSlice
-        assert(['test@gmail.com'] === Base\Arr::validateSlice('email',['test@gmail.com',true]));
-        assert(['test@gmail.com'] === Base\Arr::validateSlice('email',['test@gmail.com',true]));
-        assert([1=>true] === Base\Arr::validateSlice('bool',['test@gmail.com',true]));
-        assert([] === Base\Arr::validateSlice('email',[['test@gmail.com'],true]));
-        assert([1=>true] === Base\Arr::validateSlice('bool',['test@gmail.com',true]));
-
-        // validateStrip
-        assert([1=>true] === Base\Arr::validateStrip('email',['test@gmail.com',true]));
-        assert([['test@gmail.com'],1=>true] === Base\Arr::validateStrip('email',[['test@gmail.com'],true]));
-        assert(['test@gmail.com'] === Base\Arr::validateStrip('bool',['test@gmail.com',true]));
-
-        // validateMap
-        $array = ['test',2=>'test2',[]];
-        assert(Base\Arr::validateMap('string','strtoupper',$array) === ['TEST',2=>'TEST2',3=>[]]);
-        $array = ['test'=>'test','test2'=>'test2!'];
-        assert(['test'=>'!test!','test2'=>'!test2!!'] === Base\Arr::validateMap('string',function($a) { return "!$a!"; },$array));
-        assert(['test'=>'test!','test2'=>'test2!!'] === Base\Arr::validateMap('string',function($a) { return "$a!"; },$array));
-        assert(['test'=>'!test!','test2'=>'!test2!'] === Base\Arr::validateMap('string',function($a) { return Base\Str::wrapStartOrEnd('!','!',$a); },$array));
-        assert(['test'=>'test!','test2'=>'test2!'] === Base\Arr::validateMap('string',function($a) { return Base\Str::wrapEnd('!',$a); },$array));
-        $array = ['test'=>'test','!test2!'=>'!test2!'];
-        assert(['test'=>'test','!test2!'=>'test2'] === Base\Arr::validateMap('string',function($a) { return Base\Str::stripStartEnd('!','!',$a); },$array));
-        $array = ['test'=>'test','!test2!'=>'test2!'];
-        assert(['test'=>'test','!test2!'=>'test2'] === Base\Arr::validateMap('string',function($a) { return Base\Str::stripStartOrEnd('!','!',$a); },$array));
-        assert(['test'=>'test','!test2!'=>'test2!'] === Base\Arr::validateMap('string',function($a) { return Base\Str::stripStart('!',$a); },$array));
-        assert(['test'=>'test','!test2!'=>'test2'] === Base\Arr::validateMap('string',function($a) { return Base\Str::stripEnd('!',$a); },$array));
-        $slice = ['key_fr','key_en','key_es','what',[]];
-        assert(['name_fr','name_en','name_es','what',[]] === Base\Arr::validateMap('string',function($a) { return Base\Str::changeBefore('_','name',$a); },$slice));
-        $slice = ['name_fr','key_fr','content_fr','what',[]];
-        assert(['name_en','key_en','content_en','what',[]] === Base\Arr::validateMap('string',function($a) { return Base\Str::changeAfter('_','en',$a); },$slice));
-
-        // validateFilter
-        $array = ['test',2=>'test2',[]];
-        assert(Base\Arr::validateFilter('string',function($a,$b,$c) {
-            if($a === 'test2') return true;
-        }, $array) === [2=>'test2',[]]);
-        assert(Base\Arr::validateFilter('string',function($a,$b,$c) {
-            if($a === 'test2') return true;
-        }, $array,false) === [2=>'test2']);
-        $array = ['test'=>'test','!test2!'=>'!test2!'];
-        assert(['!test2!'=>'!test2!'] === Base\Arr::validateFilter('string',function($a) { return Base\Str::isStart('!',$a); },$array,true));
-        $array = ['test'=>'testzz','!test2!'=>'!test2!'];
-        assert(['!test2!'=>'!test2!'] === Base\Arr::validateFilter('string',function($a) { return Base\Str::isEnd('!',$a); },$array,true));
 
         // get
         $array = ['test'=>'ok','james'=>2,3=>'ok'];
@@ -551,31 +466,61 @@ class Arr extends Base\Test
         },'bla');
         assert($array === ['testbla',[2],[4],'test4bla']);
 
+        // find
+        $array = ['test',2,4,'test4'];
+        assert(Base\Arr::find($array,fn($v,$k) => is_int($v)) === 2);
+
+        // findKey
+        $array = ['test',2,4,'test4'];
+        assert(Base\Arr::findKey($array,fn($v,$k) => is_int($v)) === 1);
+
+        // each
+        assert(Base\Arr::each([1,2,3],fn($value) => $value));
+        assert(Base\Arr::each([1,2,3],fn($value) => $value < 3) === false);
+        $r = 3;
+        assert(Base\Arr::each([1,2,3],function($value) use($r) {
+            $r += 3;
+        }));
+        assert($r === 3);
+        assert(Base\Arr::each([1,2,3],function($value) use(&$r) {
+            $r += $value;
+        }));
+        assert($r === 9);
+
+        // some
+        assert(Base\Arr::some([1,2.4,3],fn($value) => is_float($value)));
+        assert(!Base\Arr::some([1,2.4,3],fn($value) => is_array($value)));
+
+        // every
+        assert(!Base\Arr::every([1,2.4,3],fn($value) => is_float($value)));
+        assert(Base\Arr::every([1,2,4,3],fn($value) => is_int($value)));
+
         // map
         $array = [' test ',2=>'test2'];
         $array2 = [' test3 ',2=>'test4'];
-        assert(['test',2=>'test2'] === Base\Arr::map('trim',$array));
-        assert(Base\Arr::map(function($a,$b,$c) { if(is_array($c)) return trim($a).$b; },$array) === ['test0',2=>'test22']);
+        assert(['test',2=>'test2'] === Base\Arr::map($array,fn($v) => trim($v)));
+        assert(Base\Arr::map($array,fn($a,$b) => trim($a).$b,true) === ['test0',2=>'test22']);
 
         // filter
         $array = ['test',2,4,'test4'];
-        assert(Base\Arr::filter($array,function($v,$k,$a) {
-            if(is_array($a) && is_int($v))
-            return true;
-        }) === [1=>2,2=>4]);
-        assert(Base\Arr::filter($array,[Base\Str::class,'is']) === ['test',3=>'test4']);
-
-        // find
-        $array = ['test',2,4,'test4'];
-        assert(Base\Arr::find($array,function($v,$k,$a) {
-            return is_int($v);
-        }) === 2);
+        assert(Base\Arr::filter($array,fn($v,$k) => is_int($v)) === [1=>2,2=>4]);
+        assert(Base\Arr::filter($array,fn($v) => Base\Str::is($v)) === ['test',3=>'test4']);
 
         // reduce
         $array = ['test',2,4,'test4'];
-        assert(Base\Arr::reduce($array,function($carry,$item) {
-            return $carry.$item;
-        },'bla') === 'blatest24test4');
+        assert(Base\Arr::reduce('bla',$array,fn($return,$value,int $key) => $return.$value) === 'blatest24test4');
+        $array = ['test',2,4,'test4'];
+        assert(Base\Arr::reduce(true,$array,fn($return,$value) => ($return === true && is_scalar($value))));
+        $array = ['test',2,4,[],'test4'];
+        assert(!Base\Arr::reduce(true,$array,fn($return,$value) => ($return === true && is_scalar($value))));
+
+        // accumulate
+        assert(Base\Arr::accumulate('',['test','ok','meh'],fn($value) => $value) === 'testokmeh');
+        assert(Base\Arr::accumulate(null,['test','ok','meh'],fn($value) => $value) === 'testokmeh');
+        assert(Base\Arr::accumulate([],['test','ok','meh'],fn($value) => $value) === ['test','ok','meh']);
+        assert(Base\Arr::accumulate(0,[2,3.3,4],fn($value) => $value) === 9.3);
+        assert(Base\Arr::accumulate(0,[2,3.3,4],fn($value) => (is_int($value))? $value:null) === 6);
+        assert(Base\Arr::accumulate([],['meh'=>'test','z'=>'ok','w'=>'meh'],fn($value,$key) => $key.$value) === ['meh'=>'mehtest','z'=>'zok','w'=>'wmeh']);
 
         // diffAssoc
         $simple1 = ['test'=>true,'test3'=>'bla'];
@@ -660,15 +605,6 @@ class Arr extends Base\Test
         // unsetAfterValue
         assert([1,2] === Base\Arr::unsetAfterValue(2,[1,2,3,4,5]));
         assert([1] === Base\Arr::unsetAfterValue(1,[1,2,3]));
-
-        // unsetBeforeIndex
-        assert([2=>3,3=>4,4=>5] === Base\Arr::unsetBeforeIndex(2,[1,2,3,4,5]));
-        assert([1,2,3] === Base\Arr::unsetBeforeIndex(0,[1,2,3]));
-        assert([1=>2,2=>3] === Base\Arr::unsetBeforeIndex(1,[1,2,3]));
-
-        // unsetAfterIndex
-        assert([1,2,3] === Base\Arr::unsetAfterIndex(2,[1,2,3]));
-        assert([1] === Base\Arr::unsetAfterIndex(0,[1,2,3]));
 
         // unsetBeforeCount
         assert([1=>2,2=>3,3=>4,4=>5] === Base\Arr::unsetBeforeCount(2,[1,2,3,4,5]));
@@ -826,9 +762,6 @@ class Arr extends Base\Test
 
         // implodeTrim
         assert(Base\Arr::implodeTrim('|',['test'=>' test ','test2','test3'=>'']) === 'test|test2|');
-
-        // implodeClean
-        assert(Base\Arr::implodeClean('|',['test'=>' test ','test2','test3'=>'']) === ' test |test2');
 
         // implodeTrimClean
         assert(Base\Arr::implodeTrimClean('|',['test'=>' test ','test2','test3'=>'']) === 'test|test2');
@@ -1037,7 +970,7 @@ class Arr extends Base\Test
         // insertFirst
         $slice = [1,2,3,4];
         assert(Base\Arr::insertFirst([0],$slice) === [0,1,2,3,4]);
-        assert(Base\Arr::insertFirst([0],$slice) === Base\Arr::prepend($slice,[0]));
+        assert(Base\Arr::insertFirst([0],$slice) === Base\Arr::append([0],$slice));
 
         // insertLast
         $slice = [1,2,3,4];
@@ -1078,18 +1011,9 @@ class Arr extends Base\Test
         assert(Base\Arr::indexesExists([0,1,2],[1,2,3]));
         assert(!Base\Arr::indexesExists([0,1,2,8],[1,2,3]));
 
-        // indexesAre
-        assert(Base\Arr::indexesAre([0,1,2],[1,2,3]));
-        assert(!Base\Arr::indexesAre([0,1,3],[1,2,3]));
-        assert(!Base\Arr::indexesAre([0,1,2,3],[1,2,3]));
-        assert(!Base\Arr::indexesAre([0,1],[1,2,3]));
-
         // indexesFirst
         assert(Base\Arr::indexesFirst([4,1,2],[1,2,3]) === 1);
         assert(Base\Arr::indexesFirst([4,4,8],[1,2,3]) === null);
-
-        // indexesFirstValue
-        assert(Base\Arr::indexesFirstValue([4,1,2],[1,2,3]) === 2);
 
         // indexKey
         assert(Base\Arr::indexKey(-1,[1,2,'bla'=>3]) === 'bla');
@@ -1208,13 +1132,6 @@ class Arr extends Base\Test
         assert([] === Base\Arr::keySlice('test',['TEST'=>2]));
         assert(['test'=>2] === Base\Arr::keySlice('test',['TEST'=>2],false));
 
-        // keysSlice
-        $slice = ['test'=>'test','test2'=>'test2','test3'=>'test3'];
-        assert(['test'=>'test','test2'=>'test2'] === Base\Arr::keysSlice(['test','test2'],$slice));
-        assert(['test3'=>'test3','test'=>'test'] === Base\Arr::keysSlice(['test3','test'],$slice));
-        assert(['test3'=>'test3','test'=>'test'] === Base\Arr::keysSlice(['test3','test','WHAT'],$slice));
-        assert(['tést'=>2] === Base\Arr::keysSlice(['tést'],['TÉST'=>2],false,true));
-
         // ikeySlice
         assert(['TÉST'=>1,'tést'=>2] === Base\Arr::ikeySlice('TésT',['TÉST'=>1,'tést'=>2,'test'=>3]));
 
@@ -1250,9 +1167,7 @@ class Arr extends Base\Test
 
         // keysMap
         $array = ['test'=>2,'james'=>'OK',2];
-        assert(Base\Arr::keysMap(function($k,$z) {
-            return $k.'bla'.$z;
-        },$array,false,'ok') === ['testblaok'=>2,'jamesblaok'=>'OK','0blaok'=>2]);
+        assert(Base\Arr::keysMap(fn($k,$z) => $k.'bla'.$z,$array,false,'ok') === ['testblaok'=>2,'jamesblaok'=>'OK','0blaok'=>2]);
 
         // keysChangeCase
         assert(Base\Arr::keysChangeCase(CASE_UPPER,$array) === ['TEST'=>2,'JAMES'=>'OK',2]);

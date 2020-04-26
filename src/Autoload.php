@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Autoload extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'psr4'=>[] // garde une copie du racine de l'auto chargement des classes
     ];
 
@@ -260,15 +260,15 @@ class Autoload extends Root
     // allPsr4
     // retourne le tableau des psr4
     // possible de fournir un callback et de sort
-    final public static function allPsr4(?callable $callable=null,bool $sort=false):array
+    final public static function allPsr4(?\Closure $closure=null,bool $sort=false):array
     {
         $return = static::$config['psr4'];
 
-        if(!empty($callable))
+        if(!empty($closure))
         {
             foreach ($return as $key => $value)
             {
-                if($callable($key,$value) !== true)
+                if($closure($key,$value) !== true)
                 unset($return[$key]);
             }
         }
@@ -298,13 +298,13 @@ class Autoload extends Root
 
     // overview
     // génère un tableau multidimensionnel avec le count, size et line pour chaque namespace dans psr4
-    // possible de filtrer par une callable
-    final public static function overview(?callable $callable=null,bool $sort=true):array
+    // possible de filtrer par une closure
+    final public static function overview(?\Closure $closure=null,bool $sort=true):array
     {
         $return = [];
         $extension = static::phpExtension();
 
-        foreach (static::allPsr4($callable,$sort) as $key => $value)
+        foreach (static::allPsr4($closure,$sort) as $key => $value)
         {
             $return[$key] = Dir::overview($value,$extension);
         }

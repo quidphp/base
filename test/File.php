@@ -421,18 +421,10 @@ class File extends Base\Test
         assert(strpos(Base\File::get($write),'INSERT') === (3 + $ll));
 
         // lineFilter
-        assert(count(Base\File::lineFilter(function($v) {
-            if(empty(trim($v)))
-            return false;
-            return true;
-        },$currentFile,false)) < 700);
+        assert(count(Base\File::lineFilter(fn($v) => !empty(trim($v)),$currentFile,false)) < 700);
 
         // lineMap
-        assert(Base\File::lineMap(function($v,$k) {
-            if(empty(trim($v)))
-            return 'VIDE!';
-            return $v;
-        },$currentFile,false)[4] === 'VIDE!');
+        assert(Base\File::lineMap(fn($v,$k) => empty(trim($v))? 'VIDE!':$v,$currentFile,false)[4] === 'VIDE!');
 
         // empty
         assert(Base\File::set('[assertCurrent]/what/ok/file.php','IBELIEVE IN LIFE'));

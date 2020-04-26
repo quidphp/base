@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Session extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'default'=>[
             'name'=>true, // le nom de la session, si true utilise type
             'sid'=>null, // permet de set un sid avant le lancement de la session
@@ -77,7 +77,7 @@ class Session extends Root
 
 
     // handler
-    protected static $handler = null; // garde une copie du handler, utiliser lors de setSaveHandler
+    protected static $handler; // garde une copie du handler, utiliser lors de setSaveHandler
 
 
     // is

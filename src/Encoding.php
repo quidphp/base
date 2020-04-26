@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Encoding extends Root
 {
     // config
-    public static $config = [
+    public static array $config = [
         'charset'=>null, // charset
         'charsetMb'=>['UTF-8'], // charset qui retourne vrai à la méthode isCharsetMb
         'mb'=>false // active les fonctions multibyte

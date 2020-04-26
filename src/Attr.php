@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Attr extends Listing
 {
     // config
-    public static $config = [
+    public static array $config = [
         'option'=>[ // tableau d'options
             'explode'=>1, // index du séparateur à utiliser lors du explode
             'trim'=>false, // chaque partie de attr est trim
@@ -65,7 +65,7 @@ class Attr extends Listing
 
 
     // selectedUri
-    protected static $selectedUri = []; // tableau qui contient les uri sélectionnés
+    protected static array $selectedUri = []; // tableau qui contient les uri sélectionnés
 
 
     // isDataKey

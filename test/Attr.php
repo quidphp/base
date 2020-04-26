@@ -216,7 +216,7 @@ class Attr extends Base\Test
         // uni
         assert(Base\Arr::validate('string',Base\Attr::keyValue(Base\Attr::arr($all),Base\Attr::option())));
         assert(count(Base\Attr::keyValue(Base\Attr::arr($all),Base\Attr::option())) === 8);
-        assert(!empty(Base\Attr::keyValue($all,Base\Attr::option(['caseImplode'=>function($key) { return ucwords($key,'-'); }]))['Data-Test2']));
+        assert(!empty(Base\Attr::keyValue($all,Base\Attr::option(['caseImplode'=>fn($key) => ucwords($key,'-')]))['Data-Test2']));
 
         // getId
         assert(Base\Attr::getId($attr) === 'JAMES');

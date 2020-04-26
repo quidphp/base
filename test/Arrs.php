@@ -41,12 +41,6 @@ class Arrs extends Base\Test
         assert(Base\Arrs::is([1,[],3]));
         assert(Base\Arrs::is([[1],[],[2]]));
 
-        // isCleanEmpty
-        assert(!Base\Arrs::isCleanEmpty(['',null]));
-        assert(Base\Arrs::isCleanEmpty(['',['']]));
-        assert(Base\Arrs::isCleanEmpty(['',[null]]));
-        assert(!Base\Arrs::isCleanEmpty(['',[true]]));
-
         // hasKeyCaseConflict
         assert(Base\Arrs::hasKeyCaseConflict(['test'=>['test'=>true,'TEST'=>false]]));
         assert(!Base\Arrs::hasKeyCaseConflict(['test'=>['test'=>true,'TEST2'=>false]]));
@@ -400,12 +394,6 @@ class Arrs extends Base\Test
         $slice = ['1',2,[2],'test'];
         assert(Base\Arrs::inFirst([1],$slice) === null);
         assert(Base\Arrs::inFirst(['B'],[[['A']],'b'],false) === 'B');
-
-        // map
-        $array = [' test ',2=>[0=>' test2 ',1=>'test2']];
-        assert(['test',2=>[0=>'test2',1=>'test2']] === Base\Arrs::map('trim',$array));
-        $array = Base\Arrs::map(function($a,$b,$c) { assert(is_array($c)); return true; },$array);
-        assert($array = [true,2=>true]);
 
         // walk
         $array = ['test',[2],[4],'test4'];

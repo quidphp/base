@@ -85,7 +85,7 @@ class Browser extends Base\Test
             assert(null === Base\Browser::device(''));
 
             // cacheStatic
-            assert(count(Base\Browser::allCacheStatic()) === 12);
+            assert(count(Base\Browser::allCacheStatic()) === 11);
             assert(Base\Browser::emptyCacheStatic() === true);
             assert(Base\Browser::allCacheStatic() === []);
 
