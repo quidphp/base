@@ -207,7 +207,7 @@ class Arr extends Base\Test
         $merge2 = ['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla'];
         assert(['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla','0'=>'ok','james'=>'what'] === Base\Arr::merge($merge1,$merge2));
         assert(Base\Arr::merge(['test'],$obj2,$obj2) === ['test',$obj2,$obj2]);
-        assert(Base\Arr::merge(['test'=>'ok',3=>2],['test'=>'ok2',12=>3])  === ['test'=>'ok2',2,3]);
+        assert(Base\Arr::merge(['test'=>'ok',3=>2],['test'=>'ok2',12=>3]) === ['test'=>'ok2',2,3]);
         assert(Base\Arr::merge(['test'],'test2',['test3','test4']) === ['test','test2','test3','test4']);
         assert(Base\Arr::merge('test','test2',['test3','test4']) === ['test','test2','test3','test4']);
         assert(Base\Arr::merge(['test','test'=>'ok'],['james','what'=>'james','test'=>'BURP',$obj2],$obj,$obj2) === ['test','test'=>'BURP',1=>'james','what'=>'james',2=>$obj2,3=>$obj[0],4=>$obj2]);
