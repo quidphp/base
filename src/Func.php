@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // func
 // class with static methods to work with simple functions
-class Func extends Root
+final class Func extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // is
@@ -33,7 +33,7 @@ class Func extends Root
     {
         $return = false;
 
-        if(static::is($name))
+        if(self::is($name))
         $return = $name(...$arg);
 
         return $return;
@@ -54,7 +54,7 @@ class Func extends Root
     {
         $return = [];
 
-        $all = static::all();
+        $all = self::all();
         if(array_key_exists('user',$all) && is_array($all['user']))
         $return = $all['user'];
 

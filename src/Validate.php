@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // validate
 // class that provides validation logic and methods
-class Validate extends Root
+final class Validate extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
 
         // regex
         'regex'=>[ // liste de regex utilisé à travers le site
@@ -159,37 +159,37 @@ class Validate extends Root
 
         if(is_string($condition))
         {
-            if(!empty(static::$config['one'][$condition]))
-            $return = static::$config['one'][$condition]($value);
+            if(!empty(self::$config['one'][$condition]))
+            $return = self::$config['one'][$condition]($value);
 
             elseif(is_object($value) && is_a($value,$condition))
             $return = true;
 
             else
-            $return = static::regex($condition,$value);
+            $return = self::regex($condition,$value);
         }
 
         elseif($condition instanceof \Closure)
         $return = $condition($value);
 
         elseif(is_object($condition))
-        $return = static::instance($condition,$value);
+        $return = self::instance($condition,$value);
 
         elseif(is_array($condition) && count($condition) === 1)
         {
             $k = key($condition);
             $v = current($condition);
 
-            if(!empty(static::$config['compare'][$k]))
-            $return = static::compare($value,$k,$v);
+            if(!empty(self::$config['compare'][$k]))
+            $return = self::compare($value,$k,$v);
 
-            elseif(!empty(static::$config['two'][$k]))
-            $return = static::two($k,$v,$value);
+            elseif(!empty(self::$config['two'][$k]))
+            $return = self::two($k,$v,$value);
         }
 
         if(!is_bool($return))
         {
-            if(static::isCallable($condition))
+            if(self::isCallable($condition))
             $return = $condition($value);
 
             if(!is_bool($return) && $onlyBool === true)
@@ -204,7 +204,7 @@ class Validate extends Root
     // inverse de is
     final public static function isNot($condition,$value):bool
     {
-        return (static::is($condition,$value))? false:true;
+        return (self::is($condition,$value))? false:true;
     }
 
 
@@ -214,7 +214,7 @@ class Validate extends Root
     // si la condition est une closure, la closure peut retourner une string ou un array comme message (plutôt que la clé)
     final public static function isCom($condition,$value,$key=null)
     {
-        $return = static::is($condition,$value,false);
+        $return = self::is($condition,$value,false);
 
         if($return !== true && !is_string($return) && !is_array($return))
         {
@@ -224,7 +224,7 @@ class Validate extends Root
             elseif($condition instanceof \Closure)
             $return = (is_string($key))? $key:'closure';
 
-            elseif(static::isCallable($condition))
+            elseif(self::isCallable($condition))
             $return = (is_string($key))? $key:'callable';
 
             elseif(is_object($condition))
@@ -245,9 +245,9 @@ class Validate extends Root
     {
         $return = false;
 
-        foreach (static::prepareConditions($conditions) as $condition)
+        foreach (self::prepareConditions($conditions) as $condition)
         {
-            $return = static::is($condition,$value);
+            $return = self::is($condition,$value);
 
             if($return === false)
             break;
@@ -264,9 +264,9 @@ class Validate extends Root
     {
         $return = [];
 
-        foreach (static::prepareConditions($conditions) as $k => $condition)
+        foreach (self::prepareConditions($conditions) as $k => $condition)
         {
-            $com = static::isCom($condition,$value,$k);
+            $com = self::isCom($condition,$value,$k);
 
             if($com !== true)
             $return[] = $com;
@@ -286,9 +286,9 @@ class Validate extends Root
     {
         $return = false;
 
-        foreach (static::prepareConditions($conditions) as $condition)
+        foreach (self::prepareConditions($conditions) as $condition)
         {
-            $return = static::is($condition,$value);
+            $return = self::is($condition,$value);
 
             if($return === true)
             break;
@@ -305,9 +305,9 @@ class Validate extends Root
     {
         $return = false;
 
-        foreach (static::prepareConditions($conditions) as $condition)
+        foreach (self::prepareConditions($conditions) as $condition)
         {
-            $bool = static::is($condition,$value);
+            $bool = self::is($condition,$value);
 
             if($bool === true)
             {
@@ -334,8 +334,8 @@ class Validate extends Root
         $return = false;
         $callable = null;
 
-        if(is_string($condition) && !empty(static::$config['type'][$condition]))
-        $callable = static::$config['type'][$condition];
+        if(is_string($condition) && !empty(self::$config['type'][$condition]))
+        $callable = self::$config['type'][$condition];
 
         elseif($condition instanceof \Closure)
         $callable = $condition;
@@ -345,7 +345,7 @@ class Validate extends Root
             if(!empty($callable))
             $return = $callable($value);
             else
-            $return = static::is($condition,$value);
+            $return = self::is($condition,$value);
 
             if(!$return)
             break;
@@ -360,7 +360,7 @@ class Validate extends Root
     // inverse de are
     final public static function areNot($condition,...$values):bool
     {
-        return (static::are($condition,...$values))? false:true;
+        return (self::are($condition,...$values))? false:true;
     }
 
 
@@ -373,7 +373,7 @@ class Validate extends Root
 
         foreach ($values as $value)
         {
-            $return = static::isAnd($conditions,$value);
+            $return = self::isAnd($conditions,$value);
 
             if($return === false)
             break;
@@ -392,7 +392,7 @@ class Validate extends Root
 
         foreach ($values as $value)
         {
-            $return = static::isOr($conditions,$value);
+            $return = self::isOr($conditions,$value);
 
             if($return === false)
             break;
@@ -411,7 +411,7 @@ class Validate extends Root
 
         foreach ($values as $value)
         {
-            $return = static::isXor($conditions,$value);
+            $return = self::isXor($conditions,$value);
 
             if($return === false)
             break;
@@ -427,9 +427,9 @@ class Validate extends Root
     {
         $return = false;
 
-        if(!empty(static::$config['one'][$key]))
+        if(!empty(self::$config['one'][$key]))
         {
-            $return = static::$config['one'][$key]($arg);
+            $return = self::$config['one'][$key]($arg);
 
             if(!is_bool($return))
             $return = false;
@@ -445,9 +445,9 @@ class Validate extends Root
     {
         $return = false;
 
-        if(array_key_exists($key,static::$config['two']) && static::isCallable(static::$config['two'][$key]))
+        if(array_key_exists($key,self::$config['two']) && self::isCallable(self::$config['two'][$key]))
         {
-            $return = static::$config['two'][$key]($value,$arg);
+            $return = self::$config['two'][$key]($value,$arg);
 
             if(!is_bool($return))
             $return = false;
@@ -469,8 +469,8 @@ class Validate extends Root
             $regex = null;
             $value = (string) $value;
 
-            if(!empty(static::$config['regex'][$input]))
-            $regex = static::$config['regex'][$input];
+            if(!empty(self::$config['regex'][$input]))
+            $regex = self::$config['regex'][$input];
 
             elseif(strpos($input,'/') !== false)
             $regex = $input;
@@ -521,7 +521,7 @@ class Validate extends Root
     // retourne vrai si le symbole est un symbol de comparaison valide
     final public static function isCompareSymbol($symbol):bool
     {
-        return is_string($symbol) && array_key_exists($symbol,static::$config['compare']);
+        return is_string($symbol) && array_key_exists($symbol,self::$config['compare']);
     }
 
 
@@ -531,9 +531,9 @@ class Validate extends Root
     {
         $return = false;
 
-        if(static::isCompareSymbol($symbol))
+        if(self::isCompareSymbol($symbol))
         {
-            $symbol = static::$config['compare'][$symbol];
+            $symbol = self::$config['compare'][$symbol];
 
             if($symbol === '===')
             $return = ($value1 === $value2);
@@ -572,19 +572,19 @@ class Validate extends Root
     final public static function pattern($value):?string
     {
         $return = null;
-        $key = static::patternKey($value);
+        $key = self::patternKey($value);
 
         if($key !== null)
         {
             if(is_string($key))
-            $return = static::$config['pattern'][$key] ?? null;
+            $return = self::$config['pattern'][$key] ?? null;
 
             elseif(is_array($key) && count($key) === 1)
             {
                 $k = key($key);
                 $v = current($key);
 
-                $return = static::$config['pattern'][$k] ?? null;
+                $return = self::$config['pattern'][$k] ?? null;
 
                 if(is_scalar($v) && !is_bool($v) && is_string($return))
                 {
@@ -611,10 +611,10 @@ class Validate extends Root
 
         foreach ($array as $k => $v)
         {
-            if(is_numeric($k) && is_string($v) && array_key_exists($v,static::$config['pattern']))
+            if(is_numeric($k) && is_string($v) && array_key_exists($v,self::$config['pattern']))
             $return = $v;
 
-            elseif(is_string($k) && array_key_exists($k,static::$config['pattern']))
+            elseif(is_string($k) && array_key_exists($k,self::$config['pattern']))
             $return = [$k=>$v];
 
             if($return !== null)
@@ -636,7 +636,7 @@ class Validate extends Root
             if(is_numeric($key))
             $return[] = $value;
 
-            elseif(static::isCallable($value))
+            elseif(self::isCallable($value))
             $return[$key] = $value;
 
             else
@@ -651,7 +651,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex alpha
     final public static function isAlpha($value):bool
     {
-        return static::regex('alpha',$value);
+        return self::regex('alpha',$value);
     }
 
 
@@ -659,7 +659,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex alphanumeric
     final public static function isAlphanumeric($value):bool
     {
-        return static::regex('alphanumeric',$value);
+        return self::regex('alphanumeric',$value);
     }
 
 
@@ -667,7 +667,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex isAlphanumericDash
     final public static function isAlphanumericDash($value):bool
     {
-        return static::regex('alphanumericDash',$value);
+        return self::regex('alphanumericDash',$value);
     }
 
 
@@ -675,7 +675,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex alphanumericSlug
     final public static function isAlphanumericSlug($value):bool
     {
-        return static::regex('alphanumericSlug',$value);
+        return self::regex('alphanumericSlug',$value);
     }
 
 
@@ -683,7 +683,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex isAlphanumericSlugPath
     final public static function isAlphanumericSlugPath($value):bool
     {
-        return static::regex('alphanumericSlugPath',$value);
+        return self::regex('alphanumericSlugPath',$value);
     }
 
 
@@ -691,7 +691,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex alphanumericPlus
     final public static function isAlphanumericPlus($value):bool
     {
-        return static::regex('alphanumericPlus',$value);
+        return self::regex('alphanumericPlus',$value);
     }
 
 
@@ -699,7 +699,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex alphanumericPlusSpace
     final public static function isAlphanumericPlusSpace($value):bool
     {
-        return static::regex('alphanumericPlusSpace',$value);
+        return self::regex('alphanumericPlusSpace',$value);
     }
 
 
@@ -708,7 +708,7 @@ class Validate extends Root
     // possible de spécifier un niveau de sécurité pour le regex
     final public static function isUsername($value,?string $security=null):bool
     {
-        return static::regex('username'.((is_string($security))? ucfirst($security):''),$value);
+        return self::regex('username'.((is_string($security))? ucfirst($security):''),$value);
     }
 
 
@@ -717,7 +717,7 @@ class Validate extends Root
     // possible de spécifier un niveau de sécurité pour le regex
     final public static function isPassword($value,?string $security=null):bool
     {
-        return static::regex('password'.((is_string($security))? ucfirst($security):''),$value);
+        return self::regex('password'.((is_string($security))? ucfirst($security):''),$value);
     }
 
 
@@ -725,7 +725,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex email
     final public static function isEmail($value):bool
     {
-        return static::regex('email',$value);
+        return self::regex('email',$value);
     }
 
 
@@ -733,7 +733,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex hex
     final public static function isHex($value):bool
     {
-        return static::regex('hex',$value);
+        return self::regex('hex',$value);
     }
 
 
@@ -741,7 +741,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex tag
     final public static function isTag($value):bool
     {
-        return static::regex('tag',$value);
+        return self::regex('tag',$value);
     }
 
 
@@ -749,7 +749,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex year
     final public static function isYear($value):bool
     {
-        return static::regex('year',$value);
+        return self::regex('year',$value);
     }
 
 
@@ -757,7 +757,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex zipcode
     final public static function isAmericanZipcode($value):bool
     {
-        return static::regex('americanZipcode',$value);
+        return self::regex('americanZipcode',$value);
     }
 
 
@@ -765,7 +765,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex postalcode
     final public static function isCanadianPostalcode($value):bool
     {
-        return static::regex('canadianPostalcode',$value);
+        return self::regex('canadianPostalcode',$value);
     }
 
 
@@ -773,7 +773,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex americanPhone
     final public static function isNorthAmericanPhone($value):bool
     {
-        return static::regex('northAmericanPhone',$value);
+        return self::regex('northAmericanPhone',$value);
     }
 
 
@@ -781,7 +781,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex phone
     final public static function isPhone($value):bool
     {
-        return static::regex('phone',$value);
+        return self::regex('phone',$value);
     }
 
 
@@ -789,7 +789,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex ip
     final public static function isIp($value):bool
     {
-        return static::regex('ip',$value);
+        return self::regex('ip',$value);
     }
 
 
@@ -797,7 +797,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex date
     final public static function isDate($value):bool
     {
-        return static::regex('date',$value);
+        return self::regex('date',$value);
     }
 
 
@@ -805,7 +805,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex datetime
     final public static function isDatetime($value):bool
     {
-        return static::regex('datetime',$value);
+        return self::regex('datetime',$value);
     }
 
 
@@ -813,7 +813,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex time
     final public static function isTime($value):bool
     {
-        return static::regex('time',$value);
+        return self::regex('time',$value);
     }
 
 
@@ -821,7 +821,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex uri
     final public static function isUri($value):bool
     {
-        return static::regex('uri',$value);
+        return self::regex('uri',$value);
     }
 
 
@@ -829,7 +829,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex uri path
     final public static function isUriPath($value):bool
     {
-        return static::regex('uriPath',$value);
+        return self::regex('uriPath',$value);
     }
 
 
@@ -837,7 +837,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex fqcn
     final public static function isFqcn($value):bool
     {
-        return static::regex('fqcn',$value);
+        return self::regex('fqcn',$value);
     }
 
 
@@ -845,7 +845,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex table
     final public static function isTable($value):bool
     {
-        return static::regex('table',$value);
+        return self::regex('table',$value);
     }
 
 
@@ -853,7 +853,7 @@ class Validate extends Root
     // retourne vrai si la valeur passe le regex col
     final public static function isCol($value):bool
     {
-        return static::regex('col',$value);
+        return self::regex('col',$value);
     }
 
 
@@ -861,7 +861,7 @@ class Validate extends Root
     // retourne vrai si les deux valeurs sont égales ===
     final public static function isEqual($value1,$value2):bool
     {
-        return static::compare($value1,'===',$value2);
+        return self::compare($value1,'===',$value2);
     }
 
 
@@ -869,7 +869,7 @@ class Validate extends Root
     // retourne vrai si les deux valeurs sont égales ==
     final public static function isSoftEqual($value1,$value2):bool
     {
-        return static::compare($value1,'==',$value2);
+        return self::compare($value1,'==',$value2);
     }
 
 
@@ -877,7 +877,7 @@ class Validate extends Root
     // retourne vrai si les deux valeurs sont inégales !==
     final public static function isInequal($value1,$value2):bool
     {
-        return static::compare($value1,'!==',$value2);
+        return self::compare($value1,'!==',$value2);
     }
 
 
@@ -885,7 +885,7 @@ class Validate extends Root
     // retourne vrai si les deux valeurs sont inégales !=
     final public static function isSoftInequal($value1,$value2):bool
     {
-        return static::compare($value1,'!=',$value2);
+        return self::compare($value1,'!=',$value2);
     }
 
 
@@ -893,7 +893,7 @@ class Validate extends Root
     // retourne vrai si la première valeur est plus grande
     final public static function isBigger($value1,$value2):bool
     {
-        return static::compare($value1,'>',$value2);
+        return self::compare($value1,'>',$value2);
     }
 
 
@@ -901,7 +901,7 @@ class Validate extends Root
     // retourne vrai si la première valeur est plus grande ou égale
     final public static function isBiggerOrEqual($value1,$value2):bool
     {
-        return static::compare($value1,'>=',$value2);
+        return self::compare($value1,'>=',$value2);
     }
 
 
@@ -909,7 +909,7 @@ class Validate extends Root
     // retourne vrai si la première valeur est plus petite
     final public static function isSmaller($value1,$value2):bool
     {
-        return static::compare($value1,'<',$value2);
+        return self::compare($value1,'<',$value2);
     }
 
 
@@ -917,7 +917,7 @@ class Validate extends Root
     // retourne vrai si la première valeur est plus petite ou égale
     final public static function isSmallerOrEqual($value1,$value2):bool
     {
-        return static::compare($value1,'<=',$value2);
+        return self::compare($value1,'<=',$value2);
     }
 
 
@@ -968,7 +968,7 @@ class Validate extends Root
                     elseif(is_int($v) && $array[$k] === $v)
                     $r = true;
 
-                    elseif(!empty($v) && static::is($v,$array[$k]))
+                    elseif(!empty($v) && self::is($v,$array[$k]))
                     $r = true;
                 }
 
@@ -997,7 +997,7 @@ class Validate extends Root
             {
                 if(is_array($v))
                 {
-                    $return = static::dig($condition,$v);
+                    $return = self::dig($condition,$v);
                 }
 
                 else

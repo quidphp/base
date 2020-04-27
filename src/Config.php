@@ -16,6 +16,6 @@ namespace Quid\Base;
 class Config extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 }
 ?>

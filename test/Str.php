@@ -160,35 +160,38 @@ class Str extends Base\Test
         // castFix
         assert(Base\Str::castFix([1,2]) === '[1,2]');
 
-        // toNumeric
-        assert((float) 1.2 === Base\Str::toNumeric('1.2'));
-        assert(1.3 === Base\Str::toNumeric('1,3'));
-        assert((float) 1 === Base\Str::toNumeric('1,3',false));
-        assert((int) 1 === Base\Str::toNumeric('1'));
-        assert((float) 'aaa' === Base\Str::toNumeric('aaa'));
-        assert((float) 'aaa1' === Base\Str::toNumeric('aaa1'));
-        assert((float) 'aaa1aaa' === Base\Str::toNumeric('aaa1aaa'));
-        assert('123321123312312132213321123312321312321123213231312312' === Base\Str::toNumeric('123321123312312132213321123312321312321123213231312312'));
+        // toNum
+        assert((float) 1.2 === Base\Str::toNum('1.2'));
+        assert(1.3 === Base\Str::toNum('1,3'));
+        assert((int) 1 === Base\Str::toNum('1'));
+        assert(null === Base\Str::toNum('aaa'));
+        assert(null === Base\Str::toNum('aaa1'));
+        assert(null === Base\Str::toNum('aaa1aaa'));
+        assert('123321123312312132213321123312321312321123213231312312' === Base\Str::toNum('123321123312312132213321123312321312321123213231312312'));
+        assert(Base\Str::toNum('30MB') === 30);
 
         // toInt
         assert((int) 1.2 === Base\Str::toInt('1.2'));
         assert(1 === Base\Str::toInt('1,3'));
         assert((int) 1 === Base\Str::toInt('1'));
-        assert((int) 'aaa' === Base\Str::toInt('aaa'));
-        assert((int) 'aaa1' === Base\Str::toInt('aaa1'));
-        assert((int) 'aaa1aaa' === Base\Str::toInt('aaa1aaa'));
+        assert(null === Base\Str::toInt('aaa'));
+        assert(null === Base\Str::toInt('aaa1'));
+        assert(null === Base\Str::toInt('aaa1aaa'));
         assert((int) '1aaa1aaa' === Base\Str::toInt('1aaa1aaa'));
         assert(PHP_INT_MAX === Base\Str::toInt('123321123312312132213321123312321312321123213231312312'));
+        assert(Base\Str::toInt('30MB') === 30);
+        assert(Base\Str::toInt('abc') === null);
 
         // toFloat
         assert((float) 1.2 === Base\Str::toFloat('1.2'));
         assert(1.3 === Base\Str::toFloat('1,3'));
-        assert((float) 1 === Base\Str::toFloat('1,3',false));
         assert((float) 1 === Base\Str::toFloat('1'));
-        assert((float) 'aaa' === Base\Str::toFloat('aaa'));
-        assert((float) 'aaa1' === Base\Str::toFloat('aaa1'));
-        assert((float) 'aaa1aaa' === Base\Str::toFloat('aaa1aaa'));
-        assert((float) '1aaa1aaa' === Base\Str::toFloat('1aaa1aaa'));
+        assert(null === Base\Str::toFloat('aaa'));
+        assert(null === Base\Str::toFloat('aaa1'));
+        assert(null === Base\Str::toFloat('aaa1aaa'));
+        assert((float) '1' === Base\Str::toFloat('1aaa1aaa'));
+        assert(Base\Str::toFloat('3.2') === 3.2);
+        assert(Base\Str::toFloat('3') === (float) 3);
 
         // len
         assert(5 === Base\Str::len('teste'));
@@ -966,10 +969,14 @@ class Str extends Base\Test
         assert('La ptits avnir' === Base\Str::remove('e',$string));
         assert('La ptits avni' === Base\Str::remove(['e','r'],$string));
 
-        // keepNumeric
-        assert('123.40' === Base\Str::keepNumeric('123.40'));
-        assert('-123.40' === Base\Str::keepNumeric('-123.40'));
-        assert('12340' === Base\Str::keepNumeric('123,40'));
+        // keepNum
+        assert('123.40' === Base\Str::keepNum('123.40'));
+        assert('-123.40' === Base\Str::keepNum('-123.40'));
+        assert('123' === Base\Str::keepNum('123,40'));
+        assert('123,40' === Base\Str::keepNum('123,40',','));
+        assert('' === Base\Str::keepNum('z1234zacc'));
+        assert('21' === Base\Str::keepNum('21,2'));
+        assert('-21.2' === Base\Str::keepNum('-21.2'));
 
         // keepNumber
         assert('' === Base\Str::keepNumber('TESTÉéèàç'));
@@ -1028,10 +1035,6 @@ class Str extends Base\Test
         assert(Base\Str::toPointer('user',2) === 'user-2');
         assert(Base\Str::toPointer('user',2,'/') === 'user/2');
 
-        // map
-        $array = [' test ',2=>' test2',3,[]];
-        assert(Base\Str::map('trim',$array) === ['test',2=>'test2',3,[]]);
-
         // excerpt
         assert(Base\Str::excerpt(22,'emondppph@hotmail.com.ca',['trim'=>false]) === 'emondppph@hotmail.c...');
         assert('la <b>petite</b> école' === Base\Str::excerpt(null," la <b>petite</b>\n école "));
@@ -1066,6 +1069,8 @@ class Str extends Base\Test
 
         // bom
         assert(strlen(Base\Str::bom()) === 3);
+
+        // setCharset
 
         return true;
     }

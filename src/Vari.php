@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // vari
 // class with some general static methods related to variables
-class Vari extends Root
+final class Vari extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // isEmpty

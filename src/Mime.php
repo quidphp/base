@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // mime
 // class with static methods to get or guess mime types
-class Mime extends Root
+final class Mime extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'defaultFamily'=>'binary', // famille par défaut pour la méthode add
         'groupToExtension'=>[ // permet de lier des extensions à des groupes
             'audio'=>'mp3',
@@ -85,10 +85,10 @@ class Mime extends Root
 
         if(is_string($group))
         {
-            if($get === true && static::getGroup($value,$fromPath) === $group)
+            if($get === true && self::getGroup($value,$fromPath) === $group)
             $return = true;
 
-            elseif(is_string($value) && static::group($value) === $group)
+            elseif(is_string($value) && self::group($value) === $group)
             $return = true;
         }
 
@@ -101,11 +101,11 @@ class Mime extends Root
     final public static function isFamily($family,$value,bool $get=false,bool $fromPath=true):bool
     {
         $return = false;
-        $group = ($get === true)? static::getGroup($value,$fromPath):static::group($value);
+        $group = ($get === true)? self::getGroup($value,$fromPath):self::group($value);
 
         if(!empty($group))
         {
-            foreach (static::$config['family'] as $key => $array)
+            foreach (self::$config['family'] as $key => $array)
             {
                 if(is_array($array) && in_array($group,$array,true) && $key === $family)
                 {
@@ -128,7 +128,7 @@ class Mime extends Root
         if(is_string($value) && is_string($mimeGroup))
         {
             $value = strtolower($value);
-            $extensions = static::extensionsFromGroup($mimeGroup);
+            $extensions = self::extensionsFromGroup($mimeGroup);
 
             if(in_array($value,$extensions,true))
             $return = true;
@@ -145,7 +145,7 @@ class Mime extends Root
         $return = null;
 
         if(is_resource($value))
-        $return = static::getFromResource($value,$charset,true);
+        $return = self::getFromResource($value,$charset,true);
 
         elseif(File::is($value))
         {
@@ -158,14 +158,14 @@ class Mime extends Root
 
                 if(is_string($mime) && !empty($mime))
                 {
-                    if(static::toExtension($mime,true) === 'txt')
-                    $return = static::fromPath($value);
+                    if(self::toExtension($mime,true) === 'txt')
+                    $return = self::fromPath($value);
 
                     else
                     $return = $mime;
 
                     if(is_string($return) && $charset === false)
-                    $return = static::removeCharset($return);
+                    $return = self::removeCharset($return);
                 }
 
                 Res::close($finfo);
@@ -189,10 +189,10 @@ class Mime extends Root
 
             if(is_string($return))
             {
-                $return = static::fromExtension($return) ?? $return;
+                $return = self::fromExtension($return) ?? $return;
 
                 if($charset === false)
-                $return = static::removeCharset($return);
+                $return = self::removeCharset($return);
             }
         }
 
@@ -202,7 +202,7 @@ class Mime extends Root
             {
                 $path = Res::path($value);
                 if(is_string($path))
-                $return = static::get($path,$charset);
+                $return = self::get($path,$charset);
             }
 
             elseif(Res::isHttp($value))
@@ -227,13 +227,13 @@ class Mime extends Root
     final public static function getGroup($value,bool $fromPath=true):?string
     {
         $return = null;
-        $mime = static::get($value);
+        $mime = self::get($value);
 
-        if($fromPath === true && (empty($mime) || static::isEmpty($mime)))
-        $mime = static::fromPath($value);
+        if($fromPath === true && (empty($mime) || self::isEmpty($mime)))
+        $mime = self::fromPath($value);
 
         if(!empty($mime))
-        $return = static::group($mime);
+        $return = self::group($mime);
 
         return $return;
     }
@@ -245,10 +245,10 @@ class Mime extends Root
     final public static function getFamilies($value,bool $fromPath=true):?array
     {
         $return = null;
-        $group = static::getGroup($value,$fromPath);
+        $group = self::getGroup($value,$fromPath);
 
         if(!empty($group))
-        $return = static::families($group);
+        $return = self::families($group);
 
         return $return;
     }
@@ -260,7 +260,7 @@ class Mime extends Root
     final public static function getFamily($value,bool $fromPath=true):?string
     {
         $return = null;
-        $families = static::getFamilies($value,$fromPath);
+        $families = self::getFamilies($value,$fromPath);
 
         if(!empty($families))
         $return = current($families);
@@ -274,10 +274,10 @@ class Mime extends Root
     final public static function getCorrectExtension($value):?string
     {
         $return = null;
-        $mime = static::get($value);
+        $mime = self::get($value);
 
         if(is_string($mime))
-        $return = static::toExtension($mime,true);
+        $return = self::toExtension($mime,true);
 
         return $return;
     }
@@ -288,13 +288,13 @@ class Mime extends Root
     final public static function group(string $value):?string
     {
         $return = null;
-        $extension = static::toExtension($value,true);
+        $extension = self::toExtension($value,true);
 
         if(!empty($extension))
         {
             $extension = strtolower($extension);
 
-            foreach (static::$config['groupToExtension'] as $k => $v)
+            foreach (self::$config['groupToExtension'] as $k => $v)
             {
                 if((is_array($v) && (in_array($extension,$v,true)) || $extension === $v))
                 {
@@ -314,7 +314,7 @@ class Mime extends Root
     {
         $return = [];
 
-        foreach (static::$config['family'] as $key => $array)
+        foreach (self::$config['family'] as $key => $array)
         {
             if(is_array($array) && in_array($value,$array,true))
             $return[] = $key;
@@ -329,7 +329,7 @@ class Mime extends Root
     final public static function family(string $value):?string
     {
         $return = null;
-        $families = static::families($value);
+        $families = self::families($value);
 
         if(!empty($families))
         $return = current($families);
@@ -353,7 +353,7 @@ class Mime extends Root
         $value = Path::extension($value) ?? $value;
 
         if(is_string($value))
-        $return = static::fromExtension($value);
+        $return = self::fromExtension($value);
 
         return $return;
     }
@@ -365,7 +365,7 @@ class Mime extends Root
     {
         $return = null;
 
-        foreach (static::$config['mimeToExtension'] as $key => $value)
+        foreach (self::$config['mimeToExtension'] as $key => $value)
         {
             if((is_array($value) && Arr::in($extension,$value,false)) || Str::icompare($extension,$value))
             {
@@ -386,7 +386,7 @@ class Mime extends Root
         $extension = Path::extension($basename);
 
         if(!empty($extension))
-        $return = static::groupFromExtension($extension);
+        $return = self::groupFromExtension($extension);
 
         return $return;
     }
@@ -397,10 +397,10 @@ class Mime extends Root
     final public static function groupFromExtension(string $extension):?string
     {
         $return = null;
-        $mime = static::fromExtension($extension);
+        $mime = self::fromExtension($extension);
 
         if(!empty($mime))
-        $return = static::group($mime);
+        $return = self::group($mime);
 
         return $return;
     }
@@ -412,7 +412,7 @@ class Mime extends Root
     {
         $return = null;
 
-        foreach (static::$config['mimeToExtension'] as $key => $value)
+        foreach (self::$config['mimeToExtension'] as $key => $value)
         {
             if(!is_array($value))
             $value = [$value];
@@ -440,8 +440,8 @@ class Mime extends Root
     {
         $return = [];
 
-        if(array_key_exists($value,static::$config['groupToExtension']))
-        $return = (array) static::$config['groupToExtension'][$value];
+        if(array_key_exists($value,self::$config['groupToExtension']))
+        $return = (array) self::$config['groupToExtension'][$value];
 
         return $return;
     }
@@ -453,7 +453,7 @@ class Mime extends Root
     final public static function extensionFromGroup(string $value,int $index=0):?string
     {
         $return = null;
-        $extensions = static::extensionsFromGroup($value);
+        $extensions = self::extensionsFromGroup($value);
 
         if(is_array($extensions))
         $return = Arr::index($index,$extensions);
@@ -483,13 +483,13 @@ class Mime extends Root
 
         if(!empty($extension))
         {
-            $mime = static::removeCharset($mime);
+            $mime = self::removeCharset($mime);
 
             if(empty($families))
-            $families = static::families($group);
+            $families = self::families($group);
 
             if(empty($families))
-            $families = static::$config['defaultFamily'];
+            $families = self::$config['defaultFamily'];
 
             if(!is_array($families))
             $families = [$families];
@@ -497,22 +497,22 @@ class Mime extends Root
             if(!is_array($extension))
             $extension = [$extension];
 
-            if(!array_key_exists($mime,static::$config['mimeToExtension']))
-            static::$config['mimeToExtension'][$mime] = $extension;
+            if(!array_key_exists($mime,self::$config['mimeToExtension']))
+            self::$config['mimeToExtension'][$mime] = $extension;
             else
-            static::$config['mimeToExtension'][$mime] = Arr::appendUnique(static::$config['mimeToExtension'][$mime],$extension);
+            self::$config['mimeToExtension'][$mime] = Arr::mergeUnique(self::$config['mimeToExtension'][$mime],$extension);
 
-            if(!array_key_exists($group,static::$config['groupToExtension']))
-            static::$config['groupToExtension'][$group] = [];
-            static::$config['groupToExtension'][$group] = Arr::appendUnique(static::$config['groupToExtension'][$group],$extension);
+            if(!array_key_exists($group,self::$config['groupToExtension']))
+            self::$config['groupToExtension'][$group] = [];
+            self::$config['groupToExtension'][$group] = Arr::mergeUnique(self::$config['groupToExtension'][$group],$extension);
 
             foreach ($families as $family)
             {
-                if(!array_key_exists($family,static::$config['family']))
-                static::$config['family'][$family] = [];
+                if(!array_key_exists($family,self::$config['family']))
+                self::$config['family'][$family] = [];
 
-                if(!in_array($group,static::$config['family'][$family], true))
-                static::$config['family'][$family][] = $group;
+                if(!in_array($group,self::$config['family'][$family], true))
+                self::$config['family'][$family][] = $group;
             }
 
             $return = true;

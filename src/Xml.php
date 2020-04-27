@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // xml
 // class with some static methods related to XML
-class Xml extends Root
+final class Xml extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'urlset'=>[ // défini les urlset utilisés par xml
             'sitemap'=>"<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'></urlset>"]
     ];
@@ -35,7 +35,7 @@ class Xml extends Root
     // si inexistant retourne la string
     final public static function urlset(string $value):?string
     {
-        return Arr::get($value,static::$config['urlset']);
+        return Arr::get($value,self::$config['urlset']);
     }
 }
 ?>

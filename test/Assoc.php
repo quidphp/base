@@ -113,9 +113,9 @@ class Assoc extends Base\Test
 
         // keysStart
         assert(Base\Assoc::keysStart('te',$array)['test'] === 2);
-        Base\Assoc::$config['sensitive'] = false;
+        Base\Assoc::config(['sensitive'=>false]);
         assert(Base\Assoc::keysStart('TE',$array)['test'] === 2);
-        Base\Assoc::$config['sensitive'] = true;
+        Base\Assoc::config(['sensitive'=>true]);
 
         // keysEnd
         assert(Base\Assoc::keysEnd('st',$array)['test'] === 2);

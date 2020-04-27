@@ -20,7 +20,7 @@ abstract class Root
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // static

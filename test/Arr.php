@@ -196,17 +196,37 @@ class Arr extends Base\Test
         assert(Base\Arr::plus(['test'],$obj2,$obj2) === [$obj2]);
         assert(Base\Arr::plus($obj,$obj,['test'],$obj) === [$obj[0]]);
 
-        // merge
-        $merge1 = ['test'=>1,'test2'=>[1,2,'ok'=>'james'],'test3'=>'ok','4'=>'ok','james'=>'what'];
-        $merge2 = ['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla'];
-        assert(['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla','0'=>'ok','james'=>'what'] === Base\Arr::merge($merge1,$merge2));
-        assert(Base\Arr::merge(['test'],$obj2,$obj2) === ['test',$obj2,$obj2]);
-
         // replace
         $merge1 = ['test'=>1,'test2'=>[1,2],'test3'=>'ok','4'=>'ok'];
         $merge2 = ['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla'];
         assert(['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla','4'=>'ok'] === Base\Arr::replace($merge1,$merge2));
         assert(Base\Arr::replace(['test'],$obj2,$obj2) === [$obj2]);
+
+        // merge
+        $merge1 = ['test'=>1,'test2'=>[1,2,'ok'=>'james'],'test3'=>'ok','4'=>'ok','james'=>'what'];
+        $merge2 = ['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla'];
+        assert(['test'=>2,'test2'=>['test'=>'ok'],'test3'=>'bla','0'=>'ok','james'=>'what'] === Base\Arr::merge($merge1,$merge2));
+        assert(Base\Arr::merge(['test'],$obj2,$obj2) === ['test',$obj2,$obj2]);
+        assert(Base\Arr::merge(['test'=>'ok',3=>2],['test'=>'ok2',12=>3])  === ['test'=>'ok2',2,3]);
+        assert(Base\Arr::merge(['test'],'test2',['test3','test4']) === ['test','test2','test3','test4']);
+        assert(Base\Arr::merge('test','test2',['test3','test4']) === ['test','test2','test3','test4']);
+        assert(Base\Arr::merge(['test','test'=>'ok'],['james','what'=>'james','test'=>'BURP',$obj2],$obj,$obj2) === ['test','test'=>'BURP',1=>'james','what'=>'james',2=>$obj2,3=>$obj[0],4=>$obj2]);
+        assert(Base\Arr::merge(['test','test'=>'ok'],['james','what'=>'james','test'=>'BURP']) === ['test','test'=>'BURP',1=>'james','what'=>'james']);
+        assert(Base\Arr::merge('test','test2',['testz','test'=>[['test4']]],['testx','test'=>['test4']]) === ['test','test2','testz','test'=>['test4'],'testx']);
+        assert(Base\Arr::merge(['test']) === ['test']);
+        assert(Base\Arr::merge(['test'=>2,'ok'=>3],['TEST'=>3]) === ['test'=>2,'ok'=>3,'TEST'=>3]);
+        assert(Base\Arr::merge('test','test2',[20=>'test3',['test4']]) === ['test','test2',2=>'test3',3=>['test4']]);
+        assert(Base\Arr::merge('test','test2',['ok','james',8=>'ok','bla']) === ['test','test2','ok','james',4=>'ok',5=>'bla']);
+
+        // imerge
+        assert(Base\Arr::imerge(['test'=>2,'ok'=>3],['TEST'=>3]) === ['ok'=>3,'TEST'=>3]);
+
+        // mergeUnique
+        assert(Base\Arr::mergeUnique(true,false,'what',['test'=>'What']) === [true,false,'what','test'=>'What']);
+        assert(Base\Arr::mergeUnique(true,false,[10=>'what','What']) === [true,false,2=>'what',3=>'What']);
+
+        // imergeUnique
+        assert(Base\Arr::imergeUnique(true,false,[5=>'what'],['test'=>'What']) === [true,false,2=>'what']);
 
         // unshift
         assert(Base\Arr::unshift('test','test2') === ['test2','test']);
@@ -219,27 +239,6 @@ class Arr extends Base\Test
         assert(Base\Arr::push('test','test2',['test3',['test4']]) === ['test','test2',['test3',['test4']]]);
         assert(Base\Arr::push(['test'],'test2',['test3','test4']) === ['test','test2',['test3','test4']]);
         assert(Base\Arr::push(['test'],$obj,$obj2) === ['test',$obj,$obj2]);
-
-        // append
-        assert(Base\Arr::append(['test'],'test2',['test3','test4']) === ['test','test2','test3','test4']);
-        assert(Base\Arr::append('test','test2',['test3','test4']) === ['test','test2','test3','test4']);
-        assert(Base\Arr::append('test','test2',[20=>'test3',['test4']]) === ['test','test2',20=>'test3',21=>['test4']]);
-        assert(Base\Arr::append(['test','test'=>'ok'],['james','what'=>'james','test'=>'BURP',$obj2],$obj,$obj2) === ['test','test'=>'BURP',1=>'james','what'=>'james',2=>$obj2,3=>$obj[0],4=>$obj2]);
-        assert(Base\Arr::append(['test','test'=>'ok'],['james','what'=>'james','test'=>'BURP']) === ['test','test'=>'BURP',1=>'james','what'=>'james']);
-        assert(Base\Arr::append('test','test2',['testz','test'=>[['test4']]],['testx','test'=>['test4']]) === ['test','test2','testz','test'=>['test4'],'testx']);
-        assert(Base\Arr::append(['test']) === ['test']);
-        assert(Base\Arr::append(['test'=>2,'ok'=>3],['TEST'=>3]) === ['test'=>2,'ok'=>3,'TEST'=>3]);
-        assert(Base\Arr::append('test','test2',['ok','james',8=>'ok','bla']) === ['test','test2','ok','james',8=>'ok',9=>'bla']);
-
-        // iappend
-        assert(Base\Arr::iAppend(['test'=>2,'ok'=>3],['TEST'=>3]) === ['ok'=>3,'TEST'=>3]);
-
-        // appendUnique
-        assert(Base\Arr::appendUnique(true,false,'what',['test'=>'What']) === [true,false,'what','test'=>'What']);
-        assert(Base\Arr::appendUnique(true,false,[10=>'what','What']) === [true,false,10=>'what',11=>'What']);
-
-        // iappendUnique
-        assert(Base\Arr::iappendUnique(true,false,[5=>'what'],['test'=>'What']) === [true,false,5=>'what']);
 
         // clean
         $clean = ['',0,null,[]];
@@ -970,12 +969,12 @@ class Arr extends Base\Test
         // insertFirst
         $slice = [1,2,3,4];
         assert(Base\Arr::insertFirst([0],$slice) === [0,1,2,3,4]);
-        assert(Base\Arr::insertFirst([0],$slice) === Base\Arr::append([0],$slice));
+        assert(Base\Arr::insertFirst([0],$slice) === Base\Arr::merge([0],$slice));
 
         // insertLast
         $slice = [1,2,3,4];
         assert(Base\Arr::insertLast([0],$slice) === [1,2,3,0,4]);
-        assert(Base\Arr::insertLast([0],$slice) !== Base\Arr::append($slice,[0]));
+        assert(Base\Arr::insertLast([0],$slice) !== Base\Arr::merge($slice,[0]));
 
         // insertInOrder
         $array = [2=>4,8=>12,12=>13];

@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // request
 // class with static methods to analyze the current request
-class Request extends Root
+final class Request extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'idLength'=>10, // longueur du id de la requête
         'safe'=>[ // paramètre par défaut pour la méhode isPathSafe
             'regex'=>'uriPath'],
@@ -42,7 +42,7 @@ class Request extends Root
     // retourne vrai si la requête courante est ajax
     final public static function isAjax():bool
     {
-        return static::getHeader('X-Requested-With') === 'XMLHttpRequest';
+        return self::getHeader('X-Requested-With') === 'XMLHttpRequest';
     }
 
 
@@ -50,7 +50,7 @@ class Request extends Root
     // retourne vrai si la requête courante est get
     final public static function isGet():bool
     {
-        return static::method() === 'get';
+        return self::method() === 'get';
     }
 
 
@@ -58,7 +58,7 @@ class Request extends Root
     // retourne vrai si la requête courante est post
     final public static function isPost():bool
     {
-        return static::method() === 'post';
+        return self::method() === 'post';
     }
 
 
@@ -67,7 +67,7 @@ class Request extends Root
     // ceci peut arriver lors du chargement d'un fichier plus lourd que php ini
     final public static function isPostWithoutData():bool
     {
-        return static::isPost() && empty(static::post());
+        return self::isPost() && empty(self::post());
     }
 
 
@@ -76,7 +76,7 @@ class Request extends Root
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public static function isRefererInternal($hosts=null):bool
     {
-        return !empty(static::referer(true,$hosts));
+        return !empty(self::referer(true,$hosts));
     }
 
 
@@ -85,7 +85,7 @@ class Request extends Root
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public static function isInternalPost($hosts=null):bool
     {
-        return static::isPost() && static::isRefererInternal($hosts);
+        return self::isPost() && self::isRefererInternal($hosts);
     }
 
 
@@ -94,7 +94,7 @@ class Request extends Root
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public static function isExternalPost($hosts=null):bool
     {
-        return static::isPost() && !static::isRefererInternal($hosts);
+        return self::isPost() && !self::isRefererInternal($hosts);
     }
 
 
@@ -102,7 +102,7 @@ class Request extends Root
     // retourne vrai si la requête courante est de méthode get et pas ajax
     final public static function isStandard():bool
     {
-        return static::isGet() && !static::isAjax();
+        return self::isGet() && !self::isAjax();
     }
 
 
@@ -110,7 +110,7 @@ class Request extends Root
     // retourne vrai si le chemin est vide (ou seulement /)
     final public static function isPathEmpty():bool
     {
-        return static::pathStripStart() === '';
+        return self::pathStripStart() === '';
     }
 
 
@@ -118,7 +118,7 @@ class Request extends Root
     // retourne vrai si le chemin est sécuritaire
     final public static function isPathSafe():bool
     {
-        return Path::isSafe(static::path(),static::$config['safe']);
+        return Path::isSafe(self::path(),self::$config['safe']);
     }
 
 
@@ -126,7 +126,7 @@ class Request extends Root
     // retourne vrai si le chemin est un argument (commence par - )
     final public static function isPathArgument():bool
     {
-        return Path::isArgument(static::path());
+        return Path::isArgument(self::path());
     }
 
 
@@ -134,7 +134,7 @@ class Request extends Root
     // retourne vrai si le chemin est un argument (commence par - ) mais que la requête n'est pas cli
     final public static function isPathArgumentNotCli():bool
     {
-        return static::isPathArgument() && !static::isCli();
+        return self::isPathArgument() && !self::isCli();
     }
 
 
@@ -150,7 +150,7 @@ class Request extends Root
     // retourne vrai si la requête semble être un envoie de fichier raté
     final public static function isFailedFileUpload():bool
     {
-        return static::isPostWithoutData() && Base\Superglobal::hasServerLengthWithoutPost();
+        return self::isPostWithoutData() && Base\Superglobal::hasServerLengthWithoutPost();
     }
 
 
@@ -158,7 +158,7 @@ class Request extends Root
     // retourne vrai si la requête courante a un query string
     final public static function hasQuery():bool
     {
-        return strlen(static::query()) > 0;
+        return strlen(self::query()) > 0;
     }
 
 
@@ -166,7 +166,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient des données get
     final public static function hasGet():bool
     {
-        return !empty(static::get());
+        return !empty(self::get());
     }
 
 
@@ -174,7 +174,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient des données post
     final public static function hasPost():bool
     {
-        return !empty(static::post());
+        return !empty(self::post());
     }
 
 
@@ -182,7 +182,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient des données get ou post
     final public static function hasData():bool
     {
-        return static::hasGet() || static::hasPost();
+        return self::hasGet() || self::hasPost();
     }
 
 
@@ -192,7 +192,7 @@ class Request extends Root
     final public static function hasValidGenuine(bool $two=true):bool
     {
         $return = false;
-        $post = static::post();
+        $post = self::post();
         $genuine = Html::getGenuineName();
         $genuine2 = Html::getGenuineName(2);
 
@@ -210,7 +210,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un user
     final public static function hasUser():bool
     {
-        return is_string(static::user());
+        return is_string(self::user());
     }
 
 
@@ -218,7 +218,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un pass
     final public static function hasPass():bool
     {
-        return is_string(static::pass());
+        return is_string(self::pass());
     }
 
 
@@ -226,7 +226,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un fragment
     final public static function hasFragment():bool
     {
-        return is_string(static::fragment());
+        return is_string(self::fragment());
     }
 
 
@@ -234,7 +234,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un ip
     final public static function hasIp(bool $validIp=true):bool
     {
-        return !empty(static::ip($validIp));
+        return !empty(self::ip($validIp));
     }
 
 
@@ -242,7 +242,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un header lang
     final public static function hasLangHeader():bool
     {
-        return !empty(static::langHeader());
+        return !empty(self::langHeader());
     }
 
 
@@ -250,7 +250,7 @@ class Request extends Root
     // retourne vrai si la requête courante contient un userAgent
     final public static function hasUserAgent():bool
     {
-        return !empty(static::userAgent());
+        return !empty(self::userAgent());
     }
 
 
@@ -258,7 +258,7 @@ class Request extends Root
     // retourne vrai si le userAgent est un bot
     final public static function isBot():bool
     {
-        return Browser::isBot(static::userAgent());
+        return Browser::isBot(self::userAgent());
     }
 
 
@@ -266,7 +266,7 @@ class Request extends Root
     // retourne vrai si le ip est local
     final public static function isIpLocal(bool $validIp=true):bool
     {
-        return Ip::isLocal(static::ip($validIp));
+        return Ip::isLocal(self::ip($validIp));
     }
 
 
@@ -274,7 +274,7 @@ class Request extends Root
     // retourne vrai si la langue est celle fourni
     final public static function isLang($value):bool
     {
-        return is_string($value) && $value === static::lang();
+        return is_string($value) && $value === self::lang();
     }
 
 
@@ -282,7 +282,7 @@ class Request extends Root
     // retourne vrai si le scheme est celui fourni
     final public static function isScheme($value):bool
     {
-        return is_string($value) && $value === static::scheme();
+        return is_string($value) && $value === self::scheme();
     }
 
 
@@ -290,7 +290,7 @@ class Request extends Root
     // retourne vrai si l'host est celui fourni
     final public static function isHost($value):bool
     {
-        return is_string($value) && $value === static::host();
+        return is_string($value) && $value === self::host();
     }
 
 
@@ -298,7 +298,7 @@ class Request extends Root
     // retourne vrai si le scheme host est celui fourni
     final public static function isSchemeHost($value):bool
     {
-        return is_string($value) && $value === static::schemeHost();
+        return is_string($value) && $value === self::schemeHost();
     }
 
 
@@ -306,7 +306,7 @@ class Request extends Root
     // retourne vrai si le ip est celui fourni
     final public static function isIp($value,bool $validIp=true):bool
     {
-        return is_string($value) && $value === static::ip($validIp);
+        return is_string($value) && $value === self::ip($validIp);
     }
 
 
@@ -314,7 +314,7 @@ class Request extends Root
     // retourne vrai si la langue du header est celle fournie
     final public static function isLangHeader(string $value):bool
     {
-        return $value === static::langHeader();
+        return $value === self::langHeader();
     }
 
 
@@ -338,7 +338,7 @@ class Request extends Root
     // retourne vrai si la requête contient le header
     final public static function headerExists(string $key):bool
     {
-        return Header::exist($key,static::headers());
+        return Header::exist($key,self::headers());
     }
 
 
@@ -346,7 +346,7 @@ class Request extends Root
     // retourne vrai si la requête contient des fichiers
     final public static function hasFiles():bool
     {
-        return !empty(static::files());
+        return !empty(self::files());
     }
 
 
@@ -354,10 +354,10 @@ class Request extends Root
     // retourne le id unique de la requête
     final public static function id():string
     {
-        if(static::$id === null)
-        static::$id = Str::random(static::$config['idLength']);
+        if(self::$id === null)
+        self::$id = Str::random(self::$config['idLength']);
 
-        return static::$id;
+        return self::$id;
     }
 
 
@@ -366,28 +366,28 @@ class Request extends Root
     // possible d'exporter le id
     final public static function info(bool $id=false,bool $validIp=true):array
     {
-        $return = static::parse();
+        $return = self::parse();
 
-        $return['relative'] = static::relative();
-        $return['absolute'] = static::absolute();
-        $return['schemeHost'] = static::schemeHost();
-        $return['method'] = static::method();
-        $return['ssl'] = static::isSsl();
-        $return['ajax'] = static::isAjax();
-        $return['timestamp'] = static::timestamp();
-        $return['ip'] = static::ip($validIp);
-        $return['get'] = static::get();
-        $return['post'] = static::post();
-        $return['files'] = static::files();
-        $return['userAgent'] = static::userAgent();
-        $return['referer'] = static::referer();
-        $return['headers'] = static::headers();
-        $return['lang'] = static::lang();
-        $return['safe'] = static::isPathSafe();
-        $return['cli'] = static::isCli();
+        $return['relative'] = self::relative();
+        $return['absolute'] = self::absolute();
+        $return['schemeHost'] = self::schemeHost();
+        $return['method'] = self::method();
+        $return['ssl'] = self::isSsl();
+        $return['ajax'] = self::isAjax();
+        $return['timestamp'] = self::timestamp();
+        $return['ip'] = self::ip($validIp);
+        $return['get'] = self::get();
+        $return['post'] = self::post();
+        $return['files'] = self::files();
+        $return['userAgent'] = self::userAgent();
+        $return['referer'] = self::referer();
+        $return['headers'] = self::headers();
+        $return['lang'] = self::lang();
+        $return['safe'] = self::isPathSafe();
+        $return['cli'] = self::isCli();
 
         if($id === true)
-        $return['id'] = static::id();
+        $return['id'] = self::id();
 
         return $return;
     }
@@ -399,18 +399,18 @@ class Request extends Root
     // possible d'exporter le id
     final public static function export(bool $id=false,bool $validIp=true):array
     {
-        $return = static::parse();
-        $return['method'] = static::method();
-        $return['timestamp'] = static::timestamp();
-        $return['ip'] = static::ip($validIp);
-        $return['post'] = static::post();
-        $return['files'] = static::files();
-        $return['headers'] = static::headers();
-        $return['lang'] = static::lang();
-        $return['cli'] = static::isCli();
+        $return = self::parse();
+        $return['method'] = self::method();
+        $return['timestamp'] = self::timestamp();
+        $return['ip'] = self::ip($validIp);
+        $return['post'] = self::post();
+        $return['files'] = self::files();
+        $return['headers'] = self::headers();
+        $return['lang'] = self::lang();
+        $return['cli'] = self::isCli();
 
         if($id === true)
-        $return['id'] = static::id();
+        $return['id'] = self::id();
 
         return $return;
     }
@@ -423,14 +423,14 @@ class Request extends Root
     {
         $return = [];
 
-        $return['scheme'] = static::scheme();
-        $return['user'] = static::user();
-        $return['pass'] = static::pass();
-        $return['host'] = static::host();
-        $return['port'] = static::port();
-        $return['path'] = static::path();
-        $return['query'] = static::query();
-        $return['fragment'] = static::fragment();
+        $return['scheme'] = self::scheme();
+        $return['user'] = self::user();
+        $return['pass'] = self::pass();
+        $return['host'] = self::host();
+        $return['port'] = self::port();
+        $return['path'] = self::path();
+        $return['query'] = self::query();
+        $return['fragment'] = self::fragment();
 
         return $return;
     }
@@ -442,13 +442,13 @@ class Request extends Root
     {
         $return = Lang::default();
 
-        $lang = static::pathLang();
+        $lang = self::pathLang();
         if(!empty($lang))
         $return = $lang;
 
         else
         {
-            $langHeader = static::langHeader();
+            $langHeader = self::langHeader();
             if(!empty($langHeader))
             $return = $langHeader;
         }
@@ -461,7 +461,7 @@ class Request extends Root
     // change les langues dans les config de la classe
     final public static function setLangs(array $value):void
     {
-        Arr::setRef('all',$value,static::$config['lang']);
+        Arr::setRef('all',$value,self::$config['lang']);
 
         return;
     }
@@ -486,9 +486,9 @@ class Request extends Root
     final public static function setAjax(bool $value=true):void
     {
         if($value === true)
-        static::setHeader('X-Requested-With','XMLHttpRequest');
+        self::setHeader('X-Requested-With','XMLHttpRequest');
         else
-        static::unsetHeader('X-Requested-With');
+        self::unsetHeader('X-Requested-With');
 
         return;
     }
@@ -507,7 +507,7 @@ class Request extends Root
     final public static function setScheme(string $value):void
     {
         if(in_array($value,['http','https'],true))
-        static::setSsl(($value === 'https'));
+        self::setSsl(($value === 'https'));
 
         return;
     }
@@ -568,7 +568,7 @@ class Request extends Root
         if(($serverName = Superglobal::getServer('SERVER_NAME')) !== null)
         $return = $serverName;
 
-        elseif(($httpHost = static::getHeader('Host')) !== null)
+        elseif(($httpHost = self::getHeader('Host')) !== null)
         $return = $httpHost;
 
         return $return;
@@ -598,7 +598,7 @@ class Request extends Root
     // change la valeur de port dans la requête courante
     final public static function setPort(int $value):void
     {
-        static::setSsl(Http::isPortSsl($value));
+        self::setSsl(Http::isPortSsl($value));
 
         return;
     }
@@ -632,7 +632,7 @@ class Request extends Root
     // retourne pathinfo du path courant
     final public static function pathinfo()
     {
-        return Path::info(static::path());
+        return Path::info(self::path());
     }
 
 
@@ -640,7 +640,7 @@ class Request extends Root
     // retourne le dirname du path courant
     final public static function dirname():?string
     {
-        return Path::infoOne('dirname',static::path());
+        return Path::infoOne('dirname',self::path());
     }
 
 
@@ -648,7 +648,7 @@ class Request extends Root
     // retourne le basename du path courant
     final public static function basename():?string
     {
-        return Path::infoOne('basename',static::path());
+        return Path::infoOne('basename',self::path());
     }
 
 
@@ -656,7 +656,7 @@ class Request extends Root
     // retourne le filename du path courant
     final public static function filename():?string
     {
-        return Path::infoOne('filename',static::path());
+        return Path::infoOne('filename',self::path());
     }
 
 
@@ -664,7 +664,7 @@ class Request extends Root
     // retourne l'extension du path courant
     final public static function extension():?string
     {
-        return Path::infoOne('extension',static::path());
+        return Path::infoOne('extension',self::path());
     }
 
 
@@ -672,7 +672,7 @@ class Request extends Root
     // retourne le mimetype du path courant
     final public static function mime():?string
     {
-        return Path::mime(static::path());
+        return Path::mime(self::path());
     }
 
 
@@ -680,7 +680,7 @@ class Request extends Root
     // retourne le path courant, sans query, et sans le slash au début
     final public static function pathStripStart():string
     {
-        return Path::stripStart(static::path());
+        return Path::stripStart(self::path());
     }
 
 
@@ -688,7 +688,7 @@ class Request extends Root
     // explode le path courant
     final public static function pathExplode(?array $option=null):array
     {
-        return Path::arr(static::pathStripStart(),$option);
+        return Path::arr(self::pathStripStart(),$option);
     }
 
 
@@ -696,7 +696,7 @@ class Request extends Root
     // retourne un index du path courant
     final public static function pathGet(int $index,?array $option=null):?string
     {
-        return Path::get($index,static::pathStripStart(),$option);
+        return Path::get($index,self::pathStripStart(),$option);
     }
 
 
@@ -704,7 +704,7 @@ class Request extends Root
     // retourne un tableau des index existants dans le path courant
     final public static function pathGets(array $indexes,?array $option=null):array
     {
-        return Path::gets($indexes,static::pathStripStart(),$option);
+        return Path::gets($indexes,self::pathStripStart(),$option);
     }
 
 
@@ -712,7 +712,7 @@ class Request extends Root
     // count le nombre de niveau dans le path courant
     final public static function pathCount(?array $option=null):int
     {
-        return Path::count(static::pathStripStart(),$option);
+        return Path::count(self::pathStripStart(),$option);
     }
 
 
@@ -720,7 +720,7 @@ class Request extends Root
     // tranche des slices du path courant en utilisant offset et length
     final public static function pathSlice(int $offset,?int $length,?array $option=null):array
     {
-        return Path::slice($offset,$length,static::pathStripStart(),$option);
+        return Path::slice($offset,$length,self::pathStripStart(),$option);
     }
 
 
@@ -736,7 +736,7 @@ class Request extends Root
     // retourne le code de langue si présent dans le path
     final public static function pathLang():?string
     {
-        return Path::lang(static::pathStripStart(),static::$config['lang']);
+        return Path::lang(self::pathStripStart(),self::$config['lang']);
     }
 
 
@@ -778,7 +778,7 @@ class Request extends Root
     // vide le query string
     final public static function removeQuery():void
     {
-        static::setQuery(null);
+        self::setQuery(null);
 
         return;
     }
@@ -790,7 +790,7 @@ class Request extends Root
     {
         $query = Cli::parseLongOptions(...$values);
         if(!empty($query))
-        static::setQuery($query);
+        self::setQuery($query);
 
         return;
     }
@@ -869,8 +869,8 @@ class Request extends Root
     final public static function schemeHost():?string
     {
         $return = null;
-        $scheme = static::scheme();
-        $host = static::host();
+        $scheme = self::scheme();
+        $host = self::host();
 
         if(!empty($scheme) && !empty($host))
         $return = Uri::build(['scheme'=>$scheme,'host'=>$host]);
@@ -888,8 +888,8 @@ class Request extends Root
 
         if(is_string($scheme) && is_string($host))
         {
-            static::setScheme($scheme);
-            static::setHost($host);
+            self::setScheme($scheme);
+            self::setHost($host);
         }
 
         return;
@@ -961,7 +961,7 @@ class Request extends Root
     // insensible à la case
     final public static function getHeader(string $key)
     {
-        return Header::get($key,static::headers());
+        return Header::get($key,self::headers());
     }
 
 
@@ -970,7 +970,7 @@ class Request extends Root
     // insensible à la case
     final public static function setHeader(string $key,$value):void
     {
-        static::setHeaders(Header::set($key,$value,static::headers()));
+        self::setHeaders(Header::set($key,$value,self::headers()));
 
         return;
     }
@@ -981,7 +981,7 @@ class Request extends Root
     // insensible à la case
     final public static function unsetHeader(string $key):void
     {
-        static::setHeaders(Header::unset($key,static::headers()));
+        self::setHeaders(Header::unset($key,self::headers()));
 
         return;
     }
@@ -1011,7 +1011,7 @@ class Request extends Root
     {
         $return = null;
 
-        if(($forwardedFor = static::getHeader('X-Forwarded-For')) !== null)
+        if(($forwardedFor = self::getHeader('X-Forwarded-For')) !== null)
         $return = $forwardedFor;
 
         elseif(($remoteAddr = Superglobal::getServer('REMOTE_ADDR')) !== null)
@@ -1030,8 +1030,8 @@ class Request extends Root
     {
         if(Ip::is($value))
         {
-            if(static::headerExists('X-Forwarded-For'))
-            static::setHeader('X-Forwarded-For',$value);
+            if(self::headerExists('X-Forwarded-For'))
+            self::setHeader('X-Forwarded-For',$value);
 
             Superglobal::setServer('REMOTE_ADDR',$value);
         }
@@ -1044,7 +1044,7 @@ class Request extends Root
     // retourne le user agent courant
     final public static function userAgent():?string
     {
-        return static::getHeader('User-Agent');
+        return self::getHeader('User-Agent');
     }
 
 
@@ -1053,7 +1053,7 @@ class Request extends Root
     // peut être null pour retirer le header
     final public static function setUserAgent(?string $value):void
     {
-        static::setHeader('User-Agent',$value);
+        self::setHeader('User-Agent',$value);
 
         return;
     }
@@ -1065,7 +1065,7 @@ class Request extends Root
     final public static function referer(bool $internal=false,$hosts=null):?string
     {
         $return = null;
-        $referer = static::getHeader('Referer');
+        $referer = self::getHeader('Referer');
 
         if(is_string($referer) && !empty($referer))
         {
@@ -1082,7 +1082,7 @@ class Request extends Root
     // peut être null pour retirer le header
     final public static function setReferer(?string $value):void
     {
-        static::setHeader('Referer',$value);
+        self::setHeader('Referer',$value);
 
         return;
     }
@@ -1092,7 +1092,7 @@ class Request extends Root
     // retourne la valeur du header lang de la requête courante
     final public static function langHeader():?string
     {
-        return (is_string($acceptLanguage = static::getHeader('Accept-Language')))? substr($acceptLanguage,0,2):null;
+        return (is_string($acceptLanguage = self::getHeader('Accept-Language')))? substr($acceptLanguage,0,2):null;
     }
 
 
@@ -1100,7 +1100,7 @@ class Request extends Root
     // change la valeur du header lang de la requête courante
     final public static function setLangHeader(?string $value):void
     {
-        static::setHeader('Accept-Language',$value);
+        self::setHeader('Accept-Language',$value);
 
         return;
     }
@@ -1110,7 +1110,7 @@ class Request extends Root
     // retourne un fingerprint sha1 des entêtes de requêtes
     final public static function fingerprint(array $keys):?string
     {
-        return Header::fingerprint(static::headers(),$keys);
+        return Header::fingerprint(self::headers(),$keys);
     }
 
 
@@ -1121,8 +1121,8 @@ class Request extends Root
     final public static function redirect(bool $absolute=false):?string
     {
         $return = null;
-        $path = static::pathStripStart();
-        $return = Path::redirect($path,static::$config['safe'],static::$config['lang']);
+        $path = self::pathStripStart();
+        $return = Path::redirect($path,self::$config['safe'],self::$config['lang']);
 
         if(is_string($return) && $absolute === true)
         $return = Uri::absolute($return);
@@ -1135,7 +1135,7 @@ class Request extends Root
     // envoie info dans http str qui retourne une string pour représenter la requête
     final public static function str():string
     {
-        return Http::str(static::info());
+        return Http::str(self::info());
     }
 
 
@@ -1147,9 +1147,9 @@ class Request extends Root
         $return = '';
 
         if($absolute === true)
-        $parse = static::parse();
+        $parse = self::parse();
         else
-        $parse = ['path'=>static::path(),'query'=>static::query(),'fragment'=>static::fragment()];
+        $parse = ['path'=>self::path(),'query'=>self::query(),'fragment'=>self::fragment()];
 
         $return = Uri::build($parse,false);
 
@@ -1161,7 +1161,7 @@ class Request extends Root
     // retourne l'uri, peut être relatif ou absolut dépendamment des options
     final public static function output(?array $option=null):?string
     {
-        return Uri::output(static::uri(true),$option);
+        return Uri::output(self::uri(true),$option);
     }
 
 
@@ -1169,7 +1169,7 @@ class Request extends Root
     // retourne l'uri relative de la requête
     final public static function relative(?array $option=null):string
     {
-        return Uri::relative(static::uri(false),$option);
+        return Uri::relative(self::uri(false),$option);
     }
 
 
@@ -1177,7 +1177,7 @@ class Request extends Root
     // retourne l'uri absolut de la requête
     final public static function absolute(?array $option=null):?string
     {
-        return Uri::absolute(static::uri(true),$option);
+        return Uri::absolute(self::uri(true),$option);
     }
 
 
@@ -1187,16 +1187,16 @@ class Request extends Root
     final public static function change(array $values,bool $default=false):void
     {
         if($default === true && Server::isCli())
-        $values = Arr::replace(static::defaultCli(),$values);
+        $values = Arr::replace(self::defaultCli(),$values);
 
-        foreach (static::prepareChangeArray($values) as $key => $value)
+        foreach (self::prepareChangeArray($values) as $key => $value)
         {
             if(is_string($key))
             {
                 $method = 'set'.ucfirst($key);
 
-                if(method_exists(static::class,$method))
-                static::$method($value);
+                if(method_exists(self::class,$method))
+                self::$method($value);
             }
         }
 

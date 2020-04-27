@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // segment
 // class that provides the logic to replace bracket segment within a string
-class Segment extends Root
+final class Segment extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'default'=>'[]', // délimiteur par défaut
         'column'=>'/', // séparateur pour column
         'lang'=>'%lang%', // à remplacer lors du prepare, pour mettre %lang% dans un segment
@@ -36,7 +36,7 @@ class Segment extends Root
     final public static function isWrapped($delimiter,string $value):bool
     {
         $return = false;
-        $delimiter = static::getDelimiter($delimiter);
+        $delimiter = self::getDelimiter($delimiter);
 
         if(!empty($delimiter))
         $return = Str::isStartEnd($delimiter[0],$delimiter[1],$value);
@@ -50,7 +50,7 @@ class Segment extends Root
     final public static function has($delimiter,string $value):bool
     {
         $return = false;
-        $delimiter = static::getDelimiter($delimiter,false);
+        $delimiter = self::getDelimiter($delimiter,false);
 
         if(!empty($delimiter))
         {
@@ -71,12 +71,12 @@ class Segment extends Root
     final public static function getDelimiter($delimiter=null,bool $escape=false):?array
     {
         $return = null;
-        $delimiter = ($delimiter === null)? static::def():$delimiter;
+        $delimiter = ($delimiter === null)? self::def():$delimiter;
 
         if(is_string($delimiter))
         {
-            if(array_key_exists($delimiter,static::$config['delimiter']))
-            $delimiter = static::$config['delimiter'][$delimiter];
+            if(array_key_exists($delimiter,self::$config['delimiter']))
+            $delimiter = self::$config['delimiter'][$delimiter];
 
             else
             $delimiter = [$delimiter,$delimiter];
@@ -88,8 +88,8 @@ class Segment extends Root
 
             if($escape === true)
             {
-                $return[0] = static::escape($return[0]);
-                $return[1] = static::escape($return[1]);
+                $return[0] = self::escape($return[0]);
+                $return[1] = self::escape($return[1]);
             }
         }
 
@@ -101,7 +101,7 @@ class Segment extends Root
     // wrap la chaîne du délimiteur
     final public static function wrap($delimiter,string $return):string
     {
-        $delimiter = static::getDelimiter($delimiter);
+        $delimiter = self::getDelimiter($delimiter);
 
         if(!empty($delimiter))
         $return = Str::wrapStartEnd($delimiter[0],$delimiter[1],$return);
@@ -114,7 +114,7 @@ class Segment extends Root
     // enlève les délimiteurs enrobbant la chaîne
     final public static function strip($delimiter,string $return):string
     {
-        $delimiter = static::getDelimiter($delimiter);
+        $delimiter = self::getDelimiter($delimiter);
 
         if(!empty($delimiter))
         $return = Str::stripStartEnd($delimiter[0],$delimiter[1],$return);
@@ -127,7 +127,7 @@ class Segment extends Root
     // ajoute le caractère d'escape si la valeur est dans le tableau config:escape
     final public static function escape(string $return):string
     {
-        if(in_array($return,static::$config['escape'],true))
+        if(in_array($return,self::$config['escape'],true))
         $return = '\\'.$return;
 
         return $return;
@@ -138,7 +138,7 @@ class Segment extends Root
     // count le nombre de segments dans la chaîne
     final public static function count($delimiter,string $str):int
     {
-        return count(static::get($delimiter,$str));
+        return count(self::get($delimiter,$str));
     }
 
 
@@ -147,7 +147,7 @@ class Segment extends Root
     final public static function exists($delimiter,$keys,string $str):bool
     {
         $return = false;
-        $delimiter = static::getDelimiter($delimiter,true);
+        $delimiter = self::getDelimiter($delimiter,true);
 
         if(!empty($delimiter) && !empty($keys))
         {
@@ -177,7 +177,7 @@ class Segment extends Root
     // retourne vrai si les clés de segments fournis représentent tous les segments de la chaîne
     final public static function are($delimiter,array $segments,string $str):bool
     {
-        return Arr::valuesAre($segments,static::get($delimiter,$str));
+        return Arr::valuesAre($segments,self::get($delimiter,$str));
     }
 
 
@@ -188,7 +188,7 @@ class Segment extends Root
     final public static function get($delimiter,string $str,bool $prepare=false):array
     {
         $return = [];
-        $delimiter = static::getDelimiter($delimiter,true);
+        $delimiter = self::getDelimiter($delimiter,true);
 
         if(!empty($delimiter))
         {
@@ -204,7 +204,7 @@ class Segment extends Root
                 {
                     foreach ($return as $key => $value)
                     {
-                        $return[$key] = static::prepare($value);
+                        $return[$key] = self::prepare($value);
                     }
                 }
             }
@@ -241,21 +241,21 @@ class Segment extends Root
     final public static function set($delimiter,$key,$value,string $return):string
     {
         $replace = [];
-        $delimiter = static::getDelimiter($delimiter);
+        $delimiter = self::getDelimiter($delimiter);
 
         if(!empty($delimiter) && is_scalar($key) && strpos($return,$delimiter[0]) !== false)
         {
             $key = (string) $key;
-            $return = static::prepare($return);
-            $delimiter[0] = static::escape($delimiter[0]);
-            $delimiter[1] = static::escape($delimiter[1]);
+            $return = self::prepare($return);
+            $delimiter[0] = self::escape($delimiter[0]);
+            $delimiter[1] = self::escape($delimiter[1]);
             $replace = [$key=>''];
 
             if(is_scalar($value))
             {
                 $value = (string) $value;
                 $replace = [$key=>$value];
-                $replace = Arr::keysReplace(static::$config['replace'],$replace);
+                $replace = Arr::keysReplace(self::$config['replace'],$replace);
             }
 
             elseif(is_array($value))
@@ -264,15 +264,15 @@ class Segment extends Root
                 {
                     if(is_scalar($v))
                     {
-                        $column = static::$config['column'];
-                        $newKey = $key.static::escape($column).$k;
+                        $column = self::$config['column'];
+                        $newKey = $key.self::escape($column).$k;
                         $replace[$newKey] = (string) $v;
                     }
                 }
             }
 
             if(!empty($replace))
-            $return = static::doSet($return,$delimiter,$replace);
+            $return = self::doSet($return,$delimiter,$replace);
         }
 
         return $return;
@@ -287,10 +287,10 @@ class Segment extends Root
         foreach ($return as $k => $v)
         {
             if(is_array($v))
-            $return[$k] = static::setArray($delimiter,$key,$value,$v);
+            $return[$k] = self::setArray($delimiter,$key,$value,$v);
 
             elseif(is_string($v))
-            $return[$k] = static::set($delimiter,$key,$value,$v);
+            $return[$k] = self::set($delimiter,$key,$value,$v);
         }
 
         return $return;
@@ -302,24 +302,24 @@ class Segment extends Root
     // support pour column si replace est multidimensionnel
     final public static function sets($delimiter,array $replace,string $return):string
     {
-        $delimiter = static::getDelimiter($delimiter);
+        $delimiter = self::getDelimiter($delimiter);
 
         if(!empty($delimiter) && strpos($return,$delimiter[0]) !== false)
         {
-            $return = static::prepare($return);
-            $delimiter[0] = static::escape($delimiter[0]);
-            $delimiter[1] = static::escape($delimiter[1]);
+            $return = self::prepare($return);
+            $delimiter[0] = self::escape($delimiter[0]);
+            $delimiter[1] = self::escape($delimiter[1]);
 
             if(Arrs::is($replace))
             {
-                $column = static::$config['column'];
+                $column = self::$config['column'];
                 $replace = Arrs::crush($replace);
-                $keysReplace = [$column=>static::escape($column)];
+                $keysReplace = [$column=>self::escape($column)];
                 $replace = Arr::keysReplace($keysReplace,$replace);
             }
 
             else
-            $replace = Arr::keysReplace(static::$config['replace'],$replace);
+            $replace = Arr::keysReplace(self::$config['replace'],$replace);
 
             foreach ($replace as $key => $value)
             {
@@ -328,7 +328,7 @@ class Segment extends Root
             }
 
             if(!empty($replace))
-            $return = static::doSet($return,$delimiter,$replace);
+            $return = self::doSet($return,$delimiter,$replace);
         }
 
         return $return;
@@ -343,10 +343,10 @@ class Segment extends Root
         foreach ($return as $k => $v)
         {
             if(is_array($v))
-            $return[$k] = static::setsArray($delimiter,$replace,$v);
+            $return[$k] = self::setsArray($delimiter,$replace,$v);
 
             elseif(is_string($v))
-            $return[$k] = static::sets($delimiter,$replace,$v);
+            $return[$k] = self::sets($delimiter,$replace,$v);
         }
 
         return $return;
@@ -357,7 +357,7 @@ class Segment extends Root
     // enlève un segment de la chaîne
     final public static function unset($delimiter,$key,string $return):string
     {
-        return static::set($delimiter,$key,'',$return);
+        return self::set($delimiter,$key,'',$return);
     }
 
 
@@ -369,7 +369,7 @@ class Segment extends Root
         {
             $replace = Arr::values($replace,'scalar');
             $replace = array_fill_keys($replace,'');
-            $return = static::sets($delimiter,$replace,$return);
+            $return = self::sets($delimiter,$replace,$return);
         }
 
         return $return;
@@ -381,7 +381,7 @@ class Segment extends Root
     // remplate %lang% par la langue courante, permet de mettre la langue à l'intérieur d'un segment
     final public static function prepare(string $return):string
     {
-        $lang = static::$config['lang'] ?? null;
+        $lang = self::$config['lang'] ?? null;
         if(is_string($lang) && strpos($return,$lang) !== false)
         $return = str_replace($lang,Lang::current(),$return);
 
@@ -393,7 +393,7 @@ class Segment extends Root
     // retourne le delimiteur par défaut
     final public static function def():string
     {
-        return static::$config['default'];
+        return self::$config['default'];
     }
 }
 ?>

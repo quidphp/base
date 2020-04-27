@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // arr
 // class with static methods to work with unidimensional arrays
-class Arr extends Root
+final class Arr extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // typecast
@@ -324,9 +324,17 @@ class Arr extends Root
     }
 
 
+    // replace
+    // wrapper pour array_replace, les valeurs sont cast
+    final public static function replace(...$values):array
+    {
+        self::typecast(...$values);
+        return array_replace(...$values);
+    }
+
+
     // merge
-    // wrapper pour array_merge
-    // fonctionne si une valeur n'est pas un tableau
+    // wrapper pour array_merge, les valeurs sont cast
     final public static function merge(...$values):array
     {
         self::typecast(...$values);
@@ -334,13 +342,87 @@ class Arr extends Root
     }
 
 
-    // replace
-    // wrapper pour array_replace
-    // fonctionne si une valeur n'est pas un tableau
-    final public static function replace(...$values):array
+    // imerge
+    // comme append mais les clés sont insensibles à la case
+    final public static function imerge($return,...$values):array
     {
-        self::typecast(...$values);
-        return array_replace(...$values);
+        self::typecast($return,...$values);
+
+        foreach ($values as $k => $value)
+        {
+            foreach ($value as $k => $v)
+            {
+                if(is_numeric($k))
+                $return[] = $v;
+
+                else
+                {
+                    if(is_string($k))
+                    $return = self::keyStrip($k,$return,false);
+
+                    $return[$k] = $v;
+                }
+            }
+        }
+
+        return $return;
+    }
+
+
+    // mergeUnique
+    // append des valeurs si non existantes dans le tableau
+    // les clés numériques existantes sont conservés, les clés string sont remplacés
+    final public static function mergeUnique($return,...$values):array
+    {
+        self::typecast($return,...$values);
+
+        foreach ($values as $value)
+        {
+            foreach ($value as $k => $v)
+            {
+                if(!self::in($v,$return,true))
+                {
+                    if(is_numeric($k))
+                    $return[] = $v;
+
+                    else
+                    $return[$k] = $v;
+                }
+            }
+        }
+
+        return $return;
+    }
+
+
+    // imergeUnique
+    // pousse des valeurs si non existantes dans le tableau de façon insensible à la case
+    // les clés numériques existantes sont conservés, les clés string sont remplacés
+    final public static function imergeUnique($return,...$values):array
+    {
+        self::typecast($return,...$values);
+
+        foreach ($values as $value)
+        {
+            foreach ($value as $k => $v)
+            {
+                if(!self::in($v,$return,false))
+                {
+                    if(is_numeric($k))
+                    $return[] = $v;
+
+                    else
+                    {
+                        if(is_string($k))
+                        $return = self::keyStrip($k,$return,false);
+
+                        $return[$k] = $v;
+                    }
+                }
+            }
+        }
+
+        return $return;
     }
 
 
@@ -372,114 +454,6 @@ class Arr extends Root
         foreach ($values as $v)
         {
             array_push($return,$v);
-        }
-
-        return $return;
-    }
-
-
-    // append
-    // similaire à array_push
-    // si une valeur secondaire est un array, les clés -> valeurs sont ajoutés au premier niveau du tableau de retour
-    // les clés numériques existantes sont conservés, les clés string sont remplacés
-    final public static function append($return,...$values):array
-    {
-        self::typecast($return,...$values);
-
-        foreach ($values as $k => $value)
-        {
-            foreach ($value as $k => $v)
-            {
-                if(is_numeric($k) && array_key_exists($k,$return))
-                $return[] = $v;
-
-                else
-                $return[$k] = $v;
-            }
-        }
-
-        return $return;
-    }
-
-
-    // iappend
-    // comme append mais les clés sont insensibles à la case
-    final public static function iappend($return,...$values):array
-    {
-        self::typecast($return,...$values);
-
-        foreach ($values as $k => $value)
-        {
-            foreach ($value as $k => $v)
-            {
-                if(is_numeric($k) && array_key_exists($k,$return))
-                $return[] = $v;
-
-                else
-                {
-                    if(is_string($k))
-                    $return = self::keyStrip($k,$return,false);
-
-                    $return[$k] = $v;
-                }
-            }
-        }
-
-        return $return;
-    }
-
-
-    // appendUnique
-    // append des valeurs si non existantes dans le tableau
-    // les clés numériques existantes sont conservés, les clés string sont remplacés
-    final public static function appendUnique($return,...$values):array
-    {
-        self::typecast($return,...$values);
-
-        foreach ($values as $value)
-        {
-            foreach ($value as $k => $v)
-            {
-                if(!self::in($v,$return,true))
-                {
-                    if(is_numeric($k) && array_key_exists($k,$return))
-                    $return[] = $v;
-
-                    else
-                    $return[$k] = $v;
-                }
-            }
-        }
-
-        return $return;
-    }
-
-
-    // iappendUnique
-    // pousse des valeurs si non existantes dans le tableau de façon insensible à la case
-    // les clés numériques existantes sont conservés, les clés string sont remplacés
-    final public static function iappendUnique($return,...$values):array
-    {
-        self::typecast($return,...$values);
-
-        foreach ($values as $value)
-        {
-            foreach ($value as $k => $v)
-            {
-                if(!self::in($v,$return,false))
-                {
-                    if(is_numeric($k) && array_key_exists($k,$return))
-                    $return[] = $v;
-
-                    else
-                    {
-                        if(is_string($k))
-                        $return = self::keyStrip($k,$return,false);
-
-                        $return[$k] = $v;
-                    }
-                }
-            }
         }
 
         return $return;
@@ -870,7 +844,7 @@ class Arr extends Root
             }
 
             if(array_key_exists($key,$return))
-            $return[$key] = self::append($return[$key],$value);
+            $return[$key] = self::merge($return[$key],$value);
             else
             $return[$key] = $value;
         }
@@ -1024,7 +998,8 @@ class Arr extends Root
             if($sensitive === false)
             {
                 $array = self::valuesLower($array);
-                $value = Str::map([Str::class,'lower'],$value,true);
+                $closure = fn($value) => (is_string($value))? Str::lower($value,true):$value;
+                $value = (is_array($value))? self::map($value,$closure):$closure($value);
             }
 
             $return = array_keys($array,$value,true);
@@ -1586,7 +1561,8 @@ class Arr extends Root
         if($sensitive === false)
         {
             $array = self::valuesLower($array);
-            $value = Str::map([Str::class,'lower'],$value,true);
+            $closure = fn($value) => (is_string($value))? Str::lower($value,true):$value;
+            $value = (is_array($value))? self::map($value,$closure):$closure($value);
         }
 
         $search = array_search($value,$array,true);
@@ -1630,14 +1606,15 @@ class Arr extends Root
     // recherche si la valeur est dans un tableau via la fonction in_array
     // possibilité de faire une recherche insensible à la case
     // mb par défaut lors de la recherche insensitive
-    final public static function in($value,array $array,bool $sensitive=true):bool
+    final public static function in($value,array $array,bool $sensitive=true,bool $debug=false):bool
     {
         $return = false;
 
         if($sensitive === false)
         {
             $array = self::valuesLower($array);
-            $value = Str::map([Str::class,'lower'],$value,true);
+            $closure = fn($value) => (is_string($value))? Str::lower($value,true):$value;
+            $value = (is_array($value))? self::map($value,$closure):$closure($value);
         }
 
         if(in_array($value,$array,true))
@@ -1828,7 +1805,7 @@ class Arr extends Root
         $return = self::sort($return,$sort);
 
         if(!empty($array))
-        $return = self::append($return,$array);
+        $return = self::replace($return,$array);
 
         return $return;
     }
@@ -3890,16 +3867,17 @@ class Arr extends Root
     // valuesChangeCase
     // change la case des valeurs string dans le tableau
     // case peut etre CASE_LOWER, CASE_UPPER ou callable
-    final public static function valuesChangeCase($case,array $return,...$args):array
+    // le changement de case se fait sur tous les sous-tableaux
+    final public static function valuesChangeCase($case,array $return):array
     {
         if(in_array($case,[CASE_LOWER,'lower','strtolower'],true))
-        $return = self::valuesLower($return,...$args);
+        $return = self::valuesLower($return);
 
         elseif(in_array($case,[CASE_UPPER,'upper','strtoupper'],true))
-        $return = self::valuesUpper($return,...$args);
+        $return = self::valuesUpper($return);
 
         elseif(Call::is($case))
-        $return = Str::map($case,$return,...$args);
+        $return = Arrs::map($return,fn($value) => (is_string($value))? $case($value):$value);
 
         return $return;
     }
@@ -3908,18 +3886,20 @@ class Arr extends Root
     // valuesLower
     // change la case des valeurs string dans le tableau pour lowercase
     // utilise multibyte
+    // le changement de case se fait sur tous les sous-tableaux
     final public static function valuesLower(array $array):array
     {
-        return Str::map([Str::class,'lower'],$array,true);
+        return Arrs::map($array,fn($value) => (is_string($value))? Str::lower($value,true):$value);
     }
 
 
     // valuesUpper
     // change la case des valeurs string dans le tableau pour uppercase
     // utilise multibyte
+    // le changement de case se fait sur tous les sous-tableaux
     final public static function valuesUpper(array $array):array
     {
-        return Str::map([Str::class,'upper'],$array,true);
+        return Arrs::map($array,fn($value) => (is_string($value))? Str::upper($value,true):$value);
     }
 
 
@@ -4178,7 +4158,7 @@ class Arr extends Root
         foreach ($array as $key => $value)
         {
             if(is_string($key))
-            $return[] = self::append($key,$value);
+            $return[] = self::merge($key,$value);
 
             else
             $return[] = $value;

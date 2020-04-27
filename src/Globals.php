@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // globals
 // class with static methods to manage global variables
-class Globals extends Root
+final class Globals extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // is

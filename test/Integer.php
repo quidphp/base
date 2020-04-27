@@ -54,13 +54,10 @@ class Integer extends Base\Test
         assert(!Base\Integer::isCastNotEmpty(1.5));
         assert(!Base\Integer::isCastNotEmpty(0));
 
-        // fromString
-        assert(Base\Integer::fromString('30MB') === 30);
-        assert(Base\Integer::fromString('abc') === null);
-
-        // fromBool
-        assert(1 === Base\Integer::fromBool(true));
-        assert(0 === Base\Integer::fromBool(false));
+        // toBool
+        assert(Base\Integer::toBool(1) === true);
+        assert(Base\Integer::toBool(0) === false);
+        assert(Base\Integer::toBool(2) === null);
 
         // toggle
         assert(1 === Base\Integer::toggle(0));

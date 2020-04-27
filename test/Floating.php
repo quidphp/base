@@ -53,10 +53,6 @@ class Floating extends Base\Test
         assert(Base\Floating::isCastNotEmpty(1.5));
         assert(!Base\Floating::isCastNotEmpty(0));
 
-        // fromString
-        assert(Base\Floating::fromString('3.2') === 3.2);
-        assert(Base\Floating::fromString('3') === (float) 3);
-
         return true;
     }
 }

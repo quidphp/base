@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // nav
 // class which contains methods to build a complex pagination engine
-class Nav extends Root
+final class Nav extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // isPage
@@ -25,7 +25,7 @@ class Nav extends Root
     final public static function isPage(int $value,$nav,int $limit):bool
     {
         $return = false;
-        $max = static::pageMax($nav,$limit);
+        $max = self::pageMax($nav,$limit);
 
         if(is_int($max) && $value > 0 && $value <= $max)
         $return = true;
@@ -39,7 +39,7 @@ class Nav extends Root
     // nav peut être un int ou un tableau
     final public static function isPageFull(int $value,$nav,int $limit):bool
     {
-        return static::pageSpecificCount($value,$nav,$limit) === $limit;
+        return self::pageSpecificCount($value,$nav,$limit) === $limit;
     }
 
 
@@ -49,7 +49,7 @@ class Nav extends Root
     final public static function isSpecificInPage($specific,int $value,array $nav,int $limit):bool
     {
         $return = false;
-        $specificPage = static::specificPage($specific,$nav,$limit);
+        $specificPage = self::specificPage($specific,$nav,$limit);
 
         if(is_int($specificPage) && $specificPage === $value)
         $return = true;
@@ -145,7 +145,7 @@ class Nav extends Root
     final public static function pageSlice(int $page,int $limit,array $array):array
     {
         $return = [];
-        $limitPage = static::limitPage($page,$limit);
+        $limitPage = self::limitPage($page,$limit);
 
         if(!empty($limitPage))
         $return = Arr::sliceIndex($limitPage[0],$limitPage[1],$array);
@@ -160,10 +160,10 @@ class Nav extends Root
     {
         $return = [];
         $page = 1;
-        $value = static::parseLimit($value);
+        $value = self::parseLimit($value);
 
         if(!empty($value))
-        $return = static::pageSlice($value['page'],$value['limit'],$array);
+        $return = self::pageSlice($value['page'],$value['limit'],$array);
 
         return $return;
     }
@@ -198,7 +198,7 @@ class Nav extends Root
         $nav = count($nav);
 
         if(is_int($nav) && $position >= 1 && $position <= $nav)
-        $return = static::pageMax($position,$limit);
+        $return = self::pageMax($position,$limit);
 
         return $return;
     }
@@ -210,7 +210,7 @@ class Nav extends Root
     final public static function pages($nav,int $limit):array
     {
         $return = [];
-        $max = static::pageMax($nav,$limit);
+        $max = self::pageMax($nav,$limit);
 
         if(is_int($max))
         {
@@ -231,7 +231,7 @@ class Nav extends Root
     final public static function pagesPosition(int $value,$nav,int $limit):?array
     {
         $return = null;
-        $max = static::pageMax($nav,$limit);
+        $max = self::pageMax($nav,$limit);
 
         if(is_int($max) && $value > 0 && $value <= $max)
         {
@@ -257,7 +257,7 @@ class Nav extends Root
 
         if($amount > 0)
         {
-            $pages = static::pagesPosition($value,$nav,$limit);
+            $pages = self::pagesPosition($value,$nav,$limit);
 
             if(!empty($pages))
             {
@@ -282,7 +282,7 @@ class Nav extends Root
 
         if($value > 0)
         {
-            $pageMax = static::pageMax($nav,$limit);
+            $pageMax = self::pageMax($nav,$limit);
 
             if(is_int($pageMax))
             {
@@ -309,7 +309,7 @@ class Nav extends Root
     // nav peut être un int ou un tableau
     final public static function pageFirst($nav,int $limit):?int
     {
-        return (is_int(static::pageMax($nav,$limit)))? 1:null;
+        return (is_int(self::pageMax($nav,$limit)))? 1:null;
     }
 
 
@@ -318,7 +318,7 @@ class Nav extends Root
     // nav peut être un int ou un tableau
     final public static function pagePrev(int $value,$nav,int $limit):?int
     {
-        return (is_int(static::pageMax($nav,$limit)) && ($value - 1) >= 1)? ($value - 1):null;
+        return (is_int(self::pageMax($nav,$limit)) && ($value - 1) >= 1)? ($value - 1):null;
     }
 
 
@@ -328,7 +328,7 @@ class Nav extends Root
     final public static function pageNext(int $value,$nav,int $limit):?int
     {
         $return = null;
-        $max = static::pageMax($nav,$limit);
+        $max = self::pageMax($nav,$limit);
 
         if(is_int($max))
         $return = (($value + 1) <= $max)? ($value + 1):null;
@@ -343,7 +343,7 @@ class Nav extends Root
     final public static function pageLast($nav,int $limit):?int
     {
         $return = null;
-        $pageMax = static::pageMax($nav,$limit);
+        $pageMax = self::pageMax($nav,$limit);
 
         if(is_int($pageMax))
         $return = $pageMax;
@@ -360,13 +360,13 @@ class Nav extends Root
     {
         $return = null;
 
-        if(static::isPage($value,$nav,$limit))
+        if(self::isPage($value,$nav,$limit))
         {
             $return = [];
-            $first = static::pageFirst($nav,$limit);
-            $last = static::pageLast($nav,$limit);
-            $prev = static::pagePrev($value,$nav,$limit);
-            $next = static::pageNext($value,$nav,$limit);
+            $first = self::pageFirst($nav,$limit);
+            $last = self::pageLast($nav,$limit);
+            $prev = self::pagePrev($value,$nav,$limit);
+            $next = self::pageNext($value,$nav,$limit);
 
             $return['first'] = ($first !== $value && $first !== $prev)? $first:null;
             $return['prev'] = $prev;
@@ -375,8 +375,8 @@ class Nav extends Root
             $return['last'] = ($last !== $value && $last !== $next)? $last:null;
             $return['total'] = $last;
             $return['limit'] = $limit;
-            $return['isFull'] = static::isPageFull($value,$nav,$limit);
-            $return['closest'] = static::pagesClose($value,$nav,$limit,$amount);
+            $return['isFull'] = self::isPageFull($value,$nav,$limit);
+            $return['closest'] = self::pagesClose($value,$nav,$limit,$amount);
         }
 
         return $return;
@@ -422,7 +422,7 @@ class Nav extends Root
 
         if($value > 0)
         {
-            $pages = static::pagesWithSpecific($nav,$limit);
+            $pages = self::pagesWithSpecific($nav,$limit);
 
             if(array_key_exists($value,$pages) && is_array($pages[$value]))
             $return = $pages[$value];
@@ -438,7 +438,7 @@ class Nav extends Root
     final public static function pageFirstSpecific(int $value,array $nav,int $limit)
     {
         $return = null;
-        $content = static::pageWithSpecific($value,$nav,$limit);
+        $content = self::pageWithSpecific($value,$nav,$limit);
 
         if(is_array($content) && !empty($content))
         $return = current($content);
@@ -453,7 +453,7 @@ class Nav extends Root
     final public static function pageLastSpecific(int $value,array $nav,int $limit)
     {
         $return = null;
-        $content = static::pageWithSpecific($value,$nav,$limit);
+        $content = self::pageWithSpecific($value,$nav,$limit);
 
         if(is_array($content) && !empty($content))
         $return = Arr::valueLast($content);
@@ -483,10 +483,10 @@ class Nav extends Root
     final public static function specificPage($value,array $nav,int $limit):?int
     {
         $return = null;
-        $index = static::specificIndex($value,$nav);
+        $index = self::specificIndex($value,$nav);
 
         if(is_int($index))
-        $return = static::pageFromIndex($index,$nav,$limit);
+        $return = self::pageFromIndex($index,$nav,$limit);
 
         return $return;
     }
@@ -516,11 +516,11 @@ class Nav extends Root
     final public static function specificPrevInPage($specific,array $nav,int $limit)
     {
         $return = null;
-        $pageNumber = static::specificPage($specific,$nav,$limit);
+        $pageNumber = self::specificPage($specific,$nav,$limit);
 
         if(is_int($pageNumber))
         {
-            $pageSpecific = static::pageWithSpecific($pageNumber,$nav,$limit);
+            $pageSpecific = self::pageWithSpecific($pageNumber,$nav,$limit);
 
             if(!empty($pageSpecific) && in_array($specific,$pageSpecific,true))
             $return = Arr::valueNav($specific,-1,$pageSpecific);
@@ -545,10 +545,10 @@ class Nav extends Root
     final public static function specificNextInPage($specific,array $nav,int $limit)
     {
         $return = null;
-        $pageNumber = static::specificPage($specific,$nav,$limit);
+        $pageNumber = self::specificPage($specific,$nav,$limit);
         if(is_int($pageNumber))
         {
-            $pageSpecific = static::pageWithSpecific($pageNumber,$nav,$limit);
+            $pageSpecific = self::pageWithSpecific($pageNumber,$nav,$limit);
 
             if(!empty($pageSpecific) && in_array($specific,$pageSpecific,true))
             $return = Arr::valueNav($specific,1,$pageSpecific);
@@ -574,21 +574,21 @@ class Nav extends Root
     final public static function specific($specific,array $nav,int $limit):?array
     {
         $return = null;
-        $index = static::specificIndex($specific,$nav);
+        $index = self::specificIndex($specific,$nav);
 
         if(is_int($index))
         {
             $return = [];
-            $first = static::specificFirst($nav);
-            $prev = static::specificPrev($specific,$nav);
-            $next = static::specificNext($specific,$nav);
-            $last = static::specificLast($nav);
+            $first = self::specificFirst($nav);
+            $prev = self::specificPrev($specific,$nav);
+            $next = self::specificNext($specific,$nav);
+            $last = self::specificLast($nav);
 
             $return['value'] = $specific;
             $return['index'] = $index;
             $return['position'] = ($index + 1);
             $return['total'] = count($nav);
-            $return['page'] = static::specificPage($specific,$nav,$limit);
+            $return['page'] = self::specificPage($specific,$nav,$limit);
 
             $return['first'] = ($first !== $specific && $first !== $prev)? $first:null;
             $return['prev'] = $prev;

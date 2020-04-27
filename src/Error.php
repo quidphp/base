@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // error
 // class with methods a layer over the native PHP error functions and handler
-class Error extends Root
+final class Error extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // setHandler
@@ -60,7 +60,7 @@ class Error extends Root
     // log une erreur à l'endroit défini dans error_log
     final public static function log($message):bool
     {
-        return error_log(static::logPrepareMessage($message),0);
+        return error_log(self::logPrepareMessage($message),0);
     }
 
 
@@ -71,7 +71,7 @@ class Error extends Root
         $return = false;
 
         if(Validate::isEmail($email))
-        $return = error_log(static::logPrepareMessage($message),1,$email,$headers);
+        $return = error_log(self::logPrepareMessage($message),1,$email,$headers);
 
         return $return;
     }
@@ -88,7 +88,7 @@ class Error extends Root
         $path = Res::uri($path);
 
         if(Finder::isWritableOrCreatable($path))
-        $return = error_log(static::logPrepareMessage($message),3,$path);
+        $return = error_log(self::logPrepareMessage($message),3,$path);
 
         return $return;
     }
@@ -145,7 +145,7 @@ class Error extends Root
 
         foreach ($values as $value)
         {
-            $return = static::trigger($value);
+            $return = self::trigger($value);
 
             if($return === true)
             break;
@@ -167,7 +167,7 @@ class Error extends Root
     // retourne le tableau de codes, mergé avec celui de lang au besoin
     final public static function getCodes(?string $lang=null):array
     {
-        return Arr::plus(Lang\En::$config['error']['code'],Lang::errorCode(null,$lang));
+        return Arr::plus(Lang\En::getConfig('error/code'),Lang::errorCode(null,$lang));
     }
 
 
@@ -176,7 +176,7 @@ class Error extends Root
     final public static function code(int $code,?string $lang=null):?string
     {
         $return = null;
-        $codes = static::getCodes($lang);
+        $codes = self::getCodes($lang);
 
         if(array_key_exists($code,$codes))
         $return = $codes[$code];
@@ -189,9 +189,9 @@ class Error extends Root
     // initialise la prise en charge des erreurs
     final public static function init():void
     {
-        Uri::setNotFound([static::class,'trigger']);
-        File::setNotFound([static::class,'trigger']);
-        Obj::setCastError([static::class,'trigger']);
+        Uri::setNotFound([self::class,'trigger']);
+        File::setNotFound([self::class,'trigger']);
+        Obj::setCastError([self::class,'trigger']);
 
         return;
     }

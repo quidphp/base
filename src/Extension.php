@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // extension
 // class which contains methods to deal with PHP extensions
-class Extension extends Root
+final class Extension extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'required'=>[ // extensions requises
             'ctype','curl','date','fileinfo','gd','iconv','json','mbstring','pcre',
             'PDO','pdo_mysql','openssl','session','SimpleXML','zip']
@@ -35,7 +35,7 @@ class Extension extends Root
     // retourne vrai si l'extension opcache est chargé
     final public static function hasOpCache(bool $ini=false):bool
     {
-        $return = static::is('Zend OPcache');
+        $return = self::is('Zend OPcache');
 
         if($return === true && $ini === true)
         $return = Ini::opcache();
@@ -48,7 +48,7 @@ class Extension extends Root
     // retourne vrai si l'extension xdebug est chargé
     final public static function hasXdebug(bool $ini=false):bool
     {
-        $return = static::is('xdebug');
+        $return = self::is('xdebug');
 
         if($return === true && $ini === true)
         $return = Ini::xdebug();
@@ -61,7 +61,7 @@ class Extension extends Root
     // retourne vrai si l'extension apcu est chargé
     final public static function hasApcu(bool $ini=false):bool
     {
-        $return = static::is('apcu');
+        $return = self::is('apcu');
 
         if($return === true && $ini === true)
         $return = Ini::apcu();
@@ -76,7 +76,7 @@ class Extension extends Root
     {
         $return = [];
 
-        if(static::is($name))
+        if(self::is($name))
         $return = get_extension_funcs($name);
 
         return $return;
@@ -88,9 +88,9 @@ class Extension extends Root
     final public static function important(bool $ini=false):array
     {
         $return = [];
-        $return['opcache'] = static::hasOpCache($ini);
-        $return['xdebug'] = static::hasXdebug($ini);
-        $return['apcu'] = static::hasApcu($ini);
+        $return['opcache'] = self::hasOpCache($ini);
+        $return['xdebug'] = self::hasXdebug($ini);
+        $return['apcu'] = self::hasApcu($ini);
 
         return $return;
     }
@@ -110,9 +110,9 @@ class Extension extends Root
     {
         $return = [];
 
-        foreach (static::$config['required'] as $value)
+        foreach (self::$config['required'] as $value)
         {
-            if(!static::is($value))
+            if(!self::is($value))
             $return[] = $value;
         }
 

@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // classe
 // class with static methods to deal with classes using fully qualified class name strings
-class Classe extends Root
+final class Classe extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // is
@@ -106,7 +106,7 @@ class Classe extends Root
     // retourne vrai si la valeur est une instance de la classe incomplete
     final public static function isIncomplete($value):bool
     {
-        return static::instance($value,'__PHP_Incomplete_Class');
+        return self::instance($value,'__PHP_Incomplete_Class');
     }
 
 
@@ -115,7 +115,7 @@ class Classe extends Root
     final public static function isAnonymous($value):bool
     {
         $return = false;
-        $value = static::fqcn($value);
+        $value = self::fqcn($value);
 
         if(is_string($value) && strpos($value,'@') !== false)
         $return = true;
@@ -156,7 +156,7 @@ class Classe extends Root
     {
         $return = false;
         $parent = Fqcn::str($parent);
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($parent) && !empty($value) && is_subclass_of($value,$parent,$autoload))
         $return = true;
@@ -170,7 +170,7 @@ class Classe extends Root
     final public static function extendOne(array $parents,$value,bool $autoload=true):bool
     {
         $return = false;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         {
@@ -194,7 +194,7 @@ class Classe extends Root
     final public static function hasMethod($method,$value,bool $autoload=true):bool
     {
         $return = false;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value) && is_string($method) && method_exists($value,$method))
         $return = true;
@@ -208,7 +208,7 @@ class Classe extends Root
     final public static function hasProperty($property,$value,bool $autoload=true):bool
     {
         $return = false;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value) && is_string($property) && property_exists($value,$property))
         $return = true;
@@ -222,12 +222,12 @@ class Classe extends Root
     final public static function hasInterface($interface,$value,bool $autoload=true):bool
     {
         $return = false;
-        $class = static::get($value,$autoload);
+        $class = self::get($value,$autoload);
 
         if(!empty($value))
         {
             $interface = Fqcn::str($interface);
-            $interfaces = static::interfaces($value,$autoload);
+            $interfaces = self::interfaces($value,$autoload);
 
             if(!empty($interface) && !empty($interfaces) && Arr::in($interface,$interfaces,false))
             $return = true;
@@ -243,12 +243,12 @@ class Classe extends Root
     final public static function hasTrait($trait,$value,bool $deep=true,bool $autoload=true):bool
     {
         $return = false;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         {
             $trait = Fqcn::str($trait);
-            $traits = static::traits($value,$deep,$autoload);
+            $traits = self::traits($value,$deep,$autoload);
 
             if(!empty($trait) && !empty($traits) && Arr::in($trait,$traits,false))
             $return = true;
@@ -265,7 +265,7 @@ class Classe extends Root
     final public static function hasNamespace($namespace,$value,bool $autoload=true):bool
     {
         $return = false;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         $return = Fqcn::hasNamespace($namespace,$value);
@@ -281,7 +281,7 @@ class Classe extends Root
     final public static function inNamespace($namespace,$value,bool $autoload=true):bool
     {
         $return = false;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         $return = Fqcn::inNamespace($namespace,$value);
@@ -341,13 +341,13 @@ class Classe extends Root
             foreach ($values as $value)
             {
                 $return = false;
-                $value = static::get($value,true);
+                $value = self::get($value,true);
 
                 if(!empty($value))
                 {
                     if($interface === null)
                     {
-                        $i = static::interfaces($value,true);
+                        $i = self::interfaces($value,true);
                         if(is_array($i))
                         {
                             $interface = $i;
@@ -357,7 +357,7 @@ class Classe extends Root
 
                     elseif(is_array($interface))
                     {
-                        $i = static::interfaces($value,true);
+                        $i = self::interfaces($value,true);
                         if((empty($i) && empty($interface)) || Arr::ins($i,$interface,false,true))
                         $return = true;
                     }
@@ -387,7 +387,7 @@ class Classe extends Root
             foreach ($values as $value)
             {
                 $return = false;
-                $value = static::get($value,true);
+                $value = self::get($value,true);
 
                 if(!empty($value))
                 {
@@ -416,9 +416,9 @@ class Classe extends Root
     {
         $return = false;
         $alias = Fqcn::str($alias);
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
-        if(!empty($alias) && !empty($value) && !static::isAny($alias))
+        if(!empty($alias) && !empty($value) && !self::isAny($alias))
         $return = class_alias($value,$alias,$autoload);
 
         return $return;
@@ -433,7 +433,7 @@ class Classe extends Root
 
         foreach ($aliases as $alias => $value)
         {
-            $return[$alias] = static::alias($alias,$value,$autoload);
+            $return[$alias] = self::alias($alias,$value,$autoload);
         }
 
         return $return;
@@ -477,7 +477,7 @@ class Classe extends Root
 
         foreach ($values as $value)
         {
-            $return = static::get($value,true);
+            $return = self::get($value,true);
 
             if($return !== null)
             break;
@@ -492,7 +492,7 @@ class Classe extends Root
     final public static function fqcn($value,bool $autoload=true):?string
     {
         $return = null;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         $return = Fqcn::str($value);
@@ -506,7 +506,7 @@ class Classe extends Root
     final public static function namespace($value,bool $autoload=true):?string
     {
         $return = null;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         $return = Fqcn::namespace($value);
@@ -520,7 +520,7 @@ class Classe extends Root
     final public static function name($value,bool $autoload=true):?string
     {
         $return = null;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         $return = Fqcn::name($value);
@@ -535,7 +535,7 @@ class Classe extends Root
     final public static function type($value,bool $autoload=true):?string
     {
         $return = null;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         {
@@ -560,9 +560,9 @@ class Classe extends Root
     {
         $return = null;
 
-        if($autoload === true ||  static::is($class,$autoload))
+        if($autoload === true ||  self::is($class,$autoload))
         {
-            $class = static::get($class,$autoload);
+            $class = self::get($class,$autoload);
 
             if(!empty($class))
             {
@@ -585,9 +585,9 @@ class Classe extends Root
     {
         $return = null;
 
-        if($autoload === true || static::is($class,$autoload))
+        if($autoload === true || self::is($class,$autoload))
         {
-            $class = static::get($class,$autoload);
+            $class = self::get($class,$autoload);
 
             if(!empty($class))
             {
@@ -598,7 +598,7 @@ class Classe extends Root
                 $return = array_values($parents);
 
                 if($self === true)
-                array_unshift($return,static::fqcn($class));
+                array_unshift($return,self::fqcn($class));
 
                 if(!empty($pop))
                 Arr::pop($return,$pop);
@@ -614,13 +614,13 @@ class Classe extends Root
     final public static function top($class,bool $autoload=true):?string
     {
         $return = null;
-        $topParent = static::topParent($class,$autoload);
+        $topParent = self::topParent($class,$autoload);
 
         if(!empty($topParent))
         $return = $topParent;
 
         else
-        $return = static::fqcn($class,$autoload);
+        $return = self::fqcn($class,$autoload);
 
         return $return;
     }
@@ -631,7 +631,7 @@ class Classe extends Root
     final public static function topParent($class,bool $autoload=true):?string
     {
         $return = null;
-        $parents = static::parents($class,false,null,$autoload);
+        $parents = self::parents($class,false,null,$autoload);
 
         if(!empty($parents))
         $return = Arr::valueLast($parents);
@@ -646,7 +646,7 @@ class Classe extends Root
     final public static function methods($value,bool $autoload=true):?array
     {
         $return = null;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         $return = get_class_methods($value);
@@ -663,9 +663,9 @@ class Classe extends Root
     {
         $return = null;
 
-        if(!static::isInterface($value))
+        if(!self::isInterface($value))
         {
-            $value = static::get($value,$autoload);
+            $value = self::get($value,$autoload);
 
             if(!empty($value))
             {
@@ -683,78 +683,30 @@ class Classe extends Root
     }
 
 
-    // propertyMergeCallable
-    // retourne la callable à utiliser pour le propertyMerge
-    final public static function propertyMergeCallable($value):callable
-    {
-        $return = [Arrs::class,'replace'];
-
-        if($value === false)
-        $return = [Arr::class,'replace'];
-
-        elseif(static::isCallable($value))
-        $return = $value;
-
-        return $return;
-    }
-
-
     // propertyMerge
-    // permet de merge une valeur dans une propriété publique et statique d'une classe
-    // si value est une string, essaie de charge un fichier et merger le contenu du fichier
-    // possibilité d'écrire dans la propriété ou non
-    // possible de spécifier une callable pour le merge
-    final public static function propertyMerge(string $property,$class,$value,$callable=null,bool $write=true,bool $autoload=true):?array
+    // permet de merge une propriété statique de la classe avec d'autres classes
+    // la méthode retourne une closure, de cette façon les propriétés protégés peuvent aussi être lu (via bindTo)
+    final public static function propertyMerge(string $property,string $class,array $others,?\Closure $closure=null):\Closure
     {
-        $return = null;
-        $class = static::get($class,$autoload);
-
-        if(!empty($class) && property_exists($class,$property) && is_array($class::$$property))
-        {
-            if(is_string($value) && File::is($value))
-            $value = File::load($value);
-
-            if(is_array($value))
-            {
-                $callable = static::propertyMergeCallable($callable);
-                $return = $callable($class::$config,$value);
-
-                if($write === true)
-                $class::$config = $return;
-            }
-        }
-
-        return $return;
-    }
-
-
-    // propertyMergeWith
-    // permet de merge une propriété statique publique de la classe avec d'autres classes
-    // ne merge pas un parent dont la propriété est identique à celle de la classe
-    // possibilité d'écrire dans la propriété ou non
-    // possible de spécifier une callable pour le merge
-    final public static function propertyMergeWith(string $property,$value,?array $parents=null,$callable=null,bool $write=true,bool $autoload=true)
-    {
-        $return = null;
-        $class = static::get($value,$autoload);
-
-        if(!empty($value))
-        {
+        return function() use($property,$class,$others,$closure):array {
             $return = [];
+
+            if(empty($closure))
+            $closure = fn(...$values) => Arrs::replace(...$values);
 
             if(property_exists($class,$property) && is_array($class::$$property))
             $return[] = $class::$$property;
 
-            if(!empty($parents))
+            if(!empty($others))
             {
-                foreach ($parents as $parent)
+                foreach ($others as $other)
                 {
-                    if(property_exists($parent,$property) && is_array($parent::$$property))
+                    if(property_exists($other,$property) && is_array($other::$$property))
                     {
                         $key = Arr::keyLast($return);
 
-                        if(empty($return[$key]) || $parent::$$property !== $return[$key])
-                        $return[] = $parent::$$property;
+                        if(empty($return[$key]) || $other::$$property !== $return[$key])
+                        $return[] = $other::$$property;
                     }
                 }
             }
@@ -765,37 +717,11 @@ class Classe extends Root
                 $return = current($return);
 
                 else
-                {
-                    $callable = static::propertyMergeCallable($callable);
-                    $return = $callable(...array_reverse($return));
-
-                    if($write === true)
-                    $class::$config = $return;
-                }
+                $return = $closure(...array_reverse($return));
             }
-        }
 
-        return $return;
-    }
-
-
-    // propertyMergeParent
-    // permet de merge une propriété statique publique de la classe avec celle de son parent
-    // possibilité d'écrire dans la propriété ou non
-    // possible de spécifier une callable pour le merge
-    final public static function propertyMergeParent(string $property,$value,$callable=null,bool $write=true,bool $autoload=true):?array
-    {
-        return static::propertyMergeWith($property,$value,(array) static::parent($value,$autoload),$callable,$write,$autoload);
-    }
-
-
-    // propertyMergeParents
-    // permet de merge une propriété statique publique de la classe avec celle de ses parents
-    // possibilité d'écrire dans la propriété ou non
-    // possible de spécifier une callable pour le merge
-    final public static function propertyMergeParents(string $property,$value,$callable=null,bool $write=true,bool $autoload=true):?array
-    {
-        return static::propertyMergeWith($property,$value,static::parents($value,false,null,$autoload),$callable,$write,$autoload);
+            return $return;
+        };
     }
 
 
@@ -806,9 +732,9 @@ class Classe extends Root
     {
         $return = null;
 
-        if(!static::isTrait($value))
+        if(!self::isTrait($value))
         {
-            $value = static::get($value,$autoload);
+            $value = self::get($value,$autoload);
 
             if(!empty($value))
             {
@@ -830,9 +756,9 @@ class Classe extends Root
     {
         $return = null;
 
-        if(!static::isInterface($value))
+        if(!self::isInterface($value))
         {
-            $value = static::get($value,$autoload);
+            $value = self::get($value,$autoload);
 
             if(!empty($value))
             {
@@ -848,18 +774,18 @@ class Classe extends Root
                         // trait
                         foreach ($return as $v)
                         {
-                            $deep = Arr::append($deep,static::traits($v,false,$autoload));
+                            $deep = Arr::merge($deep,self::traits($v,false,$autoload));
                         }
 
                         // parent
-                        $parents = (array) static::parents($value,false,null,$autoload);
+                        $parents = (array) self::parents($value,false,null,$autoload);
                         foreach ($parents as $v)
                         {
-                            $deep = Arr::append($deep,static::traits($v,false,$autoload));
+                            $deep = Arr::merge($deep,self::traits($v,false,$autoload));
                         }
 
                         if(!empty($deep))
-                        $return = Arr::iappendUnique($return,$deep);
+                        $return = Arr::imergeUnique($return,$deep);
                     }
                 }
             }
@@ -906,7 +832,7 @@ class Classe extends Root
         $declared = get_declared_classes();
 
         if($onlyClass === false)
-        $declared = Arr::append($declared,get_declared_interfaces(),get_declared_traits());
+        $declared = Arr::merge($declared,get_declared_interfaces(),get_declared_traits());
 
         if(empty($namespace))
         $return = $declared;
@@ -955,15 +881,15 @@ class Classe extends Root
 
         if($filter !== null)
         {
-            $return['class'] = static::filter($filter,$return['class']);
-            $return['interface'] = static::filter($filter,$return['interface']);
-            $return['trait'] = static::filter($filter,$return['trait']);
+            $return['class'] = self::filter($filter,$return['class']);
+            $return['interface'] = self::filter($filter,$return['interface']);
+            $return['trait'] = self::filter($filter,$return['trait']);
         }
 
         if($namespace === true)
         {
-            $append = Arr::append($return['class'],$return['interface'],$return['trait']);
-            $return['namespace'] = static::namespaces($append);
+            $append = Arr::merge($return['class'],$return['interface'],$return['trait']);
+            $return['namespace'] = self::namespaces($append);
         }
 
         if($method === true)
@@ -973,7 +899,7 @@ class Classe extends Root
                 foreach ($return[$k] as $key => $value)
                 {
                     unset($return[$k][$key]);
-                    $methods = static::methods($value);
+                    $methods = self::methods($value);
                     $return[$k][$value] = $methods;
                 }
             }
@@ -992,7 +918,7 @@ class Classe extends Root
     final public static function total($filter=null,bool $method=true):array
     {
         $return = ['class'=>0,'interface'=>0,'trait'=>0,'namespace'=>0];
-        $all = static::overview($filter,true);
+        $all = self::overview($filter,true);
 
         $return['class'] = count($all['class']);
         $return['interface'] = count($all['interface']);
@@ -1007,7 +933,7 @@ class Classe extends Root
             {
                 foreach ($all[$key] as $value)
                 {
-                    $methods = static::methods($value);
+                    $methods = self::methods($value);
                     if(is_array($methods))
                     $return['method'] += count($methods);
                 }
@@ -1065,7 +991,7 @@ class Classe extends Root
             // interface
             if($filter['interface'] !== null && $keep === true)
             {
-                $array = static::interfaces($value,$autoload);
+                $array = self::interfaces($value,$autoload);
 
                 if(empty($array) && !empty($filter['interface']))
                 $keep = false;
@@ -1080,7 +1006,7 @@ class Classe extends Root
             // trait
             if($filter['trait'] !== null && $keep === true)
             {
-                $array = static::traits($value,$autoload);
+                $array = self::traits($value,$autoload);
 
                 if(empty($array) && !empty($filter['trait']))
                 $keep = false;
@@ -1106,29 +1032,29 @@ class Classe extends Root
     final public static function info($value,bool $deep=true,bool $autoload=true):?array
     {
         $return = null;
-        $value = static::get($value,$autoload);
+        $value = self::get($value,$autoload);
 
         if(!empty($value))
         {
             $return = [];
-            $return['fqcn'] = static::fqcn($value);
-            $return['namespace'] = static::namespace($value);
-            $return['name'] = static::name($value);
-            $return['type'] = static::type($value,$autoload);
+            $return['fqcn'] = self::fqcn($value);
+            $return['namespace'] = self::namespace($value);
+            $return['name'] = self::name($value);
+            $return['type'] = self::type($value,$autoload);
 
             if($return['type'] === 'class')
-            $return['parent'] = static::parents($value,false,null,$autoload);
+            $return['parent'] = self::parents($value,false,null,$autoload);
 
             if($return['type'] !== 'interface')
-            $return['trait'] = static::traits($value,$deep,$autoload);
+            $return['trait'] = self::traits($value,$deep,$autoload);
 
             if($return['type'] !== 'trait')
-            $return['interface'] = static::interfaces($value,$autoload);
+            $return['interface'] = self::interfaces($value,$autoload);
 
-            $return['method'] = static::methods($value,$autoload);
+            $return['method'] = self::methods($value,$autoload);
 
             if($return['type'] !== 'interface')
-            $return['property'] = static::properties($value,$autoload);
+            $return['property'] = self::properties($value,$autoload);
         }
 
         return $return;

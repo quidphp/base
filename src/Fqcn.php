@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // fqcn
 // class with static methods to deal with fully qualified class name strings
-class Fqcn extends Set
+final class Fqcn extends Set
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'extension'=>'php'], // extension du path
         'separator'=>['\\'], // séparateur pour les fully qualified classname
@@ -39,8 +39,8 @@ class Fqcn extends Set
     final public static function sameName($same,$value):bool
     {
         $return = false;
-        $same = (string) static::name($same);
-        $value = (string) static::name($value);
+        $same = (string) self::name($same);
+        $value = (string) self::name($value);
 
         if($same === $value || strtolower($same) === strtolower($value))
         $return = true;
@@ -55,8 +55,8 @@ class Fqcn extends Set
     final public static function sameNamespace($same,$value):bool
     {
         $return = false;
-        $same = (string) static::namespace($same);
-        $value = (string) static::namespace($value);
+        $same = (string) self::namespace($same);
+        $value = (string) self::namespace($value);
 
         if($same === $value || strtolower($same) === strtolower($value))
         $return = true;
@@ -71,12 +71,12 @@ class Fqcn extends Set
     final public static function hasNamespace($namespace,$value):bool
     {
         $return = false;
-        $value = static::str($value);
+        $value = self::str($value);
 
         if(!empty($value))
         {
-            $namespace = static::str($namespace);
-            $value = (string) static::namespace($value);
+            $namespace = self::str($namespace);
+            $value = (string) self::namespace($value);
 
             if($namespace === $value || strtolower($namespace) === strtolower($value))
             $return = true;
@@ -92,8 +92,8 @@ class Fqcn extends Set
     final public static function inNamespace($namespace,$value):bool
     {
         $return = false;
-        $namespace = static::str($namespace);
-        $value = static::str($value);
+        $namespace = self::str($namespace);
+        $value = self::str($value);
 
         if(!empty($namespace) && !empty($value) && stripos($value,$namespace) === 0)
         $return = true;
@@ -148,7 +148,7 @@ class Fqcn extends Set
     final public static function root($value):?string
     {
         $return = null;
-        $value = static::str($value);
+        $value = self::str($value);
 
         if(is_string($value) && strpos($value,'\\') !== false)
         {
@@ -168,7 +168,7 @@ class Fqcn extends Set
     final public static function name($value):?string
     {
         $return = null;
-        $value = static::str($value);
+        $value = self::str($value);
 
         if(is_string($value))
         {
@@ -194,7 +194,7 @@ class Fqcn extends Set
     final public static function namespace($value):?string
     {
         $return = null;
-        $value = static::str($value);
+        $value = self::str($value);
 
         if(is_string($value) && strpos($value,'\\') !== false && strpos($value,'@') === false)
         {
@@ -213,7 +213,7 @@ class Fqcn extends Set
     // retourne le fqcn sans le root
     final public static function spliceRoot($value,$replace=null):string
     {
-        return static::spliceFirst(static::str($value),$replace);
+        return self::spliceFirst(self::str($value),$replace);
     }
 
 
@@ -221,7 +221,7 @@ class Fqcn extends Set
     // retoure un fqcn sans le root et le nom de classe
     final public static function sliceMiddle($value):string
     {
-        return static::unsets([0,-1],static::str($value));
+        return self::unsets([0,-1],self::str($value));
     }
 
 
@@ -231,10 +231,10 @@ class Fqcn extends Set
     final public static function many($value):array
     {
         $return = [];
-        $plusSeperator = static::$config['plusSeperator'];
+        $plusSeperator = self::$config['plusSeperator'];
 
         if(is_array($value))
-        $value = static::str($value);
+        $value = self::str($value);
 
         if(is_string($value) && strlen($value))
         {
@@ -244,7 +244,7 @@ class Fqcn extends Set
                 foreach (Arrs::valuesCrush($explodes) as $v)
                 {
                     if(is_array($v) && !empty($v))
-                    $return[] = static::str($v);
+                    $return[] = self::str($v);
                 }
             }
         }
@@ -259,8 +259,8 @@ class Fqcn extends Set
     final public static function path($value,?array $option=null):?string
     {
         $return = null;
-        $option = static::option($option);
-        $array = static::arr($value,$option);
+        $option = self::option($option);
+        $array = self::arr($value,$option);
 
         if(!empty($array))
         {
@@ -268,7 +268,7 @@ class Fqcn extends Set
             $return = Path::implode($array,$option['path']);
 
             if(!empty($option['extension']))
-            $return = static::extension($return,$option['extension']);
+            $return = self::extension($return,$option['extension']);
         }
 
         return $return;
@@ -281,7 +281,7 @@ class Fqcn extends Set
     final public static function fromPath(string $value,?array $option=null):?string
     {
         $return = null;
-        $option = static::option($option);
+        $option = self::option($option);
         $value = Path::removeExtension($value);
 
         if(!empty($value))
@@ -290,7 +290,7 @@ class Fqcn extends Set
             $array = Path::arr($value,$option['path']);
 
             if(!empty($array))
-            $return = static::str($array,$option);
+            $return = self::str($array,$option);
         }
 
         return $return;
@@ -312,7 +312,7 @@ class Fqcn extends Set
                 if(!empty($option['root']))
                 $value = Path::append($option['root'],$value);
 
-                $return = static::fromPath($value,$option);
+                $return = self::fromPath($value,$option);
             }
         }
 
@@ -331,7 +331,7 @@ class Fqcn extends Set
         {
             if(is_string($root))
             {
-                $v = static::fromPathRoot($value,$root,(is_string($k))? Arr::plus($option,['root'=>$k]):$option);
+                $v = self::fromPathRoot($value,$root,(is_string($k))? Arr::plus($option,['root'=>$k]):$option);
                 if(!empty($v))
                 {
                     $return = $v;
@@ -349,7 +349,7 @@ class Fqcn extends Set
     // utilise relative, ne force pas l'ajout d'un forward slash au path
     final public static function extension(string $value,$extension=null):string
     {
-        return PathTrack::changeExtension($extension ?? static::getOption('extension'),$value);
+        return PathTrack::changeExtension($extension ?? self::getOption('extension'),$value);
     }
 }
 

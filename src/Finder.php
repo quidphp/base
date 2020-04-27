@@ -20,7 +20,7 @@ class Finder extends Root
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'perms'=>[ // les numéros de permission valables selon le type d'accès
             'readable'=>[4,5,6,7],
             'writable'=>[2,3,6,7],

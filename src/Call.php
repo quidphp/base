@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // call
 // class with static methods to manage callables and callbacks
-class Call extends Root
+final class Call extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // typecast
@@ -25,7 +25,7 @@ class Call extends Root
     {
         foreach ($values as &$value)
         {
-            $value = static::cast($value);
+            $value = self::cast($value);
         }
 
         return;
@@ -48,20 +48,14 @@ class Call extends Root
     }
 
 
-    // isSafeArrayCallable
+    // isSafeArray
     // retourne vrai seulement si la valeur est un tableau callable, très stricte
-    final public static function isSafeArrayCallable($value,bool $callable=false):bool
+    final public static function isSafeArray($value,bool $callable=false):bool
     {
-        $return = false;
+        $return = self::isStaticMethod($value) || self::isDynamicMethod($value);
 
-        if(is_array($value) && count($value) === 2 && array_key_exists(0,$value) && array_key_exists(1,$value) && is_string($value[1]))
-        {
-            if(is_object($value[0]) || (is_string($value[0]) && strpos($value[0],'\\') > 0))
-            {
-                if($callable === false || is_callable($value))
-                $return = true;
-            }
-        }
+        if($return === true && $callable === true)
+        $return = is_callable($value);
 
         return $return;
     }
@@ -87,7 +81,7 @@ class Call extends Root
     // retourne vrai si la valeur est callable et dynamic method
     final public static function isDynamicMethod($value):bool
     {
-        return static::type($value) === 'dynamicMethod';
+        return is_array($value) && array_key_exists(0,$value) && array_key_exists(1,$value) && is_object($value[0]) && is_string($value[1]);
     }
 
 
@@ -95,7 +89,7 @@ class Call extends Root
     // retourne vrai si la valeur est callable et static method
     final public static function isStaticMethod($value):bool
     {
-        return static::type($value) === 'staticMethod';
+        return is_array($value) && array_key_exists(0,$value) && array_key_exists(1,$value) && is_string($value[0]) && strpos($value[0],'\\') > 0 && is_string($value[1]);
     }
 
 
@@ -105,22 +99,19 @@ class Call extends Root
     {
         $return = null;
 
-        if(static::is($value))
+        if(self::is($value))
         {
-            if(is_string($value) && function_exists($value))
+            if(self::isFunction($value))
             $return = 'function';
 
-            elseif($value instanceof \Closure)
+            elseif(self::isClosure($value))
             $return = 'closure';
 
-            elseif(is_array($value) && array_key_exists(0,$value) && array_key_exists(1,$value))
-            {
-                if(is_object($value[0]))
-                $return = 'dynamicMethod';
+            elseif(self::isDynamicMethod($value))
+            $return = 'dynamicMethod';
 
-                else
-                $return = 'staticMethod';
-            }
+            elseif(self::isStaticMethod($value))
+            $return = 'staticMethod';
         }
 
         return $return;
@@ -136,45 +127,49 @@ class Call extends Root
     }
 
 
-    // ableArgs
-    // fonction static pour créer un callable
-    // callable en argument 0, et tableau arg en argument 1
-    final public static function ableArgs(callable $callable,array $args=[])
+    // loop
+    // permet de loop un tableau et d'appeler toutes les callables
+    final public static function loop(array $return):array
     {
-        return $callable(...array_values($args));
-    }
-
-
-    // ableArray
-    // appele un callable
-    // tout est dans un tableau, clé 0 = callable, clé 1 = table d'argument argument
-    final public static function ableArray(array $array)
-    {
-        $return = null;
-
-        if(count($array) === 2)
+        foreach ($return as $key => $value)
         {
-            $callable = Arr::get(0,$array);
-
-            if(static::is($callable))
-            {
-                $args = (array) Arr::get(1,$array);
-                $return = $callable(...array_values($args));
-            }
+            if(self::isCallable($value))
+            $return[$key] = $value();
         }
 
         return $return;
     }
 
 
-    // ableArrs
-    // permet de loop un tableau et d'appeler tous les tableaux étant des callables
-    final public static function ableArrs(array $return):array
+    // back
+    // envoie un tableau et une clé
+    // retourne null ou le résultat du callable si existant
+    final public static function back($key,array $array,...$arg)
+    {
+        $return = null;
+
+        if(Arr::isKey($key) && array_key_exists($key,$array) && self::is($array[$key]))
+        $return = $array[$key](...$arg);
+
+        return $return;
+    }
+
+
+    // dig
+    // creuse dans un tableau et call toutes les méthodes
+    // possible d'appeler seulement les safeArray, pas les autres méthodes
+    final public static function dig(bool $onlySafeArray=false,array $return,...$args)
     {
         foreach ($return as $key => $value)
         {
-            if(static::isCallable($value))
-            $return[$key] = $value();
+            if($onlySafeArray === true && self::isSafeArray($value,true))
+            $return[$key] = $value(...$args);
+
+            elseif($onlySafeArray === false && self::is($value))
+            $return[$key] = $value(...$args);
+
+            elseif(is_array($value))
+            $return[$key] = self::dig($onlySafeArray,$value,...$args);
         }
 
         return $return;
@@ -199,119 +194,8 @@ class Call extends Root
         foreach ($classes as $class)
         {
             if(is_string($class))
-            $return[$class] = static::staticClass($class,$method,...$arg);
+            $return[$class] = self::staticClass($class,$method,...$arg);
         }
-
-        return $return;
-    }
-
-
-    // back
-    // envoie un tableau et une clé
-    // retourne null ou le résultat du callable si existant
-    final public static function back($key,array $array,...$arg)
-    {
-        $return = null;
-
-        if(Arr::isKey($key) && array_key_exists($key,$array) && static::is($array[$key]))
-        $return = $array[$key](...$arg);
-
-        return $return;
-    }
-
-
-    // backBool
-    // envoie un tableau et une clé
-    // fonction de callback qui va retourner true seulement si la fonction de rappel retourne true
-    final public static function backBool(string $key,array $array,...$arg):bool
-    {
-        $return = false;
-
-        if(static::back($key,$array,...$arg) === true)
-        $return = true;
-
-        return $return;
-    }
-
-
-    // arr
-    // envoie un tableau et une clé
-    // s'il y a une callable, remplace la callable par le résultat de la fonction
-    // le tableau est passé par référence
-    final public static function arr($key,array &$array,...$arg):void
-    {
-        if(Arr::isKey($key) && array_key_exists($key,$array) && static::is($array[$key]))
-        $array[$key] = $array[$key](...$arg);
-
-        return;
-    }
-
-
-    // bool
-    // la callable est appelé pour chaque stack de values
-    // si un retour de callable est vide, arrêt du loop et retourne false
-    // cette fonction remplace les loop dans toutes les fonctions is (trop de code)
-    final public static function bool(callable $callable,...$values):bool
-    {
-        $return = false;
-
-        if(!empty($values))
-        {
-            $return = true;
-
-            foreach ($values as $value)
-            {
-                if(!$callable($value))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
-
-        return $return;
-    }
-
-
-    // map
-    // lance la callable pour chaque valeur qui retourne vrai à la condition validate::is
-    // args permet de spécifier des arguments supplémentaires à envoyer dans la callable
-    // si la valeur est un tableau, passe chaque valeur dans la fonction et creuse le tableau si multidimensionnel
-    // retourne la valeur
-    final public static function map($condition,callable $callable,$return,...$args)
-    {
-        if(is_array($return))
-        {
-            foreach ($return as $key => $value)
-            {
-                if(is_array($value))
-                $return[$key] = static::map($condition,$callable,$value,...$args);
-
-                elseif(Validate::is($condition,$value))
-                $return[$key] = $callable($value,...$args);
-            }
-        }
-
-        elseif(Validate::is($condition,$return))
-        $return = $callable($return,...$args);
-
-        return $return;
-    }
-
-
-    // withObj
-    // permet de lancer une callable
-    // si callable est closure, alors obj est le new this
-    // sinon l'objet est mis comme premier argument
-    final public static function withObj(object $obj,callable $callable,...$args)
-    {
-        $return = false;
-
-        if($callable instanceof \Closure)
-        $return = $callable->call($obj,...$args);
-
-        else
-        $return = $callable($obj,...$args);
 
         return $return;
     }
@@ -322,32 +206,7 @@ class Call extends Root
     // permet d'appeler les méthodes protégés à l'intérieeur d'un objet
     final public static function bindTo(object $obj,\Closure $closure,...$args)
     {
-        $return = null;
-        $bind = $closure->bindTo($obj,$obj);
-        $return = $bind(...$args);
-
-        return $return;
-    }
-
-
-    // digStaticMethod
-    // creuse dans un tableau et call toutes les méthodes statiques safe
-    // les closures ne sont pas appelés
-    final public static function digStaticMethod($return,...$args)
-    {
-        if(is_array($return))
-        {
-            foreach ($return as $key => $value)
-            {
-                if(static::isSafeArrayCallable($value,true))
-                $return[$key] = $value(...$args);
-
-                elseif(is_array($value))
-                $return[$key] = static::digStaticMethod($value,...$args);
-            }
-        }
-
-        return $return;
+        return $closure->bindTo($obj,$obj)(...$args);
     }
 }
 ?>

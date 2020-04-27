@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // slug
 // class with static methods to deal with URI slugs
-class Slug extends Set
+final class Slug extends Set
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'caseImplode'=>'lower', // les valeurs sont ramenés dans cette case lors du implode
             'replaceAccent'=>true, // replace les accents par les caractères non accentés
@@ -24,7 +24,7 @@ class Slug extends Set
             'append'=>null, // append une valeur au slug
             'sliceLength'=>[2,20], // garde seulement les slugs entre une certaine longueur
             'keepLast'=>true, // garde le dernier slice peu importe la longueur
-            'keepNumeric'=>true, // garde toutes les slices numériques
+            'keepNum'=>true, // garde toutes les slices numériques
             'totalLength'=>null], // longueur total du slug admise
         'separator'=>['-','-'] // séparateur pour les slug
     ];
@@ -52,12 +52,12 @@ class Slug extends Set
     final public static function parse(array $array,array $option):array
     {
         $return = [];
-        $separator = static::getSeparator(1);
+        $separator = self::getSeparator(1);
         $segment = Segment::getDelimiter(null,true);
 
         if(is_string($option['prepend']))
         {
-            $prepend = static::parseValue($option['prepend'],$option['replaceAccent']);
+            $prepend = self::parseValue($option['prepend'],$option['replaceAccent']);
             $return[] = $prepend;
         }
 
@@ -71,7 +71,7 @@ class Slug extends Set
                 {
                     if(is_string($v))
                     {
-                        $v = static::parseValue($v,$option['replaceAccent']);
+                        $v = self::parseValue($v,$option['replaceAccent']);
 
                         if(!empty($v))
                         $return[] = $v;
@@ -82,7 +82,7 @@ class Slug extends Set
 
         if(is_string($option['append']))
         {
-            $append = static::parseValue($option['append'],$option['replaceAccent']);
+            $append = self::parseValue($option['append'],$option['replaceAccent']);
             $return[] = $append;
         }
 
@@ -93,7 +93,7 @@ class Slug extends Set
             $option['sliceLength'] = array_values($option['sliceLength']);
             $return = Arr::valuesSliceLength($option['sliceLength'][0],$option['sliceLength'][1],$return);
 
-            if($option['keepNumeric'] === true)
+            if($option['keepNum'] === true)
             {
                 foreach ($keep as $k => $v)
                 {
@@ -130,7 +130,7 @@ class Slug extends Set
         if($replaceAccent === true)
         $return = Str::replaceAccent($return);
 
-        $return = static::keepAlphanumeric($return,$segment[0].$segment[1]);
+        $return = self::keepAlphanumeric($return,$segment[0].$segment[1]);
 
         return $return;
     }

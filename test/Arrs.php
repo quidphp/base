@@ -574,12 +574,6 @@ class Arrs extends Base\Test
         $append = ['%test%'=>'mmm'];
         assert(Base\Arrs::valuesAppend($append,['test'=>['zoro','lol'=>'meh','%test%']])['test'] === ['zoro','lol'=>'meh',1=>'mmm']);
 
-        // valuesLower
-        assert(Base\Arrs::valuesLower(['Test',['OK','TÉS',['VlÉ']]])[1][2][0] === 'vlé');
-
-        // valuesUpper
-        assert(Base\Arrs::valuesUpper(['Test',['OK','TÉS',['Vlé']]])[1][2][0] === 'VLÉ');
-
         // keysValuesLower
         assert(Base\Arrs::keysValuesLower(['A'=>['A'=>'É']]) === ['a'=>['a'=>'é']]);
 

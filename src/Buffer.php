@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // buffer
 // class with methods a layer over the native PHP output buffering functions
-class Buffer extends Root
+final class Buffer extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // has
@@ -89,10 +89,10 @@ class Buffer extends Root
     final public static function startCallGet(callable $callable,array $arg=[],?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):?string
     {
         $return = null;
-        static::start($callback,$chunk,$flag);
+        self::start($callback,$chunk,$flag);
         $callable(...$arg);
 
-        $return = static::getClean();
+        $return = self::getClean();
 
         return $return;
     }
@@ -188,9 +188,9 @@ class Buffer extends Root
     {
         $return = false;
 
-        $value = static::getCleanAll();
+        $value = self::getCleanAll();
         $value = implode('',$value);
-        $return = static::startEcho($value,$callback,$chunk,$flag);
+        $return = self::startEcho($value,$callback,$chunk,$flag);
 
         return $return;
     }
@@ -312,10 +312,10 @@ class Buffer extends Root
             echo $value;
         }
         else
-        $return = static::startEcho($value,$callback,$chunk,$flag);
+        $return = self::startEcho($value,$callback,$chunk,$flag);
 
         if($flush === true)
-        static::keepFlush();
+        self::keepFlush();
 
         return $return;
     }
@@ -333,7 +333,7 @@ class Buffer extends Root
         if(ob_get_level())
         {
             $return = true;
-            static::cleanAll();
+            self::cleanAll();
 
             if(is_array($value))
             $value = implode('',$value);
@@ -341,10 +341,10 @@ class Buffer extends Root
             echo $value;
         }
         else
-        $return = static::startEcho($value,$callback,$chunk,$flag);
+        $return = self::startEcho($value,$callback,$chunk,$flag);
 
         if($flush === true)
-        static::keepFlush();
+        self::keepFlush();
 
         return $return;
     }
@@ -383,9 +383,9 @@ class Buffer extends Root
     // démarre un buffer, permet d'y joindre une fonction de rappel
     final public static function flush(bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
-        static::endFlushAll($flush);
+        self::endFlushAll($flush);
 
-        return static::start($callback,$chunk,$flag);
+        return self::start($callback,$chunk,$flag);
     }
 
 
@@ -394,8 +394,8 @@ class Buffer extends Root
     // ouvre un autre buffer à la fin du processus
     final public static function flushEcho($value,bool $flush=true,?callable $callback=null,int $chunk=0,int $flag=PHP_OUTPUT_HANDLER_STDFLAGS):bool
     {
-        $return = static::startEcho($value,$callback,$chunk,$flag);
-        static::flush($flush,$callback,$chunk,$flag);
+        $return = self::startEcho($value,$callback,$chunk,$flag);
+        self::flush($flush,$callback,$chunk,$flag);
 
         return $return;
     }
@@ -409,9 +409,9 @@ class Buffer extends Root
         $return = false;
 
         if(!ob_get_level())
-        static::start($callback,$chunk,$flag);
+        self::start($callback,$chunk,$flag);
 
-        $buffer = static::getAll(false);
+        $buffer = self::getAll(false);
 
         if(is_array($value))
         $value = implode('',$value);
@@ -437,7 +437,7 @@ class Buffer extends Root
         $value = implode('',$value);
 
         if(!ob_get_level())
-        static::start($callback,$chunk,$flag);
+        self::start($callback,$chunk,$flag);
 
         if(is_string($value))
         echo $value;

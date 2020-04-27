@@ -63,10 +63,9 @@ class Boolean extends Base\Test
         assert(Base\Boolean::str(true) === 'TRUE');
         assert(Base\Boolean::str(null) === 'NULL');
 
-        // fromInt
-        assert(Base\Boolean::fromInt(1) === true);
-        assert(Base\Boolean::fromInt(0) === false);
-        assert(Base\Boolean::fromInt(2) === null);
+        // toInt
+        assert(1 === Base\Boolean::toInt(true));
+        assert(0 === Base\Boolean::toInt(false));
 
         // toggle
         assert(Base\Boolean::toggle(true) === false);

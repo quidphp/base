@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // style
 // class with static methods to generate an HTML style attribute
-class Style extends Listing
+final class Style extends Listing
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'implode'=>1, // index du séparateur à utiliser lors du implode
             'end'=>true, // ajoute le premier séparateur à la fin lors du implode
@@ -61,12 +61,12 @@ class Style extends Listing
         {
             if(is_string($key) && (is_string($value) || is_numeric($value)))
             {
-                if(array_key_exists($key,static::$config['shortcut']))
-                $key = static::$config['shortcut'][$key];
+                if(array_key_exists($key,self::$config['shortcut']))
+                $key = self::$config['shortcut'][$key];
 
                 if((is_int($value) || is_float($value)))
                 {
-                    foreach (static::$config['unit'] as $k => $unit)
+                    foreach (self::$config['unit'] as $k => $unit)
                     {
                         if(strpos($key,$k) !== false)
                         {
@@ -82,7 +82,7 @@ class Style extends Listing
 
                     if($key === 'background-image' && strpos($value,'url(') === false)
                     {
-                        $value = static::parseUri($value,$option);
+                        $value = self::parseUri($value,$option);
                         if(!empty($value))
                         $return[$key] = "url($value)";
                     }
@@ -124,13 +124,13 @@ class Style extends Listing
     final public static function prepareStr(string $value,array $option):array
     {
         $return = [];
-        $separator = static::getSeparator(1,$option['explode']);
+        $separator = self::getSeparator(1,$option['explode']);
 
         if(!empty($separator) && strpos($value,$separator))
-        $return = static::explodeStr($value,$option);
+        $return = self::explodeStr($value,$option);
 
         else
-        $return = [static::$config['default']=>$value];
+        $return = [self::$config['default']=>$value];
 
         return $return;
     }
@@ -141,8 +141,8 @@ class Style extends Listing
     final public static function explodeStr(string $value,array $option):array
     {
         $return = [];
-        $separator = static::getSeparator(0,$option['explode']);
-        $separator2 = static::getSeparator(1,$option['explode']);
+        $separator = self::getSeparator(0,$option['explode']);
+        $separator2 = self::getSeparator(1,$option['explode']);
 
         if(!empty($separator) && !empty($separator2))
         {
@@ -160,7 +160,7 @@ class Style extends Listing
     // retourne les options uri pour style
     final public static function getUriOption():array
     {
-        return static::$config['option']['uri'];
+        return self::$config['option']['uri'];
     }
 
 
@@ -168,7 +168,7 @@ class Style extends Listing
     // change les options uri pour style
     final public static function setUriOption(array $option):void
     {
-        static::$config['option']['uri'] = Uri::option($option);
+        self::$config['option']['uri'] = Uri::option($option);
 
         return;
     }

@@ -169,9 +169,9 @@ class Mime extends Base\Test
         assert(Base\Mime::group('weird') === 'weirdG');
         assert(Base\Mime::group('weirdG') === null);
         assert(Base\Mime::register('text/weirdo','weirdo','weirdG',['text']));
-        assert(count(Base\Mime::$config['mimeToExtension']['text/weird']) === 2);
+        assert(count(Base\Mime::getConfig(['mimeToExtension','text/weird'])) === 2);
         assert(Base\Mime::register('text/weird','weirdMore','weirdG'));
-        assert(count(Base\Mime::$config['mimeToExtension']['text/weird']) === 3);
+        assert(count(Base\Mime::getConfig(['mimeToExtension','text/weird'])) === 3);
 
         return true;
     }

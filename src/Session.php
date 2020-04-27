@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // session
 // class with static methods to manage a session (built over the native PHP session functions)
-class Session extends Root
+final class Session extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'default'=>[
             'name'=>true, // le nom de la session, si true utilise type
             'sid'=>null, // permet de set un sid avant le lancement de la session
@@ -94,7 +94,7 @@ class Session extends Root
     // la session doit être active
     final public static function isLang($value):bool
     {
-        return is_string($value) && $value === static::lang();
+        return is_string($value) && $value === self::lang();
     }
 
 
@@ -103,7 +103,7 @@ class Session extends Root
     // la session doit être active
     final public static function isIp($value):bool
     {
-        return is_string($value) && $value === static::ip();
+        return is_string($value) && $value === self::ip();
     }
 
 
@@ -112,7 +112,7 @@ class Session extends Root
     // la session doit être active
     final public static function isCsrf($value):bool
     {
-        return is_string($value) && $value === static::csrf();
+        return is_string($value) && $value === self::csrf();
     }
 
 
@@ -126,11 +126,11 @@ class Session extends Root
 
         if(is_string($value))
         {
-            $captcha = static::captcha();
+            $captcha = self::captcha();
 
             if($sensitive === null)
             {
-                $option = static::getCaptchaOption();
+                $option = self::getCaptchaOption();
                 $sensitive = $option['sensitive'] || false;
             }
 
@@ -150,7 +150,7 @@ class Session extends Root
     // la session doit être active
     final public static function isBot():bool
     {
-        return Browser::isBot(static::userAgent());
+        return Browser::isBot(self::userAgent());
     }
 
 
@@ -166,7 +166,7 @@ class Session extends Root
     // retourne vrai si la session est démarré et vide
     final public static function isEmpty():bool
     {
-        return static::isStarted() && empty(Superglobal::session());
+        return self::isStarted() && empty(Superglobal::session());
     }
 
 
@@ -174,7 +174,7 @@ class Session extends Root
     // retourne vrai si la session est démarré et pas vide
     final public static function isNotEmpty():bool
     {
-        return static::isStarted() && !empty(Superglobal::session());
+        return self::isStarted() && !empty(Superglobal::session());
     }
 
 
@@ -182,7 +182,7 @@ class Session extends Root
     // retourne vrai si la classe a un save handler
     final public static function hasSaveHandler():bool
     {
-        return !empty(static::$handler);
+        return !empty(self::$handler);
     }
 
 
@@ -195,9 +195,9 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         {
-            $callback = static::getStructure($value);
+            $callback = self::getStructure($value);
 
             if(!empty($callback))
             {
@@ -205,9 +205,9 @@ class Session extends Root
                 {
                     $return = false;
 
-                    if(static::isCallable($v))
+                    if(self::isCallable($v))
                     {
-                        $val = static::get($k);
+                        $val = self::get($k);
 
                         if($v('is',$val) === true)
                         $return = true;
@@ -309,11 +309,11 @@ class Session extends Root
     // si prefix est true, utilise le type
     final public static function getPrefix():?string
     {
-        $return = static::$config['default']['prefix'] ?? null;
+        $return = self::$config['default']['prefix'] ?? null;
 
         if($return === true)
         {
-            $return = static::$config['default']['type'] ?? null;
+            $return = self::$config['default']['type'] ?? null;
             if(is_string($return))
             $return .= '-';
         }
@@ -339,9 +339,9 @@ class Session extends Root
         $return = false;
 
         if($value === true)
-        $value = static::$config['default']['type'] ?? null;
+        $value = self::$config['default']['type'] ?? null;
 
-        if(is_string($value) && !is_numeric($value) && !static::isStarted())
+        if(is_string($value) && !is_numeric($value) && !self::isStarted())
         {
             session_name($value);
             if(session_name() === $value)
@@ -367,7 +367,7 @@ class Session extends Root
     {
         $return = false;
 
-        if($value >= 0 && !static::isStarted())
+        if($value >= 0 && !self::isStarted())
         {
             session_cache_expire($value);
             if(session_cache_expire() === $value)
@@ -393,7 +393,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(in_array($value,static::$config['cacheLimiter'],true) && !static::isStarted())
+        if(in_array($value,self::$config['cacheLimiter'],true) && !self::isStarted())
         {
             session_cache_limiter($value);
             if(session_cache_limiter() === $value)
@@ -419,7 +419,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(in_array($value,static::$config['module'],true) && !static::isStarted())
+        if(in_array($value,self::$config['module'],true) && !self::isStarted())
         {
             session_module_name($value);
             if(session_module_name() === $value)
@@ -434,7 +434,7 @@ class Session extends Root
     // retourne le savehandler
     final public static function getSaveHandler():?object
     {
-        return static::$handler;
+        return self::$handler;
     }
 
 
@@ -446,12 +446,12 @@ class Session extends Root
     {
         $return = false;
 
-        if(!static::isStarted())
+        if(!self::isStarted())
         {
             $return = session_set_save_handler($handler,true);
 
             if($return === true)
-            static::$handler = $handler;
+            self::$handler = $handler;
         }
 
         return $return;
@@ -473,7 +473,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(in_array($value,static::$config['serializeHandler'],true) && !static::isStarted())
+        if(in_array($value,self::$config['serializeHandler'],true) && !self::isStarted())
         $return = Ini::set('session.serialize_handler',$value);
 
         return $return;
@@ -501,7 +501,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(!static::isStarted())
+        if(!self::isStarted())
         {
             session_save_path($value);
             if(session_save_path() === $value)
@@ -517,7 +517,7 @@ class Session extends Root
     final public static function getLifetime():?int
     {
         $return = null;
-        $cookie = static::getCookieParams();
+        $cookie = self::getCookieParams();
         $gc = Ini::get('session.gc_maxlifetime');
 
         if(array_key_exists('lifetime',$cookie) && is_int($cookie['lifetime']))
@@ -538,7 +538,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(!static::isStarted())
+        if(!self::isStarted())
         {
             Ini::set('session.cookie_lifetime',$value);
 
@@ -557,7 +557,7 @@ class Session extends Root
     final public static function getExpire():?int
     {
         $return = null;
-        $lifetime = static::getLifetime();
+        $lifetime = self::getLifetime();
 
         if(is_int($lifetime))
         $return = Datetime::time() + $lifetime;
@@ -576,7 +576,7 @@ class Session extends Root
         $time = Datetime::time();
 
         if($value > $time)
-        $return = static::setLifetime($value - $time,$buffer);
+        $return = self::setLifetime($value - $time,$buffer);
 
         return $return;
     }
@@ -605,7 +605,7 @@ class Session extends Root
         $return = false;
         $time = Datetime::time();
 
-        if(!static::isStarted())
+        if(!self::isStarted())
         {
             if(array_key_exists('expires',$value) && is_int($value['expires']) && $value['expires'] > $time)
             $value['lifetime'] = $value['expires'] - $time;
@@ -651,7 +651,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(!static::isStarted())
+        if(!self::isStarted())
         {
             $option = Cookie::option('cookieParams',$option);
 
@@ -672,54 +672,54 @@ class Session extends Root
     {
         $return = null;
 
-        if(!static::isStarted())
+        if(!self::isStarted())
         {
             $return = [];
-            $keys = array_keys(static::$config['default']);
+            $keys = array_keys(self::$config['default']);
             $option = (array) $option;
-            static::$config['default'] = Arrs::replace(static::$config['default'],Arr::getsExists($keys,$option));
-            $option = static::$config['default'];
+            self::$config['default'] = Arrs::replace(self::$config['default'],Arr::getsExists($keys,$option));
+            $option = self::$config['default'];
             $lifetime = null;
 
             if($option['name'] !== null)
-            $return['name'] = static::setName($option['name']);
+            $return['name'] = self::setName($option['name']);
 
             if($option['sid'] !== null)
-            $return['sid'] = static::setSid($option['sid']);
+            $return['sid'] = self::setSid($option['sid']);
 
             if($option['lifetime'] !== null && is_int($option['lifetime']))
             {
                 $lifetime = $option['lifetime'];
-                $return['lifetime'] = static::setLifetime($option['lifetime']);
+                $return['lifetime'] = self::setLifetime($option['lifetime']);
             }
 
             if(is_array($option['cookieParams']) && !empty($option['cookieParams']))
             {
                 if(is_int($lifetime))
                 $option['cookieParams']['lifetime'] = $lifetime;
-                $return['cookieParams'] = static::setCookieParams($option['cookieParams']);
+                $return['cookieParams'] = self::setCookieParams($option['cookieParams']);
             }
 
             if($option['cacheExpire'] !== null)
-            $return['cacheExpire'] = static::setCacheExpire($option['cacheExpire']);
+            $return['cacheExpire'] = self::setCacheExpire($option['cacheExpire']);
 
             if($option['cacheLimiter'] !== null)
-            $return['cacheLimiter'] = static::setCacheLimiter($option['cacheLimiter']);
+            $return['cacheLimiter'] = self::setCacheLimiter($option['cacheLimiter']);
 
             if($option['module'] !== null)
-            $return['module'] = static::setModule($option['module']);
+            $return['module'] = self::setModule($option['module']);
 
             if($option['serializeHandler'] !== null)
-            $return['serializeHandler'] = static::setSerializeHandler($option['serializeHandler']);
+            $return['serializeHandler'] = self::setSerializeHandler($option['serializeHandler']);
 
             if($option['savePath'] !== null)
-            $return['savePath'] = static::setSavePath($option['savePath']);
+            $return['savePath'] = self::setSavePath($option['savePath']);
 
             if(is_array($option['garbageCollect']) && !empty($option['garbageCollect']))
             {
                 if(empty($option['garbageCollect']['lifetime']) || $option['garbageCollect']['lifetime'] < $lifetime)
                 $option['garbageCollect']['lifetime'] = $lifetime;
-                $return['garbageCollect'] = static::setGarbageCollect($option['garbageCollect']);
+                $return['garbageCollect'] = self::setGarbageCollect($option['garbageCollect']);
             }
 
             if(is_array($option['ini']) && !empty($option['ini']))
@@ -736,22 +736,22 @@ class Session extends Root
     {
         $return = [];
 
-        $return['isStarted'] = static::isStarted();
-        $return['hasSaveHandler'] = static::hasSaveHandler();
-        $return['status'] = static::status();
-        $return['id'] = static::getSid();
-        $return['name'] = static::name();
-        $return['lifetime'] = static::getLifetime();
-        $return['expire'] = static::getExpire();
-        $return['cacheExpire'] = static::getCacheExpire();
-        $return['cacheLimiter'] = static::getCacheLimiter();
-        $return['module'] = static::getModule();
-        $return['serializeHandler'] = static::getSerializeHandler();
-        $return['savePath'] = static::getSavePath();
-        $return['garbageCollect'] = static::getGarbageCollect();
-        $return['cookieParams'] = static::getCookieParams();
-        $return['ini'] = static::ini();
-        $return['data'] = static::data();
+        $return['isStarted'] = self::isStarted();
+        $return['hasSaveHandler'] = self::hasSaveHandler();
+        $return['status'] = self::status();
+        $return['id'] = self::getSid();
+        $return['name'] = self::name();
+        $return['lifetime'] = self::getLifetime();
+        $return['expire'] = self::getExpire();
+        $return['cacheExpire'] = self::getCacheExpire();
+        $return['cacheLimiter'] = self::getCacheLimiter();
+        $return['module'] = self::getModule();
+        $return['serializeHandler'] = self::getSerializeHandler();
+        $return['savePath'] = self::getSavePath();
+        $return['garbageCollect'] = self::getGarbageCollect();
+        $return['cookieParams'] = self::getCookieParams();
+        $return['ini'] = self::ini();
+        $return['data'] = self::data();
 
         return $return;
     }
@@ -768,7 +768,7 @@ class Session extends Root
 
         if($value !== null)
         {
-            $return = (array) static::$config['structure'];
+            $return = (array) self::$config['structure'];
 
             if(is_array($value))
             $return = Arr::plus($return,$value);
@@ -786,21 +786,21 @@ class Session extends Root
     {
         $return = null;
 
-        if(static::isStarted() && in_array($type,['init','insert','update'],true))
+        if(self::isStarted() && in_array($type,['init','insert','update'],true))
         {
             $return = [];
-            $callback = static::getStructure($value);
+            $callback = self::getStructure($value);
 
             if(!empty($callback))
             {
                 foreach ($callback as $k => $v)
                 {
-                    if(static::isCallable($v))
+                    if(self::isCallable($v))
                     {
-                        $val = static::get($k);
+                        $val = self::get($k);
 
                         if($type !== 'init' || $val !== null)
-                        $return[$k] = static::set($k,$v($type,$val));
+                        $return[$k] = self::set($k,$v($type,$val));
                     }
                 }
             }
@@ -816,7 +816,7 @@ class Session extends Root
     final public static function structureEnv(string $mode,$value=null)
     {
         $return = $value;
-        $env = static::$config['default']['env'] ?? null;
+        $env = self::$config['default']['env'] ?? null;
 
         if($mode === 'insert')
         $return = $env;
@@ -834,7 +834,7 @@ class Session extends Root
     final public static function structureType(string $mode,$value=null)
     {
         $return = $value;
-        $type = static::$config['default']['type'] ?? null;
+        $type = self::$config['default']['type'] ?? null;
 
         if($mode === 'insert')
         $return = $type;
@@ -852,8 +852,8 @@ class Session extends Root
     final protected static function structureVersion(string $mode,$value=null)
     {
         $return = $value;
-        $version = static::$config['default']['version'] ?? null;
-        $versionMatch = static::$config['default']['versionMatch'] ?? null;
+        $version = self::$config['default']['version'] ?? null;
+        $versionMatch = self::$config['default']['versionMatch'] ?? null;
 
         if($mode === 'insert' || $mode === 'update')
         $return = $version;
@@ -873,7 +873,7 @@ class Session extends Root
         $return = $value;
 
         if($mode === 'insert' || $mode === 'update')
-        $return = static::getExpire();
+        $return = self::getExpire();
 
         elseif($mode === 'is')
         $return = (is_int($value) && $value > Datetime::time());
@@ -931,7 +931,7 @@ class Session extends Root
     final protected static function structureUserAgent(string $mode,$value=null)
     {
         $return = $value;
-        $userAgentMatch = static::$config['default']['userAgentMatch'];
+        $userAgentMatch = self::$config['default']['userAgentMatch'];
         $userAgent = Request::userAgent();
 
         if($mode === 'insert' || $mode === 'update')
@@ -967,7 +967,7 @@ class Session extends Root
     final protected static function structureFingerprint(string $mode,$value=null)
     {
         $return = $value;
-        $fingerprintKeys = static::$config['default']['fingerprintKeys'];
+        $fingerprintKeys = self::$config['default']['fingerprintKeys'];
         $fingerprint = null;
 
         if(is_array($fingerprintKeys) && !empty($fingerprintKeys))
@@ -1027,11 +1027,11 @@ class Session extends Root
         $return = $value;
 
         if($mode === 'insert')
-        $return = static::makeCsrf();
+        $return = self::makeCsrf();
 
         elseif($mode === 'is')
         {
-            $option = static::getCsrfOption();
+            $option = self::getCsrfOption();
             $return = (is_string($value) && strlen($value) === $option['length']);
         }
 
@@ -1048,7 +1048,7 @@ class Session extends Root
 
         if($mode === 'is')
         {
-            $option = static::getCaptchaOption();
+            $option = self::getCaptchaOption();
             $return = ($value === null || (is_string($value) && strlen($value) === $option['length']));
         }
 
@@ -1087,7 +1087,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(!static::isStarted())
+        if(!self::isStarted())
         {
             if($option === true)
             $option = ['read_and_close'=>true];
@@ -1099,31 +1099,31 @@ class Session extends Root
 
             if(!empty($structure))
             {
-                static::prepareStructure('init',$structure);
+                self::prepareStructure('init',$structure);
 
-                if(!static::isStructureValid($structure))
+                if(!self::isStructureValid($structure))
                 {
-                    if(static::isEmpty())
-                    static::prepareStructure('insert',$structure);
+                    if(self::isEmpty())
+                    self::prepareStructure('insert',$structure);
 
                     else
                     {
-                        $return = static::restart($structure,$setCookie,$option);
+                        $return = self::restart($structure,$setCookie,$option);
                         $setCookie = null;
                     }
                 }
 
                 else
-                static::prepareStructure('update',$structure);
+                self::prepareStructure('update',$structure);
             }
 
             if(!empty($setCookie))
             {
                 if($setCookie === true)
-                $setCookie = static::getCookieParams();
+                $setCookie = self::getCookieParams();
 
                 if(is_array($setCookie))
-                static::setCookie(true,$setCookie);
+                self::setCookie(true,$setCookie);
             }
         }
 
@@ -1139,11 +1139,11 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         {
-            static::empty();
-            if(static::destroy())
-            $return = static::start($structure,$setCookie,$option);
+            self::empty();
+            if(self::destroy())
+            $return = self::start($structure,$setCookie,$option);
         }
 
         return $return;
@@ -1158,8 +1158,8 @@ class Session extends Root
     final public static function setCookie(bool $removeHeader=false,?array $option=null):bool
     {
         $return = false;
-        $name = static::name();
-        $value = static::getSid();
+        $name = self::name();
+        $value = self::getSid();
 
         if(is_string($name) && !empty($value))
         {
@@ -1181,7 +1181,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         $return = session_regenerate_id($delete);
 
         return $return;
@@ -1195,7 +1195,7 @@ class Session extends Root
     {
         $return = null;
 
-        if(static::isStarted())
+        if(self::isStarted())
         $return = session_encode();
 
         return $return;
@@ -1209,7 +1209,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         $return = session_decode($value);
 
         return $return;
@@ -1223,7 +1223,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         $return = session_reset();
 
         return $return;
@@ -1238,12 +1238,12 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         {
             $return = session_abort();
 
             if($return === true && $unsetArray === true)
-            static::unsetArray();
+            self::unsetArray();
         }
 
         return $return;
@@ -1258,12 +1258,12 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         {
             $return = session_write_close();
 
             if($return === true && $unsetArray === true)
-            static::unsetArray();
+            self::unsetArray();
         }
 
         return $return;
@@ -1278,7 +1278,7 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         $return = session_unset();
 
         return $return;
@@ -1304,7 +1304,7 @@ class Session extends Root
     final public static function unsetCookie(?array $option=null):bool
     {
         $return = false;
-        $name = static::name();
+        $name = self::name();
 
         if(is_string($name))
         $return = Cookie::unset($name,$option);
@@ -1322,10 +1322,10 @@ class Session extends Root
     {
         $return = false;
 
-        if(static::isStarted())
+        if(self::isStarted())
         {
             if($empty === true)
-            static::empty();
+            self::empty();
 
             $return = session_destroy();
 
@@ -1334,7 +1334,7 @@ class Session extends Root
                 session_id('');
 
                 if($unsetCookie === true)
-                static::unsetCookie();
+                self::unsetCookie();
             }
         }
 
@@ -1350,7 +1350,7 @@ class Session extends Root
     {
         $return = null;
 
-        if(static::isStarted())
+        if(self::isStarted())
         {
             $return = 0;
             $gc = session_gc();
@@ -1386,7 +1386,7 @@ class Session extends Root
     // retourne l'environnement de la session
     final public static function env():string
     {
-        return static::get('env');
+        return self::get('env');
     }
 
 
@@ -1394,7 +1394,7 @@ class Session extends Root
     // retourne la clé de l'application roulant présentement
     final public static function type():string
     {
-        return static::get('type');
+        return self::get('type');
     }
 
 
@@ -1403,7 +1403,7 @@ class Session extends Root
     // la session doit être active
     final public static function version(?string $key=null):string
     {
-        return static::get('version');
+        return self::get('version');
     }
 
 
@@ -1411,7 +1411,7 @@ class Session extends Root
     // retourne le timestamp d'expiration présent dans le tableau de données session
     final public static function expire():?int
     {
-        return static::get('expire');
+        return self::get('expire');
     }
 
 
@@ -1419,7 +1419,7 @@ class Session extends Root
     // retourne le timestamp courant dans la session
     final public static function timestampCurrent():int
     {
-        return static::get('timestamp/current');
+        return self::get('timestamp/current');
     }
 
 
@@ -1427,7 +1427,7 @@ class Session extends Root
     // retourne le timestamp précédent de la session
     final public static function timestampPrevious():?int
     {
-        return static::get('timestamp/previous');
+        return self::get('timestamp/previous');
     }
 
 
@@ -1436,10 +1436,10 @@ class Session extends Root
     final public static function timestampDifference():?int
     {
         $return = null;
-        $previous = static::timestampPrevious();
+        $previous = self::timestampPrevious();
 
         if(is_int($previous))
-        $return = static::timestampCurrent() - $previous;
+        $return = self::timestampCurrent() - $previous;
 
         return $return;
     }
@@ -1450,7 +1450,7 @@ class Session extends Root
     // la session doit être active
     final public static function requestCount():?int
     {
-        return static::get('requestCount');
+        return self::get('requestCount');
     }
 
 
@@ -1459,7 +1459,7 @@ class Session extends Root
     // la session doit être active
     final public static function resetRequestCount():void
     {
-        static::set('requestCount',1);
+        self::set('requestCount',1);
 
         return;
     }
@@ -1470,7 +1470,7 @@ class Session extends Root
     // la session doit être active
     final public static function userAgent():?string
     {
-        return static::get('userAgent');
+        return self::get('userAgent');
     }
 
 
@@ -1479,7 +1479,7 @@ class Session extends Root
     // la session doit être active
     final public static function ip():?string
     {
-        return Ip::normalize(static::get('ip'));
+        return Ip::normalize(self::get('ip'));
     }
 
 
@@ -1488,7 +1488,7 @@ class Session extends Root
     // la session doit être active
     final public static function fingerprint():?string
     {
-        return static::get('fingerprint');
+        return self::get('fingerprint');
     }
 
 
@@ -1497,7 +1497,7 @@ class Session extends Root
     // la session doit être active
     final public static function lang():?string
     {
-        return static::get('lang');
+        return self::get('lang');
     }
 
 
@@ -1511,10 +1511,10 @@ class Session extends Root
         if(Lang::is($value))
         {
             $return = true;
-            $lang = static::get('lang');
+            $lang = self::get('lang');
 
             if($lang !== $value)
-            static::set('lang',$value);
+            self::set('lang',$value);
         }
 
         return $return;
@@ -1530,9 +1530,9 @@ class Session extends Root
         $return = null;
 
         if($refresh === true)
-        static::refreshCsrf();
+        self::refreshCsrf();
 
-        $return = static::get('csrf');
+        $return = self::get('csrf');
 
         return $return;
     }
@@ -1542,7 +1542,7 @@ class Session extends Root
     // retourne la config pour csrf
     final public static function getCsrfOption(?array $option=null):array
     {
-        return Arr::plus(static::$config['csrf'],$option);
+        return Arr::plus(self::$config['csrf'],$option);
     }
 
 
@@ -1550,7 +1550,7 @@ class Session extends Root
     // retourne le nom pour csrf
     final public static function getCsrfName(?array $option=null):string
     {
-        return static::getCsrfOption($option)['name'];
+        return self::getCsrfOption($option)['name'];
     }
 
 
@@ -1559,7 +1559,7 @@ class Session extends Root
     final public static function makeCsrf(?array $option=null):string
     {
         $return = '';
-        $option = static::getCsrfOption($option);
+        $option = self::getCsrfOption($option);
         if(!empty($option))
         $return = Str::random($option['length'],$option['possible'],$option['csprng']);
 
@@ -1572,7 +1572,7 @@ class Session extends Root
     // la session doit être active
     final public static function refreshCsrf(?array $option=null):void
     {
-        static::set('csrf',static::makeCsrf($option));
+        self::set('csrf',self::makeCsrf($option));
 
         return;
     }
@@ -1587,9 +1587,9 @@ class Session extends Root
         $return = null;
 
         if($refresh === true)
-        static::refreshCaptcha();
+        self::refreshCaptcha();
 
-        $return = static::get('captcha');
+        $return = self::get('captcha');
 
         return $return;
     }
@@ -1599,7 +1599,7 @@ class Session extends Root
     // retourne la config pour captcha
     final public static function getCaptchaOption(?array $option=null):array
     {
-        return Arr::plus(static::$config['captcha'],$option);
+        return Arr::plus(self::$config['captcha'],$option);
     }
 
 
@@ -1607,7 +1607,7 @@ class Session extends Root
     // retourne le nom pour captcha
     final public static function getCaptchaName(?array $option=null):string
     {
-        return static::getCaptchaOption($option)['name'];
+        return self::getCaptchaOption($option)['name'];
     }
 
 
@@ -1616,7 +1616,7 @@ class Session extends Root
     final public static function makeCaptcha(?array $option=null):string
     {
         $return = '';
-        $option = static::getCaptchaOption($option);
+        $option = self::getCaptchaOption($option);
 
         if(!empty($option))
         $return = Str::random($option['length'],$option['possible'],$option['csprng']);
@@ -1630,7 +1630,7 @@ class Session extends Root
     // la session doit être active
     final public static function refreshCaptcha(?array $option=null):void
     {
-        static::set('captcha',static::makeCaptcha($option));
+        self::set('captcha',self::makeCaptcha($option));
 
         return;
     }
@@ -1641,7 +1641,7 @@ class Session extends Root
     // la session doit être active
     final public static function emptyCaptcha():void
     {
-        static::set('captcha',null);
+        self::set('captcha',null);
 
         return;
     }
@@ -1652,7 +1652,7 @@ class Session extends Root
     // la session doit être active
     final public static function remember(?string $key=null)
     {
-        return Arr::getSafe($key,static::get('remember'));
+        return Arr::getSafe($key,self::get('remember'));
     }
 
 
@@ -1662,7 +1662,7 @@ class Session extends Root
     // la session doit être active
     final public static function setRemember(string $key,$value,bool $cast=true):void
     {
-        static::set(['remember',$key],$value,$cast);
+        self::set(['remember',$key],$value,$cast);
 
         return;
     }
@@ -1674,7 +1674,7 @@ class Session extends Root
     {
         foreach ($keyValue as $key => $value)
         {
-            static::setRemember($key,$value,$cast);
+            self::setRemember($key,$value,$cast);
         }
 
         return;
@@ -1685,7 +1685,7 @@ class Session extends Root
     // enlève une valeur du tableau remember
     final public static function unsetRemember(string $key):void
     {
-        static::unset(['remember',$key]);
+        self::unset(['remember',$key]);
 
         return;
     }
@@ -1695,7 +1695,7 @@ class Session extends Root
     // vide le tableau remember
     final public static function rememberEmpty():void
     {
-        static::set('remember',null);
+        self::set('remember',null);
 
         return;
     }

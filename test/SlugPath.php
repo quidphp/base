@@ -39,7 +39,7 @@ class SlugPath extends Base\Test
         assert(Base\SlugPath::str(['test james ok','y','la vie y ést belle','ok'=>'what'],['slug'=>['keepLast'=>false]]) === 'test-james-ok/la-vie-est-belle/ok-what');
         assert(Base\SlugPath::str([123,456,'what'=>'lol',10=>'meh']) === '123/456/what-lol/meh');
         assert(Base\SlugPath::str(['test james ok','y',12345,123,'la vie y ést belle','ok'=>'what'],['slug'=>['sliceLength'=>[5,10]]]) === 'james-ok/y/12345/123/belle/what');
-        assert(Base\SlugPath::str(['test james ok','y',12345,123,'la vie y ést belle','ok'=>'what'],['slug'=>['keepLast'=>false,'keepNumeric'=>false,'sliceLength'=>[5,10]]]) === 'james/12345/belle');
+        assert(Base\SlugPath::str(['test james ok','y',12345,123,'la vie y ést belle','ok'=>'what'],['slug'=>['keepLast'=>false,'keepNum'=>false,'sliceLength'=>[5,10]]]) === 'james/12345/belle');
         assert(strlen(Base\SlugPath::str(['test james ok','y',12345,123,'la vie y ést belle','ok'=>'what'])) === 50);
         assert(strlen(Base\SlugPath::str(['test james ok','y',12345,123,'la vie y ést belle','ok'=>'what'],['slug'=>['totalLength'=>10]])) === 50);
         assert(strlen(Base\SlugPath::str(['test james ok','y',12345,123,'la vie y ést belle','ok'=>'what'],['slug'=>['totalLength'=>15]])) === 11);

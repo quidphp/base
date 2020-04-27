@@ -23,8 +23,6 @@ class Debug extends Base\Test
         $isVarDumpOverload = Base\Ini::isVarDumpOverloaded();
         $isCli = Base\Server::isCli();
 
-        // helper
-
         // var
 
         // varFlush
@@ -110,9 +108,6 @@ class Debug extends Base\Test
         assert(round(23500) === round(Base\Debug::speed(Base\Datetime::microtime() - 23500)));
 
         // call
-
-        // data
-        assert(is_array(Base\Debug::data()));
 
         return true;
     }

@@ -35,15 +35,15 @@ class Call extends Base\Test
         assert(Base\Call::is([$date,'setDate']));
         assert(Base\Call::is(function() { }));
 
-        // isSafeArrayCallable
-        assert(!Base\Call::isSafeArrayCallable(function() { }));
-        assert(Base\Call::isSafeArrayCallable([Base\Str::class,'lower']));
-        assert(Base\Call::isSafeArrayCallable([$date,'setDatez']));
-        assert(!Base\Call::isSafeArrayCallable([\Datetime::class,'setDate']));
-        assert(!Base\Call::isSafeArrayCallable(["\Datetime",'setDate']));
-        assert(Base\Call::isSafeArrayCallable(["D\atetime",'setDate']));
-        assert(!Base\Call::isSafeArrayCallable(['test'=>Base\Str::class,'lower']));
-        assert(!Base\Call::isSafeArrayCallable('strtolower'));
+        // isSafeArray
+        assert(!Base\Call::isSafeArray(function() { }));
+        assert(Base\Call::isSafeArray([Base\Str::class,'lower']));
+        assert(Base\Call::isSafeArray([$date,'setDatez']));
+        assert(!Base\Call::isSafeArray([\Datetime::class,'setDate']));
+        assert(!Base\Call::isSafeArray(["\Datetime",'setDate']));
+        assert(Base\Call::isSafeArray(["D\atetime",'setDate']));
+        assert(!Base\Call::isSafeArray(['test'=>Base\Str::class,'lower']));
+        assert(!Base\Call::isSafeArray('strtolower'));
 
         // isFunction
         assert(Base\Call::isFunction('strtolower'));
@@ -69,59 +69,26 @@ class Call extends Base\Test
         assert('BLA' === Base\Call::able('strtoupper','bla'));
         assert('b' === Base\Call::able('substr','bla',0,1));
 
-        // ableArgs
-        assert('b' === Base\Call::ableArgs('substr',['bla',0,1]));
-        assert('BLA' === Base\Call::ableArgs('strtoupper',['bla']));
-        assert('BLA' === Base\Call::ableArgs('strtoupper',['what'=>'bla']));
+        // loop
 
-        // ableArray
-        assert('b' === Base\Call::ableArray(['substr',['bla',0,1]]));
-        assert('BLA' === Base\Call::ableArray(['strtoupper',['bla']]));
+        // back
         $array = ['upper'=>'strtoupper','closure'=>fn($x) => ($x === 'bla')];
+        assert('BLA' === Base\Call::back('upper',$array,'bla'));
 
-        // ableArrs
+        // dig
+        $test = ['test'=>[Base\Request::class,'host'],'well'=>['ok'=>fn() => true,'james'=>[Base\Request::class,'isSsl']]];
+        assert(Base\Call::dig(true,$test)['well']['james'] === Base\Request::isSsl());
+        assert(Base\Call::dig(true,$test)['well']['ok'] instanceof \Closure);
+        assert(!Base\Call::dig(false,$test)['well']['ok'] instanceof \Closure);
 
         // staticClass
+        $array = ['upper'=>'strtoupper','closure'=>fn($x) => ($x === 'bla')];
         assert(Base\Call::staticClass(Base\Str::class,'is','bla'));
 
         // staticClasses
         assert(Base\Call::staticClasses([Base\Str::class],'is','bla')[Base\Str::class] === true);
 
-        // back
-        assert('BLA' === Base\Call::back('upper',$array,'bla'));
-
-        // backBool
-        assert(!Base\Call::backBool('upper',$array,'bla'));
-        assert(Base\Call::backBool('closure',$array,'bla'));
-
-        // arr
-        $array = ['upper'=>'strtoupper','closure'=>fn($x) => ($x === 'bla')];
-        Base\Call::arr('upper',$array,'bla');
-        assert($array['upper'] === 'BLA');
-
-        // bool
-        assert(Base\Call::bool([Base\Str::class,'is'],'test','test2'));
-        assert(!Base\Call::bool([Base\Str::class,'is'],'test','test2',3));
-
-        // map
-        $array = [1,2,'test@gmail.com'];
-        assert(Base\Call::map('email','strtoupper',$array) === [1,2,'TEST@GMAIL.COM']);
-        $array = [1,2,'test'];
-        assert(Base\Call::map('string','strtoupper',$array) === [1,2,'TEST']);
-        $array = [['test@gmail.com']];
-        assert(Base\Call::map('string','strtoupper',$array) === [['TEST@GMAIL.COM']]);
-        assert(Base\Call::map('email','strtoupper','test@gmail.com') === 'TEST@GMAIL.COM');
-        assert(Base\Call::map('string',[Base\Str::class,'upper'],'éste@gmail.com') === 'éSTE@GMAIL.COM');
-        assert(Base\Call::map('string',[Base\Str::class,'upper'],'éste@gmail.com',true) === 'ÉSTE@GMAIL.COM');
-
-        // withObj
-
         // bindTo
-
-        // digStaticMethod
-        $test = ['test'=>[Base\Request::class,'host'],'well'=>['ok'=>fn() => true,'james'=>[Base\Request::class,'isSsl']]];
-        assert(Base\Call::digStaticMethod($test)['well']['james'] === Base\Request::isSsl());
-        assert(Base\Call::digStaticMethod($test)['well']['ok'] instanceof \Closure);
 
         // root
         assert(Base\Call::isCallable(function() { }));

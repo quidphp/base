@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // header
 // class with static methods to work with HTTP headers
-class Header extends Listing
+final class Header extends Listing
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'implode'=>1, // index du séparateur à utiliser lors du implode
             'caseImplode'=>[self::class,'keyCase']], // les clés sont ramenés dans cette case lors du implode
@@ -41,7 +41,7 @@ class Header extends Listing
     // retourne vrai le code status dans le tableau header est 200
     final public static function is200($header):bool
     {
-        return static::isCode(200,$header);
+        return self::isCode(200,$header);
     }
 
 
@@ -49,7 +49,7 @@ class Header extends Listing
     // retourne vrai si le code de la réponse est positive (200 à 399)
     final public static function isCodePositive($header):bool
     {
-        return static::isCodeBetween(200,399,$header);
+        return self::isCodeBetween(200,399,$header);
     }
 
 
@@ -57,7 +57,7 @@ class Header extends Listing
     // retourne vrai si le code de la réponse est positive mais pas 301
     final public static function isCodeLoggable($header):bool
     {
-        return !static::isCodePositive($header) || static::isCode(301,$header);
+        return !self::isCodePositive($header) || self::isCode(301,$header);
     }
 
 
@@ -65,7 +65,7 @@ class Header extends Listing
     // retourne vrai si le code dans le tableau header est 400 ou 404
     final public static function isCodeError($header):bool
     {
-        return static::isCodeIn(400,$header);
+        return self::isCodeIn(400,$header);
     }
 
 
@@ -73,7 +73,7 @@ class Header extends Listing
     // retourne vrai si le code dans le tableau header est 500
     final public static function isCodeServerError($header):bool
     {
-        return static::isCodeIn(500,$header);
+        return self::isCodeIn(500,$header);
     }
 
 
@@ -81,7 +81,7 @@ class Header extends Listing
     // retourne vrai si le code existe dans le tableau config
     final public static function isCodeValid($value):bool
     {
-        return is_int($value) && array_key_exists($value,Lang\En::$config['header']['responseStatus']);
+        return is_int($value) && array_key_exists($value,Lang\En::getConfig('header/responseStatus'));
     }
 
 
@@ -89,7 +89,7 @@ class Header extends Listing
     // retourne vrai si le texte de status existe dans le tableau config
     final public static function isStatusTextValid($value):bool
     {
-        return is_string($value) && in_array($value,Lang\En::$config['header']['responseStatus'],true);
+        return is_string($value) && in_array($value,Lang\En::getConfig('header/responseStatus'),true);
     }
 
 
@@ -97,7 +97,7 @@ class Header extends Listing
     // retourne vrai si le tableau header a un content type html
     final public static function isHtml($header):bool
     {
-        return static::isContentType('html',$header);
+        return self::isContentType('html',$header);
     }
 
 
@@ -105,7 +105,7 @@ class Header extends Listing
     // retourne vrai si le tableau header a un content type json
     final public static function isJson($header):bool
     {
-        return static::isContentType('json',$header);
+        return self::isContentType('json',$header);
     }
 
 
@@ -113,7 +113,7 @@ class Header extends Listing
     // retourne vrai si le tableau header a un content type xml
     final public static function isXml($header):bool
     {
-        return static::isContentType('xml',$header);
+        return self::isContentType('xml',$header);
     }
 
 
@@ -125,8 +125,8 @@ class Header extends Listing
 
         if(is_array($header))
         {
-            $statusKey = static::$config['status'];
-            $assoc = static::arr($header);
+            $statusKey = self::$config['status'];
+            $assoc = self::arr($header);
 
             if(is_string($statusKey) && array_key_exists($statusKey,$assoc) && is_string($assoc[$statusKey]))
             $return = true;
@@ -144,7 +144,7 @@ class Header extends Listing
 
         if(is_array($header))
         {
-            $code = static::code($header);
+            $code = self::code($header);
 
             if(is_int($code))
             {
@@ -174,7 +174,7 @@ class Header extends Listing
 
         if(is_array($header))
         {
-            $code = static::code($header);
+            $code = self::code($header);
 
             if(is_int($from) && is_int($to) && $code >= $from && $code <= $to)
             $return = true;
@@ -194,7 +194,7 @@ class Header extends Listing
         {
             $from = (int) (floor($value / 100) * 100);
             $to = ($from + 99);
-            $return = static::isCodeBetween($from,$to,$header);
+            $return = self::isCodeBetween($from,$to,$header);
         }
 
         return $return;
@@ -210,7 +210,7 @@ class Header extends Listing
 
         if(is_string($value) && is_array($header))
         {
-            $contentType = static::contentType($header,0);
+            $contentType = self::contentType($header,0);
 
             if(!empty($contentType))
             {
@@ -219,8 +219,8 @@ class Header extends Listing
 
                 else
                 {
-                    $parsedContentType = static::parseContentType($contentType,false);
-                    $mimedContentType = static::parseContentType($contentType,true);
+                    $parsedContentType = self::parseContentType($contentType,false);
+                    $mimedContentType = self::parseContentType($contentType,true);
 
                     if(in_array($value,[$parsedContentType,$mimedContentType],true))
                     $return = true;
@@ -236,7 +236,7 @@ class Header extends Listing
     // retourne vrai si le protocol est http1
     final public static function isHttp1($value):bool
     {
-        return in_array(static::protocol($value),['HTTP/1','HTTP/1.0','HTTP/1.1'],true);
+        return in_array(self::protocol($value),['HTTP/1','HTTP/1.0','HTTP/1.1'],true);
     }
 
 
@@ -244,7 +244,7 @@ class Header extends Listing
     // retourne vrai si le protocol est http2
     final public static function isHttp2($value):bool
     {
-        return in_array(static::protocol($value),['HTTP/2','HTTP/2.0'],true);
+        return in_array(self::protocol($value),['HTTP/2','HTTP/2.0'],true);
     }
 
 
@@ -263,14 +263,14 @@ class Header extends Listing
     final public static function parse(array $array,array $option):array
     {
         $return = [];
-        $separator = static::getSeparator(1,$option['explode']);
-        $statusKey = static::$config['status'];
+        $separator = self::getSeparator(1,$option['explode']);
+        $statusKey = self::$config['status'];
 
         foreach ($array as $key => $value)
         {
             if(is_numeric($key) && is_string($value))
             {
-                if(!empty($statusKey) && static::isStatus($value))
+                if(!empty($statusKey) && self::isStatus($value))
                 $key = $statusKey;
 
                 else
@@ -291,10 +291,10 @@ class Header extends Listing
                     if(array_key_exists($key,$return))
                     $return[$key] = $value;
                     else
-                    $return = Arr::append([$key=>$value],$return);
+                    $return = Arr::merge([$key=>$value],$return);
                 }
 
-                elseif(Arr::keyExists($key,$return,static::getSensitive()))
+                elseif(Arr::keyExists($key,$return,self::getSensitive()))
                 {
                     $target = Arr::ikey($key,$return);
 
@@ -302,7 +302,7 @@ class Header extends Listing
                     $return[$target] = [$return[$target]];
 
                     if(is_array($return[$target]))
-                    $return[$target] = Arr::append($return[$target],$value);
+                    $return[$target] = Arr::merge($return[$target],$value);
                 }
 
                 else
@@ -327,7 +327,7 @@ class Header extends Listing
 
             foreach ($value as $v)
             {
-                if(is_string($v) && static::isStatus($v))
+                if(is_string($v) && self::isStatus($v))
                 {
                     $explode = Str::explodeTrim(' ',$v,3);
 
@@ -336,7 +336,7 @@ class Header extends Listing
                         $return = [];
                         $return['protocol'] = strtoupper($explode[0]);
                         $return['code'] = (int) $explode[1];
-                        $text = $explode[2] ?? static::statusTextFromCode($return['code']);
+                        $text = $explode[2] ?? self::statusTextFromCode($return['code']);
                         $return['text'] = $text;
                         break;
                     }
@@ -353,7 +353,7 @@ class Header extends Listing
     // si mime est true, retourne simplement l'extension
     final public static function parseContentType(string $return,bool $mime=true):string
     {
-        $contentType = static::getSeparator(2);
+        $contentType = self::getSeparator(2);
         $explode = Str::explodeTrim($contentType,$return,2);
 
         if(!empty($explode[0]))
@@ -377,9 +377,9 @@ class Header extends Listing
     {
         $return = [];
 
-        $option = static::option($option);
-        $arr = static::arr($array,$option);
-        $return = static::keyValue($arr,$option);
+        $option = self::option($option);
+        $arr = self::arr($array,$option);
+        $return = self::keyValue($arr,$option);
 
         return $return;
     }
@@ -391,8 +391,8 @@ class Header extends Listing
     final public static function keyValue(array $array,array $option):array
     {
         $return = [];
-        $separator = static::getSeparator(1,$option['implode']);
-        $statusKey = static::$config['status'];
+        $separator = self::getSeparator(1,$option['implode']);
+        $statusKey = self::$config['status'];
 
         if($option['caseImplode'] !== null)
         $array = Arr::keysChangeCase($option['caseImplode'],$array);
@@ -444,7 +444,7 @@ class Header extends Listing
     // prépare une string dans la méthode arr
     final public static function prepareStr(string $value,?array $option=null):array
     {
-        return static::explodeStr($value);
+        return self::explodeStr($value);
     }
 
 
@@ -464,7 +464,7 @@ class Header extends Listing
     // sinon un tableau est formé avec les deux valeurs
     final public static function setMerge($key,$value,$assoc,?array $option=null):array
     {
-        return static::arr(Arr::setMerge($key,$value,static::arr($assoc,$option),static::getSensitive()),$option);
+        return self::arr(Arr::setMerge($key,$value,self::arr($assoc,$option),self::getSensitive()),$option);
     }
 
 
@@ -475,7 +475,7 @@ class Header extends Listing
     // sinon un tableau est formé avec les différentes valeurs
     final public static function setsMerge(array $values,$assoc,?array $option=null):array
     {
-        return static::arr(Arr::setsMerge($values,static::arr($assoc,$option),static::getSensitive()),$option);
+        return self::arr(Arr::setsMerge($values,self::arr($assoc,$option),self::getSensitive()),$option);
     }
 
 
@@ -493,7 +493,7 @@ class Header extends Listing
             if($charset === true && Str::isStart('text',$return) && strpos($return,'charset') === false)
             {
                 $charset = Encoding::getCharset();
-                $separator = static::getSeparator(2);
+                $separator = self::getSeparator(2);
                 if(!empty($separator))
                 $return .= $separator.' charset='.$charset;
             }
@@ -514,7 +514,7 @@ class Header extends Listing
 
         else
         {
-            $status = static::parseStatus($value);
+            $status = self::parseStatus($value);
             if(!empty($status))
             $return = $status['code'];
         }
@@ -535,7 +535,7 @@ class Header extends Listing
 
         else
         {
-            $status = static::parseStatus($value);
+            $status = self::parseStatus($value);
             if(!empty($status))
             $return = $status['protocol'];
         }
@@ -551,11 +551,11 @@ class Header extends Listing
         $return = null;
 
         if(is_int($value))
-        $return = static::statusTextFromCode($value);
+        $return = self::statusTextFromCode($value);
 
         else
         {
-            $status = static::parseStatus($value);
+            $status = self::parseStatus($value);
             if(!empty($status))
             $return = $status['text'];
         }
@@ -569,9 +569,9 @@ class Header extends Listing
     final public static function statusTextFromCode(int $value):?string
     {
         $return = null;
-        $code = static::code($value);
-        if(!empty($code) && array_key_exists($code,Lang\En::$config['header']['responseStatus']))
-        $return = Lang\En::$config['header']['responseStatus'][$code];
+        $code = self::code($value);
+        if(!empty($code) && array_key_exists($code,Lang\En::getConfig('header/responseStatus')))
+        $return = Lang\En::getConfig("header/responseStatus/$code");
 
         return $return;
     }
@@ -583,8 +583,8 @@ class Header extends Listing
     {
         $return = null;
 
-        if(in_array($value,Lang\En::$config['header']['responseStatus'],true))
-        $return = array_search($value,Lang\En::$config['header']['responseStatus'],true);
+        if(in_array($value,Lang\En::getConfig('header/responseStatus'),true))
+        $return = array_search($value,Lang\En::getConfig('header/responseStatus'),true);
 
         return $return;
     }
@@ -595,7 +595,7 @@ class Header extends Listing
     // seul méthode à utiliser lang, toutes les autres méthodes utilisent uniquemment les headers et status text en anglais
     final public static function getResponseStatus(?string $lang=null):array
     {
-        return Arr::plus(Lang\En::$config['header']['responseStatus'],Lang::headerResponseStatus(null,$lang));
+        return Arr::plus(Lang\En::getConfig('header/responseStatus'),Lang::headerResponseStatus(null,$lang));
     }
 
 
@@ -604,10 +604,10 @@ class Header extends Listing
     final public static function status($value):?string
     {
         $return = null;
-        $status['protocol'] = static::protocol($value);
-        $status['code'] = static::code($value);
-        $status['text'] = static::statusText($value);
-        $return = static::makeStatus($status);
+        $status['protocol'] = self::protocol($value);
+        $status['code'] = self::code($value);
+        $status['text'] = self::statusText($value);
+        $return = self::makeStatus($status);
 
         return $return;
     }
@@ -634,7 +634,7 @@ class Header extends Listing
     // si parse est true, parse devient 0 (garde le charset)
     final public static function contentType(array $header,$parse=1):?string
     {
-        $return = static::get('Content-Type',$header);
+        $return = self::get('Content-Type',$header);
 
         if(is_array($return))
         $return = current($return);
@@ -648,7 +648,7 @@ class Header extends Listing
             $parse = 0;
 
             if(!empty($parse))
-            $return = static::parseContentType($return,($parse === 2));
+            $return = self::parseContentType($return,($parse === 2));
         }
 
         return $return;
@@ -661,7 +661,7 @@ class Header extends Listing
     final public static function contentLength(array $header):?int
     {
         $return = null;
-        $contentLength = static::get('Content-Length',$header);
+        $contentLength = self::get('Content-Length',$header);
 
         if(is_numeric($contentLength))
         $return = (int) $contentLength;
@@ -675,7 +675,7 @@ class Header extends Listing
     // retourne un tableau header assoc
     final public static function setContentType(string $value,array $return=[]):array
     {
-        return static::set('Content-Type',static::prepareContentType($value),$return);
+        return self::set('Content-Type',self::prepareContentType($value),$return);
     }
 
 
@@ -684,7 +684,7 @@ class Header extends Listing
     // il doit déjà y avoir une entrée status - garde code et text
     final public static function setProtocol($value,array $return):array
     {
-        $status = static::parseStatus($return);
+        $status = self::parseStatus($return);
         if(!empty($status) && (is_string($value) || is_float($value)))
         {
             if(is_string($value))
@@ -697,7 +697,7 @@ class Header extends Listing
             }
 
             if(!empty($status['protocol']))
-            $return = static::setStatus(static::makeStatus($status),$return);
+            $return = self::setStatus(self::makeStatus($status),$return);
         }
 
         return $return;
@@ -709,17 +709,17 @@ class Header extends Listing
     // sinon envoi à setStatus
     final public static function setCode(int $value,array $return=[]):array
     {
-        $status = static::parseStatus($return);
+        $status = self::parseStatus($return);
         if(!empty($status))
         {
             $status['code'] = $value;
-            $status['text'] = static::statusTextFromCode($value);
+            $status['text'] = self::statusTextFromCode($value);
 
-            $return = static::setStatus(static::makeStatus($status),$return);
+            $return = self::setStatus(self::makeStatus($status),$return);
         }
 
         else
-        $return = static::setStatus($value,$return);
+        $return = self::setStatus($value,$return);
 
         return $return;
     }
@@ -730,11 +730,11 @@ class Header extends Listing
     // il doit déjà y avoir une entrée status - garde protocole et code
     final public static function setStatusText(string $value,array $return):array
     {
-        $status = static::parseStatus($return);
+        $status = self::parseStatus($return);
         if(!empty($status))
         {
             $status['text'] = $value;
-            $return = static::setStatus(static::makeStatus($status),$return);
+            $return = self::setStatus(self::makeStatus($status),$return);
         }
 
         return $return;
@@ -746,11 +746,11 @@ class Header extends Listing
     // accepte un int, string ou array
     final public static function setStatus($value,array $return=[]):array
     {
-        $status = static::status($value);
-        $statusKey = static::$config['status'];
+        $status = self::status($value);
+        $statusKey = self::$config['status'];
 
         if(!empty($status) && !empty($statusKey))
-        $return = static::set($statusKey,$status,$return);
+        $return = self::set($statusKey,$status,$return);
 
         return $return;
     }
@@ -760,7 +760,7 @@ class Header extends Listing
     // change le code du tableau header pour 200
     final public static function ok(array $return=[]):array
     {
-        return static::setCode(200,$return);
+        return self::setCode(200,$return);
     }
 
 
@@ -776,7 +776,7 @@ class Header extends Listing
         $code = 302;
 
         if(is_int($code))
-        $return = static::setCode($code,$return);
+        $return = self::setCode($code,$return);
 
         return $return;
     }
@@ -786,7 +786,7 @@ class Header extends Listing
     // change le code du tableau header pour 404
     final public static function notFound(array $return=[]):array
     {
-        return static::setCode(404,$return);
+        return self::setCode(404,$return);
     }
 
 
@@ -795,8 +795,8 @@ class Header extends Listing
     // permanent permet de spécifier si le code est 301 ou 302
     final public static function redirect(string $value,$code=null,array $return=[]):array
     {
-        $return = static::moved($code,$return);
-        $return = static::set('Location',$value,$return);
+        $return = self::moved($code,$return);
+        $return = self::set('Location',$value,$return);
 
         return $return;
     }
@@ -808,8 +808,8 @@ class Header extends Listing
     {
         if(Arr::keysExists(['mime','size','basename'],$value))
         {
-            $return = static::setContentType($value['mime'],$return);
-            $return = static::sets([
+            $return = self::setContentType($value['mime'],$return);
+            $return = self::sets([
                 'Content-Transfer-Encoding'=>'binary',
                 'Content-Description'=>'File Transfer',
                 'Content-Length'=>$value['size'],
@@ -827,8 +827,8 @@ class Header extends Listing
     {
         if(Arr::keysExists(['mime','size'],$value))
         {
-            $return = static::setContentType($value['mime'],$return);
-            $return = static::sets([
+            $return = self::setContentType($value['mime'],$return);
+            $return = self::sets([
                 'Content-Length'=>$value['size'],
                 'Content-Disposition'=>'inline; filename="'.$value['basename'].'"'
             ],$return);

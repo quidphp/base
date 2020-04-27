@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // slugPath
 // class with static methods to deal with URI slugs within an URI path
-class SlugPath extends Listing
+final class SlugPath extends Listing
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'slug'=>null],
         'separator'=>[ // les séparateurs de listing, le deuxième index est la version avec espace
@@ -51,7 +51,7 @@ class SlugPath extends Listing
             $return[] = $slug;
         }
 
-        $return = static::makeSlugs($return,$slugOption);
+        $return = self::makeSlugs($return,$slugOption);
 
         return $return;
     }

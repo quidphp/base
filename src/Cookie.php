@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // cookie
 // class with static methods to add and remove cookies
-class Cookie extends Root
+final class Cookie extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'lifetime'=>3600, // durée de vie, 0 signifie fermeture du browser, a priorité sur expire car le timestamp courant est ajouté
         'expires'=>null, // expiration, 0 signifie fermeture du browser, le timestamp n'est pas additionné, a priorité sur lifetime
         'path'=>'/', // chemin dans le domaine
@@ -49,7 +49,7 @@ class Cookie extends Root
     final public static function set(string $name,string $value,?array $option=null):bool
     {
         $return = false;
-        $option = static::option('set',$option);
+        $option = self::option('set',$option);
 
         if(!empty($option) && !Response::areHeadersSent())
         $return = setcookie($name,$value,$option);
@@ -64,7 +64,7 @@ class Cookie extends Root
     final public static function unset(string $name,?array $option=null):bool
     {
         $return = false;
-        $option = static::option('unset',$option);
+        $option = self::option('unset',$option);
 
         if(!empty($option) && !Response::areHeadersSent())
         $return = setcookie($name,'',$option);
@@ -78,7 +78,7 @@ class Cookie extends Root
     final public static function option(string $mode,?array $option=null):array
     {
         $return = [];
-        $option = Arr::plus(static::$config,$option);
+        $option = Arr::plus(self::$config,$option);
 
         if(in_array($mode,['set','unset','cookieParams'],true))
         {

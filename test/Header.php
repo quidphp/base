@@ -335,10 +335,10 @@ class Header extends Base\Test
         assert(is_string(Base\Header::arr(['test'=>2,'OK'=>Base\Request::absolute()])['OK']));
         assert(Base\Header::arr(['test2'=>true,'test'=>0,'user-agent'=>false,'ok'=>'0','james'=>'','james-test'=>null]) === ['test2'=>true,'test'=>0,'user-agent'=>false,'ok'=>'0']);
         assert(strlen(Base\Header::str(['test2'=>true,'test'=>0,'user-agent'=>false,'ok'=>'0','james'=>'','james-test'=>null])) === 39);
-        $headers = Base\Response::$config['default']['headers'];
+        $headers = Base\Response::getConfig('default/headers');
         assert(count(Base\Header::arr($headers)) === count($headers));
         $headers = ['test'=>[Base\Request::class,'host'],'james'=>[Base\Request::class,'isSsl']];
-        assert(Base\Header::arr(Base\Call::digStaticMethod($headers))['james'] === Base\Request::isSsl());
+        assert(Base\Header::arr(Base\Call::dig(true,$headers))['james'] === Base\Request::isSsl());
 
         // fingerprint
         assert(strlen(Base\Header::fingerprint(Base\Request::headers(),['User-Agent'])) === 40);

@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // network
 // class with static network-related methods (dns, mx, ping, hostname and more)
-class Network extends Root
+final class Network extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // isOnline
@@ -24,7 +24,7 @@ class Network extends Root
     final public static function isOnline(string $hostname,int $port=80,int $timeout=2,&$errno=null,&$errstr=null):bool
     {
         $return = false;
-        $ping = static::ping($hostname,$port,$timeout,$errno,$errstr);
+        $ping = self::ping($hostname,$port,$timeout,$errno,$errstr);
 
         if(is_numeric($ping))
         $return = true;

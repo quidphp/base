@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // obj
 // class with static methods to deal with objects, does not accept fqcn strings
-class Obj extends Root
+final class Obj extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'method'=>'_cast', // méthode pour cast
         'cast'=>null // méthode à appeler si cast ne respecte pas le type
     ];
@@ -391,7 +391,7 @@ class Obj extends Root
     {
         foreach ($properties as $property)
         {
-            if(static::hasProperty($property,$return))
+            if(self::hasProperty($property,$return))
             unset($return->$property);
         }
 
@@ -479,7 +479,7 @@ class Obj extends Root
     {
         if(is_object($return))
         {
-            $method ??= static::$config['method'];
+            $method ??= self::$config['method'];
 
             if($return instanceof \Closure)
             $return = $return();
@@ -492,7 +492,7 @@ class Obj extends Root
         {
             foreach ($return as $key => $value)
             {
-                $return[$key] = static::cast($value,0,$method);
+                $return[$key] = self::cast($value,0,$method);
             }
         }
 
@@ -521,7 +521,7 @@ class Obj extends Root
 
             if(!empty($error))
             {
-                $callable = static::$config['cast'];
+                $callable = self::$config['cast'];
 
                 if(!empty($callable))
                 $callable($error);
@@ -538,7 +538,7 @@ class Obj extends Root
     {
         foreach ($return as $key => $value)
         {
-            $return[$key] = static::cast($value,$mode);
+            $return[$key] = self::cast($value,$mode);
         }
 
         return $return;
@@ -549,7 +549,7 @@ class Obj extends Root
     // change la callable d'error pour cast
     final public static function setCastError(callable $callable):void
     {
-        static::$config['cast'] = $callable;
+        self::$config['cast'] = $callable;
 
         return;
     }

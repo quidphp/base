@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // boolean
 // class with static methods to deal with boolean type
-class Boolean extends Root
+final class Boolean extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // typecast
@@ -149,22 +149,6 @@ class Boolean extends Root
     }
 
 
-    // fromInt
-    // retourne un booléean à partir d'un int
-    final public static function fromInt(int $value):?bool
-    {
-        $return = null;
-
-        if($value === 1)
-        $return = true;
-
-        elseif($value === 0)
-        $return = false;
-
-        return $return;
-    }
-
-
     // toggle
     // toggle des valeurs primaires (true/false)
     final public static function toggle(bool $value):bool
@@ -176,6 +160,22 @@ class Boolean extends Root
 
         elseif($value === false)
         $return = true;
+
+        return $return;
+    }
+
+
+    // toInt
+    // retourne un numéro à partir d'un boolean
+    final public static function toInt(bool $bool):?int
+    {
+        $return = null;
+
+        if($bool === true)
+        $return = 1;
+
+        elseif($bool === false)
+        $return = 0;
 
         return $return;
     }

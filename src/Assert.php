@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // assert
 // class with methods a layer over the native PHP assert functions
-class Assert extends Root
+final class Assert extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // call
@@ -52,7 +52,7 @@ class Assert extends Root
     // lie un handler lors des erreurs d'assertions
     final public static function setHandler(callable $call):bool
     {
-        return static::set(ASSERT_CALLBACK,$call);
+        return self::set(ASSERT_CALLBACK,$call);
     }
 }
 ?>

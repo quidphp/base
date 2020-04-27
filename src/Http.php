@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // http
 // class with static methods related to the HTTP protocol
-class Http extends Root
+final class Http extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'str'=>[ // configuration pour la méthode str
             'all'=>['absolute','timestamp','method'],
             'delimiter'=>'|']
@@ -149,7 +149,7 @@ class Http extends Root
     final public static function str(array $value,?array $option=null):string
     {
         $return = '';
-        $option = Arr::append(static::$config['str']['all'],$option);
+        $option = Arr::merge(self::$config['str']['all'],$option);
         $str = [];
 
         foreach ($option as $key)
@@ -169,7 +169,7 @@ class Http extends Root
         }
 
         if(!empty($str))
-        $return = implode(static::$config['str']['delimiter'],$str);
+        $return = implode(self::$config['str']['delimiter'],$str);
 
         return $return;
     }
@@ -181,8 +181,8 @@ class Http extends Root
     final public static function arr(string $value,?array $option=null):array
     {
         $return = [];
-        $option = Arr::append(static::$config['str']['all'],$option);
-        $explode = Arr::castMore(Str::explode(static::$config['str']['delimiter'],$value));
+        $option = Arr::merge(self::$config['str']['all'],$option);
+        $explode = Arr::castMore(Str::explode(self::$config['str']['delimiter'],$value));
 
         if(count($explode) === count($option))
         {

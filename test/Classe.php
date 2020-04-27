@@ -284,7 +284,7 @@ namespace Quid\Test\Base
             assert(Base\Classe::properties($class)['parentPubDyn']['test2'] === 'bla');
             assert(empty(Base\Classe::properties($classname)['parentPubDyn']['test2']));
             assert(Base\Classe::properties($classname) !== Base\Classe::properties($class));
-            assert(count(Base\Classe::properties(Base\Dir::class)) === 5);
+            assert(count(Base\Classe::properties(Base\Dir::class)) === 4);
             assert(Base\Classe::properties("\Quid\Waht") === null);
             assert(count(Base\Classe::properties($class)) === 8);
             assert(count(Base\Classe::properties($classname)) === 8);
@@ -294,24 +294,9 @@ namespace Quid\Test\Base
             assert(Base\Classe::properties($interface) === null);
             assert(Base\Classe::properties($parentInterface) === null);
 
-            // propertyMergeCallable
-            assert(Base\Classe::propertyMergeCallable(null) === [Base\Arrs::class,'replace']);
-            assert(Base\Classe::propertyMergeCallable(false) === [Base\Arr::class,'replace']);
-
             // propertyMerge
-            assert(Base\Classe::propertyMerge('config',Base\Dir::class,['ok'=>'yeah'])['ok'] === 'yeah');
-            unset(Base\Dir::$config['ok']);
-
-            // propertyMergeWith
-            assert(count(Base\Classe::propertyMergeWith('config',Base\Dir::class,[Base\Attr::class],null,false)) === 16);
-
-            // propertyMergeParent
-            assert(count(Base\Classe::propertyMergeParent('config',Base\Dir::class,null,false)) === 3);
-            assert(Base\Classe::propertyMergeParent('james',Base\Dir::class,null,false) === []);
-            assert(Base\Classe::propertyMergeParent('config',Base\Finder::class,null,false) === Base\Finder::$config);
-
-            // propertyMergeParents
-            assert(count(Base\Classe::propertyMergeParents('config',Base\Dir::class,null,false)) === 3);
+            $closure = Base\Classe::propertyMerge('config',Base\Dir::class,[Base\Attr::class]);
+            assert($closure instanceof \Closure);
 
             // interfaces
             assert(Base\Classe::interfaces("Quid\What") === null);

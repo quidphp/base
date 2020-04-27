@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // ini
 // class with methods a layer over the native PHP ini functions
-class Ini extends Root
+final class Ini extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'default'=>[ // ini à appliquer par défaut lors du chargement
             'default_charset'=>'UTF-8',
             'auto_detect_line_endings'=>true,
@@ -64,7 +64,7 @@ class Ini extends Root
     // retourne vrai si la valeur ini existe
     final public static function is($value):bool
     {
-        return is_string($value) && array_key_exists($value,static::all());
+        return is_string($value) && array_key_exists($value,self::all());
     }
 
 
@@ -72,7 +72,7 @@ class Ini extends Root
     // retourne vrai si l'extension xdebug est active et var dump est overloadé
     final public static function isVarDumpOverloaded():bool
     {
-        return Extension::hasXdebug() && static::xdebug();
+        return Extension::hasXdebug() && self::xdebug();
     }
 
 
@@ -95,7 +95,7 @@ class Ini extends Root
                 $return = false;
 
                 if(!empty((int) $return))
-                $return = static::sizeFormat($return,$format);
+                $return = self::sizeFormat($return,$format);
             }
         }
 
@@ -111,7 +111,7 @@ class Ini extends Root
 
         foreach ($keys as $key)
         {
-            $return[$key] = static::get($key);
+            $return[$key] = self::get($key);
         }
 
         return $return;
@@ -146,7 +146,7 @@ class Ini extends Root
         foreach ($array as $key => $value)
         {
             if(is_string($key))
-            $return[$key] = static::set($key,$value);
+            $return[$key] = self::set($key,$value);
         }
 
         return $return;
@@ -236,7 +236,7 @@ class Ini extends Root
         }
 
         else
-        $return = Integer::fromString($return);
+        $return = Str::toInt($return);
 
         return $return;
     }
@@ -246,7 +246,7 @@ class Ini extends Root
     // retourne la valeur de uploadMaxFilesize
     final public static function uploadMaxFilesize(?int $format=0)
     {
-        return static::get('upload_max_filesize',$format);
+        return self::get('upload_max_filesize',$format);
     }
 
 
@@ -254,7 +254,7 @@ class Ini extends Root
     // retourne la valeur de postMaxSize
     final public static function postMaxSize(?int $format=0)
     {
-        return static::get('post_max_size',$format);
+        return self::get('post_max_size',$format);
     }
 
 
@@ -262,7 +262,7 @@ class Ini extends Root
     // retourne la valeur de memoryLimit
     final public static function memoryLimit(?int $format=0)
     {
-        return static::get('memory_limit',$format);
+        return self::get('memory_limit',$format);
     }
 
 
@@ -271,7 +271,7 @@ class Ini extends Root
     // note ce chemin est souvent vide -> utilise dir::temp
     final public static function tempDir()
     {
-        return static::get('sys_temp_dir');
+        return self::get('sys_temp_dir');
     }
 
 
@@ -279,7 +279,7 @@ class Ini extends Root
     // retourne la valeur de default charset
     final public static function getCharset():string
     {
-        return static::get('default_charset');
+        return self::get('default_charset');
     }
 
 
@@ -287,7 +287,7 @@ class Ini extends Root
     // change la valeur de default charset
     final public static function setCharset(string $value):bool
     {
-        return static::set('default_charset',$value);
+        return self::set('default_charset',$value);
     }
 
 
@@ -295,7 +295,7 @@ class Ini extends Root
     // retourne la valeur de timezone
     final public static function getTimezone():string
     {
-        return static::get('date.timezone');
+        return self::get('date.timezone');
     }
 
 
@@ -303,7 +303,7 @@ class Ini extends Root
     // change la timezone
     final public static function setTimezone(string $value):bool
     {
-        return static::set('date.timezone',$value);
+        return self::set('date.timezone',$value);
     }
 
 
@@ -311,7 +311,7 @@ class Ini extends Root
     // applique une limite de temps au process
     final public static function getTimeLimit():int
     {
-        return static::get('max_execution_time');
+        return self::get('max_execution_time');
     }
 
 
@@ -319,7 +319,7 @@ class Ini extends Root
     // applique une limite de temps au process
     final public static function setTimeLimit($value):bool
     {
-        return static::set('max_execution_time',$value);
+        return self::set('max_execution_time',$value);
     }
 
 
@@ -327,7 +327,7 @@ class Ini extends Root
     // retourne la valeur actuel de error reporting
     final public static function getErrorReporting()
     {
-        return static::get('error_reporting');
+        return self::get('error_reporting');
     }
 
 
@@ -335,7 +335,7 @@ class Ini extends Root
     // change la valeur de error reporting
     final public static function setErrorReporting($value):bool
     {
-        return static::set('error_reporting',$value);
+        return self::set('error_reporting',$value);
     }
 
 
@@ -343,7 +343,7 @@ class Ini extends Root
     // retourne la valeur du log d'erreur
     final public static function getErrorLog()
     {
-        return static::get('error_log');
+        return self::get('error_log');
     }
 
 
@@ -352,7 +352,7 @@ class Ini extends Root
     // la valeur est passé dans finder shortcut
     final public static function setErrorLog(string $value):bool
     {
-        return static::set('error_log',Finder::normalize($value));
+        return self::set('error_log',Finder::normalize($value));
     }
 
 
@@ -371,9 +371,9 @@ class Ini extends Root
     {
         $return = [];
 
-        $paths = static::get('include_path');
+        $paths = self::get('include_path');
         if(is_string($paths) && !empty($paths))
-        $return = explode(static::getIncludePathSeparator(),$paths);
+        $return = explode(self::getIncludePathSeparator(),$paths);
 
         return $return;
     }
@@ -387,10 +387,10 @@ class Ini extends Root
         $return = false;
 
         if(is_array($path) && !empty($path))
-        $path = implode(static::getIncludePathSeparator(),$path);
+        $path = implode(self::getIncludePathSeparator(),$path);
 
         if(is_string($path))
-        $return = static::set('include_path',$path);
+        $return = self::set('include_path',$path);
 
         return $return;
     }
@@ -404,9 +404,9 @@ class Ini extends Root
 
         if(!empty($path))
         {
-            $paths = static::getIncludePath();
+            $paths = self::getIncludePath();
             $paths[] = $path;
-            $return = static::setIncludePath($paths);
+            $return = self::setIncludePath($paths);
         }
 
         return $return;
@@ -417,7 +417,7 @@ class Ini extends Root
     // retourne vrai si opcache roule
     final public static function opcache():bool
     {
-        return !empty(static::get('opcache.enable'));
+        return !empty(self::get('opcache.enable'));
     }
 
 
@@ -425,7 +425,7 @@ class Ini extends Root
     // retourne vrai si xdebug roule
     final public static function xdebug():bool
     {
-        return !empty(static::get('xdebug.overload_var_dump'));
+        return !empty(self::get('xdebug.overload_var_dump'));
     }
 
 
@@ -433,7 +433,7 @@ class Ini extends Root
     // retourne vrai si apcu roule
     final public static function apcu():bool
     {
-        return !empty(static::get('apc.enabled'));
+        return !empty(self::get('apc.enabled'));
     }
 
 
@@ -442,11 +442,11 @@ class Ini extends Root
     final public static function important(?int $format=null):array
     {
         $return = [];
-        $important = (array) static::$config['important'];
+        $important = (array) self::$config['important'];
 
         foreach ($important as $key => $value)
         {
-            $return[$value] = static::get($value,$format);
+            $return[$value] = self::get($value,$format);
         }
 
         return $return;
@@ -457,7 +457,7 @@ class Ini extends Root
     // retourne toutes les ini de session
     final public static function session():array
     {
-        return static::all('session');
+        return self::all('session');
     }
 
 
@@ -467,13 +467,13 @@ class Ini extends Root
     {
         $return = [];
 
-        if(static::postMaxSize() <= 1)
+        if(self::postMaxSize() <= 1)
         $return[] = 'post_max_size_too_small';
 
-        if(static::postMaxSize() < static::uploadMaxFilesize())
+        if(self::postMaxSize() < self::uploadMaxFilesize())
         $return[] = 'post_max_size_smaller_than_upload_max_filesize';
 
-        if(static::memoryLimit() < 128)
+        if(self::memoryLimit() < 128)
         $return[] = 'memory_limit';
 
         return $return;
@@ -485,13 +485,13 @@ class Ini extends Root
     final public static function setDefault(?array $option=null):array
     {
         $return = [];
-        $option = Arr::plus(static::$config['default'],$option);
+        $option = Arr::plus(self::$config['default'],$option);
 
         if(is_array($option) && !empty($option))
         {
             foreach ($option as $key => $value)
             {
-                $return[$key] = static::set($key,$value);
+                $return[$key] = self::set($key,$value);
             }
         }
 

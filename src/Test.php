@@ -16,7 +16,7 @@ namespace Quid\Base;
 abstract class Test extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // trigger

@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // json
 // class with static methods to encode and decode JSON
-class Json extends Assoc
+final class Json extends Assoc
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'encode'=>JSON_INVALID_UTF8_IGNORE | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES, // flag encode
             'decode'=>JSON_INVALID_UTF8_IGNORE | JSON_BIGINT_AS_STRING, // flag decode
@@ -31,7 +31,7 @@ class Json extends Assoc
     // retourne vrai si la chaîne est du json
     final public static function is($value):bool
     {
-        return is_string($value) && static::decode($value) !== null;
+        return is_string($value) && self::decode($value) !== null;
     }
 
 
@@ -39,7 +39,7 @@ class Json extends Assoc
     // retourne vrai si la chaîne est du json mais vide
     final public static function isEmpty($value):bool
     {
-        return is_string($value) && ($json = static::decode($value)) !== null && empty($json);
+        return is_string($value) && ($json = self::decode($value)) !== null && empty($json);
     }
 
 
@@ -47,7 +47,7 @@ class Json extends Assoc
     // retourne vrai si la chaîne est du json non vide
     final public static function isNotEmpty($value):bool
     {
-        return is_string($value) && ($json = static::decode($value)) !== null && !empty($json);
+        return is_string($value) && ($json = self::decode($value)) !== null && !empty($json);
     }
 
 
@@ -58,7 +58,7 @@ class Json extends Assoc
     final public static function encode($value,?int $flag=null,?int $depth=null):?string
     {
         $return = null;
-        $option = static::option();
+        $option = self::option();
 
         $flag = ($flag === null)? $option['encode']:$flag;
         $depth = ($depth === null)? $option['depth']:$depth;
@@ -74,9 +74,9 @@ class Json extends Assoc
     final public static function encodeOption($value,int $flag,?int $depth=null):?string
     {
         $return = null;
-        $option = static::option();
+        $option = self::option();
         $flag = $option['encode'] | $flag;
-        $return = static::encode($value,$flag,$depth);
+        $return = self::encode($value,$flag,$depth);
 
         return $return;
     }
@@ -88,9 +88,9 @@ class Json extends Assoc
     final public static function encodePretty($value,int $depth=null):?string
     {
         $return = null;
-        $option = static::option();
+        $option = self::option();
         $flag = $option['encode'] | JSON_PRETTY_PRINT;
-        $return = static::encode($value,$flag,$depth);
+        $return = self::encode($value,$flag,$depth);
 
         return $return;
     }
@@ -101,7 +101,7 @@ class Json extends Assoc
     final public static function encodeSpecialchars($value,?int $flag=null,?int $depth=null):?string
     {
         $return = '';
-        $json = static::encode($value,$flag,$depth);
+        $json = self::encode($value,$flag,$depth);
 
         if(is_string($json))
         $return = Html::specialchars($json);
@@ -115,10 +115,10 @@ class Json extends Assoc
     final public static function encodeVar(string $var,$value,?int $flag=null,?int $depth=null):?string
     {
         $return = null;
-        $value = static::encode($value,$flag,$depth);
+        $value = self::encode($value,$flag,$depth);
 
         if(is_string($value))
-        $return = static::var($var,$value);
+        $return = self::var($var,$value);
 
         return $return;
     }
@@ -144,7 +144,7 @@ class Json extends Assoc
     final public static function decode(string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
     {
         $return = null;
-        $option = static::option();
+        $option = self::option();
 
         $assoc = ($assoc === null)? $option['assoc']:$assoc;
         $depth = ($depth === null)? $option['depth']:$depth;
@@ -161,7 +161,7 @@ class Json extends Assoc
     final public static function decodeKeys(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
     {
         $return = null;
-        $decode = static::decode($value,$assoc,$flag,$depth);
+        $decode = self::decode($value,$assoc,$flag,$depth);
 
         if(is_array($decode))
         $return = Arr::gets($keys,$decode);
@@ -175,7 +175,7 @@ class Json extends Assoc
     final public static function decodeKeysExists(array $keys,string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
     {
         $return = null;
-        $decode = static::decode($value,$assoc,$flag,$depth);
+        $decode = self::decode($value,$assoc,$flag,$depth);
 
         if(is_array($decode) && Arr::keysExists($keys,$decode))
         $return = $decode;
@@ -198,10 +198,10 @@ class Json extends Assoc
     final public static function arr($value,?array $option=null):array
     {
         $return = [];
-        $option = static::option($option);
+        $option = self::option($option);
 
         if(is_scalar($value))
-        $value = static::decode($value,$option['assoc'],$option['decode'],$option['depth']);
+        $value = self::decode($value,$option['assoc'],$option['decode'],$option['depth']);
 
         if(is_array($value))
         {
@@ -224,7 +224,7 @@ class Json extends Assoc
     final public static function onSet($return)
     {
         if(is_array($return) || is_object($return))
-        $return = static::encode($return);
+        $return = self::encode($return);
 
         return $return;
     }
@@ -236,7 +236,7 @@ class Json extends Assoc
     final public static function onGet($return)
     {
         if(is_scalar($return))
-        $return = static::decode($return);
+        $return = self::decode($return);
 
         return $return;
     }

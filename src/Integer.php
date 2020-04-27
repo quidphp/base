@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // integer
 // class with static methods to work with integers
-class Integer extends Root
+final class Integer extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // typecast
@@ -105,32 +105,17 @@ class Integer extends Root
     }
 
 
-    // fromString
-    // permet de cast une valeur string en gardant seulement ces caractères numériques
-    final public static function fromString(string $value):?int
-    {
-        $return = null;
-        $value = Str::keepNumeric($value);
-        $value = static::cast($value);
-
-        if(is_int($value))
-        $return = $value;
-
-        return $return;
-    }
-
-
-    // fromBool
-    // retourne un numéro à partir d'un boolean
-    final public static function fromBool(bool $bool):?int
+    // toBool
+    // retourne un booléean à partir d'un int
+    final public static function toBool(int $value):?bool
     {
         $return = null;
 
-        if($bool === true)
-        $return = 1;
+        if($value === 1)
+        $return = true;
 
-        elseif($bool === false)
-        $return = 0;
+        elseif($value === 0)
+        $return = false;
 
         return $return;
     }

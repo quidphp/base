@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Path extends Set
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'start'=>true,
             'clean'=>true],

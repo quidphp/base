@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // email
 // class with methods a layer over the native PHP send_mail function, handles mail headers
-class Email extends Root
+final class Email extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'active'=>true, // permet d'activer ou non l'envoie d'email
         'message'=>[ // contenu par défaut pour un tableau message
             'priority'=>null,
@@ -79,7 +79,7 @@ class Email extends Root
     // retourne vrai si l'envoie de courriel est activé
     final public static function isActive():bool
     {
-        return static::$config['active'] === true;
+        return self::$config['active'] === true;
     }
 
 
@@ -89,7 +89,7 @@ class Email extends Root
     {
         $return = null;
 
-        if(static::is($value))
+        if(self::is($value))
         {
             $explode = explode('@',$value);
             if(count($explode) === 2)
@@ -105,7 +105,7 @@ class Email extends Root
     final public static function name(string $value):?string
     {
         $return = null;
-        $arr = static::arr($value);
+        $arr = self::arr($value);
 
         if(!empty($arr))
         $return = $arr['name'];
@@ -119,7 +119,7 @@ class Email extends Root
     final public static function host(string $value):?string
     {
         $return = null;
-        $arr = static::arr($value);
+        $arr = self::arr($value);
 
         if(!empty($arr))
         $return = $arr['host'];
@@ -135,17 +135,17 @@ class Email extends Root
     final public static function send(array $value):bool
     {
         $return = false;
-        $message = static::prepareMessage($value);
+        $message = self::prepareMessage($value);
 
         if(!empty($message))
         {
             $mb = Encoding::isCharsetMb($message['charset']);
-            $to = static::prepareAddress($message['to']);
+            $to = self::prepareAddress($message['to']);
             $subject = $message['subject'];
             $body = $message['body'];
             $headers = Header::str($message['header']);
 
-            if(static::isActive())
+            if(self::isActive())
             {
                 if($mb === true)
                 $return = mb_send_mail($to,$subject,$body,$headers);
@@ -165,7 +165,7 @@ class Email extends Root
     // permet d'envoyer un courriel test
     final public static function sendTest(?array $value=null):bool
     {
-        return static::send(static::prepareTestMessage($value));
+        return self::send(self::prepareTestMessage($value));
     }
 
 
@@ -178,7 +178,7 @@ class Email extends Root
         foreach ($values as $key => $value)
         {
             if(is_array($value))
-            $return[$key] = static::send($value);
+            $return[$key] = self::send($value);
         }
 
         return $return;
@@ -193,24 +193,24 @@ class Email extends Root
     {
         $return = null;
         $value = Obj::cast($value);
-        $message = Call::ableArrs(static::$config['message']);
+        $message = Call::loop(self::$config['message']);
         $value = Arr::replace($message,$value);
-        $value['from'] = static::address($value['from']);
+        $value['from'] = self::address($value['from']);
         $value['date'] = (is_int($value['date']))? $value['date']:Datetime::now();
-        $value = Arr::replace($value,static::prepareContentTypeCharset($value['contentType'],$value['charset']));
+        $value = Arr::replace($value,self::prepareContentTypeCharset($value['contentType'],$value['charset']));
 
-        foreach (static::$config['contact'] as $v)
+        foreach (self::$config['contact'] as $v)
         {
             if(!empty($value[$v]))
-            $value[$v] = static::addresses($value[$v]);
+            $value[$v] = self::addresses($value[$v]);
         }
 
-        if(in_array($value['contentType'],static::$config['contentType'],true) && !empty($value['charset']) && is_string($value['charset']))
+        if(in_array($value['contentType'],self::$config['contentType'],true) && !empty($value['charset']) && is_string($value['charset']))
         {
             if(!empty($value['to']) && !empty($value['from']) && is_string($value['subject']) && is_string($value['body']))
             {
                 $return = $value;
-                $return['header'] = static::prepareHeader($return,$headerMessage);
+                $return['header'] = self::prepareHeader($return,$headerMessage);
             }
         }
 
@@ -223,7 +223,7 @@ class Email extends Root
     // destination de config a priorité sur tout
     final public static function prepareTestMessage(?array $value=null)
     {
-        return Arr::replace(static::$config['test']['message'],$value,static::$config['test']['destination']);
+        return Arr::replace(self::$config['test']['message'],$value,self::$config['test']['destination']);
     }
 
 
@@ -235,7 +235,7 @@ class Email extends Root
         $return = [];
         $charset ??= Encoding::getCharset();
         $contentType = 'txt';
-        $contentTypes = static::$config['contentType'];
+        $contentTypes = self::$config['contentType'];
         $showCharset = Encoding::isCharsetMb($charset);
 
         if(!empty($value))
@@ -262,23 +262,23 @@ class Email extends Root
     {
         $return = [];
 
-        if(!empty(static::$config['headers']['default']))
-        $return = static::$config['headers']['default'];
+        if(!empty(self::$config['headers']['default']))
+        $return = self::$config['headers']['default'];
 
         if(!empty($value['header']) && is_array($value['header']))
         $return = Arr::replace($return,$value['header']);
 
         if($headerMessage === true)
         {
-            foreach (static::$config['headers']['message'] as $k => $v)
+            foreach (self::$config['headers']['message'] as $k => $v)
             {
                 if(array_key_exists($k,$value) && !empty($value[$k]))
                 {
-                    if(in_array($k,static::$config['contact'],true) && is_array($value[$k]))
-                    $return[$v] = static::prepareAddress($value[$k],true);
+                    if(in_array($k,self::$config['contact'],true) && is_array($value[$k]))
+                    $return[$v] = self::prepareAddress($value[$k],true);
 
                     elseif($k === 'from')
-                    $return[$v] = static::prepareAddress($value[$k],false);
+                    $return[$v] = self::prepareAddress($value[$k],false);
 
                     elseif($k === 'date')
                     $return[$v] = Datetime::rfc822($value[$k]);
@@ -310,7 +310,7 @@ class Email extends Root
         {
             if(is_array($value) && array_key_exists('email',$value) && is_string($value['email']) && array_key_exists('name',$value))
             {
-                $string = static::addressStr($value['email'],$value['name']);
+                $string = self::addressStr($value['email'],$value['name']);
 
                 if(!empty($string))
                 {
@@ -361,7 +361,7 @@ class Email extends Root
             if(is_string($key))
             $value = [$key=>$value];
 
-            $prepare = static::address($value);
+            $prepare = self::address($value);
 
             if(!empty($prepare))
             $return[] = $prepare;
@@ -413,9 +413,9 @@ class Email extends Root
                 }
             }
 
-            if(static::is($email))
+            if(self::is($email))
             {
-                $name = ($name === null)? static::name($email):$name;
+                $name = ($name === null)? self::name($email):$name;
                 $return = ['email'=>$email,'name'=>$name];
             }
         }
@@ -446,7 +446,7 @@ class Email extends Root
         $value = Server::email();
 
         if(!empty($value))
-        static::$config['test']['destination']['to'] = $value;
+        self::$config['test']['destination']['to'] = $value;
 
         return;
     }
@@ -456,7 +456,7 @@ class Email extends Root
     // active ou désactive l'envoie de courriel globalement
     final public static function setActive(bool $value=true):void
     {
-        static::$config['active'] = $value;
+        self::$config['active'] = $value;
 
         return;
     }

@@ -28,7 +28,7 @@ trait _root
     // retourne vrai aux méthodes protégés pour la classe courante
     final public static function isCallable($value):bool
     {
-        return $value instanceof \Closure || (Call::isSafeArrayCallable($value) && is_callable($value));
+        return $value instanceof \Closure || (Call::isSafeArray($value) && is_callable($value));
     }
 
 

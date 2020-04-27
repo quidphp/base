@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // timezone
 // class with static methods to deal with timezone
-class Timezone extends Root
+final class Timezone extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'current'=>null, // conserve le timezone courant pour le set/reset
         'default'=>'UTC' // timezone par défaut, lorsque value est true
     ];
@@ -26,7 +26,7 @@ class Timezone extends Root
     // retourne vrai si la timezone existe
     final public static function is($value):bool
     {
-        return is_string($value) && in_array($value,static::all(),true);
+        return is_string($value) && in_array($value,self::all(),true);
     }
 
 
@@ -47,11 +47,11 @@ class Timezone extends Root
         $return = false;
 
         if($value === true)
-        $value = static::$config['default'];
+        $value = self::$config['default'];
 
         if(is_string($value))
         {
-            static::$config['current'] = static::get();
+            self::$config['current'] = self::get();
             $return = date_default_timezone_set($value);
 
             if($return === true && $ini === true)
@@ -70,13 +70,13 @@ class Timezone extends Root
         $timezone = null;
 
         if($ini === false)
-        $timezone = static::$config['current'];
+        $timezone = self::$config['current'];
 
         if($timezone === null)
         $timezone = Ini::getTimezone();
 
         $return = date_default_timezone_set($timezone);
-        static::$config['current'] = $timezone;
+        self::$config['current'] = $timezone;
 
         return $return;
     }
@@ -132,7 +132,7 @@ class Timezone extends Root
         if(is_string($value))
         {
             $timezone = $value;
-            $value = static::location($value);
+            $value = self::location($value);
         }
 
         if(is_array($value) && is_int($timestamp) && is_float($option['zenith']) && is_int($option['gmtOffset']) && array_key_exists('latitude',$value) && array_key_exists('longitude',$value))
@@ -165,7 +165,7 @@ class Timezone extends Root
         if(is_string($value))
         {
             $timezone = $value;
-            $value = static::location($value);
+            $value = self::location($value);
         }
 
         if(is_array($value) && is_int($timestamp) && is_float($option['zenith']) && is_int($option['gmtOffset']) && array_key_exists('latitude',$value) && array_key_exists('longitude',$value))
@@ -197,7 +197,7 @@ class Timezone extends Root
         if(is_string($value))
         {
             $timezone = $value;
-            $value = static::location($value);
+            $value = self::location($value);
         }
 
         if(is_array($value) && is_int($timestamp) && array_key_exists('latitude',$value) && array_key_exists('longitude',$value))

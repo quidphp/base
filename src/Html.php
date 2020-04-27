@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // html
 // class with static methods for easily generating HTML
-class Html extends Root
+final class Html extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'default'=>'specialChars', // méthode par défaut pour encode/décode
         'entities'=>[ // pour htmlentities
             'flag'=>ENT_QUOTES | ENT_SUBSTITUTE, // flag utilisé par la fonction
@@ -258,11 +258,11 @@ class Html extends Root
     {
         $return = false;
 
-        if(is_string($value) && array_key_exists($value,static::$config['wrap']) && is_array(static::$config['wrap'][$value]))
+        if(is_string($value) && array_key_exists($value,self::$config['wrap']) && is_array(self::$config['wrap'][$value]))
         {
-            if(array_key_exists(0,static::$config['wrap'][$value]) && is_string(static::$config['wrap'][$value][0]))
+            if(array_key_exists(0,self::$config['wrap'][$value]) && is_string(self::$config['wrap'][$value][0]))
             {
-                if(array_key_exists(1,static::$config['wrap'][$value]) && is_string(static::$config['wrap'][$value][1]))
+                if(array_key_exists(1,self::$config['wrap'][$value]) && is_string(self::$config['wrap'][$value][1]))
                 $return = true;
             }
         }
@@ -275,7 +275,7 @@ class Html extends Root
     // retourne vrai si la valeur est un alias de tag
     final public static function isAlias($value):bool
     {
-        return is_string($value) && !empty(static::$config['alias'][$value]);
+        return is_string($value) && !empty(self::$config['alias'][$value]);
     }
 
 
@@ -283,7 +283,7 @@ class Html extends Root
     // retourne vrai si la valeur est un type de input
     final public static function isInputType($value):bool
     {
-        return is_string($value) && array_key_exists($value,static::$config['tag']['input']['all']);
+        return is_string($value) && array_key_exists($value,self::$config['tag']['input']['all']);
     }
 
 
@@ -291,7 +291,7 @@ class Html extends Root
     // retourne vrai si la méthode en est une de input
     final public static function isInputMethod($value):bool
     {
-        return is_string($value) && !empty(static::getTypeFromInputMethod($value));
+        return is_string($value) && !empty(self::getTypeFromInputMethod($value));
     }
 
 
@@ -300,10 +300,10 @@ class Html extends Root
     // si inputMethod est true et que la tag n'est pas une tag standard, envoie à inputMethod
     final public static function isFormTag($value,bool $inputMethod=true):bool
     {
-        $return = (is_string($value) && array_key_exists($value,static::$config['tag']['form']['all']));
+        $return = (is_string($value) && array_key_exists($value,self::$config['tag']['form']['all']));
 
         if($return === false && $inputMethod === true)
-        $return = static::isInputMethod($value);
+        $return = self::isInputMethod($value);
 
         return $return;
     }
@@ -313,10 +313,10 @@ class Html extends Root
     // retourne vrai si la tag est une tag text comme input ou textarea
     final public static function isTextTag($value,bool $inputMethod=true):bool
     {
-        $return = (static::isFormTag($value,false) && static::$config['tag']['form']['all'][$value] === 'text');
+        $return = (self::isFormTag($value,false) && self::$config['tag']['form']['all'][$value] === 'text');
 
         if($return === false && $inputMethod === true)
-        $return = static::isInputGroup('text',$value);
+        $return = self::isInputGroup('text',$value);
 
         return $return;
     }
@@ -328,11 +328,11 @@ class Html extends Root
     {
         $return = false;
 
-        if(is_string($value) && array_key_exists($value,static::$config['tag']['input']['all']) && static::$config['tag']['input']['all'][$value] === 'hidden')
+        if(is_string($value) && array_key_exists($value,self::$config['tag']['input']['all']) && self::$config['tag']['input']['all'][$value] === 'hidden')
         $return = true;
 
         if($return === false && $inputMethod === true)
-        $return = static::isInputGroup('hidden',$value);
+        $return = self::isInputGroup('hidden',$value);
 
         return $return;
     }
@@ -342,7 +342,7 @@ class Html extends Root
     // retourne vrai si la tag en est une de relation
     final public static function isRelationTag($value,bool $inputMethod=true):bool
     {
-        return static::isEnumTag($value,$inputMethod) || static::isSetTag($value,$inputMethod);
+        return self::isEnumTag($value,$inputMethod) || self::isSetTag($value,$inputMethod);
     }
 
 
@@ -350,10 +350,10 @@ class Html extends Root
     // retourne vrai si la tag en est une de relation enum
     final public static function isEnumTag($value,bool $inputMethod=true):bool
     {
-        $return = (static::isFormTag($value,false) && static::$config['tag']['form']['all'][$value] === 'enum');
+        $return = (self::isFormTag($value,false) && self::$config['tag']['form']['all'][$value] === 'enum');
 
         if($return === false && $inputMethod === true)
-        $return = static::isInputGroup('enum',$value);
+        $return = self::isInputGroup('enum',$value);
 
         return $return;
     }
@@ -363,10 +363,10 @@ class Html extends Root
     // retourne vrai si la tag en est une de relation enum set
     final public static function isSetTag($value,bool $inputMethod=true):bool
     {
-        $return = (static::isFormTag($value,false) && static::$config['tag']['form']['all'][$value] === 'set');
+        $return = (self::isFormTag($value,false) && self::$config['tag']['form']['all'][$value] === 'set');
 
         if($return === false && $inputMethod === true)
-        $return = static::isInputGroup('set',$value);
+        $return = self::isInputGroup('set',$value);
 
         return $return;
     }
@@ -376,7 +376,7 @@ class Html extends Root
     // retourne vrai si le nom du input est multi
     final public static function isNameMulti($value):bool
     {
-        return is_string($value) && Str::isEnd(static::$config['multi'],$value);
+        return is_string($value) && Str::isEnd(self::$config['multi'],$value);
     }
 
 
@@ -384,7 +384,7 @@ class Html extends Root
     // retourne vrai si la valeur est un tag self closing
     final public static function isSelfClosing($value):bool
     {
-        return is_string($value) && array_key_exists($value,static::$config['tag']) && !empty(static::$config['tag'][$value]['selfClosing']);
+        return is_string($value) && array_key_exists($value,self::$config['tag']) && !empty(self::$config['tag'][$value]['selfClosing']);
     }
 
 
@@ -392,7 +392,7 @@ class Html extends Root
     // retourne vrai si le nom meta doit utilisé property plutôt que name
     final public static function isMetaProperty($value):bool
     {
-        return is_string($value) && in_array($value,static::$config['tag']['meta']['property'],true);
+        return is_string($value) && in_array($value,self::$config['tag']['meta']['property'],true);
     }
 
 
@@ -400,7 +400,7 @@ class Html extends Root
     // retourne vrai si la balise meta représente une uri
     final public static function isMetaUri($value):bool
     {
-        return is_string($value) && in_array($value,static::$config['tag']['meta']['uri']['key'],true);
+        return is_string($value) && in_array($value,self::$config['tag']['meta']['uri']['key'],true);
     }
 
 
@@ -408,7 +408,7 @@ class Html extends Root
     // retourne vrai si la tag a des options d'uri
     final public static function isUriOption($tag):bool
     {
-        return is_string($tag) && isset(static::$config['tag'][$tag]['option']['attr']['uri']);
+        return is_string($tag) && isset(self::$config['tag'][$tag]['option']['attr']['uri']);
     }
 
 
@@ -420,11 +420,11 @@ class Html extends Root
 
         if(is_string($value) && is_string($group))
         {
-            $type = static::getTypeFromInputMethod($value);
+            $type = self::getTypeFromInputMethod($value);
 
-            if(!empty($type) && array_key_exists($type,static::$config['tag']['input']['all']))
+            if(!empty($type) && array_key_exists($type,self::$config['tag']['input']['all']))
             {
-                if(static::$config['tag']['input']['all'][$type] === $group)
+                if(self::$config['tag']['input']['all'][$type] === $group)
                 $return = true;
             }
         }
@@ -451,7 +451,7 @@ class Html extends Root
 
         if(!empty($groups))
         {
-            foreach (static::$config['tag']['form']['all'] as $name => $group)
+            foreach (self::$config['tag']['form']['all'] as $name => $group)
             {
                 if(in_array($group,$groups,true) && !in_array($name,$return,true) && !in_array($name,$not,true))
                 $return[] = $name;
@@ -466,7 +466,7 @@ class Html extends Root
     // retourne tous les tag de relation
     final public static function relationTag($not=null):array
     {
-        return static::inputsFromGroups(['enum','set'],$not);
+        return self::inputsFromGroups(['enum','set'],$not);
     }
 
 
@@ -477,13 +477,13 @@ class Html extends Root
         $return = '';
 
         if($method === true)
-        $method = static::$config['default'];
+        $method = self::$config['default'];
 
         if($method === 'specialChars')
-        $return = static::specialChars($value,$option);
+        $return = self::specialChars($value,$option);
 
         elseif($method === 'entities')
-        $return = static::entities($value,$option);
+        $return = self::entities($value,$option);
 
         return $return;
     }
@@ -496,13 +496,13 @@ class Html extends Root
         $return = '';
 
         if($method === true)
-        $method = static::$config['default'];
+        $method = self::$config['default'];
 
         if($method === 'specialChars')
-        $return = static::specialCharsDecode($value,$option);
+        $return = self::specialCharsDecode($value,$option);
 
         elseif($method === 'entities')
-        $return = static::entitiesDecode($value,$option);
+        $return = self::entitiesDecode($value,$option);
 
         return $return;
     }
@@ -513,7 +513,7 @@ class Html extends Root
     final public static function specialChars(string $value,?array $option=null):string
     {
         $return = '';
-        $option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['specialChars'],$option);
+        $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['specialChars'],$option);
 
         if(!empty($option))
         $return = htmlspecialchars($value,$option['flag'],$option['charset'],$option['doubleEncode']);
@@ -527,7 +527,7 @@ class Html extends Root
     final public static function specialCharsDecode(string $value,?array $option=null):string
     {
         $return = '';
-        $option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['specialChars'],$option);
+        $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['specialChars'],$option);
 
         if(!empty($option))
         $return = htmlspecialchars_decode($value,$option['flag']);
@@ -541,7 +541,7 @@ class Html extends Root
     final public static function specialCharsTable(?array $option=null):array
     {
         $return = [];
-        $option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['specialChars'],$option);
+        $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['specialChars'],$option);
         $return = get_html_translation_table(HTML_SPECIALCHARS,$option['flag'],$option['charset']);
 
         return $return;
@@ -553,7 +553,7 @@ class Html extends Root
     final public static function entities(string $value,?array $option=null):string
     {
         $return = '';
-        $option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['entities'],$option);
+        $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['entities'],$option);
 
         if(!empty($option))
         $return = htmlentities($value,$option['flag'],$option['charset'],$option['doubleEncode']);
@@ -567,7 +567,7 @@ class Html extends Root
     final public static function entitiesDecode(string $value,?array $option=null):string
     {
         $return = '';
-        $option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['entities'],$option);
+        $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['entities'],$option);
 
         if(!empty($option))
         $return = html_entity_decode($value,$option['flag'],$option['charset']);
@@ -581,7 +581,7 @@ class Html extends Root
     final public static function entitiesTable(?array $option=null):array
     {
         $return = [];
-        $option = Arr::plus(['charset'=>Encoding::getCharset()],static::$config['entities'],$option);
+        $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['entities'],$option);
         $return = get_html_translation_table(HTML_ENTITIES,$option['flag'],$option['charset']);
 
         return $return;
@@ -605,7 +605,7 @@ class Html extends Root
     // génère un ou plusieurs balises br
     final public static function brs(int $amount):string
     {
-        return static::nl2br(Str::eol($amount));
+        return self::nl2br(Str::eol($amount));
     }
 
 
@@ -643,7 +643,7 @@ class Html extends Root
     // retourne le type de input par défaut
     final public static function getDefaultInputType():?string
     {
-        return static::$config['tag']['input']['default'] ?? null;
+        return self::$config['tag']['input']['default'] ?? null;
     }
 
 
@@ -657,8 +657,8 @@ class Html extends Root
         if($index === true)
         $index = 0;
 
-        if(array_key_exists($index,static::$config['bool']))
-        $return = static::$config['bool'][$index];
+        if(array_key_exists($index,self::$config['bool']))
+        $return = self::$config['bool'][$index];
 
         return $return;
     }
@@ -673,7 +673,7 @@ class Html extends Root
         if(stripos($method,'input') === 0)
         {
             $type = strtolower(substr($method,5));
-            if(static::isInputType($type))
+            if(self::isInputType($type))
             $return = $type;
         }
 
@@ -687,9 +687,9 @@ class Html extends Root
     {
         $return = null;
 
-        if(!empty(static::$config['tag']['form']['all']))
+        if(!empty(self::$config['tag']['form']['all']))
         {
-            foreach (static::$config['tag']['form']['all'] as $value => $type)
+            foreach (self::$config['tag']['form']['all'] as $value => $type)
             {
                 if(is_string($value) && stripos($method,$value) !== false)
                 {
@@ -707,7 +707,7 @@ class Html extends Root
     // retourne l'attribut typeAttr pour la tag
     final public static function getTypeAttr(string $tag):?string
     {
-        return static::$config['tag'][$tag]['typeAttr'] ?? null;
+        return self::$config['tag'][$tag]['typeAttr'] ?? null;
     }
 
 
@@ -716,12 +716,12 @@ class Html extends Root
     final public static function getTypeFromAttr(string $tag,array $attr):?string
     {
         $return = null;
-        $type = static::getTypeAttr($tag);
+        $type = self::getTypeAttr($tag);
 
         if(!empty($type) && !empty($attr[$type]))
         {
             if($attr[$type] === true)
-            $return = static::$config['tag'][$tag]['scalarAttr']['true'] ?? null;
+            $return = self::$config['tag'][$tag]['scalarAttr']['true'] ?? null;
 
             else
             $return = $attr[$type];
@@ -741,31 +741,31 @@ class Html extends Root
         $attr = Obj::cast($attr);
 
         if(is_scalar($attr))
-        $attr = static::getAttrScalar($tag,$attr);
+        $attr = self::getAttrScalar($tag,$attr);
 
         if(is_array($attr))
         {
-            $t = static::getTypeFromAttr($tag,$attr);
+            $t = self::getTypeFromAttr($tag,$attr);
             if(!empty($t))
             {
                 $type = $t;
-                $attr[static::getTypeAttr($tag)] = $type;
+                $attr[self::getTypeAttr($tag)] = $type;
             }
         }
 
-        if(!empty(static::$config['tag'][$tag]['attr']))
-        $merge[] = static::$config['tag'][$tag]['attr'];
+        if(!empty(self::$config['tag'][$tag]['attr']))
+        $merge[] = self::$config['tag'][$tag]['attr'];
 
-        if(is_string($type) && !empty(static::$config['tag'][$tag][$type]['attr']))
-        $merge[] = static::$config['tag'][$tag][$type]['attr'];
+        if(is_string($type) && !empty(self::$config['tag'][$tag][$type]['attr']))
+        $merge[] = self::$config['tag'][$tag][$type]['attr'];
 
         if($tag === 'input' || $tag === 'button')
         {
-            if(is_string($type) && static::isInputType($type))
+            if(is_string($type) && self::isInputType($type))
             $attr['type'] = $type;
 
-            if(empty($attr['type']) || !static::isInputType($attr['type']))
-            $attr['type'] = static::getDefaultInputType();
+            if(empty($attr['type']) || !self::isInputType($attr['type']))
+            $attr['type'] = self::getDefaultInputType();
         }
 
         $merge[] = $attr;
@@ -780,9 +780,9 @@ class Html extends Root
     // retourne toujours un tableau
     final public static function getAttrScalar(string $tag,$return):array
     {
-        if(is_scalar($return) && !empty(static::$config['tag'][$tag]['scalarAttr']))
+        if(is_scalar($return) && !empty(self::$config['tag'][$tag]['scalarAttr']))
         {
-            $scalar = static::$config['tag'][$tag]['scalarAttr'];
+            $scalar = self::$config['tag'][$tag]['scalarAttr'];
 
             if(is_array($scalar))
             {
@@ -816,9 +816,9 @@ class Html extends Root
     {
         $return = null;
 
-        if((!empty(static::$config['tag'][$tag]['valueAttr'])))
+        if((!empty(self::$config['tag'][$tag]['valueAttr'])))
         {
-            $return = static::$config['tag'][$tag]['valueAttr'];
+            $return = self::$config['tag'][$tag]['valueAttr'];
 
             if(is_array($return) && array_key_exists('default',$return))
             $return = (!empty($type) && array_key_exists($type,$return))? $return[$type]:$return['default'];
@@ -834,13 +834,13 @@ class Html extends Root
     final public static function getOption(string $tag,?string $type=null,?array $option=null):array
     {
         $return = [];
-        $merge[] = static::$config['option'];
+        $merge[] = self::$config['option'];
 
-        if(!empty(static::$config['tag'][$tag]['option']))
-        $merge[] = static::$config['tag'][$tag]['option'];
+        if(!empty(self::$config['tag'][$tag]['option']))
+        $merge[] = self::$config['tag'][$tag]['option'];
 
-        if(is_string($type) && !empty(static::$config['tag'][$tag][$type]['option']))
-        $merge[] = static::$config['tag'][$tag][$type]['option'];
+        if(is_string($type) && !empty(self::$config['tag'][$tag][$type]['option']))
+        $merge[] = self::$config['tag'][$tag][$type]['option'];
 
         if(!empty($option))
         {
@@ -882,7 +882,7 @@ class Html extends Root
     // retourne les callables de valeur du tag ou null si non existant
     final public static function getValueCallable(string $tag):?callable
     {
-        return (!empty(static::$config['tag'][$tag]['valueCallable']))? static::$config['tag'][$tag]['valueCallable']:null;
+        return (!empty(self::$config['tag'][$tag]['valueCallable']))? self::$config['tag'][$tag]['valueCallable']:null;
     }
 
 
@@ -890,7 +890,7 @@ class Html extends Root
     // retourne la callable attr du tag ou null si non existant
     final public static function getAttrCallable(string $tag):?callable
     {
-        return (!empty(static::$config['tag'][$tag]['attrCallable']))? static::$config['tag'][$tag]['attrCallable']:null;
+        return (!empty(self::$config['tag'][$tag]['attrCallable']))? self::$config['tag'][$tag]['attrCallable']:null;
     }
 
 
@@ -906,13 +906,13 @@ class Html extends Root
             {
                 $value = strtolower($value);
 
-                if(in_array($value,static::$config['static']['special'],true))
+                if(in_array($value,self::$config['static']['special'],true))
                 $return['special'] = $value;
 
-                elseif(in_array($value,static::$config['static']['openClose'],true))
+                elseif(in_array($value,self::$config['static']['openClose'],true))
                 $return['openClose'] = $value;
 
-                elseif(!empty($return) && static::isInputType($value))
+                elseif(!empty($return) && self::isInputType($value))
                 $return['arg'][] = $value;
 
                 else
@@ -933,7 +933,7 @@ class Html extends Root
         if(!is_array($value))
         $value = [$value];
 
-        $value = static::parseCallStatic($value);
+        $value = self::parseCallStatic($value);
         $method = null;
         $arg = [];
 
@@ -959,7 +959,7 @@ class Html extends Root
 
                 else
                 {
-                    if(!empty($value['openClose']) && in_array($value['openClose'],static::$config['static']['openClose'],true))
+                    if(!empty($value['openClose']) && in_array($value['openClose'],self::$config['static']['openClose'],true))
                     $method = $value['openClose'];
 
                     else
@@ -980,16 +980,16 @@ class Html extends Root
                     {
                         foreach ($args as $k => $v)
                         {
-                            $args[$k] = Arr::append($value['arg'],$args[$k]);
+                            $args[$k] = Arr::merge($value['arg'],$args[$k]);
                         }
                     }
 
                     else
-                    $args = Arr::append($value['arg'],$args);
+                    $args = Arr::merge($value['arg'],$args);
                 }
 
                 if(!empty($args))
-                $return['arg'] = Arr::append($arg,$args);
+                $return['arg'] = Arr::merge($arg,$args);
             }
         }
 
@@ -1009,12 +1009,12 @@ class Html extends Root
         $camelCase = Str::explodeCamelCase($key);
 
         if(is_array($camelCase) && !empty($camelCase))
-        $callable = static::getCallStatic($camelCase,$arg);
+        $callable = self::getCallStatic($camelCase,$arg);
         else
-        $callable = static::getCallStatic($key,$arg);
+        $callable = self::getCallStatic($key,$arg);
 
         if(!empty($callable['method']) && !empty($callable['arg']))
-        $return = static::{$callable['method']}(...$callable['arg']);
+        $return = self::{$callable['method']}(...$callable['arg']);
 
         return $return;
     }
@@ -1034,8 +1034,8 @@ class Html extends Root
 
             if(is_string($tag) && strpos($tag,'<') === false && strpos($tag,'>') === false)
             {
-                if(static::isAlias($tag))
-                $return = static::$config['alias'][$tag];
+                if(self::isAlias($tag))
+                $return = self::$config['alias'][$tag];
 
                 else
                 $return = strtolower($tag);
@@ -1052,7 +1052,7 @@ class Html extends Root
     final public static function changeLast(string $tag,$tags):?array
     {
         $return = null;
-        $tag = static::get($tag);
+        $tag = self::get($tag);
 
         if(!empty($tag))
         {
@@ -1071,7 +1071,7 @@ class Html extends Root
     // utile pour les callback
     final public static function arg($value,$arg):string
     {
-        return static::argOpen($value,$arg).static::argClose($arg);
+        return self::argOpen($value,$arg).self::argClose($arg);
     }
 
 
@@ -1085,7 +1085,7 @@ class Html extends Root
 
         if(is_string($arg))
         {
-            $explode = static::argStrExplode($arg);
+            $explode = self::argStrExplode($arg);
             $arg = [$arg];
         }
 
@@ -1103,7 +1103,7 @@ class Html extends Root
             $key = key($arg);
             unset($arg[$key]);
 
-            $return = static::open($tag,$value,...array_values($arg));
+            $return = self::open($tag,$value,...array_values($arg));
         }
 
         return $return;
@@ -1120,7 +1120,7 @@ class Html extends Root
 
         if(is_string($arg))
         {
-            $explode = static::argStrExplode($arg);
+            $explode = self::argStrExplode($arg);
             $arg = [$arg];
         }
 
@@ -1130,7 +1130,7 @@ class Html extends Root
         elseif(is_array($arg) && !empty($arg))
         {
             $tag = current($arg);
-            $return = static::close($tag);
+            $return = self::close($tag);
         }
 
         return $return;
@@ -1172,11 +1172,11 @@ class Html extends Root
 
         if(!empty($tags))
         {
-            $value = static::open($tags,...$arg);
+            $value = self::open($tags,...$arg);
             if(!empty($value))
             {
                 $return .= $value;
-                $return .= static::close($tags,(is_array($opt = Arr::valueLast($arg)))? $opt:null);
+                $return .= self::close($tags,(is_array($opt = Arr::valueLast($arg)))? $opt:null);
             }
         }
 
@@ -1195,7 +1195,7 @@ class Html extends Root
             if(!is_array($value))
             $value = [$value];
 
-            $return .= static::make(...$value);
+            $return .= self::make(...$value);
         }
 
         return $return;
@@ -1210,34 +1210,34 @@ class Html extends Root
         $return = '';
         $tags = (array) $tags;
 
-        if(count($tags) > 1 && method_exists(static::class,($method = implode('',$tags).'Open')))
-        $return = static::$method(...$arg);
+        if(count($tags) > 1 && method_exists(self::class,($method = implode('',$tags).'Open')))
+        $return = self::$method(...$arg);
 
         elseif(!empty($tags))
         {
             $count = (count($tags) - 1);
             foreach ($tags as $i =>$tag)
             {
-                $tag = static::get($tag);
+                $tag = self::get($tag);
 
                 if(!empty($tag))
                 {
                     $method = $tag.'Open';
 
-                    if(method_exists(static::class,$method))
+                    if(method_exists(self::class,$method))
                     {
                         if($i === $count)
-                        $return .= static::$method(...$arg);
+                        $return .= self::$method(...$arg);
                         else
-                        $return .= static::$method();
+                        $return .= self::$method();
                     }
 
                     else
                     {
                         if($i === $count)
-                        $return .= static::start($tag,...$arg);
+                        $return .= self::start($tag,...$arg);
                         else
-                        $return .= static::start($tag);
+                        $return .= self::start($tag);
                     }
                 }
             }
@@ -1258,7 +1258,7 @@ class Html extends Root
             if(!is_array($value))
             $value = [$value];
 
-            $return .= static::open(...$value);
+            $return .= self::open(...$value);
         }
 
         return $return;
@@ -1271,7 +1271,7 @@ class Html extends Root
     // la valeur est toujours null, donc le premier argument est attr
     final public static function op($tags,...$arg):string
     {
-        return static::open($tags,null,...$arg);
+        return self::open($tags,null,...$arg);
     }
 
 
@@ -1287,7 +1287,7 @@ class Html extends Root
             if(!is_array($value))
             $value = [$value];
 
-            $return .= static::op(...$value);
+            $return .= self::op(...$value);
         }
 
         return $return;
@@ -1302,8 +1302,8 @@ class Html extends Root
         $return = '';
         $tags = (array) $tags;
 
-        if(count($tags) > 1 && method_exists(static::class,($method = implode('',$tags).'Close')))
-        $return = static::$method($option);
+        if(count($tags) > 1 && method_exists(self::class,($method = implode('',$tags).'Close')))
+        $return = self::$method($option);
 
         elseif(!empty($tags))
         {
@@ -1314,16 +1314,16 @@ class Html extends Root
 
             foreach ($tags as $i => $tag)
             {
-                $tag = static::get($tag);
+                $tag = self::get($tag);
 
                 if(!empty($tag))
                 {
                     $method = $tag.'Close';
 
-                    if(method_exists(static::class,$method))
-                    $return .= static::$method($option);
+                    if(method_exists(self::class,$method))
+                    $return .= self::$method($option);
                     else
-                    $return .= static::end($tag,$option);
+                    $return .= self::end($tag,$option);
                 }
             }
         }
@@ -1343,7 +1343,7 @@ class Html extends Root
             if(!is_array($value))
             $value = [$value];
 
-            $return .= static::close(...$value);
+            $return .= self::close(...$value);
         }
 
         return $return;
@@ -1354,7 +1354,7 @@ class Html extends Root
     // alias de close
     final public static function cl($tags,?array $option=null):string
     {
-        return static::close($tags,$option);
+        return self::close($tags,$option);
     }
 
 
@@ -1362,7 +1362,7 @@ class Html extends Root
     // alias de closes
     final public static function cls(...$array):string
     {
-        return static::closes(...$array);
+        return self::closes(...$array);
     }
 
 
@@ -1375,7 +1375,7 @@ class Html extends Root
 
         foreach ($values as $value)
         {
-            $return .= static::make($tags,$value,$attr,$option);
+            $return .= self::make($tags,$value,$attr,$option);
         }
 
         return $return;
@@ -1395,7 +1395,7 @@ class Html extends Root
             $value = [$value];
 
             $return .= (strlen($return) && is_string($separator))? $separator:'';
-            $return .= static::make($tags,...$value);
+            $return .= self::make($tags,...$value);
         }
 
         return $return;
@@ -1415,7 +1415,7 @@ class Html extends Root
             $value = [$value];
 
             $return .= (strlen($return) && is_string($separator))? $separator:'';
-            $return .= static::open($tags,...$value);
+            $return .= self::open($tags,...$value);
         }
 
         return $return;
@@ -1435,7 +1435,7 @@ class Html extends Root
             for ($i=0; $i < $count; $i++)
             {
                 $return .= (strlen($return) && is_string($separator))? $separator:'';
-                $return .= static::close($tags);
+                $return .= self::close($tags);
             }
         }
 
@@ -1447,10 +1447,10 @@ class Html extends Root
     // ouvre et ferme un tag ou groupe de tag, conditionnelle à ce que value ne soit pas vide
     final public static function cond($tags,$value='',...$arg):string
     {
-        $return = static::condOpen($tags,$value,...$arg);
+        $return = self::condOpen($tags,$value,...$arg);
 
         if(!empty($return))
-        $return .= static::condClose($tags,$value,(is_array($opt = Arr::valueLast($arg)))? $opt:null);
+        $return .= self::condClose($tags,$value,(is_array($opt = Arr::valueLast($arg)))? $opt:null);
 
         return $return;
     }
@@ -1461,10 +1461,10 @@ class Html extends Root
     final public static function condOpen($tags,$value='',...$arg):string
     {
         $return = '';
-        $tag = static::get($tags);
+        $tag = self::get($tags);
 
-        if(!empty($tag) && static::value($value,$tag,static::getAttr($tag),static::getOption($tag)) !== '')
-        $return = static::open($tags,$value,...$arg);
+        if(!empty($tag) && self::value($value,$tag,self::getAttr($tag),self::getOption($tag)) !== '')
+        $return = self::open($tags,$value,...$arg);
 
         return $return;
     }
@@ -1475,10 +1475,10 @@ class Html extends Root
     final public static function condClose($tags,$value='',?array $option=null):string
     {
         $return = '';
-        $tag = static::get($tags);
+        $tag = self::get($tags);
 
-        if(!empty($tag) && static::value($value,$tag,static::getAttr($tag),static::getOption($tag)) !== '')
-        $return = static::close($tags,$option);
+        if(!empty($tag) && self::value($value,$tag,self::getAttr($tag),self::getOption($tag)) !== '')
+        $return = self::close($tags,$option);
 
         return $return;
     }
@@ -1489,7 +1489,7 @@ class Html extends Root
     final public static function or($tags,$href,$value='',...$arg):string
     {
         $href = Obj::cast($href);
-        return (Uri::is($href))? static::make(static::changeLast('a',$tags),$href,$value,...$arg):static::make($tags,$value,...$arg);
+        return (Uri::is($href))? self::make(self::changeLast('a',$tags),$href,$value,...$arg):self::make($tags,$value,...$arg);
     }
 
 
@@ -1498,7 +1498,7 @@ class Html extends Root
     final public static function orOpen($tags,$href,$value='',...$arg):string
     {
         $href = Obj::cast($href);
-        return (Uri::is($href))? static::open(static::changeLast('a',$tags),$href,$value,...$arg):static::open($tags,$value,...$arg);
+        return (Uri::is($href))? self::open(self::changeLast('a',$tags),$href,$value,...$arg):self::open($tags,$value,...$arg);
     }
 
 
@@ -1511,9 +1511,9 @@ class Html extends Root
         $href = Obj::cast($href);
 
         if(Uri::is($href))
-        $return = static::close(static::changeLast('a',$tags),$option);
+        $return = self::close(self::changeLast('a',$tags),$option);
         else
-        $return = static::close($tags,$option);
+        $return = self::close($tags,$option);
 
         return $return;
     }
@@ -1527,19 +1527,19 @@ class Html extends Root
         {
             if(is_string($return) && strlen($return))
             {
-                $key = (static::isMetaProperty($return))? 'property':'name';
+                $key = (self::isMetaProperty($return))? 'property':'name';
                 $return = [$key=>$return];
             }
 
             elseif(is_array($return))
             {
-                if(array_key_exists('name',$return) && static::isMetaProperty($return['name']))
+                if(array_key_exists('name',$return) && self::isMetaProperty($return['name']))
                 {
                     $return['property'] = $return['name'];
                     unset($return['name']);
                 }
 
-                if(array_key_exists('property',$return) && !static::isMetaProperty($return['property']))
+                if(array_key_exists('property',$return) && !self::isMetaProperty($return['property']))
                 {
                     $return['name'] = $return['property'];
                     unset($return['property']);
@@ -1584,15 +1584,15 @@ class Html extends Root
         {
             if($return['name'] === true)
             {
-                $wrap = static::$config['randomNameWrap'] ?? null;
+                $wrap = self::$config['randomNameWrap'] ?? null;
                 $return['name'] = Attr::randomId();
 
                 if(is_string($wrap))
                 $return['name'] = $wrap.$return['name'].$wrap;
             }
 
-            if($multi === true && !static::isNameMulti($return['name']))
-            $return['name'] .= static::$config['multi'];
+            if($multi === true && !self::isNameMulti($return['name']))
+            $return['name'] .= self::$config['multi'];
         }
 
         return $return;
@@ -1605,7 +1605,7 @@ class Html extends Root
     {
         if($type === 'initial')
         {
-            $return = static::formInitialNameAttr($return,$option['multi'] ?? false);
+            $return = self::formInitialNameAttr($return,$option['multi'] ?? false);
 
             if(array_key_exists('checked',$option) && is_array($option['checked']) && is_scalar($value))
             {
@@ -1622,7 +1622,7 @@ class Html extends Root
                 unset($return['maxlength']);
 
                 if($return['type'] === 'image')
-                $return['alt'] = static::alt($return['alt'] ?? null,$return['src'] ?? null);
+                $return['alt'] = self::alt($return['alt'] ?? null,$return['src'] ?? null);
             }
         }
 
@@ -1635,7 +1635,7 @@ class Html extends Root
     final protected static function textareaAttr(string $type,array $return,$value,array $option):array
     {
         if($type === 'initial')
-        $return = static::formInitialNameAttr($return,$option['multi'] ?? false);
+        $return = self::formInitialNameAttr($return,$option['multi'] ?? false);
 
         return $return;
     }
@@ -1646,7 +1646,7 @@ class Html extends Root
     final protected static function buttonAttr(string $type,array $return,$value,array $option):array
     {
         if($type === 'initial')
-        $return = static::formInitialNameAttr($return,$option['multi'] ?? false);
+        $return = self::formInitialNameAttr($return,$option['multi'] ?? false);
 
         return $return;
     }
@@ -1657,7 +1657,7 @@ class Html extends Root
     final protected static function selectAttr(string $type,array $return,$value,array $option):array
     {
         if($type === 'initial')
-        $return = static::formInitialNameAttr($return,$option['multi'] ?? false);
+        $return = self::formInitialNameAttr($return,$option['multi'] ?? false);
 
         return $return;
     }
@@ -1707,7 +1707,7 @@ class Html extends Root
             elseif(is_string($value))
             $src = $value;
 
-            $return['alt'] = static::alt($return['alt'] ?? null,$src);
+            $return['alt'] = self::alt($return['alt'] ?? null,$src);
         }
 
         return $return;
@@ -1726,7 +1726,7 @@ class Html extends Root
 
         if(is_string($tag))
         {
-            $callable = static::getValueCallable($tag);
+            $callable = self::getValueCallable($tag);
 
             if(!empty($callable))
             $value = $callable($value,$attr,$option);
@@ -1743,7 +1743,7 @@ class Html extends Root
             $return = Str::castFix($value,', ');
 
             if(!empty($option['encode']))
-            $return = static::encode($return,...(array) $option['encode']);
+            $return = self::encode($return,...(array) $option['encode']);
         }
 
         return $return;
@@ -1766,16 +1766,16 @@ class Html extends Root
         $return = Encoding::getCharset();
 
         elseif($key === 'og:title')
-        $return = static::titleValue($return,$option);
+        $return = self::titleValue($return,$option);
 
         elseif(in_array($key,['description','og:description'],true))
-        $return = static::metaDescriptionValue($return,$option);
+        $return = self::metaDescriptionValue($return,$option);
 
         elseif($key === 'keywords')
-        $return = static::metaKeywordsValue($return,$option);
+        $return = self::metaKeywordsValue($return,$option);
 
-        elseif(is_string($key) && static::isMetaUri($key))
-        $return = static::metaUriValue($return,$option);
+        elseif(is_string($key) && self::isMetaUri($key))
+        $return = self::metaUriValue($return,$option);
 
         return $return;
     }
@@ -1839,7 +1839,7 @@ class Html extends Root
         if(!empty($option['genuine']))
         {
             if($option['genuine'] === true || (is_array($option['genuine']) && !empty($option['genuine'][$method])))
-            $return .= static::genuine();
+            $return .= self::genuine();
         }
 
         // csrf
@@ -1848,7 +1848,7 @@ class Html extends Root
             if($option['csrf'] === true || (is_array($option['csrf']) && !empty($option['csrf'][$method])))
             {
                 $csrf = Session::csrf();
-                $return .= static::csrf($csrf);
+                $return .= self::csrf($csrf);
             }
         }
 
@@ -1867,13 +1867,13 @@ class Html extends Root
         $title = '';
 
         if(is_string($title))
-        $return .= static::option($title,'');
+        $return .= self::option($title,'');
 
         if($value === true || is_int($value))
-        $value = static::getBool($value);
+        $value = self::getBool($value);
 
         if(is_array($value))
-        $return .= static::options($value,$option);
+        $return .= self::options($value,$option);
 
         else
         $return .= Str::cast($value);
@@ -1888,7 +1888,7 @@ class Html extends Root
     {
         if(is_array($return))
         {
-            $return = static::headFromArray($return);
+            $return = self::headFromArray($return);
 
             if(array_key_exists('separator',$option) && is_string($option['separator']) && !empty($return))
             $return = $option['separator'].$return.$option['separator'];
@@ -1924,7 +1924,7 @@ class Html extends Root
             }
 
             if(is_string($return) && strlen($return))
-            $return = static::excerptStrSuffix($maxLength,$return,$option['excerpt'] ?? null);
+            $return = self::excerptStrSuffix($maxLength,$return,$option['excerpt'] ?? null);
         }
 
         return $return;
@@ -1935,7 +1935,7 @@ class Html extends Root
     // prépare la valeur pour la tag title ou meta title
     final public static function titleValue($value,?array $option=null):?string
     {
-        return static::titleDescriptionKeywordsValue($value,static::getOption('title',null,$option));
+        return self::titleDescriptionKeywordsValue($value,self::getOption('title',null,$option));
     }
 
 
@@ -1943,7 +1943,7 @@ class Html extends Root
     // prépare la valeur pour la tag meta description
     final public static function metaDescriptionValue($value,?array $option=null):?string
     {
-        return static::titleDescriptionKeywordsValue($value,static::getOption('meta','description',$option));
+        return self::titleDescriptionKeywordsValue($value,self::getOption('meta','description',$option));
     }
 
 
@@ -1951,7 +1951,7 @@ class Html extends Root
     // prépare la valeur pour la tag meta keywords
     final public static function metaKeywordsValue($value,?array $option=null):?string
     {
-        return static::titleDescriptionKeywordsValue($value,static::getOption('meta','keywords',$option));
+        return self::titleDescriptionKeywordsValue($value,self::getOption('meta','keywords',$option));
     }
 
 
@@ -1959,7 +1959,7 @@ class Html extends Root
     // prépare la valeur pour une tag meta uri
     final public static function metaUriValue($value,?array $option=null):?string
     {
-        return (is_string($value))? Uri::output($value,static::getOption('meta','uri',$option)):null;
+        return (is_string($value))? Uri::output($value,self::getOption('meta','uri',$option)):null;
     }
 
 
@@ -1967,7 +1967,7 @@ class Html extends Root
     // raccourci pour ouvrir et fermer une div
     final public static function div($value='',$attr=null,?array $option=null):string
     {
-        return static::start('div',$value,$attr,$option).static::end('div',$option);
+        return self::start('div',$value,$attr,$option).self::end('div',$option);
     }
 
 
@@ -1975,7 +1975,7 @@ class Html extends Root
     // raccourci pour ouvrir et fermer une span
     final public static function span($value='',$attr=null,?array $option=null):string
     {
-        return static::start('span',$value,$attr,$option).static::end('span',$option);
+        return self::start('span',$value,$attr,$option).self::end('span',$option);
     }
 
 
@@ -1986,26 +1986,26 @@ class Html extends Root
     final public static function start(string $tag,$value=null,$attr=null,?array $option=null):string
     {
         $return = '';
-        $tag = static::get($tag);
+        $tag = self::get($tag);
 
-        if(static::isWrap($tag))
-        $return = static::wrapOpen($tag,$value);
+        if(self::isWrap($tag))
+        $return = self::wrapOpen($tag,$value);
 
         elseif(!empty($tag))
         {
-            $attr = static::getAttr($tag,null,$attr);
-            $type = ($typeAttr = static::getTypeAttr($tag))? $attr[$typeAttr] ?? null:null;
-            $option = static::getOption($tag,$type,$option);
-            $callable = static::getAttrCallable($tag);
+            $attr = self::getAttr($tag,null,$attr);
+            $type = ($typeAttr = self::getTypeAttr($tag))? $attr[$typeAttr] ?? null:null;
+            $option = self::getOption($tag,$type,$option);
+            $callable = self::getAttrCallable($tag);
 
             if(!empty($callable))
             $attr = $callable('initial',$attr,$value,$option);
 
-            $valueAttr = static::getValueAttr($tag,$attr['type'] ?? null);
+            $valueAttr = self::getValueAttr($tag,$attr['type'] ?? null);
             if(!empty($valueAttr))
-            $attr[$valueAttr] = static::value($value,$tag,$attr,$option,true);
+            $attr[$valueAttr] = self::value($value,$tag,$attr,$option,true);
             else
-            $value = static::value($value,$tag,$attr,$option);
+            $value = self::value($value,$tag,$attr,$option);
 
             if(!empty($option['label']))
             $attr['id'] = Attr::randomId($attr['name'] ?? null);
@@ -2023,7 +2023,7 @@ class Html extends Root
                 $attrStr = ' '.$attrStr;
             }
 
-            if(static::isSelfClosing($tag))
+            if(self::isSelfClosing($tag))
             $return = "<$tag".$attrStr.'/>';
 
             else
@@ -2033,7 +2033,7 @@ class Html extends Root
                 if(empty($valueAttr))
                 {
                     if(!empty($option['excerptMin']) && is_int($option['excerptMin']) && strlen($value) > $option['excerptMin'])
-                    $value = static::excerpt($option['excerptMin'],$value);
+                    $value = self::excerpt($option['excerptMin'],$value);
 
                     $return .= $value;
                 }
@@ -2043,18 +2043,18 @@ class Html extends Root
         if(is_array($option))
         {
             if(array_key_exists('label',$option) && !in_array($option['label'],['',null],true))
-            $return = static::makeLabel($option['label'],$return,$attr['id'] ?? null,$option['position'] ?? null);
+            $return = self::makeLabel($option['label'],$return,$attr['id'] ?? null,$option['position'] ?? null);
 
             if(!empty($option['html']))
             {
-                $open = static::argOpen($return,$option['html']);
+                $open = self::argOpen($return,$option['html']);
                 $return = (strlen($open))? $open:$return;
             }
 
             if(!empty($option['conditional']))
             {
                 $arg = (is_array($option['conditional']))? $option['conditional']:[];
-                $return = static::conditionalCommentsOpen(...$arg).$return;
+                $return = self::conditionalCommentsOpen(...$arg).$return;
             }
         }
 
@@ -2069,22 +2069,22 @@ class Html extends Root
     final public static function end(string $tag,?array $option=null):string
     {
         $return = '';
-        $tag = static::get($tag);
+        $tag = self::get($tag);
 
-        if(static::isWrap($tag))
-        $return = static::wrapClose($tag);
+        if(self::isWrap($tag))
+        $return = self::wrapClose($tag);
 
-        elseif(!empty($tag) && !static::isSelfClosing($tag))
+        elseif(!empty($tag) && !self::isSelfClosing($tag))
         $return = "</$tag>";
 
         if(!empty($option['html']))
-        $return .= static::argClose($option['html']);
+        $return .= self::argClose($option['html']);
 
         if(!empty($option['conditional']))
         {
             $arg = (is_array($option['conditional']))? Arr::valueLast($option['conditional']):false;
             $arg = (!is_bool($arg))? false:$arg;
-            $return .= static::conditionalCommentsClose($arg);
+            $return .= self::conditionalCommentsClose($arg);
         }
 
         return $return;
@@ -2095,7 +2095,7 @@ class Html extends Root
     // génère un tag metaCharset
     final public static function metaCharset($value=null,$attr=null,?array $option=null):string
     {
-        return static::meta($value,Arr::plus($attr,['name'=>'charset']),$option);
+        return self::meta($value,Arr::plus($attr,['name'=>'charset']),$option);
     }
 
 
@@ -2103,7 +2103,7 @@ class Html extends Root
     // génère un tag meta description
     final public static function metaDescription($value,$attr=null,?array $option=null):string
     {
-        return static::meta($value,Arr::plus($attr,['name'=>'description']),$option);
+        return self::meta($value,Arr::plus($attr,['name'=>'description']),$option);
     }
 
 
@@ -2111,7 +2111,7 @@ class Html extends Root
     // génère un tag meta keywords
     final public static function metaKeywords($value,$attr=null,?array $option=null):string
     {
-        return static::meta($value,Arr::plus($attr,['name'=>'keywords']),$option);
+        return self::meta($value,Arr::plus($attr,['name'=>'keywords']),$option);
     }
 
 
@@ -2119,7 +2119,7 @@ class Html extends Root
     // génère un tag meta og
     final public static function metaOg($value,string $name,$attr=null,?array $option=null):string
     {
-        return static::meta($value,Arr::plus($attr,['property'=>'og:'.$name]),$option);
+        return self::meta($value,Arr::plus($attr,['property'=>'og:'.$name]),$option);
     }
 
 
@@ -2127,7 +2127,7 @@ class Html extends Root
     // ouvre un tag css -> link
     final public static function cssOpen(string $value,$attr=null,?array $option=null):string
     {
-        return static::linkOpen($value,Arr::plus($attr,['rel'=>'stylesheet']),$option);
+        return self::linkOpen($value,Arr::plus($attr,['rel'=>'stylesheet']),$option);
     }
 
 
@@ -2135,7 +2135,7 @@ class Html extends Root
     // ferme une tag css -> link
     final public static function cssClose(?array $option=null):string
     {
-        return static::linkClose($option);
+        return self::linkClose($option);
     }
 
 
@@ -2144,7 +2144,7 @@ class Html extends Root
     // possible de spécifier une valeur pour transférer la variable php en javascript
     final public static function scriptOpen($value=null,?string $var=null,$attr=null,?array $option=null):string
     {
-        return static::start('script',$value,$attr,Arr::plus($option,['var'=>$var]));
+        return self::start('script',$value,$attr,Arr::plus($option,['var'=>$var]));
     }
 
 
@@ -2152,7 +2152,7 @@ class Html extends Root
     // fait un tag js -> script
     final public static function jsOpen(string $value,$attr=null,?array $option=null):string
     {
-        return static::scriptOpen(null,null,Arr::plus(['src'=>$value],$attr),$option);
+        return self::scriptOpen(null,null,Arr::plus(['src'=>$value],$attr),$option);
     }
 
 
@@ -2160,7 +2160,7 @@ class Html extends Root
     // ferme une tag js -> script
     final public static function jsClose(?array $option=null):string
     {
-        return static::scriptClose($option);
+        return self::scriptClose($option);
     }
 
 
@@ -2168,7 +2168,7 @@ class Html extends Root
     // ouvre un tag a
     final public static function aOpen($href=null,$title=null,$attr=null,?array $option=null):string
     {
-        return static::start('a',($title === true)? $href:$title,Arr::plus(static::getAttrScalar('a',$attr),['href'=>$href]),$option);
+        return self::start('a',($title === true)? $href:$title,Arr::plus(self::getAttrScalar('a',$attr),['href'=>$href]),$option);
     }
 
 
@@ -2176,7 +2176,7 @@ class Html extends Root
     // ouvre un tag img
     final public static function imgOpen($src=null,$alt=null,$attr=null,?array $option=null):string
     {
-        return static::start('img',$src,Arr::plus($attr,['alt'=>$alt]),$option);
+        return self::start('img',$src,Arr::plus($attr,['alt'=>$alt]),$option);
     }
 
 
@@ -2185,7 +2185,7 @@ class Html extends Root
     // note: à la différence des autres méthodes les attributs et options sont appliqués au tag A et non pas le dernier, IMG
     final public static function aImgOpen($href=null,$src=null,$alt=null,$attr=null,?array $option=null):string
     {
-        return static::aOpen($href,static::imgOpen($src,$alt),$attr,$option);
+        return self::aOpen($href,self::imgOpen($src,$alt),$attr,$option);
     }
 
 
@@ -2213,7 +2213,7 @@ class Html extends Root
     // ouvre une tag img, le contenu est forcé en base64
     final public static function img64($src=null,$alt=null,$attr=null,?array $option=null):string
     {
-        return static::img($src,$alt,$attr,Arr::plus($option,['base64'=>true]));
+        return self::img($src,$alt,$attr,Arr::plus($option,['base64'=>true]));
     }
 
 
@@ -2223,7 +2223,7 @@ class Html extends Root
     final public static function tableOpen(?array $thead=null,?array $tbody=null,?array $tfoot=null,$attr=null,?array $option=null):string
     {
         $return = '';
-        $option = static::getOption('table',null,$option);
+        $option = self::getOption('table',null,$option);
         $table = '';
         $make = true;
 
@@ -2235,26 +2235,26 @@ class Html extends Root
             $rows[] = $thead;
 
             if(!empty($tbody))
-            $rows = Arr::append($rows,$tbody);
+            $rows = Arr::merge($rows,$tbody);
 
             if(!empty($tfoot))
             $rows[] = $tfoot;
 
-            $make = static::tableSameCount(...$rows);
+            $make = self::tableSameCount(...$rows);
         }
 
         if($make === true)
         {
             if(!empty($thead))
-            $table .= static::thead(...$thead);
+            $table .= self::thead(...$thead);
 
             if(!empty($tbody) && Column::is($tbody))
-            $table .= static::tbody(...$tbody);
+            $table .= self::tbody(...$tbody);
 
             if(!empty($tfoot))
-            $table .= static::tfoot(...$tfoot);
+            $table .= self::tfoot(...$tfoot);
 
-            $return = static::start('table',$table,$attr,$option);
+            $return = self::start('table',$table,$attr,$option);
         }
 
         return $return;
@@ -2265,7 +2265,7 @@ class Html extends Root
     // ouvre et ferme une table seulement si toutes les rangées ont le même nombre de colonne
     final public static function tableStrict(?array $thead=null,?array $tbody=null,?array $tfoot=null,$attr=null,?array $option=null):string
     {
-        return static::table($thead,$tbody,$tfoot,$attr,Arr::plus($option,['strict'=>true]));
+        return self::table($thead,$tbody,$tfoot,$attr,Arr::plus($option,['strict'=>true]));
     }
 
 
@@ -2273,7 +2273,7 @@ class Html extends Root
     // ouvre un thead et une tr avec des th
     final public static function theadOpen(array $value,$attr=null,?array $option=null):string
     {
-        return static::start('thead',static::trThOpen($value,$attr,$option));
+        return self::start('thead',self::trThOpen($value,$attr,$option));
     }
 
 
@@ -2281,7 +2281,7 @@ class Html extends Root
     // ferme une thead et la tr
     final public static function theadClose():string
     {
-        return static::end('tr').static::end('thead');
+        return self::end('tr').self::end('thead');
     }
 
 
@@ -2289,11 +2289,11 @@ class Html extends Root
     // ouvre un tbody et ouvre/ferme plusieurs tr avec td
     final public static function tbodyOpen(array ...$value):string
     {
-        $return = static::start('tbody');
+        $return = self::start('tbody');
 
         foreach ($value as $v)
         {
-            $return .= static::tr(...$v);
+            $return .= self::tr(...$v);
         }
 
         return $return;
@@ -2305,10 +2305,10 @@ class Html extends Root
     final public static function tbodyStrict(array ...$value):string
     {
         $return = '';
-        $sameCount = static::tableSameCount(...$value);
+        $sameCount = self::tableSameCount(...$value);
 
         if($sameCount === true)
-        $return = static::tbody(...$value);
+        $return = self::tbody(...$value);
 
         return $return;
     }
@@ -2318,7 +2318,7 @@ class Html extends Root
     // ouvre un tr avec plusieurs td
     final public static function trOpen(array $value,$attr=null,?array $option=null):string
     {
-        return static::start('tr',static::many('td',null,...$value),$attr,$option);
+        return self::start('tr',self::many('td',null,...$value),$attr,$option);
     }
 
 
@@ -2326,7 +2326,7 @@ class Html extends Root
     // ouvre un tr avec plusieurs th
     final public static function trThOpen(array $value,$attr=null,?array $option=null):string
     {
-        return static::start('tr',static::many('th',null,...$value),$attr,$option);
+        return self::start('tr',self::many('th',null,...$value),$attr,$option);
     }
 
 
@@ -2334,7 +2334,7 @@ class Html extends Root
     // ouvre un tfoot et une tr avec des td
     final public static function tfootOpen(array $value,$attr=null,?array $option=null):string
     {
-        return static::start('tfoot',static::trOpen($value,$attr,$option));
+        return self::start('tfoot',self::trOpen($value,$attr,$option));
     }
 
 
@@ -2342,7 +2342,7 @@ class Html extends Root
     // ferme une tfoot et la tr
     final public static function tfootClose():string
     {
-        return static::end('tr').static::end('tfoot');
+        return self::end('tr').self::end('tfoot');
     }
 
 
@@ -2383,7 +2383,7 @@ class Html extends Root
     // note: pas de valeur, mais csrf et genuine peuvent s'ajouter automatiquement à la valeur si les options sont activés
     final public static function formOpen($action=null,$attr=null,?array $option=null):string
     {
-        return static::start('form',null,Arr::plus(static::getAttrScalar('form',$attr),['action'=>$action]),$option);
+        return self::start('form',null,Arr::plus(self::getAttrScalar('form',$attr),['action'=>$action]),$option);
     }
 
 
@@ -2393,7 +2393,7 @@ class Html extends Root
     // cette méthode est utilisé pour générer un input via un inputMethod du genre inputEmail
     final public static function inputOpen(string $type='text',$value='',$attr=null,?array $option=null):string
     {
-        return static::start('input',$value,static::getAttr('input',$type,$attr),static::getOption('input',$type,$option));
+        return self::start('input',$value,self::getAttr('input',$type,$attr),self::getOption('input',$type,$option));
     }
 
 
@@ -2402,7 +2402,7 @@ class Html extends Root
     // contrairement à submit, une string dans attr est un nom de classe
     final public static function buttonOpen($value=null,$attr=null,?array $option=null):string
     {
-        return static::start('button',$value,static::getAttr('button','button',$attr),static::getOption('button','button',$option));
+        return self::start('button',$value,self::getAttr('button','button',$attr),self::getOption('button','button',$option));
     }
 
 
@@ -2411,7 +2411,7 @@ class Html extends Root
     // attr utilise input/submit donc une string est name
     final public static function submitOpen($value=null,$attr=null,?array $option=null):string
     {
-        return static::start('button',$value,static::getAttr('input','submit',$attr),static::getOption('button','submit',$option));
+        return self::start('button',$value,self::getAttr('input','submit',$attr),self::getOption('button','submit',$option));
     }
 
 
@@ -2419,7 +2419,7 @@ class Html extends Root
     // ferme un tag button submit
     final public static function submitClose(array $option=null):string
     {
-        return static::end('button',$option);
+        return self::end('button',$option);
     }
 
 
@@ -2437,9 +2437,9 @@ class Html extends Root
 
         if(is_int($value))
         {
-            $attr = static::getAttr('input','hidden',$attr);
+            $attr = self::getAttr('input','hidden',$attr);
             $attr['name'] = 'MAX_FILE_SIZE';
-            $return .= static::inputHidden($value,$attr,$option);
+            $return .= self::inputHidden($value,$attr,$option);
         }
 
         return $return;
@@ -2460,7 +2460,7 @@ class Html extends Root
         if(is_array($label) && count($label) === 2)
         {
             $span = Arr::valueLast($label);
-            $span = static::spanCond($span);
+            $span = self::spanCond($span);
             $label = current($label);
         }
 
@@ -2470,15 +2470,15 @@ class Html extends Root
         if(is_string($label) && strlen($label))
         {
             if(in_array($position,[1,'before'],true))
-            $return = static::label($label,$attr,$option).$span.$value;
+            $return = self::label($label,$attr,$option).$span.$value;
 
             elseif(in_array($position,[2,'after'],true))
-            $return = $value.static::label($label,$attr,$option).$span;
+            $return = $value.self::label($label,$attr,$option).$span;
 
             else
             {
                 $label = $label.$value;
-                $return = static::label($label,$attr,$option).$span;
+                $return = self::label($label,$attr,$option).$span;
             }
         }
 
@@ -2505,26 +2505,26 @@ class Html extends Root
             $method = $value[0];
             unset($value[0]);
             $value = array_values($value);
-            $tag = static::getFormTagFromMethod($method) ?? $method;
+            $tag = self::getFormTagFromMethod($method) ?? $method;
 
             if(!array_key_exists(0,$value))
             $value[0] = null;
 
             if(array_key_exists(1,$value) && !is_array($value[1]))
-            $value[1] = static::getAttrScalar($tag,$value[1]);
+            $value[1] = self::getAttrScalar($tag,$value[1]);
 
             $name = (!empty($value[1]['name']))? $value[1]['name']:null;
 
-            if(in_array($id,[null,true],true) && !static::isRelationTag($tag))
+            if(in_array($id,[null,true],true) && !self::isRelationTag($tag))
             $id = Attr::randomId($name ?? null);
 
             if(is_string($id))
             $value[1]['id'] = $id;
 
-            $value = static::$method(...$value);
+            $value = self::$method(...$value);
 
             if(is_string($value))
-            $return = static::formWrapStr($label,$value,$wrap,$replace,$id);
+            $return = self::formWrapStr($label,$value,$wrap,$replace,$id);
         }
 
         return $return;
@@ -2543,22 +2543,22 @@ class Html extends Root
         $return = '';
 
         if($wrap === null)
-        $wrap = key(static::$config['formWrap']);
+        $wrap = key(self::$config['formWrap']);
 
         if(!empty($wrap))
         {
             $label = array_values((array) $label);
 
             if(array_key_exists(1,$label) && !is_array($label[1]))
-            $label[1] = static::getAttrScalar('label',$label[1]);
+            $label[1] = self::getAttrScalar('label',$label[1]);
             if(is_string($id))
             $label[1]['for'] = $id;
-            $label = static::label(...$label);
+            $label = self::label(...$label);
 
             if(is_string($label))
             {
                 $replace = (array) $replace;
-                $formWrap = (array_key_exists($wrap,static::$config['formWrap']))? static::$config['formWrap'][$wrap]:$wrap;
+                $formWrap = (array_key_exists($wrap,self::$config['formWrap']))? self::$config['formWrap'][$wrap]:$wrap;
                 $replace['label'] = $label;
                 $replace['form'] = $value;
                 $replace = Arr::keysWrap('%','%',$replace);
@@ -2588,11 +2588,11 @@ class Html extends Root
             $required = (!empty($array['required']));
             $label = $array['label'] ?? null;
             $replace['description'] = $array['description'] ?? null;
-            $isRelation = static::isRelationTag($type);
+            $isRelation = self::isRelationTag($type);
             $htmlLabel = '';
             $htmlForm = '';
 
-            if(in_array($id,[null,true],true) && !static::isRelationTag($type))
+            if(in_array($id,[null,true],true) && !self::isRelationTag($type))
             {
                 $slug = (!empty($label))? Slug::str($label):null;
                 $id = Attr::randomId($slug);
@@ -2612,7 +2612,7 @@ class Html extends Root
             }
 
             if(!empty($replace['description']))
-            $replace['description'] = static::divCond($replace['description'],$option['descriptionClass']);
+            $replace['description'] = self::divCond($replace['description'],$option['descriptionClass']);
 
             if($isRelation === true)
             {
@@ -2631,13 +2631,13 @@ class Html extends Root
                     $option['html'] = ['div',$option['choiceClass']];
                 }
 
-                $htmlForm .= static::$type($choices,$attr,$option);
+                $htmlForm .= self::$type($choices,$attr,$option);
             }
 
             else
-            $htmlForm .= static::$type($value,$attr,$option);
+            $htmlForm .= self::$type($value,$attr,$option);
 
-            $return .= static::formWrapStr($htmlLabel,$htmlForm,$wrap,$replace,$id);
+            $return .= self::formWrapStr($htmlLabel,$htmlForm,$wrap,$replace,$id);
         }
 
         return $return;
@@ -2659,7 +2659,7 @@ class Html extends Root
         {
             foreach ($value as $v)
             {
-                $return .= static::inputHidden($v,$attr,$option);
+                $return .= self::inputHidden($v,$attr,$option);
 
                 if(empty($option['multi']))
                 break;
@@ -2677,7 +2677,7 @@ class Html extends Root
         $return = '';
         $autoAttr = Arr::plus($attr,['type'=>'hidden','id'=>null,'data-required'=>null]);
         $autoOpt = Arr::plus($option,['html'=>null,'multi'=>false]);
-        $return .= static::inputHidden(null,$autoAttr,$autoOpt);
+        $return .= self::inputHidden(null,$autoAttr,$autoOpt);
 
         return $return;
     }
@@ -2687,7 +2687,7 @@ class Html extends Root
     // alias de radios
     final public static function radio($value,$attr=null,?array $option=null):string
     {
-        return static::radios($value,$attr,$option);
+        return self::radios($value,$attr,$option);
     }
 
 
@@ -2700,19 +2700,19 @@ class Html extends Root
         $return = '';
 
         if($value === true || is_int($value))
-        $value = static::getBool($value);
+        $value = self::getBool($value);
 
-        $option = static::getOption('input','radio',$option);
-        $attr = static::getAttr('input','radio',$attr);
+        $option = self::getOption('input','radio',$option);
+        $attr = self::getAttr('input','radio',$attr);
 
         if(!empty($option['autoHidden']))
-        $return .= static::autoHidden($attr,$option);
+        $return .= self::autoHidden($attr,$option);
 
         if(is_array($value))
         {
             foreach ($value as $val => $label)
             {
-                $return .= static::inputRadio($val,$attr,Arr::plus($option,['label'=>$label]));
+                $return .= self::inputRadio($val,$attr,Arr::plus($option,['label'=>$label]));
             }
         }
 
@@ -2725,7 +2725,7 @@ class Html extends Root
     // un champ hidden est ajouté au début du html
     final public static function radiosWithHidden($value,$attr=null,?array $option=null):string
     {
-        return static::radios($value,$attr,Arr::plus($option,['autoHidden'=>true]));
+        return self::radios($value,$attr,Arr::plus($option,['autoHidden'=>true]));
     }
 
 
@@ -2733,7 +2733,7 @@ class Html extends Root
     // alias de checkboxes
     final public static function checkbox($value,$attr=null,?array $option=null):string
     {
-        return static::checkboxes($value,$attr,$option);
+        return self::checkboxes($value,$attr,$option);
     }
 
 
@@ -2747,19 +2747,19 @@ class Html extends Root
         $return = '';
 
         if($value === true || is_int($value))
-        $value = static::getBool($value);
+        $value = self::getBool($value);
 
-        $option = static::getOption('input','checkbox',$option);
-        $attr = static::getAttr('input','checkbox',$attr);
+        $option = self::getOption('input','checkbox',$option);
+        $attr = self::getAttr('input','checkbox',$attr);
 
         if(!empty($option['autoHidden']))
-        $return .= static::autoHidden($attr,$option);
+        $return .= self::autoHidden($attr,$option);
 
         if(is_array($value))
         {
             foreach ($value as $val => $label)
             {
-                $return .= static::inputCheckbox($val,$attr,Arr::plus($option,['label'=>$label]));
+                $return .= self::inputCheckbox($val,$attr,Arr::plus($option,['label'=>$label]));
             }
         }
 
@@ -2772,7 +2772,7 @@ class Html extends Root
     // un champ hidden est ajouté au début du html
     final public static function checkboxesWithHidden($value,$attr=null,?array $option=null):string
     {
-        return static::checkboxes($value,$attr,Arr::plus($option,['autoHidden'=>true]));
+        return self::checkboxes($value,$attr,Arr::plus($option,['autoHidden'=>true]));
     }
 
 
@@ -2784,13 +2784,13 @@ class Html extends Root
         $return = '';
 
         if($value === true || is_int($value))
-        $value = static::getBool($value);
+        $value = self::getBool($value);
 
         if(is_array($value))
         {
             foreach ($value as $attr => $label)
             {
-                $return .= static::option($label,$attr,$option);
+                $return .= self::option($label,$attr,$option);
             }
         }
 
@@ -2808,7 +2808,7 @@ class Html extends Root
         $title = true;
 
         $option = Arr::plus($option,['title'=>$title]);
-        $return = static::select($value,$attr,$option);
+        $return = self::select($value,$attr,$option);
 
         return $return;
     }
@@ -2818,7 +2818,7 @@ class Html extends Root
     // construit un menu de sélection avec multiple choix
     final public static function multiselect($value,$attr=null,?array $option=null):string
     {
-        return static::select($value,Arr::plus(static::getAttrScalar('select',$attr),['multiple'=>true]),Arr::plus($option,['multi'=>true]));
+        return self::select($value,Arr::plus(self::getAttrScalar('select',$attr),['multiple'=>true]),Arr::plus($option,['multi'=>true]));
     }
 
 
@@ -2839,7 +2839,7 @@ class Html extends Root
             $value = ImageRaster::captcha($value,$font,null,$option);
 
             if(is_resource($value))
-            $return = static::img($value,$alt,$attr);
+            $return = self::img($value,$alt,$attr);
         }
 
         return $return;
@@ -2856,12 +2856,12 @@ class Html extends Root
         if(is_string($name))
         {
             $label = array_values((array) $captcha);
-            $captcha = static::captcha(...$label);
+            $captcha = self::captcha(...$label);
             $attr = ['name'=>$name,'placeholder'=>$placeholder,'data-required'=>true];
             $input = ['inputText',null,$attr];
 
             if(is_string($captcha))
-            $return = static::formWrap($captcha,$input,$wrap,$replace);
+            $return = self::formWrap($captcha,$input,$wrap,$replace);
         }
 
         return $return;
@@ -2882,7 +2882,7 @@ class Html extends Root
             $attr['data-csrf'] = true;
 
             if(!empty($value))
-            $return = static::input($type,$value,$attr,$option);
+            $return = self::input($type,$value,$attr,$option);
         }
 
         return $return;
@@ -2894,13 +2894,13 @@ class Html extends Root
     final public static function genuine(string $type='text',?array $option=null):string
     {
         $return = '';
-        $genuine = static::getGenuineName();
+        $genuine = self::getGenuineName();
 
         if(!empty($genuine))
         {
             $attr['name'] = $genuine;
             $attr['data-genuine'] = true;
-            $return = static::input($type,null,$attr,$option);
+            $return = self::input($type,null,$attr,$option);
         }
 
         return $return;
@@ -2911,7 +2911,7 @@ class Html extends Root
     // retourne le nom pour l'input genuine
     final public static function getGenuineName(?int $value=null):string
     {
-        $return = static::$config['genuine'];
+        $return = self::$config['genuine'];
 
         if(is_int($value))
         $return .= $value.'-';
@@ -2924,10 +2924,10 @@ class Html extends Root
     // ouvre et ferme un wrap
     final public static function wrap(string $wrap,?string $value=''):string
     {
-        $return = static::wrapOpen($wrap,$value);
+        $return = self::wrapOpen($wrap,$value);
 
         if(strlen($return))
-        $return .= static::wrapClose($wrap);
+        $return .= self::wrapClose($wrap);
 
         return $return;
     }
@@ -2939,9 +2939,9 @@ class Html extends Root
     {
         $return = '';
 
-        if(static::isWrap($wrap))
+        if(self::isWrap($wrap))
         {
-            $return = static::$config['wrap'][$wrap][0];
+            $return = self::$config['wrap'][$wrap][0];
             $value = Obj::cast($value);
             $return .= Str::castFix($value);
         }
@@ -2956,8 +2956,8 @@ class Html extends Root
     {
         $return = '';
 
-        if(static::isWrap($wrap))
-        $return = static::$config['wrap'][$wrap][1];
+        if(self::isWrap($wrap))
+        $return = self::$config['wrap'][$wrap][1];
 
         return $return;
     }
@@ -2975,7 +2975,7 @@ class Html extends Root
     // génère les commentaires conditionnels pour ie
     final public static function conditionalComments(string $value,string $type='lte',int $version=8,bool $all=false):string
     {
-        return static::conditionalCommentsOpen($type,$version,$all).$value.static::conditionalCommentsClose($all);
+        return self::conditionalCommentsOpen($type,$version,$all).$value.self::conditionalCommentsClose($all);
     }
 
 
@@ -3016,14 +3016,14 @@ class Html extends Root
     final public static function docOpen(?array $value=null,bool $default=true,?string $separator=null,bool $separatorAfter=false):string
     {
         $return = '';
-        $separator = ($separator === null)? static::$config['separator']:$separator;
+        $separator = ($separator === null)? self::$config['separator']:$separator;
 
         if($default === true)
-        $value = Arrs::replace(static::$config['docOpen']['default'],$value);
+        $value = Arrs::replace(self::$config['docOpen']['default'],$value);
 
         if(!empty($value))
         {
-            foreach (static::$config['docOpen']['order'] as $k)
+            foreach (self::$config['docOpen']['order'] as $k)
             {
                 if(array_key_exists($k,$value))
                 {
@@ -3032,19 +3032,19 @@ class Html extends Root
 
                     // doctype
                     if($k === 'doctype')
-                    $r = static::doctype();
+                    $r = self::doctype();
 
                     // html
                     elseif($k === 'html')
-                    $r = static::htmlOpen(null,$arg);
+                    $r = self::htmlOpen(null,$arg);
 
                     // head
                     elseif($k === 'head')
-                    $r = static::head($arg,null,['separator'=>$separator]);
+                    $r = self::head($arg,null,['separator'=>$separator]);
 
                     // body
                     elseif($k === 'body')
-                    $r = static::bodyOpen(null,$arg);
+                    $r = self::bodyOpen(null,$arg);
 
                     if(strlen($r))
                     {
@@ -3070,17 +3070,17 @@ class Html extends Root
     final public static function headFromArray(?array $value=null,$separator=null):string
     {
         $return = '';
-        $separator = ($separator === null)? static::$config['separator']:$separator;
+        $separator = ($separator === null)? self::$config['separator']:$separator;
 
         if(!empty($value))
         {
-            foreach (static::$config['tag']['head']['order'] as $k)
+            foreach (self::$config['tag']['head']['order'] as $k)
             {
                 if(array_key_exists($k,$value) && $value[$k] !== false)
                 {
                     $arg = (array) $value[$k];
                     $removeAssocKey = in_array($k,['link','script','css','js'],true);
-                    $arg = static::headArgReformat($arg,$removeAssocKey);
+                    $arg = self::headArgReformat($arg,$removeAssocKey);
 
                     if(!empty($arg))
                     {
@@ -3088,23 +3088,23 @@ class Html extends Root
 
                         // title
                         if($k === 'title')
-                        $r = static::title(...$arg);
+                        $r = self::title(...$arg);
 
                         // description
                         elseif($k === 'description')
-                        $r = static::metaDescription(...$arg);
+                        $r = self::metaDescription(...$arg);
 
                         // keywords
                         elseif($k === 'keywords')
-                        $r = static::metaKeywords(...$arg);
+                        $r = self::metaKeywords(...$arg);
 
                         // meta
                         elseif($k === 'meta')
-                        $r = static::many($k,$separator,...$arg);
+                        $r = self::many($k,$separator,...$arg);
 
                         // link, script, css et js
                         elseif($removeAssocKey === true)
-                        $r = static::many($k,$separator,...$arg);
+                        $r = self::many($k,$separator,...$arg);
 
                         if(strlen($r))
                         {
@@ -3151,14 +3151,14 @@ class Html extends Root
     final public static function docClose(?array $value=null,bool $default=true,bool $closeBody=true,?string $separator=null,bool $separatorBefore=false):string
     {
         $return = '';
-        $separator = ($separator === null)? static::$config['separator']:$separator;
+        $separator = ($separator === null)? self::$config['separator']:$separator;
 
         if($default === true)
-        $value = Arrs::replace(static::$config['docClose']['default'],$value);
+        $value = Arrs::replace(self::$config['docClose']['default'],$value);
 
         if(!empty($value))
         {
-            foreach (static::$config['docClose']['order'] as $k)
+            foreach (self::$config['docClose']['order'] as $k)
             {
                 if(array_key_exists($k,$value))
                 {
@@ -3167,7 +3167,7 @@ class Html extends Root
 
                     // script et js
                     if(in_array($k,['script','js'],true) && is_array($arg) && !empty($arg))
-                    $r = static::many($k,$separator,...array_values($arg));
+                    $r = self::many($k,$separator,...array_values($arg));
 
                     // body
                     elseif($k === 'body')
@@ -3175,12 +3175,12 @@ class Html extends Root
                         if($closeBody === true)
                         $r = (string) Buffer::startCallGet([Response::class,'closeBody']);
 
-                        $r .= static::bodyClose((array) $arg);
+                        $r .= self::bodyClose((array) $arg);
                     }
 
                     // html
                     elseif($k === 'html')
-                    $r = static::htmlClose((array) $arg);
+                    $r = self::htmlClose((array) $arg);
 
                     if(strlen($r))
                     {
@@ -3238,14 +3238,14 @@ class Html extends Root
     // prendre note que le suffix sans le html (strip tags) est maintenant comptabilisé dans la longueur de la string
     final public static function excerpt(?int $length,string $return,?array $option=null):string
     {
-        $option = Arr::plus(['mb'=>true,'removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true,'stripTags'=>true,'rtrim'=>null,'suffix'=>static::getExcerptSuffix(),'encode'=>'specialChars'],$option);
+        $option = Arr::plus(['mb'=>true,'removeLineBreaks'=>true,'removeUnicode'=>true,'trim'=>true,'stripTags'=>true,'rtrim'=>null,'suffix'=>self::getExcerptSuffix(),'encode'=>'specialChars'],$option);
         $option['encode'] = (is_string($option['encode']) || $option['encode'] === true)? [$option['encode']]:$option['encode'];
         $mb = (is_bool($option['mb']))? $option['mb']:Encoding::getMb($option['mb'],$return);
         $suffix = null;
 
         // stripTags
         if(!empty($option['stripTags']))
-        $return = static::stripTags($return,$option['stripTags']);
+        $return = self::stripTags($return,$option['stripTags']);
 
         // removeLineBreaks, removeUnicode, trim
         $return = Str::output($return,$option,$mb);
@@ -3253,7 +3253,7 @@ class Html extends Root
         // length
         if(!empty($length))
         {
-            $suffixStrip = (is_string($option['suffix']) && strlen($option['suffix']))? static::stripTags($option['suffix']):null;
+            $suffixStrip = (is_string($option['suffix']) && strlen($option['suffix']))? self::stripTags($option['suffix']):null;
             $lts = Str::lengthTrimSuffix($length,$return,Arr::plus($option,['suffix'=>$suffixStrip]));
             $return = $lts['str'];
 
@@ -3263,7 +3263,7 @@ class Html extends Root
 
         // encode
         if(!empty($option['encode']) && is_array($option['encode']))
-        $return = static::encode($return,...$option['encode']);
+        $return = self::encode($return,...$option['encode']);
 
         // suffix
         if(!empty($suffix))
@@ -3281,7 +3281,7 @@ class Html extends Root
     // removeLineBreaks, removeUnicode, excerpt par length (rtrim et suffix), trim, stripTags, convert (entities)
     final public static function excerptEntities(?int $length,string $return,?array $option=null):string
     {
-        return static::excerpt($length,$return,Arr::plus($option,['encode'=>'entities']));
+        return self::excerpt($length,$return,Arr::plus($option,['encode'=>'entities']));
     }
 
 
@@ -3289,7 +3289,7 @@ class Html extends Root
     // comme excerpt mais le suffix est ... (pas de html)
     final public static function excerptStrSuffix(?int $length,string $return,?array $option=null):string
     {
-        return static::excerpt($length,$return,Arr::plus($option,['suffix'=>Str::$config['excerpt']['suffix']]));
+        return self::excerpt($length,$return,Arr::plus($option,['suffix'=>Str::getConfig('excerpt/suffix')]));
     }
 
 
@@ -3297,7 +3297,7 @@ class Html extends Root
     // retourne le suffix pour l'excerpt
     final public static function getExcerptSuffix():string
     {
-        return static::$config['excerptSuffix'] ?? '';
+        return self::$config['excerptSuffix'] ?? '';
     }
 
 
@@ -3313,11 +3313,11 @@ class Html extends Root
 
         // stripTags
         if(!empty($option['stripTags']))
-        $return = static::stripTags($return,$option['stripTags']);
+        $return = self::stripTags($return,$option['stripTags']);
 
         // encode
         if(!empty($option['encode']) && is_array($option['encode']))
-        $return = static::encode($return,...$option['encode']);
+        $return = self::encode($return,...$option['encode']);
 
         // trim les espaces
         if(!empty($option['trim']))
@@ -3331,7 +3331,7 @@ class Html extends Root
     // removeLineBreaks, removeUnicode, trim et convert (entities)
     final public static function outputEntities(string $return,?array $option=null):string
     {
-        return static::output($return,Arr::plus($option,['encode'=>'entities']));
+        return self::output($return,Arr::plus($option,['encode'=>'entities']));
     }
 
 
@@ -3339,7 +3339,7 @@ class Html extends Root
     // removeLineBreaks, removeUnicode, trim, stripTags et convert (specialchars)
     final public static function outputStripTags(string $return,?array $option=null):string
     {
-        return static::output($return,Arr::plus($option,['stripTags'=>true]));
+        return self::output($return,Arr::plus($option,['stripTags'=>true]));
     }
 
 
@@ -3347,7 +3347,7 @@ class Html extends Root
     // removeLineBreaks, trim et convert (specialchars)
     final public static function unicode(string $return,?array $option=null):string
     {
-        return static::output($return,Arr::plus($option,['removeUnicode'=>false]));
+        return self::output($return,Arr::plus($option,['removeUnicode'=>false]));
     }
 
 
@@ -3355,7 +3355,7 @@ class Html extends Root
     // removeLineBreaks, trim et convert (entities)
     final public static function unicodeEntities(string $return,?array $option=null):string
     {
-        return static::output($return,Arr::plus($option,['removeUnicode'=>false,'encode'=>'entities']));
+        return self::output($return,Arr::plus($option,['removeUnicode'=>false,'encode'=>'entities']));
     }
 
 
@@ -3363,7 +3363,7 @@ class Html extends Root
     // removeLineBreaks, trim, stripTags et convert (specialchars)
     final public static function unicodeStripTags(string $return,?array $option=null):string
     {
-        return static::output($return,Arr::plus($option,['removeUnicode'=>false,'stripTags'=>true]));
+        return self::output($return,Arr::plus($option,['removeUnicode'=>false,'stripTags'=>true]));
     }
 
 
@@ -3373,8 +3373,8 @@ class Html extends Root
     {
         $return = null;
 
-        if(static::isUriOption($tag))
-        $return = static::$config['tag'][$tag]['option']['attr']['uri'];
+        if(self::isUriOption($tag))
+        $return = self::$config['tag'][$tag]['option']['attr']['uri'];
 
         return $return;
     }
@@ -3384,8 +3384,8 @@ class Html extends Root
     // change les options uri pour une tag
     final public static function setUriOption(string $tag,array $option):void
     {
-        if(static::isUriOption($tag))
-        static::$config['tag'][$tag]['option']['attr']['uri'] = Uri::option($option);
+        if(self::isUriOption($tag))
+        self::$config['tag'][$tag]['option']['attr']['uri'] = Uri::option($option);
 
         return;
     }

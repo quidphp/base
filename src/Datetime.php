@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // datetime
 // class with static methods to generate, format and parse dates
-class Datetime extends Root
+final class Datetime extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'format'=>[
             'replace'=>[ // contenu de remplacement pour date, via une callable et éventuellement un map
                 '%'=>['call'=>[self::class,'getMonths'],'map'=>[Str::class,'lower'],'args'=>[true]],
@@ -75,7 +75,7 @@ class Datetime extends Root
     // retourne vrai si la temps donné est maintenant
     final public static function isNow($value=null,$format=null):bool
     {
-        return static::time($value,$format) === static::now();
+        return self::time($value,$format) === self::now();
     }
 
 
@@ -107,7 +107,7 @@ class Datetime extends Root
     // retourne vrai si le timestamp est une année valide
     final public static function isYearValid($value):bool
     {
-        return is_int($value) && $value >= 0 && $value <= static::$config['amount']['maxYear'];
+        return is_int($value) && $value >= 0 && $value <= self::$config['amount']['maxYear'];
     }
 
 
@@ -117,7 +117,7 @@ class Datetime extends Root
     final public static function isYearLeap($value=null,$format=null):bool
     {
         $return = false;
-        $value = static::time($value,$format,true);
+        $value = self::time($value,$format,true);
 
         if(is_int($value) && date('L',$value) === '1')
         $return = true;
@@ -131,9 +131,9 @@ class Datetime extends Root
     final public static function isToday($value=null,$format=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if(is_int($value) && static::floorDay($value) === static::floorDay(null))
+        if(is_int($value) && self::floorDay($value) === self::floorDay(null))
         $return = true;
 
         return $return;
@@ -145,10 +145,10 @@ class Datetime extends Root
     final public static function isTomorrow($value=null,$format=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
-        $timestamp = static::addDay(1);
+        $value = self::time($value,$format);
+        $timestamp = self::addDay(1);
 
-        if(is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
+        if(is_int($value) && self::floorDay($value) === self::floorDay($timestamp))
         $return = true;
 
         return $return;
@@ -160,10 +160,10 @@ class Datetime extends Root
     final public static function isYesterday($value=null,$format=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
-        $timestamp = static::addDay(-1);
+        $value = self::time($value,$format);
+        $timestamp = self::addDay(-1);
 
-        if(is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
+        if(is_int($value) && self::floorDay($value) === self::floorDay($timestamp))
         $return = true;
 
         return $return;
@@ -175,9 +175,9 @@ class Datetime extends Root
     final public static function isYear($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if(is_int($value) && static::year($value) === static::year($timestamp))
+        if(is_int($value) && self::year($value) === self::year($timestamp))
         $return = true;
 
         return $return;
@@ -189,9 +189,9 @@ class Datetime extends Root
     final public static function isMonth($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if(is_int($value) && static::floorMonth($value) === static::floorMonth($timestamp))
+        if(is_int($value) && self::floorMonth($value) === self::floorMonth($timestamp))
         $return = true;
 
         return $return;
@@ -203,9 +203,9 @@ class Datetime extends Root
     final public static function isDay($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if(is_int($value) && static::floorDay($value) === static::floorDay($timestamp))
+        if(is_int($value) && self::floorDay($value) === self::floorDay($timestamp))
         $return = true;
 
         return $return;
@@ -216,7 +216,7 @@ class Datetime extends Root
     // retourne vrai si le temps est exactement le début d'un jour
     final public static function isDayStart($value=null,$format=null):bool
     {
-        return static::secondsInDay($value,$format) === 0;
+        return self::secondsInDay($value,$format) === 0;
     }
 
 
@@ -225,9 +225,9 @@ class Datetime extends Root
     final public static function isHour($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if(is_int($value) && static::floorHour($value) === static::floorHour($timestamp))
+        if(is_int($value) && self::floorHour($value) === self::floorHour($timestamp))
         $return = true;
 
         return $return;
@@ -239,9 +239,9 @@ class Datetime extends Root
     final public static function isMinute($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if(is_int($value) && static::floorMinute($value) === static::floorMinute($timestamp))
+        if(is_int($value) && self::floorMinute($value) === self::floorMinute($timestamp))
         $return = true;
 
         return $return;
@@ -253,9 +253,9 @@ class Datetime extends Root
     final public static function isSecond($value=null,$format=null,?int $timestamp=null):bool
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if(is_int($value) && $value === static::time($timestamp))
+        if(is_int($value) && $value === self::time($timestamp))
         $return = true;
 
         return $return;
@@ -270,8 +270,8 @@ class Datetime extends Root
 
         if(is_string($value) && !empty($value))
         {
-            $parse = static::parse($format,$value);
-            $get = static::get(static::time($value,$format));
+            $parse = self::parse($format,$value);
+            $get = self::get(self::time($value,$format));
 
             if(is_array($parse) && is_array($get))
             {
@@ -292,7 +292,7 @@ class Datetime extends Root
     // ce format change selon la langue
     final public static function isFormatDateToDay($value):bool
     {
-        return static::isFormat('dateToDay',$value);
+        return self::isFormat('dateToDay',$value);
     }
 
 
@@ -301,7 +301,7 @@ class Datetime extends Root
     // ce format change selon la langue
     final public static function isFormatDateToMinute($value):bool
     {
-        return static::isFormat('dateToMinute',$value);
+        return self::isFormat('dateToMinute',$value);
     }
 
 
@@ -310,7 +310,7 @@ class Datetime extends Root
     // ce format change selon la langue
     final public static function isFormatDateToSecond($value):bool
     {
-        return static::isFormat('dateToSecond',$value);
+        return self::isFormat('dateToSecond',$value);
     }
 
 
@@ -319,10 +319,10 @@ class Datetime extends Root
     // ceci représente le temps au lancement de l'éxécution du script
     final public static function getInitTimestamp():int
     {
-        $return = static::$config['timestamp'];
+        $return = self::$config['timestamp'];
 
         if(!is_int($return))
-        $return = static::$config['timestamp'] = static::now();
+        $return = self::$config['timestamp'] = self::now();
 
         return $return;
     }
@@ -333,7 +333,7 @@ class Datetime extends Root
     // ceci représente le temps au lancement de l'éxécution du script
     final public static function setInitTimestamp(int $value):void
     {
-        static::$config['timestamp'] = $value;
+        self::$config['timestamp'] = $value;
 
         return;
     }
@@ -343,10 +343,10 @@ class Datetime extends Root
     // retourne le microtime courant archivé dans les config de la classe
     final public static function getInitMicrotime():float
     {
-        $return = static::$config['microtime'];
+        $return = self::$config['microtime'];
 
         if(!is_float($return))
-        $return = static::$config['microtime'] = static::microtime();
+        $return = self::$config['microtime'] = self::microtime();
 
         return $return;
     }
@@ -356,7 +356,7 @@ class Datetime extends Root
     // change le microtime archivé dans les config de la classe
     final public static function setInitMicrotime(float $value):void
     {
-        static::$config['microtime'] = $value;
+        self::$config['microtime'] = $value;
 
         return;
     }
@@ -368,7 +368,7 @@ class Datetime extends Root
     final public static function seconds(?array $option=null):array
     {
         $return = [];
-        $option = Arr::plus(static::getAmount(),$option);
+        $option = Arr::plus(self::getAmount(),$option);
 
         $return['year'] = ($option['daysInYear'] * $option['secondsInDay']);
         $return['month'] = ($option['daysInMonth'] * $option['secondsInDay']);
@@ -385,7 +385,7 @@ class Datetime extends Root
     // retourne le tableau amount, spécifié dans config
     final public static function getAmount():array
     {
-        return static::$config['amount'];
+        return self::$config['amount'];
     }
 
 
@@ -393,7 +393,7 @@ class Datetime extends Root
     // retourne le tableau pour la méthode, mergé avec celui de lang si disponible
     final public static function getStr(?string $lang=null):array
     {
-        return Arr::plus(Lang\En::$config['date']['str'],Lang::dateStr(null,$lang));
+        return Arr::plus(Lang\En::getConfig('date/str'),Lang::dateStr(null,$lang));
     }
 
 
@@ -401,7 +401,7 @@ class Datetime extends Root
     // retourne le tableau de mois, mergé avec celui de lang si disponible
     final public static function getMonths(?string $lang=null):array
     {
-        return Arr::plus(Lang\En::$config['date']['month'],Lang::dateMonth(null,$lang));
+        return Arr::plus(Lang\En::getConfig('date/month'),Lang::dateMonth(null,$lang));
     }
 
 
@@ -409,7 +409,7 @@ class Datetime extends Root
     // retourne le tableau des jours, mergé avec celui de lang si disponible
     final public static function getDays(?string $lang=null):array
     {
-        return Arr::plus(Lang\En::$config['date']['day'],Lang::dateDay(null,$lang));
+        return Arr::plus(Lang\En::getConfig('date/day'),Lang::dateDay(null,$lang));
     }
 
 
@@ -417,7 +417,7 @@ class Datetime extends Root
     // retourne le tableau des jours courts, mergé avec celui de lang si disponible
     final public static function getDaysShort(?string $lang=null):array
     {
-        return Arr::plus(Lang\En::$config['date']['dayShort'],Lang::dateDayShort(null,$lang));
+        return Arr::plus(Lang\En::getConfig('date/dayShort'),Lang::dateDayShort(null,$lang));
     }
 
 
@@ -426,7 +426,7 @@ class Datetime extends Root
     final public static function local($value=null,bool $assoc=true):?array
     {
         $return = null;
-        $value = static::time($value);
+        $value = self::time($value);
 
         if(is_int($value))
         $return = localtime($value,$assoc);
@@ -479,7 +479,7 @@ class Datetime extends Root
     final public static function strtotime(string $format,$value=null):?int
     {
         $return = null;
-        $value = static::time($value);
+        $value = self::time($value);
 
         if(is_int($value) && strlen($format))
         {
@@ -496,8 +496,8 @@ class Datetime extends Root
     // retourne le format pour locale
     final public static function getLocaleFormat(string $return):string
     {
-        if(array_key_exists($return,static::$config['format']['locale']))
-        $return = static::$config['format']['locale'][$return];
+        if(array_key_exists($return,self::$config['format']['locale']))
+        $return = self::$config['format']['locale'][$return];
 
         return $return;
     }
@@ -510,10 +510,10 @@ class Datetime extends Root
     final public static function localeFormat(string $format,$value=null):?string
     {
         $return = null;
-        $value = static::time($value);
+        $value = self::time($value);
 
         if(is_int($value) && strlen($format))
-        $return = strftime(static::getLocaleFormat($format),$value);
+        $return = strftime(self::getLocaleFormat($format),$value);
 
         return $return;
     }
@@ -525,10 +525,10 @@ class Datetime extends Root
     final public static function gmtLocaleFormat(string $format,$value=null):?string
     {
         $return = null;
-        $value = static::time($value);
+        $value = self::time($value);
 
         if(is_int($value) && strlen($format))
-        $return = gmstrftime(static::getLocaleFormat($format),$value);
+        $return = gmstrftime(self::getLocaleFormat($format),$value);
 
         return $return;
     }
@@ -538,7 +538,7 @@ class Datetime extends Root
     // retourne les formats de date en mergant avec lang, si disponible
     final public static function getFormats(?string $lang=null):array
     {
-        return Arr::plus(static::$config['format']['date'],Lang\En::$config['date']['format'],Lang::dateFormat(null,$lang));
+        return Arr::plus(self::$config['format']['date'],Lang\En::getConfig('date/format'),Lang::dateFormat(null,$lang));
     }
 
 
@@ -548,7 +548,7 @@ class Datetime extends Root
     final public static function getFormat($key,?string $lang=null):?string
     {
         $return = null;
-        $formats = static::getFormats($lang);
+        $formats = self::getFormats($lang);
 
         if(is_array($formats) && !empty($formats))
         {
@@ -575,22 +575,22 @@ class Datetime extends Root
     final public static function getFormatReplace($key,?string $lang=null):?array
     {
         $return = null;
-        $format = static::getFormat($key,$lang);
+        $format = self::getFormat($key,$lang);
 
         if(is_string($format))
         {
             $return = ['format'=>$format,'replace'=>null];
 
-            if(!empty(static::$config['format']['replace']))
+            if(!empty(self::$config['format']['replace']))
             {
-                foreach (static::$config['format']['replace'] as $char => $array)
+                foreach (self::$config['format']['replace'] as $char => $array)
                 {
                     if(is_string($char) && is_array($array) && array_key_exists('call',$array) && strpos($format,$char) !== false)
                     {
-                        if(static::isCallable($array['call']))
+                        if(self::isCallable($array['call']))
                         $return['replace'][$char] = $array['call']($lang);
 
-                        if(array_key_exists('map',$array) && static::isCallable($array['map']))
+                        if(array_key_exists('map',$array) && self::isCallable($array['map']))
                         {
                             $args = (array_key_exists('args',$array))? (array) $array['args']:[];
                             $callable = $array['map'];
@@ -615,7 +615,7 @@ class Datetime extends Root
 
         if((is_string($key) || is_int($key)) && !empty($value))
         {
-            static::$config['format']['date'][$key] = $value;
+            self::$config['format']['date'][$key] = $value;
             $return = true;
         }
 
@@ -629,9 +629,9 @@ class Datetime extends Root
     {
         $return = false;
 
-        if((is_string($key) || is_int($key)) && array_key_exists($key,static::$config['format']['date']))
+        if((is_string($key) || is_int($key)) && array_key_exists($key,self::$config['format']['date']))
         {
-            unset(static::$config['format']['date'][$key]);
+            unset(self::$config['format']['date'][$key]);
             $return = true;
         }
 
@@ -662,7 +662,7 @@ class Datetime extends Root
 
         if(is_scalar($format) || is_scalar($timezone))
         {
-            $format = static::getFormatReplace($format,$lang);
+            $format = self::getFormatReplace($format,$lang);
             $return['format'] = (is_array($format))? $format['format']:null;
             $return['timezone'] = (is_scalar($timezone) && !empty($timezone))? $timezone:null;
             $return['replace'] = (is_array($format) && is_array($format['replace']) && !empty($format['replace']))? $format['replace']:null;
@@ -684,8 +684,8 @@ class Datetime extends Root
     final public static function format($format=true,$value=null,$from=null):?string
     {
         $return = null;
-        $value = static::time($value,$from);
-        $format = static::parseFormat($format);
+        $value = self::time($value,$from);
+        $format = self::parseFormat($format);
 
         if(is_int($value) && is_array($format) && !empty($format['format']))
         {
@@ -703,7 +703,7 @@ class Datetime extends Root
             $return = date($format['format'],$value);
 
             if(!empty($format['replace']) && is_array($format['replace']))
-            $return = static::formatReplace($return,$format['replace']);
+            $return = self::formatReplace($return,$format['replace']);
         }
 
         return $return;
@@ -717,14 +717,14 @@ class Datetime extends Root
     {
         $return = null;
         $option = Arr::plus(['format'=>'ymdhis','formatDay'=>'ymd'],$option);
-        $start = static::time($start);
+        $start = self::time($start);
 
         if(is_int($start))
         {
-            if(static::isDayStart($start) === true)
-            $return = static::format($option['formatDay'],$start);
+            if(self::isDayStart($start) === true)
+            $return = self::format($option['formatDay'],$start);
             else
-            $return = static::format($option['format'],$start);
+            $return = self::format($option['format'],$start);
         }
 
         return $return;
@@ -739,41 +739,41 @@ class Datetime extends Root
     {
         $return = null;
         $option = Arr::plus(['format'=>'ymdhis','formatTime'=>'his','formatDay'=>'ymd','dayStart'=>true,'separator'=>' - '],$option);
-        $start = static::time($start);
-        $end = static::time($end);
+        $start = self::time($start);
+        $end = self::time($end);
 
         if(is_int($start))
         {
-            $startDayStart = ($option['dayStart'] === true && static::isDayStart($start));
+            $startDayStart = ($option['dayStart'] === true && self::isDayStart($start));
 
             if(is_int($end) && $end > $start)
             {
-                $endDayStart = ($option['dayStart'] === true && static::isDayStart($end));
+                $endDayStart = ($option['dayStart'] === true && self::isDayStart($end));
 
                 if($startDayStart === true && $endDayStart === true)
                 {
-                    $return = static::format($option['formatDay'],$start);
+                    $return = self::format($option['formatDay'],$start);
                     $return .= $option['separator'];
-                    $return .= static::format($option['formatDay'],$end);
+                    $return .= self::format($option['formatDay'],$end);
                 }
 
                 else
                 {
-                    $return = static::format($option['format'],$start);
+                    $return = self::format($option['format'],$start);
                     $return .= $option['separator'];
 
-                    if(static::isDay($start,null,$end))
-                    $return .= static::format($option['formatTime'],$end);
+                    if(self::isDay($start,null,$end))
+                    $return .= self::format($option['formatTime'],$end);
 
                     else
-                    $return .= static::format($option['format'],$end);
+                    $return .= self::format($option['format'],$end);
                 }
             }
 
             else
             {
                 $format = ($startDayStart === true)? 'formatDay':'format';
-                $return = static::format($option[$format],$start);
+                $return = self::format($option[$format],$start);
             }
         }
 
@@ -787,7 +787,7 @@ class Datetime extends Root
     // remplacement peut être effectué avant le retour
     final public static function gmtFormat($format=true,$value=null):?string
     {
-        return static::format(Arr::plus((array) $format,['timezone'=>true]),$value);
+        return self::format(Arr::plus((array) $format,['timezone'=>true]),$value);
     }
 
 
@@ -797,7 +797,7 @@ class Datetime extends Root
     {
         foreach ($return as $key => $value)
         {
-            $return[$key] = static::format($format,$value);
+            $return[$key] = self::format($format,$value);
         }
 
         return $return;
@@ -829,7 +829,7 @@ class Datetime extends Root
     // retourne les placeholders de format de date en mergant avec lang, si disponible
     final public static function getPlaceholders(?string $lang=null):array
     {
-        return Arr::plus(Lang\En::$config['date']['placeholder'],Lang::datePlaceholder(null,$lang));
+        return Arr::plus(Lang\En::getConfig('date/placeholder'),Lang::datePlaceholder(null,$lang));
     }
 
 
@@ -838,7 +838,7 @@ class Datetime extends Root
     final public static function placeholder($value,?string $lang=null):?string
     {
         $return = null;
-        $placeholders = static::getPlaceholders($lang);
+        $placeholders = self::getPlaceholders($lang);
 
         if(!empty($placeholders) && Arr::isKey($value) && array_key_exists($value,$placeholders))
         $return = $placeholders[$value];
@@ -851,7 +851,7 @@ class Datetime extends Root
     // formatte une date au format dmy
     final public static function dmy($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['dmy',$timezone],static::time($value,$format));
+        return self::format(['dmy',$timezone],self::time($value,$format));
     }
 
 
@@ -859,7 +859,7 @@ class Datetime extends Root
     // formatte une date au format ymd
     final public static function ymd($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['ymd',$timezone],static::time($value,$format));
+        return self::format(['ymd',$timezone],self::time($value,$format));
     }
 
 
@@ -867,7 +867,7 @@ class Datetime extends Root
     // formatte une date au format ymdhis
     final public static function ymdhis($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['ymdhis',$timezone],static::time($value,$format));
+        return self::format(['ymdhis',$timezone],self::time($value,$format));
     }
 
 
@@ -875,7 +875,7 @@ class Datetime extends Root
     // formatte une date au format ym
     final public static function ym($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['ym',$timezone],static::time($value,$format));
+        return self::format(['ym',$timezone],self::time($value,$format));
     }
 
 
@@ -883,7 +883,7 @@ class Datetime extends Root
     // formatte une date au format his
     final public static function his($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['his',$timezone],static::time($value,$format));
+        return self::format(['his',$timezone],self::time($value,$format));
     }
 
 
@@ -891,7 +891,7 @@ class Datetime extends Root
     // formatte une date au format rfc822
     final public static function rfc822($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['rfc822',$timezone],static::time($value,$format));
+        return self::format(['rfc822',$timezone],self::time($value,$format));
     }
 
 
@@ -899,7 +899,7 @@ class Datetime extends Root
     // formatte une date au format sql
     final public static function sql($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['sql',$timezone],static::time($value,$format));
+        return self::format(['sql',$timezone],self::time($value,$format));
     }
 
 
@@ -907,7 +907,7 @@ class Datetime extends Root
     // formatte une date au format compact
     final public static function compact($value=null,$timezone=null,$format=null):?string
     {
-        return static::format(['compact',$timezone],static::time($value,$format));
+        return self::format(['compact',$timezone],self::time($value,$format));
     }
 
 
@@ -915,7 +915,7 @@ class Datetime extends Root
     // formatte une date au format gmt
     final public static function gmt($value=null,$format=null):?string
     {
-        return static::gmtFormat('gmt',static::time($value,$format));
+        return self::gmtFormat('gmt',self::time($value,$format));
     }
 
 
@@ -926,14 +926,14 @@ class Datetime extends Root
     final public static function iformat($format,$value=null):?int
     {
         $return = null;
-        $value = static::time($value);
-        $format = static::parseFormat($format);
+        $value = self::time($value);
+        $format = self::parseFormat($format);
 
         if(is_int($value) && is_array($format) && !empty($format['format']) && strlen($format['format']) === 1)
         {
             if(!empty($format['timezone']))
             {
-                $return = static::format($format,$value);
+                $return = self::format($format,$value);
 
                 if(is_string($return))
                 $return = (int) $return;
@@ -951,7 +951,7 @@ class Datetime extends Root
     // retourne le nombre de jour dans un mois
     final public static function countDaysInMonth($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['daysInMonth',$timezone],static::time($value,$format));
+        return self::iformat(['daysInMonth',$timezone],self::time($value,$format));
     }
 
 
@@ -959,7 +959,7 @@ class Datetime extends Root
     // retourne le numéro du jour dans la semaine
     final public static function weekDay($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['weekDay',$timezone],static::time($value,$format));
+        return self::iformat(['weekDay',$timezone],self::time($value,$format));
     }
 
 
@@ -968,11 +968,11 @@ class Datetime extends Root
     // possible de mettre dimanche plutôt que lundi comme premier jour de la semaine
     final public static function weekNo($value=null,bool $sundayFirst=false,$timezone=null,$format=null):?int
     {
-        $return = static::iformat(['weekNo',$timezone],static::time($value,$format));
+        $return = self::iformat(['weekNo',$timezone],self::time($value,$format));
 
         if(is_int($return) && $sundayFirst === true)
         {
-            $weekDay = static::weekDay($value,$timezone,$format);
+            $weekDay = self::weekDay($value,$timezone,$format);
             if($weekDay === 0)
             {
                 if($return >= 52)
@@ -991,7 +991,7 @@ class Datetime extends Root
     // retourne l'année d'un timestamp en int
     final public static function year($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['year',$timezone],static::time($value,$format));
+        return self::iformat(['year',$timezone],self::time($value,$format));
     }
 
 
@@ -999,7 +999,7 @@ class Datetime extends Root
     // retourne le mois d'un timestamp en int
     final public static function month($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['month',$timezone],static::time($value,$format));
+        return self::iformat(['month',$timezone],self::time($value,$format));
     }
 
 
@@ -1007,7 +1007,7 @@ class Datetime extends Root
     // retourne le jour d'un timestamp en int
     final public static function day($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['day',$timezone],static::time($value,$format));
+        return self::iformat(['day',$timezone],self::time($value,$format));
     }
 
 
@@ -1015,7 +1015,7 @@ class Datetime extends Root
     // retourne l'heure d'un timestamp en int
     final public static function hour($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['hour',$timezone],static::time($value,$format));
+        return self::iformat(['hour',$timezone],self::time($value,$format));
     }
 
 
@@ -1023,7 +1023,7 @@ class Datetime extends Root
     // retourne la minute d'un timestamp en int
     final public static function minute($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['minute',$timezone],static::time($value,$format));
+        return self::iformat(['minute',$timezone],self::time($value,$format));
     }
 
 
@@ -1031,7 +1031,7 @@ class Datetime extends Root
     // retourne la seconde d'un timestamp en int
     final public static function second($value=null,$timezone=null,$format=null):?int
     {
-        return static::iformat(['second',$timezone],static::time($value,$format));
+        return self::iformat(['second',$timezone],self::time($value,$format));
     }
 
 
@@ -1042,18 +1042,18 @@ class Datetime extends Root
     final public static function parse($format,$value):?array
     {
         $return = null;
-        $format = static::parseFormat($format);
+        $format = self::parseFormat($format);
         $value = Str::cast($value);
 
         if(is_array($format) && !empty($format['format']))
         {
             if(!empty($format['replace']) && is_array($format['replace']))
-            $value = static::parseReplace($value,$format['replace']);
+            $value = self::parseReplace($value,$format['replace']);
 
             $parse = date_parse_from_format($format['format'],$value);
 
             if(empty($parse['error_count']))
-            $return = static::parsePrepare($parse);
+            $return = self::parsePrepare($parse);
         }
 
         return $return;
@@ -1068,10 +1068,10 @@ class Datetime extends Root
     final public static function parseMake($format,$value):?int
     {
         $return = null;
-        $parse = static::parse($format,$value);
+        $parse = self::parse($format,$value);
 
         if(!empty($parse))
-        $return = static::make($parse,static::parseFormat($format)['timezone'] ?? null);
+        $return = self::make($parse,self::parseFormat($format)['timezone'] ?? null);
 
         return $return;
     }
@@ -1088,7 +1088,7 @@ class Datetime extends Root
         $parse = date_parse($value);
 
         if(empty($parse['error_count']))
-        $return = static::parsePrepare($parse);
+        $return = self::parsePrepare($parse);
 
         return $return;
     }
@@ -1164,20 +1164,20 @@ class Datetime extends Root
         $value = Obj::cast($value);
 
         if($value === null)
-        $return = static::now();
+        $return = self::now();
 
         elseif(is_array($value))
-        $return = static::make($value,static::parseFormat($format)['timezone'] ?? null);
+        $return = self::make($value,self::parseFormat($format)['timezone'] ?? null);
 
         elseif($format !== null && is_scalar($value))
-        $return = static::parseMake($format,$value);
+        $return = self::parseMake($format,$value);
 
         elseif(is_numeric($value))
         {
             $return = (int) $value;
 
-            if($convertYear === true && static::isYearValid($return))
-            $return = static::make([$return],static::parseFormat($format)['timezone'] ?? null);
+            if($convertYear === true && self::isYearValid($return))
+            $return = self::make([$return],self::parseFormat($format)['timezone'] ?? null);
         }
 
         return $return;
@@ -1190,7 +1190,7 @@ class Datetime extends Root
     final public static function get($value=null,$timezone=null):array
     {
         $return = [];
-        $value = static::time($value);
+        $value = self::time($value);
 
         if(is_int($value))
         {
@@ -1225,7 +1225,7 @@ class Datetime extends Root
     final public static function keep(int $amount=2,$value=null):?array
     {
         $return = null;
-        $value = (!is_array($value))? static::get($value):$value;
+        $value = (!is_array($value))? self::get($value):$value;
 
         if(is_array($value) && !empty($value) && $amount > 0)
         {
@@ -1256,8 +1256,8 @@ class Datetime extends Root
     final public static function str(int $amount=2,$value=null,?string $lang=null):string
     {
         $return = '';
-        $str = static::getStr($lang);
-        $keep = static::keep($amount,$value);
+        $str = self::getStr($lang);
+        $keep = self::keep($amount,$value);
 
         if(!empty($str))
         {
@@ -1292,7 +1292,7 @@ class Datetime extends Root
     final public static function make(array $value,$timezone=null):?int
     {
         $return = null;
-        $floor = static::$config['floor'];
+        $floor = self::$config['floor'];
         $year = idate('Y');
         $month = $floor['month'];
         $day = $floor['day'];
@@ -1334,7 +1334,7 @@ class Datetime extends Root
     // construit un timestamp d'une date GMT via un tableau
     final public static function gmtMake(array $value):?int
     {
-        return static::make($value,true);
+        return self::make($value,true);
     }
 
 
@@ -1342,7 +1342,7 @@ class Datetime extends Root
     // comme make mais le premier argument n'est pas un tableau
     final public static function mk(?int $year=null,?int $month=null,?int $day=null,?int $hour=null,?int $minute=null,?int $second=null,$timezone=null)
     {
-        return static::make([$year,$month,$day,$hour,$minute,$second],$timezone);
+        return self::make([$year,$month,$day,$hour,$minute,$second],$timezone);
     }
 
 
@@ -1352,11 +1352,11 @@ class Datetime extends Root
     final public static function add(array $values,$value=null,$format=null):?int
     {
         $return = false;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
         if(!empty($values) && is_int($value))
         {
-            $get = static::get($value);
+            $get = self::get($value);
 
             foreach ($values as $key => $value)
             {
@@ -1364,7 +1364,7 @@ class Datetime extends Root
                 $get[$key] += (int) $value;
             }
 
-            $return = static::make($get);
+            $return = self::make($get);
         }
 
         return $return;
@@ -1377,16 +1377,16 @@ class Datetime extends Root
     final public static function change(array $values,$value=null,$format=null):?int
     {
         $return = null;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
         if(!empty($values) && is_int($value))
         {
-            $get = static::get($value);
+            $get = self::get($value);
 
             if(!empty($get))
             {
                 $get = Arr::replace($get,$values);
-                $return = static::make($get);
+                $return = self::make($get);
             }
         }
 
@@ -1400,11 +1400,11 @@ class Datetime extends Root
     final public static function remove(array $values,$value=null,$format=null):?int
     {
         $return = null;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
         if(!empty($values) && is_int($value))
         {
-            $get = static::get($value);
+            $get = self::get($value);
 
             if(!empty($get))
             {
@@ -1417,7 +1417,7 @@ class Datetime extends Root
                     }
                 }
 
-                $return = static::make($get);
+                $return = self::make($get);
             }
         }
 
@@ -1431,12 +1431,12 @@ class Datetime extends Root
     final public static function getFloor(string $period,$value=null,$format=null):?array
     {
         $return = null;
-        $ceil = static::$config['floor'];
-        $value = static::time($value,$format);
+        $ceil = self::$config['floor'];
+        $value = self::time($value,$format);
 
         if(is_int($value))
         {
-            $get = static::get($value);
+            $get = self::get($value);
 
             if(!empty($get))
             {
@@ -1464,12 +1464,12 @@ class Datetime extends Root
     final public static function getCeil(string $period,$value=null,$format=null):?array
     {
         $return = null;
-        $ceil = static::$config['ceil'];
-        $value = static::time($value,$format);
+        $ceil = self::$config['ceil'];
+        $value = self::time($value,$format);
 
         if(is_int($value))
         {
-            $get = static::get($value);
+            $get = self::get($value);
 
             if(!empty($get))
             {
@@ -1481,7 +1481,7 @@ class Datetime extends Root
                     if($do === true)
                     {
                         if($k === 'day')
-                        $return[$k] = static::countDaysInMonth(['year'=>$return['year'],'month'=>$return['month']]);
+                        $return[$k] = self::countDaysInMonth(['year'=>$return['year'],'month'=>$return['month']]);
 
                         elseif(array_key_exists($k,$ceil))
                         $return[$k] = $ceil[$k];
@@ -1502,8 +1502,8 @@ class Datetime extends Root
     final public static function getFloorCeil(string $period,$value=null,$format=null):array
     {
         $return = [];
-        $return['floor'] = static::getFloor($period,$value,$format);
-        $return['ceil'] = static::getCeil($period,$value,$format);
+        $return['floor'] = self::getFloor($period,$value,$format);
+        $return['ceil'] = self::getCeil($period,$value,$format);
 
         return $return;
     }
@@ -1514,10 +1514,10 @@ class Datetime extends Root
     final public static function floor(string $period,$value=null,$format=null):?int
     {
         $return = null;
-        $floor = static::getFloor($period,$value,$format);
+        $floor = self::getFloor($period,$value,$format);
 
         if(is_array($floor))
-        $return = static::make($floor);
+        $return = self::make($floor);
 
         return $return;
     }
@@ -1528,10 +1528,10 @@ class Datetime extends Root
     final public static function ceil(string $period,$value=null,$format=null):?int
     {
         $return = null;
-        $ceil = static::getCeil($period,$value,$format);
+        $ceil = self::getCeil($period,$value,$format);
 
         if(is_array($ceil))
-        $return = static::make($ceil);
+        $return = self::make($ceil);
 
         return $return;
     }
@@ -1542,8 +1542,8 @@ class Datetime extends Root
     final public static function floorCeil(string $period,$value=null,$format=null):array
     {
         $return = [];
-        $return['floor'] = static::floor($period,$value,$format);
-        $return['ceil'] = static::ceil($period,$value,$format);
+        $return['floor'] = self::floor($period,$value,$format);
+        $return['ceil'] = self::ceil($period,$value,$format);
 
         return $return;
     }
@@ -1554,7 +1554,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function addYear(int $change,$value=null,$format=null):?int
     {
-        return static::add(['year'=>$change],$value,$format);
+        return self::add(['year'=>$change],$value,$format);
     }
 
 
@@ -1563,7 +1563,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function changeYear(int $change,$value=null,$format=null):?int
     {
-        return static::change(['year'=>$change],$value,$format);
+        return self::change(['year'=>$change],$value,$format);
     }
 
 
@@ -1572,7 +1572,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function removeYear($value=null,$format=null):?int
     {
-        return static::remove(['year'],$value,$format);
+        return self::remove(['year'],$value,$format);
     }
 
 
@@ -1581,7 +1581,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorYear($value=null,$format=null):?int
     {
-        return static::floor('year',$value,$format);
+        return self::floor('year',$value,$format);
     }
 
 
@@ -1590,7 +1590,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function ceilYear($value=null,$format=null):?int
     {
-        return static::ceil('year',$value,$format);
+        return self::ceil('year',$value,$format);
     }
 
 
@@ -1599,7 +1599,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorCeilYear($value=null,$format=null):array
     {
-        return static::floorCeil('year',$value,$format);
+        return self::floorCeil('year',$value,$format);
     }
 
 
@@ -1608,7 +1608,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function addMonth(int $change,$value=null,$format=null):?int
     {
-        return static::add(['month'=>$change],$value,$format);
+        return self::add(['month'=>$change],$value,$format);
     }
 
 
@@ -1617,7 +1617,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function changeMonth(int $change,$value=null,$format=null):?int
     {
-        return static::change(['month'=>$change],$value,$format);
+        return self::change(['month'=>$change],$value,$format);
     }
 
 
@@ -1626,7 +1626,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function removeMonth($value=null,$format=null):?int
     {
-        return static::remove(['month'],$value,$format);
+        return self::remove(['month'],$value,$format);
     }
 
 
@@ -1635,7 +1635,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorMonth($value=null,$format=null):?int
     {
-        return static::floor('month',$value,$format);
+        return self::floor('month',$value,$format);
     }
 
 
@@ -1644,7 +1644,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function ceilMonth($value=null,$format=null):?int
     {
-        return static::ceil('month',$value,$format);
+        return self::ceil('month',$value,$format);
     }
 
 
@@ -1653,7 +1653,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorCeilMonth($value=null,$format=null):array
     {
-        return static::floorCeil('month',$value,$format);
+        return self::floorCeil('month',$value,$format);
     }
 
 
@@ -1662,7 +1662,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function addDay(int $change,$value=null,$format=null):?int
     {
-        return static::add(['day'=>$change],$value,$format);
+        return self::add(['day'=>$change],$value,$format);
     }
 
 
@@ -1671,7 +1671,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function changeDay(int $change,$value=null,$format=null):?int
     {
-        return static::change(['day'=>$change],$value,$format);
+        return self::change(['day'=>$change],$value,$format);
     }
 
 
@@ -1680,7 +1680,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function removeDay($value=null,$format=null):?int
     {
-        return static::remove(['day'],$value,$format);
+        return self::remove(['day'],$value,$format);
     }
 
 
@@ -1689,7 +1689,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorDay($value=null,$format=null):?int
     {
-        return static::floor('day',$value,$format);
+        return self::floor('day',$value,$format);
     }
 
 
@@ -1698,7 +1698,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function ceilDay($value=null,$format=null):?int
     {
-        return static::ceil('day',$value,$format);
+        return self::ceil('day',$value,$format);
     }
 
 
@@ -1707,7 +1707,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorCeilDay($value=null,$format=null):array
     {
-        return static::floorCeil('day',$value,$format);
+        return self::floorCeil('day',$value,$format);
     }
 
 
@@ -1716,7 +1716,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function addHour(int $change,$value=null,$format=null):?int
     {
-        return static::add(['hour'=>$change],$value,$format);
+        return self::add(['hour'=>$change],$value,$format);
     }
 
 
@@ -1725,7 +1725,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function changeHour(int $change,$value=null,$format=null):?int
     {
-        return static::change(['hour'=>$change],$value,$format);
+        return self::change(['hour'=>$change],$value,$format);
     }
 
 
@@ -1734,7 +1734,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function removeHour($value=null,$format=null):?int
     {
-        return static::remove(['hour'],$value,$format);
+        return self::remove(['hour'],$value,$format);
     }
 
 
@@ -1743,7 +1743,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorHour($value=null,$format=null):?int
     {
-        return static::floor('hour',$value,$format);
+        return self::floor('hour',$value,$format);
     }
 
 
@@ -1752,7 +1752,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function ceilHour($value=null,$format=null):?int
     {
-        return static::ceil('hour',$value,$format);
+        return self::ceil('hour',$value,$format);
     }
 
 
@@ -1761,7 +1761,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorCeilHour($value=null,$format=null):array
     {
-        return static::floorCeil('hour',$value,$format);
+        return self::floorCeil('hour',$value,$format);
     }
 
 
@@ -1770,7 +1770,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function addMinute(int $change,$value=null,$format=null):?int
     {
-        return static::add(['minute'=>$change],$value,$format);
+        return self::add(['minute'=>$change],$value,$format);
     }
 
 
@@ -1779,7 +1779,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function changeMinute(int $change,$value=null,$format=null):?int
     {
-        return static::change(['minute'=>$change],$value,$format);
+        return self::change(['minute'=>$change],$value,$format);
     }
 
 
@@ -1788,7 +1788,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function removeMinute($value=null,$format=null):?int
     {
-        return static::remove(['minute'],$value,$format);
+        return self::remove(['minute'],$value,$format);
     }
 
 
@@ -1797,7 +1797,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorMinute($value=null,$format=null):?int
     {
-        return static::floor('minute',$value,$format);
+        return self::floor('minute',$value,$format);
     }
 
 
@@ -1806,7 +1806,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function ceilMinute($value=null,$format=null):?int
     {
-        return static::ceil('minute',$value,$format);
+        return self::ceil('minute',$value,$format);
     }
 
 
@@ -1815,7 +1815,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function floorCeilMinute($value=null,$format=null):array
     {
-        return static::floorCeil('minute',$value,$format);
+        return self::floorCeil('minute',$value,$format);
     }
 
 
@@ -1824,7 +1824,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function addSecond(int $change,$value=null,$format=null):?int
     {
-        return static::add(['second'=>$change],$value,$format);
+        return self::add(['second'=>$change],$value,$format);
     }
 
 
@@ -1833,7 +1833,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function changeSecond(int $change,$value=null,$format=null):?int
     {
-        return static::change(['second'=>$change],$value,$format);
+        return self::change(['second'=>$change],$value,$format);
     }
 
 
@@ -1842,7 +1842,7 @@ class Datetime extends Root
     // possibilité d'utiliser un format en entrée
     final public static function removeSecond($value=null,$format=null):?int
     {
-        return static::remove(['second'],$value,$format);
+        return self::remove(['second'],$value,$format);
     }
 
 
@@ -1854,8 +1854,8 @@ class Datetime extends Root
     final public static function diff($value=null,$value2=0,$format=null,$format2=null):?array
     {
         $return = null;
-        $value = static::time($value,$format);
-        $value2 = static::time($value2,$format2);
+        $value = self::time($value,$format);
+        $value2 = self::time($value2,$format2);
 
         if(is_int($value) && is_int($value2))
         {
@@ -1885,9 +1885,9 @@ class Datetime extends Root
     final public static function diffTotal($value=null,$value2=0,bool $ceil=true,$format=null,$format2=null):?array
     {
         $return = null;
-        $value = static::time($value,$format);
-        $value2 = static::time($value2,$format2);
-        $amount = static::getAmount();
+        $value = self::time($value,$format);
+        $value2 = self::time($value2,$format2);
+        $amount = self::getAmount();
 
         if(is_int($value) && is_int($value2))
         {
@@ -1923,10 +1923,10 @@ class Datetime extends Root
     final public static function diffKeep(int $amount=2,$value=null,$value2=0,$format=null,$format2=null):?array
     {
         $return = null;
-        $diff = static::diff($value,$value2,$format,$format2);
+        $diff = self::diff($value,$value2,$format,$format2);
 
         if(!empty($diff))
-        $return = static::keep($amount,$diff);
+        $return = self::keep($amount,$diff);
 
         return $return;
     }
@@ -1938,10 +1938,10 @@ class Datetime extends Root
     final public static function diffStr(int $amount=2,$value=null,$value2=0,$format=null,$format2=null):string
     {
         $return = '';
-        $diff = static::diff($value,$value2,$format,$format2);
+        $diff = self::diff($value,$value2,$format,$format2);
 
         if(!empty($diff))
-        $return = static::str($amount,$diff);
+        $return = self::str($amount,$diff);
 
         return $return;
     }
@@ -1954,14 +1954,14 @@ class Datetime extends Root
     final public static function ago($value=null,$format=null,?int $amount=null):?array
     {
         $return = null;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
-        if($value <= static::time(null))
+        if($value <= self::time(null))
         {
-            $return = static::diff($value,null,$format);
+            $return = self::diff($value,null,$format);
 
             if(!empty($return) && is_int($amount))
-            $return = static::keep($amount,$return);
+            $return = self::keep($amount,$return);
         }
 
         return $return;
@@ -1975,10 +1975,10 @@ class Datetime extends Root
     final public static function agoStr(int $amount=2,$value=null,$format=null):string
     {
         $return = '';
-        $diff = static::ago($value,$format);
+        $diff = self::ago($value,$format);
 
         if(!empty($diff))
-        $return = static::str($amount,$diff);
+        $return = self::str($amount,$diff);
 
         return $return;
     }
@@ -1990,10 +1990,10 @@ class Datetime extends Root
     // possible de garder seulement un nombre de valeur du tableau de différence
     final public static function diffNow($value=null,$format=null,?int $amount=null):?array
     {
-        $return = static::diff($value,null,$format);
+        $return = self::diff($value,null,$format);
 
         if(!empty($return) && is_int($amount))
-        $return = static::keep($amount,$return);
+        $return = self::keep($amount,$return);
 
         return $return;
     }
@@ -2006,10 +2006,10 @@ class Datetime extends Root
     final public static function diffNowStr(int $amount=2,$value=null,$format=null):string
     {
         $return = '';
-        $diff = static::diffNow($value,$format);
+        $diff = self::diffNow($value,$format);
 
         if(!empty($diff))
-        $return = static::str($amount,$diff);
+        $return = self::str($amount,$diff);
 
         return $return;
     }
@@ -2021,7 +2021,7 @@ class Datetime extends Root
     // possible de garder seulement un nombre de valeur du tableau de différence
     final public static function amount(int $value,?int $amount=null):?array
     {
-        return static::diffNow(($value + static::now()),null,$amount);
+        return self::diffNow(($value + self::now()),null,$amount);
     }
 
 
@@ -2030,10 +2030,10 @@ class Datetime extends Root
     final public static function amountStr(int $amount=2,int $value):string
     {
         $return = '';
-        $diff = static::amount($value);
+        $diff = self::amount($value);
 
         if(!empty($diff))
-        $return = static::str($amount,$diff);
+        $return = self::str($amount,$diff);
 
         return $return;
     }
@@ -2046,18 +2046,18 @@ class Datetime extends Root
     final public static function calendar($value=null,bool $sundayFirst=false,bool $fill=false):array
     {
         $return = [];
-        $daysInMonths = static::daysInMonth($value);
+        $daysInMonths = self::daysInMonth($value);
 
         foreach ($daysInMonths as $day => $timestamp)
         {
-            $weekNo = static::weekNo($timestamp,$sundayFirst);
-            $weekDay = static::weekDay($timestamp);
+            $weekNo = self::weekNo($timestamp,$sundayFirst);
+            $weekDay = self::weekDay($timestamp);
 
             $return[$weekNo][$weekDay] = $timestamp;
         }
 
         if($fill === true && !empty($return))
-        $return = static::fillCalendar($return);
+        $return = self::fillCalendar($return);
 
         return $return;
     }
@@ -2083,7 +2083,7 @@ class Datetime extends Root
 
                         elseif(is_int($target))
                         {
-                            $target = static::addDay(1,$target);
+                            $target = self::addDay(1,$target);
                             $weekDays[$i] = $target;
                         }
                     }
@@ -2098,7 +2098,7 @@ class Datetime extends Root
                     foreach ($weekDays as $k => $v)
                     {
                         if($v === null)
-                        $weekDays[$k] = static::addDay(-($firstKey - $k),$target);
+                        $weekDays[$k] = self::addDay(-($firstKey - $k),$target);
                     }
                 }
 
@@ -2117,8 +2117,8 @@ class Datetime extends Root
     final public static function daysDiff($min=null,$max=null,$format=null,$format2=null):?int
     {
         $return = null;
-        $min = static::floorDay($min,$format);
-        $max = static::floorDay($max,$format2);
+        $min = self::floorDay($min,$format);
+        $max = self::floorDay($max,$format2);
 
         if(is_int($min) && is_int($max))
         {
@@ -2142,14 +2142,14 @@ class Datetime extends Root
     final public static function monthsDiff($min=null,$max=null,$format=null,$format2=null):?int
     {
         $return = null;
-        $amount = static::getAmount();
-        $min = static::floorMonth($min,$format);
-        $max = static::floorMonth($max,$format2);
+        $amount = self::getAmount();
+        $min = self::floorMonth($min,$format);
+        $max = self::floorMonth($max,$format2);
 
         if(is_int($min) && is_int($max))
         {
-            $yearMaxMin = (static::year($max) - static::year($min));
-            $monthMaxMin = (static::month($max) - static::month($min));
+            $yearMaxMin = (self::year($max) - self::year($min));
+            $monthMaxMin = (self::month($max) - self::month($min));
             $calc = ($yearMaxMin * $amount['monthsInYear']) + $monthMaxMin;
             $return = abs($calc);
         }
@@ -2165,12 +2165,12 @@ class Datetime extends Root
     final public static function yearsDiff($min=null,$max=null,$format=null,$format2=null):?int
     {
         $return = null;
-        $min = static::floorYear($min,$format);
-        $max = static::floorYear($max,$format2);
+        $min = self::floorYear($min,$format);
+        $max = self::floorYear($max,$format2);
 
         if(is_int($min) && is_int($max))
         {
-            $calc = static::year($max) - static::year($min);
+            $calc = self::year($max) - self::year($min);
             $return = abs($calc);
         }
 
@@ -2188,10 +2188,10 @@ class Datetime extends Root
     final public static function days($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
     {
         $return = [];
-        $diff = static::daysDiff($min,$max);
+        $diff = self::daysDiff($min,$max);
         $interval = (is_int($interval))? $interval:1;
-        $min = ($floor === true)? static::floorDay($min):static::time($min,null);
-        $max = ($floor === true)? static::floorDay($max):static::time($max,null);
+        $min = ($floor === true)? self::floorDay($min):self::time($min,null);
+        $max = ($floor === true)? self::floorDay($max):self::time($max,null);
 
         if(is_int($diff) && is_int($min))
         {
@@ -2208,11 +2208,11 @@ class Datetime extends Root
                 $key = $v;
 
                 if($format !== null)
-                $return[$timestamp] = static::format($format,$timestamp);
+                $return[$timestamp] = self::format($format,$timestamp);
                 else
                 $return[$key] = $timestamp;
 
-                $timestamp = static::addDay($interval,$timestamp);
+                $timestamp = self::addDay($interval,$timestamp);
             }
         }
 
@@ -2226,11 +2226,11 @@ class Datetime extends Root
     final public static function secondsInDay($value=null,$format=null):?int
     {
         $return = null;
-        $value = static::time($value,$format);
+        $value = self::time($value,$format);
 
         if(is_int($value))
         {
-            $floor = static::floorDay($value);
+            $floor = self::floorDay($value);
 
             if($value === $floor)
             $return = 0;
@@ -2252,22 +2252,22 @@ class Datetime extends Root
     {
         $return = [];
         $interval = (is_int($interval))? $interval:1;
-        $value = static::time($value);
+        $value = self::time($value);
 
         if(is_int($value))
         {
-            $year = static::year($value);
-            $month = static::month($value);
-            $daysInMonth = static::countDaysInMonth($value);
+            $year = self::year($value);
+            $month = self::month($value);
+            $daysInMonth = self::countDaysInMonth($value);
             $range = Integer::range(1,$daysInMonth,$interval);
 
             foreach ($range as $v)
             {
                 $key = $v;
-                $timestamp = static::make([$year,$month,$v]);
+                $timestamp = self::make([$year,$month,$v]);
 
                 if($format !== null)
-                $return[$timestamp] = static::format($format,$timestamp);
+                $return[$timestamp] = self::format($format,$timestamp);
                 else
                 $return[$key] = $timestamp;
             }
@@ -2282,7 +2282,7 @@ class Datetime extends Root
     // possibilité de changer interval
     final public static function daysDefault(int $min=1,?int $max=null,?int $interval=null):array
     {
-        return Integer::range($min,$max ?? static::$config['amount']['daysInMonth'],$interval ?? 1);
+        return Integer::range($min,$max ?? self::$config['amount']['daysInMonth'],$interval ?? 1);
     }
 
 
@@ -2296,10 +2296,10 @@ class Datetime extends Root
     final public static function months($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
     {
         $return = [];
-        $diff = static::monthsDiff($min,$max);
+        $diff = self::monthsDiff($min,$max);
         $interval = (is_int($interval))? $interval:1;
-        $min = ($floor === true)? static::floorMonth($min):static::time($min,null);
-        $max = ($floor === true)? static::floorMonth($max):static::time($max,null);
+        $min = ($floor === true)? self::floorMonth($min):self::time($min,null);
+        $max = ($floor === true)? self::floorMonth($max):self::time($max,null);
 
         if(is_int($diff) && is_int($min))
         {
@@ -2316,11 +2316,11 @@ class Datetime extends Root
                 $key = $v;
 
                 if($format !== null)
-                $return[$timestamp] = static::format($format,$timestamp);
+                $return[$timestamp] = self::format($format,$timestamp);
                 else
                 $return[$key] = $timestamp;
 
-                $timestamp = static::addMonth($interval,$timestamp);
+                $timestamp = self::addMonth($interval,$timestamp);
             }
         }
 
@@ -2338,21 +2338,21 @@ class Datetime extends Root
     {
         $return = [];
         $interval = (is_int($interval))? $interval:1;
-        $value = static::time($value,null,true);
-        $amount = static::getAmount();
+        $value = self::time($value,null,true);
+        $amount = self::getAmount();
 
         if(is_int($value))
         {
-            $year = static::year($value);
+            $year = self::year($value);
             $range = Integer::range(1,$amount['monthsInYear'],$interval);
 
             foreach ($range as $v)
             {
                 $key = $v;
-                $timestamp = static::make([$year,$v]);
+                $timestamp = self::make([$year,$v]);
 
                 if($format !== null)
-                $return[$timestamp] = static::format($format,$timestamp);
+                $return[$timestamp] = self::format($format,$timestamp);
                 else
                 $return[$key] = $timestamp;
             }
@@ -2367,7 +2367,7 @@ class Datetime extends Root
     // possibilité de changer interval
     final public static function monthsDefault(int $min=1,?int $max=null,?int $interval=null):array
     {
-        return Integer::range($min,$max ?? static::$config['amount']['monthsInYear'],$interval ?? 1);
+        return Integer::range($min,$max ?? self::$config['amount']['monthsInYear'],$interval ?? 1);
     }
 
 
@@ -2382,9 +2382,9 @@ class Datetime extends Root
     {
         $return = [];
         $interval = (is_int($interval))? $interval:1;
-        $diff = static::yearsDiff($min,$max);
-        $min = ($floor === true)? static::floorYear($min):static::time($min,null);
-        $max = ($floor === true)? static::floorYear($max):static::time($max,null);
+        $diff = self::yearsDiff($min,$max);
+        $min = ($floor === true)? self::floorYear($min):self::time($min,null);
+        $max = ($floor === true)? self::floorYear($max):self::time($max,null);
 
         if(is_int($diff) && is_int($min))
         {
@@ -2401,11 +2401,11 @@ class Datetime extends Root
                 $key = $v;
 
                 if($format !== null)
-                $return[$timestamp] = static::format($format,$timestamp);
+                $return[$timestamp] = self::format($format,$timestamp);
                 else
                 $return[$key] = $timestamp;
 
-                $timestamp = static::addYear($interval,$timestamp);
+                $timestamp = self::addYear($interval,$timestamp);
             }
         }
 
@@ -2420,11 +2420,11 @@ class Datetime extends Root
     final public static function yearsDefault(int $before=-100,int $after=30,?int $interval=null,$format=null):array
     {
         $return = [];
-        $year = static::year();
-        $before = static::make([$year + $before]);
-        $after = static::make([$year + $after]);
+        $year = self::year();
+        $before = self::make([$year + $before]);
+        $after = self::make([$year + $after]);
 
-        $return = static::years($before,$after,$interval,$format);
+        $return = self::years($before,$after,$interval,$format);
 
         return $return;
     }
@@ -2436,7 +2436,7 @@ class Datetime extends Root
     final public static function onSet($return,$format=true)
     {
         if(is_string($return))
-        $return = static::time($return,$format);
+        $return = self::time($return,$format);
 
         return $return;
     }
@@ -2448,7 +2448,7 @@ class Datetime extends Root
     final public static function onGet($return,$format=true)
     {
         if(is_int($return))
-        $return = static::format($format,$return);
+        $return = self::format($format,$return);
 
         return $return;
     }

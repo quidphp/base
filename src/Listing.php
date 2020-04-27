@@ -16,7 +16,7 @@ namespace Quid\Base;
 class Listing extends Assoc
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'implode'=>0, // index du séparateur à utiliser lors du implode
             'explode'=>0, // index du séparateur à utiliser lors du explode

@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // column
 // class with static methods to work with multidimensional column arrays (like a database query result array)
-class Column extends Root
+final class Column extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // is
@@ -97,7 +97,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($value))
+        if(self::is($value))
         {
             $return = true;
 
@@ -121,7 +121,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($value))
+        if(self::is($value))
         {
             $return = true;
 
@@ -145,7 +145,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($value))
+        if(self::is($value))
         {
             $return = true;
 
@@ -169,7 +169,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($value))
+        if(self::is($value))
         {
             $return = true;
 
@@ -194,7 +194,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($array))
+        if(self::is($array))
         $return = (count($array) > 1)? Arr::same(...array_values($array)):true;
 
         return $return;
@@ -208,7 +208,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($array))
+        if(self::is($array))
         $return = (count($array) > 1)? Arr::sameCount(...array_values($array)):true;
 
         return $return;
@@ -222,7 +222,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($array))
+        if(self::is($array))
         $return = (count($array) > 1)? Arr::sameKey(...array_values($array)):true;
 
         return $return;
@@ -273,7 +273,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array))
+        if(self::is($array))
         {
             $return = $array;
             $first = null;
@@ -316,7 +316,7 @@ class Column extends Root
     {
         $return = null;
 
-        if(static::sameCount($array))
+        if(self::sameCount($array))
         {
             $current = current($array);
 
@@ -333,7 +333,7 @@ class Column extends Root
     final public static function math(string $col,string $symbol='+',array $array,?int $round=null)
     {
         $return = null;
-        $values = static::value($col,$array);
+        $values = self::value($col,$array);
 
         if(!empty($values))
         $return = Num::math($symbol,$values,$round);
@@ -349,7 +349,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array) && !empty($cols))
+        if(self::is($array) && !empty($cols))
         {
             foreach ($array as $key => $value)
             {
@@ -379,7 +379,7 @@ class Column extends Root
     final public static function in(string $col,$value,array $array,bool $sensitive=true):bool
     {
         $return = false;
-        $array = static::value($col,$array);
+        $array = self::value($col,$array);
 
         if(!empty($array) && Arr::in($value,$array,$sensitive))
         $return = true;
@@ -394,7 +394,7 @@ class Column extends Root
     final public static function ins(string $col,array $values,array $array,bool $sensitive=true):bool
     {
         $return = false;
-        $array = static::value($col,$array);
+        $array = self::value($col,$array);
 
         if(!empty($array) && Arr::ins($values,$array,$sensitive))
         $return = true;
@@ -409,7 +409,7 @@ class Column extends Root
     final public static function inFirst(string $col,array $values,array $array,bool $sensitive=true)
     {
         $return = null;
-        $array = static::value($col,$array);
+        $array = self::value($col,$array);
 
         if(!empty($array))
         $return = Arr::inFirst($values,$array,$sensitive);
@@ -425,7 +425,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array) && !empty($cols))
+        if(self::is($array) && !empty($cols))
         {
             foreach ($array as $key => $value)
             {
@@ -462,7 +462,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array) && !empty($cols))
+        if(self::is($array) && !empty($cols))
         {
             foreach ($array as $key => $value)
             {
@@ -508,7 +508,7 @@ class Column extends Root
             $cols[$key] = $col;
         }
 
-        if(static::is($array) && !empty($cols))
+        if(self::is($array) && !empty($cols))
         {
             foreach ($array as $key => $value)
             {
@@ -541,7 +541,7 @@ class Column extends Root
     {
         $return = [];
 
-        $unique = static::unique($col,$array,$keepOriginal,$sensitive);
+        $unique = self::unique($col,$array,$keepOriginal,$sensitive);
         if(!empty($unique))
         $return = Arr::diffKey($array,$unique);
 
@@ -554,7 +554,7 @@ class Column extends Root
     // direction asc ou desc
     final public static function sort($col,$sort=true,array $return):array
     {
-        if(static::keyExists($col,$return))
+        if(self::keyExists($col,$return))
         {
             uasort($return, function(array $first,array $second) use ($col,$sort)
             {
@@ -595,7 +595,7 @@ class Column extends Root
     // le sort conserve l'ordre naturel du tableau si les valeurs sont égales dans la comparaison et si un seul niveau de sort est envoyé
     final public static function sorts(array $array,array $return):array
     {
-        if(static::is($return) && !empty($array))
+        if(self::is($return) && !empty($array))
         {
             uasort($return, function(array $first,array $second) use ($array)
             {
@@ -683,7 +683,7 @@ class Column extends Root
     final public static function keyValueIndex(?int $key,int $value,array $array):array
     {
         $return = [];
-        $count = static::countSame($array);
+        $count = self::countSame($array);
 
         if(is_int($count))
         {
@@ -708,7 +708,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array) && Arr::isKey($key))
+        if(self::is($array) && Arr::isKey($key))
         {
             foreach ($array as $k => $v)
             {
@@ -734,7 +734,7 @@ class Column extends Root
     // support pour splice et remplacement insensible à la case
     final public static function splice($start,$end,array $return,?array $replace=null,bool $sensitive=true):array
     {
-        if(static::is($return))
+        if(self::is($return))
         {
             foreach ($return as $key => $value)
             {
@@ -753,7 +753,7 @@ class Column extends Root
     // support pour remplacement insensible à la case
     final public static function spliceIndex(int $offset,?int $length,array $return,?array $replace=null,bool $sensitive=true):array
     {
-        if(static::is($return))
+        if(self::is($return))
         {
             foreach ($return as $key => $value)
             {
@@ -771,7 +771,7 @@ class Column extends Root
     // support pour remplacement insensible à la case
     final public static function spliceFirst(array $array,?array $replace=null,bool $sensitive=true):array
     {
-        return static::spliceIndex(0,1,$array,$replace,$sensitive);
+        return self::spliceIndex(0,1,$array,$replace,$sensitive);
     }
 
 
@@ -781,7 +781,7 @@ class Column extends Root
     // support pour remplacement insensible à la case
     final public static function spliceLast(array $array,?array $replace=null,bool $sensitive=true):array
     {
-        return static::spliceIndex(-1,1,$array,$replace,$sensitive);
+        return self::spliceIndex(-1,1,$array,$replace,$sensitive);
     }
 
 
@@ -791,7 +791,7 @@ class Column extends Root
     // support pour ajout insensible à la case
     final public static function insert($start,array $replace,array $array,bool $sensitive=true):array
     {
-        return static::splice($start,null,$array,$replace,$sensitive);
+        return self::splice($start,null,$array,$replace,$sensitive);
     }
 
 
@@ -801,7 +801,7 @@ class Column extends Root
     // support pour ajout insensible à la case
     final public static function insertIndex($offset,array $replace,array $array,bool $sensitive=true):array
     {
-        return static::spliceIndex($offset,0,$array,$replace,$sensitive);
+        return self::spliceIndex($offset,0,$array,$replace,$sensitive);
     }
 
 
@@ -811,7 +811,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($array))
+        if(self::is($array))
         {
             $return = true;
 
@@ -835,7 +835,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($array))
+        if(self::is($array))
         {
             $return = true;
 
@@ -859,7 +859,7 @@ class Column extends Root
     {
         $return = false;
 
-        if(static::is($array))
+        if(self::is($array))
         {
             $return = true;
 
@@ -900,7 +900,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(Arr::isKey($key) && static::is($array))
+        if(Arr::isKey($key) && self::is($array))
         {
             foreach ($array as $k => $v)
             {
@@ -919,7 +919,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array))
+        if(self::is($array))
         {
             $col = Arr::index(0,$array);
 
@@ -928,7 +928,7 @@ class Column extends Root
                 $key = Arr::indexKey($index,$col);
 
                 if(Arr::isKey($key))
-                $return = static::keyFrom($key,$array);
+                $return = self::keyFrom($key,$array);
             }
         }
 
@@ -943,7 +943,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array))
+        if(self::is($array))
         {
             foreach ($array as $key => $value)
             {
@@ -982,7 +982,7 @@ class Column extends Root
     final public static function valueIndex(int $value,array $array):array
     {
         $return = [];
-        $count = static::countSame($array);
+        $count = self::countSame($array);
 
         if(is_int($count))
         {
@@ -1004,7 +1004,7 @@ class Column extends Root
     {
         $return = [];
 
-        if(static::is($array) && Arr::isKey($value))
+        if(self::is($array) && Arr::isKey($value))
         {
             foreach ($array as $k => $v)
             {

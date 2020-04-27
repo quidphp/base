@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // csv
 // class with static methods to easily work with CSV files
-class Csv extends File
+final class Csv extends File
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'mimeGroup'=>'csv', // mime groupe de la classe
         'format'=>['delimiter'=>';','enclosure'=>'"','escape'=>'\\'],
         'load'=>'csv', // extension permise pour la méthode csv::load
@@ -30,7 +30,7 @@ class Csv extends File
     // retourne les configuration de format pour csv
     final public static function getFormat():array
     {
-        return static::$config['format'];
+        return self::$config['format'];
     }
 
 
@@ -84,9 +84,9 @@ class Csv extends File
         $return = [];
 
         if($clean === true)
-        $array = static::clean($array,$removeEmpty);
+        $array = self::clean($array,$removeEmpty);
 
-        if(!empty($array) && static::same($array))
+        if(!empty($array) && self::same($array))
         {
             $header = array_shift($array);
 
@@ -117,7 +117,7 @@ class Csv extends File
     {
         $return = [];
 
-        if(static::same($array))
+        if(self::same($array))
         {
             $return[0] = [];
             $first = current($array);
@@ -144,7 +144,7 @@ class Csv extends File
     final public static function strToArr($value,?array $option=null):?array
     {
         $return = null;
-        $option = Arr::plus(static::getFormat(),['removeBom'=>false],$option);
+        $option = Arr::plus(self::getFormat(),['removeBom'=>false],$option);
 
         if(is_array($value))
         {
@@ -176,7 +176,7 @@ class Csv extends File
         if(!empty($array))
         {
             $temp = Res::temp('csv');
-            static::resWrite($array,$temp,$option);
+            self::resWrite($array,$temp,$option);
             $return = Res::get($temp);
             Res::close($temp);
         }
@@ -215,12 +215,12 @@ class Csv extends File
     {
         $return = null;
 
-        if(static::is($value))
+        if(self::is($value))
         {
-            $append = static::getLines($value,true,true,$option);
+            $append = self::getLines($value,true,true,$option);
 
             if(is_array($append))
-            $return = Arr::append($prepend,$append);
+            $return = Arr::merge($prepend,$append);
         }
 
         return $return;
@@ -232,9 +232,9 @@ class Csv extends File
     final public static function resLine($value,?array $option=null):?array
     {
         $return = null;
-        $option = Arr::plus(static::getFormat(),$option);
+        $option = Arr::plus(self::getFormat(),$option);
 
-        if(static::isResource($value))
+        if(self::isResource($value))
         {
             $return = fgetcsv($value,0,$option['delimiter'],$option['enclosure'],$option['escape']);
 
@@ -254,9 +254,9 @@ class Csv extends File
     final public static function resWrite(array $content,$value,?array $option=null):bool
     {
         $return = false;
-        $option = Arr::plus(static::getFormat(),['latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\n",'bom'=>false],$option);
+        $option = Arr::plus(self::getFormat(),['latin1'=>false,'separator'=>"\n",'cellSeparator'=>"\n",'bom'=>false],$option);
 
-        if(static::isResource($value) && Res::isWritable($value))
+        if(self::isResource($value) && Res::isWritable($value))
         {
             $put = null;
 

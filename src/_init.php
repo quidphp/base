@@ -25,7 +25,7 @@ trait _init
     // merge une ou plusieurs propriétés static de la classe avec la même propriété de ces parents
     // possible de faire un merge recursif custom, selon la callable défini dans callableConfig
     // permet de merge une configuration des traits en dessous de la configuration courante de la classe
-    // les config traits sont effacé pour éviter que d'autres classes utilisent les mêmes config pour le merge
+    // les config traits sont effacé pour éviter que d'autres classes enfants utilisent les mêmes config pour le merge
     final public static function __init(bool $force=false):void
     {
         $class = static::class;

@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // num
 // class with static methods to work with strings, ints and floats numbers
-class Num extends Root
+final class Num extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'intMaxLength'=>11, // longueur maximale d'une int pour le cast
         'alias'=>[ // alias de méthode pour math
             'avg'=>'average',
@@ -41,7 +41,7 @@ class Num extends Root
     {
         foreach ($values as &$value)
         {
-            $value = static::cast($value);
+            $value = self::cast($value);
         }
 
         return;
@@ -72,7 +72,7 @@ class Num extends Root
                 $hasDot = (strpos($string,'.') !== false);
 
                 // string si longueur trop longue
-                if($hasDot === false && $stringLength > static::$config['intMaxLength'])
+                if($hasDot === false && $stringLength > self::$config['intMaxLength'])
                 $return = $string;
 
                 // si premier caractère est zéro, contient plus d'un caractère et extra est false
@@ -155,7 +155,7 @@ class Num extends Root
     final public static function isPositive($value,bool $allowZero=false):bool
     {
         $return = false;
-        static::typecast($value);
+        self::typecast($value);
 
         if($value > 0 || ($allowZero === true && $value === 0))
         $return = true;
@@ -170,7 +170,7 @@ class Num extends Root
     final public static function isNegative($value,bool $allowZero=false):bool
     {
         $return = false;
-        static::typecast($value);
+        self::typecast($value);
 
         if($value < 0 || ($allowZero === true && $value === 0))
         $return = true;
@@ -184,7 +184,7 @@ class Num extends Root
     final public static function isOdd($value):bool
     {
         $return = false;
-        static::typecast($value);
+        self::typecast($value);
 
         if(is_int($value) && is_float($value / 2))
         $return = true;
@@ -198,7 +198,7 @@ class Num extends Root
     final public static function isEven($value):bool
     {
         $return = false;
-        static::typecast($value);
+        self::typecast($value);
 
         if(is_int($value) && is_int($value / 2))
         $return = true;
@@ -216,7 +216,7 @@ class Num extends Root
 
         if(is_numeric($value))
         {
-            static::typecast($value);
+            self::typecast($value);
 
             if(is_string($value))
             $return = true;
@@ -230,8 +230,8 @@ class Num extends Root
     // retourne vrai si la length est celle spécifié
     final public static function isLength(int $length,$value):bool
     {
-        static::typecast($value);
-        return is_numeric($value) && static::len($value) === $length;
+        self::typecast($value);
+        return is_numeric($value) && self::len($value) === $length;
     }
 
 
@@ -239,8 +239,8 @@ class Num extends Root
     // retourne vrai si la length est plus grande ou égale que celle spécifié
     final public static function isMinLength(int $length,$value):bool
     {
-        static::typecast($value);
-        return is_numeric($value) && static::len($value) >= $length;
+        self::typecast($value);
+        return is_numeric($value) && self::len($value) >= $length;
     }
 
 
@@ -248,8 +248,8 @@ class Num extends Root
     // retourne vrai si la length est plus petite ou égale que celui spécifié
     final public static function isMaxLength(int $length,$value):bool
     {
-        static::typecast($value);
-        return is_numeric($value) && static::len($value) <= $length;
+        self::typecast($value);
+        return is_numeric($value) && self::len($value) <= $length;
     }
 
 
@@ -267,7 +267,7 @@ class Num extends Root
     final public static function prepend(...$values)
     {
         $return = Str::prepend(...$values);
-        static::typecast($return);
+        self::typecast($return);
 
         return $return;
     }
@@ -278,7 +278,7 @@ class Num extends Root
     final public static function append(...$values)
     {
         $return = Str::append(...$values);
-        static::typecast($return);
+        self::typecast($return);
 
         return $return;
     }
@@ -294,7 +294,7 @@ class Num extends Root
         {
             $value = (string) $value;
             $return = Str::commaToDecimal($value);
-            static::typecast($return);
+            self::typecast($return);
         }
 
         return $return;
@@ -305,7 +305,7 @@ class Num extends Root
     // retourne la longeur de la chaîne numérique
     final public static function len($value):?int
     {
-        return Str::len((string) static::cast($value));
+        return Str::len((string) self::cast($value));
     }
 
 
@@ -314,10 +314,10 @@ class Num extends Root
     final public static function sub(int $start,?int $length=null,$value)
     {
         $return = null;
-        static::typecast($value);
+        self::typecast($value);
         $value = (string) $value;
         $return = Str::sub($start,$length,$value);
-        static::typecast($return);
+        self::typecast($return);
 
         return $return;
     }
@@ -328,10 +328,10 @@ class Num extends Root
     final public static function round($value,int $round=0,int $mode=PHP_ROUND_HALF_UP)
     {
         $return = null;
-        static::typecast($value);
+        self::typecast($value);
 
         $return = round($value,$round,$mode);
-        static::typecast($return);
+        self::typecast($return);
 
         return $return;
     }
@@ -341,7 +341,7 @@ class Num extends Root
     // arrondie un chiffre
     final public static function roundLower($value,int $round=0)
     {
-        return static::round($value,$round,PHP_ROUND_HALF_DOWN);
+        return self::round($value,$round,PHP_ROUND_HALF_DOWN);
     }
 
 
@@ -350,7 +350,7 @@ class Num extends Root
     final public static function ceil($value):?int
     {
         $return = null;
-        static::typecast($value);
+        self::typecast($value);
 
         $return = (int) ceil($value);
 
@@ -363,7 +363,7 @@ class Num extends Root
     final public static function floor($value):?int
     {
         $return = null;
-        static::typecast($value);
+        self::typecast($value);
 
         $return = (int) floor($value);
 
@@ -376,7 +376,7 @@ class Num extends Root
     final public static function positive($value)
     {
         $return = null;
-        static::typecast($value);
+        self::typecast($value);
 
         $return = abs($value);
 
@@ -389,7 +389,7 @@ class Num extends Root
     final public static function negative($value)
     {
         $return = false;
-        static::typecast($value);
+        self::typecast($value);
 
         $return = abs($value) * -1;
 
@@ -402,7 +402,7 @@ class Num extends Root
     final public static function invert($value)
     {
         $return = null;
-        static::typecast($value);
+        self::typecast($value);
 
         if($value < 0)
         $return = abs($value);
@@ -419,7 +419,7 @@ class Num extends Root
     final public static function increment($value,$amount=1)
     {
         $return = null;
-        static::typecast($value,$amount);
+        self::typecast($value,$amount);
 
         $return = $value + $amount;
 
@@ -432,7 +432,7 @@ class Num extends Root
     final public static function decrement($value,$amount=1)
     {
         $return = null;
-        static::typecast($value,$amount);
+        self::typecast($value,$amount);
 
         $return = $value - $amount;
 
@@ -445,7 +445,7 @@ class Num extends Root
     final public static function in($from,$value,$to,bool $inclusive=true):?bool
     {
         $return = null;
-        static::typecast($from,$value,$to);
+        self::typecast($from,$value,$to);
 
         if($inclusive === true)
         {
@@ -467,7 +467,7 @@ class Num extends Root
     // comme in, mais est inclusif
     final public static function inExclusive($from,$value,$to):?bool
     {
-        return static::in($from,$value,$to,false);
+        return self::in($from,$value,$to,false);
     }
 
 
@@ -478,7 +478,7 @@ class Num extends Root
         $return = M_PI;
 
         if(is_int($round))
-        $return = static::round($return,$round);
+        $return = self::round($return,$round);
 
         return $return;
     }
@@ -491,19 +491,19 @@ class Num extends Root
     {
         $return = null;
 
-        if(!empty(static::$config['symbol'][$operation]))
-        $method = static::$config['symbol'][$operation];
+        if(!empty(self::$config['symbol'][$operation]))
+        $method = self::$config['symbol'][$operation];
 
-        elseif(!empty(static::$config['alias'][$operation]))
-        $method = static::$config['alias'][$operation];
+        elseif(!empty(self::$config['alias'][$operation]))
+        $method = self::$config['alias'][$operation];
 
-        if(is_string($method) && method_exists(static::class,$method))
+        if(is_string($method) && method_exists(self::class,$method))
         {
             $values = array_values($values);
-            $return = static::$method(...$values);
+            $return = self::$method(...$values);
 
             if(is_numeric($round))
-            $return = static::round($return,$round);
+            $return = self::round($return,$round);
         }
 
         return $return;
@@ -527,7 +527,7 @@ class Num extends Root
                     $return[$k] = $v;
 
                     else
-                    $return[$k] = static::math($operation,[$return[$k],$v]);
+                    $return[$k] = self::math($operation,[$return[$k],$v]);
                 }
             }
         }
@@ -545,14 +545,14 @@ class Num extends Root
 
         if(!empty($args))
         {
-            $return = static::cast($args[0]);
+            $return = self::cast($args[0]);
             unset($args[0]);
 
             foreach ($args as $z)
             {
                 if(is_scalar($z))
                 {
-                    static::typecast($z);
+                    self::typecast($z);
                     $return += $z;
                 }
             }
@@ -571,14 +571,14 @@ class Num extends Root
 
         if(!empty($args))
         {
-            $return = static::cast($args[0]);
+            $return = self::cast($args[0]);
             unset($args[0]);
 
             foreach ($args as $z)
             {
                 if(is_scalar($z))
                 {
-                    static::typecast($z);
+                    self::typecast($z);
                     $return -= $z;
                 }
             }
@@ -597,14 +597,14 @@ class Num extends Root
 
         if(count($args) > 1)
         {
-            $return = static::cast($args[0]);
+            $return = self::cast($args[0]);
             unset($args[0]);
 
             foreach ($args as $z)
             {
                 if(is_scalar($z))
                 {
-                    static::typecast($z);
+                    self::typecast($z);
                     $return *= $z;
                 }
             }
@@ -623,14 +623,14 @@ class Num extends Root
 
         if(count($args) > 1)
         {
-            $return = static::cast($args[0]);
+            $return = self::cast($args[0]);
             unset($args[0]);
 
             foreach ($args as $z)
             {
                 if(is_scalar($z))
                 {
-                    static::typecast($z);
+                    self::typecast($z);
                     $return **= $z;
                 }
             }
@@ -649,14 +649,14 @@ class Num extends Root
 
         if(count($args) > 1)
         {
-            $return = static::cast($args[0]);
+            $return = self::cast($args[0]);
             unset($args[0]);
 
             foreach ($args as $z)
             {
                 if(is_scalar($z))
                 {
-                    static::typecast($z);
+                    self::typecast($z);
 
                     if($z == 0)
                     {
@@ -682,14 +682,14 @@ class Num extends Root
 
         if(count($args) > 1)
         {
-            $return = static::cast($args[0]);
+            $return = self::cast($args[0]);
             unset($args[0]);
 
             foreach ($args as $z)
             {
                 if(is_scalar($z))
                 {
-                    static::typecast($z);
+                    self::typecast($z);
                     $return %= $z;
                 }
             }
@@ -714,7 +714,7 @@ class Num extends Root
             {
                 if(is_scalar($z))
                 {
-                    static::typecast($z);
+                    self::typecast($z);
                     $total += $z;
                     $count++;
                 }
@@ -734,7 +734,7 @@ class Num extends Root
     {
         $return = null;
 
-        static::typecast(...$values);
+        self::typecast(...$values);
         $values = Arr::filter($values,fn($value) => is_numeric($value));
         $return = min(...$values);
 
@@ -748,7 +748,7 @@ class Num extends Root
     {
         $return = null;
 
-        static::typecast(...$values);
+        self::typecast(...$values);
         $values = Arr::filter($values,fn($value) => is_numeric($value));
         $return = max(...$values);
 
@@ -770,7 +770,7 @@ class Num extends Root
             $rand = mt_rand($min,$max);
 
             if(is_int($length))
-            $return = static::sub(0,$length,$rand);
+            $return = self::sub(0,$length,$rand);
         }
 
         return $return;
@@ -806,7 +806,7 @@ class Num extends Root
     final public static function toOctal($value,$format=null)
     {
         $return = null;
-        static::typecast($value);
+        self::typecast($value);
 
         if(is_int($value))
         {
@@ -831,11 +831,11 @@ class Num extends Root
     final public static function format($value,?string $lang=null,?array $option=null):?string
     {
         $return = null;
-        $option = static::getFormat($lang,$option);
+        $option = self::getFormat($lang,$option);
 
         if(!empty($option))
         {
-            static::typecast($value);
+            self::typecast($value);
 
             if(is_numeric($value))
             {
@@ -858,20 +858,20 @@ class Num extends Root
     // supporte format, percentFormat, moneyFormat, phoneFormat et sizeFormat
     final public static function formats(string $type,array $return,?string $lang=null,?array $option=null):array
     {
-        $method = static::formatsMethod($type);
+        $method = self::formatsMethod($type);
 
         if(is_string($method))
         {
             foreach ($return as $key => $value)
             {
                 if($method === 'sizeFormat')
-                $return[$key] = static::sizeFormat($value,true,$lang,$option);
+                $return[$key] = self::sizeFormat($value,true,$lang,$option);
 
                 elseif($method === 'phoneFormat')
-                $return[$key] = static::phoneFormat($value,$lang,$option);
+                $return[$key] = self::phoneFormat($value,$lang,$option);
 
                 else
-                $return[$key] = static::$method($value,$lang,$option);
+                $return[$key] = self::$method($value,$lang,$option);
             }
         }
 
@@ -908,7 +908,7 @@ class Num extends Root
     // retourne le tableau de format pour la méthode format
     final public static function getFormat(?string $lang=null,?array $option=null):array
     {
-        return Arr::plus(Lang\En::$config['number']['format'],Lang::numberFormat(null,$lang),$option);
+        return Arr::plus(Lang\En::getConfig('number/format'),Lang::numberFormat(null,$lang),$option);
     }
 
 
@@ -916,7 +916,7 @@ class Num extends Root
     // formate un numéro, ajoute un pourcentage
     final public static function percentFormat($value,?string $lang=null,?array $option=null)
     {
-        return static::format($value,$lang,static::getPercentFormat($lang,$option));
+        return self::format($value,$lang,self::getPercentFormat($lang,$option));
     }
 
 
@@ -924,7 +924,7 @@ class Num extends Root
     // retourne le tableau de format pour la méthode moneyFormat
     final public static function getPercentFormat(?string $lang=null,?array $option=null):array
     {
-        return Arr::plus(Lang\En::$config['number']['percentFormat'],Lang::numberPercentFormat(null,$lang),$option);
+        return Arr::plus(Lang\En::getConfig('number/percentFormat'),Lang::numberPercentFormat(null,$lang),$option);
     }
 
 
@@ -933,7 +933,7 @@ class Num extends Root
     // option decimal|separator|thousand
     final public static function moneyFormat($value,?string $lang=null,?array $option=null):?string
     {
-        return static::format($value,$lang,static::getMoneyFormat($lang,$option));
+        return self::format($value,$lang,self::getMoneyFormat($lang,$option));
     }
 
 
@@ -941,7 +941,7 @@ class Num extends Root
     // retourne le tableau de format pour la méthode moneyFormat
     final public static function getMoneyFormat(?string $lang=null,?array $option=null):array
     {
-        return Arr::plus(Lang\En::$config['number']['moneyFormat'],Lang::numberMoneyFormat(null,$lang),$option);
+        return Arr::plus(Lang\En::getConfig('number/moneyFormat'),Lang::numberMoneyFormat(null,$lang),$option);
     }
 
 
@@ -950,7 +950,7 @@ class Num extends Root
     final public static function phoneFormat($value,?string $lang=null,?array $option=null):?string
     {
         $return = null;
-        $option = static::getPhoneFormat($lang,$option);
+        $option = self::getPhoneFormat($lang,$option);
 
         if(is_scalar($value))
         {
@@ -992,7 +992,7 @@ class Num extends Root
     // retourne le tableau de format pour la méthode phoneFormat
     final public static function getPhoneFormat(?string $lang=null,?array $option=null):array
     {
-        return Arrs::replace(Lang\En::$config['number']['phoneFormat'],Lang::numberPhoneFormat(null,$lang),$option);
+        return Arrs::replace(Lang\En::getConfig('number/phoneFormat'),Lang::numberPhoneFormat(null,$lang),$option);
     }
 
 
@@ -1002,7 +1002,7 @@ class Num extends Root
     final public static function sizeFormat(float $size,$round=true,?string $lang=null,?array $option=null):string
     {
         $return = '';
-        $option = static::getSizeFormat($lang,$option);
+        $option = self::getSizeFormat($lang,$option);
         $texts = $option['text'];
         $rounds = $option['round'];
 
@@ -1022,7 +1022,7 @@ class Num extends Root
                 $round = $rounds[$log];
 
                 if(is_int($round))
-                $return = static::round(($size / $pow),$round);
+                $return = self::round(($size / $pow),$round);
 
                 $return = (string) $return;
                 $return .= ' '.$text;
@@ -1037,7 +1037,7 @@ class Num extends Root
     // retourne le tableau de format pour la méthode sizeFormat
     final public static function getSizeFormat(?string $lang=null,?array $option=null):array
     {
-        return Arrs::replace(Lang\En::$config['number']['sizeFormat'],Lang::numberSizeFormat(null,$lang),$option);
+        return Arrs::replace(Lang\En::getConfig('number/sizeFormat'),Lang::numberSizeFormat(null,$lang),$option);
     }
 
 
@@ -1049,12 +1049,12 @@ class Num extends Root
     final public static function fromSizeFormat(string $value,?string $lang=null,?array $option=null):?int
     {
         $return = null;
-        $formatOriginal = Lang\En::$config['number']['sizeFormat'];
-        $format = static::getSizeFormat($lang,$option);
+        $formatOriginal = Lang\En::getConfig('number/sizeFormat');
+        $format = self::getSizeFormat($lang,$option);
         $alpha = Str::keepAlpha($value);
         $alpha = strtolower($alpha);
         $alpha = Str::stripEnd('s',$alpha,false);
-        $value = Integer::fromString($value);
+        $value = Str::toInt($value);
 
         if(!empty($formatOriginal['text']) && strlen($alpha) && is_int($value))
         {
@@ -1089,7 +1089,7 @@ class Num extends Root
     final public static function fromSizeFormatMb(string $value):?int
     {
         $return = null;
-        $value = Integer::fromString($value);
+        $value = Str::toInt($value);
 
         if(is_int($value))
         {
@@ -1112,7 +1112,7 @@ class Num extends Root
         // type cast et count
         foreach ($array as $key => $value)
         {
-            static::typecast($value);
+            self::typecast($value);
 
             if(is_numeric($value))
             {
@@ -1128,13 +1128,13 @@ class Num extends Root
                 if(is_numeric($value))
                 {
                     $calc = (($value / $count) * $total);
-                    $return[$key] = static::round($calc,$round);
+                    $return[$key] = self::round($calc,$round);
                 }
             }
 
             // adjustTotal
             if($adjustTotal === true)
-            $return = static::percentAdjustTotal($return,null,$round,$total);
+            $return = self::percentAdjustTotal($return,null,$round,$total);
         }
 
         return $return;
@@ -1149,7 +1149,7 @@ class Num extends Root
         // type cast et adjustKey
         foreach ($return as $key => $value)
         {
-            static::typecast($value);
+            self::typecast($value);
 
             if(is_numeric($value))
             {
@@ -1163,14 +1163,14 @@ class Num extends Root
         if((is_string($adjustKey) || is_numeric($adjustKey)) && array_key_exists($adjustKey,$return))
         {
             // calc
-            $calc = static::math('+',$return);
+            $calc = self::math('+',$return);
 
             if((float) $calc !== (float) $total)
             {
                 if($calc > $total)
                 {
                     $number = ($return[$adjustKey] - ($calc - $total));
-                    $return[$adjustKey] = static::round($number,$round);
+                    $return[$adjustKey] = self::round($number,$round);
 
                     if($return[$adjustKey] < 0)
                     $return[$adjustKey] = 0;
@@ -1179,7 +1179,7 @@ class Num extends Root
                 if($calc < $total)
                 {
                     $number = ($return[$adjustKey] + ($total - $calc));
-                    $return[$adjustKey] = static::round($number,$round);
+                    $return[$adjustKey] = self::round($number,$round);
 
                     if($return[$adjustKey] > $total)
                     $return[$adjustKey] = $total;

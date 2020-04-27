@@ -369,7 +369,6 @@ class Finder extends Base\Test
         // config
         assert(Base\Finder::getInitCallable() instanceof \Closure);
         assert(Base\Finder::config(['test'=>2],false)['test'] === 2);
-        assert(empty(Base\Finder::$config['test']));
 
         // cleanup
         Base\Finder::unlink($prefix);

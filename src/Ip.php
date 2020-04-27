@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // ip
 // class with static methods to work with IP strings
-class Ip extends Root
+final class Ip extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'allowed'=>[ // option par défaut pour la méthode allowed
             'whiteList'=>null,'blackList'=>null,'range'=>true,'level'=>null],
         'range'=>'*', // caractère pour range
@@ -41,7 +41,7 @@ class Ip extends Root
     // retourne vrai si l'ip est local
     final public static function isLocal($value):bool
     {
-        return static::is($value) && ($value === '127.0.0.1' || strpos($value,'192.168.') === 0);
+        return self::is($value) && ($value === '127.0.0.1' || strpos($value,'192.168.') === 0);
     }
 
 
@@ -57,7 +57,7 @@ class Ip extends Root
             if($value === '::1')
             $return = '127.0.0.1';
 
-            elseif(static::is($value))
+            elseif(self::is($value))
             $return = $value;
         }
 
@@ -75,7 +75,7 @@ class Ip extends Root
         if(Arr::isIndexed($option))
         $option = ['whiteList'=>$option];
 
-        $option = Arr::plus(static::$config['allowed'],$option);
+        $option = Arr::plus(self::$config['allowed'],$option);
 
         if(!empty($option['whiteList']) && !is_array($option['whiteList']))
         $option['whiteList'] = (array) $option['whiteList'];
@@ -83,14 +83,14 @@ class Ip extends Root
         if(!empty($option['blackList']) && !is_array($option['blackList']))
         $option['blackList'] = (array) $option['blackList'];
 
-        if(static::is($value) && is_bool($option['range']))
+        if(self::is($value) && is_bool($option['range']))
         {
             $return = true;
 
-            if(is_array($option['whiteList']) && !static::in($value,$option['whiteList'],$option['range'],$option['level']))
+            if(is_array($option['whiteList']) && !self::in($value,$option['whiteList'],$option['range'],$option['level']))
             $return = false;
 
-            elseif(is_array($option['blackList']) && static::in($value,$option['blackList'],$option['range'],$option['level']))
+            elseif(is_array($option['blackList']) && self::in($value,$option['blackList'],$option['range'],$option['level']))
             $return = false;
         }
 
@@ -104,16 +104,16 @@ class Ip extends Root
     final public static function compareRange(string $value,string $range):bool
     {
         $return = false;
-        $value = static::explode($value);
-        $range = static::explode($range);
+        $value = self::explode($value);
+        $range = self::explode($range);
 
-        if(!empty($value) && !empty($range) && !empty(static::$config['range']))
+        if(!empty($value) && !empty($range) && !empty(self::$config['range']))
         {
             $return = true;
 
             foreach ($value as $k => $v)
             {
-                if(!is_numeric($v) || ($range[$k] !== static::$config['range'] && $range[$k] !== $v))
+                if(!is_numeric($v) || ($range[$k] !== self::$config['range'] && $range[$k] !== $v))
                 {
                     $return = false;
                     break;
@@ -134,8 +134,8 @@ class Ip extends Root
 
         if($level >= 1 && $level <= 4)
         {
-            $value = static::explode($value);
-            $compare = static::explode($compare);
+            $value = self::explode($value);
+            $compare = self::explode($compare);
 
             if(!empty($value) && !empty($compare))
             {
@@ -166,7 +166,7 @@ class Ip extends Root
     {
         $return = false;
 
-        if(static::is($value))
+        if(self::is($value))
         {
             if(in_array($value,$array,true))
             $return = true;
@@ -175,13 +175,13 @@ class Ip extends Root
             {
                 foreach ($array as $ip)
                 {
-                    if($range === true && static::compareRange($value,$ip))
+                    if($range === true && self::compareRange($value,$ip))
                     {
                         $return = true;
                         break;
                     }
 
-                    elseif(is_int($level) && static::compareLevel($value,$ip,$level))
+                    elseif(is_int($level) && self::compareLevel($value,$ip,$level))
                     {
                         $return = true;
                         break;
@@ -200,7 +200,7 @@ class Ip extends Root
     final public static function reformat(string $value):?array
     {
         $return = null;
-        $explode = static::explode($value);
+        $explode = self::explode($value);
 
         if(!empty($explode) && count($explode) === 4)
         {
@@ -211,18 +211,18 @@ class Ip extends Root
             $explode = Arr::cast($explode);
             $x = Arr::cast($x);
 
-            if(count($x) === 2 && $x[0] === 0 && is_int($x[1]) && array_key_exists($x[1],static::$config['reformat']))
+            if(count($x) === 2 && $x[0] === 0 && is_int($x[1]) && array_key_exists($x[1],self::$config['reformat']))
             {
                 $return = [];
                 $i = 0;
-                $group = static::$config['reformat'][$x[1]];
+                $group = self::$config['reformat'][$x[1]];
 
                 while ($i < $group)
                 {
                     $ip = $explode;
                     $ip[] = ($start + $i);
                     $ip[] = '*';
-                    $implode = static::implode($ip);
+                    $implode = self::implode($ip);
 
                     if(!empty($implode))
                     $return[] = $implode;
@@ -245,7 +245,7 @@ class Ip extends Root
 
         foreach ($values as $value)
         {
-            $return[$value] = static::reformat($value);
+            $return[$value] = self::reformat($value);
         }
 
         return $return;
@@ -261,10 +261,10 @@ class Ip extends Root
 
         foreach ($values as $value)
         {
-            $reformat = static::reformat($value);
+            $reformat = self::reformat($value);
 
             if(!empty($reformat))
-            $return = Arr::appendUnique($return,$reformat);
+            $return = Arr::mergeUnique($return,$reformat);
         }
 
         return $return;

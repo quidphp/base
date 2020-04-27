@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // imageRaster
 // class with static methods to work with pixelated images
-class ImageRaster extends File
+final class ImageRaster extends File
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'mimeGroup'=>'imageRaster', // mime groupe de la classe
         'load'=>null, // extension permise pour la méthode imageRaster::load
         'prefix'=>[ // option image file::temp
@@ -38,7 +38,7 @@ class ImageRaster extends File
         {
             $font = File::normalize($font);
 
-            $return = (static::isResource($res))? $res:Res::temp('png');
+            $return = (self::isResource($res))? $res:Res::temp('png');
             $width = $length * 40;
             $str = Str::split(1,$value);
             $image = imagecreatetruecolor($width,50);
@@ -129,7 +129,7 @@ class ImageRaster extends File
             $newHeight = (int) $newHeight;
 
             if($expand === true)
-            $image = static::bestFitExpand($maxWidth,$maxHeight,$newWidth,$newHeight);
+            $image = self::bestFitExpand($maxWidth,$maxHeight,$newWidth,$newHeight);
             else
             $image = ['width'=>$newWidth,'height'=>$newHeight];
         }

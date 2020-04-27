@@ -16,7 +16,7 @@ namespace Quid\Base;
 class File extends Finder
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'mimeGroup'=>null, // mime groupe de la classe, pour les classes qui étendent
         'load'=>['php','html'], // extension permise pour la méthode file::load, peut être une string
         'notFoundCallable'=>[Error::class,'trigger'], // callable à déclencher si un path n'est pas chargable dans la méthode load

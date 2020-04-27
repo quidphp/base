@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // constant
 // class with static methods to work with PHP constants
-class Constant extends Root
+final class Constant extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // is
@@ -46,7 +46,7 @@ class Constant extends Root
     {
         $return = false;
 
-        if(!empty($name) && !static::is($name))
+        if(!empty($name) && !self::is($name))
         $return = define($name,$value,$sensitive);
 
         return $return;
@@ -77,7 +77,7 @@ class Constant extends Root
     // retourne les constantes définis par l'utilisateur
     final public static function user(bool $categorize=true):array
     {
-        return static::all('user',$categorize);
+        return self::all('user',$categorize);
     }
 }
 ?>

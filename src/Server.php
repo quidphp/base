@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // server
 // class that provides a set of methods to analyze the current server
-class Server extends Root
+final class Server extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'version'=>null, // version courante de quid
         'online'=>'google.com' // domaine à utiliser pour tester si le serveur est online
     ];
@@ -27,7 +27,7 @@ class Server extends Root
     final public static function isOs($value):bool
     {
         $return = false;
-        $os = static::os();
+        $os = self::os();
 
         if(is_string($os) && is_string($value) && stripos($os,$value) !== false)
         $return = true;
@@ -40,7 +40,7 @@ class Server extends Root
     // retourne vrai si le système est macOs
     final public static function isMac():bool
     {
-        return static::isOs('darwin');
+        return self::isOs('darwin');
     }
 
 
@@ -54,7 +54,7 @@ class Server extends Root
         $return = (DIRECTORY_SEPARATOR === '\\');
 
         else
-        $return = static::isOs('win');
+        $return = self::isOs('win');
 
         return $return;
     }
@@ -64,7 +64,7 @@ class Server extends Root
     // retourne vrai si le système est Linux
     final public static function isLinux():bool
     {
-        return static::isOs('linux');
+        return self::isOs('linux');
     }
 
 
@@ -73,7 +73,7 @@ class Server extends Root
     final public static function isSoftware($value):bool
     {
         $return = false;
-        $software = static::software();
+        $software = self::software();
 
         if(is_string($software) && is_string($value) && stripos($software,$value) !== false)
         $return = true;
@@ -86,7 +86,7 @@ class Server extends Root
     // retourne vrai si le serveur est apache
     final public static function isApache():bool
     {
-        return static::isSoftware('apache');
+        return self::isSoftware('apache');
     }
 
 
@@ -94,7 +94,7 @@ class Server extends Root
     // retourne vrai si le serveur est nginx
     final public static function isNginx():bool
     {
-        return static::isSoftware('nginx');
+        return self::isSoftware('nginx');
     }
 
 
@@ -102,7 +102,7 @@ class Server extends Root
     // retourne vrai si le serveur est iis
     final public static function isIis():bool
     {
-        return static::isSoftware('iis');
+        return self::isSoftware('iis');
     }
 
 
@@ -110,7 +110,7 @@ class Server extends Root
     // retourne vrai si le protocol http utilisé est 1.0 ou 1.1
     final public static function isHttp1():bool
     {
-        return in_array(static::httpProtocol(),['HTTP/1','HTTP/1.0','HTTP/1.1'],true);
+        return in_array(self::httpProtocol(),['HTTP/1','HTTP/1.0','HTTP/1.1'],true);
     }
 
 
@@ -118,7 +118,7 @@ class Server extends Root
     // retourne vrai si le protocol http utilisé est 2.0
     final public static function isHttp2():bool
     {
-        return in_array(static::httpProtocol(),['HTTP/2','HTTP/2.0'],true);
+        return in_array(self::httpProtocol(),['HTTP/2','HTTP/2.0'],true);
     }
 
 
@@ -126,7 +126,7 @@ class Server extends Root
     // retourne vrai si le serveur a accès à Internet
     final public static function isOnline():bool
     {
-        return Network::isOnline(static::$config['online'],80);
+        return Network::isOnline(self::$config['online'],80);
     }
 
 
@@ -134,7 +134,7 @@ class Server extends Root
     // retourne vrai si le serveur n'a pas accès à Internet
     final public static function isOffline():bool
     {
-        return (static::isOnline() === true)? false:true;
+        return (self::isOnline() === true)? false:true;
     }
 
 
@@ -142,7 +142,7 @@ class Server extends Root
     // retourne vrai si php roule à partir d'un commande line (plutôt qu'un browser)
     final public static function isCli():bool
     {
-        return static::sapi() === 'cli' || defined('STDIN');
+        return self::sapi() === 'cli' || defined('STDIN');
     }
 
 
@@ -158,7 +158,7 @@ class Server extends Root
     // retourne vrai si le filesystem est insensible à la casse
     final public static function isCaseInsensitive():bool
     {
-        return (static::isCaseSensitive() === true)? false:true;
+        return (self::isCaseSensitive() === true)? false:true;
     }
 
 
@@ -166,7 +166,7 @@ class Server extends Root
     // retourne vrai si la version php est égale
     final public static function isPhpVersion(string $value):bool
     {
-        return version_compare(static::phpVersion(),$value) === 0;
+        return version_compare(self::phpVersion(),$value) === 0;
     }
 
 
@@ -174,7 +174,7 @@ class Server extends Root
     // retourne vrai si la version php est plus vieille que celle fourni
     final public static function isPhpVersionOlder(string $value):bool
     {
-        return version_compare(static::phpVersion(),$value) === -1;
+        return version_compare(self::phpVersion(),$value) === -1;
     }
 
 
@@ -182,7 +182,7 @@ class Server extends Root
     // retourne vrai si la version php est plus récente que celle fourni
     final public static function isPhpVersionNewer(string $value):bool
     {
-        return version_compare(static::phpVersion(),$value) === 1;
+        return version_compare(self::phpVersion(),$value) === 1;
     }
 
 
@@ -199,7 +199,7 @@ class Server extends Root
     final public static function isApacheModule(string $value):bool
     {
         $return = false;
-        $modules = static::apacheModules();
+        $modules = self::apacheModules();
 
         if(is_array($modules) && in_array($value,$modules,true))
         $return = true;
@@ -212,7 +212,7 @@ class Server extends Root
     // retourne vrai si le module apache mod rewrite est chargé
     final public static function hasApacheModRewrite():bool
     {
-        return static::isApacheModule('mod_rewrite');
+        return self::isApacheModule('mod_rewrite');
     }
 
 
@@ -248,7 +248,7 @@ class Server extends Root
     // retourne vrai si la connection est normal
     final public static function isConnectionNormal():bool
     {
-        return static::connectionStatus() === CONNECTION_NORMAL;
+        return self::connectionStatus() === CONNECTION_NORMAL;
     }
 
 
@@ -266,13 +266,13 @@ class Server extends Root
     final public static function isRoot():bool
     {
         $return = false;
-        $serverUser = static::userExecute();
+        $serverUser = self::userExecute();
 
         if(is_string($serverUser))
         {
             $serverUser = strtolower($serverUser);
 
-            if(static::isWindows())
+            if(self::isWindows())
             $return = in_array($serverUser,['system','administrator',true], true);
 
             else
@@ -360,7 +360,7 @@ class Server extends Root
     // retourne une string
     final public static function quidVersion():string
     {
-        return static::$config['version'];
+        return self::$config['version'];
     }
 
 
@@ -379,7 +379,7 @@ class Server extends Root
     {
         $return = null;
 
-        if(static::hasApacheFunctions())
+        if(self::hasApacheFunctions())
         {
             $return = apache_get_version();
 
@@ -399,7 +399,7 @@ class Server extends Root
     // peut retourner null si les fonctions apaches ne sont pas disponibles
     final public static function apacheModules():?array
     {
-        return (static::hasApacheFunctions())? apache_get_modules():null;
+        return (self::hasApacheFunctions())? apache_get_modules():null;
     }
 
 
@@ -423,7 +423,7 @@ class Server extends Root
     final public static function unameKey(string $key):?string
     {
         $return = null;
-        $uname = static::uname();
+        $uname = self::uname();
         if(array_key_exists($key,$uname))
         $return = $uname[$key];
 
@@ -436,16 +436,16 @@ class Server extends Root
     // mix entre sysname et release
     final public static function os(bool $release=false,bool $type=false):?string
     {
-        $return = static::sysname();
+        $return = self::sysname();
 
         if(is_string($return))
         {
             if($release === true)
-            $return .= ' '.static::release();
+            $return .= ' '.self::release();
 
             if($type === true)
             {
-                $type = static::osType();
+                $type = self::osType();
                 if(is_string($type))
                 $return .= " ($type)";
             }
@@ -461,13 +461,13 @@ class Server extends Root
     {
         $return = null;
 
-        if(static::isMac())
+        if(self::isMac())
         $return = 'mac';
 
-        elseif(static::isWindows())
+        elseif(self::isWindows())
         $return = 'windows';
 
-        elseif(static::isLinux())
+        elseif(self::isLinux())
         $return = 'linux';
 
         return $return;
@@ -480,13 +480,13 @@ class Server extends Root
     {
         $return = null;
 
-        if(static::isApache())
+        if(self::isApache())
         $return = 'apache';
 
-        elseif(static::isNginx())
+        elseif(self::isNginx())
         $return = 'nginx';
 
-        elseif(static::isIis())
+        elseif(self::isIis())
         $return = 'iis';
 
         return $return;
@@ -497,7 +497,7 @@ class Server extends Root
     // retourne le sysname, soit le os
     final public static function sysname():?string
     {
-        return static::unameKey('sysname');
+        return self::unameKey('sysname');
     }
 
 
@@ -505,7 +505,7 @@ class Server extends Root
     // retourne le nodename, soit le nom du serveur sur le réseau
     final public static function nodename():?string
     {
-        return static::unameKey('nodename');
+        return self::unameKey('nodename');
     }
 
 
@@ -513,7 +513,7 @@ class Server extends Root
     // retourne la version de l'os
     final public static function release():?string
     {
-        return static::unameKey('release');
+        return self::unameKey('release');
     }
 
 
@@ -521,7 +521,7 @@ class Server extends Root
     // retourne la version du kernel
     final public static function version():?string
     {
-        return static::unameKey('version');
+        return self::unameKey('version');
     }
 
 
@@ -529,7 +529,7 @@ class Server extends Root
     // retourne l'information sur le type de la machine
     final public static function machine():?string
     {
-        return static::unameKey('machine');
+        return self::unameKey('machine');
     }
 
 
@@ -563,7 +563,7 @@ class Server extends Root
 
             if($addr === true)
             {
-                $addr = static::addr(true);
+                $addr = self::addr(true);
                 if($addr !== $return)
                 $return .= " ($addr)";
             }
@@ -631,11 +631,11 @@ class Server extends Root
     {
         $return = [];
 
-        $return['processId'] = static::processId();
-        $return['groupId'] = static::group();
-        $return['userId'] = static::user();
+        $return['processId'] = self::processId();
+        $return['groupId'] = self::group();
+        $return['userId'] = self::user();
         $return['inode'] = getmyinode();
-        $return['username'] = static::user(true);
+        $return['username'] = self::user(true);
         $return['lastModification'] = getlastmod();
 
         return $return;
@@ -673,12 +673,12 @@ class Server extends Root
     final public static function userStr(bool $withExecute=false):string
     {
         $return = '';
-        $id = static::user(false);
-        $name = static::user(true);
+        $id = self::user(false);
+        $name = self::user(true);
 
         if($withExecute === true)
         {
-            $execute = static::userExecute();
+            $execute = self::userExecute();
 
             if(is_string($execute) && $execute !== $name)
             $return .= $execute.' -> ';
@@ -761,21 +761,21 @@ class Server extends Root
     final public static function overview():array
     {
         $return = [];
-        $return['quid'] = static::quidVersion();
-        $return['protocol'] = static::httpProtocol();
-        $return['software'] = static::software();
-        $return['php'] = static::phpVersion();
-        $return['zend'] = static::zendVersion();
-        $return['os'] = static::os(true,true);
-        $return['serverType'] = static::serverType();
-        $return['sapi'] = static::sapi();
-        $return['ip'] = static::ip(true);
-        $return['hostname'] = static::hostname();
-        $return['root'] = static::isRoot();
-        $return['username'] = static::userStr(true);
-        $return['group'] = static::group();
-        $return['caseSensitive'] = static::isCaseSensitive();
-        $return = Arr::append($return,Extension::important(true));
+        $return['quid'] = self::quidVersion();
+        $return['protocol'] = self::httpProtocol();
+        $return['software'] = self::software();
+        $return['php'] = self::phpVersion();
+        $return['zend'] = self::zendVersion();
+        $return['os'] = self::os(true,true);
+        $return['serverType'] = self::serverType();
+        $return['sapi'] = self::sapi();
+        $return['ip'] = self::ip(true);
+        $return['hostname'] = self::hostname();
+        $return['root'] = self::isRoot();
+        $return['username'] = self::userStr(true);
+        $return['group'] = self::group();
+        $return['caseSensitive'] = self::isCaseSensitive();
+        $return = Arr::merge($return,Extension::important(true));
 
         return $return;
     }
@@ -786,30 +786,30 @@ class Server extends Root
     final public static function info():array
     {
         $return = [];
-        $return['quid'] = static::quidVersion();
-        $return['protocol'] = static::httpProtocol();
-        $return['software'] = static::software();
-        $return['php'] = static::phpVersion();
-        $return['zend'] = static::zendVersion();
-        $return['os'] = static::os(true,true);
-        $return['serverType'] = static::serverType();
-        $return['caseSensitive'] = static::isCaseSensitive();
-        $return['uname'] = static::uname();
-        $return['sapi'] = static::sapi();
-        $return['cli'] = static::isCli();
-        $return['ip'] = static::ip(true);
-        $return['online'] = static::isOnline();
-        $return['hostname'] = static::hostname();
-        $return['script'] = static::script();
-        $return['root'] = static::isRoot();
-        $return['user'] = static::user();
-        $return['username'] = static::userStr(true);
-        $return['group'] = static::group();
-        $return['resourceUsage'] = static::resourceUsage();
-        $return['memory'] = static::memory();
-        $return['diskSpace'] = static::diskSpace();
-        $return['phpImportantIni'] = static::phpImportantIni();
-        $return['superglobal'] = static::superglobal();
+        $return['quid'] = self::quidVersion();
+        $return['protocol'] = self::httpProtocol();
+        $return['software'] = self::software();
+        $return['php'] = self::phpVersion();
+        $return['zend'] = self::zendVersion();
+        $return['os'] = self::os(true,true);
+        $return['serverType'] = self::serverType();
+        $return['caseSensitive'] = self::isCaseSensitive();
+        $return['uname'] = self::uname();
+        $return['sapi'] = self::sapi();
+        $return['cli'] = self::isCli();
+        $return['ip'] = self::ip(true);
+        $return['online'] = self::isOnline();
+        $return['hostname'] = self::hostname();
+        $return['script'] = self::script();
+        $return['root'] = self::isRoot();
+        $return['user'] = self::user();
+        $return['username'] = self::userStr(true);
+        $return['group'] = self::group();
+        $return['resourceUsage'] = self::resourceUsage();
+        $return['memory'] = self::memory();
+        $return['diskSpace'] = self::diskSpace();
+        $return['phpImportantIni'] = self::phpImportantIni();
+        $return['superglobal'] = self::superglobal();
         $return['ini'] = Ini::important();
         $return['extension'] = Extension::important(true);
 
@@ -823,7 +823,7 @@ class Server extends Root
     {
         $return = [];
 
-        if(static::isPhpVersionOlder('7.3'))
+        if(self::isPhpVersionOlder('7.3'))
         $return[] = 'phpVersion';
 
         return $return;
@@ -835,7 +835,7 @@ class Server extends Root
     final public static function setQuidVersion($version):void
     {
         if(is_scalar($version))
-        static::$config['version'] = $version;
+        self::$config['version'] = $version;
 
         return;
     }

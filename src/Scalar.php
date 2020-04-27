@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // scalar
 // class with static methods to deal with scalar types
-class Scalar extends Root
+final class Scalar extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // typecast
@@ -25,7 +25,7 @@ class Scalar extends Root
     {
         foreach ($values as &$value)
         {
-            $value = static::cast($value);
+            $value = self::cast($value);
         }
 
         return;
@@ -38,7 +38,7 @@ class Scalar extends Root
     {
         foreach ($values as &$value)
         {
-            $value = static::castMore($value);
+            $value = self::castMore($value);
         }
 
         return;
@@ -84,7 +84,7 @@ class Scalar extends Root
     // nombre sont convertis, virgule remplacer par décimal, et les string booleans sont transformés en bool
     final public static function castMore($value)
     {
-        return static::cast($value,2,1);
+        return self::cast($value,2,1);
     }
 
 

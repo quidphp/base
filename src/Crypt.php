@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // crypt
 // class which contains methods to deal with the most common PHP cryptography functions
-class Crypt extends Root
+final class Crypt extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'passwordHash'=>[ // configuration pour password_hash et password_verify
             'algo'=>PASSWORD_DEFAULT,
             'options'=>['cost'=>11]],
@@ -46,7 +46,7 @@ class Crypt extends Root
     final public static function passwordHash(string $value,?array $option=null):?string
     {
         $return = null;
-        $option = Arr::plus(static::$config['passwordHash'],$option);
+        $option = Arr::plus(self::$config['passwordHash'],$option);
         $hash = password_hash($value,$option['algo'],$option['options']);
 
         if(is_string($hash))
@@ -70,7 +70,7 @@ class Crypt extends Root
     final public static function passwordNeedsRehash(string $value,?array $option=null):bool
     {
         $return = false;
-        $option = Arr::plus(static::$config['passwordHash'],$option);
+        $option = Arr::plus(self::$config['passwordHash'],$option);
         $return = password_needs_rehash($value,$option['algo'],$option['options']);
 
         return $return;
@@ -84,12 +84,12 @@ class Crypt extends Root
     final public static function passwordNew(?int $length=null):?string
     {
         $return = null;
-        $length ??= static::$config['passwordNew'] ?? null;
+        $length ??= self::$config['passwordNew'] ?? null;
 
         if(is_int($length) && $length > 4)
         {
-            $return = static::randomString($length - 2,'alpha');
-            $return .= (string) static::randomInt(2);
+            $return = self::randomString($length - 2,'alpha');
+            $return .= (string) self::randomInt(2);
         }
 
         return $return;
@@ -113,7 +113,7 @@ class Crypt extends Root
         elseif(is_string($newPasswordConfirm) && $newPassword !== $newPasswordConfirm)
         $return = 'newPasswordMismatch';
 
-        elseif(is_string($oldPasswordHash) && !empty($oldPasswordHash) && !static::passwordNeedsRehash($oldPasswordHash,$option) && static::passwordVerify($newPassword,$oldPasswordHash,$option))
+        elseif(is_string($oldPasswordHash) && !empty($oldPasswordHash) && !self::passwordNeedsRehash($oldPasswordHash,$option) && self::passwordVerify($newPassword,$oldPasswordHash,$option))
         $return = 'noChange';
 
         elseif(is_string($oldPassword))
@@ -124,7 +124,7 @@ class Crypt extends Root
             elseif($newPassword === $oldPassword)
             $return = 'noChange';
 
-            elseif(is_string($oldPasswordHash) && !empty($oldPasswordHash) && !static::passwordVerify($oldPassword,$oldPasswordHash))
+            elseif(is_string($oldPasswordHash) && !empty($oldPasswordHash) && !self::passwordVerify($oldPassword,$oldPasswordHash))
             $return = 'oldPasswordMismatch';
         }
 
@@ -136,7 +136,7 @@ class Crypt extends Root
     // retourne une string sha1, tel qu'utilisé pour générer la hash d'activation d'un password
     final public static function passwordActivate(string $value):string
     {
-        return static::sha($value,1);
+        return self::sha($value,1);
     }
 
 
@@ -168,7 +168,7 @@ class Crypt extends Root
     // retourne un hash sha
     final public static function sha(string $value,int $type=256,bool $binary=false):string
     {
-        return static::hash('sha'.$type,$value,$binary);
+        return self::hash('sha'.$type,$value,$binary);
     }
 
 
@@ -221,7 +221,7 @@ class Crypt extends Root
     final public static function randomString(int $length=40,?string $random=null,?bool $mb=null):string
     {
         $return = '';
-        $random = static::getRandomString($random);
+        $random = self::getRandomString($random);
 
         if($length > 0 && is_string($random) && !empty($random))
         {
@@ -261,15 +261,15 @@ class Crypt extends Root
 
         if(is_string($value))
         {
-            if(array_key_exists($value,static::$config['randomString']))
-            $return = static::$config['randomString'][$value];
+            if(array_key_exists($value,self::$config['randomString']))
+            $return = self::$config['randomString'][$value];
 
             else
             $return = $value;
         }
 
         elseif($value === null)
-        $return = current(static::$config['randomString']);
+        $return = current(self::$config['randomString']);
 
         return $return;
     }
@@ -317,7 +317,7 @@ class Crypt extends Root
         $prefix = '';
 
         if(is_numeric($value) && $value > 0)
-        $prefix = static::randomString($value);
+        $prefix = self::randomString($value);
 
         elseif(is_string($value))
         $prefix = $value;
@@ -354,12 +354,12 @@ class Crypt extends Root
 
         if(!empty($value) && !empty($key))
         {
-            $method = static::$config['openssl']['method'];
-            $key = static::sha($key,static::$config['openssl']['sha']);
-            $iv = static::sha($iv,static::$config['openssl']['sha']);
+            $method = self::$config['openssl']['method'];
+            $key = self::sha($key,self::$config['openssl']['sha']);
+            $iv = self::sha($iv,self::$config['openssl']['sha']);
             $iv = substr($iv,0,16);
             $ssl = openssl_encrypt($value,$method,$key,0,$iv);
-            $encode = static::base64($ssl);
+            $encode = self::base64($ssl);
 
             if(is_string($encode))
             $return = $encode;
@@ -377,11 +377,11 @@ class Crypt extends Root
 
         if(!empty($value) && !empty($key))
         {
-            $method = static::$config['openssl']['method'];
-            $key = static::sha($key,static::$config['openssl']['sha']);
-            $iv = static::sha($iv,static::$config['openssl']['sha']);
+            $method = self::$config['openssl']['method'];
+            $key = self::sha($key,self::$config['openssl']['sha']);
+            $iv = self::sha($iv,self::$config['openssl']['sha']);
             $iv = substr($iv,0,16);
-            $decode = static::base64Decode($value);
+            $decode = self::base64Decode($value);
             $ssl = openssl_decrypt($decode,$method,$key,0,$iv);
 
             if(is_string($ssl))
@@ -440,7 +440,7 @@ class Crypt extends Root
     final public static function onSetSerialize($return)
     {
         if(is_array($return) || is_object($return))
-        $return = static::serialize($return);
+        $return = self::serialize($return);
 
         return $return;
     }
@@ -452,7 +452,7 @@ class Crypt extends Root
     final public static function onGetSerialize($return)
     {
         if(is_string($return))
-        $return = static::unserialize($return);
+        $return = self::unserialize($return);
 
         return $return;
     }

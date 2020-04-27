@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // browser
 // class with methods a layer over the native PHP get_browser function
-class Browser extends Root
+final class Browser extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'bots'=>[ // noms pouvant se retrouver dans le user-agent signifiant un bot
             'msnbot',
             'googlebot',
@@ -46,7 +46,7 @@ class Browser extends Root
     // retourne vrai si le user agent est un bot
     final public static function isBot($value):bool
     {
-        return (is_string($value))? Arr::some(static::$config['bots'],fn($v) => stripos($value,$v) !== false):false;
+        return (is_string($value))? Arr::some(self::$config['bots'],fn($v) => stripos($value,$v) !== false):false;
     }
 
 
@@ -54,7 +54,7 @@ class Browser extends Root
     // retourne vrai si le browser est reconnu par browscap
     final public static function is($value):bool
     {
-        return is_string($value) && static::name($value) !== 'Default Browser';
+        return is_string($value) && self::name($value) !== 'Default Browser';
     }
 
 
@@ -62,7 +62,7 @@ class Browser extends Root
     // retourne vrai si le browser est desktop
     final public static function isDesktop($value):bool
     {
-        return is_string($value) && static::device($value) === 'Desktop';
+        return is_string($value) && self::device($value) === 'Desktop';
     }
 
 
@@ -70,7 +70,7 @@ class Browser extends Root
     // retourne vrai si le browser est mobile
     final public static function isMobile($value):bool
     {
-        return (is_string($value))? !empty(static::cap($value)['ismobiledevice']):false;
+        return (is_string($value))? !empty(self::cap($value)['ismobiledevice']):false;
     }
 
 
@@ -82,7 +82,7 @@ class Browser extends Root
 
         if(is_string($value))
         {
-            $cap = static::cap($value);
+            $cap = self::cap($value);
             if(!empty($cap['browser']) && $cap['browser'] === 'IE' && !empty($cap['version']) && (int) $cap['version'] < 11)
             $return = true;
         }
@@ -95,7 +95,7 @@ class Browser extends Root
     // retourne vrai si le browser est sur MacOs
     final public static function isMac($value):bool
     {
-        return is_string($value) && ($platform = static::platform($value)) && stripos($platform,'mac') !== false;
+        return is_string($value) && ($platform = self::platform($value)) && stripos($platform,'mac') !== false;
     }
 
 
@@ -103,7 +103,7 @@ class Browser extends Root
     // retourne vrai si le browser est sur Linux
     final public static function isLinux($value):bool
     {
-        return is_string($value) && ($platform = static::platform($value)) && stripos($platform,'linux') !== false;
+        return is_string($value) && ($platform = self::platform($value)) && stripos($platform,'linux') !== false;
     }
 
 
@@ -111,7 +111,7 @@ class Browser extends Root
     // retourne vrai si le browser est sur Windows
     final public static function isWindows($value):bool
     {
-        return is_string($value) && ($platform = static::platform($value)) && stripos($platform,'win') !== false;
+        return is_string($value) && ($platform = self::platform($value)) && stripos($platform,'win') !== false;
     }
 
 
@@ -121,7 +121,7 @@ class Browser extends Root
     // utilise la fonction php get_browser
     final public static function cap(string $value):?array
     {
-        return (strlen($value))? static::cacheStatic([__METHOD__,$value],fn() => get_browser($value,true)):null;
+        return (strlen($value))? self::cacheStatic([__METHOD__,$value],fn() => get_browser($value,true)):null;
     }
 
 
@@ -129,7 +129,7 @@ class Browser extends Root
     // retourne le nom browser en fonction du user agent
     final public static function name(string $value):?string
     {
-        return static::cap($value)['browser'] ?? null;
+        return self::cap($value)['browser'] ?? null;
     }
 
 
@@ -137,7 +137,7 @@ class Browser extends Root
     // retourne la plateforme browser en fonction du user agent
     final public static function platform(string $value):?string
     {
-        return static::cap($value)['platform'] ?? null;
+        return self::cap($value)['platform'] ?? null;
     }
 
 
@@ -145,7 +145,7 @@ class Browser extends Root
     // retourne le device du browser en fonction du user agent
     final public static function device(string $value):?string
     {
-        return static::cap($value)['device_type'] ?? null;
+        return self::cap($value)['device_type'] ?? null;
     }
 }
 ?>

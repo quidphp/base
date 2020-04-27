@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // exception
 // class with methods a layer over the native PHP exception functions and handler
-class Exception extends Root
+final class Exception extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'separator'=>[' -> ',', ',': '] // séparateur si le message est un tableau
     ];
 
@@ -63,7 +63,7 @@ class Exception extends Root
                 $value[$k] = Json::encode($v);
             }
 
-            $value = Arrs::implode(static::$config['separator'],$value,true,true);
+            $value = Arrs::implode(self::$config['separator'],$value,true,true);
         }
 
         if(is_string($value))

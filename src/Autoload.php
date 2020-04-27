@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // autoload
 // class with methods a layer over the native PHP autoload logic
-class Autoload extends Root
+final class Autoload extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'psr4'=>[] // garde une copie du racine de l'auto chargement des classes
     ];
 
@@ -59,7 +59,7 @@ class Autoload extends Root
         $return = false;
 
         if($value === true)
-        $value = '.'.static::phpExtension();
+        $value = '.'.self::phpExtension();
 
         if(is_array($value))
         $value = implode(',',$value);
@@ -109,9 +109,9 @@ class Autoload extends Root
     {
         $return = [];
 
-        foreach (static::all() as $key => $value)
+        foreach (self::all() as $key => $value)
         {
-            $return[$key] = static::unregister($value);
+            $return[$key] = self::unregister($value);
         }
 
         return $return;
@@ -135,7 +135,7 @@ class Autoload extends Root
     // permet de retourner une callable autoload, via index
     final public static function index(int $index):?callable
     {
-        return Arr::index($index,static::all());
+        return Arr::index($index,self::all());
     }
 
 
@@ -145,7 +145,7 @@ class Autoload extends Root
     final protected static function getPath(string $class,bool $different=true):?string
     {
         $return = null;
-        $psr4 = static::getPsr4($class,$different);
+        $psr4 = self::getPsr4($class,$different);
 
         if(!empty($psr4))
         {
@@ -170,11 +170,11 @@ class Autoload extends Root
     // possible de spécifier s'il doit exister
     final public static function getFilePath(string $class,bool $exists=true,bool $different=true):?string
     {
-        $return = static::getPath($class,$different);
+        $return = self::getPath($class,$different);
 
         if(is_string($return))
         {
-            $return .= '.'.static::phpExtension();
+            $return .= '.'.self::phpExtension();
 
             if($exists === true && !file_exists($return))
             $return = null;
@@ -189,7 +189,7 @@ class Autoload extends Root
     // possible de spécifier s'il doit exister
     final public static function getDirPath(string $class,bool $exists=true,bool $different=false):?string
     {
-        $return = static::getPath($class,$different);
+        $return = self::getPath($class,$different);
 
         if(is_string($return) && $exists === true && !is_dir($return))
         $return = null;
@@ -204,7 +204,7 @@ class Autoload extends Root
     final public static function getPsr4(string $class,bool $different=false):?array
     {
         $return = null;
-        $source = static::$config['psr4'];
+        $source = self::$config['psr4'];
 
         foreach ($source as $key => $value)
         {
@@ -226,7 +226,7 @@ class Autoload extends Root
     // change ou ajoute un point racine
     final public static function setPsr4(string $key,string $value):void
     {
-        static::$config['psr4'][$key] = $value;
+        self::$config['psr4'][$key] = $value;
 
         return;
     }
@@ -239,7 +239,7 @@ class Autoload extends Root
         foreach ($keyValue as $key => $value)
         {
             if(is_string($key) && is_string($value))
-            static::$config['psr4'][$key] = $value;
+            self::$config['psr4'][$key] = $value;
         }
 
         return;
@@ -250,8 +250,8 @@ class Autoload extends Root
     // enlève un point racine
     final public static function unsetPsr4(string $key):void
     {
-        if(array_key_exists($key,static::$config['psr4']))
-        unset(static::$config['psr4'][$key]);
+        if(array_key_exists($key,self::$config['psr4']))
+        unset(self::$config['psr4'][$key]);
 
         return;
     }
@@ -262,7 +262,7 @@ class Autoload extends Root
     // possible de fournir un callback et de sort
     final public static function allPsr4(?\Closure $closure=null,bool $sort=false):array
     {
-        $return = static::$config['psr4'];
+        $return = self::$config['psr4'];
 
         if(!empty($closure))
         {
@@ -302,9 +302,9 @@ class Autoload extends Root
     final public static function overview(?\Closure $closure=null,bool $sort=true):array
     {
         $return = [];
-        $extension = static::phpExtension();
+        $extension = self::phpExtension();
 
-        foreach (static::allPsr4($closure,$sort) as $key => $value)
+        foreach (self::allPsr4($closure,$sort) as $key => $value)
         {
             $return[$key] = Dir::overview($value,$extension);
         }

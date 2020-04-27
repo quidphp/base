@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // encoding
 // class which contains methods related to string encoding (manages mb overload)
-class Encoding extends Root
+final class Encoding extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'charset'=>null, // charset
         'charsetMb'=>['UTF-8'], // charset qui retourne vrai à la méthode isCharsetMb
         'mb'=>false // active les fonctions multibyte
@@ -27,7 +27,7 @@ class Encoding extends Root
     // retourne vrai si la chaîne est valide pour un encodage spécifique
     final public static function is($value,?string $charset=null):bool
     {
-        return (is_string($value))? mb_check_encoding($value,static::getCharset($charset)):false;
+        return (is_string($value))? mb_check_encoding($value,self::getCharset($charset)):false;
     }
 
 
@@ -35,7 +35,7 @@ class Encoding extends Root
     // retourne vrai si la valeur est string et multibyte
     final public static function isMb($value):bool
     {
-        return is_string($value) && strlen($value) !== mb_strlen($value,static::$config['charset']);
+        return is_string($value) && strlen($value) !== mb_strlen($value,self::$config['charset']);
     }
 
 
@@ -47,7 +47,7 @@ class Encoding extends Root
 
         foreach ($values as $value)
         {
-            if(static::isMb($value))
+            if(self::isMb($value))
             {
                 $return = true;
                 break;
@@ -62,7 +62,7 @@ class Encoding extends Root
     // retourne vrai si le charset est multibyte
     final public static function isCharsetMb($value):bool
     {
-        return is_string($value) && Arr::in($value,static::$config['charsetMb'],false);
+        return is_string($value) && Arr::in($value,self::$config['charsetMb'],false);
     }
 
 
@@ -86,8 +86,8 @@ class Encoding extends Root
     // change l'encodage de la chaîne
     final public static function set(string $return,?string $charset=null,?string $from=null)
     {
-        $charset = static::getCharset($charset);
-        $from = static::getCharset($from);
+        $charset = self::getCharset($charset);
+        $from = self::getCharset($from);
 
         if($charset !== $from)
         $return = mb_convert_encoding($return,$charset,$from);
@@ -100,7 +100,7 @@ class Encoding extends Root
     // permet de remplacer les caractères illégaux en ?
     final public static function scrub(string $return,?string $charset=null):string
     {
-        return mb_scrub($return,static::getCharset($charset));
+        return mb_scrub($return,self::getCharset($charset));
     }
 
 
@@ -108,7 +108,7 @@ class Encoding extends Root
     // retourne l'encoding interne de l'extension mbstring
     final public static function getInternal():string
     {
-        return static::$config['charset'] = mb_internal_encoding();
+        return self::$config['charset'] = mb_internal_encoding();
     }
 
 
@@ -118,7 +118,7 @@ class Encoding extends Root
     {
         $return = mb_internal_encoding($charset);
         if($return === true)
-        static::$config['charset'] = $charset;
+        self::$config['charset'] = $charset;
 
         return $return;
     }
@@ -128,7 +128,7 @@ class Encoding extends Root
     // retourne le charset actuel ou celui donné en argument si c'est une string
     final public static function getCharset(?string $charset=null):string
     {
-        return (is_string($charset))? $charset:static::$config['charset'];
+        return (is_string($charset))? $charset:self::$config['charset'];
     }
 
 
@@ -136,8 +136,8 @@ class Encoding extends Root
     // change le charset actuel, change aussi dans la classe str
     final public static function setCharset(string $value):void
     {
-        static::$config['charset'] = $value;
-        Str::$config['charset'] = $value;
+        self::$config['charset'] = $value;
+        Str::setCharset($value);
 
         return;
     }
@@ -152,11 +152,11 @@ class Encoding extends Root
         if(is_bool($mb))
         $return = $mb;
 
-        elseif(is_bool(static::$config['mb']))
-        $return = static::$config['mb'];
+        elseif(is_bool(self::$config['mb']))
+        $return = self::$config['mb'];
 
         elseif(is_string($value))
-        $return = static::isMb($value);
+        $return = self::isMb($value);
 
         return $return;
     }
@@ -172,11 +172,11 @@ class Encoding extends Root
         if(is_bool($mb))
         $return = $mb;
 
-        elseif(is_bool(static::$config['mb']))
-        $return = static::$config['mb'];
+        elseif(is_bool(self::$config['mb']))
+        $return = self::$config['mb'];
 
         elseif(!empty($values))
-        $return = static::isMbs(...$values);
+        $return = self::isMbs(...$values);
 
         return $return;
     }
@@ -189,11 +189,11 @@ class Encoding extends Root
         $return = false;
 
         if(is_string($mb))
-        $mb = static::isMb($mb);
+        $mb = self::isMb($mb);
 
         if(is_bool($mb) || $mb === null)
         {
-            static::$config['mb'] = $mb;
+            self::$config['mb'] = $mb;
             $return = true;
         }
 

@@ -20,7 +20,7 @@ class Set extends Root
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'implode'=>0, // index du séparateur à utiliser lors du implode
             'explode'=>0, // index du séparateur à utiliser lors du explode
@@ -247,7 +247,7 @@ class Set extends Root
                 $value = static::arr($value,$option);
 
                 if(is_array($value))
-                $array = Arr::append($array,$value);
+                $array = Arr::merge($array,$value);
             }
 
             $return = static::str($array,$option);

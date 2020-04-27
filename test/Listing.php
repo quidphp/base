@@ -112,9 +112,9 @@ class Listing extends Base\Test
         assert(count(Base\Listing::unsets(['test'],$string)) === 3);
         assert(count(Base\Listing::slice('test','what',$string)) === 3);
         assert(!(Base\Listing::slice('TEST','WHAT',$string)));
-        Base\Listing::$config['sensitive'] = false;
+        Base\Listing::config(['sensitive'=>false]);
         assert(count(Base\Listing::slice('TEST','WHAT',$string)) === 3);
-        Base\Listing::$config['sensitive'] = true;
+        Base\Listing::config(['sensitive'=>true]);
         assert(Base\Listing::sliceIndex(0,2,$string) === ['test'=>'bla','james'=>'ok']);
         assert(Base\Listing::sliceIndex(0,1,['james'=>'ok','test'=>2]) === ['james'=>'ok']);
         assert(count(Base\Listing::splice('test','what',$string,"lalal:ok\nlala2:ok2")) === 3);

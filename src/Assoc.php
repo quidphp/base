@@ -20,7 +20,7 @@ class Assoc extends Root
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'option'=>[ // tableau d'options
             'trim'=>false, // chaque partie de assoc est trim
             'clean'=>false], // une partie assoc vide est retiré

@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // response
 // class with static methods to alter the current response
-class Response extends Root
+final class Response extends Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'idLength'=>10, // longueur du id de la réponse
         'closeDown'=>[], // callbacks à lancer lors d'un closeDown
         'closeBody'=>[], // callbacks à lancer lors d'un closeBody
@@ -42,7 +42,7 @@ class Response extends Root
     // retourne vrai si le code de la réponse est 200 (OK)
     final public static function is200():bool
     {
-        return static::isCode(200);
+        return self::isCode(200);
     }
 
 
@@ -50,7 +50,7 @@ class Response extends Root
     // retourne vrai si le code de la réponse est positive (200 à 399)
     final public static function isCodePositive():bool
     {
-        return static::isCodeBetween(200,399);
+        return self::isCodeBetween(200,399);
     }
 
 
@@ -58,7 +58,7 @@ class Response extends Root
     // retourne vrai si le code de la réponse est positive (200 à 399) mais pas 301
     final public static function isCodeLoggable():bool
     {
-        return !static::isCodePositive() || static::isCode(301);
+        return !self::isCodePositive() || self::isCode(301);
     }
 
 
@@ -66,7 +66,7 @@ class Response extends Root
     // retourne vrai si le code de la réponse est erreur (400 à 499)
     final public static function isCodeError():bool
     {
-        return static::isCodeIn(400);
+        return self::isCodeIn(400);
     }
 
 
@@ -74,7 +74,7 @@ class Response extends Root
     // retourne vrai si le code de la réponse est server error (500+)
     final public static function isCodeServerError():bool
     {
-        return static::isCodeIn(500);
+        return self::isCodeIn(500);
     }
 
 
@@ -98,7 +98,7 @@ class Response extends Root
     // retourne vrai si la réponse est de content type html
     final public static function isHtml():bool
     {
-        return static::isContentType('html');
+        return self::isContentType('html');
     }
 
 
@@ -106,7 +106,7 @@ class Response extends Root
     // retourne vrai si la réponse est de content type html ou automatique
     final public static function isHtmlOrAuto():bool
     {
-        return empty(static::contentType()) || static::isHtml();
+        return empty(self::contentType()) || self::isHtml();
     }
 
 
@@ -114,7 +114,7 @@ class Response extends Root
     // retourne vrai si la réponse est de content type json
     final public static function isJson():bool
     {
-        return static::isContentType('json');
+        return self::isContentType('json');
     }
 
 
@@ -122,7 +122,7 @@ class Response extends Root
     // retourne vrai si la réponse est de content type xml
     final public static function isXml():bool
     {
-        return static::isContentType('xml');
+        return self::isContentType('xml');
     }
 
 
@@ -174,7 +174,7 @@ class Response extends Root
     final public static function isCodeBetween($from,$to,?int $code=null):bool
     {
         $return = false;
-        $code = (is_int($code))? $code:static::code();
+        $code = (is_int($code))? $code:self::code();
 
         if(is_int($from) && is_int($to) && $code >= $from && $code <= $to)
         $return = true;
@@ -194,7 +194,7 @@ class Response extends Root
         {
             $from = (int) (floor($value / 100) * 100);
             $to = ($from + 99);
-            $return = static::isCodeBetween($from,$to,$code);
+            $return = self::isCodeBetween($from,$to,$code);
         }
 
         return $return;
@@ -206,7 +206,7 @@ class Response extends Root
     // supporte le content type exact, le content type short et le mime
     final public static function isContentType(string $value):bool
     {
-        return Header::isContentType($value,static::headers(false));
+        return Header::isContentType($value,self::headers(false));
     }
 
 
@@ -214,7 +214,7 @@ class Response extends Root
     // retourne vrai si la réponse contient le header
     final public static function headerExists(string $key):bool
     {
-        return Header::exist($key,static::headers(false));
+        return Header::exist($key,self::headers(false));
     }
 
 
@@ -222,7 +222,7 @@ class Response extends Root
     // retourne vrai si la réponse contient les headers
     final public static function headersExists(array $keys):bool
     {
-        return Header::exists($keys,static::headers(false));
+        return Header::exists($keys,self::headers(false));
     }
 
 
@@ -230,10 +230,10 @@ class Response extends Root
     // retourne le id unique de la réponse
     final public static function id():string
     {
-        if(static::$id === null && is_int(static::$config['idLength']))
-        static::$id = Str::random(static::$config['idLength']);
+        if(self::$id === null && is_int(self::$config['idLength']))
+        self::$id = Str::random(self::$config['idLength']);
 
-        return static::$id;
+        return self::$id;
     }
 
 
@@ -305,7 +305,7 @@ class Response extends Root
     // retourne le texte relié au code status
     final public static function statusText():?string
     {
-        return Header::statusText(static::code());
+        return Header::statusText(self::code());
     }
 
 
@@ -314,7 +314,7 @@ class Response extends Root
     // si le message est custom, ajouté via setStatusText, cette méthode ne le retournera pas
     final public static function status():?string
     {
-        return Header::status(static::code());
+        return Header::status(self::code());
     }
 
 
@@ -324,7 +324,7 @@ class Response extends Root
     // retourne vrai si le code courant après la modification est celui donné en argument
     final public static function setCode(int $code):bool
     {
-        return static::setStatus($code);
+        return self::setStatus($code);
     }
 
 
@@ -336,7 +336,7 @@ class Response extends Root
     {
         $return = false;
 
-        if(!static::areHeadersSent())
+        if(!self::areHeadersSent())
         {
             $code = null;
             $text = null;
@@ -355,7 +355,7 @@ class Response extends Root
 
             if(is_int($code) && is_string($text))
             {
-                $array['protocol'] = static::protocol();
+                $array['protocol'] = self::protocol();
                 $array['code'] = $code;
                 $array['text'] = $text;
                 $status = Header::makeStatus($array);
@@ -378,7 +378,7 @@ class Response extends Root
     // change le code la requête pour 200
     final public static function ok():bool
     {
-        return static::setCode(200);
+        return self::setCode(200);
     }
 
 
@@ -388,10 +388,10 @@ class Response extends Root
     final public static function moved($code=null):bool
     {
         $return = false;
-        $code = static::movedCode($code);
+        $code = self::movedCode($code);
 
         if(is_int($code))
-        $return = static::setCode($code);
+        $return = self::setCode($code);
 
         return $return;
     }
@@ -409,7 +409,7 @@ class Response extends Root
         elseif($value === false)
         $value = 301;
 
-        if(static::isCodeIn(300,$value))
+        if(self::isCodeIn(300,$value))
         $return = $value;
 
         return $return;
@@ -426,11 +426,11 @@ class Response extends Root
         if(!is_int($code))
         $code = 404;
 
-        if(static::isCodeIn(400,$code))
-        $return = static::setCode($code);
+        if(self::isCodeIn(400,$code))
+        $return = self::setCode($code);
 
         if($kill === true)
-        static::kill(['error',$code]);
+        self::kill(['error',$code]);
 
         return $return;
     }
@@ -441,7 +441,7 @@ class Response extends Root
     // kill permet de tuer la réponse
     final public static function notFound(bool $kill=false):bool
     {
-        return static::error(404,$kill);
+        return self::error(404,$kill);
     }
 
 
@@ -455,11 +455,11 @@ class Response extends Root
         if(!is_int($code))
         $code = 500;
 
-        if(static::isCodeIn(500,$code))
-        $return = static::setCode($code);
+        if(self::isCodeIn(500,$code))
+        $return = self::setCode($code);
 
         if($kill === true)
-        static::kill(['serverError',$code]);
+        self::kill(['serverError',$code]);
 
         return $return;
     }
@@ -475,17 +475,17 @@ class Response extends Root
         if(is_object($value))
         $value = Obj::cast($value);
 
-        if(is_string($value) && static::moved($code))
+        if(is_string($value) && self::moved($code))
         {
             $return = true;
 
             if($encode === true)
             $value = Uri::encodeAll($value);
 
-            static::setHeader('Location',$value);
+            self::setHeader('Location',$value);
 
             if($kill === true)
-            static::kill(['redirect',$value,static::movedCode($code)]);
+            self::kill(['redirect',$value,self::movedCode($code)]);
         }
 
         return $return;
@@ -511,10 +511,10 @@ class Response extends Root
         }
 
         if(empty($referer) && $fallback === true)
-        $referer = static::redirectSchemeHost();
+        $referer = self::redirectSchemeHost();
 
         elseif(!empty($referer))
-        $return = static::redirect($referer,$code,$kill,$encode);
+        $return = self::redirect($referer,$code,$kill,$encode);
 
         return $return;
     }
@@ -524,7 +524,7 @@ class Response extends Root
     // redirige vers le scheme host courant
     final public static function redirectSchemeHost($code=true,bool $kill=true,bool $encode=true):bool
     {
-        return static::redirect(Request::schemeHost(),$code,$kill,$encode);
+        return self::redirect(Request::schemeHost(),$code,$kill,$encode);
     }
 
 
@@ -535,7 +535,7 @@ class Response extends Root
     // il est aussi possible de changer le mime ou le basename si la resource est de type phpWritable (via les options de stream)
     final public static function download($value,?array $option=null):bool
     {
-        return static::downloadToScreen('download',$value,$option);
+        return self::downloadToScreen('download',$value,$option);
     }
 
 
@@ -545,7 +545,7 @@ class Response extends Root
     // option kill, length et sleep
     final public static function toScreen($value,?array $option=null):bool
     {
-        return static::downloadToScreen('toScreen',$value,$option);
+        return self::downloadToScreen('toScreen',$value,$option);
     }
 
 
@@ -583,14 +583,14 @@ class Response extends Root
                     {
                         $return = true;
 
-                        static::ok();
-                        static::setsHeader($headers);
+                        self::ok();
+                        self::setsHeader($headers);
 
                         if($meta['kind'] !== 'phpOutput')
                         Res::passthruChunk($option['length'],$value,$option);
 
                         if($option['kill'] === true)
-                        static::kill();
+                        self::kill();
                     }
                 }
             }
@@ -619,7 +619,7 @@ class Response extends Root
     // insensible à la case
     final public static function getHeader(string $key)
     {
-        return Header::get($key,static::headers(false));
+        return Header::get($key,self::headers(false));
     }
 
 
@@ -628,7 +628,7 @@ class Response extends Root
     // insensible à la case
     final public static function getsHeader(array $keys):array
     {
-        return Header::gets($keys,static::headers(false));
+        return Header::gets($keys,self::headers(false));
     }
 
 
@@ -638,7 +638,7 @@ class Response extends Root
     // si parse est 2, la valeur mime est true dans parseContentType
     final public static function contentType(?int $parse=2):?string
     {
-        return Header::contentType(static::headers(false),$parse);
+        return Header::contentType(self::headers(false),$parse);
     }
 
 
@@ -650,7 +650,7 @@ class Response extends Root
     final public static function setHeader(string $key,$value,bool $replace=true):?int
     {
         $return = null;
-        $sets = static::setsHeader([$key=>$value],$replace);
+        $sets = self::setsHeader([$key=>$value],$replace);
 
         if(!empty($sets))
         $return = current($sets);
@@ -667,7 +667,7 @@ class Response extends Root
     {
         $return = null;
 
-        if(!static::areHeadersSent())
+        if(!self::areHeadersSent())
         {
             $return = [];
 
@@ -696,7 +696,7 @@ class Response extends Root
         $return = false;
         $contentType = Header::prepareContentType($value);
 
-        if(!empty($contentType) && static::setHeader('Content-Type',$contentType) === 1)
+        if(!empty($contentType) && self::setHeader('Content-Type',$contentType) === 1)
         $return = true;
 
         return $return;
@@ -710,11 +710,11 @@ class Response extends Root
     {
         $return = null;
 
-        if(!static::areHeadersSent())
+        if(!self::areHeadersSent())
         {
             $return = false;
 
-            if(static::headerExists($key))
+            if(self::headerExists($key))
             {
                 header_remove($key);
                 $return = true;
@@ -732,7 +732,7 @@ class Response extends Root
     {
         $return = null;
 
-        if(!static::areHeadersSent())
+        if(!self::areHeadersSent())
         {
             $return = [];
 
@@ -740,7 +740,7 @@ class Response extends Root
             {
                 $return[$key] = false;
 
-                if(static::headerExists($key))
+                if(self::headerExists($key))
                 {
                     header_remove($key);
                     $return[$key] = true;
@@ -757,7 +757,7 @@ class Response extends Root
     // retourne null si headers sont envoyés
     final public static function emptyHeader():?array
     {
-        return static::unsetsHeader(array_keys(static::headers(true)));
+        return self::unsetsHeader(array_keys(self::headers(true)));
     }
 
 
@@ -768,22 +768,22 @@ class Response extends Root
     final public static function prepare(?array $option=null):array
     {
         $return = [];
-        $option = Arr::plus(static::$config['default'],$option);
+        $option = Arr::plus(self::$config['default'],$option);
         $bufferCallback = null;
 
         // code
         if(is_int($option['code']))
-        $return['code'] = static::setCode($option['code']);
+        $return['code'] = self::setCode($option['code']);
 
         // headers
         if($option['headers'] !== null)
-        $return['headers'] = static::setsHeaderDefault($option['headers']);
+        $return['headers'] = self::setsHeaderDefault($option['headers']);
 
         // headersCallbackSpeed
         if(is_string($option['headersCallbackSpeed']))
         {
             $name = $option['headersCallbackSpeed'];
-            $return['headersCallbackSpeed'] = static::setHeaderCallback(function() use ($name) {
+            $return['headersCallbackSpeed'] = self::setHeaderCallback(function() use ($name) {
                 $speed = Debug::speed();
                 $header = $name.': '.$speed;
                 header($header);
@@ -794,20 +794,20 @@ class Response extends Root
         if(!empty($option['contentType']))
         {
             if(is_string($option['contentType']))
-            $return['setContentType'] = static::setContentType($option['contentType']);
+            $return['setContentType'] = self::setContentType($option['contentType']);
 
             elseif($option['contentType'] === true)
-            $bufferCallback = [static::class,'autoContentType'];
+            $bufferCallback = [self::class,'autoContentType'];
         }
 
         // buffer
         $return['getCleanAllEcho'] = Buffer::getCleanAllEcho($bufferCallback);
 
         // onCloseDownCloseBody
-        static::onCloseDownCloseBody();
+        self::onCloseDownCloseBody();
 
         // onShutDownCloseDown
-        static::onShutDownCloseDown();
+        self::onShutDownCloseDown();
 
         return $return;
     }
@@ -845,13 +845,13 @@ class Response extends Root
     final public static function setsHeaderDefault(?array $option=null):?array
     {
         $return = null;
-        $option = Arr::plus(static::$config['default']['headers'],$option);
+        $option = Arr::plus(self::$config['default']['headers'],$option);
 
         if(!empty($option) && is_array($option))
         {
-            static::emptyHeader();
-            $option = static::prepareHeaderDefault($option);
-            $return = static::setsHeader($option);
+            self::emptyHeader();
+            $option = self::prepareHeaderDefault($option);
+            $return = self::setsHeader($option);
         }
 
         return $return;
@@ -976,7 +976,7 @@ class Response extends Root
     // enregistre une callable à appeler au close down, des arguments peuvent être passés au callable
     final public static function onCloseDown(callable $call,...$args):void
     {
-        static::$config['closeDown'][] = [$call,$args];
+        self::$config['closeDown'][] = [$call,$args];
 
         return;
     }
@@ -987,8 +987,8 @@ class Response extends Root
     // remet on closeBody sur closeDown
     final public static function emptyCloseDown():void
     {
-        static::$config['closeDown'] = [];
-        static::onCloseDownCloseBody();
+        self::$config['closeDown'] = [];
+        self::onCloseDownCloseBody();
 
         return;
     }
@@ -998,7 +998,7 @@ class Response extends Root
     // lance tous les callbacks closeDown dans l'ordre d'ajout
     final public static function closeDown():void
     {
-        static::closeDownBody('closeDown');
+        self::closeDownBody('closeDown');
 
         return;
     }
@@ -1008,7 +1008,7 @@ class Response extends Root
     // sur shutDown lance closeDown
     final public static function onShutDownCloseDown():void
     {
-        static::onShutDown([static::class,'closeDown']);
+        self::onShutDown([self::class,'closeDown']);
 
         return;
     }
@@ -1018,7 +1018,7 @@ class Response extends Root
     // enregistre une callable à appeler au close doc, des arguments peuvent être passés au callable
     final public static function onCloseBody(callable $call,...$args):void
     {
-        static::$config['closeBody'][] = [$call,$args];
+        self::$config['closeBody'][] = [$call,$args];
 
         return;
     }
@@ -1028,7 +1028,7 @@ class Response extends Root
     // vide le tableau des callbacks sur closeBody
     final public static function emptyCloseBody():void
     {
-        static::$config['closeBody'] = [];
+        self::$config['closeBody'] = [];
 
         return;
     }
@@ -1038,7 +1038,7 @@ class Response extends Root
     // lance tous les callbacks closeBody dans l'ordre d'ajout
     final public static function closeBody():void
     {
-        static::closeDownBody('closeBody');
+        self::closeDownBody('closeBody');
 
         return;
     }
@@ -1048,7 +1048,7 @@ class Response extends Root
     // sur closeDown lance closeBody
     final public static function onCloseDownCloseBody():void
     {
-        static::onCloseDown([static::class,'closeBody']);
+        self::onCloseDown([self::class,'closeBody']);
 
         return;
     }
@@ -1058,8 +1058,8 @@ class Response extends Root
     // affiche speed sur closeBody
     final public static function speedOnCloseBody():void
     {
-        static::onCloseBody(function() {
-            if(static::isHtmlOrAuto())
+        self::onCloseBody(function() {
+            if(self::isHtmlOrAuto())
             Debug::var(Debug::speed());
             return;
         });
@@ -1073,7 +1073,7 @@ class Response extends Root
     {
         if(in_array($type,['closeDown','closeBody'],true))
         {
-            foreach (static::$config[$type] as $key => $callback)
+            foreach (self::$config[$type] as $key => $callback)
             {
                 if(is_array($callback) && !empty($callback))
                 {
@@ -1082,7 +1082,7 @@ class Response extends Root
                     $callable(...$args);
                 }
 
-                unset(static::$config[$type][$key]);
+                unset(self::$config[$type][$key]);
             }
         }
 
@@ -1112,12 +1112,12 @@ class Response extends Root
     // est utilisé comme callback pour ob_start
     final public static function autoContentType(string $return):?string
     {
-        $contentType = static::contentType();
+        $contentType = self::contentType();
 
         if(empty($contentType))
         {
-            $autoContentType = static::getAutoContentType($return);
-            static::setContentType($autoContentType);
+            $autoContentType = self::getAutoContentType($return);
+            self::setContentType($autoContentType);
         }
 
         return $return;

@@ -15,6 +15,14 @@ namespace Quid\Base;
 // trait that grants static methods to get or set data within static config
 trait _config
 {
+    // getConfig
+    // permet d'obtenir une valeur de la config de la classe
+    final public static function getConfig($key)
+    {
+        return Arrs::get($key,static::$config);
+    }
+
+
     // config
     // retourne le tableau de config
     // possibilité de faire un merge sur la valeur de retour

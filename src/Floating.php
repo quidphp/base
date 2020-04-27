@@ -13,10 +13,10 @@ namespace Quid\Base;
 
 // floating
 // class with static methods to work with floating numbers
-class Floating extends Root
+final class Floating extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // typecast
@@ -100,21 +100,6 @@ class Floating extends Root
             if(self::isNotEmpty($value))
             $return = true;
         }
-
-        return $return;
-    }
-
-
-    // fromString
-    // permet de cast une valeur string en gardant seulement ces caractères numériques
-    final public static function fromString(string $value):?float
-    {
-        $return = null;
-        $value = Str::keepNumeric($value);
-        $value = static::cast($value);
-
-        if(is_float($value))
-        $return = $value;
 
         return $return;
     }
