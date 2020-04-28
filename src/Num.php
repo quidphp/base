@@ -36,12 +36,12 @@ final class Num extends Root
 
 
     // typecast
-    // typecasts des valeurs par référence
+    // typecasts des valeurs par référence, utilise castMore donc les float sont cast
     final public static function typecast(&...$values):void
     {
         foreach ($values as &$value)
         {
-            $value = self::cast($value);
+            $value = self::castMore($value);
         }
 
         return;
@@ -50,19 +50,26 @@ final class Num extends Root
 
     // cast
     // retourne la valeur dans le type (int ou float) si celle ci est numérique
-    // extra permet de remplacer la virgule par un décimal et aussi de forcer le cast des chaînes numériques commençant par zéro
-    final public static function cast($value,bool $extra=true)
+    // castFloat permet de remplacer la virgule par un décimal et de cast les float, castFloat est false par défaut car risqué
+    final public static function cast($value,bool $more=false,bool $commaToDecimal=false,bool $cleanDecimal=true)
     {
         $return = null;
 
-        if(is_scalar($value))
+        if(is_int($value))
+        $return = $value;
+
+        elseif(is_scalar($value))
         {
             $return = $value;
             $string = Str::cast($value);
 
             // commaToDecimal
-            if($extra === true)
+            if($commaToDecimal === true)
             $string = Str::commaToDecimal($string);
+
+            // cleanDecimal
+            if($cleanDecimal === true)
+            $string = Str::cleanDecimal($string);
 
             if(is_numeric($string))
             {
@@ -76,7 +83,7 @@ final class Num extends Root
                 $return = $string;
 
                 // si premier caractère est zéro, contient plus d'un caractère et extra est false
-                elseif($hasDot === false && $extra === false && $stringLength > 1 && $string[0] === '0')
+                elseif($hasDot === false && $more === false && $stringLength > 1 && $string[0] === '0')
                 $return = $string;
 
                 // si valeur égale à int
@@ -85,11 +92,19 @@ final class Num extends Root
 
                 // si valeur égale à int
                 elseif($float == $string)
-                $return = $float;
+                $return = ($more === true || is_float($value))? $float:$string;
             }
         }
 
         return $return;
+    }
+
+
+    // castMore
+    // comme cast mais castFloat est true
+    final public static function castMore($value,bool $commaToDecimal=true,?bool $cleanDecimal=true)
+    {
+        return static::cast($value,true,$commaToDecimal,$cleanDecimal);
     }
 
 

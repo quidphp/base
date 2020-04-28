@@ -27,16 +27,13 @@ final class Ini extends Root
             'error_reporting'=>-1,
             'date.timezone'=>'America/New_York'],
         'important'=>[ // ini considéré importante
-            'opcache.enable',
-            'always_populate_raw_post_data',
-            'register_argc_argv',
-            'request_order',
-            'variables_order',
-            'auto_detect_line_endings',
+            'error_log',
+            'mail.log',
+            'browscap',
+            'date.timezone',
+            'default_charset',
             'display_startup_errors',
             'display_errors',
-            'error_log',
-            'default_charset',
             'html_errors',
             'error_reporting',
             'memory_limit',
@@ -47,16 +44,22 @@ final class Ini extends Root
             'session.gc_maxlifetime',
             'precision',
             'mysql.default_socket',
-            'date.timezone',
+            'always_populate_raw_post_data',
+            'register_argc_argv',
+            'request_order',
+            'variables_order',
+            'auto_detect_line_endings',
             'allow_url_fopen',
             'allow_url_include',
-            'mail.log',
-            'browscap',
+            'zend.assertions',
+            'zend.exception_ignore_args',
+            'opcache.enable',
+            'opcache.revalidate_freq',
+            'apc.enabled',
             'xdebug.remote_enable',
             'xdebug.coverage_enable',
             'xdebug.profiler_enable',
-            'xdebug.overload_var_dump',
-            'apc.enabled']
+            'xdebug.overload_var_dump']
     ];
 
 
@@ -87,7 +90,7 @@ final class Ini extends Root
 
         if(is_string($get))
         {
-            $return = Scalar::cast($get,1,2);
+            $return = Scalar::cast($get,2,2);
 
             if(is_string($return) && is_int($format))
             {

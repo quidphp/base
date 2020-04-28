@@ -847,6 +847,11 @@ class Str extends Base\Test
         assert('1,3' === Base\Str::decimalToComma('1.3'));
         assert('1,3' === Base\Str::decimalToComma('1,3'));
 
+        // cleanDecimal
+        assert(Base\Str::cleanDecimal('1.2') === '1.2');
+        assert(Base\Str::cleanDecimal('1.2000') === '1.2');
+        assert(Base\Str::cleanDecimal('1.200000000010') === '1.20000000001');
+
         // similar
         assert(Base\Str::similar('testlavie','testLavie') === (float) 100);
         assert(Base\Str::similar('tÉstlavie','téstlavie') === (float) 100);

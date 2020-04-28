@@ -117,7 +117,7 @@ class Server extends Base\Test
         assert(PHP_VERSION !== Base\Server::phpVersion('DOM'));
 
         // phpImportantIni
-        assert(count(Base\Server::phpImportantIni()) === 30);
+        assert(count(Base\Server::phpImportantIni()) === 33);
 
         // phpImportantExtension
         assert(count(Base\Server::phpImportantExtension()) === 3);

@@ -34,14 +34,11 @@ final class Floating extends Root
 
     // cast
     // cast une valeur en float, utilise num::cast
-    final public static function cast($value,bool $extra=true):?float
+    final public static function cast($value,bool $commaToDecimal=true):?float
     {
-        $return = null;
-        $value = Num::cast($value,$extra);
-        if(is_numeric($value))
-        $return = (float) $value;
+        $float = Num::castMore($value,$commaToDecimal);
 
-        return $return;
+        return (is_numeric($float))? (float) $float:null;
     }
 
 

@@ -24,7 +24,7 @@ class Scalar extends Base\Test
         $x = '1.1';
         Base\Scalar::typecast($y,$x);
         assert($y === 'true');
-        assert($x === 1.1);
+        assert($x === '1.1');
 
         // typecastMore
         $array = [true,'true','null',1.2,'3.5','4,8'];
@@ -38,7 +38,7 @@ class Scalar extends Base\Test
         assert(true === Base\Scalar::cast('true',1,1));
         assert('true' === Base\Scalar::cast('true'));
         assert(true === Base\Scalar::cast(true));
-        assert(1.5 === Base\Scalar::cast('1.5'));
+        assert('1.5' === Base\Scalar::cast('1.5'));
         assert(Base\Scalar::cast('000111') === '000111');
 
         // castMore

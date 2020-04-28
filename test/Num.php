@@ -27,11 +27,11 @@ class Num extends Base\Test
         assert($b === 'string');
 
         // cast
-        assert(Base\Num::cast('000000') === 0);
-        assert(Base\Num::cast('000111') === 111);
+        assert(Base\Num::cast('000000') === '000000');
         assert(Base\Num::cast('000000',false) === '000000');
         assert(Base\Num::cast('000111',false) === '000111');
-        assert((float) '1.22323321213321222' === Base\Num::cast('1.22323321213321222'));
+        assert('1.22323321213321222' === Base\Num::cast('1.22323321213321222'));
+        assert((float) '1.22323321213321222' === Base\Num::cast('1.22323321213321222',true));
         assert(null === Base\Num::cast([]));
         assert((int) '2' === Base\Num::cast('2'));
         assert((int) true === Base\Num::cast(true));
@@ -39,14 +39,13 @@ class Num extends Base\Test
         assert(0 === Base\Num::cast(false));
         assert(2 === Base\Num::cast(2.0));
         assert('22323321213321222' === Base\Num::cast('22323321213321222'));
-        assert('22323321213321222' === Base\Num::cast(22323321213321222));
-        assert((float) '2.1' === Base\Num::cast('2.1'));
+        assert(22323321213321222 === Base\Num::cast(22323321213321222));
+        assert((float) '2.1' === Base\Num::cast('2.1',true));
         assert((float) '2.1' === Base\Num::cast(2.1));
-        assert((float) '0.1' === Base\Num::cast('0.1'));
-        assert((float) '-0.1' === Base\Num::cast('-0.1'));
+        assert('0.1' === Base\Num::cast('0.1'));
+        assert('-0.1' === Base\Num::cast('-0.1'));
         assert((float) '-0.1' === Base\Num::cast(-0.1));
-        assert(-0.1 === Base\Num::cast('-0,1'));
-        assert('-0,1' === Base\Num::cast('-0,1',false));
+        assert('-0,1' === Base\Num::cast('-0,1'));
         assert((int) 0 === Base\Num::cast('0'));
         assert((int) 0 === Base\Num::cast(0));
         assert('aaaa0' === Base\Num::cast('aaaa0'));
@@ -57,8 +56,22 @@ class Num extends Base\Test
         assert(0 === Base\Num::cast(false));
         assert(null === Base\Num::cast(null));
         assert(Base\Num::cast('30MB') === '30MB');
-        assert(Base\Num::cast('0.02316447') === 0.02316447);
-        assert(Base\Num::cast('0.02316447',false) === 0.02316447);
+        assert(Base\Num::cast('0.02316447') === '0.02316447');
+        assert(Base\Num::cast('0.02316447',false) === '0.02316447');
+        assert(Base\Num::cast('0.02316447',true) === 0.02316447);
+        assert(Base\Num::cast('0.100000200000',true) === 0.1000002);
+        assert(Base\Num::cast('0.10000000000000200000000',true) === 0.100000000000002);
+        assert(Base\Num::cast('0.10000000000000200000000',false) === '0.100000000000002');
+        assert(Base\Num::cast('0.77207400',true) === 0.772074);
+
+        // castMore
+        assert(Base\Num::castMore('000000') === 0);
+        assert(Base\Num::castMore('000111') === 111);
+        assert((float) '0.1' === Base\Num::castMore('0.1'));
+        assert((float) '-0.1' === Base\Num::castMore('-0.1'));
+        assert((float) '-0.1' === Base\Num::castMore('-0.1'));
+        assert(-0.1 === Base\Num::castMore('-0,1'));
+        assert(Base\Num::castMore('0.02316447') === 0.02316447);
 
         // is
         assert(Base\Num::is('2'));

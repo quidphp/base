@@ -59,8 +59,9 @@ final class Scalar extends Root
             // numberCast
             if(!is_bool($value) && $numberCast > 0)
             {
-                $extra = ($numberCast === 2);
-                $value = Num::cast($value,$extra);
+                $castFloat = ($numberCast >= 2);
+                $commaToDecimal = ($numberCast >= 3);
+                $value = Num::cast($value,$castFloat,$commaToDecimal);
             }
 
             // boolCast
@@ -84,7 +85,7 @@ final class Scalar extends Root
     // nombre sont convertis, virgule remplacer par décimal, et les string booleans sont transformés en bool
     final public static function castMore($value)
     {
-        return self::cast($value,2,1);
+        return self::cast($value,3,1);
     }
 
 

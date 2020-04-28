@@ -422,7 +422,7 @@ final class Str extends Root
         $value = self::keepNum($value,$keep);
 
         if(strlen($value))
-        $return = Num::cast($value,true);
+        $return = Num::castMore($value);
 
         return $return;
     }
@@ -2242,6 +2242,14 @@ final class Str extends Root
     final public static function decimalToComma(string $value):string
     {
         return str_replace('.',',',$value);
+    }
+
+
+    // cleanDecimal
+    // méthode qui permet d'enlever les décimals superflus dans une string (pas un float)
+    final public static function cleanDecimal(string $value,string $decimal='.'):string
+    {
+        return (strpos($value,$decimal) !== false)? rtrim(rtrim($value,'0'),$decimal):$value;
     }
 
 

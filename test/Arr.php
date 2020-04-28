@@ -35,14 +35,14 @@ class Arr extends Base\Test
         $obj2 = new \DateTime('now');
 
         // cast
-        assert([1,1.2,'1,3',12345678901,'true','false','null',null] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null]));
+        assert([1,'1.2','1,3',12345678901,'true','false','null',null] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null]));
         assert([1,'true','false','NULL',null] === Base\Arr::cast(['1','true','false','NULL',null]));
         assert(['1','true','false','NULL',null] === Base\Arr::cast(['1','true','false','NULL',null],0));
-        assert([1,1.2,'1,3',12345678901,true,false,null,null] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null],1,1));
-        assert(['000111',1,1.2,'12345678901123123',true,false,null,null] === Base\Arr::cast(['000111','1','1.2','12345678901123123','true','false','null',null],1,1));
-        assert([1,1.2,1.3,12345678901,true,false,null,null] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null],2,1));
-        assert([1,1.2,1.3,12345678901,true,false,null,null,true,false] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null,'on','off'],2,2));
-        assert(Base\Arr::cast(['0.02316447']) === [0.02316447]);
+        assert([1,1.2,1.3,12345678901,true,false,null,null] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null],3,1));
+        assert(['000111',1,'1.2','12345678901123123',true,false,null,null] === Base\Arr::cast(['000111','1','1.2','12345678901123123','true','false','null',null],1,1));
+        assert([1,1.2,'1,3',12345678901,true,false,null,null] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null],2,1));
+        assert([1,1.2,1.3,12345678901,true,false,null,null,true,false] === Base\Arr::cast(['1','1.2','1,3','12345678901','true','false','null',null,'on','off'],3,2));
+        assert(Base\Arr::cast(['0.02316447'],2) === [0.02316447]);
 
         // castMore
         assert([111,1,1.2,1.3,12345678901,true,false,null,null] === Base\Arr::castMore(['000111','1','1.2','1,3','12345678901','true','false','null',null]));

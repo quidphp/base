@@ -34,14 +34,11 @@ final class Integer extends Root
 
     // cast
     // cast une valeur en int, utilise num::cast
-    final public static function cast($value,bool $extra=true):?int
+    final public static function cast($value,bool $commaToDecimal=true):?int
     {
-        $return = null;
-        $value = Num::cast($value,$extra);
-        if(is_numeric($value))
-        $return = (int) $value;
+        $numeric = Num::castMore($value,$commaToDecimal);
 
-        return $return;
+        return (is_numeric($numeric))? (int) $numeric:null;
     }
 
 
