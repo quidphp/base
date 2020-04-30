@@ -432,29 +432,5 @@ final class Crypt extends Root
 
         return $return;
     }
-
-
-    // onSetSerialize
-    // helper pour une méthode onSet de colonne
-    // serialize si array ou objet
-    final public static function onSetSerialize($return)
-    {
-        if(is_array($return) || is_object($return))
-        $return = self::serialize($return);
-
-        return $return;
-    }
-
-
-    // onGetSerialize
-    // helper pour une méthode onGet de colonne
-    // déserialize si string
-    final public static function onGetSerialize($return)
-    {
-        if(is_string($return))
-        $return = self::unserialize($return);
-
-        return $return;
-    }
 }
 ?>

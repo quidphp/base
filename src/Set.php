@@ -639,29 +639,5 @@ class Set extends Root
     {
         return Str::wrapEnd(static::getSeparator(),$set,static::getSensitive());
     }
-
-
-    // onSet
-    // helper pour une méthode onSet de colonne
-    // fait un set si array
-    final public static function onSet($return)
-    {
-        if(is_array($return))
-        $return = static::str($return);
-
-        return $return;
-    }
-
-
-    // onGet
-    // helper pour une méthode onGet de colonne
-    // explose le set si scalar, utilise option cast
-    final public static function onGet($return)
-    {
-        if(is_scalar($return))
-        $return = static::arr($return,['cast'=>true]);
-
-        return $return;
-    }
 }
 ?>

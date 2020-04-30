@@ -2428,30 +2428,6 @@ final class Datetime extends Root
 
         return $return;
     }
-
-
-    // onSet
-    // helper pour une méthode onSet de colonne
-    // transforme une int en format de date
-    final public static function onSet($return,$format=true)
-    {
-        if(is_string($return))
-        $return = self::time($return,$format);
-
-        return $return;
-    }
-
-
-    // onGet
-    // helper pour une méthode onGet de colonne
-    // envoie en format de date par défaut si int
-    final public static function onGet($return,$format=true)
-    {
-        if(is_int($return))
-        $return = self::format($format,$return);
-
-        return $return;
-    }
 }
 
 // init

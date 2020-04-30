@@ -45,6 +45,7 @@ final class Html extends Root
         'multi'=>'[]', // caractère pour nom multi
         'separator'=>"\n", // caractère séparateur new line
         'genuine'=>'-genuine-', // nom pour l'input genuine
+        'timestamp'=>'-timestamp-', // nom pour l'input timestamp
         'randomNameWrap'=>'-', // caractère utilisé pour wrapper un name qui est true
         'bool'=>[ // relation bool
             0=>[
@@ -162,6 +163,7 @@ final class Html extends Root
                     'attr'=>['uri'=>[]],
                     'csrf'=>['get'=>false,'post'=>true],
                     'genuine'=>['get'=>false,'post'=>true],
+                    'timestamp'=>['get'=>false,'post'=>true],
                     'enctype'=>['get'=>null,'post'=>'multipart/form-data']]],
             'button'=>[
                 'attrCallable'=>[self::class,'buttonAttr'],
@@ -1829,18 +1831,11 @@ final class Html extends Root
     // formValue
     // note: form n'a pas de valeur ajoutable via formOpen -> ca va dans action
     // fonction de callback pour la valeur de la tag form
-    // csrf et genuine s'ajoute automatiquement si true ou via la méthode
+    // csrf, genuine et timestamp s'ajoute automatiquement si true ou via la méthode
     final protected static function formValue($return,array $attr,array $option):string
     {
         $return = '';
         $method = $attr['method'];
-
-        // genuine
-        if(!empty($option['genuine']))
-        {
-            if($option['genuine'] === true || (is_array($option['genuine']) && !empty($option['genuine'][$method])))
-            $return .= self::genuine();
-        }
 
         // csrf
         if(!empty($option['csrf']))
@@ -1850,6 +1845,20 @@ final class Html extends Root
                 $csrf = Session::csrf();
                 $return .= self::csrf($csrf);
             }
+        }
+
+        // genuine
+        if(!empty($option['genuine']))
+        {
+            if($option['genuine'] === true || (is_array($option['genuine']) && !empty($option['genuine'][$method])))
+            $return .= self::genuine();
+        }
+
+        // timestamp
+        if(!empty($option['timestamp']))
+        {
+            if($option['timestamp'] === true || (is_array($option['timestamp']) && !empty($option['timestamp'][$method])))
+            $return .= self::timestamp();
         }
 
         return $return;
@@ -2380,7 +2389,7 @@ final class Html extends Root
 
     // formOpen
     // ouvre un tag form
-    // note: pas de valeur, mais csrf et genuine peuvent s'ajouter automatiquement à la valeur si les options sont activés
+    // note: pas de valeur, mais csrf, genuine et timestamp peuvent s'ajouter automatiquement à la valeur si les options sont activés
     final public static function formOpen($action=null,$attr=null,?array $option=null):string
     {
         return self::start('form',null,Arr::plus(self::getAttrScalar('form',$attr),['action'=>$action]),$option);
@@ -2917,6 +2926,33 @@ final class Html extends Root
         $return .= $value.'-';
 
         return $return;
+    }
+
+
+    // timestamp
+    // génère un tag input hidden de type timestamp
+    final public static function timestamp(string $type='hidden',?array $option=null):string
+    {
+        $return = '';
+        $timestamp = self::getTimestampName();
+
+        if(!empty($timestamp))
+        {
+            $value = Datetime::now();
+            $attr['name'] = $timestamp;
+            $attr['data-timestamp'] = true;
+            $return = self::input($type,$value,$attr,$option);
+        }
+
+        return $return;
+    }
+
+
+    // getTimestampName
+    // retourne le nom pour l'input timestamp
+    final public static function getTimestampName():string
+    {
+        return self::$config['timestamp'];
     }
 
 

@@ -401,5 +401,13 @@ final class Cli extends Root
 
         return $return;
     }
+
+
+    // outputMethod
+    // retourne la méthode de output cli à utiliser selon une valeur bool ou null
+    final public static function outputMethod(?bool $value):string
+    {
+        return (is_bool($value))? (($value === true) ? 'pos':'neg'):'neutral';
+    }
 }
 ?>

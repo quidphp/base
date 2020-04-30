@@ -103,6 +103,11 @@ class Cli extends Base\Test
 
         // inLine
 
+        // outputMethod
+        assert(Base\Cli::outputMethod(true) === 'pos');
+        assert(Base\Cli::outputMethod(false) === 'neg');
+        assert(Base\Cli::outputMethod(null) === 'neutral');
+
         return true;
     }
 }

@@ -134,10 +134,6 @@ class Crypt extends Base\Test
         assert(Base\Obj::isIncomplete(Base\Crypt::unserialize($x,false)));
         assert(Base\Crypt::unserialize($x,['DateTime']) instanceof \DateTime);
 
-        // onSetSerialize
-
-        // onGetSerialize
-
         return true;
     }
 }

@@ -91,13 +91,6 @@ class Json extends Base\Test
         // arr
         assert(Base\Json::arr(Base\Json::encode([1,'tet'=>2,3])) === [1,'tet'=>2,3]);
 
-        // onSet
-        assert(Base\Json::onSet([1,2,3]) === '[1,2,3]');
-
-        // onGet
-        assert(Base\Json::onGet([1,2,3]) === [1,2,3]);
-        assert(Base\Json::onGet('[1,2,3]') === [1,2,3]);
-
         // other
         assert(Base\Json::count('1') === 0);
         assert(1 === Base\Json::count('{"test":["👦🏼👦🏼👦","http://google.com"]}'));

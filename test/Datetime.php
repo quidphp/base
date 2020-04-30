@@ -718,13 +718,6 @@ class Datetime extends Base\Test
         assert(count(Base\Datetime::yearsDefault(-100,0,null,'sql')) === 101);
         assert(count(Base\Datetime::yearsDefault()) === 131);
 
-        // onSet
-        assert(Base\Datetime::onSet('12-3-2017','d-m-Y') === 1489294800);
-        assert(Base\Datetime::onSet(1489294800,'d-m-Y') === 1489294800);
-
-        // onGet
-        assert(is_string(Base\Datetime::onGet(time())));
-
         return true;
     }
 }

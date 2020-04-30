@@ -243,14 +243,6 @@ class Set extends Base\Test
         assert(',test,' === Base\Set::wrapEnd(',test'));
         assert(',test,' === Base\Set::wrapEnd(',test'));
 
-        // onSet
-        assert(Base\Set::onSet('lala,2,3') === 'lala,2,3');
-        assert(Base\Set::onSet(['test','3',3]) === 'test,3,3');
-
-        // onGet
-        assert(Base\Set::onGet('lala,2,3') === ['lala',2,3]);
-        assert(Base\Set::onGet(['test',2,3]) === ['test',2,3]);
-
         // option
         assert(count(Base\Set::option()) === 11);
 

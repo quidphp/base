@@ -309,8 +309,8 @@ class Html extends Base\Test
         assert(Base\Html::divtableClose() === '</div></div></div>');
         assert(Base\Html::divtable('CENTERTHIS') === "<div class='table'><div class='table-row'><div class='table-cell'>CENTERTHIS</div></div></div>");
         assert(Base\Html::divele('OKÉ') === "<div class='element'>OKÉ</div>");
-        assert(Base\Html::form('james.php',['method'=>'get'],['csrf'=>false,'genuine'=>false]) === "<form action='/james.php' method='get'></form>");
-        assert(Base\Html::form('james.php',['method'=>'post'],['csrf'=>false,'genuine'=>false]) === "<form action='/james.php' method='post' enctype='multipart/form-data'></form>");
+        assert(Base\Html::form('james.php',['method'=>'get'],['csrf'=>false,'genuine'=>false,'timestamp'=>false]) === "<form action='/james.php' method='get'></form>");
+        assert(Base\Html::form('james.php',['method'=>'post'],['csrf'=>false,'genuine'=>false,'timestamp'=>false]) === "<form action='/james.php' method='post' enctype='multipart/form-data'></form>");
         assert(Base\Html::inputText('tést','namé') === "<input name='namé' type='text' maxlength='255' value='tést'/>");
         assert(Base\Html::inputEmail('tést',['name'=>'namé','placeholder'=>'jamés','maxlength'=>200]) === "<input name='namé' placeholder='jamés' maxlength='200' type='email' value='tést'/>");
         assert(Base\Html::inputEmail('tést',['name'=>'namé','placeholder'=>'jamés','maxlength'=>2000]) === "<input name='namé' placeholder='jamés' maxlength='2000' type='email' value='tést'/>");
@@ -443,12 +443,12 @@ class Html extends Base\Test
         assert(Base\Html::make('script',null,null,['src'=>'/path/jquery.js']) === "<script src='/path/jquery.js'></script>");
         assert(Base\Html::make('img','/testé-l.img') === "<img alt='teste-l' src='/test%C3%A9-l.img'/>");
         assert(Base\Html::make('a','/test/laa.php') === "<a href='/test/laa.php' class='selected'></a>");
-        assert(Base\Html::make('form','/form/to',null,['csrf'=>false,'genuine'=>false]) === "<form action='/form/to' method='post' enctype='multipart/form-data'></form>");
+        assert(Base\Html::make('form','/form/to',null,['csrf'=>false,'genuine'=>false,'timestamp'=>false]) === "<form action='/form/to' method='post' enctype='multipart/form-data'></form>");
         assert(Base\Html::make('A','/test/laa.php') === "<a href='/test/laa.php' class='selected'></a>");
 
         // makes
         assert(Base\Html::makes([['div','a'],'/test/laa.php'],[['span','b'],'test']) === "<div><a href='/test/laa.php' class='selected'></a></div><span><b>test</b></span>");
-        assert(Base\Html::makes(['a','/test/laa.php'],['form','/form/to',null,['csrf'=>false,'genuine'=>false]]) === "<a href='/test/laa.php' class='selected'></a><form action='/form/to' method='post' enctype='multipart/form-data'></form>");
+        assert(Base\Html::makes(['a','/test/laa.php'],['form','/form/to',null,['csrf'=>false,'genuine'=>false,'timestamp'=>false]]) === "<a href='/test/laa.php' class='selected'></a><form action='/form/to' method='post' enctype='multipart/form-data'></form>");
         assert(Base\Html::makes('div','span','b') === '<div></div><span></span><b></b>');
 
         // open
@@ -745,7 +745,7 @@ class Html extends Base\Test
         assert(Base\Html::tableSameCount([[1,2,3]],[[1,2,3]]));
 
         // formOpen
-        assert(Base\Html::formOpen('test.php',true,['genuine'=>false,'csrf'=>false]) === "<form action='/test.php' method='post' enctype='multipart/form-data'>");
+        assert(Base\Html::formOpen('test.php',true,['genuine'=>false,'timestamp'=>false,'csrf'=>false]) === "<form action='/test.php' method='post' enctype='multipart/form-data'>");
         assert(Base\Html::formClose() === '</form>');
         assert(Base\Html::formOpen('test.php','get') === "<form action='/test.php' method='get'>");
 
@@ -896,6 +896,12 @@ class Html extends Base\Test
         // getGenuineName
         assert(Base\Html::getGenuineName() === '-genuine-');
         assert(Base\Html::getGenuineName(2) === '-genuine-2-');
+
+        // timestamp
+        assert(strlen(Base\Html::timestamp()) === 79);
+
+        // getTimestampName
+        assert(Base\Html::getTimestampName() === '-timestamp-');
 
         // wrap
         assert(Base\Html::wrap('divele','tést') === "<div class='element'>tést</div>");

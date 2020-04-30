@@ -216,30 +216,6 @@ final class Json extends Assoc
 
         return $return;
     }
-
-
-    // onSet
-    // helper pour une méthode onSet de colonne
-    // encode en json si array ou objet
-    final public static function onSet($return)
-    {
-        if(is_array($return) || is_object($return))
-        $return = self::encode($return);
-
-        return $return;
-    }
-
-
-    // onGet
-    // helper pour une méthode onGet de colonne
-    // décode de json si scalar
-    final public static function onGet($return)
-    {
-        if(is_scalar($return))
-        $return = self::decode($return);
-
-        return $return;
-    }
 }
 
 // init
