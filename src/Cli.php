@@ -361,6 +361,84 @@ final class Cli extends Root
     }
 
 
+    // write
+    // permet d'écrire une valeur au cli
+    // si c'est un tableau unidimensionnel, la valeur sera implode avec différents séparateurs et la date sera ajouté au début
+    final public static function write(string $method,$data,$separator=', ',?array $option=null):void
+    {
+        $option = Arr::plus(['timeSeparator'=>'|','firstSeparator'=>':','dateFormat'=>'sql'],$option);
+        $time = Datetime::format($option['dateFormat']);
+
+        if(is_string($data) && is_string($separator))
+        $data = [$data];
+
+        if(is_array($data))
+        $data = Arr::clean($data);
+
+        if(is_array($data) && Arr::isUni($data) && is_string($separator))
+        {
+            $first = array_shift($data);
+            $data = implode($separator,$data);
+            $value = $time;
+
+            if(is_scalar($first))
+            {
+                $value .= ' '.$option['timeSeparator'].' ';
+                $value .= $first;
+
+                if(strlen($data))
+                {
+                    $value .= $option['firstSeparator'].' ';
+                    $value .= $data;
+                }
+            }
+        }
+
+        else
+        $value = $data;
+
+        self::$method($value);
+
+        return;
+    }
+
+
+    // beep
+    // permet d'émettre un beep à la console
+    final public static function beep($amount=null):void
+    {
+        if(!is_int($amount))
+        $amount = 1;
+
+        while ($amount > 0)
+        {
+            echo "\x07";
+            $amount--;
+        }
+
+        return;
+    }
+
+
+    // say
+    // permet de dire quelque chose dans la console
+    final public static function say($value,?string $voice=null):void
+    {
+        if(is_scalar($value))
+        {
+            $value = (string) $value;
+            $cmd = 'say ';
+            if(!empty($voice))
+            $cmd .= '-v '.$voice.' ';
+            $cmd .= "'$value'";
+
+            exec($cmd);
+        }
+
+        return;
+    }
+
+
     // setHtmlOverload
     // active ou désactive le overload du html
     final public static function setHtmlOverload(bool $value):void

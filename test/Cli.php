@@ -97,6 +97,12 @@ class Cli extends Base\Test
         assert(Base\Cli::getStyle('blackz') === null);
         assert(Base\Cli::getStyle('bold',1) === ['font-weight'=>'bold']);
 
+        // write
+
+        // beep
+
+        // say
+
         // setHtmlOverload
 
         // in

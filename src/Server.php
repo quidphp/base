@@ -783,7 +783,7 @@ final class Server extends Root
 
     // info
     // génère un tableau d'information complet sur le serveur courant
-    final public static function info():array
+    final public static function info(bool $extra=true):array
     {
         $return = [];
         $return['quid'] = self::quidVersion();
@@ -808,10 +808,14 @@ final class Server extends Root
         $return['resourceUsage'] = self::resourceUsage();
         $return['memory'] = self::memory();
         $return['diskSpace'] = self::diskSpace();
-        $return['phpImportantIni'] = self::phpImportantIni();
-        $return['superglobal'] = self::superglobal();
-        $return['ini'] = Ini::important();
-        $return['extension'] = Extension::important(true);
+
+        if($extra === true)
+        {
+            $return['phpImportantIni'] = self::phpImportantIni();
+            $return['superglobal'] = self::superglobal();
+            $return['ini'] = Ini::important();
+            $return['extension'] = Extension::important(true);
+        }
 
         return $return;
     }

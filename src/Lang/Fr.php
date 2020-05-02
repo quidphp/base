@@ -91,7 +91,8 @@ class Fr extends Base\Config
             'placeholder'=>[
                 'dateToDay'=>'JJ-MM-AAAA',
                 'dateToMinute'=>'JJ-MM-AAAA HH:MM',
-                'dateToSecond'=>'JJ-MM-AAAA HH:MM:SS'
+                'dateToSecond'=>'JJ-MM-AAAA HH:MM:SS',
+                'sql'=>'YYYY-MM-DD HH:MM:SS'
             ],
 
             // str

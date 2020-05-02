@@ -903,6 +903,14 @@ final class Datetime extends Root
     }
 
 
+    // dateToSecond
+    // formatte une date au format dateToSecond
+    final public static function dateToSecond($value=null,$timezone=null,$format=null):?string
+    {
+        return self::format(['dateToSecond',$timezone],self::time($value,$format));
+    }
+
+
     // compact
     // formatte une date au format compact
     final public static function compact($value=null,$timezone=null,$format=null):?string

@@ -245,7 +245,8 @@ class Datetime extends Base\Test
         assert(Base\Datetime::formatReplace('1 %2% 2017',['%'=>['2'=>'octobre']]) === '1 octobre 2017');
 
         // getPlaceholders
-        assert(count(Base\Datetime::getPlaceholders('fr')) === 3);
+        assert(count(Base\Datetime::getPlaceholders('fr')) === 4);
+        assert(count(Base\Datetime::getPlaceholders('en')) === 4);
 
         // placeholder
         assert(Base\Datetime::placeholder('dateToDay') === 'MM-DD-YYYY');
@@ -269,6 +270,9 @@ class Datetime extends Base\Test
         assert(Base\Datetime::sql($timestamp) === '2017-12-01 09:40:42');
         assert(Base\Datetime::sql($timestamp,true) === '2017-12-01 14:40:42');
         assert(Base\Datetime::sql($timestamp,'Europe/Prague') === '2017-12-01 15:40:42');
+
+        // dateToSecond
+        assert(Base\Datetime::dateToSecond($timestamp) === '12-01-2017 09:40:42');
 
         // compact
         assert(Base\Datetime::compact($timestamp) === '20171201094042');

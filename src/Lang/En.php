@@ -91,7 +91,8 @@ class En extends Base\Config
             'placeholder'=>[
                 'dateToDay'=>'MM-DD-YYYY',
                 'dateToMinute'=>'MM-DD-YYYY HH:MM',
-                'dateToSecond'=>'MM-DD-YYYY HH:MM:SS'
+                'dateToSecond'=>'MM-DD-YYYY HH:MM:SS',
+                'sql'=>'YYYY-MM-DD HH:MM:SS'
             ],
 
             // str
