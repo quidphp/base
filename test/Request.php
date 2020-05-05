@@ -310,9 +310,10 @@ class Request extends Base\Test
         assert($_GET === []);
 
         // setArgv
-        Base\Request::setArgv(['james','--james=2','--ok=2','--lol','-what']);
-        assert(Base\Request::query() === 'james=2&ok=2&lol=');
-        assert($_GET['lol'] === '');
+        Base\Request::setArgv(['james','--james=true','--ok=2','--lol=false','-what']);
+        assert(Base\Request::get() === ['james'=>'true','ok'=>2,'lol'=>'false']);
+        assert(Base\Request::query() === 'james=true&ok=2&lol=false');
+        assert($_GET['lol'] === 'false');
         Base\Request::removeQuery();
 
         // fragment

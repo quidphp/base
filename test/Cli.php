@@ -30,13 +30,7 @@ class Cli extends Base\Test
         // isHtmlOverload
         assert(is_bool(Base\Cli::isHtmlOverload()));
 
-        // isInLine
-
-        // parseLongOptions
-        assert(Base\Cli::parseLongOptions('--james2=2','--lol','--james2=3','lo') === ['james2'=>3,'lol'=>'']);
-        assert(Base\Cli::parseLongOptions('--','--z','--=','--é;é=4') === ['z'=>'','é;é'=>4]);
-        assert(Base\Cli::parseLongOptions('--==3') === []);
-        assert(Base\Cli::parseLongOptions('--=3') === []);
+        // isStdinLine
 
         // callStatic
         assert(Base\Cli::getPos('test') === $escape.'[0;32m[1m[40mtest[0m'.$eol);
@@ -103,16 +97,31 @@ class Cli extends Base\Test
 
         // say
 
-        // setHtmlOverload
+        // stdin
 
-        // in
+        // stdinLine
 
-        // inLine
+        // parseOpt
+        assert(Base\Cli::parseOpt('--ok = On','--james','--james2 = Off') === ['ok'=>'On','james'=>1,'james2'=>'Off']);
+        assert(Base\Cli::parseOpt('--ok=On','--james','--james2=Off') === ['ok'=>'On','james'=>1,'james2'=>'Off']);
+        assert(Base\Cli::parseOpt('--james2=2','--lol','--james2=3','lo') === ['james2'=>3,'lol'=>1]);
+        assert(Base\Cli::parseOpt('--','--z','--=','--é;é=4') === ['z'=>1,'é;é'=>4]);
+        assert(Base\Cli::parseOpt('--==3') === []);
+        assert(Base\Cli::parseOpt('--=3') === []);
+
+        // parseCmd
+        assert(Base\Cli::parseCmd('->buy-now --james=2 --ok=true') === ['cmd'=>'buy-now','opt'=>['james'=>2,'ok'=>'true']]);
+        assert(Base\Cli::parseCmd('->buy-now') === ['cmd'=>'buy-now','opt'=>[]]);
+        assert(Base\Cli::parseCmd('-> buy-now') === ['cmd'=>'buy-now','opt'=>[]]);
+        assert(Base\Cli::parseCmd('->james  --ok  --well=false') === ['cmd'=>'james','opt'=>['ok'=>1,'well'=>'false']]);
+        assert(Base\Cli::parseCmd('--ok=2') === null);
 
         // outputMethod
         assert(Base\Cli::outputMethod(true) === 'pos');
         assert(Base\Cli::outputMethod(false) === 'neg');
         assert(Base\Cli::outputMethod(null) === 'neutral');
+
+        // setHtmlOverload
 
         return true;
     }

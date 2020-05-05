@@ -74,51 +74,21 @@ final class Cli extends Root
     }
 
 
-    // isInLine
+    // isStdinLine
     // retourne vrai si la dernière ligne du stdin est la valeur en argument
-    final public static function isInLine($value,$stdin,bool $lower=false):bool
+    final public static function isStdinLine($value,$stdin,bool $lower=false):bool
     {
         $return = false;
 
         if(is_resource($stdin))
         {
-            $line = self::inLine($stdin,$lower);
+            $line = self::stdinLine($stdin,$lower);
 
             if(!is_array($value))
             $value = (array) $value;
 
             if(in_array($line,$value,true))
             $return = true;
-        }
-
-        return $return;
-    }
-
-
-    // parseLongOptions
-    // prend un tableau des argv et retourne un tableau avec toutes les options longues
-    // l'ordre des options n'a pas d'importance, mais il faut que l'entrée commence par --
-    final public static function parseLongOptions(string ...$values):array
-    {
-        $return = [];
-
-        foreach ($values as $key => $value)
-        {
-            if(Str::isStart('--',$value))
-            {
-                $value = substr($value,2);
-
-                if(strlen($value) && !Str::isStart('=',$value))
-                {
-                    if(strpos($value,'=') === false)
-                    $value .= '=';
-
-                    $x = Str::explodeKeyValue('=',$value,true);
-                    $x = Arr::cast($x);
-
-                    $return = Arr::replace($return,$x);
-                }
-            }
         }
 
         return $return;
@@ -403,6 +373,21 @@ final class Cli extends Root
     }
 
 
+    // exec
+    // permet d'éxécuter une commande au terminal
+    // la commande peut être bloquante ou non
+    final public static function exec(string $cmd,bool $escape=true,bool $block=true):?string
+    {
+        if($escape === true)
+        $cmd = escapeshellcmd($cmd);
+
+        if($block === false)
+        $cmd .= ' > /dev/null &';
+
+        return shell_exec($cmd);
+    }
+
+
     // beep
     // permet d'émettre un beep à la console
     final public static function beep($amount=null):void
@@ -422,7 +407,7 @@ final class Cli extends Root
 
     // say
     // permet de dire quelque chose dans la console
-    final public static function say($value,?string $voice=null):void
+    final public static function say($value,?string $voice=null,bool $block=false):void
     {
         if(is_scalar($value))
         {
@@ -432,35 +417,25 @@ final class Cli extends Root
             $cmd .= '-v '.$voice.' ';
             $cmd .= "'$value'";
 
-            exec($cmd);
+            self::exec($cmd,true,$block);
         }
 
         return;
     }
 
 
-    // setHtmlOverload
-    // active ou désactive le overload du html
-    final public static function setHtmlOverload(bool $value):void
-    {
-        self::$config['htmlOverload'] = $value;
-
-        return;
-    }
-
-
-    // in
+    // stdin
     // retourne la resource stdin
-    final public static function in(bool $block=true)
+    final public static function stdin(bool $block=true)
     {
         return Res::stdin(['block'=>$block]);
     }
 
 
-    // inLine
+    // stdinLine
     // retourne la dernière ligne du stdin
-    // par défaut tout est remené en lowerCase
-    final public static function inLine($stdin,bool $lower=false):?string
+    // possible de ramener en lowercase
+    final public static function stdinLine($stdin,bool $lower=false):?string
     {
         $return = null;
 
@@ -481,11 +456,84 @@ final class Cli extends Root
     }
 
 
+    // parseOpt
+    // prend un tableau des argv et retourne un tableau avec toutes les options longues
+    // l'ordre des options n'a pas d'importance, mais il faut que l'entrée commence par --
+    // une entrée sans égale, prend la valeur true
+    final public static function parseOpt(string ...$values):array
+    {
+        $return = [];
+
+        foreach ($values as $key => $value)
+        {
+            if(Str::isStart('--',$value))
+            {
+                $value = substr($value,2);
+
+                if(strlen($value) && !Str::isStart('=',$value))
+                {
+                    if(strpos($value,'=') === false)
+                    $value .= '=1';
+
+                    $x = Str::explodeKeyValue('=',$value,true);
+                    $x = Arr::cast($x);
+
+                    $return = Arr::replace($return,$x);
+                }
+            }
+        }
+
+        return $return;
+    }
+
+
+    // parseCmd
+    // permet de parse une string contenant une commande et des opts
+    // retourne un tableau correctement formatté
+    final public static function parseCmd(string $value):?array
+    {
+        $return = null;
+
+        if(Str::isStart('->',$value))
+        {
+            $value = substr($value,2);
+            $value = trim($value);
+
+            if(strlen($value))
+            {
+                $explode = Str::wordExplode($value,2,true,true);
+                if(!empty($explode[0]))
+                {
+                    $opt = [];
+                    if(!empty($explode[1]))
+                    $opt = Str::wordExplode($explode[1],null,true,true);
+
+                    $return = [];
+                    $return['cmd'] = $explode[0];
+                    $return['opt'] = static::parseOpt(...$opt);
+                }
+            }
+        }
+
+        return $return;
+    }
+
+
     // outputMethod
     // retourne la méthode de output cli à utiliser selon une valeur bool ou null
     final public static function outputMethod(?bool $value):string
     {
         return (is_bool($value))? (($value === true) ? 'pos':'neg'):'neutral';
+    }
+
+
+    // setHtmlOverload
+    // active ou désactive le overload du html
+    final public static function setHtmlOverload(bool $value):void
+    {
+        self::$config['htmlOverload'] = $value;
+
+        return;
     }
 }
 ?>

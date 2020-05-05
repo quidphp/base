@@ -788,7 +788,7 @@ final class Request extends Root
     // permet de lier des query à la requête à partir d'un tableau d'options de cli
     final public static function setArgv(array $values):void
     {
-        $query = Cli::parseLongOptions(...$values);
+        $query = Cli::parseOpt(...array_values($values));
         if(!empty($query))
         self::setQuery($query);
 

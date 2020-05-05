@@ -27,7 +27,7 @@ final class Debug extends Root
     // génère le détail d'une variable selon la méthode dans config
     // si echo est false, la string est retourné mais pas affiché
     // si echo est true, flush peut être true
-    final public static function var($value=null,bool $wrap=true,bool $echo=true,bool $flush=false):string
+    final public static function var($value=null,bool $wrap=true,bool $echo=true,?bool $flush=null):string
     {
         $return = '';
         $method = self::varMethod();
@@ -137,8 +137,10 @@ final class Debug extends Root
 
     // echoFlush
     // permet d'echo la valeur ou de la echo + flush si flush est true
-    final public static function echoFlush($value,bool $flush=true):void
+    final public static function echoFlush($value,?bool $flush=null):void
     {
+        $flush = ($flush === null && Server::isCli())? true:false;
+
         if($flush === true)
         Buffer::flushEcho($value);
 
