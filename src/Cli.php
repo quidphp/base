@@ -382,9 +382,9 @@ final class Cli extends Root
         $cmd = escapeshellcmd($cmd);
 
         if($block === false)
-        $cmd .= ' > /dev/null &';
+        $cmd .= ' <&- > /dev/null 2>&1 & echo $!';
 
-        return shell_exec($cmd);
+        return exec($cmd);
     }
 
 
@@ -399,25 +399,6 @@ final class Cli extends Root
         {
             echo "\x07";
             $amount--;
-        }
-
-        return;
-    }
-
-
-    // say
-    // permet de dire quelque chose dans la console
-    final public static function say($value,?string $voice=null,bool $block=false):void
-    {
-        if(is_scalar($value))
-        {
-            $value = (string) $value;
-            $cmd = 'say ';
-            if(!empty($voice))
-            $cmd .= '-v '.$voice.' ';
-            $cmd .= "'$value'";
-
-            self::exec($cmd,true,$block);
         }
 
         return;

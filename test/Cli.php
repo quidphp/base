@@ -95,8 +95,6 @@ class Cli extends Base\Test
 
         // beep
 
-        // say
-
         // stdin
 
         // stdinLine
