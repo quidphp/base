@@ -366,7 +366,7 @@ final class Str extends Root
     // cast une valeur en string, que le type soit simple ou complexe
     // possible de forcer un array à impode si un separateur est fourni, sinon toujours json:encode
     // la grosse différence avec cette méthode pour les scalaires, est que false retourne '0' plutôt que ''
-    final public static function cast($return,?string $separator=null,bool $fixUnicode=false):string
+    final public static function cast($return,?string $separator=null,bool $fixUnicode=false,bool $encodePretty=false):string
     {
         if(!is_string($return))
         {
@@ -388,7 +388,12 @@ final class Str extends Root
                 $return = implode($separator,$return);
 
                 else
-                $return = Json::encode($return);
+                {
+                    if($encodePretty === true)
+                    $return = Json::encodePretty($return);
+                    else
+                    $return = Json::encode($return);
+                }
             }
 
             elseif(is_object($return))
