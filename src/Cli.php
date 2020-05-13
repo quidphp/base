@@ -474,6 +474,7 @@ final class Cli extends Root
     final public static function parseCmd(string $value):?array
     {
         $return = null;
+        $value = trim($value);
 
         if(Str::isStart('->',$value))
         {

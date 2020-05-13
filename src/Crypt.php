@@ -23,6 +23,8 @@ final class Crypt extends Root
         'passwordNew'=>10, // longueur d'un nouveau mot de passe
         'openssl'=>[ // configuration pour encrypt/decrypt openssl
             'method'=>'AES-256-CBC',
+            'multiplier'=>7843,
+            'divider'=>747,
             'sha'=>256],
         'randomString'=>[
             'alphanumeric'=>'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvXxYyWwZz0123456789', // caractère possible pour alphanumeric
@@ -354,6 +356,7 @@ final class Crypt extends Root
 
         if(!empty($value) && !empty($key))
         {
+            $key .= self::openSslKey($key);
             $method = self::$config['openssl']['method'];
             $key = self::sha($key,self::$config['openssl']['sha']);
             $iv = self::sha($iv,self::$config['openssl']['sha']);
@@ -377,6 +380,7 @@ final class Crypt extends Root
 
         if(!empty($value) && !empty($key))
         {
+            $key .= self::openSslKey($key);
             $method = self::$config['openssl']['method'];
             $key = self::sha($key,self::$config['openssl']['sha']);
             $iv = self::sha($iv,self::$config['openssl']['sha']);
@@ -387,6 +391,17 @@ final class Crypt extends Root
             if(is_string($ssl))
             $return = $ssl;
         }
+
+        return $return;
+    }
+
+
+    // openSslKey
+    // génère la clé ssl secrète pour openssl et opensslDecrypt
+    protected static function openSslKey(string $return):string
+    {
+        $return .= (strlen($return) * static::$config['openssl']['multiplier']);
+        $return .= (strlen($return) / static::$config['openssl']['divider']);
 
         return $return;
     }

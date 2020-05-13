@@ -110,17 +110,19 @@ class Crypt extends Base\Test
         // base64Decode
         assert(Base\Crypt::base64Decode('YWJjw6k=') === 'abcé');
 
-        // ssl
+        // openssl
         assert(strlen(Base\Crypt::openssl('test','what')) === 32);
         assert(Base\Crypt::openssl('test','what') !== Base\Crypt::openssl('test','whatzzz'));
         assert(strlen(Base\Crypt::openssl('test','what','james')) === 32);
         assert(strlen(Base\Crypt::openssl('testxzxczzxczx@#@##!!##','what')) === 60);
 
-        // sslDecrypt
+        // opensslDecrypt
         assert('test' === Base\Crypt::opensslDecrypt(Base\Crypt::openssl('test','what'),'what'));
         assert('test' === Base\Crypt::opensslDecrypt(Base\Crypt::openssl('test','what','zzz'),'what','zzz'));
         assert(null === Base\Crypt::opensslDecrypt(Base\Crypt::openssl('test','what','zz'),'what','zzz'));
         assert(Base\Crypt::opensslDecrypt(Base\Crypt::openssl('test','what'),'whatz') === null);
+
+        // openSslKey
 
         // serialize
         $d = new \Datetime('now');
