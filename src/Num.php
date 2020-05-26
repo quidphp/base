@@ -338,6 +338,26 @@ final class Num extends Root
     }
 
 
+    // formatDecimal
+    // similaire à round, mais est plus efficace pour les très petits nombres
+    // de même, la valeur est retourne en string et non pas float
+    final public static function formatDecimal($value,int $decimal,bool $clean=false):?string
+    {
+        $return = null;
+
+        if(is_numeric($value))
+        {
+            $value = (float) $value;
+            $return = number_format($value,$decimal,'.','');
+
+            if($clean === true)
+            $return = Str::cleanDecimal($return);
+        }
+
+        return $return;
+    }
+
+
     // round
     // arrondie un chiffre
     final public static function round($value,int $round=0,int $mode=PHP_ROUND_HALF_UP)

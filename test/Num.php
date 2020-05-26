@@ -176,6 +176,9 @@ class Num extends Base\Test
         assert(3.21 === Base\Num::sub(-4,null,2033.21));
         assert(2033.21 === Base\Num::sub(0,20,2033.21));
 
+        // formatDecimal
+        assert('2.55' === Base\Num::formatDecimal('2.5534',2));
+
         // round
         assert(3 === Base\Num::round('2.5',0));
         assert(2 === Base\Num::round('2.5',0,PHP_ROUND_HALF_DOWN));
