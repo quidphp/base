@@ -246,9 +246,12 @@ final class Cli extends Root
     {
         $return = '';
         $arg = self::getPreset($key);
-        $arg[] = $eol;
 
-        $return = self::make($value,...$arg);
+        if(!empty($arg))
+        {
+            $arg[] = $eol;
+            $return = self::make($value,...$arg);
+        }
 
         return $return;
     }
@@ -334,10 +337,11 @@ final class Cli extends Root
     // write
     // permet d'écrire une valeur au cli
     // si c'est un tableau unidimensionnel, la valeur sera implode avec différents séparateurs et la date sera ajouté au début
-    final public static function write(string $method,$data,$separator=', ',?array $option=null):void
+    final public static function write(?string $method,$data,$separator=', ',?array $option=null):void
     {
         $option = Arr::plus(['timeSeparator'=>'|','firstSeparator'=>':','dateFormat'=>'sql'],$option);
         $time = Datetime::format($option['dateFormat']);
+        $method = (is_string($method))? $method:'flush';
 
         if(is_string($data) && is_string($separator))
         $data = [$data];

@@ -338,21 +338,20 @@ final class Num extends Root
     }
 
 
-    // formatDecimal
-    // similaire à round, mais est plus efficace pour les très petits nombres
+    // decimal
+    // similaire à round, mais n'arrondie rien (coupe seulement à la décimale spécifiée)
     // de même, la valeur est retourne en string et non pas float
-    final public static function formatDecimal($value,int $decimal,bool $clean=false):?string
+    // possible de cleaner les decimal vide (0)
+    final public static function decimal($value,int $decimal,bool $clean=false):?string
     {
         $return = null;
+        self::typecast($value);
 
-        if(is_numeric($value))
-        {
-            $value = (float) $value;
-            $return = number_format($value,$decimal,'.','');
+        $value = (float) $value;
+        $return = number_format($value,$decimal,'.','');
 
-            if($clean === true)
-            $return = Str::cleanDecimal($return);
-        }
+        if($clean === true)
+        $return = Str::cleanDecimal($return);
 
         return $return;
     }
