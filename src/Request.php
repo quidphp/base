@@ -565,10 +565,10 @@ final class Request extends Root
     {
         $return = null;
 
-        if(($serverName = Superglobal::getServer('SERVER_NAME')) !== null)
+        if(Str::isNotEmpty($serverName = Superglobal::getServer('SERVER_NAME')))
         $return = $serverName;
 
-        elseif(($httpHost = self::getHeader('Host')) !== null)
+        elseif(Str::isNotEmpty($httpHost = self::getHeader('host')))
         $return = $httpHost;
 
         return $return;

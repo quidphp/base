@@ -170,6 +170,20 @@ final class Datetime extends Root
     }
 
 
+    // isWeekend
+    // retourne vrai si le temps est durant le week-end (samedi, dimanche)
+    final public static function isWeekend($value=null,$format=null):bool
+    {
+        $return = false;
+        $dayNo = self::weekDay($value,null,$format);
+
+        if(in_array($dayNo,[0,6],true))
+        $return = true;
+
+        return $return;
+    }
+
+
     // isYear
     // retourne vrai si le temps donné a la même année que timestamp
     final public static function isYear($value=null,$format=null,?int $timestamp=null):bool

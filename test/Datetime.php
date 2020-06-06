@@ -52,6 +52,12 @@ class Datetime extends Base\Test
         assert(!Base\Datetime::isYesterday(Base\Datetime::now()));
         assert(Base\Datetime::isYesterday(Base\Datetime::addDay(-1)));
 
+        // isWeekend
+        assert(!Base\Datetime::isWeekend($timestamp));
+        assert(Base\Datetime::isWeekend('2020-06-06','Y-m-d'));
+        assert(Base\Datetime::isWeekend('2020-06-07','Y-m-d'));
+        assert(!Base\Datetime::isWeekend('2020-06-05','Y-m-d'));
+
         // isYear
         assert(Base\Datetime::isYear(Base\Datetime::now()));
         assert(!Base\Datetime::isYear(Base\Datetime::addYear(1)));
