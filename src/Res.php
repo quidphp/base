@@ -1517,8 +1517,7 @@ final class Res extends Root
 
             if(!empty($return))
             {
-                $mimeType = Path::mime($mime);
-                $mimeType = (empty($mimeType))? $mime:$mimeType;
+                $mimeType = Path::mime($mime) ?: $mime;
                 $extension = (!empty($mimeType))? Mime::toExtension($mimeType):null;
                 $basename = Obj::cast($basename);
 

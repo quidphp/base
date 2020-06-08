@@ -2490,7 +2490,7 @@ final class Str extends Root
         {
             $isPlural = ($value > 1);
             $letter = (is_string($letter))? $letter:self::$config['plural']['letter'];
-            $wrap = (!empty($wrap))? $wrap:self::$config['plural']['wrap'];
+            $wrap = $wrap ?: self::$config['plural']['wrap'];
             $delimiter = Segment::getDelimiter($wrap);
             $default = $delimiter[0].$letter.$delimiter[1];
             $replace = (array) $replace;

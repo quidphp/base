@@ -1156,7 +1156,7 @@ final class Arrs extends Root
         elseif(is_array($delimiter) && !empty($delimiter))
         {
             $deli = array_shift($delimiter);
-            $delimiter = (empty($delimiter))? $deli:$delimiter;
+            $delimiter = $delimiter ?: $deli;
         }
 
         if(is_string($deli))
