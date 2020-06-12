@@ -839,6 +839,14 @@ final class Datetime extends Root
     }
 
 
+    // getLocale
+    // retourne la locale
+    final public static function getLocale(?string $lang=null):string
+    {
+        return Lang::dateLocale($lang) ?? Lang\En::getConfig('date/placeholder');
+    }
+
+
     // getPlaceholders
     // retourne les placeholders de format de date en mergant avec lang, si disponible
     final public static function getPlaceholders(?string $lang=null):array

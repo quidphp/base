@@ -74,12 +74,7 @@ final class Extension extends Root
     // retourne les fonctions d'une extension
     final public static function functions(string $name):array
     {
-        $return = [];
-
-        if(self::is($name))
-        $return = get_extension_funcs($name);
-
-        return $return;
+        return (self::is($name))? get_extension_funcs($name):[];
     }
 
 
@@ -87,12 +82,11 @@ final class Extension extends Root
     // retourn un tableau avec les résultats des méthodes pour détecter opcache, xdebug et apcu
     final public static function important(bool $ini=false):array
     {
-        $return = [];
-        $return['opcache'] = self::hasOpCache($ini);
-        $return['xdebug'] = self::hasXdebug($ini);
-        $return['apcu'] = self::hasApcu($ini);
-
-        return $return;
+        return [
+            'opcache'=>self::hasOpCache($ini),
+            'xdebug'=>self::hasXdebug($ini),
+            'apcu'=>self::hasApcu($ini)
+        ];
     }
 
 
@@ -108,15 +102,7 @@ final class Extension extends Root
     // lance les tests de requirement
     final public static function requirement():array
     {
-        $return = [];
-
-        foreach (self::$config['required'] as $value)
-        {
-            if(!self::is($value))
-            $return[] = $value;
-        }
-
-        return $return;
+        return Arr::accumulate([],self::$config['required'],fn($value) => !self::is($value)? $value:null);
     }
 }
 ?>

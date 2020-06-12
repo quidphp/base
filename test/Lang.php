@@ -124,6 +124,8 @@ class Lang extends Base\Test
 
         // numberSizeFormat
 
+        // dateLocale
+
         // dateMonth
 
         // dateFormat

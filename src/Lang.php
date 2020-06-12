@@ -377,6 +377,14 @@ final class Lang extends Root
     }
 
 
+    // dateLocale
+    // retourne la locale pour la date
+    final public static function dateLocale(...$args)
+    {
+        return self::call('dateLocale',...$args);
+    }
+
+
     // dateMonth
     // retourne le tableau des mois, si callable lié
     final public static function dateMonth(...$args)

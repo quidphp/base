@@ -43,18 +43,7 @@ final class Encoding extends Root
     // retourne vrai si une des chaînes est multibyte
     final public static function isMbs(...$values):bool
     {
-        $return = false;
-
-        foreach ($values as $value)
-        {
-            if(self::isMb($value))
-            {
-                $return = true;
-                break;
-            }
-        }
-
-        return $return;
+        return Arr::some($values,fn($value) => self::isMb($value));
     }
 
 

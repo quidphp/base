@@ -39,12 +39,7 @@ final class Assert extends Root
     // change la valeur d'une option d'assertion
     final public static function set(int $key,$value):bool
     {
-        $return = false;
-
-        if(assert_options($key,$value) !== false)
-        $return = true;
-
-        return $return;
+        return assert_options($key,$value) !== false;
     }
 
 

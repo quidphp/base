@@ -47,6 +47,19 @@ final class Slug extends Set
     }
 
 
+    // implode
+    // passe tous les éléments dans keepAlphanumeric (pour éviter une slug avec caractère segment [])
+    public static function implode(array $value,?array $option=null):string
+    {
+        foreach ($value as $k => $v)
+        {
+            $value[$k] = self::keepAlphanumeric($v);
+        }
+
+        return parent::implode($value,$option);
+    }
+
+
     // parse
     // parse le tableau arr de slug
     final public static function parse(array $array,array $option):array

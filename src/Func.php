@@ -31,12 +31,7 @@ final class Func extends Root
     // appelle une fonction
     final public static function call(string $name,...$arg)
     {
-        $return = false;
-
-        if(self::is($name))
-        $return = $name(...$arg);
-
-        return $return;
+        return (self::is($name))? $name(...$arg):null;
     }
 
 
@@ -52,13 +47,7 @@ final class Func extends Root
     // retourne les fonctions définis par l'utilisateur
     final public static function user():array
     {
-        $return = [];
-
-        $all = self::all();
-        if(array_key_exists('user',$all) && is_array($all['user']))
-        $return = $all['user'];
-
-        return $return;
+        return self::all()['user'] ?? [];
     }
 }
 ?>

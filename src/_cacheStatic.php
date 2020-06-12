@@ -59,12 +59,11 @@ trait _cacheStatic
 
     // emptyCacheStatic
     // vide le tableau de cache statique
-    final public static function emptyCacheStatic():bool
+    final public static function emptyCacheStatic():void
     {
-        $return = true;
         static::$cacheStatic = [];
 
-        return $return;
+        return;
     }
 
 

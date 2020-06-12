@@ -31,12 +31,7 @@ final class Constant extends Root
     // retourne la valeur d'une constante définie
     final public static function get(string $name)
     {
-        $return = null;
-
-        if(defined($name))
-        $return = constant($name);
-
-        return $return;
+        return (defined($name))? constant($name):null;
     }
 
 
@@ -44,12 +39,7 @@ final class Constant extends Root
     // crée une nouvelle constante si elle n'existe pas
     final public static function set(string $name,$value,bool $sensitive=false):bool
     {
-        $return = false;
-
-        if(!empty($name) && !self::is($name))
-        $return = define($name,$value,$sensitive);
-
-        return $return;
+        return (!empty($name) && !self::is($name))? define($name,$value,$sensitive):false;
     }
 
 

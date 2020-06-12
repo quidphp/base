@@ -91,7 +91,6 @@ final class Buffer extends Root
         $return = null;
         self::start($callback,$chunk,$flag);
         $callable(...$arg);
-
         $return = self::getClean();
 
         return $return;
@@ -154,12 +153,7 @@ final class Buffer extends Root
     // retourne le contenu du niveau actuel de buffer et ferme le buffer
     final public static function getClean():?string
     {
-        $return = null;
-
-        if(ob_get_level())
-        $return = ob_get_clean();
-
-        return $return;
+        return (ob_get_level())? ob_get_clean():null;
     }
 
 
@@ -271,7 +265,7 @@ final class Buffer extends Root
     {
         $return = [];
 
-        while (($level = ob_get_level()))
+        while ($level = ob_get_level())
         {
             $return[$level] = true;
 
@@ -354,12 +348,7 @@ final class Buffer extends Root
     // vide le buffer, ferme le buffer et rien d'afficher
     final public static function endClean():bool
     {
-        $return = false;
-
-        if(ob_get_level())
-        $return = ob_end_clean();
-
-        return $return;
+        return (ob_get_level())? ob_end_clean():false;
     }
 
 

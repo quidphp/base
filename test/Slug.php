@@ -25,6 +25,8 @@ class Slug extends Base\Test
         // keepAlphanumeric
         assert('test-testtes1' === Base\Slug::keepAlphanumeric('testé-test tes1'));
 
+        // implode
+
         // parse
         assert(Base\Slug::parse(['testé ok! la vie','JAMÉS'],Base\Slug::option(['sliceLength'=>[3,30]])) === ['teste',3=>'vie',4=>'JAMES']);
 
@@ -33,6 +35,7 @@ class Slug extends Base\Test
         assert(Base\Slug::parseValue('test!é',false) === 'test');
 
         // other
+        assert(Base\Slug::str('test ok [ok]') === 'test-ok-ok');
         assert(Base\Slug::str(['test_k',2]) === 'test-2');
         assert(Base\Slug::str(['test_2','ok']) === 'test-2-ok');
         assert(Base\Slug::sameWithSegments('lavie-[james]','lavie-ok'));

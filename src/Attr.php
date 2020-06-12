@@ -523,7 +523,11 @@ final class Attr extends Listing
         $option = Arr::plus(['append'=>null],$option);
 
         if(!empty($option['append']) && Uri::isAbsolute($value))
-        $option['append'] = null;
+        {
+            $host = Uri::host($value);
+            if(!empty($host) && empty(Finder::getHostPaths($host)))
+            $option['append'] = null;
+        }
 
         $return = Uri::output($value,$option);
 

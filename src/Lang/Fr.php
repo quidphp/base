@@ -72,6 +72,9 @@ class Fr extends Base\Config
         // date
         'date'=>[
 
+            // locale
+            'locale'=>'fr-CA',
+
             // format
             'format'=>[
                 0=>'j %n% Y',
