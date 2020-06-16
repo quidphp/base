@@ -371,6 +371,10 @@ class Validate extends Base\Test
         assert(!Base\Validate::isCol('Asdas'));
         assert(!Base\Validate::isCol('asdas-as'));
         assert(!Base\Validate::isCol('123asdasas'));
+        assert(!Base\Validate::isCol('123abc'));
+        assert(Base\Validate::isCol('a123abc'));
+        assert(!Base\Validate::isCol([1,2,34]));
+        assert(!Base\Validate::isCol('-csrf-'));
 
         // isEqual
         assert(Base\Validate::isEqual(2,2));
