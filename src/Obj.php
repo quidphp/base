@@ -313,12 +313,7 @@ final class Obj extends Root
     // la propriété doit être public, pas accès au propriété protégé ou privé
     final public static function get(string $property,object $object)
     {
-        $return = null;
-
-        if(property_exists($object,$property))
-        $return = $object->$property;
-
-        return $return;
+        return (property_exists($object,$property))? $object->$property:null;
     }
 
 

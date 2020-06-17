@@ -104,16 +104,7 @@ final class Mime extends Root
         $group = ($get === true)? self::getGroup($value,$fromPath):self::group($value);
 
         if(!empty($group))
-        {
-            foreach (self::$config['family'] as $key => $array)
-            {
-                if(is_array($array) && in_array($group,$array,true) && $key === $family)
-                {
-                    $return = true;
-                    break;
-                }
-            }
-        }
+        $return = Arr::some(self::$config['family'],fn($array,$key) => is_array($array) && in_array($group,$array,true) && $key === $family);
 
         return $return;
     }
@@ -293,15 +284,8 @@ final class Mime extends Root
         if(!empty($extension))
         {
             $extension = strtolower($extension);
-
-            foreach (self::$config['groupToExtension'] as $k => $v)
-            {
-                if((is_array($v) && (in_array($extension,$v,true)) || $extension === $v))
-                {
-                    $return = $k;
-                    break;
-                }
-            }
+            $closure = fn($v) => is_array($v) && (in_array($extension,$v,true)) || $extension === $v;
+            $return = Arr::findKey(self::$config['groupToExtension'],$closure);
         }
 
         return $return;
@@ -363,18 +347,8 @@ final class Mime extends Root
     // retourne le mime type à partir d'une extension
     final public static function fromExtension(string $extension):?string
     {
-        $return = null;
-
-        foreach (self::$config['mimeToExtension'] as $key => $value)
-        {
-            if((is_array($value) && Arr::in($extension,$value,false)) || Str::icompare($extension,$value))
-            {
-                $return = $key;
-                break;
-            }
-        }
-
-        return $return;
+        $closure = fn($value) => (is_array($value) && Arr::in($extension,$value,false)) || Str::icompare($extension,$value);
+        return Arr::findKey(self::$config['mimeToExtension'],$closure);
     }
 
 

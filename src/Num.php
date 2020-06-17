@@ -277,17 +277,6 @@ final class Num extends Root
     }
 
 
-    // prepend
-    // ajoute des chaînes numériques une en arrière de l'autre
-    final public static function prepend(...$values)
-    {
-        $return = Str::prepend(...$values);
-        self::typecast($return);
-
-        return $return;
-    }
-
-
     // append
     // ajoute des chaînes numériques une après l'autre
     final public static function append(...$values)

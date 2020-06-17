@@ -153,9 +153,6 @@ class Num extends Base\Test
         assert(!Base\Num::isCountable(1234));
         assert(Base\Num::isCountable([1,2,3]));
 
-        // prepend
-        assert(Base\Num::prepend('23',4.2,4) === 44.223);
-
         // append
         assert(Base\Num::append('23',4.2,4) === 234.24);
         assert(Base\Num::append('23',4.2,2.4) === '234.22.4');

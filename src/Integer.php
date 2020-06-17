@@ -37,7 +37,6 @@ final class Integer extends Root
     final public static function cast($value,bool $commaToDecimal=true):?int
     {
         $numeric = Num::castMore($value,$commaToDecimal);
-
         return (is_numeric($numeric))? (int) $numeric:null;
     }
 

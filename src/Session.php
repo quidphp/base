@@ -1291,7 +1291,9 @@ final class Session extends Root
     // la session n'a pas à être active
     final public static function unsetArray():void
     {
-        $_SESSION = [];
+        $session =& Superglobal::session();
+        if($session !== null)
+        $session = [];
 
         return;
     }

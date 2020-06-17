@@ -66,12 +66,7 @@ final class Email extends Root
     // strpos sur un slash car utilisé par base/attr, pour accélérer
     final public static function is($value):bool
     {
-        $return = false;
-
-        if(is_string($value) && strpos($value,'/') === false)
-        $return = Validate::isEmail($value);
-
-        return $return;
+        return (is_string($value) && strpos($value,'/') === false)? Validate::isEmail($value):false;
     }
 
 

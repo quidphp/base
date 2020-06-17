@@ -84,14 +84,6 @@ final class Arrs extends Root
     }
 
 
-    // hasKeyCaseConflict
-    // retourne vrai si le tableau multidimensionnel contient au moins une clé en conflit de case si le tableau est insensible à la case
-    final public static function hasKeyCaseConflict(array $value):bool
-    {
-        return self::is($value) && self::count($value) !== self::count(self::keysInsensitive($value));
-    }
-
-
     // merge
     // wrapper pour array_merge_recursive, valeur sont cast
     final public static function merge(...$values):array
@@ -196,9 +188,7 @@ final class Arrs extends Root
             $return[$key] = self::clean($value,$reset);
         }
 
-        $return = Arr::clean($return,$reset);
-
-        return $return;
+        return Arr::clean($return,$reset);
     }
 
 
@@ -212,9 +202,7 @@ final class Arrs extends Root
             $return[$k] = self::trim($v,$key,$value);
         }
 
-        $return = Arr::trim($return,$key,$value);
-
-        return $return;
+        return Arr::trim($return,$key,$value);
     }
 
 
@@ -229,9 +217,7 @@ final class Arrs extends Root
             $return[$key] = self::trimClean($value,$trimKey,$trim,$clean,$reset);
         }
 
-        $return = Arr::trimClean($return,$trimKey,$trim,$clean,$reset);
-
-        return $return;
+        return Arr::trimClean($return,$trimKey,$trim,$clean,$reset);
     }
 
 
@@ -1075,38 +1061,6 @@ final class Arrs extends Root
     }
 
 
-    // shuffle
-    // mélange un tableau multidimensionnel, mais conserve les clés
-    final public static function shuffle(array $return):array
-    {
-        foreach ($return as $key => $value)
-        {
-            if(is_array($value))
-            $return[$key] = self::shuffle($value);
-        }
-
-        $return = Arr::shuffle($return);
-
-        return $return;
-    }
-
-
-    // reverse
-    // invertit un tableau multidimensionel
-    final public static function reverse(array $return,bool $preserve=true):array
-    {
-        foreach ($return as $key => $value)
-        {
-            if(is_array($value))
-            $return[$key] = self::reverse($value,$preserve);
-        }
-
-        $return = Arr::reverse($return,$preserve);
-
-        return $return;
-    }
-
-
     // flip
     // reformat un tableau en s'assurant que la valeur devienne la clé
     // value permet de specifier la valeur des nouvelles valeurs du tableau, si null prend la clé
@@ -1534,9 +1488,7 @@ final class Arrs extends Root
             $return[$key] = self::keysLower($value,$mb);
         }
 
-        $return = Arr::keysLower($return,$mb);
-
-        return $return;
+        return Arr::keysLower($return,$mb);
     }
 
 
@@ -1551,26 +1503,7 @@ final class Arrs extends Root
             $return[$key] = self::keysUpper($value,$mb);
         }
 
-        $return = Arr::keysUpper($return,$mb);
-
-        return $return;
-    }
-
-
-    // keysInsensitive
-    // retourne une version du tableau multidimensionnel avec les clés en conflit de case retirés
-    // garde la même case
-    final public static function keysInsensitive(array $return):array
-    {
-        foreach ($return as $key => $value)
-        {
-            if(is_array($value))
-            $return[$key] = self::keysInsensitive($value);
-        }
-
-        $return = Arr::keysInsensitive($return);
-
-        return $return;
+        return Arr::keysUpper($return,$mb);
     }
 
 
@@ -1579,15 +1512,13 @@ final class Arrs extends Root
     // on peut mettre asc ou desc à sort (ksort ou krsort)
     final public static function keysSort(array $return,$sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):array
     {
-        $return = Arr::keysSort($return,$sort,$type);
-
         foreach ($return as $key => $value)
         {
             if(is_array($value))
             $return[$key] = self::keysSort($value,$sort,$type);
         }
 
-        return $return;
+        return Arr::keysSort($return,$sort,$type);
     }
 
 
@@ -1749,10 +1680,10 @@ final class Arrs extends Root
     }
 
 
-    // valuesAppend
+    // valuesMerge
     // cette méthode est utilisé pour le remplacement dans les routes
     // si une même clé existe, efface la valeur et ensuite fait un arr::append entre le tableau restant et la nouvelle valeur
-    final public static function valuesAppend(array $append,array $return,bool $once=true,bool $sensitive=true):array
+    final public static function valuesMerge(array $append,array $return,bool $once=true,bool $sensitive=true):array
     {
         foreach ($append as $k => $v)
         {
@@ -1773,7 +1704,7 @@ final class Arrs extends Root
                 }
 
                 elseif(is_array($value))
-                $return[$key] = self::valuesAppend($append,$value,$once,$sensitive);
+                $return[$key] = self::valuesMerge($append,$value,$once,$sensitive);
             }
         }
 

@@ -143,9 +143,6 @@ class Str extends Base\Test
         assert(Base\Str::icompare('string','string'));
         assert(Base\Str::icompare('ÉÈstring','Éèstring'));
 
-        // prepend
-        assert(Base\Str::prepend('test',1,2.4,'what') === 'what2.41test');
-
         // append
         assert(Base\Str::append('test',1,2.4,'what') === 'test12.4what');
 

@@ -41,10 +41,6 @@ class Arrs extends Base\Test
         assert(Base\Arrs::is([1,[],3]));
         assert(Base\Arrs::is([[1],[],[2]]));
 
-        // hasKeyCaseConflict
-        assert(Base\Arrs::hasKeyCaseConflict(['test'=>['test'=>true,'TEST'=>false]]));
-        assert(!Base\Arrs::hasKeyCaseConflict(['test'=>['test'=>true,'TEST2'=>false]]));
-
         // merge
         $merge1 = ['test'=>'test','test2'=>[0=>'test3']];
         $merge2 = ['test'=>'test6','test2'=>[0=>'test3'],'test5'=>[0=>'test4']];
@@ -405,23 +401,6 @@ class Arrs extends Base\Test
         },$array,'bla');
         assert($array === ['testbla',[1002],[1004],'test4bla']);
 
-        // shuffle
-        $array = Base\Arrs::shuffle([1,'test'=>2,3,['key'=>'bla','what',[1,2,3,4,5]]]);
-        assert(count($array) === 4);
-        assert($array[2]['key'] === 'bla');
-
-        // reverse
-        $array = [1,'test'=>2,3];
-        assert(Base\Arrs::reverse([1,2,3],false) === [3,2,1]);
-        assert(Base\Arrs::reverse([1,2,3]) === [2=>3,1=>2,0=>1]);
-        $array = [1,'test'=>2,3,['key'=>'bla','what',[1,2,3,4,5]]];
-        $reverse = Base\Arrs::reverse([1,'test'=>2,3,['key'=>'bla','what',[1,2,3,4,5]]]);
-        assert(count($reverse) === 4);
-        assert($reverse[2]['key'] === 'bla');
-        assert($reverse !== $array);
-        $reverse2 = Base\Arrs::reverse([1,'test'=>2,3,['key'=>'bla','what',[1,2,3,4,5]]],false);
-        assert($reverse !== $reverse2);
-
         // flip
         assert(['test'=>0,'test2'=>1] === Base\Arrs::flip(['test','test2']));
         assert(['test'=>'test','test2'=>'test2'] === Base\Arrs::flip(['test'=>'test','test2'=>'test2']));
@@ -512,9 +491,6 @@ class Arrs extends Base\Test
         // keysUpper
         assert(Base\Arrs::keysUpper(['Tést'=>['TesT2'=>'ok']],true) === ['TÉST'=>['TEST2'=>'ok']]);
 
-        // keysInsensitive
-        assert(Base\Arrs::keysInsensitive(['Tést'=>['TésT2'=>'ok','TÉST2'=>true]]) === ['Tést'=>['TÉST2'=>true]]);
-
         // keysSort
         $sort = ['z'=>'test','b'=>'test','c'=>['z'=>'a','b'=>'b']];
         $sort = Base\Arrs::keysSort($sort,true);
@@ -568,11 +544,11 @@ class Arrs extends Base\Test
         assert(['test'=>['lapa'],'lapa2','2'] === Base\Arrs::valuesReplace(['test'=>'lapa'],['test'=>['test'],'TEST2','2'],false,false));
         assert(['test'=>['lapa'],'TEST2','2'] === Base\Arrs::valuesReplace(['test'=>'lapa'],['test'=>['test'],'TEST2','2'],false,true));
 
-        // valuesAppend
+        // valuesMerge
         $append = ['%test%'=>['OK','james'=>'what']];
-        assert(Base\Arrs::valuesAppend($append,['test'=>['zoro','lol'=>'meh','%test%']])['test'] === ['zoro','lol'=>'meh',1=>'OK','james'=>'what']);
+        assert(Base\Arrs::valuesMerge($append,['test'=>['zoro','lol'=>'meh','%test%']])['test'] === ['zoro','lol'=>'meh',1=>'OK','james'=>'what']);
         $append = ['%test%'=>'mmm'];
-        assert(Base\Arrs::valuesAppend($append,['test'=>['zoro','lol'=>'meh','%test%']])['test'] === ['zoro','lol'=>'meh',1=>'mmm']);
+        assert(Base\Arrs::valuesMerge($append,['test'=>['zoro','lol'=>'meh','%test%']])['test'] === ['zoro','lol'=>'meh',1=>'mmm']);
 
         // keysValuesLower
         assert(Base\Arrs::keysValuesLower(['A'=>['A'=>'É']]) === ['a'=>['a'=>'é']]);

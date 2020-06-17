@@ -36,11 +36,7 @@ final class Extension extends Root
     final public static function hasOpCache(bool $ini=false):bool
     {
         $return = self::is('Zend OPcache');
-
-        if($return === true && $ini === true)
-        $return = Ini::opcache();
-
-        return $return;
+        return ($return === true && $ini === true)? Ini::opcache():$return;
     }
 
 
@@ -49,11 +45,7 @@ final class Extension extends Root
     final public static function hasXdebug(bool $ini=false):bool
     {
         $return = self::is('xdebug');
-
-        if($return === true && $ini === true)
-        $return = Ini::xdebug();
-
-        return $return;
+        return ($return === true && $ini === true)? Ini::xdebug():$return;
     }
 
 
@@ -62,11 +54,7 @@ final class Extension extends Root
     final public static function hasApcu(bool $ini=false):bool
     {
         $return = self::is('apcu');
-
-        if($return === true && $ini === true)
-        $return = Ini::apcu();
-
-        return $return;
+        return ($return === true && $ini === true)? Ini::apcu():$return;
     }
 
 

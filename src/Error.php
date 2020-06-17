@@ -141,17 +141,7 @@ final class Error extends Root
     // aucune erreur de générer si le tableau est vide ou si le message final n'est pas string
     final public static function triggers(...$values):bool
     {
-        $return = false;
-
-        foreach ($values as $value)
-        {
-            $return = self::trigger($value);
-
-            if($return === true)
-            break;
-        }
-
-        return $return;
+        return Arr::some($values,fn($value) => self::trigger($value));
     }
 
 

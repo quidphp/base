@@ -35,7 +35,7 @@ final class Xml extends Root
     // si inexistant retourne la string
     final public static function urlset(string $value):?string
     {
-        return Arr::get($value,self::$config['urlset']);
+        return self::$config['urlset'][$value] ?? null;
     }
 }
 ?>
