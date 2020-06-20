@@ -646,25 +646,25 @@ final class Res extends Root
 
     // permissionChange
     // change la permission de la resource fichier
-    final public static function permissionChange($mode,$path):bool
+    final public static function permissionChange($mode,$value):bool
     {
-        return File::permissionChange($mode,$path);
+        return File::permissionChange($mode,$value);
     }
 
 
     // ownerChange
     // change le owner de la resource fichier
-    final public static function ownerChange($user,$path):bool
+    final public static function ownerChange($user,$value):bool
     {
-        return File::ownerChange($user,$path);
+        return File::ownerChange($user,$value);
     }
 
 
     // groupChange
     // change le groupe de la resource fichier
-    final public static function groupChange($group,$path):bool
+    final public static function groupChange($group,$value):bool
     {
-        return File::groupChange($group,$path);
+        return File::groupChange($group,$value);
     }
 
 
@@ -3354,9 +3354,17 @@ final class Res extends Root
 
     // copy
     // copy une resource fichier
+    // ajoute support pour phpTemp
     final public static function copy($to,$value):?bool
     {
-        return File::copy($to,$value);
+        $return = null;
+
+        if(self::isPhpTemp($value))
+        $return = File::set($to,$value);
+        else
+        $return = File::copy($to,$value);
+
+        return $return;
     }
 
 

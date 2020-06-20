@@ -181,9 +181,9 @@ final class Html extends Root
                     'position'=>1,
                     'multi'=>null],
                 'text'=>[
-                    'attr'=>['maxlength'=>255]],
+                    'attr'=>['maxlength'=>250]],
                 'email'=>[
-                    'attr'=>['maxlength'=>255]],
+                    'attr'=>['maxlength'=>250]],
                 'radio'=>[
                     'option'=>[
                         'position'=>2,
@@ -2429,6 +2429,15 @@ final class Html extends Root
     final public static function submitClose(array $option=null):string
     {
         return self::end('button',$option);
+    }
+
+
+    // inputDecimal
+    // génère un input text avec un input mode à decimal
+    final public static function inputDecimal($value=null,$attr=null,?array $option=null):string
+    {
+        $value = (is_numeric($value))? (int) $value:null;
+        return static::input('text',$value,Arr::plus($attr,['inputmode'=>'decimal']),$option);
     }
 
 

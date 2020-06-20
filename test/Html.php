@@ -214,9 +214,9 @@ class Html extends Base\Test
 
         // getAttr
         assert(Base\Html::getAttr('script') === []);
-        assert(Base\Html::getAttr('input','text') === ['type'=>'text','maxlength'=>255]);
-        assert(Base\Html::getAttr('input','email') === ['type'=>'email','maxlength'=>255]);
-        assert(Base\Html::getAttr('input',null,['type'=>'email']) === ['type'=>'email','maxlength'=>255]);
+        assert(Base\Html::getAttr('input','text') === ['type'=>'text','maxlength'=>250]);
+        assert(Base\Html::getAttr('input','email') === ['type'=>'email','maxlength'=>250]);
+        assert(Base\Html::getAttr('input',null,['type'=>'email']) === ['type'=>'email','maxlength'=>250]);
         assert(Base\Html::getAttr('div',null,'#open') === ['#open']);
         assert(Base\Html::getAttr('a',null,'#open') === ['#open']);
 
@@ -311,11 +311,11 @@ class Html extends Base\Test
         assert(Base\Html::divele('OKÉ') === "<div class='element'>OKÉ</div>");
         assert(Base\Html::form('james.php',['method'=>'get'],['csrf'=>false,'genuine'=>false,'timestamp'=>false]) === "<form action='/james.php' method='get'></form>");
         assert(Base\Html::form('james.php',['method'=>'post'],['csrf'=>false,'genuine'=>false,'timestamp'=>false]) === "<form action='/james.php' method='post' enctype='multipart/form-data'></form>");
-        assert(Base\Html::inputText('tést','namé') === "<input name='namé' type='text' maxlength='255' value='tést'/>");
+        assert(Base\Html::inputText('tést','namé') === "<input name='namé' type='text' maxlength='250' value='tést'/>");
         assert(Base\Html::inputEmail('tést',['name'=>'namé','placeholder'=>'jamés','maxlength'=>200]) === "<input name='namé' placeholder='jamés' maxlength='200' type='email' value='tést'/>");
         assert(Base\Html::inputEmail('tést',['name'=>'namé','placeholder'=>'jamés','maxlength'=>2000]) === "<input name='namé' placeholder='jamés' maxlength='2000' type='email' value='tést'/>");
         assert(Base\Html::textarea('tést','namé') === "<textarea name='namé'>tést</textarea>");
-        assert(Base\Html::inputEmail('valuezé','namez') === "<input name='namez' type='email' maxlength='255' value='valuezé'/>");
+        assert(Base\Html::inputEmail('valuezé','namez') === "<input name='namez' type='email' maxlength='250' value='valuezé'/>");
         assert(Base\Html::inputHidden('ok','important') === "<input name='important' type='hidden' value='ok'/>");
         assert(Base\Html::inputSubmit('OK','submitIt') === "<input name='submitIt' type='submit' value='OK'/>");
         assert(Base\Html::inputImage('james','blabla') === "<input name='blabla' type='image' src='/james.jpg' alt='james'/>");
@@ -335,7 +335,7 @@ class Html extends Base\Test
         assert(Base\Html::select([1=>'james',2=>'james2'],'my',['title'=>'','selected'=>2]) === "<select name='my'><option value=''></option><option value='1'>james</option><option value='2' selected='selected'>james2</option></select>");
         assert(Base\Html::option('value','nameé') === "<option value='nameé'>value</option>");
         assert(Base\Html::option('value') === "<option value='value'>value</option>");
-        assert(Base\Html::inputText('val','name',['multi'=>true]) === "<input name='name[]' type='text' maxlength='255' value='val'/>");
+        assert(Base\Html::inputText('val','name',['multi'=>true]) === "<input name='name[]' type='text' maxlength='250' value='val'/>");
         assert(Base\Html::label('james','ok') === "<label for='ok'>james</label>");
         assert(Base\Html::htmlOpen(null,['lang'=>'fr','data-route'=>'home']) === "<html lang='fr' data-route='home'>");
         assert(Base\Html::bodyOpen(null,'home') === "<body class='home'>");
@@ -349,12 +349,12 @@ class Html extends Base\Test
         assert(Base\Html::head(['title'=>'OK']) === '<head><title>OK</title></head>');
         assert(Base\Html::head('<title>OK</title><meta name="nothing">') === '<head><title>OK</title><meta name="nothing"></head>');
         assert(Base\Html::div('ok','.mon .ma #ok',['html'=>['span','LOL']]) === "<span class='LOL'><div id='ok' class='mon ma'>ok</div></span>");
-        assert(Base\Html::inputText('ok','name') === "<input name='name' type='text' maxlength='255' value='ok'/>");
+        assert(Base\Html::inputText('ok','name') === "<input name='name' type='text' maxlength='250' value='ok'/>");
         assert(Base\Html::aImg('/test','/james.jpg') === "<a href='/test'><img alt='james' src='/james.jpg'/></a>");
         assert(Base\Html::aImgOpen('/test','/james.jpg') === "<a href='/test'><img alt='james' src='/james.jpg'/>");
         assert(Base\Html::divOp('ok') === "<div class='ok'>");
         assert(Base\Html::divCl() === '</div>');
-        assert(Base\Html::inputEmail('ok','well') === "<input name='well' type='email' maxlength='255' value='ok'/>");
+        assert(Base\Html::inputEmail('ok','well') === "<input name='well' type='email' maxlength='250' value='ok'/>");
         assert(Base\Html::div(true) === '<div>&nbsp;</div>');
         assert(Base\Html::div('test','ok',['html'=>[['span','p'],'my-class']]) === "<span><p class='my-class'><div class='ok'>test</div></p></span>");
         assert(Base\Html::div('test','ok',['html'=>'span']) === "<span><div class='ok'>test</div></span>");
@@ -611,7 +611,7 @@ class Html extends Base\Test
         assert(Base\Html::start('br') === '<br/>');
         assert(Base\Html::start('div','jamés','ok') === "<div class='ok'>jamés");
         assert(Base\Html::start('divele','OK') === "<div class='element'>OK");
-        assert(Base\Html::start('input','vale',['type'=>'email','name'=>'name']) === "<input type='email' name='name' maxlength='255' value='vale'/>");
+        assert(Base\Html::start('input','vale',['type'=>'email','name'=>'name']) === "<input type='email' name='name' maxlength='250' value='vale'/>");
         assert(Base\Html::start('div','ok','classe',['conditional'=>['lte',9,true]]) === "<!--[if lte IE 9]><!--><div class='classe'>ok");
 
         // end
@@ -751,18 +751,18 @@ class Html extends Base\Test
 
         // inputOpen
         assert(Base\Html::inputOpen('date','oké') === "<input type='date' value='oké'/>");
-        assert(Base\Html::inputOpen('datez','oké') === "<input type='text' maxlength='255' value='oké'/>");
+        assert(Base\Html::inputOpen('datez','oké') === "<input type='text' maxlength='250' value='oké'/>");
         assert(Base\Html::inputOpen('email','oké',['name'=>'oké','maxlength'=>5]) === "<input name='oké' maxlength='5' type='email' value='oké'/>");
         assert(strlen(Base\Html::inputOpen('text','ok','james',['label'=>'Click this'])) === 128);
         assert(strlen(Base\Html::inputOpen('text','ok','james',['label'=>'Click this','after'=>true])) === 128);
         assert(Base\Str::isEnd('/label>',Base\Html::inputOpen('radio','ok','james',['label'=>'NOW'])));
         assert(Base\Html::inputOpen('checkbox',null) === "<input type='checkbox'/>");
-        assert(Base\Html::inputOpen('text','ok',['required'=>true]) === "<input required='required' type='text' maxlength='255' value='ok'/>");
+        assert(Base\Html::inputOpen('text','ok',['required'=>true]) === "<input required='required' type='text' maxlength='250' value='ok'/>");
         assert(Base\Html::inputButton('ok','monnom') === "<input name='monnom' type='button' value='ok'/>");
         assert(strlen(Base\Html::inputText('',true)) === 65);
         assert(strlen(Base\Html::inputText(true,true)) === 66);
-        assert(Base\Html::inputText(true,'ok') === "<input name='ok' type='text' maxlength='255' value='1'/>");
-        assert(Base\Html::inputText('','ok') === "<input name='ok' type='text' maxlength='255' value=''/>");
+        assert(Base\Html::inputText(true,'ok') === "<input name='ok' type='text' maxlength='250' value='1'/>");
+        assert(Base\Html::inputText('','ok') === "<input name='ok' type='text' maxlength='250' value=''/>");
         assert(strlen(Base\Html::inputSubmit(true,['name'=>true])) === 52);
         assert(strlen(Base\Html::inputSubmit('',['name'=>true])) === 51);
         assert(Base\Html::email('test','ok') === "<email class='ok'>test</email>");
@@ -781,6 +781,9 @@ class Html extends Base\Test
 
         // submitClose
         assert(Base\Html::submitClose() === '</button>');
+
+        // inputDecimal
+        assert(Base\Html::inputDecimal(40) === "<input inputmode='decimal' type='text' maxlength='250' value='40'/>");
 
         // inputMaxFilesize
         assert(Base\Html::inputMaxFilesize(100,'myFile') === "<input name='MAX_FILE_SIZE' type='hidden' value='100'/>");
@@ -811,7 +814,7 @@ class Html extends Base\Test
         assert(strlen(Base\Html::formWrap(['test'],['inputText','bla',['name'=>'myName']],'br')) === 131);
         assert(strlen(Base\Html::formWrap(['test'],['div','bla','myName'],'br')) === 86);
         assert(strlen(Base\Html::formWrap(['test'],['divInputEmail','bla','name'],'br')) === 137);
-        assert(Base\Html::formWrap(['test'],['divInputEmail','bla','name'],'br',null,false) === "<label>test</label><br/><div><input name='name' type='email' maxlength='255' value='bla'/></div>");
+        assert(Base\Html::formWrap(['test'],['divInputEmail','bla','name'],'br',null,false) === "<label>test</label><br/><div><input name='name' type='email' maxlength='250' value='bla'/></div>");
 
         // formWrapStr
         assert(Base\Html::formWrapStr('LABEL','FORM','table',null,'forId') === "<table><tr><td><label for='forId'>LABEL</label></td><td>FORM</td></tr></table>");
@@ -891,7 +894,7 @@ class Html extends Base\Test
         assert(Base\Html::csrf('bcde') === "<input name='-csrf-' data-csrf='1' type='hidden' value='bcde'/>");
 
         // genuine
-        assert(Base\Html::genuine() === "<input name='-genuine-' data-genuine='1' type='text' maxlength='255'/>");
+        assert(Base\Html::genuine() === "<input name='-genuine-' data-genuine='1' type='text' maxlength='250'/>");
 
         // getGenuineName
         assert(Base\Html::getGenuineName() === '-genuine-');
