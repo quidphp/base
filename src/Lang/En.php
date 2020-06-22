@@ -73,7 +73,7 @@ class En extends Base\Config
         'date'=>[
 
             // locale
-            'locale'=>'en_US',
+            'locale'=>'en-US',
 
             // format
             'format'=>[

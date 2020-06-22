@@ -440,6 +440,8 @@ class Arrs extends Base\Test
         assert(Base\Arrs::hierarchyStructure(['test'=>'well','ok'=>null,'test2'=>'test','test5'=>'test2','test3'=>'test4']) === [['ok']]);
         assert(Base\Arrs::hierarchyStructure(['test'=>'ok','ok'=>null,'test2'=>'test','test5'=>'test2','test3'=>'test4'])[1] === ['ok','test']);
         assert(Base\Arrs::hierarchyStructure(['test'=>null,'ok'=>null,'test2'=>'test','test5'=>'test2','test3'=>'test4']) === [['test'],['ok'],['test','test2'],['test','test2','test5']]);
+        $array = ['test3'=>'test4','test4'=>'test','test'=>null,'test2'=>'test4'];
+        assert(Base\Arrs::hierarchyStructure($array)[2] === ['test','test4','test3']);
 
         // hierarchyAppend
         assert(Base\Arrs::hierarchyAppend(['test2'=>'test5'],[['ok'],['ok','james','test5']])[2] === ['ok','james','test5','test2']);

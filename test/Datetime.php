@@ -251,7 +251,7 @@ class Datetime extends Base\Test
         assert(Base\Datetime::formatReplace('1 %2% 2017',['%'=>['2'=>'octobre']]) === '1 octobre 2017');
 
         // getLocale
-        assert(Base\Datetime::getLocale() === 'en_US');
+        assert(Base\Datetime::getLocale() === 'en-US');
 
         // getPlaceholders
         assert(count(Base\Datetime::getPlaceholders('fr')) === 4);

@@ -1226,7 +1226,7 @@ final class Arrs extends Root
     // hierarchy
     // retourne un tableau hierarchy sous une forme logique
     // un parent non existant peut être ajouté dans la hiérarchie si existe est true
-    final public static function hierarchy(array $array,bool $exists=true):array
+    final public static function hierarchy(array $array,bool $exists=true,bool $debug=false):array
     {
         $return = [];
         $structure = self::hierarchyStructure($array,$exists);
@@ -1307,7 +1307,7 @@ final class Arrs extends Root
                             $continue = true;
                             $return[] = Arr::merge($v,$key);
                             unset($array[$key]);
-                            break;
+                            break 2;
                         }
                     }
                 }
