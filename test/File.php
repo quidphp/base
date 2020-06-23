@@ -36,6 +36,7 @@ class File extends Base\Test
         $write = '[assertCurrent]/splice.txt';
         $storage = '[assertCurrent]';
         $array = Base\File::makeUploadArray($currentFile);
+        $tempRes = Base\Res::open('php://temp');
 
         // is
         assert(Base\File::is($currentFile));
@@ -126,6 +127,7 @@ class File extends Base\Test
         assert(Base\File::isMaxCount(2,[1,2]));
 
         // path
+        assert(Base\File::path($tempRes) === null);
         assert(Base\File::path($currentFile) === $currentFile);
         assert(is_string(Base\File::path($temp)));
 

@@ -3194,12 +3194,7 @@ final class Res extends Root
     // force l'écriture de la resource dans un nouveau fichier
     final public static function toFile($path,$value,?array $option=null)
     {
-        $return = null;
-
-        if(self::isResponsable($value))
-        $return = File::set($path,$value,false,$option);
-
-        return $return;
+        return (self::isResponsable($value))? File::set($path,$value,false,$option):null;
     }
 
 
@@ -3251,17 +3246,11 @@ final class Res extends Root
         $return = null;
         $path = self::path($value);
 
-        if(is_string($path))
+        if(is_string($path) && File::changeDirname($dirname,$value) === true)
         {
             $basename = Path::basename($path);
-            $rename = File::changeDirname($dirname,$value);
-
-            if($rename === true)
-            {
-
-                $target = Path::addBasename($basename,$dirname);
-                $return = self::open($target);
-            }
+            $target = Path::addBasename($basename,$dirname);
+            $return = self::open($target);
         }
 
         return $return;
@@ -3276,16 +3265,11 @@ final class Res extends Root
         $return = null;
         $path = self::path($value);
 
-        if(is_string($path))
+        if(is_string($path) && File::changeBasename($basename,$value) === true)
         {
             $dirname = Path::dirname($path);
-            $rename = File::changeBasename($basename,$value);
-
-            if($rename === true)
-            {
-                $target = Path::addBasename($basename,$dirname);
-                $return = self::open($target);
-            }
+            $target = Path::addBasename($basename,$dirname);
+            $return = self::open($target);
         }
 
         return $return;
@@ -3300,15 +3284,10 @@ final class Res extends Root
         $return = null;
         $path = self::path($value);
 
-        if(is_string($path))
+        if(is_string($path) && File::changeExtension($extension,$value) === true)
         {
-            $rename = File::changeExtension($extension,$value);
-
-            if($rename === true)
-            {
-                $target = Path::changeExtension($extension,$path);
-                $return = self::open($target);
-            }
+            $target = Path::changeExtension($extension,$path);
+            $return = self::open($target);
         }
 
         return $return;
@@ -3323,15 +3302,10 @@ final class Res extends Root
         $return = null;
         $path = self::path($value);
 
-        if(is_string($path))
+        if(is_string($path) && File::removeExtension($value) === true)
         {
-            $rename = File::removeExtension($value);
-
-            if($rename === true)
-            {
-                $target = Path::removeExtension($path);
-                $return = self::open($target);
-            }
+            $target = Path::removeExtension($path);
+            $return = self::open($target);
         }
 
         return $return;
@@ -3340,6 +3314,7 @@ final class Res extends Root
 
     // moveUploaded
     // déplace une resource fichier venant d'être chargé
+    // retourne null ou la resource du nouveau fichier
     final public static function moveUploaded($target,$value)
     {
         $return = null;
@@ -3354,7 +3329,7 @@ final class Res extends Root
 
     // copy
     // copy une resource fichier
-    // ajoute support pour phpTemp
+    // support pour phpTemp, à ce moment le contenu de la resource temporaire est écrit dans un nouveau fichier
     final public static function copy($to,$value):?bool
     {
         $return = null;

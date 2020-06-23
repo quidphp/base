@@ -149,7 +149,7 @@ final class Csv extends File
         if(is_array($value))
         {
             $value = Arr::clean($value);
-            $value = implode(PHP_EOL,$value);
+            $value = Str::lineImplode($value);
         }
 
         if(is_string($value) && !empty($value))
