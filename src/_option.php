@@ -36,8 +36,6 @@ trait _option
     final public static function setOption($key,$value):void
     {
         Arrs::setRef($key,$value,static::$config['option']);
-
-        return;
     }
 
 
@@ -46,8 +44,6 @@ trait _option
     final public static function unsetOption($key):void
     {
         Arrs::unsetRef($key,static::$config['option']);
-
-        return;
     }
 
 

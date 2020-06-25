@@ -442,8 +442,6 @@ final class Email extends Root
 
         if(!empty($value))
         self::$config['test']['destination']['to'] = $value;
-
-        return;
     }
 
 
@@ -452,8 +450,6 @@ final class Email extends Root
     final public static function setActive(bool $value=true):void
     {
         self::$config['active'] = $value;
-
-        return;
     }
 }
 ?>

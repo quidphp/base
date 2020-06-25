@@ -1418,8 +1418,6 @@ class File extends Finder
             $mask = static::getUmaskFromPermission($value);
             static::permissionUmask($mask);
         }
-
-        return;
     }
 
 
@@ -1437,8 +1435,6 @@ class File extends Finder
     final public static function setNotFound(?callable $callable):void
     {
         static::$config['notFoundCallable'] = $callable;
-
-        return;
     }
 }
 

@@ -840,8 +840,6 @@ final class Server extends Root
     {
         if(is_scalar($version))
         self::$config['version'] = $version;
-
-        return;
     }
 }
 ?>

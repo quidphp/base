@@ -1294,8 +1294,6 @@ final class Session extends Root
         $session =& Superglobal::session();
         if($session !== null)
         $session = [];
-
-        return;
     }
 
 
@@ -1462,8 +1460,6 @@ final class Session extends Root
     final public static function resetRequestCount():void
     {
         self::set('requestCount',1);
-
-        return;
     }
 
 
@@ -1575,8 +1571,6 @@ final class Session extends Root
     final public static function refreshCsrf(?array $option=null):void
     {
         self::set('csrf',self::makeCsrf($option));
-
-        return;
     }
 
 
@@ -1633,8 +1627,6 @@ final class Session extends Root
     final public static function refreshCaptcha(?array $option=null):void
     {
         self::set('captcha',self::makeCaptcha($option));
-
-        return;
     }
 
 
@@ -1644,8 +1636,6 @@ final class Session extends Root
     final public static function emptyCaptcha():void
     {
         self::set('captcha',null);
-
-        return;
     }
 
 
@@ -1665,8 +1655,6 @@ final class Session extends Root
     final public static function setRemember(string $key,$value,bool $cast=true):void
     {
         self::set(['remember',$key],$value,$cast);
-
-        return;
     }
 
 
@@ -1678,8 +1666,6 @@ final class Session extends Root
         {
             self::setRemember($key,$value,$cast);
         }
-
-        return;
     }
 
 
@@ -1688,8 +1674,6 @@ final class Session extends Root
     final public static function unsetRemember(string $key):void
     {
         self::unset(['remember',$key]);
-
-        return;
     }
 
 
@@ -1698,8 +1682,6 @@ final class Session extends Root
     final public static function rememberEmpty():void
     {
         self::set('remember',null);
-
-        return;
     }
 
 
@@ -1713,8 +1695,6 @@ final class Session extends Root
         $value = Obj::cast($value);
 
         Superglobal::setSession($key,$value);
-
-        return;
     }
 
 
@@ -1724,8 +1704,6 @@ final class Session extends Root
     final public static function unset($key):void
     {
         Superglobal::unsetSession($key);
-
-        return;
     }
 }
 ?>

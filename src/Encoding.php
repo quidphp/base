@@ -127,8 +127,6 @@ final class Encoding extends Root
     {
         self::$config['charset'] = $value;
         Str::setCharset($value);
-
-        return;
     }
 
 

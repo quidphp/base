@@ -27,8 +27,6 @@ final class Boolean extends Root
         {
             $value = (bool) $value;
         }
-
-        return;
     }
 
 

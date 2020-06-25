@@ -70,8 +70,6 @@ final class Globals extends Root
     final public static function unset(...$keys):void
     {
         Arr::unsetsRef($keys,$GLOBALS);
-
-        return;
     }
 }
 ?>

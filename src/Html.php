@@ -3416,12 +3416,7 @@ final class Html extends Root
     // retourne les options uri pour une tag
     final public static function getUriOption(string $tag):?array
     {
-        $return = null;
-
-        if(self::isUriOption($tag))
-        $return = self::$config['tag'][$tag]['option']['attr']['uri'];
-
-        return $return;
+        return self::$config['tag'][$tag]['option']['attr']['uri'] ?? null;
     }
 
 
@@ -3429,10 +3424,7 @@ final class Html extends Root
     // change les options uri pour une tag
     final public static function setUriOption(string $tag,array $option):void
     {
-        if(self::isUriOption($tag))
         self::$config['tag'][$tag]['option']['attr']['uri'] = Uri::option($option);
-
-        return;
     }
 }
 ?>

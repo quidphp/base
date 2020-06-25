@@ -2,11 +2,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the QuidPHP package.
+ * This file is part of the QuidPHP package <https://quidphp.com>
  * Author: Pierre-Philippe Emond <emondpph@gmail.com>
- * Website: https://quidphp.com
  * License: https://github.com/quidphp/base/blob/master/LICENSE
- * Readme: https://github.com/quidphp/base/blob/master/README.md
  */
 
 namespace Quid\Base;
@@ -104,14 +102,10 @@ final class Attr extends Listing
     // retourne vrai si les attributs ont la ou les classes spécifiés
     final public static function hasClass($value,$attr):bool
     {
-        $return = false;
         $value = (array) self::parseClass($value);
         $class = (array) self::getClass($attr);
 
-        if(!empty($value) && !empty($class) && Arr::ins($value,$class))
-        $return = true;
-
-        return $return;
+        return !empty($value) && !empty($class) && Arr::ins($value,$class);
     }
 
 
@@ -519,7 +513,6 @@ final class Attr extends Listing
     // option append est enlevé si l'uri est absolute
     final public static function outputUri(string $value,?array $option=null):string
     {
-        $return = null;
         $option = Arr::plus(['append'=>null],$option);
 
         if(!empty($option['append']) && Uri::isAbsolute($value))
@@ -529,9 +522,7 @@ final class Attr extends Listing
             $option['append'] = null;
         }
 
-        $return = Uri::output($value,$option);
-
-        return $return;
+        return Uri::output($value,$option);
     }
 
 
@@ -539,12 +530,7 @@ final class Attr extends Listing
     // parse un champ style
     final public static function parseStyle($value,array $option=null):?array
     {
-        $return = null;
-
-        if(!empty($value) && (is_string($value) || is_array($value)))
-        $return = Style::arr($value,$option);
-
-        return $return;
+        return (!empty($value) && (is_string($value) || is_array($value)))? Style::arr($value,$option):null;
     }
 
 
@@ -665,9 +651,7 @@ final class Attr extends Listing
             }
         }
 
-        $return = self::arr($return);
-
-        return $return;
+        return self::arr($return);
     }
 
 
@@ -792,13 +776,8 @@ final class Attr extends Listing
     // retourne une string class à partir d'un array
     final public static function classImplode(array $value):?string
     {
-        $return = null;
-
         $value = Str::wordImplode($value);
-        if(!empty($value))
-        $return = $value;
-
-        return $return;
+        return (!empty($value))? $value:null;
     }
 
 
@@ -806,13 +785,8 @@ final class Attr extends Listing
     // retourne une string class correctement formatté
     final public static function prepareClass($value):?string
     {
-        $return = null;
         $value = self::parseClass($value);
-
-        if(is_array($value))
-        $return = self::classImplode($value);
-
-        return $return;
+        return (is_array($value))? self::classImplode($value):null;
     }
 
 
@@ -879,13 +853,8 @@ final class Attr extends Listing
     // change le id d'une valeur attribut
     final public static function setId(string $value,$assoc,?array $option=null):?array
     {
-        $return = null;
-
         $value = self::parseId($value);
-        if(!empty($value))
-        $return = self::set('id',$value,$assoc,$option);
-
-        return $return;
+        return (!empty($value))? self::set('id',$value,$assoc,$option):null;
     }
 
 
@@ -960,14 +929,10 @@ final class Attr extends Listing
     // enlève une ou plusieurs classes à une valeur attribut
     final public static function removeClass($value,$assoc,?array $option=null):?array
     {
-        $return = null;
         $value = (array) self::parseClass($value);
         $class = (array) self::getClass($assoc,$option);
 
-        if(!empty($class))
-        $return = self::set('class',Arr::valuesStrip($value,$class,self::getSensitive()),$assoc,$option);
-
-        return $return;
+        return (!empty($class))? self::set('class',Arr::valuesStrip($value,$class,self::getSensitive()),$assoc,$option):null;
     }
 
 
@@ -1137,13 +1102,8 @@ final class Attr extends Listing
     // enlève toutes les clés data des attributs
     final public static function emptyData($assoc,?array $option=null):?array
     {
-        $return = null;
         $data = self::data($assoc,$option);
-
-        if(!empty($data))
-        $return = self::unsets(array_keys($data),$assoc,$option);
-
-        return $return;
+        return (!empty($data))? self::unsets(array_keys($data),$assoc,$option):null;
     }
 
 
@@ -1177,8 +1137,6 @@ final class Attr extends Listing
     final public static function addSelectedUri(array $values):void
     {
         self::$selectedUri = Arr::replace(self::$selectedUri,$values);
-
-        return;
     }
 
 
@@ -1193,8 +1151,6 @@ final class Attr extends Listing
             if(array_key_exists($uri,self::$selectedUri))
             unset(self::$selectedUri[$uri]);
         }
-
-        return;
     }
 
 
@@ -1211,8 +1167,6 @@ final class Attr extends Listing
     final public static function setUriOption(array $option):void
     {
         self::$config['option']['uri'] = Uri::option($option);
-
-        return;
     }
 }
 

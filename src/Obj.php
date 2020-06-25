@@ -30,8 +30,6 @@ final class Obj extends Root
         {
             $value = (object) $value;
         }
-
-        return;
     }
 
 
@@ -545,8 +543,6 @@ final class Obj extends Root
     final public static function setCastError(callable $callable):void
     {
         self::$config['cast'] = $callable;
-
-        return;
     }
 }
 ?>

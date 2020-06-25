@@ -27,8 +27,6 @@ final class Floating extends Root
         {
             $value = (float) $value;
         }
-
-        return;
     }
 
 

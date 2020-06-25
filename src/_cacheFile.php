@@ -85,8 +85,6 @@ trait _cacheFile
     final public static function setCacheFileStorage(string $value):void
     {
         static::$cacheFile = $value;
-
-        return;
     }
 
 

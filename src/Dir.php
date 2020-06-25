@@ -1263,8 +1263,6 @@ final class Dir extends Finder
     final public static function setDefaultPermission(int $value):void
     {
         self::$config['defaultPermission'] = $value;
-
-        return;
     }
 
 

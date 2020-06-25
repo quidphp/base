@@ -125,8 +125,6 @@ final class Cli extends Root
     final public static function flush($value,?string $foreground=null,?string $style=null,?string $background=null,int $eol=1):void
     {
         Buffer::flushEcho(self::make($value,$foreground,$style,$background,$eol));
-
-        return;
     }
 
 
@@ -135,8 +133,6 @@ final class Cli extends Root
     final public static function flushPreset(string $key,$value,int $eol=1):void
     {
         Buffer::flushEcho(self::preset($key,$value,$eol));
-
-        return;
     }
 
 
@@ -151,8 +147,6 @@ final class Cli extends Root
             Buffer::flushEcho($eol);
             $value--;
         }
-
-        return;
     }
 
 
@@ -297,8 +291,6 @@ final class Cli extends Root
     {
         if(count($value) === 3)
         self::$config['preset'][$key] = array_values($value);
-
-        return;
     }
 
 
@@ -372,8 +364,6 @@ final class Cli extends Root
         $value = $data;
 
         self::$method($value);
-
-        return;
     }
 
 
@@ -404,8 +394,6 @@ final class Cli extends Root
             echo "\x07";
             $amount--;
         }
-
-        return;
     }
 
 
@@ -518,8 +506,6 @@ final class Cli extends Root
     final public static function setHtmlOverload(bool $value):void
     {
         self::$config['htmlOverload'] = $value;
-
-        return;
     }
 }
 ?>

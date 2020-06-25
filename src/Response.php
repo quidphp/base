@@ -956,8 +956,6 @@ final class Response extends Root
         $kill = $value;
 
         exit($kill);
-
-        return;
     }
 
 
@@ -967,8 +965,6 @@ final class Response extends Root
     final public static function onShutDown(callable $call,...$args):void
     {
         register_shutdown_function($call,...$args);
-
-        return;
     }
 
 
@@ -977,8 +973,6 @@ final class Response extends Root
     final public static function onCloseDown(callable $call,...$args):void
     {
         self::$config['closeDown'][] = [$call,$args];
-
-        return;
     }
 
 
@@ -989,8 +983,6 @@ final class Response extends Root
     {
         self::$config['closeDown'] = [];
         self::onCloseDownCloseBody();
-
-        return;
     }
 
 
@@ -999,8 +991,6 @@ final class Response extends Root
     final public static function closeDown():void
     {
         self::closeDownBody('closeDown');
-
-        return;
     }
 
 
@@ -1009,8 +999,6 @@ final class Response extends Root
     final public static function onShutDownCloseDown():void
     {
         self::onShutDown([self::class,'closeDown']);
-
-        return;
     }
 
 
@@ -1019,8 +1007,6 @@ final class Response extends Root
     final public static function onCloseBody(callable $call,...$args):void
     {
         self::$config['closeBody'][] = [$call,$args];
-
-        return;
     }
 
 
@@ -1029,8 +1015,6 @@ final class Response extends Root
     final public static function emptyCloseBody():void
     {
         self::$config['closeBody'] = [];
-
-        return;
     }
 
 
@@ -1039,8 +1023,6 @@ final class Response extends Root
     final public static function closeBody():void
     {
         self::closeDownBody('closeBody');
-
-        return;
     }
 
 
@@ -1049,8 +1031,6 @@ final class Response extends Root
     final public static function onCloseDownCloseBody():void
     {
         self::onCloseDown([self::class,'closeBody']);
-
-        return;
     }
 
 
@@ -1061,7 +1041,6 @@ final class Response extends Root
         self::onCloseBody(function() {
             if(self::isHtmlOrAuto())
             Debug::var(Debug::speed());
-            return;
         });
     }
 
@@ -1085,8 +1064,6 @@ final class Response extends Root
                 unset(self::$config[$type][$key]);
             }
         }
-
-        return;
     }
 
 

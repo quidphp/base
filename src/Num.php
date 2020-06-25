@@ -43,8 +43,6 @@ final class Num extends Root
         {
             $value = self::castMore($value);
         }
-
-        return;
     }
 
 

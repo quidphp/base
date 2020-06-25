@@ -1950,8 +1950,6 @@ final class Uri extends Root
     final public static function emptySchemeStatic():void
     {
         self::$scheme = [];
-
-        return;
     }
 
 
@@ -1961,8 +1959,6 @@ final class Uri extends Root
     final public static function setNotFound(?callable $callable):void
     {
         self::setOption('notFoundCallable',$callable);
-
-        return;
     }
 
 
@@ -1971,8 +1967,6 @@ final class Uri extends Root
     final public static function setAllAbsolute(bool $value):void
     {
         self::$absolute = $value;
-
-        return;
     }
 }
 ?>

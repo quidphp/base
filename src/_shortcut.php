@@ -42,8 +42,6 @@ trait _shortcut
     {
         $method = static::setShortcutMethod();
         Arr::setRef($key,$method($value),static::$shortcut);
-
-        return;
     }
 
 
@@ -56,8 +54,6 @@ trait _shortcut
             if(is_string($key) && is_string($value))
             static::setShortcut($key,$value);
         }
-
-        return;
     }
 
 
@@ -74,8 +70,6 @@ trait _shortcut
     final public static function unsetShortcut(string $key):void
     {
         Arr::unsetRef($key,static::$shortcut);
-
-        return;
     }
 
 
@@ -122,8 +116,6 @@ trait _shortcut
     final public static function emptyShortcut():void
     {
         static::$shortcut = [];
-
-        return;
     }
 }
 ?>

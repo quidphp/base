@@ -31,8 +31,6 @@ final class Arr extends Root
             elseif(!is_array($value))
             $value = [$value];
         }
-
-        return;
     }
 
 
@@ -811,8 +809,6 @@ final class Arr extends Root
     final public static function setRef($key,$value,array &$array,bool $sensitive=true):void
     {
         $array = self::set($key,$value,$array,$sensitive);
-
-        return;
     }
 
 
@@ -822,8 +818,6 @@ final class Arr extends Root
     final public static function setsRef(array $keyValue,array &$array,bool $sensitive=true):void
     {
         $array = self::sets($keyValue,$array,$sensitive);
-
-        return;
     }
 
 
@@ -897,8 +891,6 @@ final class Arr extends Root
     final public static function unsetRef($key,array &$array,bool $sensitive=true):void
     {
         $array = self::unset($key,$array,$sensitive);
-
-        return;
     }
 
 
@@ -908,8 +900,6 @@ final class Arr extends Root
     final public static function unsetsRef(array $keys,array &$array,bool $sensitive=true):void
     {
         $array = self::unsets($keys,$array,$sensitive);
-
-        return;
     }
 
 

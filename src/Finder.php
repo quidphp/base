@@ -775,8 +775,6 @@ class Finder extends Root
         clearstatcache($clearRealPath,$filename);
         else
         clearstatcache($clearRealPath);
-
-        return;
     }
 
 
@@ -1116,8 +1114,6 @@ class Finder extends Root
     final public static function unlinkOnShutdown($path):void
     {
         Response::onShutdown(fn($path) => static::unlink($path),$path);
-
-        return;
     }
 
 
@@ -1311,8 +1307,6 @@ class Finder extends Root
     final public static function emptyHost():void
     {
         static::$host = [];
-
-        return;
     }
 
 
@@ -1327,8 +1321,6 @@ class Finder extends Root
 
         File::setDefaultPermission($file,true);
         Dir::setDefaultPermission($dir);
-
-        return;
     }
 
 

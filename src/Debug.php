@@ -146,8 +146,6 @@ final class Debug extends Root
 
         else
         echo $value;
-
-        return;
     }
 
 
@@ -589,7 +587,6 @@ use Quid\Base;
         function dd(...$values):void
         {
             Base\Debug::deads(...$values);
-            return;
         }
     }
 
@@ -627,7 +624,6 @@ use Quid\Base;
         {
             Base\Debug::var(Base\Debug::speed($value,$round));
             Base\Response::kill();
-            return;
         }
     }
 })();

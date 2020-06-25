@@ -169,8 +169,6 @@ final class Style extends Listing
     final public static function setUriOption(array $option):void
     {
         self::$config['option']['uri'] = Uri::option($option);
-
-        return;
     }
 }
 

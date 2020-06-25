@@ -342,8 +342,6 @@ final class Superglobal extends Root
     final public static function setGet($key,$value):void
     {
         Arrs::setRef($key,$value,$_GET);
-
-        return;
     }
 
 
@@ -352,8 +350,6 @@ final class Superglobal extends Root
     final public static function setPost($key,$value):void
     {
         Arrs::setRef($key,$value,$_POST);
-
-        return;
     }
 
 
@@ -362,8 +358,6 @@ final class Superglobal extends Root
     final public static function setCookie(string $key,$value):void
     {
         Arrs::setRef($key,$value,$_COOKIE);
-
-        return;
     }
 
 
@@ -374,8 +368,6 @@ final class Superglobal extends Root
     {
         if(self::hasSession())
         Arrs::setRef($key,$value,$_SESSION);
-
-        return;
     }
 
 
@@ -384,8 +376,6 @@ final class Superglobal extends Root
     final public static function setFiles(string $key,$value):void
     {
         Arrs::setRef($key,$value,$_FILES);
-
-        return;
     }
 
 
@@ -394,8 +384,6 @@ final class Superglobal extends Root
     final public static function setEnv(string $key,$value):void
     {
         Arrs::setRef($key,$value,$_ENV);
-
-        return;
     }
 
 
@@ -404,8 +392,6 @@ final class Superglobal extends Root
     final public static function setRequest($key,$value):void
     {
         Arrs::setRef($key,$value,$_REQUEST);
-
-        return;
     }
 
 
@@ -415,8 +401,6 @@ final class Superglobal extends Root
     final public static function setServer(string $key,$value,bool $sensitive=true):void
     {
         Arrs::setRef($key,$value,$_SERVER,$sensitive);
-
-        return;
     }
 
 
@@ -425,8 +409,6 @@ final class Superglobal extends Root
     final public static function unsetGet($key):void
     {
         Arrs::unsetRef($key,$_GET);
-
-        return;
     }
 
 
@@ -435,8 +417,6 @@ final class Superglobal extends Root
     final public static function unsetPost($key):void
     {
         Arrs::unsetRef($key,$_POST);
-
-        return;
     }
 
 
@@ -445,8 +425,6 @@ final class Superglobal extends Root
     final public static function unsetCookie(string $key):void
     {
         Arrs::unsetRef($key,$_COOKIE);
-
-        return;
     }
 
 
@@ -457,8 +435,6 @@ final class Superglobal extends Root
     {
         if(self::hasSession())
         Arrs::unsetRef($key,$_SESSION);
-
-        return;
     }
 
 
@@ -467,8 +443,6 @@ final class Superglobal extends Root
     final public static function unsetFiles(string $key):void
     {
         Arrs::unsetRef($key,$_FILES);
-
-        return;
     }
 
 
@@ -477,8 +451,6 @@ final class Superglobal extends Root
     final public static function unsetEnv(string $key):void
     {
         Arrs::unsetRef($key,$_ENV);
-
-        return;
     }
 
 
@@ -487,8 +459,6 @@ final class Superglobal extends Root
     final public static function unsetRequest($key):void
     {
         Arrs::unsetRef($key,$_REQUEST);
-
-        return;
     }
 
 
@@ -498,8 +468,6 @@ final class Superglobal extends Root
     final public static function unsetServer(string $key,bool $sensitive=true):void
     {
         Arrs::unsetRef($key,$_SERVER,$sensitive);
-
-        return;
     }
 
 
@@ -512,8 +480,6 @@ final class Superglobal extends Root
 
         if(!empty($values))
         Arrs::unsetsRef(array_keys($values),$_SERVER,$sensitive);
-
-        return;
     }
 
 
@@ -522,8 +488,6 @@ final class Superglobal extends Root
     final public static function unsetServerHeader():void
     {
         self::unsetServerStart('HTTP_');
-
-        return;
     }
 
 

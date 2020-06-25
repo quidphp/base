@@ -27,8 +27,6 @@ final class Integer extends Root
         {
             $value = (int) $value;
         }
-
-        return;
     }
 
 

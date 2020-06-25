@@ -348,8 +348,6 @@ final class Datetime extends Root
     final public static function setInitTimestamp(int $value):void
     {
         self::$config['timestamp'] = $value;
-
-        return;
     }
 
 
@@ -371,8 +369,6 @@ final class Datetime extends Root
     final public static function setInitMicrotime(float $value):void
     {
         self::$config['microtime'] = $value;
-
-        return;
     }
 
 

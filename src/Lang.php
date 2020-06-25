@@ -201,8 +201,6 @@ final class Lang extends Root
             Finder::setShortcut('lang',$current);
             Uri::setShortcut('lang',$current);
         }
-
-        return;
     }
 
 
@@ -307,8 +305,6 @@ final class Lang extends Root
     final public static function setCallable(callable $callable):void
     {
         self::$callable = $callable;
-
-        return;
     }
 
 
@@ -317,8 +313,6 @@ final class Lang extends Root
     final public static function unsetCallable():void
     {
         self::$callable = null;
-
-        return;
     }
 
 

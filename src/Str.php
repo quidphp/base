@@ -60,8 +60,6 @@ final class Str extends Root
         {
             $value = (string) $value;
         }
-
-        return;
     }
 
 
@@ -75,8 +73,6 @@ final class Str extends Root
             if($value !== null)
             $value = (string) $value;
         }
-
-        return;
     }
 
 
@@ -704,7 +700,7 @@ final class Str extends Root
     final public static function prepareSearch($value,?string $separator=null):array
     {
         $return = [];
-        $separator = (is_string($separator))? $separator:self::$config['search'];
+        $separator = (is_string($separator) && strlen($separator))? $separator:self::$config['search'];
 
         if(is_scalar($value))
         {
@@ -2940,8 +2936,6 @@ final class Str extends Root
     final public static function setCharset(string $value):void
     {
         self::$config['charset'] = $value;
-
-        return;
     }
 }
 ?>

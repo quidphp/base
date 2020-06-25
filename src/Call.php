@@ -27,8 +27,6 @@ final class Call extends Root
         {
             $value = self::cast($value);
         }
-
-        return;
     }
 
 

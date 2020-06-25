@@ -27,8 +27,6 @@ final class Exception extends Root
     final public static function setHandler(?callable $value=null):void
     {
         set_exception_handler($value);
-
-        return;
     }
 
 

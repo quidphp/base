@@ -227,8 +227,6 @@ final class Autoload extends Root
     final public static function setPsr4(string $key,string $value):void
     {
         self::$config['psr4'][$key] = $value;
-
-        return;
     }
 
 
@@ -241,8 +239,6 @@ final class Autoload extends Root
             if(is_string($key) && is_string($value))
             self::$config['psr4'][$key] = $value;
         }
-
-        return;
     }
 
 
@@ -252,8 +248,6 @@ final class Autoload extends Root
     {
         if(array_key_exists($key,self::$config['psr4']))
         unset(self::$config['psr4'][$key]);
-
-        return;
     }
 
 

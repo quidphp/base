@@ -462,8 +462,6 @@ final class Request extends Root
     final public static function setLangs(array $value):void
     {
         Arr::setRef('all',$value,self::$config['lang']);
-
-        return;
     }
 
 
@@ -476,8 +474,6 @@ final class Request extends Root
         Superglobal::setServer('SERVER_PORT',Http::port($value));
         Superglobal::setServer('HTTPS',($value === true)? 'on':'off');
         Superglobal::setServer('SERVER_PROTOCOL',$protocol);
-
-        return;
     }
 
 
@@ -489,8 +485,6 @@ final class Request extends Root
         self::setHeader('X-Requested-With','XMLHttpRequest');
         else
         self::unsetHeader('X-Requested-With');
-
-        return;
     }
 
 
@@ -508,8 +502,6 @@ final class Request extends Root
     {
         if(in_array($value,['http','https'],true))
         self::setSsl(($value === 'https'));
-
-        return;
     }
 
 
@@ -531,8 +523,6 @@ final class Request extends Root
         Superglobal::setServer('REQUEST_USER',$value);
         else
         Superglobal::unsetServer('REQUEST_USER');
-
-        return;
     }
 
 
@@ -554,8 +544,6 @@ final class Request extends Root
         Superglobal::setServer('REQUEST_PASS',$value);
         else
         Superglobal::unsetServer('REQUEST_PASS');
-
-        return;
     }
 
 
@@ -581,8 +569,6 @@ final class Request extends Root
     {
         Superglobal::setServer('SERVER_NAME',$value);
         Superglobal::setServer('HTTP_HOST',$value);
-
-        return;
     }
 
 
@@ -599,8 +585,6 @@ final class Request extends Root
     final public static function setPort(int $value):void
     {
         self::setSsl(Http::isPortSsl($value));
-
-        return;
     }
 
 
@@ -623,8 +607,6 @@ final class Request extends Root
     final public static function setPath(string $value):void
     {
         Superglobal::setServer('REQUEST_URI',Path::wrapStart($value));
-
-        return;
     }
 
 
@@ -769,8 +751,6 @@ final class Request extends Root
             Globals::set('_GET',$array);
             Superglobal::setServer('QUERY_STRING',$string);
         }
-
-        return;
     }
 
 
@@ -779,8 +759,6 @@ final class Request extends Root
     final public static function removeQuery():void
     {
         self::setQuery(null);
-
-        return;
     }
 
 
@@ -791,8 +769,6 @@ final class Request extends Root
         $query = Cli::parseOpt(...array_values($values));
         if(!empty($query))
         self::setQuery($query);
-
-        return;
     }
 
 
@@ -814,8 +790,6 @@ final class Request extends Root
         Superglobal::setServer('REQUEST_FRAGMENT',$value);
         else
         Superglobal::unsetServer('REQUEST_FRAGMENT');
-
-        return;
     }
 
 
@@ -835,8 +809,6 @@ final class Request extends Root
 
         if(in_array($value,['GET','POST'],true))
         Superglobal::setServer('REQUEST_METHOD',$value);
-
-        return;
     }
 
 
@@ -859,8 +831,6 @@ final class Request extends Root
             Superglobal::setServer('REQUEST_TIME',(int) $value);
             Superglobal::setServer('REQUEST_TIME_FLOAT',(float) $value);
         }
-
-        return;
     }
 
 
@@ -891,8 +861,6 @@ final class Request extends Root
             self::setScheme($scheme);
             self::setHost($host);
         }
-
-        return;
     }
 
 
@@ -943,8 +911,6 @@ final class Request extends Root
     final public static function setPost(array $value):void
     {
         Globals::set('_POST',$value);
-
-        return;
     }
 
 
@@ -971,8 +937,6 @@ final class Request extends Root
     final public static function setHeader(string $key,$value):void
     {
         self::setHeaders(Header::set($key,$value,self::headers()));
-
-        return;
     }
 
 
@@ -982,8 +946,6 @@ final class Request extends Root
     final public static function unsetHeader(string $key):void
     {
         self::setHeaders(Header::unset($key,self::headers()));
-
-        return;
     }
 
 
@@ -999,8 +961,6 @@ final class Request extends Root
             $key = Superglobal::formatServerKey('HTTP_'.$key);
             Superglobal::setServer($key,$value);
         }
-
-        return;
     }
 
 
@@ -1035,8 +995,6 @@ final class Request extends Root
 
             Superglobal::setServer('REMOTE_ADDR',$value);
         }
-
-        return;
     }
 
 
@@ -1054,8 +1012,6 @@ final class Request extends Root
     final public static function setUserAgent(?string $value):void
     {
         self::setHeader('User-Agent',$value);
-
-        return;
     }
 
 
@@ -1083,8 +1039,6 @@ final class Request extends Root
     final public static function setReferer(?string $value):void
     {
         self::setHeader('Referer',$value);
-
-        return;
     }
 
 
@@ -1101,8 +1055,6 @@ final class Request extends Root
     final public static function setLangHeader(?string $value):void
     {
         self::setHeader('Accept-Language',$value);
-
-        return;
     }
 
 
@@ -1199,8 +1151,6 @@ final class Request extends Root
                 self::$method($value);
             }
         }
-
-        return;
     }
 
 

@@ -27,8 +27,6 @@ final class Scalar extends Root
         {
             $value = self::cast($value);
         }
-
-        return;
     }
 
 
@@ -40,8 +38,6 @@ final class Scalar extends Root
         {
             $value = self::castMore($value);
         }
-
-        return;
     }
 
 

@@ -72,8 +72,6 @@ trait _init
                 }
             }
         }
-
-        return;
     }
 
 
@@ -112,8 +110,6 @@ trait _init
     final protected static function setInitCallable(?\Closure $value=null):void
     {
         static::$initCallable = $value;
-
-        return;
     }
 
 

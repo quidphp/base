@@ -164,8 +164,6 @@ final class Ini extends Root
         {
             ini_restore($key);
         }
-
-        return;
     }
 
 

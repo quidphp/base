@@ -199,8 +199,6 @@ final class Buffer extends Root
 
         if($flush === true)
         flush();
-
-        return;
     }
 
 

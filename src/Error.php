@@ -25,8 +25,6 @@ final class Error extends Root
     final public static function setHandler(?callable $value=null,int $type=E_ALL | E_STRICT):void
     {
         set_error_handler($value,$type);
-
-        return;
     }
 
 
@@ -51,8 +49,6 @@ final class Error extends Root
     final public static function clearLast():void
     {
         error_clear_last();
-
-        return;
     }
 
 
@@ -182,8 +178,6 @@ final class Error extends Root
         Uri::setNotFound([self::class,'trigger']);
         File::setNotFound([self::class,'trigger']);
         Obj::setCastError([self::class,'trigger']);
-
-        return;
     }
 }
 ?>

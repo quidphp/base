@@ -62,8 +62,6 @@ trait _cacheStatic
     final public static function emptyCacheStatic():void
     {
         static::$cacheStatic = [];
-
-        return;
     }
 
 
