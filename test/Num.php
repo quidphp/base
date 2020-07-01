@@ -437,6 +437,11 @@ class Num extends Base\Test
         assert([3,98] === Base\Num::percentAdjustTotal([1,98],null,1,101));
         assert([5,96] === Base\Num::percentAdjustTotal([5,98],1,1,101));
 
+        // compoundInterest
+        assert(Base\Num::compoundInterest(1,0.06,1) === 1.06);
+        assert(Base\Num::compoundInterest(1,0.06,2) > 1.12);
+        assert(Base\Num::compoundInterest(1,0.06,0) === 1.0);
+
         return true;
     }
 }

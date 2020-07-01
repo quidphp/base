@@ -1208,5 +1208,18 @@ final class Num extends Root
 
         return $return;
     }
+
+
+    // compoundInterest
+    // permet de calculer les interets sur une somme alors qu'un pourcentage est ajouté chaque itération et conservé
+    final public static function compoundInterest(float $return,float $percent,int $iteration=12):float
+    {
+        for ($i=0; $i < $iteration; $i++)
+        {
+            $return += ($return * $percent);
+        }
+
+        return $return;
+    }
 }
 ?>
