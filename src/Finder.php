@@ -132,13 +132,8 @@ class Finder extends Root
     // retourne vrai si l'uri existe et est accessible
     final public static function isUriToPath(string $value,?string $host=null):bool
     {
-        $return = false;
         $uriPath = static::uriToPath($value,$host);
-
-        if(static::is($uriPath))
-        $return = true;
-
-        return $return;
+        return static::is($uriPath);
     }
 
 
@@ -146,13 +141,8 @@ class Finder extends Root
     // retourne vrai si l'uri existe et est accessible en lecture
     final public static function isUriToPathReadable(string $value,?string $host=null):bool
     {
-        $return = false;
         $uriPath = static::uriToPath($value,$host);
-
-        if(static::isReadable($uriPath))
-        $return = true;
-
-        return $return;
+        return static::isReadable($uriPath);
     }
 
 
@@ -160,13 +150,8 @@ class Finder extends Root
     // retourne vrai si l'uri existe et est accessible en écriture
     final public static function isUriToPathWritable(string $value,?string $host=null):bool
     {
-        $return = false;
         $uriPath = static::uriToPath($value,$host);
-
-        if(static::isWritable($uriPath))
-        $return = true;
-
-        return $return;
+        return static::isWritable($uriPath);
     }
 
 
@@ -174,13 +159,8 @@ class Finder extends Root
     // retourne vrai si l'uri existe et est éxécutable
     final public static function isUriToPathExecutable(string $value,?string $host=null):bool
     {
-        $return = false;
         $uriPath = static::uriToPath($value,$host);
-
-        if(static::isExecutable($uriPath))
-        $return = true;
-
-        return $return;
+        return static::isExecutable($uriPath);
     }
 
 
@@ -213,13 +193,8 @@ class Finder extends Root
     // retourne vrai si le chemin existe et qu'il est lisible ou si le chemin n'existe pas et qu'il est créable
     final public static function isReadableOrCreatable($path):bool
     {
-        $return = false;
         $path = static::path($path);
-
-        if(static::isReadable($path,false) || self::isCreatable($path))
-        $return = true;
-
-        return $return;
+        return static::isReadable($path,false) || self::isCreatable($path);
     }
 
 
@@ -228,13 +203,8 @@ class Finder extends Root
     // retourne vrai si le chemin existe et qu'il est écrivable ou si le chemin n'existe pas et qu'il est créable
     final public static function isWritableOrCreatable($path):bool
     {
-        $return = false;
         $path = static::path($path);
-
-        if(static::isWritable($path,false) || self::isCreatable($path))
-        $return = true;
-
-        return $return;
+        return static::isWritable($path,false) || self::isCreatable($path);
     }
 
 

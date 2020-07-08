@@ -65,16 +65,12 @@ class Assoc extends Root
     // compare que les assoc ont toutes les clés du premier et ont le même count
     final public static function same(...$values):bool
     {
-        $return = false;
-
         foreach ($values as $key => $value)
         {
             $values[$key] = static::arr($value);
         }
 
-        $return = Arr::same(...$values);
-
-        return $return;
+        return Arr::same(...$values);
     }
 
 
@@ -106,16 +102,12 @@ class Assoc extends Root
     // compare que les assoc ont le même compte que le premier
     final public static function sameCount(...$values):bool
     {
-        $return = false;
-
         foreach ($values as $key => $value)
         {
             $values[$key] = static::arr($value);
         }
 
-        $return = Arr::sameCount(...$values);
-
-        return $return;
+        return Arr::sameCount(...$values);
     }
 
 
@@ -123,16 +115,12 @@ class Assoc extends Root
     // compare que les assoc ont toutes les clés du premier
     final public static function sameKey(...$values):bool
     {
-        $return = false;
-
         foreach ($values as $key => $value)
         {
             $values[$key] = static::arr($value);
         }
 
-        $return = Arr::sameKey(...$values);
-
-        return $return;
+        return Arr::sameKey(...$values);
     }
 
 
@@ -158,7 +146,6 @@ class Assoc extends Root
     // input string ou array
     public static function append(...$values):array
     {
-        $return = '';
         $array = [];
 
         foreach ($values as $k => $value)
@@ -169,9 +156,7 @@ class Assoc extends Root
             $array = Arr::replace($array,$value);
         }
 
-        $return = static::arr($array);
-
-        return $return;
+        return static::arr($array);
     }
 
 
