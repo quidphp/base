@@ -2253,13 +2253,13 @@ final class Html extends Root
         if($make === true)
         {
             if(!empty($thead))
-            $table .= self::thead(...$thead);
+            $table .= self::thead(...Arr::clean($thead));
 
             if(!empty($tbody) && Column::is($tbody))
-            $table .= self::tbody(...$tbody);
+            $table .= self::tbody(...Arr::clean($tbody));
 
             if(!empty($tfoot))
-            $table .= self::tfoot(...$tfoot);
+            $table .= self::tfoot(...Arr::clean($tfoot));
 
             $return = self::start('table',$table,$attr,$option);
         }
