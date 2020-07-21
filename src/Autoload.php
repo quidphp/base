@@ -33,9 +33,7 @@ final class Autoload extends Root
         if(!class_exists($class,false))
         {
             spl_autoload_call($class);
-
-            if(class_exists($class,false))
-            $return = true;
+            $return = (class_exists($class,false));
         }
 
         return $return;
@@ -65,9 +63,7 @@ final class Autoload extends Root
         if(is_string($value))
         {
             $extension = spl_autoload_extensions($value);
-
-            if($extension === $value)
-            $return = true;
+            $return = ($extension === $value);
         }
 
         return $return;

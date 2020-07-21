@@ -165,13 +165,8 @@ final class Num extends Root
     // si allowZero est true, retourne true si zero
     final public static function isPositive($value,bool $allowZero=false):bool
     {
-        $return = false;
         self::typecast($value);
-
-        if($value > 0 || ($allowZero === true && $value === 0))
-        $return = true;
-
-        return $return;
+        return $value > 0 || ($allowZero === true && $value === 0);
     }
 
 
@@ -180,13 +175,8 @@ final class Num extends Root
     // si allowZero est true, retourne true si zero
     final public static function isNegative($value,bool $allowZero=false):bool
     {
-        $return = false;
         self::typecast($value);
-
-        if($value < 0 || ($allowZero === true && $value === 0))
-        $return = true;
-
-        return $return;
+        return $value < 0 || ($allowZero === true && $value === 0);
     }
 
 
@@ -194,13 +184,8 @@ final class Num extends Root
     // vérifie que la valeur est un chiffre impair
     final public static function isOdd($value):bool
     {
-        $return = false;
         self::typecast($value);
-
-        if(is_int($value) && is_float($value / 2))
-        $return = true;
-
-        return $return;
+        return is_int($value) && is_float($value / 2);
     }
 
 
@@ -208,13 +193,8 @@ final class Num extends Root
     // vérifie que la valeur est un chiffre pair
     final public static function isEven($value):bool
     {
-        $return = false;
         self::typecast($value);
-
-        if(is_int($value) && is_int($value / 2))
-        $return = true;
-
-        return $return;
+        return is_int($value) && is_int($value / 2);
     }
 
 
@@ -228,9 +208,7 @@ final class Num extends Root
         if(is_numeric($value))
         {
             self::typecast($value);
-
-            if(is_string($value))
-            $return = true;
+            $return = (is_string($value));
         }
 
         return $return;
@@ -467,16 +445,10 @@ final class Num extends Root
         self::typecast($from,$value,$to);
 
         if($inclusive === true)
-        {
-            if($value >= $from && $value <= $to)
-            $return = true;
-        }
+        $return = ($value >= $from && $value <= $to);
 
         else
-        {
-            if($value > $from && $value < $to)
-            $return = true;
-        }
+        $return = ($value > $from && $value < $to);
 
         return $return;
     }

@@ -171,13 +171,8 @@ final class Response extends Root
     // possible de spécifier le code de comparaison en troisième argument, sinon utilise le courant
     final public static function isCodeBetween($from,$to,?int $code=null):bool
     {
-        $return = false;
         $code = (is_int($code))? $code:self::code();
-
-        if(is_int($from) && is_int($to) && $code >= $from && $code <= $to)
-        $return = true;
-
-        return $return;
+        return is_int($from) && is_int($to) && $code >= $from && $code <= $to;
     }
 
 
@@ -361,9 +356,7 @@ final class Response extends Root
                 if(Header::isStatus($status))
                 {
                     header($status,true);
-
-                    if(http_response_code() === $code)
-                    $return = true;
+                    $return = (http_response_code() === $code);
                 }
             }
         }
@@ -691,13 +684,8 @@ final class Response extends Root
     // change le content type de la réponse courante
     final public static function setContentType(string $value):bool
     {
-        $return = false;
         $contentType = Header::prepareContentType($value);
-
-        if(!empty($contentType) && self::setHeader('Content-Type',$contentType) === 1)
-        $return = true;
-
-        return $return;
+        return !empty($contentType) && self::setHeader('Content-Type',$contentType) === 1;
     }
 
 

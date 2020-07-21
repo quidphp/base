@@ -22,13 +22,8 @@ final class Nav extends Root
     // nav peut être un int ou un tableau
     final public static function isPage(int $value,$nav,int $limit):bool
     {
-        $return = false;
         $max = self::pageMax($nav,$limit);
-
-        if(is_int($max) && $value > 0 && $value <= $max)
-        $return = true;
-
-        return $return;
+        return is_int($max) && $value > 0 && $value <= $max;
     }
 
 
@@ -46,13 +41,8 @@ final class Nav extends Root
     // nav doit être un array
     final public static function isSpecificInPage($specific,int $value,array $nav,int $limit):bool
     {
-        $return = false;
         $specificPage = self::specificPage($specific,$nav,$limit);
-
-        if(is_int($specificPage) && $specificPage === $value)
-        $return = true;
-
-        return $return;
+        return is_int($specificPage) && $specificPage === $value;
     }
 
 

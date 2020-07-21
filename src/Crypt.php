@@ -192,13 +192,8 @@ final class Crypt extends Root
     // à partir d'une fonction CSPRNG
     final public static function randomBool(int $min=0,int $max=1):bool
     {
-        $return = false;
-
         $random = random_int($min,$max);
-        if($random === $min)
-        $return = true;
-
-        return $return;
+        return $random === $min;
     }
 
 

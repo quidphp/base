@@ -49,15 +49,10 @@ class Finder extends Root
     // si makePath est true, passe à la méthode path
     public static function is($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = static::path($path);
 
-        if(is_string($path) && file_exists($path))
-        $return = true;
-
-        return $return;
+        return is_string($path) && file_exists($path);
     }
 
 
@@ -65,15 +60,10 @@ class Finder extends Root
     // retourne vrai si le chemin existe et est lisible
     public static function isReadable($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = static::path($path);
 
-        if(static::is($path,false) && is_readable($path))
-        $return = true;
-
-        return $return;
+        return static::is($path,false) && is_readable($path);
     }
 
 
@@ -81,15 +71,10 @@ class Finder extends Root
     // retourne vrai si le chemin existe et est accessible en écriture
     public static function isWritable($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = static::path($path);
 
-        if(static::is($path,false) && is_writable($path))
-        $return = true;
-
-        return $return;
+        return static::is($path,false) && is_writable($path);
     }
 
 
@@ -97,15 +82,10 @@ class Finder extends Root
     // retourne vrai le chemin est éxécutable
     public static function isExecutable($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = static::path($path);
 
-        if(static::is($path,false) && is_executable($path))
-        $return = true;
-
-        return $return;
+        return static::is($path,false) && is_executable($path);
     }
 
 
@@ -119,9 +99,7 @@ class Finder extends Root
         if(is_string($value))
         {
             $uri = static::pathToUri($value);
-
-            if(is_string($uri))
-            $return = true;
+            $return = (is_string($uri));
         }
 
         return $return;
@@ -228,9 +206,7 @@ class Finder extends Root
         if(is_string($path))
         {
             $basename = Path::basename($path);
-
-            if(!empty($basename) && !Str::isStart('.',$basename))
-            $return = true;
+            $return = (!empty($basename) && !Str::isStart('.',$basename));
         }
 
         return $return;
@@ -255,9 +231,7 @@ class Finder extends Root
         if(is_string($path))
         {
             $parent = Path::parent($path);
-
-            if(!empty($parent) && Dir::is($parent,false))
-            $return = true;
+            $return = (!empty($parent) && Dir::is($parent,false));
         }
 
         return $return;
@@ -274,9 +248,7 @@ class Finder extends Root
         if(is_string($path))
         {
             $parent = Path::parent($path);
-
-            if(!empty($parent) && Dir::isReadable($parent,false))
-            $return = true;
+            $return = (!empty($parent) && Dir::isReadable($parent,false));
         }
 
         return $return;
@@ -293,9 +265,7 @@ class Finder extends Root
         if(is_string($path))
         {
             $parent = Path::parent($path);
-
-            if(!empty($parent) && Dir::isWritable($parent,false))
-            $return = true;
+            $return = (!empty($parent) && Dir::isWritable($parent,false));
         }
 
         return $return;
@@ -312,9 +282,7 @@ class Finder extends Root
         if(is_string($path))
         {
             $parent = Path::parent($path);
-
-            if(!empty($parent) && Dir::isExecutable($parent,false))
-            $return = true;
+            $return = (!empty($parent) && Dir::isExecutable($parent,false));
         }
 
         return $return;
@@ -362,8 +330,7 @@ class Finder extends Root
                 else
                 $permission = Num::sub(2,1,$permission);
 
-                if(is_int($permission) && in_array($permission,static::$config['perms'][$type],true))
-                $return = true;
+                $return = (is_int($permission) && in_array($permission,static::$config['perms'][$type],true));
             }
         }
 
@@ -396,10 +363,7 @@ class Finder extends Root
         $return = false;
 
         if(is_string($value))
-        {
-            if(stripos($value,'http:') === 0 || stripos($value,'https:') === 0 || stripos($value,'ftp:') === 0)
-            $return = true;
-        }
+        $return = (stripos($value,'http:') === 0 || stripos($value,'https:') === 0 || stripos($value,'ftp:') === 0);
 
         return $return;
     }
@@ -509,9 +473,7 @@ class Finder extends Root
         if(static::isWritable($path,false) && is_int($mode))
         {
             $mode = static::permissionOctal($mode);
-
-            if(is_int($mode) && chmod($path,$mode))
-            $return = true;
+            $return = (is_int($mode) && chmod($path,$mode));
         }
 
         return $return;
@@ -539,13 +501,8 @@ class Finder extends Root
     // pour changer le owner d'un symlink une méthode étend celle-ci
     public static function ownerChange($user,$path):bool
     {
-        $return = false;
         $path = static::path($path);
-
-        if(is_scalar($user) && static::isWritable($path,false) && chown($path,$user))
-        $return = true;
-
-        return $return;
+        return is_scalar($user) && static::isWritable($path,false) && chown($path,$user);
     }
 
 
@@ -570,13 +527,8 @@ class Finder extends Root
     // pour changer le groupe d'un symlink une méthode étend celle-ci
     public static function groupChange($group,$path):bool
     {
-        $return = false;
         $path = static::path($path);
-
-        if(is_scalar($group) && static::isWritable($path,false) && chgrp($path,$group))
-        $return = true;
-
-        return $return;
+        return is_scalar($group) && static::isWritable($path,false) && chgrp($path,$group);
     }
 
 
@@ -1061,10 +1013,7 @@ class Finder extends Root
         if(is_string($path) && static::isWritable($path,false))
         {
             if(is_dir($path))
-            {
-                if(Dir::isEmpty($path) && rmdir($path))
-                $return = true;
-            }
+            $return = (Dir::isEmpty($path) && rmdir($path));
 
             elseif(is_link($path))
             $return = Symlink::unset($symlink);

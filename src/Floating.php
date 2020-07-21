@@ -33,7 +33,6 @@ final class Floating extends Root
     final public static function cast($value,bool $commaToDecimal=true):?float
     {
         $float = Num::castMore($value,$commaToDecimal);
-
         return (is_numeric($float))? (float) $float:null;
     }
 
@@ -71,9 +70,7 @@ final class Floating extends Root
         if(is_numeric($value))
         {
             Num::typecast($value);
-
-            if(self::is($value))
-            $return = true;
+            $return = (self::is($value));
         }
 
         return $return;
@@ -89,9 +86,7 @@ final class Floating extends Root
         if(is_numeric($value))
         {
             Num::typecast($value);
-
-            if(self::isNotEmpty($value))
-            $return = true;
+            $return = (self::isNotEmpty($value));
         }
 
         return $return;

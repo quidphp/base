@@ -243,9 +243,7 @@ final class Html extends Root
         if(is_string($value))
         {
             $value = trim($value);
-
-            if(Str::isStart('<',$value) && !Str::isStart('<?xml',$value))
-            $return = true;
+            $return = (Str::isStart('<',$value) && !Str::isStart('<?xml',$value));
         }
 
         return $return;
@@ -261,10 +259,7 @@ final class Html extends Root
         if(is_string($value) && array_key_exists($value,self::$config['wrap']) && is_array(self::$config['wrap'][$value]))
         {
             if(array_key_exists(0,self::$config['wrap'][$value]) && is_string(self::$config['wrap'][$value][0]))
-            {
-                if(array_key_exists(1,self::$config['wrap'][$value]) && is_string(self::$config['wrap'][$value][1]))
-                $return = true;
-            }
+            $return = (array_key_exists(1,self::$config['wrap'][$value]) && is_string(self::$config['wrap'][$value][1]));
         }
 
         return $return;
@@ -326,10 +321,7 @@ final class Html extends Root
     // retourne vrai si la méthode en est une de input hidden
     final public static function isHiddenTag($value,bool $inputMethod=true):bool
     {
-        $return = false;
-
-        if(is_string($value) && array_key_exists($value,self::$config['tag']['input']['all']) && self::$config['tag']['input']['all'][$value] === 'hidden')
-        $return = true;
+        $return = (is_string($value) && array_key_exists($value,self::$config['tag']['input']['all']) && self::$config['tag']['input']['all'][$value] === 'hidden');
 
         if($return === false && $inputMethod === true)
         $return = self::isInputGroup('hidden',$value);
@@ -423,10 +415,7 @@ final class Html extends Root
             $type = self::getTypeFromInputMethod($value);
 
             if(!empty($type) && array_key_exists($type,self::$config['tag']['input']['all']))
-            {
-                if(self::$config['tag']['input']['all'][$type] === $group)
-                $return = true;
-            }
+            $return = (self::$config['tag']['input']['all'][$type] === $group);
         }
 
         return $return;

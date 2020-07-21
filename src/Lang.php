@@ -30,13 +30,8 @@ final class Lang extends Root
     // retourne vrai si la langue est valide
     final public static function is($value):bool
     {
-        $return = false;
         $value = self::prepareCode($value);
-
-        if(!empty($value) && in_array($value,self::all(),true))
-        $return = true;
-
-        return $return;
+        return !empty($value) && in_array($value,self::all(),true);
     }
 
 

@@ -118,9 +118,7 @@ final class Mime extends Root
         {
             $value = strtolower($value);
             $extensions = self::extensionsFromGroup($mimeGroup);
-
-            if(in_array($value,$extensions,true))
-            $return = true;
+            $return = (in_array($value,$extensions,true));
         }
 
         return $return;

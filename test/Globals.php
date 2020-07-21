@@ -36,9 +36,9 @@ class Globals extends Base\Test
         assert(count(Base\Globals::all()) > 4);
 
         // set
-        assert(Base\Globals::set('2',21));
+        Base\Globals::set('2',21);
         assert(Base\Globals::get('2') === 21); // la globale $2 exite mais aucune façon d'aller chercher sa valeur
-        assert(Base\Globals::set('c',2));
+        Base\Globals::set('c',2);
         assert($c === 2);
         assert(Base\Globals::get('c') === 2);
         $c = 3;

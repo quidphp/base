@@ -291,7 +291,8 @@ final class Arrs extends Root
 
         foreach ($value as $v)
         {
-            $return[self::keyPrepare($v)] = self::get($v,$array,$sensitive);
+            $key = self::keyPrepare($v);
+            $return[$key] = self::get($v,$array,$sensitive);
         }
 
         return $return;
@@ -968,16 +969,7 @@ final class Arrs extends Root
         $return = Arr::in($value,$array,$sensitive);
 
         if($return === false)
-        {
-            foreach ($array as $k => $v)
-            {
-                if(is_array($v) && self::in($value,$v,$sensitive))
-                {
-                    $return = true;
-                    break;
-                }
-            }
-        }
+        $return = Arr::some($array,fn($v) => is_array($v) && self::in($value,$v,$sensitive));
 
         return $return;
     }
@@ -991,18 +983,7 @@ final class Arrs extends Root
         $return = false;
 
         if(!empty($values))
-        {
-            $return = true;
-
-            foreach ($values as $k => $v)
-            {
-                if(!self::in($v,$array,$sensitive))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($values,fn($v) => self::in($v,$array,$sensitive));
 
         return $return;
     }

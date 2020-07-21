@@ -21,15 +21,10 @@ final class Symlink extends Finder
     // retourne vrai si le chemin est un lien symbolique
     final public static function is($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = self::path($path);
 
-        if(is_string($path) && is_link($path))
-        $return = true;
-
-        return $return;
+        return is_string($path) && is_link($path);
     }
 
 
@@ -37,15 +32,10 @@ final class Symlink extends Finder
     // retourne vrai si le chemin est un lien symbolique existant et lisible
     final public static function isReadable($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = self::path($path);
 
-        if(self::is($path,false) && self::isPermission('readable',$path))
-        $return = true;
-
-        return $return;
+        return self::is($path,false) && self::isPermission('readable',$path);
     }
 
 
@@ -53,15 +43,10 @@ final class Symlink extends Finder
     // retourne vrai si le chemin est un lien symbolique existant et accessible en écriture
     final public static function isWritable($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = self::path($path);
 
-        if(self::is($path,false) && self::isPermission('writable',$path))
-        $return = true;
-
-        return $return;
+        return self::is($path,false) && self::isPermission('writable',$path);
     }
 
 
@@ -69,15 +54,10 @@ final class Symlink extends Finder
     // retourne vrai le chemin est un lien symbolique existant et éxécutable
     final public static function isExecutable($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = self::path($path);
 
-        if(self::is($path,false) && self::isPermission('executable',$path))
-        $return = true;
-
-        return $return;
+        return self::is($path,false) && self::isPermission('executable',$path);
     }
 
 
@@ -127,13 +107,8 @@ final class Symlink extends Finder
     // change le owner du symlink
     final public static function ownerChange($user,$path):bool
     {
-        $return = false;
         $path = self::path($path);
-
-        if(is_scalar($user) && self::isWritable($path,false) && lchown($path,$user))
-        $return = true;
-
-        return $return;
+        return is_scalar($user) && self::isWritable($path,false) && lchown($path,$user);
     }
 
 
@@ -155,13 +130,8 @@ final class Symlink extends Finder
     // change le groupe du symlink
     final public static function groupChange($group,$path):bool
     {
-        $return = false;
         $path = self::path($path);
-
-        if(is_scalar($group) && self::isWritable($path,false) && lchgrp($path,$group))
-        $return = true;
-
-        return $return;
+        return is_scalar($group) && self::isWritable($path,false) && lchgrp($path,$group);
     }
 
 
@@ -501,9 +471,7 @@ final class Symlink extends Finder
         if(is_string($target) && is_string($path))
         {
             self::unset($path);
-
-            if(self::set($path,$target))
-            $return = true;
+            $return = (self::set($path,$target));
         }
 
         return $return;

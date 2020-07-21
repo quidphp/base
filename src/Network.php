@@ -21,13 +21,8 @@ final class Network extends Root
     // retourne vrai si le hostname est accessible ua port spécifié
     final public static function isOnline(string $hostname,int $port=80,int $timeout=2,&$errno=null,&$errstr=null):bool
     {
-        $return = false;
         $ping = self::ping($hostname,$port,$timeout,$errno,$errstr);
-
-        if(is_numeric($ping))
-        $return = true;
-
-        return $return;
+        return is_numeric($ping);
     }
 
 

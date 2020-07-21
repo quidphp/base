@@ -54,9 +54,7 @@ final class Segment extends Root
         {
             $in = Str::pos($delimiter[0],$value);
             $out = Str::posRev($delimiter[1],$value);
-
-            if(is_int($in) && is_int($out) && $out > $in)
-            $return = true;
+            $return = (is_int($in) && is_int($out) && $out > $in);
         }
 
         return $return;

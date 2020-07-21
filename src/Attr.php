@@ -168,8 +168,7 @@ final class Attr extends Listing
                 $values[$key] = Arrs::keysSort($values[$key]);
             }
 
-            if(Arr::sameKeyValue(...$values))
-            $return = true;
+            $return = (Arr::sameKeyValue(...$values));
         }
 
         return $return;

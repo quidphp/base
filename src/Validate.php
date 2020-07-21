@@ -473,8 +473,7 @@ final class Validate extends Root
             elseif(strpos($input,'/') !== false)
             $regex = $input;
 
-            if(is_string($regex) && preg_match($regex,$value))
-            $return = true;
+            $return = (is_string($regex) && preg_match($regex,$value));
         }
 
         return $return;
@@ -490,8 +489,7 @@ final class Validate extends Root
         if(is_scalar($value))
         {
             $value = (string) $value;
-            if(preg_match($regex,$value))
-            $return = true;
+            $return = (!empty(preg_match($regex,$value)));
         }
 
         return $return;
@@ -507,8 +505,7 @@ final class Validate extends Root
         if((is_object($class) || is_string($class)) && (is_object($value) || is_string($value)))
         {
             $class = get_class($class);
-            if(is_a($value,$class,true))
-            $return = true;
+            $return = (is_a($value,$class,true));
         }
 
         return $return;
@@ -974,8 +971,7 @@ final class Validate extends Root
                 break;
             }
 
-            if($r === true)
-            $return = true;
+            $return = ($r === true);
         }
 
         return $return;

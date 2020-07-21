@@ -140,9 +140,7 @@ class Path extends Set
         if(is_string($value))
         {
             $value = static::stripStart($value);
-
-            if(strpos($value,static::$config['argument']) === 0)
-            $return = true;
+            $return = (strpos($value,static::$config['argument']) === 0);
         }
 
         return $return;
@@ -175,14 +173,9 @@ class Path extends Set
     // retourne vrai si la valeur parent est un sous-directoire dans le chemin de path
     final public static function isParent(string $parent,string $path):bool
     {
-        $return = false;
         $parent = static::str($parent);
         $parents = static::parents($path);
-
-        if(in_array($parent,$parents,true))
-        $return = true;
-
-        return $return;
+        return in_array($parent,$parents,true);
     }
 
 
@@ -197,9 +190,7 @@ class Path extends Set
         if(is_string($target) || is_array($target))
         {
             $extension = static::extension($path);
-
-            if(!empty($extension) && Arr::in($extension,(array) $target,false))
-            $return = true;
+            $return = (!empty($extension) && Arr::in($extension,(array) $target,false));
         }
 
         return $return;

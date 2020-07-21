@@ -292,8 +292,7 @@ final class Csv extends File
                 }
             }
 
-            if(is_int($put))
-            $return = true;
+            $return = (is_int($put));
         }
 
         return $return;

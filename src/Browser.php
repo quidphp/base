@@ -81,8 +81,7 @@ final class Browser extends Root
         if(is_string($value))
         {
             $cap = self::cap($value);
-            if(!empty($cap['browser']) && $cap['browser'] === 'IE' && !empty($cap['version']) && (int) $cap['version'] < 11)
-            $return = true;
+            $return = (!empty($cap['browser']) && $cap['browser'] === 'IE' && !empty($cap['version']) && (int) $cap['version'] < 11);
         }
 
         return $return;

@@ -178,10 +178,7 @@ final class Arr extends Root
             if(is_int($value[0]) && $value[0] >= 0)
             {
                 if(is_int($value[1]) && $value[1] >= $value[0])
-                {
-                    if(is_int($value[2]) && $value[2] > 0)
-                    $return = true;
-                }
+                $return = (is_int($value[2]) && $value[2] > 0);
             }
         }
 
@@ -1596,8 +1593,6 @@ final class Arr extends Root
     // mb par défaut lors de la recherche insensitive
     final public static function in($value,array $array,bool $sensitive=true,bool $debug=false):bool
     {
-        $return = false;
-
         if($sensitive === false)
         {
             $array = self::valuesLower($array);
@@ -1605,10 +1600,7 @@ final class Arr extends Root
             $value = (is_array($value))? self::map($value,$closure):$closure($value);
         }
 
-        if(in_array($value,$array,true))
-        $return = true;
-
-        return $return;
+        return in_array($value,$array,true);
     }
 
 
@@ -2223,9 +2215,7 @@ final class Arr extends Root
                     if(array_key_exists($key,$array))
                     {
                         $value = (array) $value;
-
-                        if(in_array($array[$key],$value,true))
-                        $return = true;
+                        $return = (in_array($array[$key],$value,true));
                     }
 
                     if($return === true)
@@ -2583,16 +2573,12 @@ final class Arr extends Root
     // retourne vrai si l'index existe dans le tableau
     final public static function indexExists(int $index,array $array):bool
     {
-        $return = false;
         $array = array_values($array);
 
         if($index < 1)
         $index = self::indexPrepare($index,count($array));
 
-        if(array_key_exists($index,$array))
-        $return = true;
-
-        return $return;
+        return array_key_exists($index,$array);
     }
 
 
@@ -2808,8 +2794,7 @@ final class Arr extends Root
                 $array = self::keysLower($array,true);
             }
 
-            if(array_key_exists($key,$array))
-            $return = true;
+            $return = (array_key_exists($key,$array));
         }
 
         return $return;
@@ -3510,13 +3495,8 @@ final class Arr extends Root
     // support pour recherche insensible à la case
     final public static function valuesAre(array $values,array $array,bool $sensitive=true):bool
     {
-        $return = false;
-
         $unique = self::unique($array,false,$sensitive);
-        if(self::ins($unique,$values,$sensitive))
-        $return = true;
-
-        return $return;
+        return self::ins($unique,$values,$sensitive);
     }
 
 

@@ -129,9 +129,7 @@ final class Ini extends Root
         if(is_scalar($value))
         {
             $value = (string) $value;
-
-            if(!empty($key) && ini_set($key,$value) !== false)
-            $return = true;
+            $return = (!empty($key) && ini_set($key,$value) !== false);
         }
 
         return $return;

@@ -125,9 +125,7 @@ final class Header extends Listing
         {
             $statusKey = self::$config['status'];
             $assoc = self::arr($header);
-
-            if(is_string($statusKey) && array_key_exists($statusKey,$assoc) && is_string($assoc[$statusKey]))
-            $return = true;
+            $return = (is_string($statusKey) && array_key_exists($statusKey,$assoc) && is_string($assoc[$statusKey]));
         }
 
         return $return;
@@ -149,14 +147,7 @@ final class Header extends Listing
                 if(!is_array($value))
                 $value = [$value];
 
-                foreach ($value as $v)
-                {
-                    if(is_numeric($v) && $code === (int) $v)
-                    {
-                        $return = true;
-                        break;
-                    }
-                }
+                $return = Arr::some($value,fn($v) => is_numeric($v) && $code === (int) $v);
             }
         }
 
@@ -173,9 +164,7 @@ final class Header extends Listing
         if(is_array($header))
         {
             $code = self::code($header);
-
-            if(is_int($from) && is_int($to) && $code >= $from && $code <= $to)
-            $return = true;
+            $return = (is_int($from) && is_int($to) && $code >= $from && $code <= $to);
         }
 
         return $return;
@@ -219,9 +208,7 @@ final class Header extends Listing
                 {
                     $parsedContentType = self::parseContentType($contentType,false);
                     $mimedContentType = self::parseContentType($contentType,true);
-
-                    if(in_array($value,[$parsedContentType,$mimedContentType],true))
-                    $return = true;
+                    $return = (in_array($value,[$parsedContentType,$mimedContentType],true));
                 }
             }
         }

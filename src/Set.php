@@ -176,8 +176,7 @@ class Set extends Root
                     $pattern[$key] = $set[$key];
                 }
 
-                if($pattern === $set)
-                $return = true;
+                $return = ($pattern === $set);
             }
         }
 

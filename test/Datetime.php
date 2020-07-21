@@ -189,11 +189,11 @@ class Datetime extends Base\Test
         assert(count(Base\Datetime::getFormatReplace('j %m% Y')['replace']['%']) === 12);
 
         // setFormat
-        assert(Base\Datetime::setFormat('yearz','Y'));
+        Base\Datetime::setFormat('yearz','Y');
         assert(Base\Datetime::format('yearz',$timestamp) === '2017');
 
         // unsetFormat
-        assert(Base\Datetime::unsetFormat('yearz'));
+        Base\Datetime::unsetFormat('yearz');
         assert(Base\Datetime::format('yearz') !== '2017');
 
         // parseFormat

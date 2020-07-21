@@ -218,15 +218,13 @@ final class Str extends Root
                 if(strpos($pattern,$char) === 0)
                 {
                     $pattern = substr($pattern,$charLen);
-                    if(self::isEnd($pattern,$value,$sensitive))
-                    $return = true;
+                    $return = (self::isEnd($pattern,$value,$sensitive));
                 }
 
                 elseif(strpos($pattern,$char) === (strlen($pattern) - $charLen))
                 {
                     $pattern = substr($pattern,0,-$charLen);
-                    if(self::isStart($pattern,$value,$sensitive))
-                    $return = true;
+                    $return = (self::isStart($pattern,$value,$sensitive));
                 }
             }
         }
@@ -582,18 +580,13 @@ final class Str extends Root
     // retourne vrai si la chaine contient le needle
     final public static function in(string $needle,string $str,bool $sensitive=true,int $offset=0):bool
     {
-        $return = false;
-
         if($sensitive === true)
         $position = self::pos($needle,$str,$offset,false);
 
         else
         $position = self::ipos($needle,$str,$offset,true);
 
-        if(is_numeric($position))
-        $return = true;
-
-        return $return;
+        return is_numeric($position);
     }
 
 

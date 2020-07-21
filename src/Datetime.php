@@ -114,13 +114,8 @@ final class Datetime extends Root
     // la valeur peut être une année 4 chiffres ou un timestamp
     final public static function isYearLeap($value=null,$format=null):bool
     {
-        $return = false;
         $value = self::time($value,$format,true);
-
-        if(is_int($value) && date('L',$value) === '1')
-        $return = true;
-
-        return $return;
+        return is_int($value) && date('L',$value) === '1';
     }
 
 
@@ -128,13 +123,8 @@ final class Datetime extends Root
     // retourne vrai si la temps donné est aujourd'hui
     final public static function isToday($value=null,$format=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
-
-        if(is_int($value) && self::floorDay($value) === self::floorDay(null))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::floorDay($value) === self::floorDay(null);
     }
 
 
@@ -142,14 +132,9 @@ final class Datetime extends Root
     // retourne vrai si la temps donné est demain
     final public static function isTomorrow($value=null,$format=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
         $timestamp = self::addDay(1);
-
-        if(is_int($value) && self::floorDay($value) === self::floorDay($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::floorDay($value) === self::floorDay($timestamp);
     }
 
 
@@ -157,14 +142,9 @@ final class Datetime extends Root
     // retourne vrai si la temps donné est hier
     final public static function isYesterday($value=null,$format=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
         $timestamp = self::addDay(-1);
-
-        if(is_int($value) && self::floorDay($value) === self::floorDay($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::floorDay($value) === self::floorDay($timestamp);
     }
 
 
@@ -172,13 +152,8 @@ final class Datetime extends Root
     // retourne vrai si le temps est durant le week-end (samedi, dimanche)
     final public static function isWeekend($value=null,$format=null):bool
     {
-        $return = false;
         $dayNo = self::weekDay($value,null,$format);
-
-        if(in_array($dayNo,[0,6],true))
-        $return = true;
-
-        return $return;
+        return in_array($dayNo,[0,6],true);
     }
 
 
@@ -186,13 +161,8 @@ final class Datetime extends Root
     // retourne vrai si le temps donné a la même année que timestamp
     final public static function isYear($value=null,$format=null,?int $timestamp=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
-
-        if(is_int($value) && self::year($value) === self::year($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::year($value) === self::year($timestamp);
     }
 
 
@@ -200,13 +170,8 @@ final class Datetime extends Root
     // retourne vrai si le temps donné est identique jusqu'au mois de timestamp
     final public static function isMonth($value=null,$format=null,?int $timestamp=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
-
-        if(is_int($value) && self::floorMonth($value) === self::floorMonth($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::floorMonth($value) === self::floorMonth($timestamp);
     }
 
 
@@ -214,13 +179,8 @@ final class Datetime extends Root
     // retourne vrai si le temps donné est identique jusqu'au jour de timestamp
     final public static function isDay($value=null,$format=null,?int $timestamp=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
-
-        if(is_int($value) && self::floorDay($value) === self::floorDay($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::floorDay($value) === self::floorDay($timestamp);
     }
 
 
@@ -236,13 +196,8 @@ final class Datetime extends Root
     // retourne vrai si le temps donné est identique jusqu'à l'heure de timestamp
     final public static function isHour($value=null,$format=null,?int $timestamp=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
-
-        if(is_int($value) && self::floorHour($value) === self::floorHour($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::floorHour($value) === self::floorHour($timestamp);
     }
 
 
@@ -250,13 +205,8 @@ final class Datetime extends Root
     // retourne vrai si le temps donné est identique jusqu'à la minute de timestamp
     final public static function isMinute($value=null,$format=null,?int $timestamp=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
-
-        if(is_int($value) && self::floorMinute($value) === self::floorMinute($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && self::floorMinute($value) === self::floorMinute($timestamp);
     }
 
 
@@ -264,13 +214,8 @@ final class Datetime extends Root
     // retourne vrai si le temps donné est identique à timestamp
     final public static function isSecond($value=null,$format=null,?int $timestamp=null):bool
     {
-        $return = false;
         $value = self::time($value,$format);
-
-        if(is_int($value) && $value === self::time($timestamp))
-        $return = true;
-
-        return $return;
+        return is_int($value) && $value === self::time($timestamp);
     }
 
 
@@ -289,9 +234,8 @@ final class Datetime extends Root
             {
                 $parse = Arr::cleanEmpty($parse);
                 $get = Arr::cleanEmpty($get);
-
-                if(Arr::gets(array_keys($parse),$get) === $parse)
-                $return = true;
+                $keys = array_keys($parse);
+                $return = (Arr::gets($keys,$get) === $parse);
             }
         }
 
@@ -617,33 +561,19 @@ final class Datetime extends Root
 
     // setFormat
     // ajoute ou modifie un format dans les config
-    final public static function setFormat($key,string $value):bool
+    final public static function setFormat($key,string $value):void
     {
-        $return = false;
-
         if((is_string($key) || is_int($key)) && !empty($value))
-        {
-            self::$config['format']['date'][$key] = $value;
-            $return = true;
-        }
-
-        return $return;
+        self::$config['format']['date'][$key] = $value;
     }
 
 
     // unsetFormat
     // enlève un format des config
-    final public static function unsetFormat($key):bool
+    final public static function unsetFormat($key):void
     {
-        $return = false;
-
         if((is_string($key) || is_int($key)) && array_key_exists($key,self::$config['format']['date']))
-        {
-            unset(self::$config['format']['date'][$key]);
-            $return = true;
-        }
-
-        return $return;
+        unset(self::$config['format']['date'][$key]);
     }
 
 

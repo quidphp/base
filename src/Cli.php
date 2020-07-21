@@ -85,8 +85,7 @@ final class Cli extends Root
             if(!is_array($value))
             $value = (array) $value;
 
-            if(in_array($line,$value,true))
-            $return = true;
+            $return = (in_array($line,$value,true));
         }
 
         return $return;

@@ -62,9 +62,7 @@ final class Http extends Root
         if(is_string($value))
         {
             $value = strtolower($value);
-
-            if(in_array($value,['get','post'],true))
-            $return = true;
+            $return = (in_array($value,['get','post'],true));
         }
 
         return $return;
@@ -131,13 +129,8 @@ final class Http extends Root
     // retourne le booléean ssl à partir d'un scheme, d'un booléen ou d'un numéro de port
     final public static function ssl($value):bool
     {
-        $return = false;
         $value = (is_string($value))? strtolower($value):$value;
-
-        if(is_scalar($value) && ($value === 'https' || $value === 443 || $value === true))
-        $return = true;
-
-        return $return;
+        return is_scalar($value) && ($value === 'https' || $value === 443 || $value === true);
     }
 
 

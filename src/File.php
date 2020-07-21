@@ -74,13 +74,8 @@ class File extends Finder
     // value peut être une string ou une resource
     final public static function isUploaded($value):bool
     {
-        $return = false;
         $value = static::path($value);
-
-        if(static::is($value,false) && is_uploaded_file($value))
-        $return = true;
-
-        return $return;
+        return static::is($value,false) && is_uploaded_file($value);
     }
 
 
@@ -150,16 +145,7 @@ class File extends Finder
         $return = false;
 
         if(static::isUploadArray(...$values))
-        {
-            foreach ($values as $value)
-            {
-                if(in_array($value['error'],[1,2],true))
-                {
-                    $return = true;
-                    break;
-                }
-            }
-        }
+        $return = Arr::some($values,fn($value) => in_array($value['error'],[1,2],true));
 
         return $return;
     }
@@ -172,14 +158,9 @@ class File extends Finder
     // normalize les chemins si c'est Windows
     final public static function isLoaded($value):bool
     {
-        $return = false;
         $value = static::getLoadPath($value);
         $normalize = (Server::isWindows());
-
-        if(!empty($value) && in_array($value,static::loaded($normalize),true))
-        $return = true;
-
-        return $return;
+        return !empty($value) && in_array($value,static::loaded($normalize),true);
     }
 
 
@@ -221,13 +202,8 @@ class File extends Finder
     // retourne vrai si le fichier est plus petit que la taille maximale
     final public static function isMaxSize(int $size,$value):bool
     {
-        $return = false;
         $v = static::size($value);
-
-        if(is_int($v) && $size >= $v)
-        $return = true;
-
-        return $return;
+        return is_int($v) && $size >= $v;
     }
 
 

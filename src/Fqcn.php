@@ -36,14 +36,10 @@ final class Fqcn extends Set
     // la comparaison est insensible à la case
     final public static function sameName($same,$value):bool
     {
-        $return = false;
         $same = (string) self::name($same);
         $value = (string) self::name($value);
 
-        if($same === $value || strtolower($same) === strtolower($value))
-        $return = true;
-
-        return $return;
+        return $same === $value || strtolower($same) === strtolower($value);
     }
 
 
@@ -52,14 +48,10 @@ final class Fqcn extends Set
     // la comparaison est insensible à la case
     final public static function sameNamespace($same,$value):bool
     {
-        $return = false;
         $same = (string) self::namespace($same);
         $value = (string) self::namespace($value);
 
-        if($same === $value || strtolower($same) === strtolower($value))
-        $return = true;
-
-        return $return;
+        return $same === $value || strtolower($same) === strtolower($value);
     }
 
 
@@ -75,9 +67,7 @@ final class Fqcn extends Set
         {
             $namespace = self::str($namespace);
             $value = (string) self::namespace($value);
-
-            if($namespace === $value || strtolower($namespace) === strtolower($value))
-            $return = true;
+            $return = ($namespace === $value || strtolower($namespace) === strtolower($value));
         }
 
         return $return;
@@ -89,14 +79,10 @@ final class Fqcn extends Set
     // la comparaison est insensible à la case
     final public static function inNamespace($namespace,$value):bool
     {
-        $return = false;
         $namespace = self::str($namespace);
         $value = self::str($value);
 
-        if(!empty($namespace) && !empty($value) && stripos($value,$namespace) === 0)
-        $return = true;
-
-        return $return;
+        return !empty($namespace) && !empty($value) && stripos($value,$namespace) === 0;
     }
 
 

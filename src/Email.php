@@ -132,6 +132,7 @@ final class Email extends Root
 
         if(!empty($message))
         {
+            $return = true;
             $mb = Encoding::isCharsetMb($message['charset']);
             $to = self::prepareAddress($message['to']);
             $subject = $message['subject'];
@@ -145,9 +146,6 @@ final class Email extends Root
                 else
                 $return = mail($to,$subject,$body,$headers);
             }
-
-            else
-            $return = true;
         }
 
         return $return;

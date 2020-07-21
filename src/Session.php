@@ -206,9 +206,7 @@ final class Session extends Root
                     if(self::isCallable($v))
                     {
                         $val = self::get($k);
-
-                        if($v('is',$val) === true)
-                        $return = true;
+                        $return = ($v('is',$val) === true);
                     }
 
                     if($return === false)
@@ -257,8 +255,7 @@ final class Session extends Root
         if(!is_numeric($value) && !empty($value))
         {
             session_id($value);
-            if(session_id() === $value)
-            $return = true;
+            $return = (session_id() === $value);
         }
 
         return $return;
@@ -287,15 +284,14 @@ final class Session extends Root
     final public static function validateId(string $id,?string $prefix=null):bool
     {
         $return = false;
-
         $length = Ini::get('session.sid_length');
+
         if(is_int($length) && ($prefix === null || (!empty($prefix) && strpos($id,$prefix) === 0)))
         {
             if(is_string($prefix))
             $length += strlen($prefix);
 
-            if($length === strlen($id))
-            $return = true;
+            $return = ($length === strlen($id));
         }
 
         return $return;
@@ -342,8 +338,7 @@ final class Session extends Root
         if(is_string($value) && !is_numeric($value) && !self::isStarted())
         {
             session_name($value);
-            if(session_name() === $value)
-            $return = true;
+            $return = (session_name() === $value);
         }
 
         return $return;
@@ -368,8 +363,7 @@ final class Session extends Root
         if($value >= 0 && !self::isStarted())
         {
             session_cache_expire($value);
-            if(session_cache_expire() === $value)
-            $return = true;
+            $return = (session_cache_expire() === $value);
         }
 
         return $return;
@@ -394,8 +388,7 @@ final class Session extends Root
         if(in_array($value,self::$config['cacheLimiter'],true) && !self::isStarted())
         {
             session_cache_limiter($value);
-            if(session_cache_limiter() === $value)
-            $return = true;
+            $return = (session_cache_limiter() === $value);
         }
 
         return $return;
@@ -420,8 +413,7 @@ final class Session extends Root
         if(in_array($value,self::$config['module'],true) && !self::isStarted())
         {
             session_module_name($value);
-            if(session_module_name() === $value)
-            $return = true;
+            $return = (session_module_name() === $value);
         }
 
         return $return;
@@ -502,8 +494,7 @@ final class Session extends Root
         if(!self::isStarted())
         {
             session_save_path($value);
-            if(session_save_path() === $value)
-            $return = true;
+            $return = (session_save_path() === $value);
         }
 
         return $return;

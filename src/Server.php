@@ -24,13 +24,8 @@ final class Server extends Root
     // retourne vrai si le os est la valeur donné en argument
     final public static function isOs($value):bool
     {
-        $return = false;
         $os = self::os();
-
-        if(is_string($os) && is_string($value) && stripos($os,$value) !== false)
-        $return = true;
-
-        return $return;
+        return is_string($os) && is_string($value) && stripos($os,$value) !== false;
     }
 
 
@@ -70,13 +65,8 @@ final class Server extends Root
     // retourne vrai si le software est la valeur donné en argument
     final public static function isSoftware($value):bool
     {
-        $return = false;
         $software = self::software();
-
-        if(is_string($software) && is_string($value) && stripos($software,$value) !== false)
-        $return = true;
-
-        return $return;
+        return is_string($software) && is_string($value) && stripos($software,$value) !== false;
     }
 
 
@@ -196,13 +186,8 @@ final class Server extends Root
     // retourne vrai si le module apache est chargé
     final public static function isApacheModule(string $value):bool
     {
-        $return = false;
         $modules = self::apacheModules();
-
-        if(is_array($modules) && in_array($value,$modules,true))
-        $return = true;
-
-        return $return;
+        return is_array($modules) && in_array($value,$modules,true);
     }
 
 

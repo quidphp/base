@@ -24,18 +24,7 @@ final class Column extends Root
         $return = false;
 
         if(is_array($value) && !empty($value))
-        {
-            $return = true;
-
-            foreach ($value as $v)
-            {
-                if(!is_array($v))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($value,fn($v) => is_array($v));
 
         return $return;
     }
@@ -48,18 +37,7 @@ final class Column extends Root
         $return = false;
 
         if(is_array($value) && !empty($value))
-        {
-            $return = true;
-
-            foreach ($value as $v)
-            {
-                if(!is_array($v) || !empty($v))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($value,fn($v) => is_array($v) && empty($v));
 
         return $return;
     }
@@ -72,18 +50,7 @@ final class Column extends Root
         $return = false;
 
         if(is_array($value) && !empty($value))
-        {
-            $return = true;
-
-            foreach ($value as $v)
-            {
-                if(!is_array($v) || empty($v))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($value,fn($v) => is_array($v) && !empty($v));
 
         return $return;
     }
@@ -96,18 +63,7 @@ final class Column extends Root
         $return = false;
 
         if(self::is($value))
-        {
-            $return = true;
-
-            foreach ($value as $v)
-            {
-                if(!Arr::isIndexed($v))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($value,fn($v) => Arr::isIndexed($v));
 
         return $return;
     }
@@ -120,18 +76,7 @@ final class Column extends Root
         $return = false;
 
         if(self::is($value))
-        {
-            $return = true;
-
-            foreach ($value as $v)
-            {
-                if(!Arr::isSequential($v))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($value,fn($v) => Arr::isSequential($v));
 
         return $return;
     }
@@ -144,18 +89,7 @@ final class Column extends Root
         $return = false;
 
         if(self::is($value))
-        {
-            $return = true;
-
-            foreach ($value as $v)
-            {
-                if(!Arr::isAssoc($v))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($value,fn($v) => Arr::isAssoc($v));
 
         return $return;
     }
@@ -168,18 +102,7 @@ final class Column extends Root
         $return = false;
 
         if(self::is($value))
-        {
-            $return = true;
-
-            foreach ($value as $v)
-            {
-                if(!Arr::isUni($v))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($value,fn($v) => Arr::isUni($v));
 
         return $return;
     }
@@ -376,13 +299,8 @@ final class Column extends Root
     // support pour recherche insensible à la case
     final public static function in(string $col,$value,array $array,bool $sensitive=true):bool
     {
-        $return = false;
         $array = self::value($col,$array);
-
-        if(!empty($array) && Arr::in($value,$array,$sensitive))
-        $return = true;
-
-        return $return;
+        return !empty($array) && Arr::in($value,$array,$sensitive);
     }
 
 
@@ -391,13 +309,8 @@ final class Column extends Root
     // support pour recherche insensible à la case
     final public static function ins(string $col,array $values,array $array,bool $sensitive=true):bool
     {
-        $return = false;
         $array = self::value($col,$array);
-
-        if(!empty($array) && Arr::ins($values,$array,$sensitive))
-        $return = true;
-
-        return $return;
+        return !empty($array) && Arr::ins($values,$array,$sensitive);
     }
 
 
@@ -810,18 +723,7 @@ final class Column extends Root
         $return = false;
 
         if(self::is($array))
-        {
-            $return = true;
-
-            foreach ($array as $value)
-            {
-                if(!Arr::keyExists($key,$value))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($array,fn($value) => Arr::keyExists($key,$value));
 
         return $return;
     }
@@ -834,18 +736,7 @@ final class Column extends Root
         $return = false;
 
         if(self::is($array))
-        {
-            $return = true;
-
-            foreach ($array as $value)
-            {
-                if(!Arr::keysExists($keys,$value))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($array,fn($value) => Arr::keysExists($keys,$value));
 
         return $return;
     }
@@ -858,18 +749,7 @@ final class Column extends Root
         $return = false;
 
         if(self::is($array))
-        {
-            $return = true;
-
-            foreach ($array as $value)
-            {
-                if(!Arr::keysAre($keys,$value))
-                {
-                    $return = false;
-                    break;
-                }
-            }
-        }
+        $return = Arr::every($array,fn($value) => Arr::keysAre($keys,$value));
 
         return $return;
     }

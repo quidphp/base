@@ -82,9 +82,7 @@ final class Uri extends Root
         if(is_string($value))
         {
             $type = self::type($value);
-
-            if($type === 'relative')
-            $return = true;
+            $return = ($type === 'relative');
         }
 
         return $return;
@@ -100,9 +98,7 @@ final class Uri extends Root
         if(is_string($value))
         {
             $type = self::type($value);
-
-            if($type === 'absolute')
-            $return = true;
+            $return = ($type === 'absolute');
         }
 
         return $return;
@@ -171,18 +167,15 @@ final class Uri extends Root
     // si l'uri n'a pas de host, retourne vrai
     final public static function isInternal(string $value,$host=null):bool
     {
-        $return = false;
+        $return = true;
 
         if(self::isAbsolute($value))
         {
             if(empty($host))
             $host = Request::host();
 
-            if(self::isHost($host,$value))
-            $return = true;
+            $return = (self::isHost($host,$value));
         }
-        else
-        $return = true;
 
         return $return;
     }
@@ -201,8 +194,7 @@ final class Uri extends Root
             if(empty($host))
             $host = Request::host();
 
-            if(!self::isHost($host,$value))
-            $return = true;
+            $return = (!self::isHost($host,$value));
         }
 
         return $return;
@@ -245,9 +237,7 @@ final class Uri extends Root
         if(is_string($target) || is_array($target))
         {
             $host = self::host($uri,$decode);
-
-            if(!empty($host) && Arr::in($host,(array) $target,false))
-            $return = true;
+            $return = (!empty($host) && Arr::in($host,(array) $target,false));
         }
 
         return $return;
@@ -258,13 +248,8 @@ final class Uri extends Root
     // retourne vrai si l'uri a le scheme host spécifié
     final public static function isSchemeHost($value,string $uri,bool $decode=false):bool
     {
-        $return = false;
         $schemeHost = self::schemeHost($uri,$decode);
-
-        if(is_string($value) && $value === $schemeHost)
-        $return = true;
-
-        return $return;
+        return is_string($value) && $value === $schemeHost;
     }
 
 
@@ -279,9 +264,7 @@ final class Uri extends Root
         if(is_string($target) || is_array($target))
         {
             $extension = self::extension($uri,$decode);
-
-            if(!empty($extension) && Arr::in($extension,(array) $target,false))
-            $return = true;
+            $return = (!empty($extension) && Arr::in($extension,(array) $target,false));
         }
 
         return $return;
@@ -299,9 +282,7 @@ final class Uri extends Root
         {
             $keys = (array) $keys;
             $query = self::queryArray($uri,true,$decode);
-
-            if(Arr::keysExists($keys,$query))
-            $return = true;
+            $return = (Arr::keysExists($keys,$query));
         }
 
         return $return;
@@ -320,13 +301,8 @@ final class Uri extends Root
     // retourne vrai si les deux uris ont le même schemeHost
     final public static function sameSchemeHost($value,string $uri,bool $decode=false):bool
     {
-        $return = false;
         $schemeHost = self::schemeHost($uri,$decode);
-
-        if(is_string($value) && self::schemeHost($value,$decode) === $schemeHost)
-        $return = true;
-
-        return $return;
+        return is_string($value) && self::schemeHost($value,$decode) === $schemeHost;
     }
 
 

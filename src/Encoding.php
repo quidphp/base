@@ -169,20 +169,13 @@ final class Encoding extends Root
 
     // setMb
     // change la valeur par défaut de mb
-    final public static function setMb($mb):bool
+    final public static function setMb($mb):void
     {
-        $return = false;
-
         if(is_string($mb))
         $mb = self::isMb($mb);
 
         if(is_bool($mb) || $mb === null)
-        {
-            self::$config['mb'] = $mb;
-            $return = true;
-        }
-
-        return $return;
+        self::$config['mb'] = $mb;
     }
 
 

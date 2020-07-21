@@ -29,12 +29,7 @@ final class Globals extends Root
     // retourne la valeur d'une variable globale
     final public static function get($key)
     {
-        $return = null;
-
-        if(Arr::isKey($key) && array_key_exists($key,$GLOBALS))
-        $return = $GLOBALS[$key];
-
-        return $return;
+        return (Arr::isKey($key) && array_key_exists($key,$GLOBALS))? $GLOBALS[$key]:null;
     }
 
 
@@ -49,17 +44,12 @@ final class Globals extends Root
 
     // set
     // change la valeur d'une variable globale
-    final public static function set($key,$value):bool
+    final public static function set($key,$value):void
     {
-        $return = false;
-
         if(Arr::isKey($key))
-        {
-            $GLOBALS[$key] = $value;
-            $return = true;
-        }
+        $GLOBALS[$key] = $value;
 
-        return $return;
+        return;
     }
 
 

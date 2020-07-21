@@ -88,7 +88,7 @@ final class ImageRaster extends File
     // génère le calcul de résolution pour le redimensionnement best fit
     final public static function bestFit(int $maxWidth,int $maxHeight,int $width,int $height,bool $expand=false):?array
     {
-        $image = null;
+        $return = null;
 
         if($maxWidth > 0 && $maxHeight > 0 && $width > 0 && $height > 0)
         {
@@ -127,12 +127,12 @@ final class ImageRaster extends File
             $newHeight = (int) $newHeight;
 
             if($expand === true)
-            $image = self::bestFitExpand($maxWidth,$maxHeight,$newWidth,$newHeight);
+            $return = self::bestFitExpand($maxWidth,$maxHeight,$newWidth,$newHeight);
             else
-            $image = ['width'=>$newWidth,'height'=>$newHeight];
+            $return = ['width'=>$newWidth,'height'=>$newHeight];
         }
 
-        return $image;
+        return $return;
     }
 
 
@@ -140,7 +140,7 @@ final class ImageRaster extends File
     // permet d'agrandir une image qui a été passé dans bestfit pour qu'elle prenne l'espace maximale
     final public static function bestFitExpand(int $maxWidth,int $maxHeight,int $width,int $height):?array
     {
-        $image = null;
+        $return = null;
 
         if($maxWidth > 0 && $maxHeight > 0 && $width > 0 && $height > 0)
         {
@@ -157,10 +157,10 @@ final class ImageRaster extends File
                 $newHeight *= $ratio;
             }
 
-            $image = ['width'=>(int) $newWidth,'height'=>(int) $newHeight];
+            $return = ['width'=>(int) $newWidth,'height'=>(int) $newHeight];
         }
 
-        return $image;
+        return $return;
     }
 }
 

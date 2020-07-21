@@ -23,15 +23,10 @@ final class Dir extends Finder
     // retourne vrai si le chemin est un directoire
     final public static function is($path,bool $makePath=true):bool
     {
-        $return = false;
-
         if($makePath === true)
         $path = self::path($path);
 
-        if(is_string($path) && is_dir($path))
-        $return = true;
-
-        return $return;
+        return is_string($path) && is_dir($path);
     }
 
 
@@ -45,9 +40,7 @@ final class Dir extends Finder
         if(self::isReadable($path,false))
         {
             $res = self::open($path);
-
-            if(Res::isEmpty($res))
-            $return = true;
+            $return = (Res::isEmpty($res));
         }
 
         return $return;
@@ -64,9 +57,7 @@ final class Dir extends Finder
         if(self::isReadable($path,false))
         {
             $res = self::open($path);
-
-            if(Res::isNotEmpty($res))
-            $return = true;
+            $return = (Res::isNotEmpty($res));
         }
 
         return $return;
@@ -84,16 +75,7 @@ final class Dir extends Finder
         {
             $get = self::get($path);
             if(!empty($get))
-            {
-                foreach ($get as $v)
-                {
-                    if(self::is($v,false))
-                    {
-                        $return = true;
-                        break;
-                    }
-                }
-            }
+            $return = Arr::some($get,fn($v) => self::is($v,false));
         }
 
         return $return;

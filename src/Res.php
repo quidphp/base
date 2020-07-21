@@ -103,13 +103,8 @@ final class Res extends Root
     // retourne vrai si le flux est accessible en lecture
     final public static function isReadable($value):bool
     {
-        $return = false;
         $mode = self::mode($value,true);
-
-        if(is_string($mode) && in_array($mode,self::$config['readable'],true))
-        $return = true;
-
-        return $return;
+        return is_string($mode) && in_array($mode,self::$config['readable'],true);
     }
 
 
@@ -117,13 +112,8 @@ final class Res extends Root
     // retourne vrai si le flux est accessible en écriture
     final public static function isWritable($value):bool
     {
-        $return = false;
         $mode = self::mode($value,true);
-
-        if(is_string($mode) && in_array($mode,self::$config['writable'],true))
-        $return = true;
-
-        return $return;
+        return is_string($mode) && in_array($mode,self::$config['writable'],true);
     }
 
 
@@ -131,13 +121,8 @@ final class Res extends Root
     // retourne vrai si le mode du flux est binaire
     final public static function isBinary($value):bool
     {
-        $return = false;
         $mode = self::mode($value);
-
-        if(is_string($mode) && strpos($mode,self::$config['binary']) !== false)
-        $return = true;
-
-        return $return;
+        return is_string($mode) && strpos($mode,self::$config['binary']) !== false;
     }
 
 
@@ -154,13 +139,8 @@ final class Res extends Root
     // pas curl ni file_info
     final public static function isRegularType($value):bool
     {
-        $return = false;
         $type = self::type($value);
-
-        if(is_string($type) && !in_array($type,['curl','file_info'],true))
-        $return = true;
-
-        return $return;
+        return is_string($type) && !in_array($type,['curl','file_info'],true);
     }
 
 
@@ -192,12 +172,7 @@ final class Res extends Root
     // retourne vrai si le tableau de meta représente une ressource fichier
     final public static function isStreamMetaFile($value):bool
     {
-        $return = false;
-
-        if(is_array($value) && !empty($value['stream_type']) && $value['stream_type'] === 'STDIO')
-        $return = true;
-
-        return $return;
+        return is_array($value) && !empty($value['stream_type']) && $value['stream_type'] === 'STDIO';
     }
 
 
@@ -211,9 +186,7 @@ final class Res extends Root
         if(self::isStream($value))
         {
             $meta = stream_get_meta_data($value);
-
-            if(self::isStreamMetaFile($meta))
-            $return = true;
+            $return = (self::isStreamMetaFile($meta));
         }
 
         return $return;
@@ -229,9 +202,7 @@ final class Res extends Root
         if($return === true)
         {
             $path = self::uriRemoveScheme($value);
-
-            if(is_string($path) && File::is($path))
-            $return = true;
+            $return = (is_string($path) && File::is($path));
         }
 
         return $return;
@@ -517,9 +488,7 @@ final class Res extends Root
         if(is_string($target) || is_array($target))
         {
             $extension = self::extension($value);
-
-            if(!empty($extension) && in_array($extension,(array) $target,true))
-            $return = true;
+            $return = (!empty($extension) && in_array($extension,(array) $target,true));
         }
 
         return $return;

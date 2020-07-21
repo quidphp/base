@@ -32,9 +32,7 @@ final class Classe extends Root
         else
         {
             $value = Fqcn::str($value);
-
-            if(!empty($value) && class_exists($value,$autoload))
-            $return = true;
+            $return = (!empty($value) && class_exists($value,$autoload));
         }
 
         return $return;
@@ -50,9 +48,7 @@ final class Classe extends Root
         if(!is_object($value))
         {
             $value = Fqcn::str($value);
-
-            if(!empty($value) && interface_exists($value,$autoload))
-            $return = true;
+            $return = (!empty($value) && interface_exists($value,$autoload));
         }
 
         return $return;
@@ -68,9 +64,7 @@ final class Classe extends Root
         if(!is_object($value))
         {
             $value = Fqcn::str($value);
-
-            if(!empty($value) && trait_exists($value,$autoload))
-            $return = true;
+            $return = (!empty($value) && trait_exists($value,$autoload));
         }
 
         return $return;
@@ -90,10 +84,7 @@ final class Classe extends Root
         {
             $value = Fqcn::str($value);
             if(!empty($value))
-            {
-                if(class_exists($value,$autoload) || interface_exists($value,$autoload) || trait_exists($value,$autoload))
-                $return = true;
-            }
+            $return = (class_exists($value,$autoload) || interface_exists($value,$autoload) || trait_exists($value,$autoload));
         }
 
         return $return;
@@ -112,13 +103,8 @@ final class Classe extends Root
     // retourne vrai si le nom de la classe représente une classe anonyme
     final public static function isAnonymous($value):bool
     {
-        $return = false;
         $value = self::fqcn($value);
-
-        if(is_string($value) && strpos($value,'@') !== false)
-        $return = true;
-
-        return $return;
+        return is_string($value) && strpos($value,'@') !== false;
     }
 
 
@@ -152,14 +138,9 @@ final class Classe extends Root
     // retourne vrai si parent est étendu par value
     final public static function extend($parent,$value,bool $autoload=true):bool
     {
-        $return = false;
         $parent = Fqcn::str($parent);
         $value = self::get($value,$autoload);
-
-        if(!empty($parent) && !empty($value) && is_subclass_of($value,$parent,$autoload))
-        $return = true;
-
-        return $return;
+        return !empty($parent) && !empty($value) && is_subclass_of($value,$parent,$autoload);
     }
 
 
@@ -191,13 +172,8 @@ final class Classe extends Root
     // retourne vrai si la méthode existe dans la valeur qu'elle soit publique ou privé
     final public static function hasMethod($method,$value,bool $autoload=true):bool
     {
-        $return = false;
         $value = self::get($value,$autoload);
-
-        if(!empty($value) && is_string($method) && method_exists($value,$method))
-        $return = true;
-
-        return $return;
+        return !empty($value) && is_string($method) && method_exists($value,$method);
     }
 
 
@@ -205,13 +181,8 @@ final class Classe extends Root
     // retourne vrai si la propriété existe dans la valeur qu'elle soit publique ou privé
     final public static function hasProperty($property,$value,bool $autoload=true):bool
     {
-        $return = false;
         $value = self::get($value,$autoload);
-
-        if(!empty($value) && is_string($property) && property_exists($value,$property))
-        $return = true;
-
-        return $return;
+        return !empty($value) && is_string($property) && property_exists($value,$property);
     }
 
 
@@ -226,9 +197,7 @@ final class Classe extends Root
         {
             $interface = Fqcn::str($interface);
             $interfaces = self::interfaces($value,$autoload);
-
-            if(!empty($interface) && !empty($interfaces) && Arr::in($interface,$interfaces,false))
-            $return = true;
+            $return = (!empty($interface) && !empty($interfaces) && Arr::in($interface,$interfaces,false));
         }
 
         return $return;
@@ -247,9 +216,7 @@ final class Classe extends Root
         {
             $trait = Fqcn::str($trait);
             $traits = self::traits($value,$deep,$autoload);
-
-            if(!empty($trait) && !empty($traits) && Arr::in($trait,$traits,false))
-            $return = true;
+            $return = (!empty($trait) && !empty($traits) && Arr::in($trait,$traits,false));
         }
 
         return $return;
@@ -356,8 +323,7 @@ final class Classe extends Root
                     elseif(is_array($interface))
                     {
                         $i = self::interfaces($value,true);
-                        if((empty($i) && empty($interface)) || Arr::ins($i,$interface,false,true))
-                        $return = true;
+                        $return = ((empty($i) && empty($interface)) || Arr::ins($i,$interface,false,true));
                     }
                 }
 
