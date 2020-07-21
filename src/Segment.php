@@ -69,7 +69,7 @@ final class Segment extends Root
     final public static function getDelimiter($delimiter=null,bool $escape=false):?array
     {
         $return = null;
-        $delimiter = ($delimiter === null)? self::def():$delimiter;
+        $delimiter ??= self::def();
 
         if(is_string($delimiter))
         {

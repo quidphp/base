@@ -408,7 +408,7 @@ final class Email extends Root
 
             if(self::is($email))
             {
-                $name = ($name === null)? self::name($email):$name;
+                $name ??= self::name($email);
                 $return = ['email'=>$email,'name'=>$name];
             }
         }

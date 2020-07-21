@@ -343,7 +343,7 @@ final class Debug extends Root
     final public static function traceStart(string $file,?int $line=null,bool $showArgs=false,?array $trace=null):array
     {
         $return = [];
-        $trace = ($trace === null)? self::trace(false,1):$trace;
+        $trace ??= self::trace(false,1);
         $capture = false;
 
         foreach ($trace as $key => $value)
@@ -374,7 +374,7 @@ final class Debug extends Root
     final public static function traceIndex(int $index=0,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):?array
     {
         $return = null;
-        $trace = ($trace === null)? self::trace(false,1):$trace;
+        $trace ??= self::trace(false,1);
 
         if(is_string($file))
         $trace = self::traceStart($file,$line,$showArgs,$trace);
@@ -394,7 +394,7 @@ final class Debug extends Root
     final public static function traceSlice(int $offset,?int $length=null,?string $file=null,?int $line=null,bool $showArgs=false,?array $trace=null):array
     {
         $return = [];
-        $trace = ($trace === null)? self::trace(false,1):$trace;
+        $trace ??= self::trace(false,1);
 
         if(is_string($file))
         $trace = self::traceStart($file,$line,$showArgs,$trace);
@@ -414,7 +414,7 @@ final class Debug extends Root
     final public static function traceLastCall(?string $file=null,?int $line=null,?array $trace=null):?string
     {
         $return = null;
-        $trace = ($trace === null)? self::trace(false,1):$trace;
+        $trace ??= self::trace(false,1);
 
         if(is_string($file))
         $trace = self::traceStart($file,$line,false,$trace);
@@ -445,7 +445,7 @@ final class Debug extends Root
     final public static function traceBeforeClass($class=null,bool $construct=true,?array $trace=null):?array
     {
         $return = null;
-        $trace = ($trace === null)? self::trace(false,1):$trace;
+        $trace ??= self::trace(false,1);
         $class = (empty($class))? [self::class]:Arr::merge($class,self::class);
 
         foreach ($trace as $key => $value)
@@ -469,7 +469,7 @@ final class Debug extends Root
     final public static function traceBeforeFile(string $file,?array $trace=null):?array
     {
         $return = null;
-        $trace = ($trace === null)? self::trace(false,1):$trace;
+        $trace ??= self::trace(false,1);
 
         foreach ($trace as $key => $value)
         {

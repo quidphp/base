@@ -1853,7 +1853,7 @@ final class Arr extends Root
 
             // cle normal de tableau
             elseif(self::isKey($v))
-            $return[$v] = ($value === null)? $k:$value;
+            $return[$v] = $value ?? $k;
 
             // autre valeur
             else
@@ -2000,7 +2000,7 @@ final class Arr extends Root
     final public static function explode(string $delimiter,array $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
     {
         $return = [];
-        $limit = ($limit === null)? PHP_INT_MAX:$limit;
+        $limit ??= PHP_INT_MAX;
 
         foreach ($value as $k => $v)
         {
@@ -2294,7 +2294,7 @@ final class Arr extends Root
     // wrapper pour array_slice
     final public static function sliceIndex(int $offset,?int $length,array $array):array
     {
-        $length = ($length === null)? 1:$length;
+        $length ??= 1;
         return array_slice($array,$offset,$length,true);
     }
 
@@ -2403,7 +2403,7 @@ final class Arr extends Root
     final public static function spliceIndex(int $offset,?int $length,array $array,?array $replace=null,bool $sensitive=true):array
     {
         $return = [];
-        $length = ($length === null)? 1:$length;
+        $length ??= 1;
         $keys = array_keys($array);
         $values = array_values($array);
 
@@ -3233,7 +3233,7 @@ final class Arr extends Root
     final public static function keysLower(array $array,?bool $mb=null):array
     {
         $return = [];
-        $mb = ($mb === null)? Encoding::getMb($mb):$mb;
+        $mb ??= Encoding::getMb($mb);
 
         if($mb === false)
         $return = array_change_key_case($array,CASE_LOWER);
@@ -3257,7 +3257,7 @@ final class Arr extends Root
     final public static function keysUpper(array $array,?bool $mb=null):array
     {
         $return = [];
-        $mb = ($mb === null)? Encoding::getMb($mb):$mb;
+        $mb ??= Encoding::getMb($mb);
 
         if($mb === false)
         $return = array_change_key_case($array,CASE_UPPER);
@@ -3898,7 +3898,7 @@ final class Arr extends Root
     final public static function valuesSliceLength(int $min,?int $max,array $array):array
     {
         $return = [];
-        $max = ($max === null)? PHP_INT_MAX:$max;
+        $max ??= PHP_INT_MAX;
 
         foreach ($array as $k => $v)
         {
@@ -3922,7 +3922,7 @@ final class Arr extends Root
     final public static function valuesStripLength(int $min,?int $max,array $array):array
     {
         $return = [];
-        $max = ($max === null)? PHP_INT_MAX:$max;
+        $max ??= PHP_INT_MAX;
 
         foreach ($array as $k => $v)
         {

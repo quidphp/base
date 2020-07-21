@@ -1068,7 +1068,7 @@ final class Arrs extends Root
 
             // cle normal de tableau
             elseif(Arr::isKey($v))
-            $return[$v] = ($value === null)? $k:$value;
+            $return[$v] = $value ?? $k;
 
             // tableau
             elseif(is_array($v))

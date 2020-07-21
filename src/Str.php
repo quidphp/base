@@ -720,7 +720,7 @@ final class Str extends Root
         $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
-        $length = ($length === null)? self::len($value,$mb):$length;
+        $length ??= self::len($value,$mb);
 
         if(is_int($offset) && is_int($length))
         {
@@ -761,7 +761,7 @@ final class Str extends Root
         $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
-        $length = ($length === null)? self::len($value,$mb):$length;
+        $length ??= self::len($value,$mb);
 
         if(is_int($offset) && is_int($length))
         {
@@ -1721,7 +1721,7 @@ final class Str extends Root
     {
         $return = '';
         $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
-        $max = ($max === null)? PHP_INT_MAX:$max;
+        $max ??= PHP_INT_MAX;
         $array = [];
 
         foreach (self::words($str,$mb) as $word)
@@ -1746,7 +1746,7 @@ final class Str extends Root
         $return = '';
         $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
         $array = [];
-        $max = ($max === null)? PHP_INT_MAX:$max;
+        $max ??= PHP_INT_MAX;
 
         foreach (self::words($str,$mb) as $word)
         {
@@ -1936,7 +1936,8 @@ final class Str extends Root
     // si clean est true, enlève les entrées du tableau cleanable
     final public static function explode(string $delimiter,string $value,?int $limit=PHP_INT_MAX,bool $trim=false,bool $clean=false):array
     {
-        $return = explode($delimiter,$value,($limit === null)? PHP_INT_MAX:$limit);
+        $limit ??= PHP_INT_MAX;
+        $return = explode($delimiter,$value,$limit);
 
         if(!empty($return))
         {

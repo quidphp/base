@@ -1511,7 +1511,7 @@ final class Res extends Root
             $option = Arr::unsets(['basename','mime'],$option);
 
             $return = self::open('php://'.$type,$option);
-            $mime = ($mime === null)? self::$config['phpStream']['mime']:$mime;
+            $mime ??= self::$config['phpStream']['mime'];
 
             if(!empty($return))
             {

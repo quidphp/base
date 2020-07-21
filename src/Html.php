@@ -1840,8 +1840,8 @@ final class Html extends Root
         {
             if($option['csrf'] === true || (is_array($option['csrf']) && !empty($option['csrf'][$method])))
             {
-                $csrf = Session::csrf();
-                $return .= self::csrf($csrf);
+                $csrfValue = $option['csrfValue'] ?? null;
+                $return .= self::csrf($csrfValue);
             }
         }
 
@@ -1856,7 +1856,10 @@ final class Html extends Root
         if(!empty($option['timestamp']))
         {
             if($option['timestamp'] === true || (is_array($option['timestamp']) && !empty($option['timestamp'][$method])))
-            $return .= self::timestamp();
+            {
+                $timestampValue = $option['timestampValue'] ?? null;
+                $return .= self::timestamp($timestampValue);
+            }
         }
 
         return $return;
@@ -2893,7 +2896,7 @@ final class Html extends Root
 
         if(!empty($csrf))
         {
-            $value = ($value === null)? Session::csrf():$value;
+            $value ??= Session::csrf();
             $attr = Arr::plus($attr,['name'=>$csrf['name']]);
             $attr['data-csrf'] = true;
 
@@ -2938,14 +2941,14 @@ final class Html extends Root
 
     // timestamp
     // génère un tag input hidden de type timestamp
-    final public static function timestamp(string $type='hidden',?array $option=null):string
+    final public static function timestamp($value=null,string $type='hidden',?array $option=null):string
     {
         $return = '';
         $timestamp = self::getTimestampName();
 
         if(!empty($timestamp))
         {
-            $value = Datetime::now();
+            $value ??= Datetime::now();
             $attr['name'] = $timestamp;
             $attr['data-timestamp'] = true;
             $return = self::input($type,$value,$attr,$option);
@@ -3059,7 +3062,7 @@ final class Html extends Root
     final public static function docOpen(?array $value=null,bool $default=true,?string $separator=null,bool $separatorAfter=false):string
     {
         $return = '';
-        $separator = ($separator === null)? self::$config['separator']:$separator;
+        $separator ??= self::$config['separator'];
 
         if($default === true)
         $value = Arrs::replace(self::$config['docOpen']['default'],$value);
@@ -3113,7 +3116,7 @@ final class Html extends Root
     final public static function headFromArray(?array $value=null,$separator=null):string
     {
         $return = '';
-        $separator = ($separator === null)? self::$config['separator']:$separator;
+        $separator ??= self::$config['separator'];
 
         if(!empty($value))
         {
@@ -3194,7 +3197,7 @@ final class Html extends Root
     final public static function docClose(?array $value=null,bool $default=true,bool $closeBody=true,?string $separator=null,bool $separatorBefore=false):string
     {
         $return = '';
-        $separator = ($separator === null)? self::$config['separator']:$separator;
+        $separator ??= self::$config['separator'];
 
         if($default === true)
         $value = Arrs::replace(self::$config['docClose']['default'],$value);

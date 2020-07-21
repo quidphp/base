@@ -58,8 +58,8 @@ final class Json extends Assoc
         $return = null;
         $option = self::option();
 
-        $flag = ($flag === null)? $option['encode']:$flag;
-        $depth = ($depth === null)? $option['depth']:$depth;
+        $flag ??= $option['encode'];
+        $depth ??= $option['depth'];
         $return = json_encode($value,$flag,$depth);
 
         return $return;
@@ -141,16 +141,12 @@ final class Json extends Assoc
     // note: json_decode retourne false si une erreur survient
     final public static function decode(string $value,?bool $assoc=null,?int $flag=null,?int $depth=null)
     {
-        $return = null;
         $option = self::option();
+        $assoc ??= $option['assoc'];
+        $depth ??= $option['depth'];
+        $flag ??= $option['decode'];
 
-        $assoc = ($assoc === null)? $option['assoc']:$assoc;
-        $depth = ($depth === null)? $option['depth']:$depth;
-        $flag = ($flag === null)? $option['decode']:$flag;
-
-        $return = json_decode($value,$assoc,$depth,$flag);
-
-        return $return;
+        return json_decode($value,$assoc,$depth,$flag);
     }
 
 

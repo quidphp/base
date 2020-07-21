@@ -472,7 +472,8 @@ final class Dir extends Finder
     // dig est true, ne peut pas être changé
     final public static function getFqcn($path,?string $fqcn=null,bool $dig=true,$extension=null,?array $option=null):?array
     {
-        return self::getExtension($path,($extension === null)? self::phpExtension():$extension,$dig,Arrs::replace($option,['in'=>['visible'=>true,'type'=>'file'],'format'=>'fqcn','fqcn'=>$fqcn]));
+        $extension ??= self::phpExtension();
+        return self::getExtension($path,$extension,$dig,Arrs::replace($option,['in'=>['visible'=>true,'type'=>'file'],'format'=>'fqcn','fqcn'=>$fqcn]));
     }
 
 
@@ -484,7 +485,7 @@ final class Dir extends Finder
     {
         $return = null;
         $get = self::getFormat($path,$format,$dig,$option);
-        $value = ($value === null)? Datetime::now():$value;
+        $value ??= Datetime::now();
 
         if(is_array($get))
         {

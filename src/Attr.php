@@ -747,9 +747,9 @@ final class Attr extends Listing
     // explodeClass
     // explose une string de classe
     // sensible à la case
-    final public static function explodeClass(string $value,?array $return=[]):array
+    final public static function explodeClass(string $value,?array $return=null):array
     {
-        $return = ($return === null)? []:$return;
+        $return ??= [];
 
         if(strpos($value,' ') !== false)
         {

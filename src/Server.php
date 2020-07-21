@@ -218,13 +218,8 @@ final class Server extends Root
     // retourne vrai si value est le même int que celui du user
     final public static function isOwner(int $value,$user=null):bool
     {
-        $return = false;
-        $user = ($user === null)? self::user():$user;
-
-        if($value === $user)
-        $return = true;
-
-        return $return;
+        $user ??= self::user();
+        return $value === $user;
     }
 
 
@@ -232,13 +227,8 @@ final class Server extends Root
     // retourne vrai si value est le même int que celui du groupe
     final public static function isGroup(int $value,$group=null):bool
     {
-        $return = false;
-        $group = ($group === null)? self::group():$group;
-
-        if($value === $group)
-        $return = true;
-
-        return $return;
+        $group ??= self::group();
+        return $value === $group;
     }
 
 

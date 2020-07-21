@@ -744,7 +744,7 @@ class Html extends Base\Test
 
         // formOpen
         assert(Base\Html::formOpen('test.php',true,['genuine'=>false,'timestamp'=>false,'csrf'=>false]) === "<form action='/test.php' method='post' enctype='multipart/form-data'>");
-        assert(Base\Html::formClose() === '</form>');
+        assert(Base\Html::formCl() === '</form>');
         assert(Base\Html::formOpen('test.php','get') === "<form action='/test.php' method='get'>");
 
         // inputOpen
