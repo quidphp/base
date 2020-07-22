@@ -330,7 +330,7 @@ class Html extends Base\Test
         assert(Base\Html::inputFile(1,'myname') === "<input name='myname' type='file' value='1'/>");
         assert(Base\Html::inputFile(1,['name'=>'myName','maxlength'=>200]) === "<input name='myName' type='file' value='1'/>");
         assert(Base\Html::select('<option>james</option>','ok') === "<select name='ok'><option>james</option></select>");
-        assert(Base\Html::select([1=>'james',2=>'james2'],'my',['title'=>'','selected'=>2]) === "<select name='my'><option value=''></option><option value='1'>james</option><option value='2' selected='selected'>james2</option></select>");
+        assert(Base\Html::select([1=>'james',2=>'james2'],'my',['title'=>'','selected'=>2]) === "<select name='my'><option value='' label=' '></option><option value='1'>james</option><option value='2' selected='selected'>james2</option></select>");
         assert(Base\Html::option('value','nameé') === "<option value='nameé'>value</option>");
         assert(Base\Html::option('value') === "<option value='value'>value</option>");
         assert(Base\Html::inputText('val','name',['multi'=>true]) === "<input name='name[]' type='text' maxlength='250' value='val'/>");
@@ -364,17 +364,17 @@ class Html extends Base\Test
         assert(Base\Html::div('test','my-class',['html'=>'sdasaddsa>!%!<span>']) === "<div class='my-class'>test</div>");
         assert(Base\Html::divLoop(['test','test2'],'field') === "<div class='field'>test</div><div class='field'>test2</div>");
         assert(Base\Html::divSpanLoop(['test','test2'],'field') === "<div><span class='field'>test</span></div><div><span class='field'>test2</span></div>");
-        assert(strlen(Base\Html::select(0,'withTitle',['title'=>'JAMES','value'=>1])) === 148);
-        assert(strlen(Base\Html::select(0,'withTitle',['title'=>'JAMES','checked'=>1])) === 128);
-        assert(strlen(Base\Html::select(0,'withTitle',['title'=>'JAMES','selected'=>1])) === 148);
+        assert(strlen(Base\Html::select(0,'withTitle',['title'=>'JAMES','value'=>1])) === 158);
+        assert(strlen(Base\Html::select(0,'withTitle',['title'=>'JAMES','checked'=>1])) === 138);
+        assert(strlen(Base\Html::select(0,'withTitle',['title'=>'JAMES','selected'=>1])) === 158);
         assert(Base\Html::select(0,'myName') === "<select name='myName'><option value='0'>false</option><option value='1'>true</option></select>");
-        assert(Base\Html::select(0,'withTitle',['title'=>'JAMES']) === "<select name='withTitle'><option value=''>JAMES</option><option value='0'>false</option><option value='1'>true</option></select>");
-        assert(Base\Html::select(0,'test',['title'=>true]) === "<select name='test'><option value=''></option><option value='0'>false</option><option value='1'>true</option></select>");
-        assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>'test'])) === 132);
-        assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>true])) === 128);
+        assert(Base\Html::select(0,'withTitle',['title'=>'JAMES']) === "<select name='withTitle'><option value='' label=' '>JAMES</option><option value='0'>false</option><option value='1'>true</option></select>");
+        assert(Base\Html::select(0,'test',['title'=>true]) === "<select name='test'><option value='' label=' '></option><option value='0'>false</option><option value='1'>true</option></select>");
+        assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>'test'])) === 142);
+        assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>true])) === 138);
         assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>false])) === 102);
         assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>null])) === 102);
-        assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>''])) === 128);
+        assert(strlen(Base\Html::select([1=>'james',2=>'Édouaard'],'my-select',['title'=>''])) === 138);
         $closure = fn() => 'a';
         $closureAttr = fn() => 'b';
         $closureArr = fn() => ['test'=>'ok','james'=>2];
@@ -824,7 +824,7 @@ class Html extends Base\Test
         $wrap = "<div class='labelDescription'>%label%%description%</div>%form%";
         assert(strlen(Base\Html::formWrapArray('test',$array,$wrap)) === 239);
         $array = ['label'=>'label','type'=>'select','required'=>true,'choices'=>[1,'deux',3]];
-        assert(strlen(Base\Html::formWrapArray(1,$array,$wrap)) === 255);
+        assert(strlen(Base\Html::formWrapArray(1,$array,$wrap)) === 265);
         $array = ['label'=>'label','description'=>'description','type'=>'checkbox','required'=>true,'choices'=>[1,'deux',3]];
         assert(strlen(Base\Html::formWrapArray(1,$array,$wrap,'myname')) === 613);
         assert(strlen(Base\Html::formWrapArray(1,$array,$wrap,'myname',null,null,['autoHidden'=>false])) === 576);
@@ -874,7 +874,7 @@ class Html extends Base\Test
         assert(Base\Html::options(0) === "<option value='0'>false</option><option value='1'>true</option>");
 
         // selectWithTitle
-        assert(Base\Html::selectWithTitle('james',['test','ok'],'my-select') === "<select name='my-select'><option value=''>james</option><option value='0'>test</option><option value='1'>ok</option></select>");
+        assert(Base\Html::selectWithTitle('james',['test','ok'],'my-select') === "<select name='my-select'><option value='' label=' '>james</option><option value='0'>test</option><option value='1'>ok</option></select>");
 
         // multiselect
         assert(strlen(Base\Html::multiselect([1=>'james',2=>'james2'],'name',['value'=>2])) === 136);

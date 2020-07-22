@@ -1666,6 +1666,9 @@ final class Html extends Root
                 if(in_array(Scalar::cast($return['value']),$option['selected'],true))
                 $return['selected'] = true;
             }
+
+            if(in_array($return['value'],['',null],true))
+            $return['label'] = ' ';
         }
 
         return $return;
