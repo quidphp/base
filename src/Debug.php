@@ -137,7 +137,7 @@ final class Debug extends Root
     // permet d'echo la valeur ou de la echo + flush si flush est true
     final public static function echoFlush($value,?bool $flush=null):void
     {
-        $flush = ($flush === null && Server::isCli())? true:false;
+        $flush = ($flush === null && Server::isCli());
 
         if($flush === true)
         Buffer::flushEcho($value);
