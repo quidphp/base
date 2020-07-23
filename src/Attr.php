@@ -168,7 +168,7 @@ final class Attr extends Listing
                 $values[$key] = Arrs::keysSort($values[$key]);
             }
 
-            $return = (Arr::sameKeyValue(...$values));
+            $return = Arr::sameKeyValue(...$values);
         }
 
         return $return;
@@ -776,7 +776,7 @@ final class Attr extends Listing
     final public static function classImplode(array $value):?string
     {
         $value = Str::wordImplode($value);
-        return (!empty($value))? $value:null;
+        return $value ?: null;
     }
 
 
@@ -1143,8 +1143,6 @@ final class Attr extends Listing
     // enlève une ou plusieurs uri sélectionné
     final public static function removeSelectedUri(string ...$uris):void
     {
-        $return = false;
-
         foreach ($uris as $uri)
         {
             if(array_key_exists($uri,self::$selectedUri))
