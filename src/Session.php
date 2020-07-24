@@ -1167,7 +1167,6 @@ final class Session extends Root
     final public static function regenerateId(bool $delete=true):bool
     {
         return (self::isStarted())? session_regenerate_id($delete):false;
-
     }
 
 
