@@ -899,7 +899,7 @@ final class Num extends Root
     // retourne le tableau de format pour la méthode format
     final public static function getFormat(?string $lang=null,?array $option=null):array
     {
-        return Arr::plus(Lang\En::getConfig('number/format'),Lang::numberFormat(null,$lang),$option);
+        return Arr::replace(Lang\En::getConfig('number/format'),Lang::numberFormat(null,$lang),$option);
     }
 
 
@@ -915,7 +915,7 @@ final class Num extends Root
     // retourne le tableau de format pour la méthode moneyFormat
     final public static function getPercentFormat(?string $lang=null,?array $option=null):array
     {
-        return Arr::plus(Lang\En::getConfig('number/percentFormat'),Lang::numberPercentFormat(null,$lang),$option);
+        return Arr::replace(Lang\En::getConfig('number/percentFormat'),Lang::numberPercentFormat(null,$lang),$option);
     }
 
 
@@ -932,7 +932,7 @@ final class Num extends Root
     // retourne le tableau de format pour la méthode moneyFormat
     final public static function getMoneyFormat(?string $lang=null,?array $option=null):array
     {
-        return Arr::plus(Lang\En::getConfig('number/moneyFormat'),Lang::numberMoneyFormat(null,$lang),$option);
+        return Arr::replace(Lang\En::getConfig('number/moneyFormat'),Lang::numberMoneyFormat(null,$lang),$option);
     }
 
 

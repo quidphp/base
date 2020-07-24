@@ -575,12 +575,11 @@ final class Session extends Root
     // retourne les paramètres de garbage collect
     final public static function getGarbageCollect():array
     {
-        $return = [];
-        $return['probability'] = Ini::get('session.gc_probability');
-        $return['divisor'] = Ini::get('session.gc_divisor');
-        $return['lifetime'] = Ini::get('session.gc_maxlifetime');
-
-        return $return;
+        return [
+            'probability'=>Ini::get('session.gc_probability'),
+            'divisor'=>Ini::get('session.gc_divisor'),
+            'lifetime'=>Ini::get('session.gc_maxlifetime')
+        ];
     }
 
 
@@ -724,7 +723,6 @@ final class Session extends Root
     final public static function info():array
     {
         $return = [];
-
         $return['isStarted'] = self::isStarted();
         $return['hasSaveHandler'] = self::hasSaveHandler();
         $return['status'] = self::status();
@@ -1168,12 +1166,8 @@ final class Session extends Root
     // la session doit être active
     final public static function regenerateId(bool $delete=true):bool
     {
-        $return = false;
+        return (self::isStarted())? session_regenerate_id($delete):false;
 
-        if(self::isStarted())
-        $return = session_regenerate_id($delete);
-
-        return $return;
     }
 
 
@@ -1182,12 +1176,7 @@ final class Session extends Root
     // la session doit être active
     final public static function encode():?string
     {
-        $return = null;
-
-        if(self::isStarted())
-        $return = session_encode();
-
-        return $return;
+        return (self::isStarted())? session_encode():null;
     }
 
 
@@ -1196,12 +1185,7 @@ final class Session extends Root
     // la session doit être active
     final public static function decode(string $value):bool
     {
-        $return = false;
-
-        if(self::isStarted())
-        $return = session_decode($value);
-
-        return $return;
+        return (self::isStarted())? session_decode($value):false;
     }
 
 
@@ -1210,12 +1194,7 @@ final class Session extends Root
     // la session doit être active
     final public static function reset():bool
     {
-        $return = false;
-
-        if(self::isStarted())
-        $return = session_reset();
-
-        return $return;
+        return (self::isStarted())? session_reset():false;
     }
 
 
@@ -1265,12 +1244,7 @@ final class Session extends Root
     // la session doit être active
     final public static function empty():bool
     {
-        $return = false;
-
-        if(self::isStarted())
-        $return = session_unset();
-
-        return $return;
+        return (self::isStarted())? session_unset():false;
     }
 
 
@@ -1519,9 +1493,7 @@ final class Session extends Root
         if($refresh === true)
         self::refreshCsrf();
 
-        $return = self::get('csrf');
-
-        return $return;
+        return self::get('csrf');
     }
 
 
@@ -1545,12 +1517,8 @@ final class Session extends Root
     // retourne une nouvelle string csrf
     final public static function makeCsrf(?array $option=null):string
     {
-        $return = '';
         $option = self::getCsrfOption($option);
-        if(!empty($option))
-        $return = Str::random($option['length'],$option['possible'],$option['csprng']);
-
-        return $return;
+        return Str::random($option['length'],$option['possible'],$option['csprng']);
     }
 
 
@@ -1574,9 +1542,7 @@ final class Session extends Root
         if($refresh === true)
         self::refreshCaptcha();
 
-        $return = self::get('captcha');
-
-        return $return;
+        return self::get('captcha');
     }
 
 
@@ -1600,13 +1566,8 @@ final class Session extends Root
     // retourne une nouvelle string captcha
     final public static function makeCaptcha(?array $option=null):string
     {
-        $return = '';
         $option = self::getCaptchaOption($option);
-
-        if(!empty($option))
-        $return = Str::random($option['length'],$option['possible'],$option['csprng']);
-
-        return $return;
+        return Str::random($option['length'],$option['possible'],$option['csprng']);
     }
 
 

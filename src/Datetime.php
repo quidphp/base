@@ -490,7 +490,7 @@ final class Datetime extends Root
     // retourne les formats de date en mergant avec lang, si disponible
     final public static function getFormats(?string $lang=null):array
     {
-        return Arr::plus(self::$config['format']['date'],Lang\En::getConfig('date/format'),Lang::dateFormat(null,$lang));
+        return Arr::replace(self::$config['format']['date'],Lang\En::getConfig('date/format'),Lang::dateFormat(null,$lang));
     }
 
 
@@ -601,9 +601,9 @@ final class Datetime extends Root
         if(is_scalar($format) || is_scalar($timezone))
         {
             $format = self::getFormatReplace($format,$lang);
-            $return['format'] = (is_array($format))? $format['format']:null;
+            $return['format'] = $format['format'] ?? null;
             $return['timezone'] = (is_scalar($timezone) && !empty($timezone))? $timezone:null;
-            $return['replace'] = (is_array($format) && is_array($format['replace']) && !empty($format['replace']))? $format['replace']:null;
+            $return['replace'] = $format['replace'] ?? null;
 
             if(is_array($replace) && !empty($replace) && Arrs::is($replace))
             $return['replace'] = Arrs::replace($return['replace'],$replace);
@@ -733,12 +733,7 @@ final class Datetime extends Root
     // permet de formatter un tableau unidimmensionnel avec plusieurs dates
     final public static function formats($format,array $return):array
     {
-        foreach ($return as $key => $value)
-        {
-            $return[$key] = self::format($format,$value);
-        }
-
-        return $return;
+        return Arr::map($return,fn($value) => self::format($format,$value));
     }
 
 
@@ -1495,11 +1490,10 @@ final class Datetime extends Root
     // retourne un tableau avec les valeur floor et ceil d'une date
     final public static function floorCeil(string $period,$value=null,$format=null):array
     {
-        $return = [];
-        $return['floor'] = self::floor($period,$value,$format);
-        $return['ceil'] = self::ceil($period,$value,$format);
-
-        return $return;
+        return [
+            'floor'=>self::floor($period,$value,$format),
+            'ceil'=>self::ceil($period,$value,$format)
+        ];
     }
 
 
@@ -2143,7 +2137,7 @@ final class Datetime extends Root
     {
         $return = [];
         $diff = self::daysDiff($min,$max);
-        $interval = (is_int($interval))? $interval:1;
+        $interval ??= 1;
         $min = ($floor === true)? self::floorDay($min):self::time($min,null);
         $max = ($floor === true)? self::floorDay($max):self::time($max,null);
 
@@ -2205,7 +2199,7 @@ final class Datetime extends Root
     final public static function daysInMonth($value=null,?int $interval=null,$format=null):array
     {
         $return = [];
-        $interval = (is_int($interval))? $interval:1;
+        $interval ??= 1;
         $value = self::time($value);
 
         if(is_int($value))
@@ -2251,7 +2245,7 @@ final class Datetime extends Root
     {
         $return = [];
         $diff = self::monthsDiff($min,$max);
-        $interval = (is_int($interval))? $interval:1;
+        $interval ??= 1;
         $min = ($floor === true)? self::floorMonth($min):self::time($min,null);
         $max = ($floor === true)? self::floorMonth($max):self::time($max,null);
 
@@ -2291,7 +2285,7 @@ final class Datetime extends Root
     final public static function monthsInYear($value=null,?int $interval=null,$format=null):array
     {
         $return = [];
-        $interval = (is_int($interval))? $interval:1;
+        $interval ??= 1;
         $value = self::time($value,null,true);
         $amount = self::getAmount();
 
@@ -2335,7 +2329,7 @@ final class Datetime extends Root
     final public static function years($min=null,$max=null,?int $interval=null,$format=null,bool $floor=true):array
     {
         $return = [];
-        $interval = (is_int($interval))? $interval:1;
+        $interval ??= 1;
         $diff = self::yearsDiff($min,$max);
         $min = ($floor === true)? self::floorYear($min):self::time($min,null);
         $max = ($floor === true)? self::floorYear($max):self::time($max,null);

@@ -523,7 +523,7 @@ final class Superglobal extends Root
 
         if($includeFiles === true)
         {
-            $files = (is_array($files))? $files:self::files();
+            $files ??= self::files();
             $files = self::filesReformat($files);
             $return = Arrs::replace($files,$return);
         }

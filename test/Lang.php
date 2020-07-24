@@ -112,44 +112,6 @@ class Lang extends Base\Test
 
         // call
 
-        // numberFormat
-
-        // numberPercentFormat
-
-        // numberMoneyFormat
-
-        // numberPhoneFormat
-
-        // numberSizeFormat
-
-        // dateLocale
-
-        // dateMonth
-
-        // dateFormat
-
-        // dateStr
-
-        // datePlaceholder
-
-        // dateDay
-
-        // dateDayShort
-
-        // headerResponseStatus
-
-        // errorCode
-
-        // validate
-
-        // compare
-
-        // required
-
-        // unique
-
-        // editable
-
         // content
         assert(Base\Lang::content([1,2]) === [1,2]);
         assert(Base\Lang::content(['test/james'=>2,'test/james2'=>3,'test/james'=>4]) === ['test'=>['james'=>4,'james2'=>3]]);

@@ -169,7 +169,7 @@ final class Dir extends Finder
         {
             $return = [];
             $isWindows = Server::isWindows();
-            $sort = (is_int($sort))? $sort:SCANDIR_SORT_ASCENDING;
+            $sort ??= SCANDIR_SORT_ASCENDING;
 
             foreach (scandir($path,$sort) as $value)
             {

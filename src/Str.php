@@ -409,7 +409,7 @@ final class Str extends Root
     final public static function len(string $value,?bool $mb=null):int
     {
         $return = 0;
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+        $mb ??= Encoding::getMb($mb,$value);
 
         if($mb === true)
         $return = mb_strlen($value,self::$config['charset']);
@@ -456,7 +456,7 @@ final class Str extends Root
     final public static function pos(string $needle,string $str,$offset=0,?bool $mb=null):?int
     {
         $return = null;
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+        $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
@@ -482,7 +482,7 @@ final class Str extends Root
     final public static function posRev(string $needle,string $str,$offset=0,?bool $mb=null):?int
     {
         $return = null;
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+        $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
@@ -508,7 +508,7 @@ final class Str extends Root
     final public static function ipos(string $needle,string $str,$offset=0,?bool $mb=null):?int
     {
         $return = null;
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+        $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
@@ -536,7 +536,7 @@ final class Str extends Root
     final public static function iposRev(string $needle,string $str,$offset=0,?bool $mb=null):?int
     {
         $return = null;
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$str,$offset);
+        $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
@@ -710,7 +710,7 @@ final class Str extends Root
     final public static function sub($offset,$length,string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
+        $mb ??= Encoding::getMbs($mb,$value,$offset,$length);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
         $length ??= self::len($value,$mb);
@@ -751,7 +751,7 @@ final class Str extends Root
     final public static function cut($offset,$length,string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$value,$offset,$length);
+        $mb ??= Encoding::getMbs($mb,$value,$offset,$length);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
         $length ??= self::len($value,$mb);
@@ -774,7 +774,7 @@ final class Str extends Root
     final public static function subCount(string $needle,string $value,$offset=null,$length=null,?bool $mb=null):int
     {
         $return = 0;
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$needle,$value,$offset,$length);
+        $mb ??= Encoding::getMbs($mb,$needle,$value,$offset,$length);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
 
@@ -798,7 +798,7 @@ final class Str extends Root
     final public static function subReplace($offset,$length,$replace,string $str,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$offset,$length,$str,$replace);
+        $mb ??= Encoding::getMbs($mb,$offset,$length,$str,$replace);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
 
@@ -832,7 +832,7 @@ final class Str extends Root
     final public static function subCompare(string $str,$offset,$length,string $main,bool $sensitive=true,?bool $mb=null):?int
     {
         $return = null;
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$offset,$length,$main);
+        $mb ??= Encoding::getMbs($mb,$str,$offset,$length,$main);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
 
@@ -1079,7 +1079,7 @@ final class Str extends Root
     final public static function stripBefore(string $char,string $value,bool $includeChar=true,bool $sensitive=true,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$char,$value);
+        $mb ??= Encoding::getMbs($mb,$char,$value);
 
         if(!empty($char))
         {
@@ -1146,7 +1146,7 @@ final class Str extends Root
     final public static function stripAfter(string $char,string $value,bool $includeChar=false,bool $sensitive=true,?bool $mb=null):?string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$char,$value);
+        $mb ??= Encoding::getMbs($mb,$char,$value);
 
         if(!empty($char))
         {
@@ -1245,7 +1245,7 @@ final class Str extends Root
     final public static function lower(string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+        $mb ??= Encoding::getMb($mb,$value);
 
         if($mb === true)
         $return = mb_strtolower($value,self::$config['charset']);
@@ -1261,7 +1261,7 @@ final class Str extends Root
     final public static function lowerFirst(string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+        $mb ??= Encoding::getMb($mb,$value);
 
         if($mb === true)
         {
@@ -1281,7 +1281,7 @@ final class Str extends Root
     final public static function upper(string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+        $mb ??= Encoding::getMb($mb,$value);
 
         if($mb === true)
         $return = mb_strtoupper($value,self::$config['charset']);
@@ -1297,7 +1297,7 @@ final class Str extends Root
     final public static function upperFirst(string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+        $mb ??= Encoding::getMb($mb,$value);
 
         if($mb === true)
         {
@@ -1317,7 +1317,7 @@ final class Str extends Root
     final public static function capitalize(string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+        $mb ??= Encoding::getMb($mb,$value);
 
         if($mb === true)
         {
@@ -1338,7 +1338,7 @@ final class Str extends Root
     final public static function title(string $value,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$value);
+        $mb ??= Encoding::getMb($mb,$value);
 
         if($mb === true)
         $return = mb_convert_case($value,MB_CASE_TITLE,self::$config['charset']);
@@ -1400,7 +1400,7 @@ final class Str extends Root
     final public static function pad(string $input,int $length,string $str,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
+        $mb ??= Encoding::getMbs($mb,$str,$input);
 
         if($mb === true)
         {
@@ -1443,7 +1443,7 @@ final class Str extends Root
     final public static function padLeft(string $input,int $length,string $str,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
+        $mb ??= Encoding::getMbs($mb,$str,$input);
 
         if($mb === true)
         {
@@ -1476,7 +1476,7 @@ final class Str extends Root
     final public static function padRight(string $input,int $length,string $str,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$input);
+        $mb ??= Encoding::getMbs($mb,$str,$input);
 
         if($mb === true)
         {
@@ -1506,7 +1506,7 @@ final class Str extends Root
     final public static function split(int $length=1,string $str,?bool $mb=null):array
     {
         $return = [];
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+        $mb ??= Encoding::getMb($mb,$str);
 
         if($length > 0)
         {
@@ -1713,7 +1713,7 @@ final class Str extends Root
     final public static function wordSliceLength(int $min,?int $max,string $str,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+        $mb ??= Encoding::getMb($mb,$str);
         $max ??= PHP_INT_MAX;
         $array = [];
 
@@ -1737,7 +1737,7 @@ final class Str extends Root
     final public static function wordStripLength(int $min,?int $max,string $str,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+        $mb ??= Encoding::getMb($mb,$str);
         $array = [];
         $max ??= PHP_INT_MAX;
 
@@ -1762,7 +1762,7 @@ final class Str extends Root
     final public static function wordTotalLength(int $length,string $str,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMb($mb,$str);
+        $mb ??= Encoding::getMb($mb,$str);
 
         if(self::len($str,$mb) <= $length)
         $return = $str;
@@ -1803,7 +1803,7 @@ final class Str extends Root
     final public static function wordwrap(int $width=75,string $str,string $break=PHP_EOL,bool $cut=false,?bool $mb=null):string
     {
         $return = '';
-        $mb = (is_bool($mb))? $mb:Encoding::getMbs($mb,$str,$break);
+        $mb ??= Encoding::getMbs($mb,$str,$break);
 
         if(!empty($break))
         {
@@ -2403,7 +2403,7 @@ final class Str extends Root
     final public static function s($value,?string $letter=null):string
     {
         $return = '';
-        $letter = (is_string($letter))? $letter:self::$config['plural']['letter'];
+        $letter ??= self::$config['plural']['letter'];
 
         if(is_string($letter))
         {
@@ -2441,7 +2441,7 @@ final class Str extends Root
         if(is_int($value) && is_string($return))
         {
             $isPlural = ($value > 1);
-            $letter = (is_string($letter))? $letter:self::$config['plural']['letter'];
+            $letter ??= self::$config['plural']['letter'];
             $wrap = $wrap ?: self::$config['plural']['wrap'];
             $delimiter = Segment::getDelimiter($wrap);
             $default = $delimiter[0].$letter.$delimiter[1];
@@ -2766,7 +2766,7 @@ final class Str extends Root
     final public static function pointer(string $value,?string $separator=null):?array
     {
         $return = null;
-        $separator = (is_string($separator))? $separator:self::$config['pointer'];
+        $separator ??= self::$config['pointer'];
         $value = self::explodeTrimClean($separator,$value);
         $value = Arr::cast($value);
 
@@ -2781,7 +2781,7 @@ final class Str extends Root
     // génère un pointeur à partir d'une string et chiffre
     final public static function toPointer(string $key,int $value,?string $separator=null):string
     {
-        $separator = (is_string($separator))? $separator:self::$config['pointer'];
+        $separator ??= self::$config['pointer'];
         return $key.$separator.$value;
     }
 

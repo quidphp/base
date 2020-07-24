@@ -1207,7 +1207,7 @@ final class Arr extends Root
 
     // accumulate
     // comme reduce, mais le return est automatiquement append
-    // pour les tableaux, la clé est seulement conservé si c'est une string
+    // pour les tableaux, la clé n'est pas conservé
     // si le callback retourne null, continue
     final public static function accumulate($return,array $array,\Closure $closure)
     {
@@ -1222,12 +1222,7 @@ final class Arr extends Root
             $return += $r;
 
             elseif(is_array($return))
-            {
-                if(is_string($key))
-                $return[$key] = $r;
-                else
-                $return[] = $r;
-            }
+            $return[] = $r;
 
             else
             $return .= $r;
@@ -3160,7 +3155,7 @@ final class Arr extends Root
     // retourne les slices des clés commençant par la chaîne
     final public static function keysStart(string $str,array $array,bool $sensitive=true):array
     {
-        return self::accumulate([],$array,fn($value,$key) => (is_string($key) && Str::isStart($str,$key,$sensitive))? $value:null);
+        return self::filter($array,fn($value,$key) => (is_string($key) && Str::isStart($str,$key,$sensitive)));
     }
 
 
@@ -3168,7 +3163,7 @@ final class Arr extends Root
     // retourne les slices des clés finissant par la chaîne
     final public static function keysEnd(string $str,array $array,bool $sensitive=true):array
     {
-        return self::accumulate([],$array,fn($value,$key) => (is_string($key) && Str::isEnd($str,$key,$sensitive))? $value:null);
+        return self::filter($array,fn($value,$key) => (is_string($key) && Str::isEnd($str,$key,$sensitive)));
     }
 
 

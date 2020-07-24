@@ -17,6 +17,10 @@ final class Lang extends Root
     protected static array $config = [
         'default'=>'en', // langue par défaut à appliquer au chargement de la classe
         'field'=>'_', // délimiteur pour les méthodes field
+        'call'=>[ // clé pour call static, renvoie vers la callable lang
+            'numberFormat','numberPercentFormat','numberMoneyFormat','numberPhoneFormat','numberSizeFormat','dateLocale',
+            'dateMonth','dateFormat','dateStr','datePlaceholder','dateDay','dateDayShort','headerResponseStatus',
+            'errorCode','validate','compare','required','unique','editable']
     ];
 
 
@@ -56,6 +60,14 @@ final class Lang extends Root
     final public static function hasCallable():bool
     {
         return !empty(self::$callable);
+    }
+
+
+    // callStatic
+    // permet de gérer des renvois vers la callable de lang de façon dynamique
+    final public static function __callStatic(string $key,array $arg)
+    {
+        return (in_array($key,static::$config['call'],true))? static::call($key,...$arg):null;
     }
 
 
@@ -106,12 +118,9 @@ final class Lang extends Root
     // retourne un tableau avec toutes les autres langues
     final public static function others(?string $value=null):array
     {
-        $return = [];
         $value = self::code($value);
         $return = Arr::valueStrip($value,self::all());
-        $return = array_values($return);
-
-        return $return;
+        return array_values($return);
     }
 
 
@@ -314,165 +323,8 @@ final class Lang extends Root
     // aucun envoie d'erreur si contenu inexistant
     final public static function call(string $value,...$args)
     {
-        $return = null;
         $callable = self::getCallable();
-
-        if(!empty($callable))
-        $return = $callable($value,...$args);
-
-        return $return;
-    }
-
-
-    // numberFormat
-    // retourne le tableau format numérique de la langue, si callable lié
-    final public static function numberFormat(...$args)
-    {
-        return self::call('numberFormat',...$args);
-    }
-
-
-    // numberPercentFormat
-    // retourne le tableau format numérique en pourcentage de la langue, si callable lié
-    final public static function numberPercentFormat(...$args)
-    {
-        return self::call('numberPercentFormat',...$args);
-    }
-
-
-    // numberMoneyFormat
-    // retourne le tableau format monétaire de la langue, si callable lié
-    final public static function numberMoneyFormat(...$args)
-    {
-        return self::call('numberMoneyFormat',...$args);
-    }
-
-
-    // numberPhoneFormat
-    // retourne le tableau format de size de phone, si callable lié
-    final public static function numberPhoneFormat(...$args)
-    {
-        return self::call('numberPhoneFormat',...$args);
-    }
-
-
-    // numberSizeFormat
-    // retourne le tableau format de size de la langue, si callable lié
-    final public static function numberSizeFormat(...$args)
-    {
-        return self::call('numberSizeFormat',...$args);
-    }
-
-
-    // dateLocale
-    // retourne la locale pour la date
-    final public static function dateLocale(...$args)
-    {
-        return self::call('dateLocale',...$args);
-    }
-
-
-    // dateMonth
-    // retourne le tableau des mois, si callable lié
-    final public static function dateMonth(...$args)
-    {
-        return self::call('dateMonth',...$args);
-    }
-
-
-    // dateFormat
-    // retourne le tableau des formats de date, si callable lié
-    final public static function dateFormat(...$args)
-    {
-        return self::call('dateFormat',...$args);
-    }
-
-
-    // dateStr
-    // retourne le tableau pour date str, si callable lié
-    final public static function dateStr(...$args)
-    {
-        return self::call('dateStr',...$args);
-    }
-
-
-    // datePlaceholder
-    // retourne le tableau pour date placeholder, si callable lié
-    final public static function datePlaceholder(...$args)
-    {
-        return self::call('datePlaceholder',...$args);
-    }
-
-
-    // dateDay
-    // retourne le tableau pour date day, si callable lié
-    final public static function dateDay(...$args)
-    {
-        return self::call('dateDay',...$args);
-    }
-
-
-    // dateDayShort
-    // retourne le tableau pour date dayShort, si callable lié
-    final public static function dateDayShort(...$args)
-    {
-        return self::call('dateDayShort',...$args);
-    }
-
-
-    // headerResponseStatus
-    // retourne le tableau headerResponseStatus, si callable lié
-    final public static function headerResponseStatus(...$args)
-    {
-        return self::call('headerResponseStatus',...$args);
-    }
-
-
-    // errorCode
-    // retourne le tableau pour error codes, si callable lié
-    final public static function errorCode(...$args)
-    {
-        return self::call('errorCode',...$args);
-    }
-
-
-    // validate
-    // retourne le tableau pour validate, si callable lié
-    final public static function validate(...$args)
-    {
-        return self::call('validate',...$args);
-    }
-
-
-    // compare
-    // retourne le tableau pour compare, si callable lié
-    final public static function compare(...$args)
-    {
-        return self::call('compare',...$args);
-    }
-
-
-    // required
-    // retourne le tableau pour required, si callable lié
-    final public static function required(...$args)
-    {
-        return self::call('required',...$args);
-    }
-
-
-    // unique
-    // retourne le tableau pour unique, si callable lié
-    final public static function unique(...$args)
-    {
-        return self::call('unique',...$args);
-    }
-
-
-    // editable
-    // retourne le tableau pour editable, si callable lié
-    final public static function editable(...$args)
-    {
-        return self::call('editable',...$args);
+        return (!empty($callable))? $callable($value,...$args):null;
     }
 
 
@@ -502,7 +354,7 @@ final class Lang extends Root
     {
         $return = null;
         $lang = self::code($lang);
-        $delimiter = (is_string($delimiter))? $delimiter:self::$config['field'];
+        $delimiter ??= self::$config['field'];
 
         if(strlen($value) && !empty($lang) && is_string($delimiter) && strlen($delimiter))
         $return = $value.$delimiter.$lang;
@@ -549,7 +401,7 @@ final class Lang extends Root
         $return = [];
         $lang = self::code($lang);
         $others = self::others();
-        $delimiter = (is_string($delimiter))? $delimiter:self::$config['field'];
+        $delimiter ??= self::$config['field'];
         $not = [];
 
         if(!empty($lang) && !empty($others) && strlen($delimiter) && !empty($array))

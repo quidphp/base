@@ -517,7 +517,7 @@ class Arr extends Base\Test
         assert(Base\Arr::accumulate([],['test','ok','meh'],fn($value) => $value) === ['test','ok','meh']);
         assert(Base\Arr::accumulate(0,[2,3.3,4],fn($value) => $value) === 9.3);
         assert(Base\Arr::accumulate(0,[2,3.3,4],fn($value) => (is_int($value))? $value:null) === 6);
-        assert(Base\Arr::accumulate([],['meh'=>'test','z'=>'ok','w'=>'meh'],fn($value,$key) => $key.$value) === ['meh'=>'mehtest','z'=>'zok','w'=>'wmeh']);
+        assert(Base\Arr::accumulate([],['meh'=>'test','z'=>'ok','w'=>'meh'],fn($value,$key) => $key.$value) === ['mehtest','zok','wmeh']);
 
         // diffAssoc
         $simple1 = ['test'=>true,'test3'=>'bla'];

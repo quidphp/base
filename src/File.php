@@ -522,7 +522,7 @@ class File extends Finder
 
         if(is_string($path))
         {
-            $basename = (is_string($basename))? $basename:Path::basename($path);
+            $basename ??= Path::basename($path);
             $extension = Path::extension($basename) ?? Path::extension($path);
             $mime = static::mime($path,false);
 
@@ -664,7 +664,7 @@ class File extends Finder
     {
         $return = static::prefixFilename($prefix,$option);
         $option = Arr::plus(static::$config['prefix'],$option);
-        $extension = (is_string($extension))? $extension:$option['extension'];
+        $extension ??= $option['extension'];
 
         if(is_string($return) && is_string($extension))
         $return .= '.'.$extension;
@@ -928,7 +928,7 @@ class File extends Finder
     {
         $return = false;
         $dirname = parent::path($dirname);
-        $extension = (is_string($extension))? $extension:static::$config['prefix']['extension'];
+        $extension ??= static::$config['prefix']['extension'];
 
         if(!empty($dirname) && !empty($filename) && !empty($extension))
         {

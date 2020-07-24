@@ -171,7 +171,7 @@ final class Response extends Root
     // possible de spécifier le code de comparaison en troisième argument, sinon utilise le courant
     final public static function isCodeBetween($from,$to,?int $code=null):bool
     {
-        $code = (is_int($code))? $code:self::code();
+        $code ??= self::code();
         return is_int($from) && is_int($to) && $code >= $from && $code <= $to;
     }
 

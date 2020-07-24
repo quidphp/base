@@ -507,7 +507,7 @@ final class Debug extends Root
     final public static function speed(?float $value=null,int $round=3):float
     {
         $return = 0;
-        $value = (is_numeric($value))? $value:Datetime::getInitMicrotime();
+        $value ??= Datetime::getInitMicrotime();
 
         if(is_numeric($value))
         $return = Num::round((Datetime::microtime() - $value),$round);
