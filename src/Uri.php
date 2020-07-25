@@ -555,7 +555,6 @@ final class Uri extends Root
     // encode toutes les partis de l'uri
     final public static function encodeAll(string $uri,bool $decode=false):string
     {
-        $return = '';
         $parse = self::parse($uri,$decode);
 
         foreach ($parse as $key => $value)
@@ -573,9 +572,7 @@ final class Uri extends Root
             }
         }
 
-        $return = self::build($parse,false);
-
-        return $return;
+        return self::build($parse,false);
     }
 
 
@@ -642,10 +639,7 @@ final class Uri extends Root
         if($encode === false)
         $return = self::decode($return);
 
-        if(empty($return))
-        $return = null;
-
-        return $return;
+        return $return ?: null;
     }
 
 
@@ -800,12 +794,9 @@ final class Uri extends Root
 
             else
             $return = self::parseOne('scheme',$value,$decode);
-
-            if(empty($return))
-            $return = null;
         }
 
-        return $return;
+        return $return ?: null;
     }
 
 

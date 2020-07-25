@@ -116,15 +116,7 @@ class Path extends Set
         if(!empty($return) && !empty($option['pattern']))
         {
             $patterns = (array) $option['pattern'];
-
-            foreach ($patterns as $v)
-            {
-                if(strpos($path,$v) !== false)
-                {
-                    $return = false;
-                    break;
-                }
-            }
+            $return = Arr::every($patterns,fn($v) => (strpos($path,$v) === false));
         }
 
         return $return;
@@ -276,7 +268,6 @@ class Path extends Set
     // gestion particulière si le path commence par un windows drive
     final public static function implode(array $value,?array $option=null):string
     {
-        $return = '';
         $option = (array) $option;
 
         if(!empty($value))
@@ -287,9 +278,7 @@ class Path extends Set
         }
 
         $return = parent::implode($value,$option);
-        $return = static::normalize($return);
-
-        return $return;
+        return static::normalize($return);
     }
 
 
@@ -310,10 +299,7 @@ class Path extends Set
             unset($return[$key]);
         }
 
-        if(empty($return))
-        $return = null;
-
-        return $return;
+        return $return ?: null;
     }
 
 
@@ -416,9 +402,7 @@ class Path extends Set
             }
         }
 
-        $return = static::normalize($return,true);
-
-        return $return;
+        return static::normalize($return,true);
     }
 
 
@@ -427,9 +411,7 @@ class Path extends Set
     final public static function rebuild(string $return):string
     {
         $info = static::info($return);
-        $return = static::build($info);
-
-        return $return;
+        return static::build($info);
     }
 
 
@@ -499,13 +481,9 @@ class Path extends Set
     // change le dirname d'un path
     final public static function changeDirname(string $change,string $path):string
     {
-        $return = '';
-
         $build['dirname'] = $change;
         $build['basename'] = static::basename($path);
-        $return = static::build($build);
-
-        return $return;
+        return static::build($build);
     }
 
 
@@ -513,14 +491,10 @@ class Path extends Set
     // ajoute un dirname à un path, le dirname s'ajoute au dirname existant
     final public static function addDirname(string $change,string $path):string
     {
-        $return = '';
-
         $dirname = static::dirname($path);
         $build['dirname'] = static::append($dirname,$change);
         $build['basename'] = static::basename($path);
-        $return = static::build($build);
-
-        return $return;
+        return static::build($build);
     }
 
 
@@ -636,8 +610,8 @@ class Path extends Set
     final public static function parentBasename(string $path):?string
     {
         $return = null;
-
         $dirname = static::dirname($path);
+
         if(!empty($dirname))
         $return = static::basename($dirname);
 
@@ -649,13 +623,9 @@ class Path extends Set
     // ajoute le basename à un path
     final public static function addBasename(string $change,string $path):string
     {
-        $return = '';
-
         $build['basename'] = static::basename($change);
         $build['dirname'] = $path;
-        $return = static::build($build);
-
-        return $return;
+        return static::build($build);
     }
 
 
@@ -663,13 +633,9 @@ class Path extends Set
     // change le basename d'un path
     final public static function changeBasename(string $change,string $path):string
     {
-        $return = '';
-
         $build['basename'] = static::basename($change);
         $build['dirname'] = static::dirname($path);
-        $return = static::build($build);
-
-        return $return;
+        return static::build($build);
     }
 
 
@@ -693,13 +659,9 @@ class Path extends Set
     // ajoute le filename à un path
     final public static function addFilename(string $change,string $path):string
     {
-        $return = '';
-
         $build['filename'] = static::filename($change);
         $build['dirname'] = $path;
-        $return = static::build($build);
-
-        return $return;
+        return static::build($build);
     }
 
 
@@ -707,14 +669,10 @@ class Path extends Set
     // change le filename d'un path
     final public static function changeFilename(string $change,string $path):string
     {
-        $return = '';
-
         $build['filename'] = static::filename($change);
         $build['dirname'] = static::dirname($path);
         $build['extension'] = static::extension($path);
-        $return = static::build($build);
-
-        return $return;
+        return static::build($build);
     }
 
 
@@ -772,17 +730,14 @@ class Path extends Set
     // ajoute l'extension à un path
     final public static function addExtension(string $change,string $path):string
     {
-        $return = '';
-
         $extension = static::extension($change);
         if(empty($extension))
         $extension = static::filename($change);
 
         $build['extension'] = $extension;
         $build['dirname'] = $path;
-        $return = static::build($build);
 
-        return $return;
+        return static::build($build);
     }
 
 
@@ -790,8 +745,6 @@ class Path extends Set
     // change l'extension d'un path
     final public static function changeExtension(string $change,string $path):string
     {
-        $return = '';
-
         $extension = static::extension($change);
         if(empty($extension))
         $extension = static::filename($change);
@@ -799,9 +752,8 @@ class Path extends Set
         $build['extension'] = $extension;
         $build['dirname'] = static::dirname($path);
         $build['filename'] = static::filename($path);
-        $return = static::build($build);
 
-        return $return;
+        return static::build($build);
     }
 
 
@@ -828,13 +780,8 @@ class Path extends Set
     // pour les fichiers qui n'existent pas
     final public static function mimeGroup(string $value):?string
     {
-        $return = null;
         $mime = static::mime($value);
-
-        if(!empty($mime))
-        $return = Mime::group($mime);
-
-        return $return;
+        return (!empty($mime))? Mime::group($mime):null;
     }
 
 
@@ -843,13 +790,8 @@ class Path extends Set
     // pour les fichiers qui n'existent pas
     final public static function mimeFamilies(string $value):?array
     {
-        $return = null;
         $group = static::mimeGroup($value);
-
-        if(!empty($group))
-        $return = Mime::families($group);
-
-        return $return;
+        return (!empty($group))? Mime::families($group):null;
     }
 
 
@@ -858,13 +800,8 @@ class Path extends Set
     // pour les fichiers qui n'existent pas
     final public static function mimeFamily(string $value):?string
     {
-        $return = null;
         $group = static::mimeGroup($value);
-
-        if(!empty($group))
-        $return = Mime::family($group);
-
-        return $return;
+        return (!empty($group))? Mime::family($group):null;
     }
 
 
@@ -887,12 +824,7 @@ class Path extends Set
     // ajoute même si le code existe déjà
     final public static function addLang(string $value,string $path,?array $option=null):?string
     {
-        $return = null;
-
-        if(static::isLangCode($value,$option))
-        $return = static::insert(0,$value,$path,$option);
-
-        return $return;
+        return (static::isLangCode($value,$option))? static::insert(0,$value,$path,$option):null;
     }
 
 
@@ -936,9 +868,7 @@ class Path extends Set
     final public static function match(string $return,?array $option=null):string
     {
         $return = static::removeLang($return,$option);
-        $return = static::stripStart($return);
-
-        return $return;
+        return static::stripStart($return);
     }
 
 

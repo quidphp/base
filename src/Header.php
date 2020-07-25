@@ -360,13 +360,9 @@ final class Header extends Listing
     // retourne un tableau unidimensionnel avec clé numérique, parfait pour ajouter dans la fonction header
     final public static function list($array,?array $option=null):array
     {
-        $return = [];
-
         $option = self::option($option);
         $arr = self::arr($array,$option);
-        $return = self::keyValue($arr,$option);
-
-        return $return;
+        return self::keyValue($arr,$option);
     }
 
 
@@ -555,6 +551,7 @@ final class Header extends Listing
     {
         $return = null;
         $code = self::code($value);
+
         if(!empty($code) && array_key_exists($code,Lang\En::getConfig('header/responseStatus')))
         $return = Lang\En::getConfig("header/responseStatus/$code");
 
@@ -588,13 +585,10 @@ final class Header extends Listing
     // retourne la string header status à partir d'une int, string ou array
     final public static function status($value):?string
     {
-        $return = null;
         $status['protocol'] = self::protocol($value);
         $status['code'] = self::code($value);
         $status['text'] = self::statusText($value);
-        $return = self::makeStatus($status);
-
-        return $return;
+        return self::makeStatus($status);
     }
 
 
@@ -695,6 +689,7 @@ final class Header extends Listing
     final public static function setCode(int $value,array $return=[]):array
     {
         $status = self::parseStatus($return);
+
         if(!empty($status))
         {
             $status['code'] = $value;
@@ -781,9 +776,7 @@ final class Header extends Listing
     final public static function redirect(string $value,$code=null,array $return=[]):array
     {
         $return = self::moved($code,$return);
-        $return = self::set('Location',$value,$return);
-
-        return $return;
+        return self::set('Location',$value,$return);
     }
 
 

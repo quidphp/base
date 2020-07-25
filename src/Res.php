@@ -1364,10 +1364,7 @@ final class Res extends Root
             $return = 'http';
         }
 
-        if(empty($return))
-        $return = 'file';
-
-        return $return;
+        return $return ?: 'file';
     }
 
 

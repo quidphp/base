@@ -270,10 +270,7 @@ final class Validate extends Root
             $return[] = $com;
         }
 
-        if(empty($return))
-        $return = true;
-
-        return $return;
+        return $return ?: true;
     }
 
 

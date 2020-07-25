@@ -3533,8 +3533,8 @@ final class Arr extends Root
     final public static function valueIndex($value,array $array,bool $sensitive=true):array
     {
         $return = [];
-
         $keys = self::valueKey($value,$array,$sensitive);
+
         if(!empty($keys))
         $return = array_values(self::keysIndex($keys,$array));
 
@@ -3548,8 +3548,8 @@ final class Arr extends Root
     final public static function valuesIndex(array $values,array $array,bool $sensitive=true):array
     {
         $return = [];
-
         $keys = self::valuesKey($values,$array,$sensitive);
+
         if(!empty($keys))
         $return = array_values(self::keysIndex($keys,$array));
 
@@ -3799,15 +3799,7 @@ final class Arr extends Root
     // retourne les slices des valeurs commençant par la chaîne
     final public static function valuesStart(string $str,array $array,bool $sensitive=true):array
     {
-        $return = [];
-
-        foreach ($array as $key => $value)
-        {
-            if(is_string($value) && Str::isStart($str,$value,$sensitive))
-            $return[$key] = $value;
-        }
-
-        return $return;
+        return self::filter($array,fn($value) => (is_string($value) && Str::isStart($str,$value,$sensitive)));
     }
 
 
@@ -3815,15 +3807,7 @@ final class Arr extends Root
     // retourne les slices des valeurs finissant par la chaîne
     final public static function valuesEnd(string $str,array $array,bool $sensitive=true):array
     {
-        $return = [];
-
-        foreach ($array as $key => $value)
-        {
-            if(is_string($value) && Str::isEnd($str,$value,$sensitive))
-            $return[$key] = $value;
-        }
-
-        return $return;
+        return self::filter($array,fn($value) => (is_string($value) && Str::isEnd($str,$value,$sensitive)));
     }
 
 
@@ -4092,9 +4076,7 @@ final class Arr extends Root
     final public static function keysValuesLower(array $return,?bool $mb=null):array
     {
         $return = self::keysLower($return,$mb);
-        $return = self::valuesLower($return);
-
-        return $return;
+        return self::valuesLower($return);
     }
 
 
@@ -4104,9 +4086,7 @@ final class Arr extends Root
     final public static function keysValuesUpper(array $return,?bool $mb=null):array
     {
         $return = self::keysUpper($return,$mb);
-        $return = self::valuesUpper($return);
-
-        return $return;
+        return self::valuesUpper($return);
     }
 
 
