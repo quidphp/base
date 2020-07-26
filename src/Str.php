@@ -353,10 +353,10 @@ final class Str extends Root
             $return = Crypt::serialize($return);
 
             elseif(is_resource($return))
-            $return = Res::pathToUriOrBase64($return);
+            $return = Res::pathToUriOrBase64($return) ?? '';
         }
 
-        if($fixUnicode === true && is_string($return))
+        if($fixUnicode === true)
         $return = self::fixUnicode($return);
 
         return $return;
