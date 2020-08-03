@@ -729,6 +729,12 @@ class Datetime extends Base\Test
         assert(count(Base\Datetime::yearsDefault(-100,0,null,'sql')) === 101);
         assert(count(Base\Datetime::yearsDefault()) === 131);
 
+        // toMicrotime
+        assert(Base\Datetime::toMicrotime(20) === 20000);
+
+        // fromMicrotime
+        assert(Base\Datetime::fromMicrotime(20000) === 20);
+
         return true;
     }
 }

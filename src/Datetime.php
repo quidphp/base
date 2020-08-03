@@ -2376,6 +2376,22 @@ final class Datetime extends Root
 
         return $return;
     }
+
+
+    // toMicrotime
+    // transforme un timestamp en microtime
+    final public static function toMicrotime(float $value):float
+    {
+        return $value * 1000;
+    }
+
+
+    // fromMicrotime
+    // transforme un microtime en timestamp
+    final public static function fromMicrotime(float $value):int
+    {
+        return (int) ($value / 1000);
+    }
 }
 
 // init
