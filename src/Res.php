@@ -43,6 +43,7 @@ final class Res extends Root
             'writeTruncateCreate'=>'w',
             'readWriteTruncateCreate'=>'w+'],
         'curl'=>[ // option par défaut pour curl
+            'method'=>null,
             'timeout'=>10,
             'dnsGlobalCache'=>false,
             'userPassword'=>null,
@@ -1756,6 +1757,10 @@ final class Res extends Root
             // userAgent
             if(is_string($option['userAgent']) && !empty($option['userAgent']))
             curl_setopt($return,CURLOPT_USERAGENT,$option['userAgent']);
+
+            // method
+            if(is_string($option['method']) && !empty($option['method']))
+            curl_setopt($return,CURLOPT_CUSTOMREQUEST,strtoupper($option['method']));
 
             // post
             if($post !== null)

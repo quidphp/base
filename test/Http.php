@@ -36,6 +36,7 @@ class Http extends Base\Test
 
         // isMethod
         assert(Base\Http::isMethod('POST'));
+        assert(Base\Http::isMethod('delete'));
         assert(Base\Http::isMethod('get'));
         assert(!Base\Http::isMethod('getz'));
 

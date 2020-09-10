@@ -62,7 +62,7 @@ final class Http extends Root
         if(is_string($value))
         {
             $value = strtolower($value);
-            $return = (in_array($value,['get','post'],true));
+            $return = (in_array($value,['get','post','put','patch','delete'],true));
         }
 
         return $return;
