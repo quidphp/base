@@ -20,6 +20,7 @@ final class Res extends Root
         'writable'=>['r+','w','w+','a','a+','x','x+','c','c+'], // mode de resource writable
         'creatable'=>['c+','w','w+'],
         'lineSeparatorLength'=>300, // longueur utilisé pour tenter de trouver le séparateur de ligne
+        'allowSelfSigned'=>false, // permet le fonctionnement si le certificat ssl est self-signed
         'base64'=>[ // si convert est true dans la méthode base64, converti un mime en un autre
             'image/svg'=>'image/svg+xml'],
         'phpStream'=>[ // paramètre par défaut pour stream php
@@ -57,6 +58,14 @@ final class Res extends Root
             'userAgent'=>null,
             'postJson'=>false]
     ];
+
+
+    // allowSelfSigned
+    // retourne vrai s'il faut permettre les requêtes dont les certificats SSL sont self-signed
+    final public static function allowSelfSigned():bool
+    {
+        return static::$config['allowSelfSigned'];
+    }
 
 
     // is
@@ -1329,11 +1338,17 @@ final class Res extends Root
 
                 if($open === true)
                 {
-                    if(is_resource($context))
-                    $return = fopen($value,$mode,$option['useIncludePath'],$context);
+                    if(empty($context))
+                    {
+                        $contextOpts = [];
 
-                    else
-                    $return = fopen($value,$mode,$option['useIncludePath']);
+                        if(static::allowSelfSigned())
+                        $contextOpts = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false]];
+
+                        $context = stream_context_create($contextOpts);
+                    }
+
+                    $return = fopen($value,$mode,$option['useIncludePath'],$context);
 
                     if(!empty($return) && array_key_exists('block',$option) && is_bool($option['block']))
                     stream_set_blocking($return,$option['block']);
@@ -1742,8 +1757,17 @@ final class Res extends Root
 
             if($option['ssl'] === true)
             {
-                curl_setopt($return,CURLOPT_SSL_VERIFYPEER,0);
-                curl_setopt($return,CURLOPT_SSL_VERIFYHOST,2);
+                $verifyPeer = 0;
+                $verifyHost = 2;
+
+                if(static::allowSelfSigned())
+                {
+                    $verifyPeer = false;
+                    $verifyHost = false;
+                }
+
+                curl_setopt($return,CURLOPT_SSL_VERIFYPEER,$verifyPeer);
+                curl_setopt($return,CURLOPT_SSL_VERIFYHOST,$verifyHost);
             }
 
             // port
@@ -3396,6 +3420,15 @@ final class Res extends Root
     final protected static function uriSchemeNotWindowsDrive(string $value):?string
     {
         return (!Path::hasWindowsDrive($value))? Uri::scheme($value):null;
+    }
+
+
+    // setSelfSigned
+    // permet de changer la configuration si les ressources doivent accepter des requêtes
+    // si le certifat SSL est self-signed
+    final public static function setSelfSigned(bool $value):void
+    {
+        static::$config['allowSelfSigned'] = $value;
     }
 }
 ?>

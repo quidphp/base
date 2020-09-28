@@ -31,6 +31,7 @@ final class Attr extends Listing
                 'targetExternal'=>'_blank', // target si le href est externe
                 'lang'=>true, // détecte la lang pour href
                 'mailto'=>true, // détecte les courriels
+                'tel'=>true, // détecte les téléphones
                 'extension'=>null], // extension par défaut pour href si non fourni et uri relative
             'src'=>[
                 'extension'=>'jpg'], // extension par défaut pour src si non fourni et uri relative
@@ -87,6 +88,24 @@ final class Attr extends Listing
     final public static function isSelectedUri($value):bool
     {
         return is_string($value) && array_key_exists($value,self::$selectedUri);
+    }
+
+
+    // isTel
+    // retourne vrai si la valeur est un téléphone
+    final public static function isTel($value):bool
+    {
+        $return = false;
+
+        if(is_scalar($value))
+        {
+            $value = (string) $value;
+
+            if(strlen($value) < 20 && Validate::isPhone($value))
+            $return = true;
+        }
+
+        return $return;
     }
 
 
@@ -243,6 +262,9 @@ final class Attr extends Listing
         if($href['active'] === true && !empty($href['mailto']) && Email::is($value))
         $value = 'mailto:'.$value;
 
+        elseif($href['active'] === true && !empty($href['tel']) && self::isTel($value))
+        $value = 'tel:'.static::prepareTel($value);
+
         else
         {
             $value = self::parseUri($value,$option[$key]['extension'] ?? null);
@@ -310,6 +332,14 @@ final class Attr extends Listing
         }
 
         return $return;
+    }
+
+
+    // prepareTel
+    // prépare le numéro de téléphone
+    final protected static function prepareTel($value):string
+    {
+        return Str::keepNumber((string) $value,"\+");
     }
 
 

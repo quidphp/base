@@ -50,6 +50,12 @@ class Attr extends Base\Test
         assert(Base\Attr::isSelectedUri('/test/laa.php'));
         assert(!Base\Attr::isSelectedUri('test/laa.php'));
 
+        // isTel
+        assert(Base\Attr::isTel('4188355487'));
+        assert(Base\Attr::isTel('4188355487 post 245'));
+        assert(!Base\Attr::isTel('4188355487 / post 245'));
+        assert(!Base\Attr::isTel('4188355487 post 245.2'));
+
         // hasId
         assert(Base\Attr::hasId('JAMES',$attr));
 
@@ -82,6 +88,8 @@ class Attr extends Base\Test
         // prepareParseHref
 
         // prepareGroup
+
+        // prepareTel
 
         // parse
         assert(Base\Attr::parse([['.james.james2#id'],['.james2.james3#id2']],Base\Attr::option()) === ['id'=>'id2','class'=>['james','james2','james3']]);
@@ -330,6 +338,9 @@ class Attr extends Base\Test
         Base\Attr::setUriOption(Base\Attr::getUriOption());
 
         // other
+        assert(Base\Attr::str(['href'=>'4382654789']) === "href='tel:4382654789'");
+        assert(Base\Attr::str(['href'=>'(438)265-4789']) === "href='tel:4382654789'");
+        assert(Base\Attr::str(['href'=>'+4382654789']) === "href='tel:+4382654789'");
         assert(Base\Attr::str(['a'=>'','b'=>true,'c'=>false,'d'=>null,'e'=>['1','2']]) === "a='' b='1' c='0' e='[&quot;1&quot;,&quot;2&quot;]'");
         assert(Base\Attr::str(['james'=>2,'class'=>false,'id'=>false]) === "james='2'");
         assert(Base\Attr::str(['src'=>'[media]/ok.jpg','style'=>['bgimg'=>'[media]/test.jpg']]) === "src='/media/ok.jpg' style='background-image: url(/media/test.jpg);'");

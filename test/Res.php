@@ -56,6 +56,9 @@ class Res extends Base\Test
         $hash = Base\Res::open($mediaHash);
         $vector = Base\Res::open('[assertCommon]/svg.svg');
 
+        // allowSelfSigned
+        assert(is_bool(Base\Res::allowSelfSigned()));
+
         // is
         assert(!Base\Res::is('bla'));
         assert(Base\Res::is($fp));
@@ -743,6 +746,7 @@ class Res extends Base\Test
         $exec = Base\Res::curlExec($curl,false);
         assert(count($exec) === 6);
         $res = $exec['resource'];
+
         assert(is_array(Base\Res::headers($res)));
         assert(Base\Res::mime($res) === 'text/html');
         assert(Base\Res::basename($res) === 'php.html');
@@ -1167,6 +1171,8 @@ class Res extends Base\Test
         Base\Res::closes($current,$output,$input,$temp,$memory,$http,$dir);
 
         // uriSchemeNotWindowsDrive
+
+        // setSelfSigned
 
         // cleanup
         Base\Dir::empty('[assertCurrent]');
