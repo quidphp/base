@@ -3381,6 +3381,29 @@ final class Html extends Root
     }
 
 
+    // xss
+    // permet de retourner une string sans attribut ou balise dangereuse pour le xss
+    // ceci est moins sécuritaire que excerpt ou output, mais permet de conserver plus de html
+    // from: https://stackoverflow.com/questions/1336776/xss-filtering-function-in-php
+    // bogue connu: tous les attributs après un attribut en ON sont retirés
+    final public static function xss(string $return):string
+    {
+        $return = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $return);
+
+        $i = 0;
+        $old = null;
+
+        while ($i < 1 || $old !== $return)
+        {
+            $old = $return;
+            $return = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $return);
+            $i++;
+        }
+
+        return $return;
+    }
+
+
     // unicode
     // removeLineBreaks, trim et convert (specialchars)
     final public static function unicode(string $return,?array $option=null):string

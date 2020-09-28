@@ -792,7 +792,10 @@ final class Request extends Root
     // retourne la method courante
     final public static function method():string
     {
-        return (($requestMethod = Superglobal::getServer('REQUEST_METHOD')) && strtolower($requestMethod) === 'post')? 'post':'get';
+        $requestMethod = Superglobal::getServer('REQUEST_METHOD');
+        $return = (!empty($requestMethod))? strtolower($requestMethod):'get';
+
+        return $return;
     }
 
 
@@ -800,10 +803,11 @@ final class Request extends Root
     // change la méthode de la requête courante
     final public static function setMethod(string $value):void
     {
-        $value = strtoupper($value);
-
-        if(in_array($value,['GET','POST'],true))
-        Superglobal::setServer('REQUEST_METHOD',$value);
+        if(Http::isMethod($value))
+        {
+            $value = strtoupper($value);
+            Superglobal::setServer('REQUEST_METHOD',$value);
+        }
     }
 
 
