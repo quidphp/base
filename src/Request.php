@@ -487,7 +487,15 @@ final class Request extends Root
     // retourne le scheme de la requete
     final public static function scheme():?string
     {
-        return (is_string($scheme = Superglobal::getServer('REQUEST_SCHEME')))? $scheme:null;
+        $return = Superglobal::getServer('REQUEST_SCHEME');
+
+        if(empty($return))
+        {
+            $ssl = self::isSsl();
+            $return = Http::scheme($ssl);
+        }
+
+        return $return;
     }
 
 
