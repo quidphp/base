@@ -988,6 +988,9 @@ class Html extends Base\Test
 
         // headArgReformat
 
+        // metaFromArray
+        assert(strlen(Base\Html::metaFromArray(['title'=>'OK','test'=>'james','description'=>'WHAT'])) === 111);
+
         // docClose
         assert(Base\Html::docClose(['html'=>true,'body'=>true],false,false) === "</body>\n</html>");
         assert(Base\Html::docClose(null,true,false) === "</body>\n</html>");

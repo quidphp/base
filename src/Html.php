@@ -3179,6 +3179,41 @@ final class Html extends Root
     }
 
 
+    // metaFromArray
+    // méthode qui permet de génère une string meta à partir d'un tableau meta
+    // gère aussi metaDescription et metaKeywords
+    final public static function metaFromArray(array $array,$separator=null):string
+    {
+        $return = '';
+        $separator ??= self::$config['separator'];
+
+        foreach ($array as $k => $value)
+        {
+            $arg = (array) $value;
+
+            // description
+            if($k === 'description')
+            $r = self::metaDescription(...$arg);
+
+            // keywords
+            elseif($k === 'keywords')
+            $r = self::metaKeywords(...$arg);
+
+            // meta
+            else
+            $r = self::meta(...Arr::merge($arg,$k));
+
+            if(strlen($r))
+            {
+                $return .= (strlen($return) && is_string($separator))? $separator:'';
+                $return .= $r;
+            }
+        }
+
+        return $return;
+    }
+
+
     // docClose
     // ferme le document
     // un séparateur entre chaque ligne est ajouté si séparateur est null ou string
