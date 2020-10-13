@@ -305,7 +305,7 @@ final class Num extends Root
     // similaire à round, mais n'arrondie rien (coupe seulement à la décimale spécifiée)
     // de même, la valeur est retourne en string et non pas float
     // possible de cleaner les decimal vide (0)
-    final public static function decimal($value,int $decimal,bool $clean=false):?string
+    final public static function decimal($value,int $decimal=2,bool $clean=false):?string
     {
         $return = null;
         self::typecast($value);

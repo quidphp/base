@@ -175,6 +175,7 @@ class Num extends Base\Test
         assert('2.55' === Base\Num::decimal('2.5534',2));
         assert(Base\Num::decimal('2.55340000',8) === '2.55340000');
         assert(Base\Num::decimal('2.55340000',8,true) === '2.5534');
+        assert(Base\Num::decimal('2.55340000') === '2.55');
 
         // round
         assert(3 === Base\Num::round('2.5',0));
