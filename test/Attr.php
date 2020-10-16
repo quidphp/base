@@ -338,6 +338,7 @@ class Attr extends Base\Test
         Base\Attr::setUriOption(Base\Attr::getUriOption());
 
         // other
+        assert(Base\Attr::str(['href'=>'/test/@ok']) === "href='/test/%40ok'");
         assert(Base\Attr::str(['href'=>'4382654789']) === "href='tel:4382654789'");
         assert(Base\Attr::str(['href'=>'(438)265-4789']) === "href='tel:4382654789'");
         assert(Base\Attr::str(['href'=>'+4382654789']) === "href='tel:+4382654789'");
