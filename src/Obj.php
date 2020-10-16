@@ -444,7 +444,7 @@ final class Obj extends Root
     // sort
     // permet de sort un tableau unidimensionnel contenant des objets via le résultat d'une méthode de l'objet
     // possible de mettre des arguments pour la méthode pack après l'argument return
-    final public static function sort(string $method,$sort=true,array $return,...$args):array
+    final public static function sort($method,$sort=true,array $return,...$args):array
     {
         return Arr::methodSort('obj',$method,$sort,$return,...$args);
     }

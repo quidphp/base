@@ -4188,23 +4188,34 @@ final class Arr extends Root
     // methodSort
     // permet de faire un sort su un tableau unidimensionnel contenant des noms de classes ou des objets
     // le type doit être obj ou classe
-    final public static function methodSort(string $type,string $method,$sort=true,array $return,...$args):array
+    final public static function methodSort(string $type,$method,$sort=true,array $return,...$args):array
     {
-        uasort($return, function($a,$b) use ($type,$method,$sort,$args)
+        uasort($return, function($first,$second) use ($type,$method,$sort,$args)
         {
             $return = 0;
+            $a = 0;
+            $b = 0;
             $sort = self::getSortAscDesc($sort);
 
-            if($type === 'obj')
+            if(is_string($method))
             {
-                $a = $a->$method(...$args);
-                $b = $b->$method(...$args);
+                if($type === 'obj')
+                {
+                    $a = $first->$method(...$args);
+                    $b = $second->$method(...$args);
+                }
+
+                else
+                {
+                    $a = $first::$method(...$args);
+                    $b = $second::$method(...$args);
+                }
             }
 
-            else
+            elseif($method instanceof \Closure)
             {
-                $a = $a::$method(...$args);
-                $b = $b::$method(...$args);
+                $a = $method($first);
+                $b = $method($second);
             }
 
             if($sort === 'asc')
@@ -4240,20 +4251,22 @@ final class Arr extends Root
         uasort($return, function($first,$second) use ($type,$sorts)
         {
             $return = 0;
+            $a = 0;
+            $b = 0;
 
             foreach ($sorts as $array)
             {
                 if(is_array($array) && count($array) >= 2)
                 {
-                    if(is_string($array[0]))
-                    {
-                        $array = array_values($array);
-                        $method = $array[0];
-                        $sort = self::getSortAscDesc($array[1]);
-                        $args = (array_key_exists(2,$array))? $array[2]:[];
-                        if(!is_array($args))
-                        $args = [$args];
+                    $array = array_values($array);
+                    $method = $array[0];
+                    $sort = self::getSortAscDesc($array[1]);
+                    $args = (array_key_exists(2,$array))? $array[2]:[];
+                    if(!is_array($args))
+                    $args = [$args];
 
+                    if(is_string($method))
+                    {
                         if($type === 'obj')
                         {
                             $a = $first->$method(...$args);
@@ -4265,30 +4278,36 @@ final class Arr extends Root
                             $a = $first::$method(...$args);
                             $b = $second::$method(...$args);
                         }
-
-                        // asc
-                        if($sort === 'asc')
-                        {
-                            if($a < $b)
-                            $return = -1;
-
-                            elseif($a > $b)
-                            $return = 1;
-                        }
-
-                        // desc
-                        elseif($sort === 'desc')
-                        {
-                            if($a < $b)
-                            $return = 1;
-
-                            elseif($a > $b)
-                            $return = -1;
-                        }
-
-                        if($return !== 0)
-                        break;
                     }
+
+                    elseif($method instanceof \Closure)
+                    {
+                        $a = $method($first,...$args);
+                        $b = $method($second,...$args);
+                    }
+
+                    // asc
+                    if($sort === 'asc')
+                    {
+                        if($a < $b)
+                        $return = -1;
+
+                        elseif($a > $b)
+                        $return = 1;
+                    }
+
+                    // desc
+                    elseif($sort === 'desc')
+                    {
+                        if($a < $b)
+                        $return = 1;
+
+                        elseif($a > $b)
+                        $return = -1;
+                    }
+
+                    if($return !== 0)
+                    break;
                 }
             }
 
