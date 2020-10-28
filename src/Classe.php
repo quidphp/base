@@ -1030,7 +1030,7 @@ final class Classe extends Root
     // possible de mettre des arguments pour la méthode pack après l'argument return
     final public static function sort($method,$sort=true,array $return,...$args):array
     {
-        return Arr::methodSort('classe',$method,$sort,$return,...$args);
+        return Arr::methodSort($method,$sort,$return,...$args);
     }
 
 
@@ -1041,7 +1041,7 @@ final class Classe extends Root
     // direction asc ou desc
     final public static function sorts(array $sorts,array $return):array
     {
-        return Arr::methodSorts('classe',$sorts,$return);
+        return Arr::methodSorts($sorts,$return);
     }
 }
 ?>

@@ -4187,35 +4187,32 @@ final class Arr extends Root
 
     // methodSort
     // permet de faire un sort su un tableau unidimensionnel contenant des noms de classes ou des objets
-    // le type doit être obj ou classe
-    final public static function methodSort(string $type,$method,$sort=true,array $return,...$args):array
+    // le type doit être obj ou classe, ou possible de passer une closure
+    final public static function methodSort($method,$sort=true,array $return,...$args):array
     {
-        uasort($return, function($first,$second) use ($type,$method,$sort,$args)
+        uasort($return, function($first,$second) use ($method,$sort,$args)
         {
             $return = 0;
             $a = 0;
             $b = 0;
             $sort = self::getSortAscDesc($sort);
 
-            if(is_string($method))
+            if(is_string($method) && is_object($first) && is_object($second))
             {
-                if($type === 'obj')
-                {
-                    $a = $first->$method(...$args);
-                    $b = $second->$method(...$args);
-                }
+                $a = $first->$method(...$args);
+                $b = $second->$method(...$args);
+            }
 
-                else
-                {
-                    $a = $first::$method(...$args);
-                    $b = $second::$method(...$args);
-                }
+            elseif(is_string($method) && is_string($first) && is_string($second))
+            {
+                $a = $first::$method(...$args);
+                $b = $second::$method(...$args);
             }
 
             elseif($method instanceof \Closure)
             {
-                $a = $method($first);
-                $b = $method($second);
+                $a = $method($first,...$args);
+                $b = $method($second,...$args);
             }
 
             if($sort === 'asc')
@@ -4245,10 +4242,10 @@ final class Arr extends Root
 
     // methodSorts
     // permet de faire plusieurs sorts su un tableau unidimensionnel contenant des noms de classes ou des objets
-    // le type doit être obj ou classe
-    final public static function methodSorts(string $type,array $sorts,array $return):array
+    // le type doit être obj ou classe, il est aussi possible de passer des closures
+    final public static function methodSorts(array $sorts,array $return):array
     {
-        uasort($return, function($first,$second) use ($type,$sorts)
+        uasort($return, function($first,$second) use ($sorts)
         {
             $return = 0;
             $a = 0;
@@ -4265,19 +4262,16 @@ final class Arr extends Root
                     if(!is_array($args))
                     $args = [$args];
 
-                    if(is_string($method))
+                    if(is_string($method) && is_object($first) && is_object($second))
                     {
-                        if($type === 'obj')
-                        {
-                            $a = $first->$method(...$args);
-                            $b = $second->$method(...$args);
-                        }
+                        $a = $first->$method(...$args);
+                        $b = $second->$method(...$args);
+                    }
 
-                        else
-                        {
-                            $a = $first::$method(...$args);
-                            $b = $second::$method(...$args);
-                        }
+                    elseif(is_string($method) && is_string($first) && is_string($second))
+                    {
+                        $a = $first::$method(...$args);
+                        $b = $second::$method(...$args);
                     }
 
                     elseif($method instanceof \Closure)
