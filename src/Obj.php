@@ -466,7 +466,8 @@ final class Obj extends Root
     // si l'objet a la méthode cast, l'objet est remplacé par le retour de la méthode
     // mode permet de spécifier une valeur de retour de la valeur, une erreur est lancé si non respect du type de retour
     // une resource est transformé en sa version base64
-    final public static function cast($return,int $mode=0,?string $method=null)
+    // l'argument objResource effectue une deuxième transformation si la valeur cast d'un objet est une resource
+    final public static function cast($return,int $mode=0,?string $method=null,bool $objResource=false)
     {
         if(is_object($return))
         {
@@ -477,13 +478,16 @@ final class Obj extends Root
 
             elseif(method_exists($return,$method))
             $return = $return->$method();
+
+            if($objResource === true && is_resource($return))
+            $return = Res::pathToUriOrBase64($return);
         }
 
         elseif(is_array($return))
         {
             foreach ($return as $key => $value)
             {
-                $return[$key] = self::cast($value,0,$method);
+                $return[$key] = self::cast($value,0,$method,$objResource);
             }
         }
 
