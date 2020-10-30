@@ -280,8 +280,7 @@ final class Attr extends Listing
 
                     if(!empty($href['selected']) && self::isSelectedUri($value))
                     {
-                        $selected = self::getSelectedUri($value);
-                        $selected = ($selected === true)? $href['selected']:$selected;
+                        $selected = self::getSelectedUri($value,$href['selected']);
                         $return['class'][] = $selected;
                     }
 
@@ -1154,9 +1153,16 @@ final class Attr extends Listing
 
     // getSelectedUri
     // retourne la classe à utiliser pour une uri sélectionnée
-    final public static function getSelectedUri(string $key)
+    // la classe par défaut peut être fourni en deuxième argument, sinon utilise les options
+    final public static function getSelectedUri(string $key,?string $default=null)
     {
-        return (array_key_exists($key,self::$selectedUri))? self::$selectedUri[$key]:null;
+        $default ??= static::$config['option']['href']['selected'];
+        $return = (array_key_exists($key,self::$selectedUri))? self::$selectedUri[$key]:null;
+
+        if($return === true)
+        $return = $default;
+
+        return $return;
     }
 
 

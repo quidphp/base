@@ -502,7 +502,8 @@ final class Superglobal extends Root
     // possibilité d'enlever les tags html dans le tableau de retour
     // possibilité d'inclure les données chargés en provenance de files comme variable post
     // les données de files sont reformat par défaut, mais post a toujours précédente sur files
-    final public static function postReformat(array $return,bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false,?array $files=null):array
+    // possible d'exclure les champs qui commencent par notStart
+    final public static function postReformat(array $return,bool $safeKey=false,bool $stripTags=false,?string $notStart=null,bool $includeFiles=false,?array $files=null):array
     {
         if($safeKey === true)
         {
@@ -516,10 +517,10 @@ final class Superglobal extends Root
         }
 
         if($stripTags === true)
-        {
-            $closure = fn($v) => is_string($v)? strip_tags($v):$v;
-            $return = Arrs::map($return,$closure);
-        }
+        $return = Arrs::map($return,fn($v) => is_string($v)? strip_tags($v):$v);
+
+        if(is_string($notStart))
+        $return = Arr::filter($return,fn($value,$key) => !Str::isStart($notStart,$key));
 
         if($includeFiles === true)
         {

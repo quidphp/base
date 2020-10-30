@@ -202,6 +202,8 @@ class Superglobal extends Base\Test
         // postReformat
         $post = ['-test-'=>'non','oui'=>'OK','MAX_FILE_SIZE'=>200];
         assert(Base\Superglobal::postReformat($post,true,true) === ['oui'=>'OK']);
+        $post = ['-test-'=>'non','oui'=>'OK','oui_MAX_FILE_SIZE'=>200];
+        assert(Base\Superglobal::postReformat($post,true,true,'oui') === []);
 
         // filesReformat
         $single = ['ok'=>['name'=>'test.jpg','error'=>2],'ok2'=>['name'=>'test2.jpg','error'=>3]];

@@ -881,9 +881,9 @@ final class Request extends Root
 
     // post
     // retourne la valeur post courante
-    final public static function post(bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false):?array
+    final public static function post(bool $safeKey=false,bool $stripTags=false,?string $notStart=null,bool $includeFiles=false):?array
     {
-        return Superglobal::postReformat(Superglobal::post(),$safeKey,$stripTags,$includeFiles);
+        return Superglobal::postReformat(Superglobal::post(),$safeKey,$stripTags,$notStart,$includeFiles);
     }
 
 

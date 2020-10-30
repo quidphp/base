@@ -321,7 +321,9 @@ class Attr extends Base\Test
         assert(Base\Attr::selectedUriArray() === ['/test/laa.php']);
 
         // getSelectedUri
-        assert(Base\Attr::getSelectedUri('/test/laa.php') === true);
+        assert(Base\Attr::getSelectedUri('/test/laa.php') === 'selected');
+        assert(Base\Attr::getSelectedUri('/test/laa.php','james') === 'james');
+        assert(Base\Attr::getSelectedUri('/test/laa.phpz','james') === null);
 
         // addSelectedUri
         Base\Attr::addSelectedUri(['/test.php'=>'james']);
