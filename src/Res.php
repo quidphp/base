@@ -2145,6 +2145,7 @@ final class Res extends Root
     // ne peut pas être une resource directoire
     // endCleanAll est utilisé -> donc fermeture complête du output buffer
     // option clean, rewind, flush et sleep
+    // length true égale maintenant 10% de la limite mémoire (memory_limit)
     final public static function passthruChunk($length,$value,?array $option=null):?int
     {
         $return = null;
@@ -2153,6 +2154,9 @@ final class Res extends Root
         if(self::isReadable($value) && !self::isDir($value))
         {
             $return = 0;
+
+            if($length === true)
+            $length = (int) (Ini::memoryLimit(1) / 10);
 
             if($option['clean'] === true)
             Buffer::endCleanAll();
