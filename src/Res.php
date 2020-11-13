@@ -2149,14 +2149,14 @@ final class Res extends Root
     final public static function passthruChunk($length,$value,?array $option=null):?int
     {
         $return = null;
-        $option = Arr::plus(['clean'=>true,'rewind'=>true,'flush'=>true,'sleep'=>null],$option);
+        $option = Arr::plus(['clean'=>true,'rewind'=>true,'flush'=>true,'sleep'=>null,'memoryDivider'=>10],$option);
 
         if(self::isReadable($value) && !self::isDir($value))
         {
             $return = 0;
 
             if($length === true)
-            $length = (int) (Ini::memoryLimit(1) / 10);
+            $length = Server::getMemoryChunk($option['memoryDivider']);
 
             if($option['clean'] === true)
             Buffer::endCleanAll();

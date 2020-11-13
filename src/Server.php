@@ -705,6 +705,15 @@ final class Server extends Root
     }
 
 
+    // getMemoryChunk
+    // retourne un chunk de bites valable en considérant la limite de mémoire
+    // utilisé pour les download afin d'éviter que tout le fichier soit mis en mémoire
+    final public static function getMemoryChunk(int $divider=10):int
+    {
+        return (int) (Ini::memoryLimit(1) / $divider);
+    }
+
+
     // diskSpace
     // retourne l'espace disque sur le serveur
     final public static function diskSpace(string $directory='/',bool $format=true):array

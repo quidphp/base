@@ -231,6 +231,9 @@ class Server extends Base\Test
         // memory
         assert(count(Base\Server::memory()) === 4);
 
+        // getMemoryChunk
+        assert(is_int(Base\Server::getMemoryChunk()));
+
         // diskSpace
         assert(count(Base\Server::diskSpace()) === 2);
 
