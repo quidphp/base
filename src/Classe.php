@@ -738,7 +738,7 @@ final class Classe extends Root
                         // trait
                         foreach ($return as $v)
                         {
-                            $deep = Arr::merge($deep,self::traits($v,false,$autoload));
+                            $deep = Arr::merge($deep,self::traits($v,true,$autoload));
                         }
 
                         // parent
