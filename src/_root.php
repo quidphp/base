@@ -59,6 +59,38 @@ trait _root
     }
 
 
+    // classHasProperty
+    // retourne vrai si la classe a la propriété statique
+    final public static function classHasProperty(string $value):bool
+    {
+        return Classe::hasProperty($value,static::class);
+    }
+
+
+    // classHasMethod
+    // retourne vrai si la classe a la méthode statique
+    final public static function classHasMethod(string $value):bool
+    {
+        return Classe::hasMethod($value,static::class);
+    }
+
+
+    // classHasTrait
+    // retourne vrai si la classe a le trait
+    final public static function classHasTrait(string $value):bool
+    {
+        return Classe::hasTrait($value,static::class);
+    }
+
+
+    // classHasInterface
+    // retourne vrai si la classe a l'interface
+    final public static function classHasInterface(string $value):bool
+    {
+        return Classe::hasInterface($value,static::class);
+    }
+
+
     // classParents
     // retourne un tableau avec tous les parents de la classe
     // possible d'inclure la classe si self est true, et de pop des éléments à la fin

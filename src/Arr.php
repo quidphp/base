@@ -3503,8 +3503,8 @@ final class Arr extends Root
 
         if(!empty($array))
         {
-            reset($array);
-            $return = current($array);
+            $key = self::keyFirst($array);
+            $return = $array[$key];
         }
 
         return $return;
@@ -3519,8 +3519,8 @@ final class Arr extends Root
 
         if(!empty($array))
         {
-            end($array);
-            return current($array);
+            $key = self::keyLast($array);
+            $return = $array[$key];
         }
 
         return $return;

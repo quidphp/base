@@ -1199,7 +1199,7 @@ final class Html extends Root
         $return = '';
         $tags = (array) $tags;
 
-        if(count($tags) > 1 && method_exists(self::class,($method = implode('',$tags).'Open')))
+        if(count($tags) > 1 && self::classHasMethod($method = implode('',$tags).'Open'))
         $return = self::$method(...$arg);
 
         elseif(!empty($tags))
@@ -1213,7 +1213,7 @@ final class Html extends Root
                 {
                     $method = $tag.'Open';
 
-                    if(method_exists(self::class,$method))
+                    if(self::classHasMethod($method))
                     {
                         if($i === $count)
                         $return .= self::$method(...$arg);
@@ -1291,7 +1291,7 @@ final class Html extends Root
         $return = '';
         $tags = (array) $tags;
 
-        if(count($tags) > 1 && method_exists(self::class,($method = implode('',$tags).'Close')))
+        if(count($tags) > 1 && self::classHasMethod($method = implode('',$tags).'Close'))
         $return = self::$method($option);
 
         elseif(!empty($tags))
@@ -1309,7 +1309,7 @@ final class Html extends Root
                 {
                     $method = $tag.'Close';
 
-                    if(method_exists(self::class,$method))
+                    if(self::classHasMethod($method))
                     $return .= self::$method($option);
                     else
                     $return .= self::end($tag,$option);

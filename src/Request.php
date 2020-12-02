@@ -1154,7 +1154,7 @@ final class Request extends Root
             {
                 $method = 'set'.ucfirst($key);
 
-                if(method_exists(self::class,$method))
+                if(self::classHasMethod($method))
                 self::$method($value);
             }
         }

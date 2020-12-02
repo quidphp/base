@@ -21,6 +21,10 @@ class Root extends Base\Test
         assert(Base\Root::classFqcn() === Base\Root::class);
         assert(Base\Root::classNamespace() === 'Quid\Base');
         assert(Base\Root::className() === 'Root');
+        assert(Base\Root::classHasProperty('config'));
+        assert(Base\Root::classHasMethod('classHasProperty'));
+        assert(Base\Root::classHasTrait(Base\_root::class));
+        assert(!Base\Root::classHasInterface(Base\_root::class));
         assert(Base\Root::classParents() === []);
         assert(count(Base\Root::classHelp()) === 9);
         assert(Base\Root::isCallable([Base\Str::class,'upper']));

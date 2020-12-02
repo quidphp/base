@@ -488,7 +488,7 @@ final class Num extends Root
         elseif(!empty(self::$config['alias'][$operation]))
         $method = self::$config['alias'][$operation];
 
-        if(is_string($method) && method_exists(self::class,$method))
+        if(is_string($method) && self::classHasMethod($method))
         {
             $values = array_values($values);
             $return = self::$method(...$values);
