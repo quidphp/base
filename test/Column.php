@@ -242,7 +242,7 @@ class Column extends Base\Test
         $multi = [0=>['name'=>'test','user'=>'testa'],3=>['name'=>'test2','user'=>'testa2'],2=>['user'=>['testa3'],'meh'=>'test','bla'=>'2']];
         assert(['testa','testa2',['testa3']] === Base\Column::keyValue(null,'user',$multi));
         assert([] === Base\Column::keyValue([],'user',$multi));
-        assert(Base\Column::keyValue('bla','user',$multi) === array('testa','testa2',array('testa3')));
+        assert(Base\Column::keyValue('bla','user',$multi) === ['testa','testa2',['testa3']]);
         assert(['test'=>'2'] === Base\Column::keyValue('meh','bla',$multi));
         assert([] === Base\Column::keyValue(null,'namez',$multi));
         assert([] === Base\Column::keyValue([],[],$multi));

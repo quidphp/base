@@ -216,8 +216,8 @@ final class Segment extends Root
     final protected static function doSet(string $return,array $delimiter,array $replace):string
     {
         $replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
-        
-        foreach ($replace as $key => $value) 
+
+        foreach ($replace as $key => $value)
         {
             if(!is_string($value))
             {
@@ -225,7 +225,7 @@ final class Segment extends Root
                 $replace[$key] = (string) $value;
             }
         }
-        
+
         $pattern = array_keys($replace);
         $replacement = array_values($replace);
         foreach ($replacement as $key => $value)
