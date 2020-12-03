@@ -313,7 +313,7 @@ class File extends Finder
     // res
     // méthode protégé utilisé pour faire les appels à la classe res
     // sauve 400 lignes de code
-    final protected static function res(string $method,bool $create=false,int $v,?int $o=null,...$args)
+    final protected static function res(string $method,bool $create,int $v,?int $o=null,...$args)
     {
         $return = null;
         $value = $args[$v];

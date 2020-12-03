@@ -1028,7 +1028,7 @@ final class Classe extends Root
     // sort
     // permet de sort un tableau unidimensionnel contenant des noms de classes via le résultat d'une méthode statique de la classe
     // possible de mettre des arguments pour la méthode pack après l'argument return
-    final public static function sort($method,$sort=true,array $return,...$args):array
+    final public static function sort($method,$sort,array $return,...$args):array
     {
         return Arr::methodSort($method,$sort,$return,...$args);
     }

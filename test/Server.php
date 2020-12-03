@@ -70,11 +70,11 @@ class Server extends Base\Test
         assert(Base\Server::isPhpVersion(PHP_VERSION));
 
         // isPhpVersionOlder
-        assert(Base\Server::isPhpVersionOlder('7.5'));
+        assert(Base\Server::isPhpVersionOlder('9.1'));
 
         // isPhpVersionNewer
         assert(Base\Server::isPhpVersionNewer('6.5'));
-        assert(!Base\Server::isPhpVersionNewer('7.5'));
+        assert(!Base\Server::isPhpVersionNewer('9.1'));
 
         // hasApacheFunctions
         assert(is_bool(Base\Server::hasApacheFunctions()));

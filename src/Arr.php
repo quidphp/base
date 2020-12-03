@@ -902,7 +902,7 @@ final class Arr extends Root
     // permet de faire des modifications get/set sur un tableau unidimensionnel
     // le tableau est passé par référence
     // pas de support pour clé insensible à la case
-    final public static function getSet($get=null,$set=null,array &$source)
+    final public static function getSet($get,$set,array &$source)
     {
         $return = null;
 
@@ -954,7 +954,7 @@ final class Arr extends Root
 
     // keyValueIndex
     // retourne un tableau clé valeur à partir d'un index pour clé et un index pour valeur
-    final public static function keyValueIndex(int $key=0,int $value=1,array $array):array
+    final public static function keyValueIndex(int $key,int $value,array $array):array
     {
         $return = [];
         $array = array_values($array);
@@ -4188,7 +4188,7 @@ final class Arr extends Root
     // methodSort
     // permet de faire un sort su un tableau unidimensionnel contenant des noms de classes ou des objets
     // le type doit être obj ou classe, ou possible de passer une closure
-    final public static function methodSort($method,$sort=true,array $return,...$args):array
+    final public static function methodSort($method,$sort,array $return,...$args):array
     {
         uasort($return, function($first,$second) use ($method,$sort,$args)
         {

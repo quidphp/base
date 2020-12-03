@@ -216,17 +216,24 @@ final class Segment extends Root
     final protected static function doSet(string $return,array $delimiter,array $replace):string
     {
         $replace = Arr::keysWrap('/'.$delimiter[0],$delimiter[1].'/',$replace);
+        
+        foreach ($replace as $key => $value) 
+        {
+            if(!is_string($value))
+            {
+                if(is_scalar($value) || $value === null)
+                $replace[$key] = (string) $value;
+            }
+        }
+        
         $pattern = array_keys($replace);
         $replacement = array_values($replace);
-
         foreach ($replacement as $key => $value)
         {
             $replacement[$key] = str_replace('$','\$',$value);
         }
 
-        $return = preg_replace($pattern,$replacement,$return);
-
-        return $return;
+        return preg_replace($pattern,$replacement,$return);
     }
 
 
@@ -249,7 +256,6 @@ final class Segment extends Root
 
             if(is_scalar($value))
             {
-                $value = (string) $value;
                 $replace = [$key=>$value];
                 $replace = Arr::keysReplace(self::$config['replace'],$replace);
             }
@@ -262,7 +268,7 @@ final class Segment extends Root
                     {
                         $column = self::$config['column'];
                         $newKey = $key.self::escape($column).$k;
-                        $replace[$newKey] = (string) $v;
+                        $replace[$newKey] = $v;
                     }
                 }
             }
@@ -316,12 +322,6 @@ final class Segment extends Root
 
             else
             $replace = Arr::keysReplace(self::$config['replace'],$replace);
-
-            foreach ($replace as $key => $value)
-            {
-                if(is_scalar($value))
-                $replace[$key] = (string) $value;
-            }
 
             if(!empty($replace))
             $return = self::doSet($return,$delimiter,$replace);

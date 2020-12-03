@@ -221,7 +221,7 @@ final class Datetime extends Root
 
     // isFormat
     // retourne vrai si la date est bien du format spécifé
-    final public static function isFormat($format=null,$value):bool
+    final public static function isFormat($format,$value):bool
     {
         $return = false;
 
@@ -1975,7 +1975,7 @@ final class Datetime extends Root
 
     // amountStr
     // comme amountKeep mais retourne plutôt une string formatté
-    final public static function amountStr(int $amount=2,int $value):string
+    final public static function amountStr(int $amount,int $value):string
     {
         $return = '';
         $diff = self::amount($value);

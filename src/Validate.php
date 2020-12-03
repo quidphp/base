@@ -519,7 +519,7 @@ final class Validate extends Root
 
     // compare
     // fonction de comparaison entre deux chaines
-    final public static function compare($value1,string $symbol='===',$value2):bool
+    final public static function compare($value1,string $symbol,$value2):bool
     {
         $return = false;
 

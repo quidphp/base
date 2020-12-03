@@ -104,10 +104,10 @@ class Encoding extends Base\Test
         assert(strlen(Base\Encoding::fromUtf8('testé')) === 5);
 
         // info
-        assert(count(Base\Encoding::info()) >= 14);
+        assert(count(Base\Encoding::info()) >= 12);
 
         // all
-        assert(in_array(count(Base\Encoding::all()),[86,87],true));
+        assert(in_array(count(Base\Encoding::all()),[85,86,87],true));
 
         return true;
     }

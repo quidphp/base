@@ -519,7 +519,7 @@ final class Debug extends Root
     // call
     // permet de faire des itérations sur une closure
     // retourne le temps d'éxécutions
-    final public static function call(int $iteration=5000,\Closure $closure):float
+    final public static function call(int $iteration,\Closure $closure):float
     {
         $return = 0;
         $microtime = Datetime::microtime();

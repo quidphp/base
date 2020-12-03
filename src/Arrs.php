@@ -706,7 +706,7 @@ final class Arrs extends Root
     // permet de faire des modifications get/set sur un tableau multidimensionnel
     // le tableau est passé par référence
     // pas de support pour clé insensible à la case
-    final public static function getSet($get=null,$set=null,array &$source)
+    final public static function getSet($get,$set,array &$source)
     {
         $return = null;
 

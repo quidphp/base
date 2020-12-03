@@ -1503,7 +1503,7 @@ final class Str extends Root
     // split
     // split une chaîne par longueur
     // length permet de définir la longueur du split
-    final public static function split(int $length=1,string $str,?bool $mb=null):array
+    final public static function split(int $length,string $str,?bool $mb=null):array
     {
         $return = [];
         $mb ??= Encoding::getMb($mb,$str);
@@ -1609,7 +1609,7 @@ final class Str extends Root
     // lineSplice
     // permet d'ajouter ou remplacer une ou plusieurs lignes dans la chaîne
     // replace peut être array, string ou null
-    final public static function lineSplice(int $offset,?int $length,$replace=[],string $str):string
+    final public static function lineSplice(int $offset,?int $length,$replace,string $str):string
     {
         $return = '';
         $lines = self::lines($str);
@@ -1690,7 +1690,7 @@ final class Str extends Root
     // wordSplice
     // permet d'ajouter ou remplacer un ou plusieurs mots dans la chaîne
     // replace peut être array, string ou null
-    final public static function wordSplice(int $offset,?int $length,$replace=[],string $str,?bool $mb=null):string
+    final public static function wordSplice(int $offset,?int $length,$replace,string $str,?bool $mb=null):string
     {
         $return = '';
         $words = self::words($str,$mb);
@@ -1800,7 +1800,7 @@ final class Str extends Root
     // wordwrap
     // wrapper pour word_wrap
     // fonctionne avec mb
-    final public static function wordwrap(int $width=75,string $str,string $break=PHP_EOL,bool $cut=false,?bool $mb=null):string
+    final public static function wordwrap(int $width,string $str,string $break=PHP_EOL,bool $cut=false,?bool $mb=null):string
     {
         $return = '';
         $mb ??= Encoding::getMbs($mb,$str,$break);
@@ -2099,7 +2099,7 @@ final class Str extends Root
 
     // repeatLeft
     // repeat un caractère un nombre de fois au début d'une chaine
-    final public static function repeatLeft(string $input,int $multiplier=2,string $return):string
+    final public static function repeatLeft(string $input,int $multiplier,string $return):string
     {
         if($multiplier > 0)
         $return = str_repeat($input,$multiplier).$return;
@@ -2110,7 +2110,7 @@ final class Str extends Root
 
     // repeatRight
     // repeat un caractère un nombre de fois à la fin d'une chaine
-    final public static function repeatRight(string $input,int $multiplier=2,string $return):string
+    final public static function repeatRight(string $input,int $multiplier,string $return):string
     {
         if($multiplier > 0)
         $return = $return.str_repeat($input,$multiplier);

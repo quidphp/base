@@ -405,7 +405,7 @@ namespace Quid\Test\Base\Classe
 
 
         // parentTraiPrivDyn
-        final private function parentTraiPrivDyn()
+        private function parentTraiPrivDyn()
         {
             return true;
         }
@@ -426,7 +426,7 @@ namespace Quid\Test\Base\Classe
 
 
         // parentTraiPrivStat
-        final private static function parentTraiPrivStat()
+        private static function parentTraiPrivStat()
         {
             return true;
         }
@@ -467,7 +467,7 @@ namespace Quid\Test\Base\Classe
 
 
         // traiPrivDyn
-        final private function traiPrivDyn()
+        private function traiPrivDyn()
         {
             return true;
         }
@@ -488,7 +488,7 @@ namespace Quid\Test\Base\Classe
 
 
         // traiPrivStat
-        final private static function traiPrivStat()
+        private static function traiPrivStat()
         {
             return true;
         }
@@ -573,7 +573,7 @@ namespace Quid\Test\Base\Classe
 
 
         // parentPrivStat
-        final private static function parentPrivStat()
+        private static function parentPrivStat()
         {
             return true;
         }
@@ -631,7 +631,7 @@ namespace Quid\Test\Base\Classe
 
 
         // privDyn
-        final private function privDyn()
+        private function privDyn()
         {
             return true;
         }
@@ -652,7 +652,7 @@ namespace Quid\Test\Base\Classe
 
 
         // priStat
-        final private static function privStat()
+        private static function privStat()
         {
             return true;
         }

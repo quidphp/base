@@ -154,7 +154,7 @@ final class Call extends Root
     // dig
     // creuse dans un tableau et call toutes les méthodes
     // possible d'appeler seulement les safeArray, pas les autres méthodes
-    final public static function dig(bool $onlySafeArray=false,array $return,...$args)
+    final public static function dig(bool $onlySafeArray,array $return,...$args)
     {
         foreach ($return as $key => $value)
         {

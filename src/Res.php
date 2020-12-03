@@ -1564,7 +1564,7 @@ final class Res extends Root
     // getPhpContextOption
     // retourne une option de contexte ou null
     // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
-    final public static function getPhpContextOption($key=null,$value)
+    final public static function getPhpContextOption($key,$value)
     {
         $return = null;
         $option = self::contextOption($value);
@@ -1961,7 +1961,7 @@ final class Res extends Root
     // pour les resources seekable, une bit additionnelle est lu pour tester la fin de la resource
     // si seek est true, alors seek vaut 0
     // si ce n'est pas la fin de la resource, le pointeur est ramener une bit à l'arrière
-    final public static function seek($seek=0,$value,?int $type=SEEK_SET,?array $option=null):bool
+    final public static function seek($seek,$value,?int $type=SEEK_SET,?array $option=null):bool
     {
         $return = false;
 
@@ -2043,7 +2043,7 @@ final class Res extends Root
     // seekEnd
     // envoie le pointeur de la resource à la fin
     // ne fonctionne pas avec une ressource directoire
-    final public static function seekEnd($seek=0,$value,?array $option=null):bool
+    final public static function seekEnd($seek,$value,?array $option=null):bool
     {
         return self::seek($seek,$value,SEEK_END,$option);
     }
@@ -2225,7 +2225,7 @@ final class Res extends Root
     // lineRef
     // retourne la ligne courante de la resource à partir d'un offset, length et un i
     // le i doit être passé par référence
-    final public static function lineRef($value,$offset=true,$length=true,int &$i,?array $option=null)
+    final public static function lineRef($value,$offset,$length,int &$i,?array $option=null)
     {
         $return = null;
 

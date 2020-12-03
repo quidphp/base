@@ -22,7 +22,7 @@ class Num extends Base\Test
         $b = 'string';
         Base\Num::typecast($a,$b);
         assert($a === 23.2);
-        assert($b === 'string');
+        assert($b === null);
 
         // cast
         assert(Base\Num::cast('000000') === '000000');
@@ -70,6 +70,10 @@ class Num extends Base\Test
         assert((float) '-0.1' === Base\Num::castMore('-0.1'));
         assert(-0.1 === Base\Num::castMore('-0,1'));
         assert(Base\Num::castMore('0.02316447') === 0.02316447);
+
+        // castMoreOrNull
+        assert(-0.1 === Base\Num::castMoreOrNull('-0,1'));
+        assert(null === Base\Num::castMoreOrNull('bla'));
 
         // is
         assert(Base\Num::is('2'));
@@ -119,6 +123,7 @@ class Num extends Base\Test
 
         // isOdd
         assert(Base\Num::isOdd('1'));
+        assert(!Base\Num::isOdd('bla'));
         assert(Base\Num::isOdd(3));
         assert(Base\Num::isOdd(3.0));
         assert(!Base\Num::isOdd(3.1));
@@ -153,12 +158,12 @@ class Num extends Base\Test
 
         // append
         assert(Base\Num::append('23',4.2,4) === 234.24);
-        assert(Base\Num::append('23',4.2,2.4) === '234.22.4');
+        assert(Base\Num::append('23',4.2,2.4) === null);
 
         // commaToDecimal
         assert(1.1 === Base\Num::commaToDecimal(1.1));
         assert(2.1 === Base\Num::commaToDecimal('2,1'));
-        assert('2.1.2' === Base\Num::commaToDecimal('2,1,2'));
+        assert(null === Base\Num::commaToDecimal('2,1,2'));
 
         // len
         assert(3 === Base\Num::len('2.5'));
@@ -190,30 +195,30 @@ class Num extends Base\Test
         // ceil
         assert(3 === Base\Num::ceil('2.5'));
         assert(3 === Base\Num::ceil(2.2));
-        assert(0 === Base\Num::ceil('bla'));
+        assert(null === Base\Num::ceil('bla'));
 
         // floor
         assert(2 === Base\Num::floor('2.5'));
         assert(2 === Base\Num::floor(2.2));
-        assert(0 === Base\Num::floor('bla'));
+        assert(null === Base\Num::floor('bla'));
 
         // positive
         assert(2 === Base\Num::positive('-2'));
-        assert(2 === Base\Num::positive('-2a'));
-        assert(abs('a-2a') === Base\Num::positive('a-2a'));
-        assert(0 === Base\Num::positive('a-2a'));
+        assert(null === Base\Num::positive('-2a'));
+        assert(null === Base\Num::positive('a-2a'));
+        assert(null === Base\Num::positive('a-2a'));
         assert(2.5 === Base\Num::positive('-2.5'));
 
         // negative
         assert(-2 === Base\Num::negative('2'));
         assert(-2.5 === Base\Num::negative(2.5));
-        assert(-2 === Base\Num::negative('-2a'));
-        assert(abs('-2a') * -1 === Base\Num::negative('-2a'));
+        assert(null === Base\Num::negative('-2a'));
+        assert(null === Base\Num::negative('-2a'));
 
         // invert
         assert(-2 === Base\Num::invert('2'));
         assert(0 === Base\Num::invert(0));
-        assert(0 === Base\Num::invert('test'));
+        assert(null === Base\Num::invert('test'));
         assert(0 === Base\Num::invert('0'));
         assert(2.5 === Base\Num::invert(-2.5));
 
@@ -265,10 +270,12 @@ class Num extends Base\Test
         assert(Base\Num::math('>',[4,3]) === 4);
         assert(Base\Num::math('<',[4,1]) === 1);
 
+        // mathCommon
+
         // combine
         assert(Base\Num::combine('+',[1,2],[3,4],[1,2,3]) === [5,8,3]);
         assert(Base\Num::combine('*',[1,2],[3,4],[1,2,3],['test',[]]) === [3,16,3]);
-        assert(Base\Num::combine('/',[1,0],[0,0],[0,2,3]) === [null,0,3]);
+        assert(Base\Num::combine('/',[1,0],[0,0],[0,2,3]) === [null,null,3]);
         assert(Base\Num::combine('>',[1,0],[3,0],[0,2,3]) === [3,2,3]);
 
         // addition

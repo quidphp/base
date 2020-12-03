@@ -251,7 +251,7 @@ final class Column extends Root
 
     // math
     // fait une opération mathématique sur les éléments d'une colonne d'un tableau multidimensionnel
-    final public static function math(string $col,string $symbol='+',array $array,?int $round=null)
+    final public static function math(string $col,string $symbol,array $array,?int $round=null)
     {
         $return = null;
         $values = self::value($col,$array);
@@ -463,7 +463,7 @@ final class Column extends Root
     // sort
     // sort un tableau multidimensionnel par une colonne
     // direction asc ou desc
-    final public static function sort($col,$sort=true,array $return):array
+    final public static function sort($col,$sort,array $return):array
     {
         if(self::keyExists($col,$return))
         {

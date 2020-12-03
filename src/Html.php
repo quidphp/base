@@ -2811,7 +2811,7 @@ final class Html extends Root
 
     // selectWithTitle
     // permet de générer un select avec une option title
-    final public static function selectWithTitle($title=true,$value,$attr=null,?array $option=null):string
+    final public static function selectWithTitle($title,$value,$attr=null,?array $option=null):string
     {
         $return = '';
 
