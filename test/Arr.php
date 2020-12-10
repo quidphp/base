@@ -24,6 +24,7 @@ class Arr extends Base\Test
         $x = 1;
         $y = '2';
         $z = [];
+
         $obj = new \DateTime('now');
         Base\Arr::typecast($x,$y,$z,$obj);
         assert([1] === $x);

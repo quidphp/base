@@ -38,7 +38,6 @@ class Res extends Base\Test
         $input = Base\Res::open('php://input');
         $temp = Base\Res::open('php://temp');
         $memory = Base\Res::open('php://memory');
-        $curl = Base\Res::curl(Base\Uri::absolute($mediaPhp));
         $http = Base\Res::open(Base\Uri::absolute($mediaJpgUri));
         $dir = Base\Res::open($_dir_);
         $sym = $storage.'/sym';
@@ -56,26 +55,20 @@ class Res extends Base\Test
         $hash = Base\Res::open($mediaHash);
         $vector = Base\Res::open('[assertCommon]/svg.svg');
 
-        // allowSelfSigned
-        assert(is_bool(Base\Res::allowSelfSigned()));
-
         // is
         assert(!Base\Res::is('bla'));
         assert(Base\Res::is($fp));
-        assert(Base\Res::is($curl));
 
         // isEmpty
         assert(Base\Res::isEmpty($fp));
         assert(Base\Res::isEmpty($input));
         assert(Base\Res::isEmpty($output));
         assert(!Base\Res::isEmpty($dir));
-        assert(Base\Res::isEmpty($curl));
 
         // isNotEmpty
         assert(Base\Res::isNotEmpty($current));
         assert(Base\Res::isNotEmpty($http));
         assert(Base\Res::isNotEmpty($dir));
-        assert(!Base\Res::isNotEmpty($curl));
         assert(Base\Res::isNotEmpty($array));
 
         // isReadable
@@ -87,7 +80,6 @@ class Res extends Base\Test
         assert(Base\Res::isReadable($memory));
         assert(Base\Res::isReadable($http));
         assert(Base\Res::isReadable($dir));
-        assert(!Base\Res::isReadable($curl));
         assert(Base\Res::isReadable($array));
 
         // isWritable
@@ -98,7 +90,6 @@ class Res extends Base\Test
         assert(Base\Res::isWritable($memory));
         assert(!Base\Res::isWritable($http));
         assert(!Base\Res::isWritable($dir));
-        assert(!Base\Res::isBinary($curl));
 
         // isBinary
         assert(is_bool(Base\Res::isBinary($fp)));
@@ -109,7 +100,6 @@ class Res extends Base\Test
         assert(Base\Res::isBinary($memory));
         assert(!Base\Res::isBinary($http));
         assert(!Base\Res::isBinary($dir));
-        assert(!Base\Res::isBinary($curl));
 
         // isStream
         assert(Base\Res::isStream($fp));
@@ -120,31 +110,21 @@ class Res extends Base\Test
         assert(Base\Res::isStream($memory));
         assert(Base\Res::isStream($http));
         assert(Base\Res::isStream($dir));
-        assert(!Base\Res::isStream($curl));
 
         // isRegularType
         assert(Base\Res::isRegularType($fp));
-        assert(!Base\Res::isRegularType($curl));
         assert(!Base\Res::isRegularType($finfo));
 
-        // isCurl
-        assert(!Base\Res::isCurl($http));
-        assert(Base\Res::isCurl($curl));
-
         // isFinfo
-        assert(!Base\Res::isFinfo($curl));
         assert(Base\Res::isFinfo($finfo));
 
         // isContext
         assert(!Base\Res::isContext($fp));
         assert(Base\Res::isContext($context));
-        assert(!Base\Res::isContext($curl));
 
         // isStreamMetaFile
         $meta = Base\Res::meta($current);
         assert(Base\Res::isStreamMetaFile($meta));
-        $meta2 = Base\Res::meta($curl);
-        assert(!Base\Res::isStreamMetaFile($meta2));
 
         // isFile
         assert(Base\Res::isFile($fp));
@@ -155,7 +135,6 @@ class Res extends Base\Test
         assert(!Base\Res::isFile($memory));
         assert(!Base\Res::isFile($http));
         assert(!Base\Res::isFile($dir));
-        assert(!Base\Res::isFile($curl));
         assert(Base\Res::isFile($array));
         assert(Base\Res::isFile($hash));
 
@@ -193,12 +172,10 @@ class Res extends Base\Test
         assert(Base\Res::isFileLike($memory));
         assert(!Base\Res::isFileLike($http));
         assert(!Base\Res::isFileLike($dir));
-        assert(!Base\Res::isFileLike($curl));
 
         // isDir
         assert(!Base\Res::isDir($current));
         assert(Base\Res::isDir($dir));
-        assert(!Base\Res::isDir($curl));
 
         // isHttp
         assert(!Base\Res::isHttp($fp));
@@ -209,7 +186,6 @@ class Res extends Base\Test
         assert(!Base\Res::isHttp($memory));
         assert(Base\Res::isHttp($http));
         assert(!Base\Res::isHttp($dir));
-        assert(!Base\Res::isHttp($curl));
 
         // isPhp
         assert(!Base\Res::isPhp($fp));
@@ -220,7 +196,6 @@ class Res extends Base\Test
         assert(Base\Res::isPhp($memory));
         assert(!Base\Res::isPhp($http));
         assert(!Base\Res::isPhp($dir));
-        assert(!Base\Res::isPhp($curl));
 
         // isPhpWritable
         assert(Base\Res::isPhpWritable($output));
@@ -250,7 +225,6 @@ class Res extends Base\Test
         assert(!Base\Res::isPhpMemory($input));
         assert(!Base\Res::isPhpMemory($temp));
         assert(Base\Res::isPhpMemory($memory));
-        assert(!Base\Res::isPhpMemory($curl));
 
         // isResponsable
         assert(Base\Res::isResponsable($fp));
@@ -261,7 +235,6 @@ class Res extends Base\Test
         assert(Base\Res::isResponsable($memory));
         assert(Base\Res::isResponsable($http));
         assert(!Base\Res::isResponsable($dir));
-        assert(!Base\Res::isResponsable($curl));
 
         // isLocal
         assert(Base\Res::isLocal($fp));
@@ -272,39 +245,33 @@ class Res extends Base\Test
         assert(Base\Res::isLocal($memory));
         assert(!Base\Res::isLocal($http));
         assert(Base\Res::isLocal($dir));
-        assert(!Base\Res::isLocal($curl));
 
         // isRemote
         assert(!Base\Res::isRemote($fp));
         assert(Base\Res::isRemote($http));
         assert(!Base\Res::isRemote($dir));
-        assert(!Base\Res::isRemote($curl));
 
         // isTimedOut
         assert(!Base\Res::isTimedOut($fp));
         assert(!Base\Res::isTimedOut($temp));
         assert(!Base\Res::isTimedOut($dir));
-        assert(!Base\Res::isTimedOut($curl));
 
         // isBlocked
         assert(Base\Res::isBlocked($memory));
         assert(Base\Res::isBlocked($http));
         assert(Base\Res::isBlocked($dir));
-        assert(!Base\Res::isBlocked($curl));
 
         // isSeekable
         assert(!Base\Res::isSeekable($output));
         assert(Base\Res::isSeekable($current));
         assert(Base\Res::isSeekable($dir));
         assert(Base\Res::isSeekable($dir));
-        assert(!Base\Res::isSeekable($curl));
 
         // isSeekableTellable
         assert(!Base\Res::isSeekableTellable($output));
         assert(Base\Res::isSeekableTellable($current));
         assert(!Base\Res::isSeekableTellable($dir));
         assert(!Base\Res::isSeekableTellable($dir));
-        assert(!Base\Res::isSeekableTellable($curl));
 
         // isLockable
         assert(Base\Res::isLockable($current));
@@ -315,13 +282,11 @@ class Res extends Base\Test
         assert(!Base\Res::isLockable($memory));
         assert(!Base\Res::isLockable($temp));
         assert(!Base\Res::isLockable($dir));
-        assert(!Base\Res::isLockable($curl));
 
         // isStart
         assert(Base\Res::isStart($fp));
         assert(Base\Res::isStart($input));
         assert(!Base\Res::isStart($dir));
-        assert(!Base\Res::isStart($curl));
 
         // isEnd
         assert(!Base\Res::isEnd($fp));
@@ -337,19 +302,15 @@ class Res extends Base\Test
         assert(Base\Res::canStat($memory));
         assert(!Base\Res::canStat($http));
         assert(!Base\Res::canStat($dir));
-        assert(!Base\Res::canStat($curl));
 
         // canLocal
         assert(Base\Res::canLocal($fp));
-        assert(!Base\Res::canLocal($curl));
 
         // canMeta
         assert(Base\Res::canMeta($fp));
-        assert(!Base\Res::canMeta($curl));
 
         // canContext
         assert(Base\Res::canContext($fp));
-        assert(!Base\Res::canContext($curl));
 
         // hasScheme
         assert(Base\Res::hasScheme($http));
@@ -441,7 +402,6 @@ class Res extends Base\Test
         assert(Base\Res::info($dir)['uri'] === null);
         assert(Base\Res::info($symRes)['path'] === $_file_);
         assert(count(Base\Res::info($context)) === 18);
-        assert(count(Base\Res::info($curl)) === 18);
         assert(count(Base\Res::info($finfo)) === 18);
         assert(count(Base\Res::info($zip)) === 18);
 
@@ -452,7 +412,6 @@ class Res extends Base\Test
         $output2 = Base\Res::output('jpg','test.jpg',['clean'=>false,'binary'=>false]);
         assert(count(Base\Res::responseMeta($output2)) === 4);
         assert(Base\Res::close($output2));
-        assert(Base\Res::responseMeta($curl) === null);
         assert(Base\Res::setContextBasename('testa.log',$current));
         assert(Base\Res::setContextMime('jpg',$current));
         assert(Base\Res::responseMeta($current)['mime'] === 'image/jpeg');
@@ -474,7 +433,6 @@ class Res extends Base\Test
         assert(Base\Res::kind($memory) === 'phpMemory');
         assert(Base\Res::kind($http) === 'http');
         assert(Base\Res::kind($context) === 'context');
-        assert(Base\Res::kind($curl) === 'curl');
         assert(Base\Res::kind($finfo) === 'finfo');
 
         // meta
@@ -511,7 +469,6 @@ class Res extends Base\Test
         assert(is_string(Base\Res::uri($http)));
         assert(Base\Res::uri($output) === 'php://output');
         assert(Base\Res::uri($dir) === null);
-        assert(!empty(Base\Res::uri($curl)));
 
         // uriRemoveScheme
         assert(strpos(Base\Res::uriRemoveScheme($hash),'#') !== false);
@@ -733,35 +690,12 @@ class Res extends Base\Test
 
         // http
 
-        // curl
-
         // context
         $context = Base\Res::context(['post'=>['test'=>2,'whaté'=>'JEMBAQEUÉÉ'],'header'=>['Header'=>'ok','James'=>'LOL']],'http');
         assert(Base\Res::isContext($context));
         assert(is_string(Base\Res::contextOption($context)['http']['header']));
         assert(is_string(Base\Res::contextOption($context)['http']['content']));
         assert(Base\Res::contextOption($context)['http']['method'] === 'POST');
-
-        // curlExec
-        $exec = Base\Res::curlExec($curl,false);
-        assert(count($exec) === 6);
-        $res = $exec['resource'];
-
-        assert(is_array(Base\Res::headers($res)));
-        assert(Base\Res::mime($res) === 'text/html');
-        assert(Base\Res::basename($res) === 'php.html');
-        assert(Base\Res::uri($res) === 'php://temp');
-        assert(Base\Res::path($res) === 'php.html');
-        assert(!empty(Base\Res::size($res)));
-        assert(count(Base\Res::responseMeta($res)) === 4);
-        assert(Base\Res::isResponsable($res));
-        $res2 = Base\Res::curl('http://perdu.com',true)['resource'];
-
-        // curlInfo
-        assert(count(Base\Res::curlInfo($curl)) >= 26);
-        if($res2 !== null) // seulement si online
-        assert(count(Base\Res::curlInfo($res2)) >= 26);
-        assert(Base\Res::curlInfo($http) === null);
 
         // position
         assert(Base\Res::position($dir) === null);
@@ -869,8 +803,6 @@ class Res extends Base\Test
         assert(Base\Res::read(true,20,$current) === "<?php\ndeclare(strict");
         assert(Base\Res::read(null,20,$current) === "_types=1);\nnamespace");
         assert(Base\Res::read(21,20,$current) === "types=1);\nnamespace ");
-        assert(Base\Res::get($curl) === 'lorem ipsum lorem ipsum');
-        assert(Base\Res::get($curl) !== '');
         assert(is_string(Base\Res::read(true,5550,$http)));
         assert(Base\Res::read(null,2,$current,['callback'=>[Base\Str::class,'upper']]) === 'QU');
 
@@ -907,8 +839,6 @@ class Res extends Base\Test
         assert(is_string(Base\Res::base64($current)));
         assert(Base\Res::base64($temp) === null);
         assert(is_string(Base\Res::base64($csvPublic)));
-        assert(Base\Str::isStart('data:image/svg;base64,',Base\Res::base64($vector,true,false)));
-        assert(Base\Str::isStart('data:image/svg+xml;base64,',Base\Res::base64($vector,true,true)));
         assert(Base\Str::isStart('data:image/svg+xml;base64,',Base\Res::base64($vector,true,true)));
 
         // lineFirst
@@ -1155,14 +1085,9 @@ class Res extends Base\Test
         // close
         assert(Base\Res::close($output));
         $x2 = Base\Res::open($_dir_);
-        $curlOpen = Base\Res::curl(Base\Uri::absolute($mediaJpgUri));
         $file2 = Base\Res::open($_file_);
         assert(Base\Res::close($x2));
         assert(!Base\Res::close($x2));
-        assert(Base\Res::close($curlOpen));
-        assert(!Base\Res::close($curlOpen));
-        assert(Base\Res::close($curl));
-        assert(!Base\Res::close($curl));
         assert(Base\Res::close($finfo));
         assert(!Base\Res::close($finfo));
         assert(Base\Res::close($dir));
@@ -1171,8 +1096,6 @@ class Res extends Base\Test
         Base\Res::closes($current,$output,$input,$temp,$memory,$http,$dir);
 
         // uriSchemeNotWindowsDrive
-
-        // setSelfSigned
 
         // cleanup
         Base\Dir::empty('[assertCurrent]');

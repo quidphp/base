@@ -85,6 +85,9 @@ class Server extends Base\Test
         // hasApacheModRewrite
         assert(is_bool(Base\Server::hasApacheModRewrite()));
 
+        // allowSelfSignedCertificate
+        assert(is_bool(Base\Server::allowSelfSignedCertificate()));
+
         // isOwner
         assert(!Base\Server::isOwner(999));
 
@@ -247,6 +250,8 @@ class Server extends Base\Test
 
         // requirement
         assert(empty(Base\Server::requirement()));
+
+        // setAllowSelfSignedCertificate
 
         // setQuidVersion
 

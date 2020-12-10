@@ -16,7 +16,8 @@ final class Server extends Root
     // config
     protected static array $config = [
         'version'=>null, // version courante de quid
-        'online'=>'google.com' // domaine à utiliser pour tester si le serveur est online
+        'online'=>'google.com', // domaine à utiliser pour tester si le serveur est online
+        'allowSelfSignedCertificate'=>false, // permet le fonctionnement de requête si le certificat ssl est self-signed
     ];
 
 
@@ -196,6 +197,14 @@ final class Server extends Root
     final public static function hasApacheModRewrite():bool
     {
         return self::isApacheModule('mod_rewrite');
+    }
+
+
+    // allowSelfSignedCertificate
+    // retourne vrai s'il faut permettre les requêtes dont les certificats SSL sont self-signed
+    final public static function allowSelfSignedCertificate():bool
+    {
+        return static::$config['allowSelfSignedCertificate'];
     }
 
 
@@ -813,6 +822,14 @@ final class Server extends Root
         $return[] = 'phpVersion';
 
         return $return;
+    }
+
+
+    // setAllowSelfSignedCertificate
+    // permet de supporter des requêtes dont les certificats sont self-signed
+    final public static function setAllowSelfSignedCertificate(bool $value):void
+    {
+        static::$config['allowSelfSignedCertificate'] = $value;
     }
 
 

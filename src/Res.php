@@ -20,7 +20,6 @@ final class Res extends Root
         'writable'=>['r+','w','w+','a','a+','x','x+','c','c+'], // mode de resource writable
         'creatable'=>['c+','w','w+'],
         'lineSeparatorLength'=>300, // longueur utilisé pour tenter de trouver le séparateur de ligne
-        'allowSelfSigned'=>false, // permet le fonctionnement si le certificat ssl est self-signed
         'base64'=>[ // si convert est true dans la méthode base64, converti un mime en un autre
             'image/svg'=>'image/svg+xml'],
         'phpStream'=>[ // paramètre par défaut pour stream php
@@ -30,7 +29,6 @@ final class Res extends Root
             'finfo'=>'finfo',
             'file_info'=>'finfo',
             'context'=>'context',
-            'curl'=>'curl',
             'php://output'=>'phpOutput',
             'php://input'=>'phpInput',
             'php://temp'=>'phpTemp',
@@ -42,30 +40,8 @@ final class Res extends Root
             'readWriteCreate'=>'c+',
             'writeCreate'=>'a',
             'writeTruncateCreate'=>'w',
-            'readWriteTruncateCreate'=>'w+'],
-        'curl'=>[ // option par défaut pour curl
-            'method'=>null,
-            'timeout'=>10,
-            'dnsGlobalCache'=>false,
-            'userPassword'=>null,
-            'proxyHost'=>null,
-            'proxyPort'=>8080,
-            'proxyPassword'=>null,
-            'followLocation'=>false,
-            'ssl'=>null,
-            'port'=>null,
-            'sslCipher'=>null,
-            'userAgent'=>null,
-            'postJson'=>false]
+            'readWriteTruncateCreate'=>'w+']
     ];
-
-
-    // allowSelfSigned
-    // retourne vrai s'il faut permettre les requêtes dont les certificats SSL sont self-signed
-    final public static function allowSelfSigned():bool
-    {
-        return static::$config['allowSelfSigned'];
-    }
 
 
     // is
@@ -146,19 +122,11 @@ final class Res extends Root
 
     // isRegularType
     // retourne vrai si le type de la resource est régulier
-    // pas curl ni file_info
+    // pas file_info
     final public static function isRegularType($value):bool
     {
         $type = self::type($value);
-        return is_string($type) && !in_array($type,['curl','file_info'],true);
-    }
-
-
-    // isCurl
-    // retourne vrai si la resource est de type curl
-    final public static function isCurl($value):bool
-    {
-        return self::type($value) === 'curl';
+        return is_string($type) && !in_array($type,['file_info'],true);
     }
 
 
@@ -792,9 +760,6 @@ final class Res extends Root
         elseif(self::isContext($value))
         $return = 'context';
 
-        elseif(self::isCurl($value))
-        $return = 'curl';
-
         elseif(self::isFinfo($value))
         $return = 'finfo';
 
@@ -804,7 +769,6 @@ final class Res extends Root
 
     // meta
     // retourne les meta données de la resource, si disponible
-    // fonctionne pour curl
     final public static function meta($value):?array
     {
         $return = null;
@@ -815,19 +779,6 @@ final class Res extends Root
 
             if(self::isStreamMetaFile($return))
             $return['uri'] = Path::normalize($return['uri']);
-        }
-
-        elseif(self::isCurl($value))
-        {
-            $return = [];
-            $info = curl_getinfo($value);
-
-            if(!empty($info['url']))
-            $return['uri'] = $info['url'];
-
-            $return['error'] = curl_error($value);
-            $return['errorNo'] = curl_errno($value);
-            $return['info'] = $info;
         }
 
         return $return;
@@ -1296,9 +1247,6 @@ final class Res extends Root
         elseif($kind === 'finfo')
         $return = finfo_open(FILEINFO_MIME);
 
-        elseif($kind === 'curl')
-        $return = curl_init();
-
         elseif($kind === 'context')
         $return = stream_context_create();
 
@@ -1342,7 +1290,7 @@ final class Res extends Root
                     {
                         $contextOpts = [];
 
-                        if(static::allowSelfSigned())
+                        if(Server::allowSelfSignedCertificate())
                         $contextOpts = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false]];
 
                         $context = stream_context_create($contextOpts);
@@ -1700,124 +1648,6 @@ final class Res extends Root
     }
 
 
-    // curl
-    // crée et retourne une resource curl
-    // n'éxécute pas la resource
-    final public static function curl(string $value,bool $exec=false,$post=null,$header=null,?array $option=null)
-    {
-        $return = self::open('curl');
-        $option = Arr::plus(self::$config['curl'],$option);
-
-        if(Uri::isAbsolute($value))
-        {
-            // base
-            curl_setopt($return,CURLOPT_RETURNTRANSFER,true);
-            curl_setopt($return,CURLOPT_HEADER,true);
-
-            // dnsGlobalCache
-            if(is_bool($option['dnsGlobalCache']) && !PHP_ZTS)
-            curl_setopt($return,CURLOPT_DNS_USE_GLOBAL_CACHE,$option['dnsGlobalCache']);
-
-            // timeout
-            if(is_int($option['timeout']))
-            {
-                curl_setopt($return,CURLOPT_CONNECTTIMEOUT,$option['timeout']);
-                curl_setopt($return,CURLOPT_TIMEOUT,$option['timeout']);
-            }
-
-            // followLocation
-            if($option['followLocation'] === true)
-            curl_setopt($return,CURLOPT_FOLLOWLOCATION,true);
-
-            // userPassword
-            if(!empty($option['userPassword']))
-            {
-                if(is_array($option['userPassword']))
-                $option['userPassword'] = implode(':',$option['userPassword']);
-
-                curl_setopt($return,CURLOPT_USERPWD,$option['userPassword']);
-            }
-
-            // proxy
-            if(is_string($option['proxyHost']) && is_int($option['proxyPort']))
-            {
-                $hostPort = Uri::makehostPort($option['proxyHost'],$option['proxyPort']);
-                curl_setopt($return,CURLOPT_PROXY,$hostPort);
-
-                if(is_string($option['proxyPassword']))
-                curl_setopt($return,CURLOPT_PROXYUSERPWD,$option['proxyPassword']);
-            }
-
-            // uri
-            curl_setopt($return,CURLOPT_URL,$value);
-
-            // ssl
-            if($option['ssl'] === null)
-            $option['ssl'] = (Uri::isSsl($value));
-
-            if($option['ssl'] === true)
-            {
-                $verifyPeer = 0;
-                $verifyHost = 2;
-
-                if(static::allowSelfSigned())
-                {
-                    $verifyPeer = false;
-                    $verifyHost = false;
-                }
-
-                curl_setopt($return,CURLOPT_SSL_VERIFYPEER,$verifyPeer);
-                curl_setopt($return,CURLOPT_SSL_VERIFYHOST,$verifyHost);
-            }
-
-            // port
-            $port = (is_int($option['port']))? $option['port']:Http::port($option['ssl']);
-            curl_setopt($return,CURLOPT_PORT,$port);
-
-            // sslCipher
-            if(is_string($option['sslCipher']) && !empty($option['sslCipher']))
-            curl_setopt($return,CURLOPT_SSL_CIPHER_LIST,$option['sslCipher']);
-
-            // userAgent
-            if(is_string($option['userAgent']) && !empty($option['userAgent']))
-            curl_setopt($return,CURLOPT_USERAGENT,$option['userAgent']);
-
-            // method
-            if(is_string($option['method']) && !empty($option['method']))
-            curl_setopt($return,CURLOPT_CUSTOMREQUEST,strtoupper($option['method']));
-
-            // post
-            if($post !== null)
-            {
-                curl_setopt($return,CURLOPT_POST,1);
-
-                if(is_array($post))
-                {
-                    if($option['postJson'] === true)
-                    $post = Json::encode($post);
-                    else
-                    $post = Uri::buildQuery($post,true);
-                }
-
-                if(is_string($post))
-                curl_setopt($return,CURLOPT_POSTFIELDS,$post);
-            }
-
-            // header
-            if(!empty($header))
-            {
-                $header = Header::list($header);
-                curl_setopt($return,CURLOPT_HTTPHEADER,$header);
-            }
-
-            if($exec === true)
-            $return = self::curlExec($return);
-        }
-
-        return $return;
-    }
-
-
     // context
     // crée un context de flux à joindre avec l'ouverture d'une resource
     // simplifié pour les type http (joindre un array avec clé post et/ou header)
@@ -1862,80 +1692,6 @@ final class Res extends Root
             if(!empty($value))
             stream_context_set_option($return,$value);
         }
-
-        return $return;
-    }
-
-
-    // curlExec
-    // éxécute la ressource curl
-    // retourne un tableau avec code, contentType, basename, meta, header et resource si c'est bien une requête http
-    // la resource est une resource php temporaire
-    final public static function curlExec($value,bool $close=true):?array
-    {
-        $return = null;
-
-        if(self::isCurl($value))
-        {
-            $return = ['code'=>null,'contentType'=>null,'basename'=>null,'meta'=>null,'header'=>null,'resource'=>null];
-            $exec = curl_exec($value);
-            $meta = self::meta($value);
-            $basename = self::basename($value);
-
-            $return['basename'] = $basename;
-            $return['meta'] = $meta;
-
-            if(is_string($exec) && !empty($exec))
-            {
-                $explode = Str::explodeTrim("\r\n\r\n",$exec);
-
-                if(count($explode) >= 2)
-                {
-                    $body = Arr::valueLast($explode);
-                    $explode = Arr::spliceLast($explode);
-                    $header = Arr::valueLast($explode);
-
-                    if(is_string($header) && !empty($header))
-                    {
-                        $header = Header::arr($header);
-                        $contentType =  Header::contentType($header);
-
-                        $return['code'] = Header::code($header);
-                        $return['contentType'] = $contentType;
-                        $return['header'] = Header::arr($header);
-
-                        if(is_string($body))
-                        {
-                            $write = ['meta'=>$return['meta'],'header'=>$return['header']];
-                            $resource = self::temp($contentType,$basename,['write'=>$write]);
-
-                            if(!empty($resource) && self::write($body,$resource))
-                            $return['resource'] = $resource;
-                        }
-                    }
-                }
-            }
-
-            if($close === true)
-            self::close($value);
-        }
-
-        return $return;
-    }
-
-
-    // curlInfo
-    // retourne le tableau curl info
-    // supporte curl ou une resource temporaire avec des données emmagasinés
-    final public static function curlInfo($value):?array
-    {
-        $return = null;
-
-        if(self::isCurl($value))
-        $return = curl_getinfo($value);
-
-        else
-        $return = self::getPhpContextOption(['meta','info'],$value);
 
         return $return;
     }
@@ -2267,17 +2023,6 @@ final class Res extends Root
         {
             $value = self::open($value,$option);
             $close = true;
-        }
-
-        if(self::isCurl($value))
-        {
-            $exec = self::curlExec($value,false);
-
-            if(!empty($exec))
-            $value = $exec['resource'];
-
-            else
-            $value = null;
         }
 
         if(is_resource($value))
@@ -3385,12 +3130,6 @@ final class Res extends Root
                 closedir($value);
             }
 
-            elseif($kind === 'curl')
-            {
-                $return = true;
-                curl_close($value);
-            }
-
             elseif($kind === 'finfo')
             $return = finfo_close($value);
 
@@ -3424,15 +3163,6 @@ final class Res extends Root
     final protected static function uriSchemeNotWindowsDrive(string $value):?string
     {
         return (!Path::hasWindowsDrive($value))? Uri::scheme($value):null;
-    }
-
-
-    // setSelfSigned
-    // permet de changer la configuration si les ressources doivent accepter des requêtes
-    // si le certifat SSL est self-signed
-    final public static function setSelfSigned(bool $value):void
-    {
-        static::$config['allowSelfSigned'] = $value;
     }
 }
 ?>
