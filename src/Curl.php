@@ -20,7 +20,7 @@ final class Curl extends Root
         'dnsGlobalCache'=>false,
         'userPassword'=>null,
         'proxyHost'=>null,
-        'proxyPort'=>8080,
+        'proxyPort'=>null,
         'proxyPassword'=>null,
         'followLocation'=>false,
         'ssl'=>null,
@@ -51,7 +51,7 @@ final class Curl extends Root
     // ouvre une resource ou objet curl
     final public static function open(?string $value=null)
     {
-        return curl_init($value);
+        return (is_string($value))? curl_init($value):curl_init();
     }
 
 
