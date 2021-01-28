@@ -370,6 +370,9 @@ final class Arrs extends Root
             {
                 if(is_string($k))
                 $key[$i] = trim($k,self::$config['delimiter']);
+
+                elseif(is_array($k))
+                unset($key[$i]);
             }
 
             $return = implode(self::$config['delimiter'],$key);
