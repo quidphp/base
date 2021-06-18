@@ -24,7 +24,7 @@ final class Arr extends Root
         foreach ($values as &$value)
         {
             if($value === null)
-            $value = (array) $value;
+            $value = [];
 
             elseif(!is_array($value))
             $value = [$value];

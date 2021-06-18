@@ -261,15 +261,12 @@ final class Cli extends Root
     // si c'est un tableau, utilise print_r
     final public static function prepareValue($value):?string
     {
-        $return = null;
         $value = Obj::cast($value);
 
         if(is_array($value))
         $value = Debug::printr($value);
 
-        $return = Str::cast($value);
-
-        return $return;
+        return Str::cast($value);
     }
 
 

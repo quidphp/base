@@ -39,8 +39,7 @@ final class Arrs extends Root
     // par défaut, seul les nombres sont convertis
     final public static function cast($return,int $numberCast=1,int $boolCast=0):array
     {
-        $return = (array) $return;
-        foreach ($return as $key => $value)
+        foreach ((array) $return as $key => $value)
         {
             if(is_array($value))
             $return[$key] = self::cast($value,$numberCast,$boolCast);
@@ -58,8 +57,7 @@ final class Arrs extends Root
     // nombre sont convertis, virgule remplacer par décimal, et les string booleans sont transformés en bool
     final public static function castMore($return):array
     {
-        $return = (array) $return;
-        foreach ($return as $key => $value)
+        foreach ((array) $return as $key => $value)
         {
             if(is_array($value))
             $return[$key] = self::castMore($value);

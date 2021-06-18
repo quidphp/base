@@ -191,7 +191,7 @@ final class Dir extends Finder
     final public static function get($path,bool $dig=false,?array $option=null):?array
     {
         $return = null;
-        $option = Arrs::replace(['sort'=>null,'in'=>null,'out'=>null,'format'=>null,'formatExtra'=>false,'relative'=>null,'fqcn'=>null,'fqcnClass'=>null,'fqcnTrait'=>null,'fqcnInterface'=>null],$option);
+        $option = Arr::plus(['sort'=>null,'in'=>null,'out'=>null,'format'=>null,'formatExtra'=>false,'relative'=>null,'fqcn'=>null,'fqcnClass'=>null,'fqcnTrait'=>null,'fqcnInterface'=>null],$option);
         $scan = self::scan($path,$option['sort']);
 
         if(!is_string($option['relative']))
@@ -729,9 +729,7 @@ final class Dir extends Finder
             }
         }
 
-        $return = Arr::merge($return,$source);
-
-        return $return;
+        return Arr::merge($return,$source);
     }
 
 

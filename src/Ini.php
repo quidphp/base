@@ -484,12 +484,9 @@ final class Ini extends Root
         $return = [];
         $option = Arr::plus(self::$config['default'],$option);
 
-        if(is_array($option) && !empty($option))
+        foreach ($option as $key => $value)
         {
-            foreach ($option as $key => $value)
-            {
-                $return[$key] = self::set($key,$value);
-            }
+            $return[$key] = self::set($key,$value);
         }
 
         return $return;
