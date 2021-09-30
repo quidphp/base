@@ -39,6 +39,7 @@ class Http extends Base\Test
         assert(Base\Http::isMethod('delete'));
         assert(Base\Http::isMethod('get'));
         assert(!Base\Http::isMethod('getz'));
+        assert(Base\Http::isMethod('HEAD'));
 
         // protocl
         assert(Base\Http::protocol(true) === 'HTTP/2.0');

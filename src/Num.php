@@ -871,6 +871,7 @@ final class Num extends Root
 
     // phoneFormat
     // format un numéro de téléphone
+    // ajoute de l'option areaDash, pour ajouter un tiret entre code régional et reste du numéro
     final public static function phoneFormat($value,?string $lang=null,?array $option=null):?string
     {
         $return = null;
@@ -892,9 +893,14 @@ final class Num extends Root
                     if($option['parenthesis'] === true)
                     $return .= '(';
                     $return .= $match[1];
+
                     if($option['parenthesis'] === true)
-                    $return .= ')';
+                    $return .= ') ';
+                    elseif($option['areaDash'] === true)
+                    $return .= '-';
+                    else
                     $return .= ' ';
+
                     $return .= "{$match[2]}-{$match[3]}";
 
                     // extension

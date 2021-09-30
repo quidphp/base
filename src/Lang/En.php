@@ -44,7 +44,8 @@ class En extends Base\Config
 
             // phoneFormat
             'phoneFormat'=>[
-                'parenthesis'=>true,
+                'parenthesis'=>false,
+                'areaDash'=>true,
                 'extension'=>'#'
             ],
 

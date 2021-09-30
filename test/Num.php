@@ -363,7 +363,7 @@ class Num extends Base\Test
         assert(Base\Num::formats('$',[2,3,4,5])[0] === '$2.00');
         assert(Base\Num::formats('size',[200,3000,4000,5000])[0] === '200 Bytes');
         assert(Base\Num::formats('number',[200,3000,4000,5000])[0] === '200.00');
-        assert(Base\Num::formats('phone',[5145140000])[0] === '(514) 514-0000');
+        assert(Base\Num::formats('phone',[5145140000])[0] === '514-514-0000');
 
         // formatsMethod
         assert(Base\Num::formatsMethod('$') === 'moneyFormat');
@@ -387,17 +387,18 @@ class Num extends Base\Test
         assert(Base\Num::getMoneyFormat('en',['decimal'=>3]) === ['decimal'=>3,'separator'=>'.','thousand'=>',','output'=>'$%v%']);
 
         // phoneFormat
-        assert('(514) 483-5603' === Base\Num::phoneFormat('5144835603'));
-        assert('(514) 483-5603' === Base\Num::phoneFormat('51.448356.03'));
-        assert('(514) 483-5603' === Base\Num::phoneFormat(5144835603));
-        assert('(514) 483-5603' === Base\Num::phoneFormat(51.44835603));
+        assert('514-483-5603' === Base\Num::phoneFormat('5144835603'));
+        assert('514-483-5603' === Base\Num::phoneFormat('51.448356.03'));
+        assert('514-483-5603' === Base\Num::phoneFormat(5144835603));
+        assert('514-483-5603' === Base\Num::phoneFormat(51.44835603));
         assert(null === Base\Num::phoneFormat(514483560));
-        assert('(514) 483-5603 #212' === Base\Num::phoneFormat('5144835603212'));
-        assert('(514) 483-5603' === Base\Num::phoneFormat('5144835603212',null,['extension'=>false]));
-        assert(Base\Num::phoneFormat('5144835603212',null,['parenthesis'=>false,'extension'=>false]) === '514 483-5603');
+        assert('514-483-5603 #212' === Base\Num::phoneFormat('5144835603212'));
+        assert('514-483-5603' === Base\Num::phoneFormat('5144835603212',null,['extension'=>false]));
+        assert(Base\Num::phoneFormat('5144835603212',null,['parenthesis'=>false,'extension'=>false]) === '514-483-5603');
+        assert(Base\Num::phoneFormat('5144835603212',null,['parenthesis'=>true,'areaDash'=>false,'extension'=>false]) === '(514) 483-5603');
 
         // getPhoneFormat
-        assert(count(Base\Num::getPhoneFormat()) === 2);
+        assert(count(Base\Num::getPhoneFormat()) === 3);
 
         // sizeFormat
         assert('43.35 MB' === Base\Num::sizeFormat(45456546,2));

@@ -17,7 +17,9 @@ final class Http extends Root
     protected static array $config = [
         'str'=>[ // configuration pour la méthode str
             'all'=>['absolute','timestamp','method'],
-            'delimiter'=>'|']
+            'delimiter'=>'|'],
+        'schemes'=>['http','https'], // les différents schemes
+        'methods'=>['get','post','put','patch','delete','head','options','connect','trace'] // les méthodes valables pour le protocole http
     ];
 
 
@@ -25,7 +27,7 @@ final class Http extends Root
     // retourne vrai si le scheme est compatible http
     final public static function isScheme($value):bool
     {
-        return is_string($value) && in_array(strtolower($value),['http','https'],true);
+        return is_string($value) && in_array(strtolower($value),static::$config['schemes'],true);
     }
 
 
@@ -62,7 +64,7 @@ final class Http extends Root
         if(is_string($value))
         {
             $value = strtolower($value);
-            $return = (in_array($value,['get','post','put','patch','delete'],true));
+            $return = (in_array($value,static::$config['methods'],true));
         }
 
         return $return;
@@ -94,7 +96,7 @@ final class Http extends Root
             elseif($value === 80 || $value === false)
             $return = 'http';
 
-            elseif(in_array($value,['http','https'],true))
+            elseif(in_array($value,static::$config['schemes'],true))
             $return = $value;
         }
 
