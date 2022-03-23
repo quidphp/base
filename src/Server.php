@@ -155,7 +155,7 @@ final class Server extends Root
     // retourne vrai si la version php est égale
     final public static function isPhpVersion(string $value):bool
     {
-        return version_compare(self::phpVersion(),$value) === 0;
+        return version_compare(self::phpVersion(),$value,'=');
     }
 
 
@@ -163,7 +163,7 @@ final class Server extends Root
     // retourne vrai si la version php est plus vieille que celle fourni
     final public static function isPhpVersionOlder(string $value):bool
     {
-        return version_compare(self::phpVersion(),$value) === -1;
+        return version_compare(self::phpVersion(),$value,'<');
     }
 
 
@@ -171,7 +171,7 @@ final class Server extends Root
     // retourne vrai si la version php est plus récente que celle fourni
     final public static function isPhpVersionNewer(string $value):bool
     {
-        return version_compare(self::phpVersion(),$value) === 1;
+        return version_compare(self::phpVersion(),$value,'>');
     }
 
 
