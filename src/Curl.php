@@ -37,10 +37,10 @@ final class Curl extends Root
     {
         $return = false;
 
-        if(is_resource($value) && Res::type($value) === 'curl')
+        if(is_a($value,\CurlHandle::class,true))
         $return = true;
 
-        elseif(is_a($value,\CurlHandle::class,true))
+        elseif(is_resource($value) && Res::type($value) === 'curl')
         $return = true;
 
         return $return;
