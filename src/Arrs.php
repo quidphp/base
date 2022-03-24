@@ -355,25 +355,19 @@ final class Arrs extends Root
         $return = null;
 
         if(is_string($key) || is_numeric($key))
-        {
-            if(!is_string($key))
-            $key = (string) $key;
-
-            $return = $key;
-        }
+        $return = trim((string) $key,self::$config['delimiter']);
 
         elseif(is_array($key))
         {
+            $return = [];
+
             foreach ($key as $i => $k)
             {
-                if(is_string($k))
-                $key[$i] = trim($k,self::$config['delimiter']);
-
-                elseif(is_array($k))
-                unset($key[$i]);
+                if(is_string($k) || is_numeric($k))
+                $return[$i] = trim((string) $k,self::$config['delimiter']);
             }
 
-            $return = implode(self::$config['delimiter'],$key);
+            $return = implode(self::$config['delimiter'],$return);
         }
 
         return $return;

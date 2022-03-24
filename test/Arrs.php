@@ -149,6 +149,7 @@ class Arrs extends Base\Test
         // keyPrepare
         assert(Base\Arrs::keyPrepare(1) === '1');
         assert(Base\Arrs::keyPrepare([1,2,3]) === '1/2/3');
+        assert(Base\Arrs::keyPrepare('/test/') === 'test');
         assert(Base\Arrs::keyPrepare(['test','/test2']) === 'test/test2');
 
         // keyPrepares

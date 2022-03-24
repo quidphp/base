@@ -1041,11 +1041,13 @@ class Html extends Base\Test
 
         // xss
         assert(Base\Html::xss("<script>alert('OK')</script><b>ok</b>") === "alert('OK')<b>ok</b>");
-        assert(Base\Html::xss("<script>alert('OK')</script><b onmouseover='alert('OK')'>ok</b>") === "alert('OK')<b >ok</b>");
+        assert(Base\Html::xss("<script>alert('OK')</script><b onmouseover='alert('OK')'>ok</b>") === "alert('OK')<b onmouseover='alert('OK')'>ok</b>");
         assert(Base\Html::xss("<scr<script>ipt>alert('OK')</script>") === "alert('OK')");
-        assert(Base\Html::xss("<b class='meh' id='OK' data-ok='WELL' onclick='WHAT!' ONMOUVE='ok'>ok</b>") === "<b class='meh' id='OK' data-ok='WELL' >ok</b>");
-        assert(Base\Html::xss("<b data-ba='WELL' onclick='WHAT!' class='meh' id='OK' data-ok='WELL' ONMOUVE='ok'>ok</b>") === "<b data-ba='WELL' >ok</b>"); // bogue ici, il retire tous les attributs après celui à enlever
-        assert(Base\Html::xss("<b class='meh' id='OK' data-ok='WELL' ONCLICK='WHAT!'>ok</b>") === "<b class='meh' id='OK' data-ok='WELL' >ok</b>");
+        assert(Base\Html::xss("<b class='meh' id='OK' data-ok='WELL' onclick='WHAT!' ONMOUVE='ok'>ok</b>") === "<b class='meh' id='OK' data-ok='WELL' onclick='WHAT!' ONMOUVE='ok'>ok</b>");
+        assert(Base\Html::xss("<b class='meh' id='OK' data-ok='WELL' ONCLICK='WHAT!'>ok</b>") === "<b class='meh' id='OK' data-ok='WELL' ONCLICK='WHAT!'>ok</b>");
+        assert(Base\Html::xss("<b data-ba='WELL' onclick='WHAT!' class='meh' id='OK' data-ok='WELL' ONMOUVE='ok'>ok</b>") === "<b data-ba='WELL' onclick='WHAT!' class='meh' id='OK' data-ok='WELL' ONMOUVE='ok'>ok</b>"); // bogue ici, il retire tous les attributs après celui à enlever
+        assert(Base\Html::xss("<img src='onboarding_01' alt='OK' />") === "<img src='onboarding_01' alt='OK' />");
+        assert(Base\Html::xss("<div class='onyva'>On y va</div>") === "<div class='onyva'>On y va</div>");
 
         // unicode
         assert(Base\Html::unicode("la ' \"\n vié <script></script>👦🏼👦👦🏼") === 'la &apos; &quot; vié &lt;script&gt;&lt;/script&gt;👦🏼👦👦🏼');
