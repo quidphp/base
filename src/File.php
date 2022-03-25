@@ -1030,7 +1030,7 @@ class File extends Finder
     // permet de concatener plusieurs ressources et écrire le rendu dans le fichier
     // crée le fichier destination si non existant
     // un séparateur doit être fourni, une closure peut être fourni
-    final public static function concatenate($value,?\Closure $closure=null,string $separator,...$values)
+    final public static function concatenate($value,?\Closure $closure,string $separator,...$values)
     {
         return Res::concatenate(static::resource($value,['create'=>true]),$closure,$separator,...static::resources(...$values));
     }
@@ -1039,7 +1039,7 @@ class File extends Finder
     // concatenateString
     // permet de concatener plusieurs ressources et retourner le rendu combiné dans une string
     // un séparateur doit être fourni, une closure peut être fourni
-    final public static function concatenateString(?\Closure $closure=null,string $separator,...$values):?string
+    final public static function concatenateString(?\Closure $closure,string $separator,...$values):?string
     {
         return Res::concatenateString($closure,$separator,...static::resources(...$values));
     }

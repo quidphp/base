@@ -137,11 +137,11 @@ final class Mime extends Root
         elseif(File::is($value))
         {
             $value = File::path($value);
-            $finfo = Res::open('finfo');
+            $finfo = Finfo::open();
 
             if(!empty($finfo))
             {
-                $mime = finfo_file($finfo,$value);
+                $mime = Finfo::read($finfo,$value);
 
                 if(is_string($mime) && !empty($mime))
                 {
@@ -155,7 +155,7 @@ final class Mime extends Root
                     $return = self::removeCharset($return);
                 }
 
-                Res::close($finfo);
+                Finfo::close($finfo);
             }
         }
 

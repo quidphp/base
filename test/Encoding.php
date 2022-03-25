@@ -20,7 +20,7 @@ class Encoding extends Base\Test
         // is
         assert(Base\Encoding::is("lala'"));
         assert(Base\Encoding::is("lalaé'"));
-        assert(!Base\Encoding::is("lalaé'",'JIS'));
+        assert(!Base\Encoding::is("lalaé'",'7bit'));
         $nonUtf8 = "\xF0";
         assert(!Base\Encoding::is($nonUtf8));
 
@@ -107,7 +107,7 @@ class Encoding extends Base\Test
         assert(count(Base\Encoding::info()) >= 12);
 
         // all
-        assert(in_array(count(Base\Encoding::all()),[85,86,87],true));
+        assert(count(Base\Encoding::all()) > 70);
 
         return true;
     }

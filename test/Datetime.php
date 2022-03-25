@@ -163,17 +163,6 @@ class Datetime extends Base\Test
         assert(is_int(Base\Datetime::strtotime('tomorrow',Base\Datetime::make([2017]))));
         assert(Base\Datetime::sql(Base\Datetime::strtotime('tomorrow',Base\Datetime::make([2017]))) === '2017-01-02 00:00:00');
 
-        // getLocaleFormat
-        assert(Base\Datetime::getLocaleFormat('ymd') === '%G-%m-%d');
-
-        // localeFormat
-        assert(Base\Datetime::localeFormat('ymd',$timestamp) === '2017-12-01');
-        assert(Base\Datetime::localeFormat('ymdhis',$timestamp) === '2017-12-01 09:40:42');
-        assert(Base\Datetime::localeFormat('ym',$timestamp) === '2017-12');
-
-        // gmtLocaleFormat
-        assert(Base\Datetime::gmtLocaleFormat('ymdhis',$timestamp) === '2017-12-01 14:40:42');
-
         // getFormats
         assert(count(Base\Datetime::getFormats()) > 5);
 

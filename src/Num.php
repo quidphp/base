@@ -296,7 +296,7 @@ final class Num extends Root
 
     // sub
     // coupe un numéro avec un début et un length
-    final public static function sub(int $start,?int $length=null,$value)
+    final public static function sub(int $start,?int $length,$value)
     {
         $return = null;
         $value = self::castMoreOrNull($value);

@@ -38,11 +38,7 @@ final class Datetime extends Root
                 'office365'=>'Ymd\THisP',
                 'daysInMonth'=>'t',
                 'weekDay'=>'w',
-                'weekNo'=>'W'],
-            'locale'=>[ // format locale compatible avec strftime et gmstrftime
-                'ymd'=>'%G-%m-%d',
-                'ymdhis'=>'%G-%m-%d %H:%M:%S',
-                'ym'=>'%G-%m']],
+                'weekNo'=>'W']],
         'floor'=>[ // données pour date floor
             'month'=>1,
             'day'=>1,
@@ -439,48 +435,6 @@ final class Datetime extends Root
             if(is_int($time))
             $return = $time;
         }
-
-        return $return;
-    }
-
-
-    // getLocaleFormat
-    // retourne le format pour locale
-    final public static function getLocaleFormat(string $return):string
-    {
-        if(array_key_exists($return,self::$config['format']['locale']))
-        $return = self::$config['format']['locale'][$return];
-
-        return $return;
-    }
-
-
-    // localeFormat
-    // format une date via la fonction strftime ou gmstrftime
-    // le format doit être string, pas de support pour timezone
-    // le format peut être un raccourci pour le tableau config
-    final public static function localeFormat(string $format,$value=null):?string
-    {
-        $return = null;
-        $value = self::time($value);
-
-        if(is_int($value) && strlen($format))
-        $return = strftime(self::getLocaleFormat($format),$value);
-
-        return $return;
-    }
-
-
-    // gmtLocaleFormat
-    // format une date via la fonction gmstrftime, le temps retourné est timezone GMT
-    // le format doit être string
-    final public static function gmtLocaleFormat(string $format,$value=null):?string
-    {
-        $return = null;
-        $value = self::time($value);
-
-        if(is_int($value) && strlen($format))
-        $return = gmstrftime(self::getLocaleFormat($format),$value);
 
         return $return;
     }

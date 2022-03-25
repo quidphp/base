@@ -1173,11 +1173,11 @@ class Arr extends Base\Test
         assert(Base\Arr::keysChangeCase('ucfirst',$array) === ['Test'=>2,'James'=>'OK',2]);
 
         // keysLower
-        $array = [1=>'no',1.2=>'ok','1.2'=>'ok','test'=>'no','TEST'=>'no','tEST'=>'ok','TÉST'=>'mb'];
+        $array = [1=>'no',1=>'ok','1.2'=>'ok','test'=>'no','TEST'=>'no','tEST'=>'ok','TÉST'=>'mb'];
         assert(Base\Arr::keysLower($array,true) === [1=>'ok','1.2'=>'ok','test'=>'ok','tést'=>'mb']);
 
         // keysUpper
-        $array = [1=>'no',1.2=>'ok','1.2'=>'ok','test'=>'no','TEST'=>'no','tEST'=>'ok','téST'=>'mb'];
+        $array = [1=>'no',1=>'ok','1.2'=>'ok','test'=>'no','TEST'=>'no','tEST'=>'ok','téST'=>'mb'];
         assert(Base\Arr::keysUpper($array,false) === [1=>'ok','1.2'=>'ok','TEST'=>'ok','TéST'=>'mb']);
         assert(Base\Arr::keysUpper($array,true) === [1=>'ok','1.2'=>'ok','TEST'=>'ok','TÉST'=>'mb']);
 

@@ -57,7 +57,11 @@ final class Globals extends Root
     // enlève une ou plusieurs variables globales
     final public static function unset(...$keys):void
     {
-        Arr::unsetsRef($keys,$GLOBALS);
+        foreach ($keys as $key) 
+        {
+            if(array_key_exists($key,$GLOBALS))
+            unset($GLOBALS[$key]);
+        }
     }
 }
 ?>

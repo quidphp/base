@@ -49,7 +49,6 @@ class Res extends Base\Test
         $csvPublic = Base\Res::open($mediaCsv,['create'=>true]);
         $moveAround = Base\Res::open($storage.'/moveAround.txt',['create'=>true]);
         $context = stream_context_create(['http'=>[]]);
-        $finfo = finfo_open();
         $captcha = Base\ImageRaster::captcha('test','[assertCommon]/ttf.ttf');
         $zip = Base\Res::open('[assertCommon]/zip.zip');
         $hash = Base\Res::open($mediaHash);
@@ -113,10 +112,6 @@ class Res extends Base\Test
 
         // isRegularType
         assert(Base\Res::isRegularType($fp));
-        assert(!Base\Res::isRegularType($finfo));
-
-        // isFinfo
-        assert(Base\Res::isFinfo($finfo));
 
         // isContext
         assert(!Base\Res::isContext($fp));
@@ -402,7 +397,6 @@ class Res extends Base\Test
         assert(Base\Res::info($dir)['uri'] === null);
         assert(Base\Res::info($symRes)['path'] === $_file_);
         assert(count(Base\Res::info($context)) === 18);
-        assert(count(Base\Res::info($finfo)) === 18);
         assert(count(Base\Res::info($zip)) === 18);
 
         // responseMeta
@@ -433,7 +427,6 @@ class Res extends Base\Test
         assert(Base\Res::kind($memory) === 'phpMemory');
         assert(Base\Res::kind($http) === 'http');
         assert(Base\Res::kind($context) === 'context');
-        assert(Base\Res::kind($finfo) === 'finfo');
 
         // meta
         assert(count(Base\Res::meta($fp)) === 9);
@@ -1088,8 +1081,6 @@ class Res extends Base\Test
         $file2 = Base\Res::open($_file_);
         assert(Base\Res::close($x2));
         assert(!Base\Res::close($x2));
-        assert(Base\Res::close($finfo));
-        assert(!Base\Res::close($finfo));
         assert(Base\Res::close($dir));
 
         // closes

@@ -60,12 +60,6 @@ class Timezone extends Base\Test
         // transitions
         assert(count(Base\Timezone::transitions($timezone,10000000)) > 100);
 
-        // sunrise
-        assert(Base\Timezone::sunrise($timezone) === Base\Timezone::suninfo($timezone)['sunrise']);
-
-        // sunset
-        assert(Base\Timezone::sunset($timezone) === Base\Timezone::suninfo($timezone)['sunset']);
-
         // suninfo
         assert(Base\Timezone::suninfo($timezone,Base\Datetime::make([2017,1,23])) !== Base\Timezone::suninfo($timezone,Base\Datetime::make([2017,8,23])));
         assert(count(Base\Timezone::suninfo($timezone)) === 9);

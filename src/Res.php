@@ -26,8 +26,6 @@ final class Res extends Root
             'mime'=>'txt',
             'basenameLength'=>10],
         'openKind'=>[ // kind de resource qui se détermine selon le nom
-            'finfo'=>'finfo',
-            'file_info'=>'finfo',
             'context'=>'context',
             'php://output'=>'phpOutput',
             'php://input'=>'phpInput',
@@ -127,14 +125,6 @@ final class Res extends Root
     {
         $type = self::type($value);
         return is_string($type) && !in_array($type,['file_info'],true);
-    }
-
-
-    // isFinfo
-    // retourne vrai si la resource est de type finfo
-    final public static function isFinfo($value):bool
-    {
-        return self::type($value) === 'file_info';
     }
 
 
@@ -760,9 +750,6 @@ final class Res extends Root
         elseif(self::isContext($value))
         $return = 'context';
 
-        elseif(self::isFinfo($value))
-        $return = 'finfo';
-
         return $return;
     }
 
@@ -1243,9 +1230,6 @@ final class Res extends Root
 
         if($kind === 'dir')
         $return = opendir($value);
-
-        elseif($kind === 'finfo')
-        $return = finfo_open(FILEINFO_MIME);
 
         elseif($kind === 'context')
         $return = stream_context_create();
@@ -2708,7 +2692,7 @@ final class Res extends Root
     // concatenate
     // permet de concatener plusieurs ressources et écrire le rendu dans une resource
     // un séparateur doit être fourni, une closure peut être fourni
-    final public static function concatenate($value,?\Closure $closure=null,string $separator,...$values)
+    final public static function concatenate($value,?\Closure $closure,string $separator,...$values)
     {
         $return = false;
         $content = self::concatenateString($closure,$separator,...$values);
@@ -2723,7 +2707,7 @@ final class Res extends Root
     // concatenateString
     // permet de concatener plusieurs ressources et retourner le rendu combiné dans une string
     // un séparateur doit être fourni, une closure peut être fourni
-    final public static function concatenateString(?\Closure $closure=null,string $separator,...$values):?string
+    final public static function concatenateString(?\Closure $closure,string $separator,...$values):?string
     {
         $return = null;
 
@@ -3129,9 +3113,6 @@ final class Res extends Root
                 $return = true;
                 closedir($value);
             }
-
-            elseif($kind === 'finfo')
-            $return = finfo_close($value);
 
             else
             $return = fclose($value);

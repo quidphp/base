@@ -17,7 +17,6 @@ final class Ini extends Root
     protected static array $config = [
         'default'=>[ // ini à appliquer par défaut lors du chargement
             'default_charset'=>'UTF-8',
-            'auto_detect_line_endings'=>true,
             'error_log'=>'error_log',
             'log_errors'=>true,
             'html_errors'=>true,
@@ -46,7 +45,6 @@ final class Ini extends Root
             'register_argc_argv',
             'request_order',
             'variables_order',
-            'auto_detect_line_endings',
             'allow_url_fopen',
             'allow_url_include',
             'zend.assertions',
