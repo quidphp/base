@@ -57,7 +57,7 @@ final class Globals extends Root
     // enlève une ou plusieurs variables globales
     final public static function unset(...$keys):void
     {
-        foreach ($keys as $key) 
+        foreach ($keys as $key)
         {
             if(array_key_exists($key,$GLOBALS))
             unset($GLOBALS[$key]);
