@@ -47,6 +47,7 @@ final class Ini extends Root
             'variables_order',
             'allow_url_fopen',
             'allow_url_include',
+            'assert.exception',
             'zend.assertions',
             'zend.exception_ignore_args',
             'opcache.enable',

@@ -1004,8 +1004,9 @@ class Finder extends Root
     // unlink
     // efface un fichier ou directoire
     // si le chemin est un symlink, celui-ci est effacé mais n'est pas suivi
-    // le dossier doit être vide pour être effacé, utiliser la méthode dans la classe Dir pour effacer et vider un dossier
-    final public static function unlink($path):bool
+    // par défaut le dossier doit être vide pour être effacé
+    // possible de forcer de vider le dossier avec le deuxième argument
+    final public static function unlink($path,bool $emptyDir=false):bool
     {
         $return = false;
         $path = static::path($path);
@@ -1013,7 +1014,12 @@ class Finder extends Root
         if(is_string($path) && static::isWritable($path,false))
         {
             if(is_dir($path))
-            $return = (Dir::isEmpty($path) && rmdir($path));
+            {
+                if($emptyDir === true)
+                Dir::empty($path);
+
+                $return = (Dir::isEmpty($path) && rmdir($path));
+            }
 
             elseif(is_link($path))
             $return = Symlink::unset($symlink);

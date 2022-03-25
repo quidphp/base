@@ -154,6 +154,8 @@ class Dir extends Base\Test
         // fromToCatchAll
         assert(count(Base\Dir::fromToCatchAll([dirname($common).'/*'=>'[public]'])) === 2);
 
+        // fromToFilterDate
+
         // getChangeBasename
         assert(Base\Dir::set($storage.'/what'));
         assert(count(Base\Dir::getChangeBasename(fn($value) => $value.'OK',$storage)) === 1);

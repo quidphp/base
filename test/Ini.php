@@ -159,7 +159,7 @@ class Ini extends Base\Test
         assert(is_bool(Base\Ini::apcu()));
 
         // important
-        assert(count(Base\Ini::important()) === 32);
+        assert(count(Base\Ini::important()) === 33);
 
         // session
         assert(count(Base\Ini::session()) === 30);

@@ -682,6 +682,24 @@ final class Dir extends Finder
     }
 
 
+    // fromToFilterDate
+    // cette méthode prend un tableau avec des paths from->to
+    // retire les entrées dont la date de modification du to est plus grande ou égal à from
+    final public static function fromToFilterDate(array $return):array
+    {
+        foreach ($return as $from => $to)
+        {
+            $dateFrom = Finder::dateModify($from);
+            $dateTo = Finder::dateModify($to);
+
+            if(!empty($dateFrom) && !empty($dateTo) && $dateTo >= $dateFrom)
+            unset($return[$from]);
+        }
+
+        return $return;
+    }
+
+
     // getChangeBasename
     // fait une requête get
     // permet de passer une closure pour changer les basenames de tous les fichiers incluents
