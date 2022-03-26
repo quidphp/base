@@ -23,7 +23,8 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 
 ## Requirement
 **QuidPHP/Base** requires the following:
-- PHP 7.3 or 7.4 with these extensions:
+- PHP 7.4, 8.0 or 8.1 with these extensions:
+    - ctype
     - curl
     - date
     - fileinfo
@@ -36,9 +37,9 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
     - session
     - SimpleXML
     - zip
-
+    
 ## Comment
-**QuidPHP/Base** code is commented and all methods are explained. However, most of the comments are currently written in French.
+**QuidPHP/Base** code is commented and all methods are explained. However, most of the comments are written in French.
 
 ## Convention
 **QuidPHP/Base** is built on the following conventions:
@@ -50,7 +51,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 
 ## Overview
-**QuidPHP/Base** contains 79 classes and traits. Here is an overview:
+**QuidPHP/Base** contains 81 classes and traits. Here is an overview:
 - [Arr](src/Arr.php) - Class with static methods to work with unidimensional arrays
 - [Arrs](src/Arrs.php) - Class with static methods to work with multidimensional arrays (an array containing at least another array)
 - [Assert](src/Assert.php) - Class with methods a layer over the native PHP assert functions
@@ -69,6 +70,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Cookie](src/Cookie.php) - Class with static methods to add and remove cookies
 - [Crypt](src/Crypt.php) - Class which contains methods to deal with the most common PHP cryptography functions
 - [Csv](src/Csv.php) - Class with static methods to easily work with CSV files
+- [Curl](src/Curl.php) - Class with basic logics for managing requests via curl
 - [Datetime](src/Datetime.php) - Class with static methods to generate, format and parse dates
 - [Debug](src/Debug.php) - Class with tools to help for debugging, also injects some helper functions
 - [Dir](src/Dir.php) - Class with static methods to list, open and parse directories
@@ -79,6 +81,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Extension](src/Extension.php) - Class which contains methods to deal with PHP extensions
 - [File](src/File.php) - Class with static methods to create, read and write files (accepts path strings and resources)
 - [Finder](src/Finder.php) - Class that provides methods to deal with the filesystem (used by Dir, File and Symlink)
+- [Finfo](src/Finfo.php) - Class with basic logics for managing the finfo extension
 - [Floating](src/Floating.php) - Class with static methods to work with floating numbers
 - [Fqcn](src/Fqcn.php) - Class with static methods to deal with fully qualified class name strings
 - [Func](src/Func.php) - Class with static methods to work with simple functions
@@ -129,10 +132,10 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [_init](src/_init.php) - Trait that provides the logic to recursively merge the static properties with the parent's properties
 - [_option](src/_option.php) - Trait that grants static methods to deal with static options (within the $config static property)
 - [_root](src/_root.php) - Trait that provides some basic fqcn methods
-- [_shortcut](src/_shortcut.php) - Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)
+- [_shortcut](src/_shortcut.php) - Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)',
 
 ## Testing
-**QuidPHP/Base** contains 68 test classes:
+**QuidPHP/Base** contains 70 test classes:
 - [Arr](test/Arr.php) - Class for testing Quid\Base\Arr
 - [Arrs](test/Arrs.php) - Class for testing Quid\Base\Arrs
 - [Assert](test/Assert.php) - Class for testing Quid\Base\Assert
@@ -150,6 +153,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Cookie](test/Cookie.php) - Class for testing Quid\Base\Cookie
 - [Crypt](test/Crypt.php) - Class for testing Quid\Base\Crypt
 - [Csv](test/Csv.php) - Class for testing Quid\Base\Csv
+- [Curl](test/Curl.php) - Class for testing Quid\Base\Curl
 - [Datetime](test/Datetime.php) - Class for testing Quid\Base\Datetime
 - [Debug](test/Debug.php) - Class for testing Quid\Base\Debug
 - [Dir](test/Dir.php) - Class for testing Quid\Base\Dir
@@ -160,6 +164,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Extension](test/Extension.php) - Class for testing Quid\Base\Extension
 - [File](test/File.php) - Class for testing Quid\Base\File
 - [Finder](test/Finder.php) - Class for testing Quid\Base\Finder
+- [Finfo](test/Finfo.php) - Class for testing Quid\Base\Finfo
 - [Floating](test/Floating.php) - Class for testing Quid\Base\Floating
 - [Fqcn](test/Fqcn.php) - Class for testing Quid\Base\Fqcn
 - [Func](test/Func.php) - Class for testing Quid\Base\Func

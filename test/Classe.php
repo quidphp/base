@@ -291,6 +291,8 @@ namespace Quid\Test\Base
             assert(count(Base\Classe::properties($parentTrai)) === 2);
             assert(Base\Classe::properties($interface) === null);
             assert(Base\Classe::properties($parentInterface) === null);
+            $class::$pubStat = [true];
+            assert(Base\Classe::properties($class)['pubStat'] === [true]);
 
             // propertyMerge
             $closure = Base\Classe::propertyMerge('config',Base\Dir::class,[Base\Attr::class]);

@@ -35,17 +35,14 @@ trait _init
                 if(property_exists($class,$prop) && is_array(static::$$prop))
                 {
                     $init = false;
-                    $callable = static::getInitCallable();
-
                     $merge = [];
-                    $vars = get_class_vars($class);
-                    foreach (array_reverse($vars) as $key => $value)
+                    $callable = static::getInitCallable();
+                    $vars = static::getInitClassVars($prop,true);
+
+                    foreach ($vars as $key => $value)
                     {
-                        if($key !== $prop && strpos($key,$prop) === 0 && is_array($value) && !empty($value))
-                        {
-                            $merge[] = $value;
-                            static::$$key = [];
-                        }
+                        $merge[] = $value;
+                        static::$$key = [];
                     }
 
                     if(!empty($merge))
@@ -70,6 +67,31 @@ trait _init
                 }
             }
         }
+    }
+
+
+    // getInitClassVars
+    // retourne le tableau des valeurs à merger en fonction de la propriété
+    // attention, en php 8.1 la fonction retourne maintenant la valeur par défaut de la propriété
+    // dans les versions précédentes c'étaient la valeur courante
+    final protected static function getInitClassVars(string $prop,bool $reverse=true):array
+    {
+        $return = [];
+        $vars = get_class_vars(static::class);
+
+        if(is_array($vars))
+        {
+            foreach ($vars as $key => $value)
+            {
+                if($key !== $prop && strpos($key,$prop) === 0 && !empty(static::$$key) && is_array(static::$$key))
+                $return[$key] = static::$$key;
+            }
+
+            if($reverse === true)
+            $return = array_reverse($return);
+        }
+
+        return $return;
     }
 
 

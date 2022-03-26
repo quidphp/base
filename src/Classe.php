@@ -623,6 +623,8 @@ final class Classe extends Root
     // retourne toutes les propriétés publiques par défaut d'une classe ou trait
     // si la variable est un objet, merge les propriétés dynamiques actuelles de l'objet
     // retourne null si interface ou non existant
+    // attention php 8.1: get_class_vars va retourner les valeurs par défaut des propriétés, ce n'était pas le cas versions précédentes
+    // attention php 8.1: ne permet plus d'accéder aux propritéés sur un trait, à ce moment on aura juste la valeur par défaut via get_class_vars
     final public static function properties($value,bool $autoload=true):?array
     {
         $return = null;
@@ -633,13 +635,28 @@ final class Classe extends Root
 
             if(!empty($value))
             {
+                $return = [];
+                $isTrait = self::isTrait($value);
                 $name = Fqcn::str($value);
-                $vars = get_class_vars($name);
-                if($vars !== false)
-                $return = $vars;
 
                 if(is_object($value))
-                $return = Arr::replace($return,get_object_vars($value));
+                $return = get_object_vars($value);
+
+                $vars = get_class_vars($name);
+                if(is_array($vars))
+                {
+                    foreach ($vars as $key => $value)
+                    {
+                        if(!array_key_exists($key,$return))
+                        {
+                            if($isTrait === false && isset($name::$$key))
+                            $return[$key] = $name::$$key;
+
+                            else
+                            $return[$key] = $value;
+                        }
+                    }
+                }
             }
         }
 
