@@ -52,7 +52,9 @@ final class Cli extends Root
             'neg'=>['white','bold','red'],
             'neutral'=>['black',null,'gray']],
         'htmlPadding'=>'5px', // valeur utilisé pour le padding de html
-        'htmlOverload'=>false // permet d'overload les appels aux méthodes clis avec du html
+        'htmlOverload'=>false, // permet d'overload les appels aux méthodes clis avec du html
+        'opt'=>'--', // caractères pour identifier opt
+        'cmd'=>'->' // caractères pour identifier cmd
     ];
 
 
@@ -433,7 +435,7 @@ final class Cli extends Root
 
         foreach ($values as $key => $value)
         {
-            if(Str::isStart('--',$value))
+            if(Str::isStart(static::$config['opt'],$value))
             {
                 $value = substr($value,2);
 
@@ -462,7 +464,7 @@ final class Cli extends Root
         $return = null;
         $value = trim($value);
 
-        if(Str::isStart('->',$value))
+        if(Str::isStart(static::$config['cmd'],$value))
         {
             $value = substr($value,2);
             $value = trim($value);
