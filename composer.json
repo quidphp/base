@@ -2,7 +2,7 @@
     "name": "quidphp/base",
     "type": "library",
     "description": "PHP library that provides a set of low-level static methods",
-    "keywords": ["quidphp","quid","framework"],
+    "keywords": ["quidphp","quid","php-framework"],
     "homepage": "https://quidphp.com",
     "license": "MIT",
     "authors": [{

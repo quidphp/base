@@ -28,7 +28,7 @@ class Constant extends Base\Test
         assert(Base\Constant::is('QUID_TEST'));
 
         // all
-        assert(count(Base\Constant::all()) > 30);
+        assert(count(Base\Constant::all()) > 20);
 
         // user
         assert(count(Base\Constant::user()) < 30);

@@ -253,7 +253,7 @@ final class Request extends Root
     // retourne vrai si le userAgent est un bot
     final public static function isBot():bool
     {
-        return Browser::isBot(self::userAgent());
+        return UserAgent::isBot(self::userAgent());
     }
 
 

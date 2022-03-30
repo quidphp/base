@@ -148,7 +148,7 @@ final class Session extends Root
     // la session doit être active
     final public static function isBot():bool
     {
-        return Browser::isBot(self::userAgent());
+        return UserAgent::isBot(self::userAgent());
     }
 
 

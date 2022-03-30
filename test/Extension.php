@@ -38,7 +38,7 @@ class Extension extends Base\Test
         assert(count(Base\Extension::important()) === 3);
 
         // all
-        assert(count(Base\Extension::all()) > 40);
+        assert(count(Base\Extension::all()) > 30);
 
         // requirement
         assert(empty(Base\Extension::requirement()));
