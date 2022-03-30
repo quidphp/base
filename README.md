@@ -59,7 +59,6 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Attr](src/Attr.php) - Class with static methods to generate HTML attributes
 - [Autoload](src/Autoload.php) - Class with methods a layer over the native PHP autoload logic
 - [Boolean](src/Boolean.php) - Class with static methods to deal with boolean type
-- [Browser](src/Browser.php) - Class with methods a layer over the native PHP get_browser function
 - [Buffer](src/Buffer.php) - Class with methods a layer over the native PHP output buffering functions
 - [Call](src/Call.php) - Class with static methods to manage callables and callbacks
 - [Classe](src/Classe.php) - Class with static methods to deal with classes using fully qualified class name strings
@@ -123,6 +122,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Test](src/Test.php) - Abstract class used to create a testsuite for a class
 - [Timezone](src/Timezone.php) - Class with static methods to deal with timezone
 - [Uri](src/Uri.php) - Class with static methods to generate URI (absolute and relative)
+- [UserAgent](src/UserAgent.php) - Class with methods related to useragent
 - [Validate](src/Validate.php) - Class that provides validation logic and methods
 - [Vari](src/Vari.php) - Class with some general static methods related to variables
 - [Xml](src/Xml.php) - Class with some static methods related to XML
@@ -132,7 +132,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [_init](src/_init.php) - Trait that provides the logic to recursively merge the static properties with the parent's properties
 - [_option](src/_option.php) - Trait that grants static methods to deal with static options (within the $config static property)
 - [_root](src/_root.php) - Trait that provides some basic fqcn methods
-- [_shortcut](src/_shortcut.php) - Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)',
+- [_shortcut](src/_shortcut.php) - Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)
 
 ## Testing
 **QuidPHP/Base** contains 70 test classes:
