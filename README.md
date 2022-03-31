@@ -143,7 +143,6 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Attr](test/Attr.php) - Class for testing Quid\Base\Attr
 - [Autoload](test/Autoload.php) - Class for testing Quid\Base\Autoload
 - [Boolean](test/Boolean.php) - Class for testing Quid\Base\Boolean
-- [Browser](test/Browser.php) - Class for testing Quid\Base\Browser
 - [Buffer](test/Buffer.php) - Class for testing Quid\Base\Buffer
 - [Call](test/Call.php) - Class for testing Quid\Base\Call
 - [Classe](test/Classe.php) - Class for testing Quid\Base\Classe
@@ -203,6 +202,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [Symlink](test/Symlink.php) - Class for testing Quid\Base\Symlink
 - [Timezone](test/Timezone.php) - Class for testing Quid\Base\Timezone
 - [Uri](test/Uri.php) - Class for testing Quid\Base\Uri
+- [UserAgent](test/UserAgent.php) - Class for testing Quid\Base\UserAgent
 - [Validate](test/Validate.php) - Class for testing Quid\Base\Validate
 - [Vari](test/Vari.php) - Class for testing Quid\Base\Vari
 - [Xml](test/Xml.php) - Class for testing Quid\Base\Xml
