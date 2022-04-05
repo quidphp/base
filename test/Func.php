@@ -30,7 +30,7 @@ class Func extends Base\Test
         assert(count(Base\Func::all()) === 2);
 
         // user
-        assert(count(Base\Func::user()) < 30);
+        assert(count(Base\Func::user()) < 60);
 
         return true;
     }
