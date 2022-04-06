@@ -18,7 +18,7 @@ final class Server extends Root
         'version'=>null, // version courante de quid
         'online'=>'google.com', // domaine à utiliser pour tester si le serveur est online
         'allowSelfSignedCertificate'=>false, // permet le fonctionnement de requête si le certificat ssl est self-signed
-        'minPhpVersion'=>'7.4' // version minimal de php supporté
+        'minPhpVersion'=>'8.1' // version minimal de php supporté
     ];
 
 
