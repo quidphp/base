@@ -87,11 +87,17 @@ final class Html extends Root
                 'valueAttr'=>'data-value',
                 'selfClosing'=>true],
             'img'=>[ // config pour img
-                'valueCallable'=>[self::class,'imgValue'],
+                'valueCallable'=>[self::class,'mediaValue'],
                 'valueAttr'=>'src',
                 'selfClosing'=>true,
                 'attrCallable'=>[self::class,'imgAttr'],
                 'option'=>['attr'=>['uri'=>[]]]],
+            'video'=>[// config pour video
+                'valueCallable'=>[self::class,'mediaValue'],
+                'valueAttr'=>'src'],
+            'audio'=>[// config pour audio
+                'valueCallable'=>[self::class,'mediaValue'],
+                'valueAttr'=>'src'],
             'label'=>[ // config pour label
                 'scalarAttr'=>'for'],
             'head'=>[ // config pour head
@@ -1773,9 +1779,9 @@ final class Html extends Root
     }
 
 
-    // imgValue
-    // fonction de callback pour la valeur de la tag img
-    final protected static function imgValue($return,array $attr,array $option)
+    // mediaValue
+    // fonction de callback pour la valeur des tag img, video, audio
+    final protected static function mediaValue($return,array $attr,array $option)
     {
         if(array_key_exists('base64',$option) && $option['base64'] === true)
         {

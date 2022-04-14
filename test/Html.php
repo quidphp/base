@@ -389,6 +389,8 @@ class Html extends Base\Test
         assert(Base\Html::button(['test'=>'OKÉÉÉ', 'ble'=> 'MEH']) === "<button type='button'>OKÉÉÉ, MEH</button>");
         assert(Base\Html::spanCond(0,'what') === "<span class='what'>0</span>");
         assert(Base\Html::spanCond(true,'what') === "<span class='what'>&nbsp;</span>");
+        assert(Base\Html::video('test',['controls'=>true,'poster'=>'test2']) === "<video controls='1' poster='test2' src='/test.jpg'></video>");
+        assert(Base\Html::video($res,['controls'=>'','poster'=>'test2']) === "<video controls='' poster='test2' src='/media/assert/jpg.jpg'></video>");
 
         // get
         assert(Base\Html::get('a') === 'a');
@@ -565,7 +567,7 @@ class Html extends Base\Test
 
         // metaValue
 
-        // imgValue
+        // mediaValue
 
         // scriptValue
 
