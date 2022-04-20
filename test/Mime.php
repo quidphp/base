@@ -45,6 +45,7 @@ class Mime extends Base\Test
         assert(!Base\Mime::isGroup('imageVector','image/jpeg'));
         assert(Base\Mime::isGroup('js','text/javascript; charset=us-ascii'));
         assert(Base\Mime::isGroup('json','text/json'));
+        assert(Base\Mime::isGroup('json','application/problem+json'));
         assert(!Base\Mime::isGroup('pdf','text/x-php; charset=us-ascii'));
         assert(Base\Mime::isGroup('pdf','application/pdf'));
         assert(Base\Mime::isGroup('php','text/x-php; charset=us-ascii'));

@@ -46,6 +46,7 @@ final class Mime extends Root
             'image/svg'=>'svg',
             'text/json'=>'json',
             'application/json'=>'json',
+            'application/problem+json'=>'json',
             'application/pdf'=>'pdf',
             'text/plain'=>'txt',
             'text/css'=>'css',
