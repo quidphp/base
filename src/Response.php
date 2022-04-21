@@ -861,6 +861,14 @@ final class Response extends Root
     }
 
 
+    // flushEchoBody
+    // ouvre un buffer, echo des donnés et flush ferme tous les buffer, ouvre un autre buffer à la fin du processus
+    final public static function flushEchoBody(string $value):bool
+    {
+        return Buffer::flushEcho($value);
+    }
+
+
     // prependBody
     // ajoute du contenu au début du body de la réponse
     final public static function prependBody(string $value):bool

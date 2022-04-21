@@ -504,13 +504,14 @@ final class Debug extends Root
     // speed
     // calcule la différence entre deux microtime, par défaut getInitMicrotime dans date
     // round permet d'arrondir la différence
+    // ici utilise la fonction round, car l'envoie à num round me fait parfois des erreurs bizarres dans le log
     final public static function speed(?float $value=null,int $round=3):float
     {
         $return = 0;
         $value ??= Datetime::getInitMicrotime();
 
         if(is_numeric($value))
-        $return = Num::round((Datetime::microtime() - $value),$round);
+        $return = round((Datetime::microtime() - $value),$round);
 
         return $return;
     }

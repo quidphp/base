@@ -2926,9 +2926,9 @@ final class Res extends Root
 
     // pathToUri
     // retourne l'uri à partir d'un path
-    final public static function pathToUri($value,?bool $absolute=null):?string
+    final public static function pathToUri($value,?bool $absolute=null,?string $priority=null):?string
     {
-        return File::pathToUri($value,$absolute);
+        return File::pathToUri($value,$absolute,$priority);
     }
 
 

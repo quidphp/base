@@ -296,6 +296,8 @@ class Response extends Base\Test
         // setBody
         assert(Base\Response::setBody('OK'));
 
+        // flushEchoBody
+
         // prependBody
         assert(Base\Response::prependBody('BE'));
 

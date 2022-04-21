@@ -1187,14 +1187,15 @@ class Finder extends Root
 
     // pathToUri
     // retourne l'uri absolut ou relative à partir d'un chemin serveur
-    final public static function pathToUri($value,?bool $absolute=null):?string
+    // va par défaut prendre le chemin de son domaine courant pour éviter certains problèmes avec des certificats SSL multi-domaines
+    final public static function pathToUri($value,?bool $absolute=null,?string $priority=null):?string
     {
         $return = null;
         $value = static::path($value);
 
         if(is_string($value))
         {
-            foreach (static::host() as $host => $paths)
+            foreach (static::getHostWithPriority($priority) as $host => $paths)
             {
                 if(!is_array($paths))
                 $paths = (array) $paths;
@@ -1222,6 +1223,29 @@ class Finder extends Root
     final public static function host(?array $array=null):array
     {
         return (is_array($array))? (static::$host = Arr::cleanNull(Arr::replace(static::$host,$array))):static::$host;
+    }
+
+
+    // getHostWithPriority
+    // retourne le tableau de host, mais met le host courant en priorité
+    // utilisé par pathToUri
+    final public static function getHostWithPriority(?string $priority=null):array
+    {
+        $return = [];
+        $priority ??= Request::host();
+        $hosts = static::host();
+        $loop = [];
+
+        if(array_key_exists($priority,$hosts))
+        $return[$priority] = $hosts[$priority];
+
+        foreach ($hosts as $host => $paths)
+        {
+            if(!array_key_exists($host,$return))
+            $return[$host] = $paths;
+        }
+
+        return $return;
     }
 
 
