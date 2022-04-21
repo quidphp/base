@@ -2935,9 +2935,9 @@ final class Res extends Root
     // pathToUriOrBase64
     // retourne le pathToUri ou base64
     // utiliser pour html/img
-    final public static function pathToUriOrBase64($value):?string
+    final public static function pathToUriOrBase64($value,?bool $absolute=null,?string $priority=null):?string
     {
-        return self::pathToUri($value) ?? self::base64($value);
+        return self::pathToUri($value,$absolute,$priority) ?? self::base64($value);
     }
 
 
