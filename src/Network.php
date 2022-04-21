@@ -38,12 +38,11 @@ final class Network extends Root
     // essaie de rejoindre un hostname sur un port
     // utilise fsocketopen, donc n'est pas si précis
     // retour le délai d'attente
-    // si le host n'est pas joignable une erreur est généré mais caché par le gestionnaire d'erreur
     final public static function ping(string $hostname,int $port=80,int $timeout=10,&$errno=null,&$errstr=null):?float
     {
         $return = null;
         $microtime = Datetime::microtime();
-        $socket = @fsockopen($hostname,$port,$errno,$errstr,$timeout);
+        $socket = fsockopen($hostname,$port,$errno,$errstr,$timeout);
 
         if(!empty($socket))
         {
