@@ -44,7 +44,7 @@ class Vari extends Base\Test
         assert(Base\Vari::isNull(null));
 
         // isType
-        assert(Base\Vari::isType('NULL',null));
+        assert(Base\Vari::isType('null',null));
         assert(Base\Vari::isType('array',[]));
 
         // sameType
@@ -57,8 +57,10 @@ class Vari extends Base\Test
         assert(Base\Vari::sameType(new \DateTime('now'),new \DateTime('now'),new \DateTime('now')));
 
         // type
-        assert(Base\Vari::type(true) === 'boolean');
-        assert(Base\Vari::type(new \stdclass()) === 'object');
+        assert(Base\Vari::type(true) === 'bool');
+        assert(Base\Vari::type(new \stdclass()) === 'stdClass');
+        assert(Base\Vari::type(true,false) === 'boolean');
+        assert(Base\Vari::type(new \stdclass(),false) === 'object');
 
         return true;
     }

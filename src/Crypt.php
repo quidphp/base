@@ -417,7 +417,7 @@ final class Crypt extends Root
         $option = ['allowed_classes'=>($allowedClasses === false)? $allowedClasses:true];
 
         if(is_object($allowedClasses))
-        $allowedClasses = get_class($allowedClasses);
+        $allowedClasses = $allowedClasses::class;
 
         if(is_string($allowedClasses))
         $allowedClasses = [$allowedClasses];

@@ -391,13 +391,13 @@ class Res extends Base\Test
         assert(is_string(Base\Res::dateInodeModify($current,true)));
 
         // info
-        assert(count(Base\Res::info($http)) === 18);
-        assert(count(Base\Res::info($output)) === 18);
-        assert(count(Base\Res::info($current)) === 18);
+        assert(count(Base\Res::info($http)) === 19);
+        assert(count(Base\Res::info($output)) === 19);
+        assert(count(Base\Res::info($current)) === 19);
         assert(Base\Res::info($dir)['uri'] === null);
         assert(Base\Res::info($symRes)['path'] === $_file_);
-        assert(count(Base\Res::info($context)) === 18);
-        assert(count(Base\Res::info($zip)) === 18);
+        assert(count(Base\Res::info($context)) === 19);
+        assert(count(Base\Res::info($zip)) === 19);
 
         // responseMeta
         assert(count(Base\Res::responseMeta($current)) === 4);
@@ -412,6 +412,9 @@ class Res extends Base\Test
         assert(Base\Res::responseMeta($current)['basename'] === 'testa.log');
         assert(Base\Res::responseMeta($current,false)['basename'] === 'class.php');
         assert(strpos(Base\Res::responseMeta($current,false)['mime'],'text/x-php; ') === 0);
+
+        // id
+        assert(is_int(Base\Res::id($fp)));
 
         // type
         assert(Base\Res::type($fp) === 'stream');

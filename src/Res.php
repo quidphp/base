@@ -635,7 +635,8 @@ final class Res extends Root
 
         if(is_resource($value))
         {
-            $return['type'] = get_resource_type($value);
+            $return['id'] = self::id($value);
+            $return['type'] = self::type($value);
             $return['kind'] = self::kind($value);
 
             if($clearStatCache === true)
@@ -690,16 +691,19 @@ final class Res extends Root
     }
 
 
+    // id
+    // retourne le id de la resource
+    final public static function id($value):?int
+    {
+        return is_resource($value) ? get_resource_id($value):null;
+    }
+
+
     // type
     // retourne le type de la resource
     final public static function type($value):?string
     {
-        $return = null;
-
-        if(is_resource($value))
-        $return = get_resource_type($value);
-
-        return $return;
+        return is_resource($value) ? get_resource_type($value):null;
     }
 
 

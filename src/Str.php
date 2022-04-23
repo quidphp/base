@@ -133,7 +133,7 @@ final class Str extends Root
             $value = (string) $value;
 
             if($sensitive === true)
-            $return = (self::pos($needle,$value,0,false) === 0);
+            $return = str_starts_with($value,$needle);
             else
             $return = (self::ipos($needle,$value,0,true) === 0);
         }
@@ -158,14 +158,16 @@ final class Str extends Root
 
         if(is_scalar($value))
         {
-            $value = (string) $value;
-            $mb = ($sensitive === false);
-            $length = self::len($value,$mb) - self::len($needle,$mb);
-
             if($sensitive === true)
-            $return = (self::posRev($needle,$value,0,false) === $length);
+            $return = str_ends_with($value,$needle);
+
             else
-            $return = (self::iposRev($needle,$value,0,true) === $length);
+            {
+                $value = (string) $value;
+                $mb = true;
+                $length = self::len($value,$mb) - self::len($needle,$mb);
+                $return = (self::iposRev($needle,$value,0,true) === $length);
+            }
         }
 
         return $return;
@@ -561,18 +563,13 @@ final class Str extends Root
     // mb est utilisé pour la version insensible à la case
     final public static function posIpos(string $needle,string $str,bool $sensitive=true):?int
     {
-        $return = null;
-
         if($sensitive === true)
         $pos = strpos($str,$needle);
 
         else
         $pos = mb_stripos($str,$needle,0,self::$config['charset']);
 
-        if(is_int($pos))
-        $return = $pos;
-
-        return $return;
+        return (is_int($pos))? $pos:null;
     }
 
 
@@ -580,13 +577,18 @@ final class Str extends Root
     // retourne vrai si la chaine contient le needle
     final public static function in(string $needle,string $str,bool $sensitive=true,int $offset=0):bool
     {
-        if($sensitive === true)
-        $position = self::pos($needle,$str,$offset,false);
+        $return = false;
+
+        if($sensitive === true && $offset === 0)
+        $return = str_contains($str,$needle);
+
+        elseif($sensitive === true)
+        $return = is_numeric(self::pos($needle,$str,$offset,false));
 
         else
-        $position = self::ipos($needle,$str,$offset,true);
+        $return = is_numeric(self::ipos($needle,$str,$offset,true));
 
-        return is_numeric($position);
+        return $return;
     }
 
 
@@ -602,13 +604,7 @@ final class Str extends Root
 
             foreach ($needles as $needle)
             {
-                if($sensitive === true)
-                $position = self::pos($needle,$str,$offset,false);
-
-                else
-                $position = self::ipos($needle,$str,$offset,true);
-
-                if(!is_numeric($position))
+                if(!self::in($needle,$str,$sensitive,$offset))
                 {
                     $return = false;
                     break;

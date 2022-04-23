@@ -24,15 +24,7 @@ final class Finfo extends Root
     // retourne vrai si la resource (php7) ou l'objet (php 8.1) est de type finfo
     final public static function is($value):bool
     {
-        $return = false;
-
-        if(is_a($value,\finfo::class,true))
-        $return = true;
-
-        elseif(is_resource($value) && Res::type($value) === 'file_info')
-        $return = true;
-
-        return $return;
+        return $value instanceof \finfo;
     }
 
 

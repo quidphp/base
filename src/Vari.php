@@ -29,7 +29,7 @@ final class Vari extends Root
     // inverse de isEmpty
     final public static function isNotEmpty($value):bool
     {
-        return !self::isEmpty($value);
+        return !empty($value);
     }
 
 
@@ -84,21 +84,17 @@ final class Vari extends Root
         {
             if(!empty($type))
             {
-                if(!self::isType($type,$v))
-                $return = false;
-
-                elseif(!empty($class) && (!is_object($v) || !is_a($v,$class)))
-                $return = false;
-
-                else
                 $return = true;
 
-                if($return === false)
-                break;
+                if(!self::isType($type,$v))
+                {
+                    $return = false;
+                    break;
+                }
             }
 
+            else
             $type = self::type($v);
-            $class = (is_object($v))? get_class($v):false;
         }
 
         return $return;
@@ -107,9 +103,10 @@ final class Vari extends Root
 
     // type
     // retourne le type de la variable
-    final public static function type($value):string
+    // par défaut utilise get_debug_type qui retourne le nom de la classe ou de ressource
+    final public static function type($value,bool $debugType=true):string
     {
-        return gettype($value);
+        return ($debugType === true)? get_debug_type($value):gettype($value);
     }
 }
 ?>

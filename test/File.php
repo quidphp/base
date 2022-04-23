@@ -201,7 +201,7 @@ class File extends Base\Test
 
         // info
         assert(count(Base\File::info($currentFile)) === 13);
-        assert(count(Base\File::info($open)) === 18);
+        assert(count(Base\File::info($open)) === 19);
         assert(Base\File::info($_dir_) === null);
         assert(!empty(Base\File::info($array)));
 
@@ -223,7 +223,7 @@ class File extends Base\Test
         assert(Base\Path::str(dirname($prefix)) === Base\Path::str(Base\Dir::temp()));
 
         // prefixResource
-        assert(count(Base\Res::info(Base\File::prefixResource('[assertCurrent]','QUID','jpg',['dateformat'=>'Ymd+His','separator'=>'-','random'=>10]))) === 18);
+        assert(count(Base\Res::info(Base\File::prefixResource('[assertCurrent]','QUID','jpg',['dateformat'=>'Ymd+His','separator'=>'-','random'=>10]))) === 19);
         assert(Base\Res::isFile(Base\File::prefixResource('[assertCurrent]')));
         $prefixRes = Base\File::prefixResource();
         assert(Base\Res::isFile($prefixRes));

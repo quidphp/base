@@ -588,12 +588,13 @@ class Html extends Base\Test
         assert(Base\Html::titleValue("Notre conseil d'administration") === "Notre conseil d'administration");
 
         // metaDescriptionValue
-        assert(Base\Html::metaDescriptionValue(['bla','jamés','ok']) === 'Bla - Jamés - Ok');
+        assert(Base\Html::metaDescriptionValue(['bla',"l'article",'ok']) === "Bla - L'article - Ok");
         assert(Base\Html::metaDescriptionValue(null) === null);
         assert(Base\Html::metaDescriptionValue('<strong>OK mon ami</strong>') === 'OK mon ami');
+        assert(Base\Html::metaDescriptionValue("L'article") === "L'article");
 
         // metaKeywordsValue
-        assert(Base\Html::metaKeywordsValue(['bla','ok']) === 'bla, ok');
+        assert(Base\Html::metaKeywordsValue(['bla',"l'article"]) === "bla, l'article");
         assert(Base\Html::metaKeywordsValue(null) === null);
 
         // metaUriValue

@@ -35,9 +35,9 @@ final class Constant extends Root
 
     // set
     // crée une nouvelle constante si elle n'existe pas
-    final public static function set(string $name,$value,bool $sensitive=false):bool
+    final public static function set(string $name,$value):bool
     {
-        return (!empty($name) && !self::is($name))? define($name,$value,$sensitive):false;
+        return (!empty($name) && !self::is($name))? define($name,$value):false;
     }
 
 

@@ -35,15 +35,7 @@ final class Curl extends Root
     // retourne vrai si la resource (php7) ou l'objet (php8) est de type curl
     final public static function is($value):bool
     {
-        $return = false;
-
-        if(is_a($value,\CurlHandle::class,true))
-        $return = true;
-
-        elseif(is_resource($value) && Res::type($value) === 'curl')
-        $return = true;
-
-        return $return;
+        return $value instanceof \CurlHandle;
     }
 
 

@@ -1932,7 +1932,7 @@ final class Html extends Root
             }
 
             if(is_string($return) && strlen($return))
-            $return = self::excerptStrSuffix($maxLength,$return,$option['excerpt'] ?? null);
+            $return = self::excerptStrSuffix($maxLength,$return,Arr::plus($option['excerpt'] ?? null,['encode'=>null]));
         }
 
         return $return;

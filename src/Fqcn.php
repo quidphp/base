@@ -94,7 +94,7 @@ final class Fqcn extends Set
         $return = '';
 
         if(is_object($value))
-        $return = get_class($value);
+        $return = $value::class;
 
         elseif(is_string($value) && (strpos($value,'\\') > 0 || class_exists($value,false)))
         $return = $value;
@@ -114,7 +114,7 @@ final class Fqcn extends Set
         $return = [];
 
         if(is_object($value))
-        $value = get_class($value);
+        $value = $value::class;
 
         elseif(is_string($value) && (strpos($value,'\\') > 0 || class_exists($value,false)))
         $return = explode('\\',$value);

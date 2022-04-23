@@ -226,7 +226,7 @@ final class Validate extends Root
             $return = (is_string($key))? $key:'callable';
 
             elseif(is_object($condition))
-            $return = ['instance'=>get_class($condition)];
+            $return = ['instance'=>$condition::class];
 
             elseif(is_array($condition) && count($condition) === 1)
             $return = $condition;
@@ -497,15 +497,7 @@ final class Validate extends Root
     // valide que la valeur est une instance de la classe
     final public static function instance($class,$value):bool
     {
-        $return = false;
-
-        if((is_object($class) || is_string($class)) && (is_object($value) || is_string($value)))
-        {
-            $class = get_class($class);
-            $return = (is_a($value,$class,true));
-        }
-
-        return $return;
+        return $value instanceof $class;
     }
 
 
