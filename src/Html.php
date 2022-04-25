@@ -535,11 +535,8 @@ final class Html extends Root
     // retourne la table de traduction pour specialChars
     final public static function specialCharsTable(?array $option=null):array
     {
-        $return = [];
         $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['specialChars'],$option);
-        $return = get_html_translation_table(HTML_SPECIALCHARS,$option['flag'],$option['charset']);
-
-        return $return;
+        return get_html_translation_table(HTML_SPECIALCHARS,$option['flag'],$option['charset']);
     }
 
 
@@ -575,11 +572,8 @@ final class Html extends Root
     // retourne la table de traduction pour entities
     final public static function entitiesTable(?array $option=null):array
     {
-        $return = [];
         $option = Arr::plus(['charset'=>Encoding::getCharset()],self::$config['entities'],$option);
-        $return = get_html_translation_table(HTML_ENTITIES,$option['flag'],$option['charset']);
-
-        return $return;
+        return get_html_translation_table(HTML_ENTITIES,$option['flag'],$option['charset']);
     }
 
 

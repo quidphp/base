@@ -19,7 +19,7 @@ final class Vari extends Root
 
     // isEmpty
     // retourne vrai si empty
-    final public static function isEmpty($value):bool
+    final public static function isEmpty(mixed $value):bool
     {
         return empty($value);
     }
@@ -27,7 +27,7 @@ final class Vari extends Root
 
     // isNotEmpty
     // inverse de isEmpty
-    final public static function isNotEmpty($value):bool
+    final public static function isNotEmpty(mixed $value):bool
     {
         return !empty($value);
     }
@@ -37,30 +37,26 @@ final class Vari extends Root
     // retourne vrai si empty, sans etre numérique ni boolean ni une string avec une longueur
     // en somme, ca retourne faux pour 0, '0' et false
     // si removeWhiteSpace est true et que c'est une string, envoie dans str::removeWhiteSpace avant
-    final public static function isReallyEmpty($value,bool $removeWhiteSpace=false):bool
+    final public static function isReallyEmpty(mixed $value,bool $removeWhiteSpace=false):bool
     {
-        $return = false;
-
         if($removeWhiteSpace === true && is_string($value))
         $value = Str::removeWhiteSpace($value);
 
-        $return = (empty($value) && !is_numeric($value) && !is_bool($value) && !(is_string($value) && strlen($value)));
-
-        return $return;
+        return empty($value) && !is_numeric($value) && !is_bool($value) && !(is_string($value) && strlen($value));
     }
 
 
     // isNotReallyEmpty
     // inverse de isReallyEmpty
-    final public static function isNotReallyEmpty($value,bool $removeWhiteSpace=false):bool
+    final public static function isNotReallyEmpty(mixed $value,bool $removeWhiteSpace=false):bool
     {
-        return (self::isReallyEmpty($value,$removeWhiteSpace))? false:true;
+        return !self::isReallyEmpty($value,$removeWhiteSpace);
     }
 
 
     // isNull
     // retourne vrai si la valeur est null
-    final public static function isNull($value):bool
+    final public static function isNull(mixed $value):bool
     {
         return $value === null;
     }
@@ -68,7 +64,7 @@ final class Vari extends Root
 
     // isType
     // retourne vrai si la variable est du type fournie en argument
-    final public static function isType($type,$value):bool
+    final public static function isType(mixed $type,mixed $value):bool
     {
         return self::type($value) === $type;
     }
@@ -76,7 +72,7 @@ final class Vari extends Root
 
     // sameType
     // vérifie que toutes les valeurs donnés ont le même type ou la même instance de classe
-    final public static function sameType(...$values):bool
+    final public static function sameType(mixed ...$values):bool
     {
         $return = false;
 
@@ -84,13 +80,10 @@ final class Vari extends Root
         {
             if(!empty($type))
             {
-                $return = true;
+                $return = self::isType($type,$v);
 
-                if(!self::isType($type,$v))
-                {
-                    $return = false;
-                    break;
-                }
+                if($return === false)
+                break;
             }
 
             else
@@ -104,7 +97,7 @@ final class Vari extends Root
     // type
     // retourne le type de la variable
     // par défaut utilise get_debug_type qui retourne le nom de la classe ou de ressource
-    final public static function type($value,bool $debugType=true):string
+    final public static function type(mixed $value,bool $debugType=true):string
     {
         return ($debugType === true)? get_debug_type($value):gettype($value);
     }

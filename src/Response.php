@@ -933,7 +933,7 @@ final class Response extends Root
     // tue la réponse et l'éxécution du script
     // si valeur est int entre 0 et 254, code de sortie non affiché
     // si value est scalar, message de sortie
-    final public static function kill($value=null):void
+    final public static function kill($value=null):never
     {
         $kill = null;
 

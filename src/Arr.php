@@ -112,7 +112,7 @@ final class Arr extends Root
     // retourne vrai si le tableau est vide ou séquentielle
     final public static function isSequential($value):bool
     {
-        return is_array($value) && (empty($value) || array_keys($value) === range(0, (count($value) - 1)));
+        return is_array($value) && array_is_list($value);
     }
 
 

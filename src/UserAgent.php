@@ -38,7 +38,7 @@ final class UserAgent extends Root
 
     // isBot
     // retourne vrai si le user agent est un bot
-    final public static function isBot($value):bool
+    final public static function isBot(mixed $value):bool
     {
         return (is_string($value))? Arr::some(self::$config['bots'],fn($v) => stripos($value,$v) !== false):false;
     }

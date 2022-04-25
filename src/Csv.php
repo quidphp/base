@@ -281,14 +281,7 @@ final class Csv extends File
                         }
                     }
 
-                    $put = fputcsv($value,$write,$option['delimiter'],$option['enclosure'],$option['escape']);
-
-                    // ceci ici permettrait d'utiliser un séparateur de ligne autre que \n
-                    if(is_int($put) && strlen($option['separator']) === 2)
-                    {
-                        Res::seekCurrent(-1,$value);
-                        Res::writeStream($option['separator'],$value);
-                    }
+                    $put = fputcsv($value,$write,$option['delimiter'],$option['enclosure'],$option['escape'],$option['separator']);
                 }
             }
 

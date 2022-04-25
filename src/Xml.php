@@ -22,7 +22,7 @@ final class Xml extends Root
 
     // is
     // retourne vrai si la valeur est xml
-    final public static function is($value):bool
+    final public static function is(mixed $value):bool
     {
         return is_string($value) && Str::isStart('<?xml',$value);
     }

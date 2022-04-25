@@ -112,7 +112,7 @@ final class Debug extends Root
     // dead
     // génère le détail d'une variable selon la méthode dans config et meurt
     // utilise la méthode par défaut
-    final public static function dead($value=null):void
+    final public static function dead($value=null):never
     {
         self::var($value);
         Response::kill();
@@ -122,7 +122,7 @@ final class Debug extends Root
     // deads
     // génère le détail de variables selon la méthode dans config et meurt
     // utilise la méthode par défaut
-    final public static function deads(...$values):void
+    final public static function deads(...$values):never
     {
         foreach ($values as $value)
         {
@@ -619,7 +619,7 @@ use Quid\Base;
     // raccourci pour speed + dead
     if(!function_exists('speedd'))
     {
-        function speedd(?float $value=null,int $round=3):void
+        function speedd(?float $value=null,int $round=3):never
         {
             Base\Debug::var(Base\Debug::speed($value,$round));
             Base\Response::kill();
