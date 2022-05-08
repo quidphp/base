@@ -790,7 +790,6 @@ final class Server extends Root
         $return['sapi'] = self::sapi();
         $return['cli'] = self::isCli();
         $return['ip'] = self::ip(true);
-        $return['online'] = self::isOnline();
         $return['hostname'] = self::hostname();
         $return['script'] = self::script();
         $return['root'] = self::isRoot();
@@ -803,6 +802,7 @@ final class Server extends Root
 
         if($extra === true)
         {
+            $return['online'] = self::isOnline();
             $return['phpImportantIni'] = self::phpImportantIni();
             $return['superglobal'] = self::superglobal();
             $return['ini'] = Ini::important();
