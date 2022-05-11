@@ -24,7 +24,9 @@ class Num extends Base\Test
         assert($a === 23.2);
         assert($b === null);
 
+
         // cast
+        assert(Base\Num::cast('22E1') === '22E1');
         assert(Base\Num::cast('000000') === '000000');
         assert(Base\Num::cast('000000',false) === '000000');
         assert(Base\Num::cast('000111',false) === '000111');
@@ -61,6 +63,7 @@ class Num extends Base\Test
         assert(Base\Num::cast('0.10000000000000200000000',true) === 0.100000000000002);
         assert(Base\Num::cast('0.10000000000000200000000',false) === '0.100000000000002');
         assert(Base\Num::cast('0.77207400',true) === 0.772074);
+        assert(Base\Num::cast('22F1') === '22F1');
 
         // castMore
         assert(Base\Num::castMore('000000') === 0);

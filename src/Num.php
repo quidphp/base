@@ -67,7 +67,7 @@ final class Num extends Root
             if($cleanDecimal === true)
             $string = Str::cleanDecimal($string);
 
-            if(is_numeric($string))
+            if(is_numeric($string) && Str::keepNum($string) === $string)
             {
                 $stringLength = strlen($string);
                 $float = (float) $string;
