@@ -282,8 +282,8 @@ class Column extends Base\Test
         // spliceIndex
         $multi = [0=>['name'=>'test','user'=>'testa'],1=>['name'=>'test2','user'=>'testa2'],2=>['name'=>'test','user'=>'testa2']];
         assert(Base\Column::spliceIndex(0,2,$multi)[0] === []);
-        assert(Base\Column::spliceIndex(0,null,$multi)[0] === ['user'=>'testa']);
-        assert(Base\Column::spliceIndex(-1,null,$multi,['date'=>1234])[0] === ['name'=>'test','date'=>1234]);
+        assert(Base\Column::spliceIndex(0,1,$multi)[0] === ['user'=>'testa']);
+        assert(Base\Column::spliceIndex(-1,1,$multi,['date'=>1234])[0] === ['name'=>'test','date'=>1234]);
 
         // spliceFirst
         $multi = [0=>['name'=>'test','user'=>'testa'],1=>['name'=>'test2','user'=>'testa2'],2=>['name'=>'test','user'=>'testa2']];

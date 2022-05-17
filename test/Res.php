@@ -968,10 +968,13 @@ class Res extends Base\Test
         // lineSplice
         assert(Base\Res::overwrite(Base\File::get($_file_),$splice));
         $original = Base\Res::read(0,true,$splice);
-        assert(Base\Res::lineSplice(-100,100,$splice,['OK','LOL'],true));
+        assert(count(Base\Res::lineSplice(-100,100,$splice,['OK','LOL'],true)) === 21);
         assert(strlen(Base\Res::read(0,true,$splice)) < strlen($original));
-        assert(Base\Res::lineSplice(0,1,$splice,['OK'],true));
-        assert(strpos(Base\Res::read(0,true,$splice),'OK') === 0);
+        assert(count(Base\Res::lineSplice(0,1,$splice,['OK'],true)) === 21);
+        $read = Base\Res::read(0,true,$splice);
+        assert(strpos($read,'OK') === 0);
+        assert(Base\Res::lineSplice(0,null,$splice,['OK'],true) === ['OK']);
+        Base\Res::overwrite($read,$splice);
         assert(Base\Res::lineSplice(1,1,$csv,[['plat','james'],['lala','garf','"OK"']],true,['csv'=>true]) === Base\Res::getLines($csv,true,true,['csv'=>true]));
         assert(Base\Res::lineSplice(-2,1,$csv,['avantderi','james'],true,['csv'=>true])[7][0] === 'avantderi');
 

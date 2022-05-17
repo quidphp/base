@@ -914,7 +914,9 @@ class Arr extends Base\Test
 
         // spliceIndex
         $array = [1,'test'=>2,3,4,5,6,'end'=>'what',8];
-        assert(Base\Arr::spliceIndex(0,null,$array) === ['test'=>2,1=>3,2=>4,3=>5,4=>6,'end'=>'what',5=>8]);
+        assert(Base\Arr::spliceIndex(0,null,$array) === []);
+        assert(Base\Arr::spliceIndex(2,null,$array) === [1,'test'=>2]);
+        assert(Base\Arr::spliceIndex(0,1,$array) === ['test'=>2,1=>3,2=>4,3=>5,4=>6,'end'=>'what',5=>8]);
         assert(Base\Arr::spliceIndex(0,2,$array) === [1=>3,2=>4,3=>5,4=>6,'end'=>'what',5=>8]);
         assert(Base\Arr::spliceIndex(-2,2,$array) === [1,'test'=>2,3,4,5,6]);
         assert(Base\Arr::spliceIndex(1000,1000,$array) === $array);

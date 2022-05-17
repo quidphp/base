@@ -67,7 +67,7 @@ final class Num extends Root
             if($cleanDecimal === true)
             $string = Str::cleanDecimal($string);
 
-            if(is_numeric($string) && Str::keepNum($string) === $string)
+            if(self::isReallyNumeric($string))
             {
                 $stringLength = strlen($string);
                 $float = (float) $string;
@@ -166,6 +166,14 @@ final class Num extends Root
     final public static function isNan($value):bool
     {
         return is_numeric($value) && is_nan((float) $value);
+    }
+
+
+    // isReallyNumeric
+    // retourne vrai si la valeur est réelement numérique, va retourner faux à quelque chose que comme 21E1
+    final public static function isReallyNumeric($value):bool
+    {
+        return is_numeric($value) && Str::keepNum((string) $value) === (string) $value;
     }
 
 

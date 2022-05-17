@@ -1049,7 +1049,7 @@ class File extends Finder
     // permet d'enlever et éventuellement remplacer des lignes dans le fichier ou la ressource fichier
     // offset accepte un chiffre négatif
     // retourne un tableau des lignes, si overwrite est true les changements sont inscrits au fichier
-    final public static function lineSplice(int $offset,int $length,$value,$replace=null,bool $overwrite=true,?array $option=null):?array
+    final public static function lineSplice(int $offset,?int $length,$value,$replace=null,bool $overwrite=true,?array $option=null):?array
     {
         return static::res('lineSplice',false,2,5,$offset,$length,$value,$replace,$overwrite,$option);
     }

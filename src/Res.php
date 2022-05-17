@@ -2739,7 +2739,7 @@ final class Res extends Root
     // permet d'enlever et éventuellement remplacer des lignes dans la ressource
     // offset accepte un chiffre négatif
     // retourne un tableau des lignes, si overwrite est true les changements sont inscrits au fichier
-    final public static function lineSplice(int $offset,int $length,$value,$replace=null,bool $overwrite=true,?array $option=null):?array
+    final public static function lineSplice(int $offset,?int $length,$value,$replace=null,bool $overwrite=true,?array $option=null):?array
     {
         $return = null;
         $lines = self::lines(true,true,$value,$option);

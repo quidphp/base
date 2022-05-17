@@ -459,11 +459,12 @@ final class Str extends Root
     {
         $return = null;
         $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
+        $offset ??= 0;
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
 
-        if(is_int($offset) && strlen($needle))
+        if(is_int($offset))
         {
             if($mb === true)
             $pos = mb_strpos($str,$needle,$offset,self::$config['charset']);
@@ -485,11 +486,12 @@ final class Str extends Root
     {
         $return = null;
         $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
+        $offset ??= 0;
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
 
-        if(is_int($offset) && strlen($needle))
+        if(is_int($offset))
         {
             if($mb === true)
             $pos = mb_strrpos($str,$needle,$offset,self::$config['charset']);
@@ -511,11 +513,12 @@ final class Str extends Root
     {
         $return = null;
         $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
+        $offset ??= 0;
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
 
-        if(is_int($offset) && strlen($needle))
+        if(is_int($offset))
         {
             if($mb === true)
             $pos = mb_stripos($str,$needle,$offset,self::$config['charset']);
@@ -539,11 +542,12 @@ final class Str extends Root
     {
         $return = null;
         $mb ??= Encoding::getMbs($mb,$needle,$str,$offset);
+        $offset ??= 0;
 
         if(is_string($offset))
         $offset = self::len($offset,$mb);
 
-        if(is_int($offset) && strlen($needle))
+        if(is_int($offset))
         {
             if($mb === true)
             $pos = mb_strripos($str,$needle,$offset,self::$config['charset']);
@@ -709,9 +713,8 @@ final class Str extends Root
         $mb ??= Encoding::getMbs($mb,$value,$offset,$length);
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
-        $length ??= self::len($value,$mb);
 
-        if(is_int($offset) && is_int($length))
+        if(is_int($offset) && (is_int($length) || $length === null))
         {
             if($mb === true)
             $return = mb_substr($value,$offset,$length,self::$config['charset']);
@@ -791,6 +794,7 @@ final class Str extends Root
     // la fonction n'accepte pas de tableau en argument
     // si start ou length sont des chaînes, calculent leur longueur avec strlen
     // replace peut être scalar, string ou un tableau
+    // note substr_replace n'accepte pas length à null comme les autres fonctions en php 8
     final public static function subReplace($offset,$length,$replace,string $str,?bool $mb=null):string
     {
         $return = '';
@@ -804,7 +808,7 @@ final class Str extends Root
         if(is_scalar($replace))
         $replace = (string) $replace;
 
-        if(is_int($offset) && is_int($length) && is_string($replace))
+        if(is_int($offset) && is_string($replace) && is_int($length))
         {
             if($mb === true)
             {
@@ -832,7 +836,7 @@ final class Str extends Root
         $offset = (is_string($offset))? self::len($offset,$mb):$offset;
         $length = (is_string($length))? self::len($length,$mb):$length;
 
-        if(is_int($offset) && is_int($length))
+        if(is_int($offset) && (is_int($length) || $length === null))
         {
             if($sensitive === false)
             {
@@ -1077,30 +1081,27 @@ final class Str extends Root
         $return = '';
         $mb ??= Encoding::getMbs($mb,$char,$value);
 
-        if(!empty($char))
+        if($sensitive === true)
         {
-            if($sensitive === true)
-            {
-                if($mb === true)
-                $strip = mb_strstr($value,$char,false,self::$config['charset']);
-                else
-                $strip = strstr($value,$char,false);
-            }
-
+            if($mb === true)
+            $strip = mb_strstr($value,$char,false,self::$config['charset']);
             else
-            {
-                if($mb === true)
-                $strip = mb_stristr($value,$char,false,self::$config['charset']);
-                else
-                $strip = stristr($value,$char,false);
-            }
+            $strip = strstr($value,$char,false);
+        }
 
-            if($strip !== false)
-            {
-                $return = $strip;
-                if($includeChar === false)
-                $return = self::sub($char,null,$strip,$mb);
-            }
+        else
+        {
+            if($mb === true)
+            $strip = mb_stristr($value,$char,false,self::$config['charset']);
+            else
+            $strip = stristr($value,$char,false);
+        }
+
+        if($strip !== false)
+        {
+            $return = $strip;
+            if($includeChar === false)
+            $return = self::sub($char,null,$strip,$mb);
         }
 
         return $return;
@@ -1115,21 +1116,18 @@ final class Str extends Root
     {
         $return = '';
 
-        if(!empty($char))
+        if($sensitive === true)
+        $strip = mb_strrchr($value,$char,false,self::$config['charset']);
+
+        else
+        $strip = mb_strrichr($value,$char,false,self::$config['charset']);
+
+        if($strip !== false)
         {
-            if($sensitive === true)
-            $strip = mb_strrchr($value,$char,false,self::$config['charset']);
+            $return = $strip;
 
-            else
-            $strip = mb_strrichr($value,$char,false,self::$config['charset']);
-
-            if($strip !== false)
-            {
-                $return = $strip;
-
-                if($includeChar === false)
-                $return = self::sub($char,null,$strip,true);
-            }
+            if($includeChar === false)
+            $return = self::sub($char,null,$strip,true);
         }
 
         return $return;
@@ -1144,30 +1142,27 @@ final class Str extends Root
         $return = '';
         $mb ??= Encoding::getMbs($mb,$char,$value);
 
-        if(!empty($char))
+        if($sensitive === true)
         {
-            if($sensitive === true)
-            {
-                if($mb === true)
-                $strip = mb_strstr($value,$char,true,self::$config['charset']);
-                else
-                $strip = strstr($value,$char,true);
-            }
-
+            if($mb === true)
+            $strip = mb_strstr($value,$char,true,self::$config['charset']);
             else
-            {
-                if($mb === true)
-                $strip = mb_stristr($value,$char,true,self::$config['charset']);
-                else
-                $strip = stristr($value,$char,true);
-            }
+            $strip = strstr($value,$char,true);
+        }
 
-            if($strip !== false)
-            {
-                $return = $strip;
-                if($includeChar === true)
-                $return .= $char;
-            }
+        else
+        {
+            if($mb === true)
+            $strip = mb_stristr($value,$char,true,self::$config['charset']);
+            else
+            $strip = stristr($value,$char,true);
+        }
+
+        if($strip !== false)
+        {
+            $return = $strip;
+            if($includeChar === true)
+            $return .= $char;
         }
 
         return $return;
@@ -1182,20 +1177,17 @@ final class Str extends Root
     {
         $return = '';
 
-        if(!empty($char))
+        if($sensitive === true)
+        $strip = mb_strrchr($value,$char,true,self::$config['charset']);
+
+        else
+        $strip = mb_strrichr($value,$char,true,self::$config['charset']);
+
+        if($strip !== false)
         {
-            if($sensitive === true)
-            $strip = mb_strrchr($value,$char,true,self::$config['charset']);
-
-            else
-            $strip = mb_strrichr($value,$char,true,self::$config['charset']);
-
-            if($strip !== false)
-            {
-                $return = $strip;
-                if($includeChar === true)
-                $return .= $char;
-            }
+            $return = $strip;
+            if($includeChar === true)
+            $return .= $char;
         }
 
         return $return;

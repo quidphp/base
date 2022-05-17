@@ -110,6 +110,12 @@ class Num extends Base\Test
         assert(!Base\Num::isNan('2'));
         assert(!Base\Num::isNan(Base\Num::pi()));
 
+        // isReallyNumeric
+        assert(Base\Num::isReallyNumeric(23.2));
+        assert(Base\Num::isReallyNumeric('24.2'));
+        assert(!Base\Num::isReallyNumeric('24.z2'));
+        assert(!Base\Num::isReallyNumeric('21E1'));
+
         // isPositive
         assert(Base\Num::isPositive('2'));
         assert(!Base\Num::isPositive(0));

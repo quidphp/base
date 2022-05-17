@@ -2388,7 +2388,6 @@ final class Arr extends Root
     final public static function spliceIndex(int $offset,?int $length,array $array,?array $replace=null,bool $sensitive=true):array
     {
         $return = [];
-        $length ??= 1;
         $keys = array_keys($array);
         $values = array_values($array);
 

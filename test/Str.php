@@ -217,6 +217,8 @@ class Str extends Base\Test
         assert(3 === Base\Str::pos('es','aetestesc',2,true));
         assert(6 === Base\Str::pos('es','aetestesc',4,true));
         assert(6 === Base\Str::pos('es','aetestesc','1234',true));
+        assert(Base\Str::pos('','aetestesc',null,true) === 0);
+        assert(Base\Str::pos('','aetestesc',null,false) === 0);
 
         // posRev
         assert(6 === Base\Str::posRev('es','aetestesc'));
@@ -227,6 +229,8 @@ class Str extends Base\Test
         assert(Base\Str::posRev('te','aetestéésc',-9,true) === null);
         assert(Base\Str::posRev('te','aetestéésc',-9,false) === 2);
         assert(5 === Base\Str::posRev('té','aetestéésc',1));
+        assert(Base\Str::posRev('','aetestéésc',2,false) === 12);
+        assert(Base\Str::posRev('','aetestéésc',2,true) === 10);
 
         // ipos
         assert(2 === Base\Str::ipos('z','asZtestasc'));
@@ -245,12 +249,16 @@ class Str extends Base\Test
         assert(null === Base\Str::iposRev('ée','ÉetestÉÉesc',0,false));
         assert(7 === Base\Str::iposRev('ée','ÉetestÉÉesc',0,true));
         assert(null === Base\Str::iposRev('esqqqqq','aetestéesc',0,false));
+        assert(Base\Str::iposRev('','aetestéesc',0,true) === 10);
+        assert(Base\Str::iposRev('','aetestéesc',0,false) === 11);
 
         // posIpos
         assert(Base\Str::posIpos('test','testa') === 0);
         assert(Base\Str::posIpos('TEST','testa') === null);
         assert(Base\Str::posIpos('TEST','testa',false) === 0);
         assert(Base\Str::posIpos('TÉST','tésta',false) === 0);
+        assert(Base\Str::posIpos('','tésta',false) === 0);
+        assert(Base\Str::posIpos('','tésta',true) === 0);
 
         // in
         $string = 'testlalablabla';
@@ -341,6 +349,7 @@ class Str extends Base\Test
         assert(Base\Str::subReplace(1,2,['o','k'],$string) === 'eoksté test test test test test blabla test');
 
         // subCompare
+        assert(Base\Str::subCompare('lala',2,null,'ilalai') === -11);
         assert(Base\Str::subCompare('lala',1,4,'ilalai') === 0);
         assert(Base\Str::subCompare('lala',1,4,'iLalai',false) === 0);
         assert(Base\Str::subCompare('lala','i','lala','iLalai',false) === 0);
@@ -469,6 +478,7 @@ class Str extends Base\Test
         assert(Base\Str::stripBefore('@',$string) === '@Gmail@com');
         $string = 'test/test2/test3/test4';
         assert(Base\Str::stripBefore('/',$string) === '/test2/test3/test4');
+        assert(Base\Str::stripBefore('',$string,true,true,true) === 'test/test2/test3/test4');
 
         // stripBeforeReverse
         $string = 'test/test2/test3/test4';
@@ -479,6 +489,7 @@ class Str extends Base\Test
         assert(Base\Str::stripBeforeReverse('@',$string,false) === 'com');
         assert(Base\Str::stripBeforeReverse('O',$string,true,true) === '');
         assert(Base\Str::stripBeforeReverse('O',$string,true,false) === 'om');
+        assert(Base\Str::stripBeforeReverse('',$string) === '');
 
         // stripAfter
         $string = 'emondppÉh@Gmail.com';
@@ -634,7 +645,8 @@ class Str extends Base\Test
         assert(Base\Str::lineSplice(1,1,'WHAT',$x) === 'test'.PHP_EOL.'WHAT'.PHP_EOL.'ok'.PHP_EOL.'bla');
         assert(Base\Str::lineSplice(1,1,2,$x) === 'test'.PHP_EOL.'2'.PHP_EOL.'ok'.PHP_EOL.'bla');
         assert(Base\Str::lineSplice(0,2,[1,'ok',3],$x) === '1'.PHP_EOL.'ok'.PHP_EOL.'3'.PHP_EOL.'ok'.PHP_EOL.'bla');
-        assert(Base\Str::lineSplice(1,null,null,$x) === 'test'.PHP_EOL.'ok'.PHP_EOL.'bla');
+        assert(Base\Str::lineSplice(1,null,null,$x) === 'test');
+        assert(Base\Str::lineSplice(1,1,null,$x) === 'test'.PHP_EOL.'ok'.PHP_EOL.'bla');
 
         // words
         assert(Base\Str::words('asddas@asd.la.ca') === ['asddas@asd.la.ca']);
@@ -668,7 +680,8 @@ class Str extends Base\Test
         assert(Base\Str::wordSplice(0,3,2,$string) === '2 test test test blabla test');
         assert(Base\Str::wordSplice(0,0,['hahahaè','hihi'],$string) === 'hahahaè hihi etesté test test test test test blabla test');
         assert(Base\Str::wordSplice(3,7,['hahaha','hihi'],$string) === 'etesté test test hahaha hihi');
-        assert(Base\Str::wordSplice(6,null,null,$string) === 'etesté test test test test test test');
+        assert(Base\Str::wordSplice(6,null,null,$string) === 'etesté test test test test test');
+        assert(Base\Str::wordSplice(6,1,null,$string) === 'etesté test test test test test test');
 
         // wordSliceLength
         assert('word bla' === Base\Str::wordSliceLength(3,5,'word wa bla z'));
