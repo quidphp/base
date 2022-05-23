@@ -39,16 +39,16 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
     - zip
     
 ## Comment
-**QuidPHP/Base** code is commented in French and all methods are explained.
+**QuidPHP/Base** code is commented and all methods are explained (in French).
 
 ## Convention
 **QuidPHP/Base** is built on the following conventions:
+- *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
+- *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
+- *Error*: The only exceptions that are thrown are related to function arguments and return types.
+- *Static*: All class constructors are private, thus all methods are static and there is no object instantiation.
 - *Traits*: Traits filenames start with an underscore (_).
 - *Type*: Files, function arguments and return types are strict typed.
-- *Static*: All class constructors are private, thus all methods are static and there is no object instantiation.
-- *Error*: The only exceptions that are thrown are related to function arguments and return types.
-- *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
-- *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 
 ## Overview
 **QuidPHP/Base** contains 81 classes and traits. Here is an overview:
