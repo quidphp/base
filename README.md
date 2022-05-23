@@ -12,7 +12,7 @@
 **QuidPHP/Base** is available as an open-source software under the [MIT license](LICENSE).
 
 ## Documentation
-**QuidPHP/Base** documentation is being written. Once ready, it will be available at [QuidPHP/Docs](https://github.com/quidphp/docs).
+**QuidPHP/Base** documentation is available at [QuidPHP/Docs](https://github.com/quidphp/docs).
 
 ## Installation
 **QuidPHP/Base** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/base).
@@ -23,7 +23,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 
 ## Requirement
 **QuidPHP/Base** requires the following:
-- PHP 7.4, 8.0 or 8.1 with these extensions:
+- PHP 8.1 with these extensions:
     - ctype
     - curl
     - date
@@ -39,7 +39,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
     - zip
     
 ## Comment
-**QuidPHP/Base** code is commented and all methods are explained. However, most of the comments are written in French.
+**QuidPHP/Base** code is commented in French and all methods are explained.
 
 ## Convention
 **QuidPHP/Base** is built on the following conventions:
