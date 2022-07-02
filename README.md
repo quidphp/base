@@ -134,7 +134,7 @@ Once installed, the **Quid\Base** namespace will be available within your PHP ap
 - [_root](src/_root.php) - Trait that provides some basic fqcn methods
 - [_shortcut](src/_shortcut.php) - Trait that grants static methods to declare and replace shortcuts (bracketed segments within strings)
 
-## Testing
+### Testing
 **QuidPHP/Base** contains 70 test classes:
 - [Arr](test/Arr.php) - Class for testing Quid\Base\Arr
 - [Arrs](test/Arrs.php) - Class for testing Quid\Base\Arrs
