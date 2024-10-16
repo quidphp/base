@@ -214,7 +214,7 @@ class Listing extends Assoc
     // implode
     // implose un tableau qui a été passé dans arr
     // fonctionne aussi avec les tableaux list
-    final public static function implode(array $value,?array $option=null):string
+    public static function implode(array $value,?array $option=null):string
     {
         $return = '';
         $option = static::option($option);

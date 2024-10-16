@@ -45,6 +45,7 @@ final class Attr extends Listing
         'class'=>'.', // ce caractère sert à identifier une classe
         'oddEven'=>['odd','even'], // les classes pour oddEven
         'mirror'=>['multiple','selected','checked','required','disabled'], // attributs mirror
+        'boolean'=>['async'], // attributs boolean
         'pattern'=>['pattern','data-pattern'], // noms d'attributs qui contiennent pattern et doivent être passés dans validate/pattern
         'method'=>'post', // si method est true
         'target'=>'_blank', // si target est true
@@ -391,9 +392,31 @@ final class Attr extends Listing
                     elseif(in_array($key,self::$config['mirror'],true) && is_bool($value))
                     $value = ($value === true)? $key:null;
 
+                    elseif(in_array($key,self::$config['boolean'],true) && is_bool($value))
+                    $value = ($value === true)? true:null;
+
                     if(is_string($key) && !empty($key) && $value !== null)
                     $return = self::parseMerge([$key=>$value],$return);
                 }
+            }
+        }
+
+        return $return;
+    }
+
+
+    // implode
+    // hack pour pouvoir générer un champ boolean
+    public static function implode(array $value,?array $option=null):string
+    {
+        $return = parent::implode($value,$option);
+
+        foreach(self::$config['boolean'] as $booleanField)
+        {
+            if(!empty($value[$booleanField]))
+            {
+                $target = $booleanField."='1'";
+                $return = Str::replace([$target=>$booleanField],$return);
             }
         }
 

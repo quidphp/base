@@ -416,6 +416,9 @@ class Attr extends Base\Test
         assert(strlen(Base\Attr::str(['id'=>true,'james','href'=>'test@gmail.com'])) === 58);
         assert(Base\Attr::str(['multiple'=>true]) === "multiple='multiple'");
         assert(Base\Attr::str(['multiple'=>false]) === '');
+        assert(Base\Attr::str(['href'=>'/test/@ok','async'=>true]) === "href='/test/%40ok' async");
+        assert(Base\Attr::str(['href'=>'/test/@ok','async'=>1]) === "href='/test/%40ok' async");
+        assert(Base\Attr::str(['href'=>'/test/@ok','async'=>0]) === "href='/test/%40ok' async='0'");
 
         // cleanup
         Base\Attr::removeSelectedUri('/test/laa.php');
