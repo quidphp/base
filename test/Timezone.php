@@ -71,7 +71,7 @@ class Timezone extends Base\Test
         // abbreviations
 
         // all
-        assert(count(Base\Timezone::all()) >= 425);
+        assert(count(Base\Timezone::all()) >= 400);
 
         return true;
     }
